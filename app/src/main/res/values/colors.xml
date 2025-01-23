@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light Theme Colors -->
+    <color name="primary">#136E00</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#3700B3</color>
+    <color name="onPrimaryContainer">#FFFFFF</color>
+    <color name="secondary">#03DAC6</color>
+    <color name="onSecondary">#000000</color>
+    <color name="tertiary">#018786</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="onBackground">#000000</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#000000</color>
+    <color name="error">#B00020</color>
+    <color name="onError">#FFFFFF</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="primary_dark">#BB86FC</color>
+    <color name="onPrimary_dark">#000000</color>
+    <color name="background_dark">#121212</color>
+    <color name="onBackground_dark">#FFFFFF</color>
+    <color name="surface_dark">#121212</color>
+    <color name="onSurface_dark">#FFFFFF</color>
+    <color name="error_dark">#CF6679</color>
+    <color name="onError_dark">#000000</color>
+</resources>
