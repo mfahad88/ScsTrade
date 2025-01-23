@@ -5,8 +5,10 @@ plugins {
 
 android {
     namespace = "com.example.scstrade"
-    compileSdk = 34
-
+    compileSdk = 35
+    buildFeatures{
+        viewBinding=true
+    }
     defaultConfig {
         applicationId = "com.example.scstrade"
         minSdk = 21
@@ -36,8 +38,11 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.5")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation (libs.retrofit)
     implementation (libs.retrofit2.converter.gson)
     implementation(libs.androidx.core.ktx)

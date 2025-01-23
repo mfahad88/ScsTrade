@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="scs_trade_p">
+        <item name="android:textSize">37.65sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="fontFamily">@font/inter_18pt_medium</item>
+    </style>
+
+    <style name="this_next_g">
+        <item name="android:textSize">45sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="fontFamily">@font/inter_28pt_medium</item>
+    </style>
+
+    <style name="connecting_">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">-0.04</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="fontFamily">@font/inter_18pt_medium</item>
+    </style>
+    <style name="kse_100">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="m_vol_721_9"></style>
+
+    <style name="index_value"></style>
+</resources>

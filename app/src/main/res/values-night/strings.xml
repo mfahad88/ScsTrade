@@ -1,11 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ScsTrade</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scs_trade_p">SCS Trade Pro</string>
     <string name="this_next_g">This next gen\nof your investments</string>
     <string name="connecting_">Connecting to 100+\nexchange worldwide ...</string>
-    <string name="kse_100">KSE 100</string>
     <string name="m_vol_721_9">M.Vol: 721.934m</string>
     <string name="some_id">91,458.58</string>
     <string name="index_value">91,458.58</string>

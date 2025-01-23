@@ -1,0 +1,10 @@
+<resources>
+    <attr name="colorDarkerr" format="color" />
+    <attr name="colorOnDarkerr" format="color" />
+    <attr name="colorDarkerrContainer" format="color" />
+    <attr name="colorOnDarkerrContainer" format="color" />
+    <attr name="colorSpecialHeadingColor" format="color" />
+    <attr name="colorOnSpecialHeadingColor" format="color" />
+    <attr name="colorSpecialHeadingColorContainer" format="color" />
+    <attr name="colorOnSpecialHeadingColorContainer" format="color" />
+</resources>
