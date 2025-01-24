@@ -30,4 +30,15 @@
     <style name="m_vol_721_9"></style>
 
     <style name="index_value"></style>
+
+    <style name="net_change"></style>
+
+    <style name="kse100"></style>
+
+    <style name="index_value_22sp">
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="fontFamily">@font/inter_24pt_bold</item>
+    </style>
 </resources>

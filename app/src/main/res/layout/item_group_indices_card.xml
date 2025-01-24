@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="95dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="@color/md_theme_surfaceBright"
+        android:background="@color/md_theme_surfaceBright"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/kse100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="12dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/kse100"
+                android:textAppearance="@style/kse100"
+                android:translationY="-1.27sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/index_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/index_value"
+                android:textAppearance="@style/index_value_22sp"
+                android:translationY="-3.42sp"
+                app:layout_constraintStart_toStartOf="@+id/kse100"
+                app:layout_constraintTop_toBottomOf="@+id/kse100" />
+
+            <ImageView
+                android:id="@+id/image_drop_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/drop_up"
+                app:layout_constraintBottom_toBottomOf="@+id/index_value"
+                app:layout_constraintStart_toEndOf="@+id/index_value"
+                app:layout_constraintTop_toTopOf="@+id/index_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
