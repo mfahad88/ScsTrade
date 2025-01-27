@@ -10,4 +10,6 @@
     <string name="some_id">91,458.58</string>
     <string name="index_value">91,458.58</string>
     <string name="kse100">KSE100</string>
+    <string name="h_116_700_0">H: 116,700.01 +1,441.02 (+1.23%)</string>
+    <string name="l_116_700_0">L: 116,700.01 +1,441.02 (+1.23%)</string>
 </resources>
