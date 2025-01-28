@@ -7,4 +7,7 @@
     <attr name="colorOnSpecialHeadingColor" format="color" />
     <attr name="colorSpecialHeadingColorContainer" format="color" />
     <attr name="colorOnSpecialHeadingColorContainer" format="color" />
+    <declare-styleable name="LabelledTextField">
+        <attr name="hintText" format="string"/>
+    </declare-styleable>
 </resources>

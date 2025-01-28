@@ -26,47 +26,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+    <com.example.scstrade.views.widgets.LabelledTextField
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:id="@+id/fullName"
         android:layout_marginStart="34dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="34dp"
-        android:hint="@string/full_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:hintText="@string/full_name"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fullName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="24dp"
-        android:hint="@string/email"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        android:layout_marginEnd="34dp"
+        app:hintText="@string/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
-        <com.google.android.material.textfield.TextInputEditText
+    <RelativeLayout
+        android:layout_width="92dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        android:background="@drawable/rounded_country_code">
+        <com.example.scstrade.views.widgets.CustomSpinner
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textEmailAddress"
-            android:id="@+id/email"
-       />
-    </com.google.android.material.textfield.TextInputLayout>
 
-   <!-- <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        android:entries="@array/spinner_country"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="588dp" />-->
+            />
+    </RelativeLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
+        app:hintTextColor="@color/md_theme_onSurfaceVariant"
+        app:boxBackgroundMode="outline"
+        android:hint="@string/full_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>

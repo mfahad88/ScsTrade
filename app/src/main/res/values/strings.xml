@@ -14,4 +14,20 @@
     <string name="l_116_700_0">L: 116,700.01 +1,441.02 (+1.23%)</string>
     <string name="full_name">Full Name</string>
     <string name="email">Email</string>
+    <string name="reg">REG</string>
+    <string name="sariah">Sariah</string>
+    <string name="wtl">WTL</string>
+    <string name="companyName">Worldcall Telecom Limited</string>
+    <string name="volume">Vol: 127,408.831</string>
+    <string name="weeks">52 Weeks</string>
+    <string name="high_52">147.5</string>
+    <string name="low_52">141.6</string>
+    <string name="valueTrade">1.78</string>
+    <string name="netChange">0.00 (0.00%)</string>
+    <string name="high">H: 1.85</string>
+    <string name="low">L: 1.60</string>
+    <string name="bid_vol_100">Bid Vol: 100</string>
+    <string name="bid_2_78">Bid: 2.78</string>
+    <string name="ask_vol_2_2">Ask Vol: 2.205</string>
+    <string name="ask_0_78">Ask: 0.78</string>
 </resources>
