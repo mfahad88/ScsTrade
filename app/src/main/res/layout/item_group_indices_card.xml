@@ -9,8 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="95dp"
         app:cardElevation="5dp"
+        app:strokeWidth="0dp"
         app:cardBackgroundColor="@color/md_theme_surfaceBright"
-        android:background="@color/md_theme_surfaceBright"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
@@ -100,6 +100,26 @@
                 app:layout_constraintEnd_toStartOf="@+id/l_116_700_0"
                 app:layout_constraintTop_toTopOf="@+id/l_116_700_0"
                 app:srcCompat="@drawable/drop_down" />
+
+            <RelativeLayout
+                android:layout_width="82.27dp"
+                android:layout_height="16.98dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/light_green_chip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/label_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_centerInParent="true"
+                    android:text="@string/label_text"
+                    android:textAppearance="@style/label_text"
+                    android:lineSpacingExtra="3sp"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

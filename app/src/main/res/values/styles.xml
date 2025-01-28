@@ -160,5 +160,11 @@
         <item name="android:textColor">#A44FA9</item>
     </style>
 
+    <style name="label_text">
+        <item name="android:textSize">7.96sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+    </style>
+
 
 </resources>

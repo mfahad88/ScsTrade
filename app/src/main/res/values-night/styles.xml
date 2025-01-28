@@ -155,4 +155,6 @@
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#F87FFF</item>
     </style>
+
+    <style name="label_text"></style>
 </resources>
