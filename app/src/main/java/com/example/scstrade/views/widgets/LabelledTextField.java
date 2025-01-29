@@ -28,8 +28,13 @@ public class LabelledTextField extends LinearLayout {
             );
             try {
                 String hint = a.getString(R.styleable.LabelledTextField_hintText);
+                String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
+                binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
                 if(hint!=null){
                     binding.textInputLayout.setHint(hint);
+                }
+                if(hintField!=null){
+                    binding.textInputEditText.setHint(hintField);
                 }
             }finally {
                 a.recycle();

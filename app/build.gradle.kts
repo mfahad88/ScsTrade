@@ -46,6 +46,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation (libs.retrofit)
     implementation (libs.retrofit2.converter.gson)
     implementation(libs.androidx.core.ktx)

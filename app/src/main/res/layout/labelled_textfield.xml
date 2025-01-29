@@ -7,6 +7,7 @@
         android:layout_height="wrap_content"
         app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
         app:hintTextColor="@color/md_theme_onSurfaceVariant"
+        app:expandedHintEnabled="false"
         app:boxBackgroundMode="outline"
         android:hint="@string/full_name">
 

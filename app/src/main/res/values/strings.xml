@@ -31,4 +31,16 @@
     <string name="ask_vol_2_2">Ask Vol: 2.205</string>
     <string name="ask_0_78">Ask: 0.78</string>
     <string name="label_text">+4,411.27 (+4.03%)</string>
+    <string name="valueTradeIndices">Value: 16,757.17m</string>
+    <string name="volumeIndices">Volume: 424.810m</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="register">Register</string>
+    <string name="continue_wi">Continue with Google/Facebook</string>
+    <string name="scs_trade_p_logo">SCS Trade Pro</string>
+    <string name="committed_t">Committed to intelligent investing</string>
+    <string name="version_1_0">Version 1.0</string>
 </resources>

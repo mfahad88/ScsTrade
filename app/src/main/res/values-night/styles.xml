@@ -57,20 +57,20 @@
     <style name="index_value_22sp">
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">#1C1C1C</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="fontFamily">@font/inter_24pt_bold</item>
     </style>
 
     <style name="h_116_700_0">
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">#136E00</item>
+        <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
     </style>
 
     <style name="l_116_700_0">
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">#910000</item>
+        <item name="android:textColor">@color/md_theme_errorContainer_mediumContrast</item>
     </style>
 
     <style name="country_code_dropdown">
@@ -156,5 +156,25 @@
         <item name="android:textColor">#F87FFF</item>
     </style>
 
-    <style name="label_text"></style>
+    <style name="label_text">
+        <item name="android:textSize">7.96sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/md_theme_inversePrimary</item>
+    </style>
+
+    <style name="valueTradeIndices">
+        <item name="android:textSize">7.96sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="continue_wi"></style>
+
+    <style name="scs_trade_p_logo"></style>
+
+    <style name="committed_t"></style>
+
+    <style name="version_1_0"></style>
+
+
 </resources>

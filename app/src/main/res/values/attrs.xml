@@ -9,5 +9,7 @@
     <attr name="colorOnSpecialHeadingColorContainer" format="color" />
     <declare-styleable name="LabelledTextField">
         <attr name="hintText" format="string"/>
+        <attr name="hintTextField" format="string"/>
+        <attr name="android:inputType" format="reference"/>
     </declare-styleable>
 </resources>
