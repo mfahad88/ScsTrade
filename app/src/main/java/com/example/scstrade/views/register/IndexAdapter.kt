@@ -18,6 +18,7 @@ class IndexAdapter(private val list:List<KSEIndices>):RecyclerView.Adapter<Index
                 tradingValue.text = Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())
                 netChange.text = kseIndices.nETCHANGE
                 volume.text = Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())
+
             }
         }
 
