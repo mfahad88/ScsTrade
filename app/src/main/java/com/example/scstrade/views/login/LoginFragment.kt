@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.ChartRepository
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
@@ -30,7 +31,6 @@ class LoginFragment : Fragment() {
 
     private lateinit  var mainRepository: MainRepository
     private lateinit var binding: FragmentLoginBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +38,6 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLoginBinding.inflate(inflater,container,false)
         mainRepository= MainRepository(RetrofitInstance.api)
-
         val chartRepository = ChartRepository(RetrofitInstance.api)
         val viewModelChart = ChartViewModel(chartRepository)
         viewModel= MainViewModel(mainRepository)
@@ -54,7 +53,6 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
-            System.out.println(resource.data.toString())
             when (resource){
                 is Resource.Loading ->{
                     binding.loader.visibility=View.VISIBLE

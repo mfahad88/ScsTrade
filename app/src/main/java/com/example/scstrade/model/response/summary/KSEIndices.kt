@@ -22,5 +22,6 @@ data class KSEIndices(
     val vALUETRADED: String,
     @SerializedName("VOLUME_TRADED")
     val vOLUMETRADED: String,
+    var charts:List<ChartItem>
 
 )

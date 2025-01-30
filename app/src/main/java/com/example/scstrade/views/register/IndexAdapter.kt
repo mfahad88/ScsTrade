@@ -29,7 +29,9 @@ class IndexAdapter(
                 tradingValue.text = Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())
                 netChange.text = kseIndices.nETCHANGE
                 volume.text = "MVol: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
-                if(kseIndices.iNDEXCODE.lowercase().contains("kse all")){
+                System.out.println("Chart: ${kseIndices.charts}")
+                populateChart(kseIndices.charts)
+               /* if(kseIndices.iNDEXCODE.lowercase().contains("kse all")){
                     viewModelChart.getIndexChart("kseall",1)
                     viewModelChart.mutableChart.observe(lifecycleOwner, Observer {resource->
                         when(resource){
@@ -81,7 +83,7 @@ class IndexAdapter(
                             }
                         }
                     })
-                }
+                }*/
             }
         }
 
