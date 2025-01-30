@@ -12,7 +12,7 @@
         <item name="android:textSize">45sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="fontFamily">@font/inter_28pt_medium</item>
+        <item name="fontFamily">@font/inter_28pt_medium_500</item>
     </style>
 
     <style name="connecting_">
@@ -25,27 +25,30 @@
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
+        <item name="fontFamily">@font/inter_28pt_semibold_600</item>
+        <item name="fontWeight">600</item>
     </style>
 
     <style name="m_vol_721_9">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">#000000</item>
-        <item name="fontFamily">@font/inter_18pt_medium</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="fontFamily">@font/inter_28pt_semibold_600</item>
+
     </style>
 
     <style name="index_value">
         <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">#000000</item>
-        <item name="fontFamily">@font/inter_28pt_semibold</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="fontFamily">@font/inter_28pt_semibold_600</item>
     </style>
 
     <style name="net_change">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#484740</item>
-        <item name="fontFamily">@font/inter_18pt_medium</item>
+        <item name="fontFamily">@font/inter_28pt_medium_500</item>
     </style>
 
     <style name="kse100">
@@ -58,7 +61,7 @@
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="fontFamily">@font/inter_24pt_bold</item>
+        <item name="fontFamily">@font/inter_18pt_semibold</item>
     </style>
 
     <style name="h_116_700_0">
@@ -168,13 +171,58 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
-    <style name="continue_wi"></style>
+    <style name="continue_wi">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
-    <style name="scs_trade_p_logo"></style>
+    <style name="scs_trade_p_logo">
+        <item name="android:textSize">17.41sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+    </style>
 
-    <style name="committed_t"></style>
+    <style name="committed_t">
+        <item name="android:textSize">7.42sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/inter_28pt_regular_italic_400</item>
+    </style>
 
-    <style name="version_1_0"></style>
+    <style name="version_1_0">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#484646</item>
+    </style>
 
+    <style name="sign_in">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/inter_28pt_semibold_600</item>
+    </style>
+
+    <style name="forgot_pass">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+    </style>
+
+    <style name="don_t_have_">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+    </style>
+
+    <style name="sign_up">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
+        <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
+    </style>
 
 </resources>

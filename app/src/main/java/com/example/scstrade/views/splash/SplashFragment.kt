@@ -6,9 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -24,9 +28,12 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
-        Handler().postDelayed(Runnable {
-            findNavController().navigate(R.id.action_splashFragment_to_registerFragment)
-        },5000)
+        lifecycleScope.launch {
+            delay(5000)
+
+            findNavController().navigate(R.id.action_splashFragment_to_loginFragment,null,)
+        }
+
         return  binding.root
     }
 

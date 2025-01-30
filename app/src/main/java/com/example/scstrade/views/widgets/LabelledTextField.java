@@ -20,6 +20,7 @@ public class LabelledTextField extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         binding=LabelledTextfieldBinding.inflate(LayoutInflater.from(context),this,true);
+
         if(attrs!=null){
             TypedArray a=context.getTheme().obtainStyledAttributes(
                     attrs,
@@ -30,6 +31,7 @@ public class LabelledTextField extends LinearLayout {
                 String hint = a.getString(R.styleable.LabelledTextField_hintText);
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
+                binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 if(hint!=null){
                     binding.textInputLayout.setHint(hint);
                 }

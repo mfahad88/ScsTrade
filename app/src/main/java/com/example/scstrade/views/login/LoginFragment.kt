@@ -1,4 +1,4 @@
-package com.example.scstrade.views.register
+package com.example.scstrade.views.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,31 +6,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.scstrade.databinding.FragmentRegisterBinding
+import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.summary.KSEIndices
+import com.example.scstrade.repository.ChartRepository
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
+import com.example.scstrade.viewmodels.ChartViewModel
 import com.example.scstrade.viewmodels.MainViewModel
+import com.example.scstrade.views.register.IndexAdapter
 import com.example.scstrade.views.widgets.VerticalDivider
 
 
-class RegisterFragment : Fragment() {
-    private lateinit var binding: FragmentRegisterBinding
+/**
+ * A simple [Fragment] subclass.
+ * Use the [LoginFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class LoginFragment : Fragment() {
     private lateinit  var viewModel: MainViewModel
 
     private lateinit  var mainRepository: MainRepository
+    private lateinit var binding: FragmentLoginBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding=FragmentRegisterBinding.inflate(inflater,container,false)
+        binding=FragmentLoginBinding.inflate(inflater,container,false)
         mainRepository= MainRepository(RetrofitInstance.api)
-        viewModel= MainViewModel(mainRepository)
-        viewModel.fetchIndices()
 
+        val chartRepository = ChartRepository(RetrofitInstance.api)
+        val viewModelChart = ChartViewModel(chartRepository)
+        viewModel= MainViewModel(mainRepository)
+//        viewModel.fetchIndices()
+
+        binding.recyclerIndices.apply {
+            adapter= IndexAdapter(emptyList(),viewModelChart,viewLifecycleOwner)
+            layoutManager=
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+            addItemDecoration(VerticalDivider())
+
+
+        }
 
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             System.out.println(resource.data.toString())
@@ -47,23 +68,15 @@ class RegisterFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     binding.container.visibility=View.VISIBLE
-                    bindView(resource.data)
+                    (binding.recyclerIndices.adapter as IndexAdapter).addItems(resource.data?: emptyList())
                 }
             }
         })
-
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
         return binding.root
     }
 
-    private fun bindView(data: List<KSEIndices>?) {
-        binding.recyclerIndices.apply {
-//            adapter=IndexAdapter(data?: emptyList())
-            layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-            addItemDecoration(VerticalDivider())
-
-
-        }
-
-    }
 
 }

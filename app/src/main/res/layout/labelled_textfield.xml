@@ -9,6 +9,7 @@
         app:hintTextColor="@color/md_theme_onSurfaceVariant"
         app:expandedHintEnabled="false"
         app:boxBackgroundMode="outline"
+
         android:hint="@string/full_name">
 
         <com.google.android.material.textfield.TextInputEditText

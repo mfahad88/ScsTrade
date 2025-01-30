@@ -8,14 +8,14 @@
     app:cardElevation="5dp"
     android:clipToPadding="false"
     android:clipChildren="false"
-    app:cardBackgroundColor="@color/cardview_light_background"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/stock_card">
 
         <TextView
             android:id="@+id/kse_100"
@@ -83,15 +83,28 @@
                 android:textAppearance="@style/net_change" />
         </RelativeLayout>
 
-        <com.github.mikephil.charting.charts.LineChart
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/mpChart"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/relativeLayout"
-            app:layout_constraintTop_toTopOf="@+id/tradingValue" />
+            app:layout_constraintTop_toTopOf="@+id/tradingValue">
+            <com.example.scstrade.views.widgets.CustomLineChart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/lineChart" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/loader"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/load_anim" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -1,5 +1,8 @@
 package com.example.scstrade.helper
 
+import com.google.gson.JsonParseException
+import java.util.Date
+
 class Utils {
     companion object{
         fun helloWorld(){
@@ -16,7 +19,16 @@ class Utils {
                 value.toString()
             }
         }
-    }
 
+        fun convertDate(dateString:String): Date {
+            if (dateString != null && dateString.startsWith("/Date(") && dateString.endsWith(")/")) {
+                val timestamp = dateString.substring(6, dateString.length - 2)
+                val millis = timestamp.toLong()
+                return Date(millis)
+            }else{
+                return  Date()
+            }
+         }
+    }
 
 }

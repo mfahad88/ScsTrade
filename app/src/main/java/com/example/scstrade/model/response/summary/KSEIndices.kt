@@ -1,5 +1,6 @@
 package com.example.scstrade.model.summary
 
+import com.example.scstrade.model.response.chart.ChartItem
 import com.google.gson.annotations.SerializedName
 
 data class KSEIndices(
@@ -20,5 +21,6 @@ data class KSEIndices(
     @SerializedName("VALUE_TRADED")
     val vALUETRADED: String,
     @SerializedName("VOLUME_TRADED")
-    val vOLUMETRADED: String
+    val vOLUMETRADED: String,
+
 )

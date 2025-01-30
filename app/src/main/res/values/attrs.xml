@@ -11,5 +11,6 @@
         <attr name="hintText" format="string"/>
         <attr name="hintTextField" format="string"/>
         <attr name="android:inputType" format="reference"/>
+        <attr name="passwordToggleEnabled" format="boolean"/>
     </declare-styleable>
 </resources>

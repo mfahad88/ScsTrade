@@ -43,4 +43,17 @@
     <string name="scs_trade_p_logo">SCS Trade Pro</string>
     <string name="committed_t">Committed to intelligent investing</string>
     <string name="version_1_0">Version 1.0</string>
+    <string name="register_an">Register An Account</string>
+    <string name="create_weal">Create wealth and create a better future</string>
+    <string name="hi_there_we">Hi There! Welcome Back</string>
+    <string name="let_s_sign_">Let’s sign in to your account and get started.</string>
+    <string name="sign_in">Sign in</string>
+    <string name="user_name">User Name</string>
+    <string name="enter_user_name">Enter User Name</string>
+    <string name="password">Password</string>
+    <string name="enter_your_password">Enter Your Password</string>
+    <string name="forgot_pass">Forgot Password</string>
+    <string name="don_t_have_">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in_wit">Sign in with Google/Facebook</string>
 </resources>
