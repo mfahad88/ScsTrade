@@ -55,4 +55,7 @@
         <item name="colorSpecialHeadingColorContainer">@color/colorSpecialHeadingColorContainer</item>
         <item name="colorOnSpecialHeadingColorContainer">@color/colorOnSpecialHeadingColorContainer</item>
     </style>
+
+
+
 </resources>

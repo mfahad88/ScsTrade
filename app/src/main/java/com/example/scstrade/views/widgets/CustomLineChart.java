@@ -4,6 +4,7 @@ package com.example.scstrade.views.widgets;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -40,7 +41,9 @@ public class CustomLineChart extends LineChart {
     // Set the data entries for the chart
     public void setEntries(List<Entry> entries) {
         this.entries = entries;
-        updateChart();
+        if(!entries.isEmpty()) {
+            updateChart();
+        }
     }
 
     // Set X-axis labels
@@ -68,29 +71,31 @@ public class CustomLineChart extends LineChart {
     }
 
     private void updateChart() {
-        // Create a dataset with the provided entries
-        /*ViewPortHandler viewPortHandler =getViewPortHandler();
-        zoom(viewPortHandler.getScaleX(),viewPortHandler.getScaleY(),1f,1f);*/
-
-        LineDataSet dataSet = new LineDataSet(entries, "Line Data");
-        dataSet.setColor(lineColor);
-        dataSet.setValueTextColor(valueTextColor);
-        dataSet.setDrawValues(true);
-        dataSet.setDrawCircles(false);
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        try{
+            // Create a dataset with the provided entries
+            LineDataSet dataSet = new LineDataSet(entries, "Line Data");
+            dataSet.setColor(lineColor);
+            dataSet.setValueTextColor(valueTextColor);
+            dataSet.setDrawValues(true);
+            dataSet.setDrawCircles(false);
+            dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
 
 
-        // Create LineData object and set it to the chart
-        LineData lineData = new LineData(dataSet);
+            // Create LineData object and set it to the chart
+            LineData lineData = new LineData(dataSet);
 
-        this.setData(lineData);
-        this.invalidate(); // Refresh the chart
+            this.setData(lineData);
+            this.invalidate(); // Refresh the chart
+        }catch (Exception e){
+            Log.e("CustomLineChart: ",e.getMessage());
+        }
     }
 
     private void updateXAxis() {
         // Customize the X-axis with the provided labels
         XAxis xAxis = this.getXAxis();
+        xAxis.setAxisMinimum(0f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
     }
@@ -99,6 +104,7 @@ public class CustomLineChart extends LineChart {
         // Customize the Y-axis with the provided labels
         YAxis rightAxis = this.getAxisRight();
         rightAxis.setValueFormatter(new IndexAxisValueFormatter(yLabels));
+        rightAxis.setAxisMinimum(0);
 
         // Disable the right Y-axis
         this.getAxisRight().setEnabled(false);

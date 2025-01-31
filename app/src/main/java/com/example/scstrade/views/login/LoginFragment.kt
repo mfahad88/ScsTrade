@@ -42,6 +42,9 @@ class LoginFragment : Fragment() {
         val viewModelChart = ChartViewModel(chartRepository)
         viewModel= MainViewModel(mainRepository)
 //        viewModel.fetchIndices()
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_landingFragment)
+        }
 
         binding.recyclerIndices.apply {
             adapter= IndexAdapter(emptyList(),viewModelChart,viewLifecycleOwner)
@@ -66,7 +69,14 @@ class LoginFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     binding.container.visibility=View.VISIBLE
-                    (binding.recyclerIndices.adapter as IndexAdapter).addItems(resource.data?: emptyList())
+                    if(resource.data?.first()?.marketStatus?.lowercase()=="close"){
+                        binding.recyclerIndices.visibility=View.GONE
+                    }else {
+                        binding.recyclerIndices.visibility=View.VISIBLE
+                        (binding.recyclerIndices.adapter as IndexAdapter).addItems(
+                            resource.data ?: emptyList()
+                        )
+                    }
                 }
             }
         })

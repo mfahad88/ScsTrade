@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/indices"
+        android:icon="@drawable/indices"
+        android:title="Indices" />
+
+    <item android:id="@+id/all_stocks"
+        android:icon="@drawable/all_stocks"
+        android:title="All Stocks" />
+
+    <item android:id="@+id/detail_quote"
+        android:icon="@drawable/detail_quote"
+        android:title="Detailed Quote" />
+
+    <item android:id="@+id/fundamental"
+        android:icon="@drawable/fundamental"
+        android:title="Fundamental" />
+
+    <item android:id="@+id/technical"
+        android:icon="@drawable/technicals"
+        android:title="Technical" />
+
+    <item android:id="@+id/scs_portfolio"
+        android:icon="@drawable/scs_portfolio"
+        android:title="SCS Portfolio" />
+
+    <item android:id="@+id/my_portfolio"
+        android:icon="@drawable/my_portfolio"
+        android:title="My Portfolio" />
+
+    <item android:id="@+id/announcements"
+        android:icon="@drawable/announcements"
+        android:title="Announcements" />
+</menu>

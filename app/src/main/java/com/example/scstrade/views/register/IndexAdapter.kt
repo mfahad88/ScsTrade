@@ -29,7 +29,6 @@ class IndexAdapter(
                 tradingValue.text = Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())
                 netChange.text = kseIndices.nETCHANGE
                 volume.text = "MVol: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
-                System.out.println("Chart: ${kseIndices.charts}")
                 populateChart(kseIndices.charts)
                /* if(kseIndices.iNDEXCODE.lowercase().contains("kse all")){
                     viewModelChart.getIndexChart("kseall",1)
@@ -104,7 +103,7 @@ class IndexAdapter(
             binding.lineChart.removeAxisValues()
             binding.lineChart.removeAxisTitles()
             // Initialize the chart with default settings
-            binding.lineChart.invalidate() // or customLineChart.notifyDataSetChanged()
+//            binding.lineChart.invalidate() // or customLineChart.notifyDataSetChanged()
 
             // Optionally, animate the chart
             binding.lineChart.animateXY(1000, 1000)

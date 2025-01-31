@@ -242,5 +242,30 @@
         <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
     </style>
 
+    <style name="BottomNavText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:paddingTop">-10dp</item>
+    </style>
+
+    <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">28dp</item>
+        <item name="itemTextColor">@android:color/white</item>
+        <item name="itemIconTint">@android:color/white</item>
+        <item name="itemActiveIndicatorStyle">@style/CustomActiveIndicator</item>
+
+    </style>
+
+    <style name="CustomActiveIndicator">
+        <item name="android:color">#1AFFFFFF</item>
+        <item name="android:height">90dp</item>
+        <item name="android:width">80dp</item>
+        <item name="shapeAppearance">@style/CustomIndicatorShape</item>
+
+    </style>
+
+    <style name="CustomIndicatorShape" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
 
 </resources>
