@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.scstrade.R
 
@@ -39,8 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /*override fun onSupportNavigateUp(): Boolean {
-        val navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }*/
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp()
+                || super.onSupportNavigateUp()
+    }
 }

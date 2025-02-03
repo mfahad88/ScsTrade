@@ -1,23 +1,29 @@
 package com.example.scstrade.views.landing
 
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemSideMenuBinding
+import com.example.scstrade.model.data.KeyDescValue
 
 class SideMenuAdapter(
-    private var list: Map<Drawable?, String>,
+    private var list: List<KeyDescValue>,
+    private val onItemClick: (KeyDescValue) -> Unit
 ):RecyclerView.Adapter<SideMenuAdapter.MenuViewHolder>() {
-//    private val mapEntries: List<Map.Entry<Drawable?, String>> = list.entries.toList()
     inner class  MenuViewHolder(private val binding: ItemSideMenuBinding):RecyclerView.ViewHolder(binding.root){
 
-        fun bind(map: Map.Entry<Drawable?, String>){
-            binding.imageView15.setImageDrawable(map.key)
-            binding.textView.text = map.value
-            System.out.println(map.value)
+        fun bind(map: KeyDescValue){
 
+            binding.imageView15.setImageDrawable(AppCompatResources.getDrawable(binding.root.context,
+                map.value!!
+            ))
+            binding.textView.text = map.key
+            binding.root.setOnClickListener {
+                 onItemClick(map)
+            }
         }
 
 
@@ -34,7 +40,8 @@ class SideMenuAdapter(
     }
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-        val map=list.toMap()[position]
+        val map=list[position]
+
         holder.bind(map)
     }
 

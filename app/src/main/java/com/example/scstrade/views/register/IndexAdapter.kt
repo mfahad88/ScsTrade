@@ -30,59 +30,7 @@ class IndexAdapter(
                 netChange.text = kseIndices.nETCHANGE
                 volume.text = "MVol: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
                 populateChart(kseIndices.charts)
-               /* if(kseIndices.iNDEXCODE.lowercase().contains("kse all")){
-                    viewModelChart.getIndexChart("kseall",1)
-                    viewModelChart.mutableChart.observe(lifecycleOwner, Observer {resource->
-                        when(resource){
-                            is Resource.Error -> binding.loader.visibility= View.GONE
-                            is Resource.Loading -> binding.loader.visibility = View.VISIBLE
-                            is Resource.Success -> {
-                                binding.loader.visibility = View.GONE
-                                populateChart(resource.data)
 
-                            }
-                        }
-                    })
-                }else if(kseIndices.iNDEXCODE.lowercase().contains("kse 100")){
-                    viewModelChart.getIndexChart("kse",1)
-                    viewModelChart.mutableChart.observe(lifecycleOwner, Observer {resource->
-                        when(resource){
-                            is Resource.Error -> binding.loader.visibility= View.GONE
-                            is Resource.Loading -> binding.loader.visibility = View.VISIBLE
-                            is Resource.Success -> {
-                                binding.loader.visibility = View.GONE
-                                populateChart(resource.data)
-
-                            }
-                        }
-                    })
-                }else if(kseIndices.iNDEXCODE.lowercase().contains("kse 30")){
-                    viewModelChart.getIndexChart("kse30",1)
-                    viewModelChart.mutableChart.observe(lifecycleOwner, Observer {resource->
-                        when(resource){
-                            is Resource.Error -> binding.loader.visibility= View.GONE
-                            is Resource.Loading -> binding.loader.visibility = View.VISIBLE
-                            is Resource.Success -> {
-                                binding.loader.visibility = View.GONE
-                                populateChart(resource.data)
-
-                            }
-                        }
-                    })
-                }else if(kseIndices.iNDEXCODE.lowercase().contains("kmi 30")){
-                    viewModelChart.getIndexChart("kmi30",1)
-                    viewModelChart.mutableChart.observe(lifecycleOwner, Observer {resource->
-                        when(resource){
-                            is Resource.Error -> binding.loader.visibility= View.GONE
-                            is Resource.Loading -> binding.loader.visibility = View.VISIBLE
-                            is Resource.Success -> {
-                                binding.loader.visibility = View.GONE
-                                populateChart(resource.data)
-
-                            }
-                        }
-                    })
-                }*/
             }
         }
 

@@ -43,6 +43,7 @@ class LoginFragment : Fragment() {
         viewModel= MainViewModel(mainRepository)
 //        viewModel.fetchIndices()
         binding.button.setOnClickListener {
+
             findNavController().navigate(R.id.action_loginFragment_to_landingFragment)
         }
 

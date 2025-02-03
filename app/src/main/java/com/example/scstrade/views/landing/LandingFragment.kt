@@ -1,17 +1,25 @@
 package com.example.scstrade.views.landing
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLandingBinding
+import com.example.scstrade.model.data.KeyDescValue
+import com.example.scstrade.views.widgets.VerticalDivider
 
 
 /**
@@ -21,7 +29,7 @@ import com.example.scstrade.databinding.FragmentLandingBinding
  */
 class LandingFragment : Fragment() {
     lateinit var binding: FragmentLandingBinding
-
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,42 +42,57 @@ class LandingFragment : Fragment() {
         binding.bottomNavigationView.setupWithNavController(
             findNavController()
         )
-        binding.bottomNavigationView.setOnItemSelectedListener {item ->
+        binding.drawerNavView.setupWithNavController(
+            findNavController()
+        )
+
+
+
+        Log.e("Graph",findNavController().graph.startDestDisplayName)
+        /*binding.bottomNavigationView.setOnItemSelectedListener {item ->
             if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            if(item.itemId==R.id.home){
-                findNavController().navigate(R.id.homeFragment)
-            }else if (item.itemId==R.id.more){
+            if (item.itemId==R.id.more){
                 if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)
                 }else {
                     binding.drawerLayout.openDrawer(GravityCompat.END)
                 }
             }
-            true
-        }
 
+            true
+        }*/
 
 
         return binding.root
     }
 
     private fun initSideMenu() {
-        val map= mapOf(
-            AppCompatResources.getDrawable(requireContext(),R.drawable.indices) to "Indices",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.all_stocks) to "All Stocks",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.detail_quote) to "Detailed Quote",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.fundamental) to "Fundamental",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.technicals) to "Technical",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.scs_portfolio) to "SCS Portfolio",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.my_portfolio) to "My Portfolio",
-            AppCompatResources.getDrawable(requireContext(),R.drawable.announcements) to "Announcements",
+        val list:List<KeyDescValue> = listOf(
+            KeyDescValue("Indices",null,R.drawable.indices),
+            KeyDescValue("All Stocks",null,R.drawable.all_stocks),
+            KeyDescValue("Detailed Quote",null,R.drawable.detail_quote),
+            KeyDescValue("Fundamental",null,R.drawable.fundamental),
+            KeyDescValue("Technical",null,R.drawable.technicals),
+            KeyDescValue("SCS Portfolio",null,R.drawable.scs_portfolio),
+            KeyDescValue("My Portfolio",null,R.drawable.my_portfolio),
+            KeyDescValue("Announcements",null,R.drawable.announcements)
         )
 
         binding.sideMenu.apply {
-            adapter= SideMenuAdapter(map)
-            layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            adapter= SideMenuAdapter(list){ keyDescValue ->
+                System.out.println("Clicked: ${keyDescValue.toString()}")
+                if(keyDescValue.key?.equals("indices",true)?:false){
+                    findNavController().navigate(R.id.indicesFragment)
+//                    findNavController().navigate(R.id.action_landingFragment_to_indicesFragment)
+                }
+                binding.drawerLayout.closeDrawers()
+            }
+            layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+            val divider=DividerItemDecoration(binding.root.context,DividerItemDecoration.VERTICAL)
+            divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
+            addItemDecoration(divider)
         }
     }
 

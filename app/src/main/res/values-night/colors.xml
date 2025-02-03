@@ -164,4 +164,5 @@
     <color name="colorOnSpecialHeadingColor_highContrast">#000000</color>
     <color name="colorSpecialHeadingColorContainer_highContrast">#000000</color>
     <color name="colorOnSpecialHeadingColorContainer_highContrast">#000000</color>
+    <color name="item_side_menu">#FFFFFF</color>
 </resources>

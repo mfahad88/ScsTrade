@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/watchlist"
+    <item android:id="@+id/watchlistFragment"
         android:icon="@drawable/watchlist"
         android:title="Watchlist"
         />
@@ -9,7 +9,7 @@
         android:icon="@drawable/market"
         android:title="Market"
         />
-    <item android:id="@+id/home"
+    <item android:id="@+id/homeFragment"
         android:icon="@drawable/home"
         android:title="Home"
         />
