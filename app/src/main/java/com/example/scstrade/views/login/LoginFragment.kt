@@ -41,10 +41,8 @@ class LoginFragment : Fragment() {
         val chartRepository = ChartRepository(RetrofitInstance.api)
         val viewModelChart = ChartViewModel(chartRepository)
         viewModel= MainViewModel(mainRepository)
-//        viewModel.fetchIndices()
         binding.button.setOnClickListener {
-
-            findNavController().navigate(R.id.action_loginFragment_to_landingFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_landingActivity)
         }
 
         binding.recyclerIndices.apply {
@@ -86,6 +84,17 @@ class LoginFragment : Fragment() {
         }
         return binding.root
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchIndices()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopIndices()
+    }
+
 
 
 }

@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemGroupIndicesCardBinding
+import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
 
-class IndicesAdapter(private val itemList: List<KSEIndices>) : RecyclerView.Adapter<IndicesAdapter.ViewHolder>() {
+class IndicesAdapter(private val itemList: List<KSEIndices>,
+                     private val onItemClick: (KSEIndices) -> Unit) : RecyclerView.Adapter<IndicesAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices) {
@@ -14,9 +16,12 @@ class IndicesAdapter(private val itemList: List<KSEIndices>) : RecyclerView.Adap
             binding.indexValue.text = kseIndices.cURRENTINDEX
             binding.labelText.text = kseIndices.nETCHANGE
             binding.volume.text = "Volume: ${kseIndices.vOLUMETRADED}"
-            binding.valueTrade.text = "Volume: ${kseIndices.vALUETRADED}"
+            binding.valueTrade.text = "Value: ${kseIndices.vALUETRADED}"
             binding.high.text = "H: ${kseIndices.hIGHINDEX}"
             binding.l1167000.text = "L: ${kseIndices.lOWINDEX}"
+            binding.root.setOnClickListener {
+                onItemClick(kseIndices)
+            }
         }
     }
 

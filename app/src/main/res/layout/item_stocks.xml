@@ -10,7 +10,7 @@
     app:strokeWidth="0dp">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/stock_card">
 
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/image" />
+        android:src="@drawable/image" />
 
     <TextView
         android:id="@+id/reg"
@@ -35,6 +35,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         android:text="@string/reg"
+        android:visibility="gone"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:textAppearance="@style/reg"
@@ -65,7 +66,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:lineSpacingExtra="3sp"
         android:text="@string/wtl"
         android:textAppearance="@style/wtl"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
@@ -73,11 +73,12 @@
 
     <TextView
         android:id="@+id/companyName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:lineSpacingExtra="9sp"
+        android:layout_marginEnd="8dp"
         android:text="@string/companyName"
         android:textAppearance="@style/companyName"
+        app:layout_constraintEnd_toStartOf="@+id/imageView11"
         app:layout_constraintStart_toStartOf="@+id/symbol"
         app:layout_constraintTop_toBottomOf="@+id/symbol" />
 
@@ -86,7 +87,6 @@
         android:id="@+id/volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lineSpacingExtra="4sp"
         android:text="@string/volume"
         android:textAppearance="@style/volume"
         app:layout_constraintStart_toStartOf="@+id/symbol"
@@ -167,7 +167,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="10dp"
         android:gravity="end"
-        android:lineSpacingExtra="3sp"
         android:text="@string/valueTrade"
         android:textAppearance="@style/valueTrade"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
@@ -178,7 +177,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:lineSpacingExtra="9sp"
         android:text="@string/netChange"
         android:textAppearance="@style/netChange"
         app:layout_constraintEnd_toEndOf="@+id/valueTrade"
@@ -189,7 +187,6 @@
         android:id="@+id/high"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lineSpacingExtra="12sp"
         android:text="@string/high"
         android:textAppearance="@style/high_stock"
         app:layout_constraintEnd_toEndOf="@+id/netChange"
@@ -210,7 +207,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="7dp"
         android:gravity="end"
-        android:lineSpacingExtra="12sp"
         android:text="@string/low"
         android:textAppearance="@style/low_stock"
         app:layout_constraintEnd_toStartOf="@+id/imageView10"
@@ -233,7 +229,7 @@
         android:src="@drawable/vertical_separator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shariah" />
+        app:layout_constraintTop_toBottomOf="@+id/volume" />
 
     <TextView
         android:id="@+id/bid_vol"
@@ -242,7 +238,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:gravity="top"
-        android:lineSpacingExtra="2sp"
         android:text="@string/bid_vol_100"
         android:textAppearance="@style/bid_vol_100"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -257,7 +252,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginBottom="1dp"
         android:gravity="end"
-        android:lineSpacingExtra="2sp"
         android:text="@string/bid_2_78"
         android:textAppearance="@style/bid_vol_100"
         app:layout_constraintBottom_toBottomOf="@+id/bid_vol"
@@ -269,7 +263,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:lineSpacingExtra="2sp"
         android:text="@string/ask_vol_2_2"
         android:textAppearance="@style/ask_vol"
         app:layout_constraintBottom_toBottomOf="@+id/bid"
@@ -284,7 +277,6 @@
         android:layout_marginEnd="15dp"
         android:gravity="end"
 
-        android:lineSpacingExtra="2sp"
         android:text="@string/ask_0_78"
         android:textAppearance="@style/ask_vol"
         app:layout_constraintBottom_toBottomOf="@+id/bid"

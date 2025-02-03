@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
@@ -25,7 +30,18 @@ class IndicesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         indicesRepository= IndicesRepository(RetrofitInstance.api)
         indicesViewModel= IndicesViewModel(indicesRepository)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         indicesViewModel.fetchIndices()
+    }
+
+    override fun onPause() {
+
+        super.onPause()
+        indicesViewModel.stopIndices()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +49,11 @@ class IndicesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
+        val appConfiguration= AppBarConfiguration(/*findNavController().graph*/setOf(
+            R.id.indicesFragment
+        ))
+
+        binding.toolbar.setupWithNavController(findNavController(),appConfiguration)
         indicesViewModel.mutableLiveData.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Error -> {
@@ -46,10 +67,13 @@ class IndicesFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility= View.GONE
                     binding.recyclerView.apply {
-                        visibility= View.GONE
-                        adapter=IndicesAdapter(result.data?: emptyList())
+                        visibility= View.VISIBLE
+                        adapter=IndicesAdapter(result.data?: emptyList()){kseIndices ->
+                            var bundle=Bundle()
+                            bundle.putString("index",kseIndices.iNDEXCODE)
+                            findNavController().navigate(R.id.stockFragment,bundle)
+                        }
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                        addItemDecoration(HorizontalDivider(30))
                     }
                 }
             }

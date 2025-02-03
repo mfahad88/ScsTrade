@@ -15,6 +15,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     var mutableIndices=  MutableLiveData<Resource<List<KSEIndices>>>(Resource.Loading())
     private val handler = Handler(Looper.getMainLooper())
     private var delayMillis:Long=1*60*1000
+    private var isFetch=true
     private val updateTask= object :Runnable {
         override fun run() {
             fetchIndices()
@@ -33,11 +34,12 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
 
     init {
 //        startTimer()
-        fetchIndices()
+//        fetchIndices()
     }
  fun fetchIndices(){
+     isFetch=true
      viewModelScope.launch {
-       while (true){
+       while (isFetch){
            var resource= repository.getIndices()
            if(resource.data?.first()?.marketStatus?.lowercase()=="open"){
                delayMillis=5000
@@ -53,5 +55,9 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     override fun onCleared() {
         super.onCleared()
 //        stopTimer()
+    }
+
+    fun stopIndices() {
+        isFetch = false
     }
 }

@@ -32,28 +32,14 @@
             app:destination="@id/registerFragment"
             />
         <action
-            android:id="@+id/action_loginFragment_to_landingFragment"
-            app:destination="@id/landingFragment" />
+            android:id="@+id/action_loginFragment_to_landingActivity"
+            app:destination="@id/landingActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/landingFragment"
-        android:name="com.example.scstrade.views.landing.LandingFragment"
-        android:label="LandingFragment" />
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.scstrade.views.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/indicesFragment"
-        android:name="com.example.scstrade.views.indices.IndicesFragment"
-        android:label="fragment_indices"
-        tools:layout="@layout/fragment_indices" />
-    <fragment
-        android:id="@+id/watchlistFragment"
-        android:name="com.example.scstrade.views.WatchlistFragment"
-        android:label="fragment_watchlist"
-        tools:layout="@layout/fragment_watchlist" />
+    <activity
+        android:id="@+id/landingActivity"
+        android:name="com.example.scstrade.views.landing.LandingActivity"
+        android:label="activity_landing"
+        tools:layout="@layout/activity_landing" />
 
 
 </navigation>

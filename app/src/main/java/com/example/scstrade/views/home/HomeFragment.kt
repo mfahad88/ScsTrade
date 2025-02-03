@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.scstrade.R
+import com.example.scstrade.repository.IndicesRepository
+import com.example.scstrade.services.RetrofitInstance
+import com.example.scstrade.viewmodels.IndicesViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,16 +21,15 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var repository: IndicesRepository
+    private lateinit var viewModel: IndicesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        repository= IndicesRepository(RetrofitInstance.api)
+        viewModel = IndicesViewModel(repository)
+        viewModel.fetchAllData()
+
     }
 
     override fun onCreateView(

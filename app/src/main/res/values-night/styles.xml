@@ -244,4 +244,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20%</item>
     </style>
+
+    <style name="indices"></style>
+
+    <style name="back"></style>
+
+    <style name="kse100_toolbar"></style>
 </resources>
