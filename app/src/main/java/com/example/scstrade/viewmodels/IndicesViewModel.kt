@@ -7,12 +7,15 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.IndicesRepository
+import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class IndicesViewModel(private  val repository: IndicesRepository) : ViewModel() {
+class IndicesViewModel() : ViewModel() {
+    private  val repository: IndicesRepository=IndicesRepository(RetrofitInstance.api)
     private var isFetchIndices=true
     private var isFetchAllData=true
+    private var isFetchMarket=true
     val mutableLiveData = MutableLiveData<Resource<List<KSEIndices>>>()
     val mutableStockLiveData = MutableLiveData<Resource<List<StockItem>>>()
     fun fetchIndices(){
@@ -26,6 +29,20 @@ class IndicesViewModel(private  val repository: IndicesRepository) : ViewModel()
         }
     }
 
+    fun fetchMarket(){
+        isFetchMarket=true
+        viewModelScope.launch {
+            mutableLiveData.value = Resource.Loading()
+            while (isFetchMarket){
+                mutableLiveData.value = repository.fetchIndices()
+                delay(60000)
+            }
+        }
+    }
+
+    fun stopMarket(){
+        isFetchMarket = false
+    }
     fun stopIndices() {
         isFetchIndices = false
     }

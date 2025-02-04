@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
+import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: MainRepository) : ViewModel() {
+class MainViewModel() : ViewModel() {
+    private val repository: MainRepository=MainRepository(RetrofitInstance.api)
     var mutableIndices=  MutableLiveData<Resource<List<KSEIndices>>>(Resource.Loading())
     private val handler = Handler(Looper.getMainLooper())
     private var delayMillis:Long=1*60*1000

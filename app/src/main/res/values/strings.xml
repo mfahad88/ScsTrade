@@ -58,4 +58,8 @@
     <string name="sign_in_wit">Sign in with Google/Facebook</string>
     <string name="indices" >Indices</string>
     <string name="back">Back</string>
+    <string name="market_stat">Market Status:</string>
+    <string name="open">OPEN</string>
+    <string name="closed">Closed</string>
+    <string name="dec_2024_04">21 Dec 2024 | 04:30PM</string>
 </resources>

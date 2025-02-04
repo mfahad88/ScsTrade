@@ -1,14 +1,29 @@
 package com.example.scstrade.views.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentHomeBinding
+import com.example.scstrade.model.Resource
+import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.IndicesRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.IndicesViewModel
+import com.example.scstrade.viewmodels.SharedViewModel
+import com.github.mikephil.charting.data.Entry
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,14 +36,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    private lateinit var repository: IndicesRepository
-    private lateinit var viewModel: IndicesViewModel
-
+    private val viewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository= IndicesRepository(RetrofitInstance.api)
-        viewModel = IndicesViewModel(repository)
-        viewModel.fetchAllData()
+//        viewModel.fetchAllData()
 
     }
 
@@ -37,26 +49,52 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+        binding=FragmentHomeBinding.inflate(inflater,container,false)
+        viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    Log.e("Home: ",result.data.toString())
+                    initMarket(result.data)
                 }
             }
+        })
+        val entries=ArrayList<Entry>()
+        entries.add(Entry(0f, 5f))
+        entries.add(Entry(1f, 10f))
+        entries.add(Entry(2f, 12f))
+        entries.add(Entry(3f, 9f))
+        entries.add(Entry(4f, 5f))
+
+
+        binding.lineChart.lineColor=ContextCompat.getColor(requireContext(), R.color.md_theme_inversePrimary_highContrast)
+        binding.lineChart.filledColor=ContextCompat.getColor(requireContext(),R.color.md_theme_secondaryFixedDim)
+        binding.lineChart.entries=entries
+
+
+        return binding.root
     }
+
+    private fun initMarket(data: List<KSEIndices>?) {
+        if(data?.first()?.marketStatus.equals("open",true)){
+            binding.mMarket.open.visibility = View.VISIBLE
+            binding.mMarket.close.visibility = View.GONE
+        }else{
+            binding.mMarket.open.visibility = View.GONE
+            binding.mMarket.close.visibility = View.VISIBLE
+        }
+        var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
+
+        // Get the current date and time
+        var formattedDate = sdf.format(Date())
+        binding.mMarket.dateTime.text = formattedDate
+
+    }
+
+
 }

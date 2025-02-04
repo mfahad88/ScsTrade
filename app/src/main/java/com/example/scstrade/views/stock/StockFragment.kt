@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +17,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.repository.IndicesRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.IndicesViewModel
+import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.widgets.HorizontalDivider
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,13 +32,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class StockFragment : Fragment() {
     private lateinit var binding: FragmentStockBinding
-    private lateinit var repository: IndicesRepository
-    private lateinit var viewModel: IndicesViewModel
+    private val viewModel: SharedViewModel by activityViewModels()
     private var index:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository=IndicesRepository(RetrofitInstance.api)
-        viewModel=IndicesViewModel(repository)
         viewModel.fetchAllData()
         index=arguments?.getString("index")
 
@@ -57,7 +57,7 @@ class StockFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
         }
-        viewModel.mutableStockLiveData.observe(viewLifecycleOwner, Observer {result ->
+        viewModel.mutableAllData.observe(viewLifecycleOwner, Observer {result ->
             when(result){
                 is Resource.Error -> {
 

@@ -17,8 +17,6 @@ import com.github.mikephil.charting.data.Entry
 
 class IndexAdapter(
     private var list: List<KSEIndices>,
-    private val viewModelChart: ChartViewModel,
-    private val lifecycleOwner: LifecycleOwner
 ):RecyclerView.Adapter<IndexAdapter.IndexViewHolder>() {
 
     inner class  IndexViewHolder(private val binding: ItemIndicesCardBinding):RecyclerView.ViewHolder(binding.root){
@@ -35,26 +33,22 @@ class IndexAdapter(
         }
 
         private fun populateChart(data: List<ChartItem>?) {
-           val entries = data?.map {
-                Entry(Utils.convertDate(it.tradingDate).time.toFloat(),it.tradingClose.toFloat())
-            }
-            binding.lineChart.setEntries(entries)
+           try{
+               val entries = data?.map {
+                   Entry(Utils.convertDate(it.tradingDate).time.toFloat(),it.tradingClose.toFloat())
+               }
+               binding.lineChart.setEntries(entries)
 
-            // Set custom X and Y axis labels
-//            binding.lineChart.setXAxisLabels(listOf("Jan", "Feb", "Mar", "Apr"))
-//            binding.lineChart.setYAxisLabels(listOf("0", "1", "2", "3"))
+               binding.lineChart.setLineColor(R.color.md_theme_primary)
+               binding.lineChart.removeGrid()
+               binding.lineChart.removeAxisValues()
+               binding.lineChart.removeAxisTitles()
 
-            // Set custom line color and value text color
-            binding.lineChart.setLineColor(R.color.md_theme_primary)
-//            binding.lineChart.setValueTextColor(resources.getColor(android.R.color.holo_red_dark))
-            binding.lineChart.removeGrid()
-            binding.lineChart.removeAxisValues()
-            binding.lineChart.removeAxisTitles()
-            // Initialize the chart with default settings
-//            binding.lineChart.invalidate() // or customLineChart.notifyDataSetChanged()
-
-            // Optionally, animate the chart
-            binding.lineChart.animateXY(1000, 1000)
+               // Optionally, animate the chart
+               binding.lineChart.animateXY(1000, 1000)
+           }catch (e:Exception){
+               e.printStackTrace()
+           }
         }
 
     }

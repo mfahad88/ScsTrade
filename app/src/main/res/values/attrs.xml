@@ -13,4 +13,14 @@
         <attr name="android:inputType" format="reference"/>
         <attr name="passwordToggleEnabled" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="mLineChart">
+        <attr name="isTouchEnabled" format="boolean"/>
+        <attr name="isPinchZoom" format="boolean"/>
+        <attr name="isDragEnabled" format="boolean"/>
+        <attr name="isScaleEnabled" format="boolean"/>
+        <attr name="isRightAxis" format="boolean"/>
+        <attr name="isLeftAxis" format="boolean"/>
+        <attr name="entries" format="string"/>
+
+    </declare-styleable>
 </resources>

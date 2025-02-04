@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,9 +29,8 @@ import com.example.scstrade.views.widgets.VerticalDivider
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment() {
-    private lateinit  var viewModel: MainViewModel
+    private  val viewModel: MainViewModel by activityViewModels()
 
-    private lateinit  var mainRepository: MainRepository
     private lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +38,13 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentLoginBinding.inflate(inflater,container,false)
-        mainRepository= MainRepository(RetrofitInstance.api)
-        val chartRepository = ChartRepository(RetrofitInstance.api)
-        val viewModelChart = ChartViewModel(chartRepository)
-        viewModel= MainViewModel(mainRepository)
+
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_landingActivity)
         }
 
         binding.recyclerIndices.apply {
-            adapter= IndexAdapter(emptyList(),viewModelChart,viewLifecycleOwner)
+            adapter= IndexAdapter(emptyList())
             layoutManager=
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             addItemDecoration(VerticalDivider())
@@ -68,14 +66,18 @@ class LoginFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     binding.container.visibility=View.VISIBLE
-                    if(resource.data?.first()?.marketStatus?.lowercase()=="close"){
+                    binding.recyclerIndices.visibility=View.VISIBLE
+                    (binding.recyclerIndices.adapter as IndexAdapter).addItems(
+                        resource.data ?: emptyList()
+                    )
+                    /*if(resource.data?.first()?.marketStatus?.lowercase()=="close"){
                         binding.recyclerIndices.visibility=View.GONE
                     }else {
                         binding.recyclerIndices.visibility=View.VISIBLE
                         (binding.recyclerIndices.adapter as IndexAdapter).addItems(
                             resource.data ?: emptyList()
                         )
-                    }
+                    }*/
                 }
             }
         })
@@ -83,16 +85,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchIndices()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.stopIndices()
     }
 
 

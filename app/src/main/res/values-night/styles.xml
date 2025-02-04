@@ -250,4 +250,12 @@
     <style name="back"></style>
 
     <style name="kse100_toolbar"></style>
+
+    <style name="market_stat"></style>
+
+    <style name="open"></style>
+
+    <style name="closed"></style>
+
+    <style name="dec_2024_04"></style>
 </resources>

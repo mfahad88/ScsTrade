@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.FragmentRegisterBinding
@@ -18,20 +19,16 @@ import com.example.scstrade.views.widgets.VerticalDivider
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private lateinit  var viewModel: MainViewModel
+    private val viewModel: MainViewModel by activityViewModels()
 
-    private lateinit  var mainRepository: MainRepository
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentRegisterBinding.inflate(inflater,container,false)
-        mainRepository= MainRepository(RetrofitInstance.api)
-        viewModel= MainViewModel(mainRepository)
-        viewModel.fetchIndices()
 
-
+        bindView()
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             System.out.println(resource.data.toString())
             when (resource){
@@ -47,7 +44,7 @@ class RegisterFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     binding.container.visibility=View.VISIBLE
-                    bindView(resource.data)
+                   (binding.recyclerIndices.adapter as IndexAdapter).addItems(resource.data?: emptyList())
                 }
             }
         })
@@ -55,10 +52,11 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
-    private fun bindView(data: List<KSEIndices>?) {
+    private fun bindView() {
         binding.recyclerIndices.apply {
-//            adapter=IndexAdapter(data?: emptyList())
-            layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            adapter= IndexAdapter(emptyList())
+            layoutManager=
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             addItemDecoration(VerticalDivider())
 
 

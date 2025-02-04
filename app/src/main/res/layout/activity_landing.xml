@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:id="@+id/main">
 
-
+        <!--<include layout="@layout/mmarket" android:id="@+id/mMarket"/>-->
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
@@ -32,15 +32,15 @@
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
+                style="@style/CustomBottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
-                android:paddingHorizontal="10dp"
                 android:background="@drawable/rectangle_bottom_bar"
-                app:menu="@menu/menu"
-                style="@style/CustomBottomNavigationView"
-                app:labelVisibilityMode="labeled" />
+                android:paddingHorizontal="10dp"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/menu" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </RelativeLayout>

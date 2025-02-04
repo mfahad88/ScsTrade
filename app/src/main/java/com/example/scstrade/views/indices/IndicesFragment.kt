@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -19,30 +21,19 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.repository.IndicesRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.IndicesViewModel
+import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.widgets.HorizontalDivider
 
 class IndicesFragment : Fragment() {
 
     lateinit var binding: FragmentIndicesBinding
-    lateinit var indicesRepository: IndicesRepository
-    lateinit var indicesViewModel: IndicesViewModel
+    private val indicesViewModel: SharedViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        indicesRepository= IndicesRepository(RetrofitInstance.api)
-        indicesViewModel= IndicesViewModel(indicesRepository)
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        indicesViewModel.fetchIndices()
-    }
 
-    override fun onPause() {
-
-        super.onPause()
-        indicesViewModel.stopIndices()
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +45,7 @@ class IndicesFragment : Fragment() {
         ))
 
         binding.toolbar.setupWithNavController(findNavController(),appConfiguration)
-        indicesViewModel.mutableLiveData.observe(viewLifecycleOwner, Observer { result ->
+        indicesViewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Error -> {
                     binding.loader.visibility= View.GONE
