@@ -64,4 +64,5 @@
     <string name="dec_2024_04">21 Dec 2024 | 04:30PM</string>
     <string name="sector">Sector</string>
     <string name="all_stock">All Stock</string>
+    <string name="kmiallshr">KMIALLSHR</string>
 </resources>

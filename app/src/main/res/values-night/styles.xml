@@ -258,4 +258,10 @@
     <style name="closed"></style>
 
     <style name="dec_2024_04"></style>
+
+    <style name="kmiallshr">
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>
