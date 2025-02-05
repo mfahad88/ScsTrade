@@ -25,4 +25,9 @@
         android:name="com.example.scstrade.views.stock.StockFragment"
         android:label="fragment_stock"
         tools:layout="@layout/fragment_stock" />
+    <fragment
+        android:id="@+id/allStockFragment"
+        android:name="com.example.scstrade.views.allstock.AllStockFragment"
+        android:label="fragment_all_stock"
+        tools:layout="@layout/fragment_all_stock" />
 </navigation>

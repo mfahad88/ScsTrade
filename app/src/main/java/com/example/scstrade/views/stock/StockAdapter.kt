@@ -52,4 +52,11 @@ class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockA
         this.list=list
         notifyDataSetChanged()
     }
+
+    fun addFilter(sector: String?) {
+        if(sector!=null){
+         this.list.filter { it.sN==sector }.toList()
+            notifyDataSetChanged()
+        }
+    }
 }

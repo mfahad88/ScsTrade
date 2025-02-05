@@ -54,7 +54,9 @@
         <item name="colorOnSpecialHeadingColor">@color/colorOnSpecialHeadingColor</item>
         <item name="colorSpecialHeadingColorContainer">@color/colorSpecialHeadingColorContainer</item>
         <item name="colorOnSpecialHeadingColorContainer">@color/colorOnSpecialHeadingColorContainer</item>
+        <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
     </style>
+
 
 
 

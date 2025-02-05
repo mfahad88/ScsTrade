@@ -117,6 +117,8 @@ class LandingActivity : AppCompatActivity() {
                 if(keyDescValue.key?.equals("indices",true)?:false){
 
                     findNavController(R.id.nav_host_fragment).navigate(R.id.indicesFragment)
+                }else if(keyDescValue.key?.equals("all stocks",true)?:false){
+                    findNavController(R.id.nav_host_fragment).navigate(R.id.allStockFragment)
                 }
                 binding.drawerLayout.closeDrawers()
             }

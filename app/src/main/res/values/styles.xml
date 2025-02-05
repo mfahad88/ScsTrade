@@ -311,6 +311,11 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#313030</item>
     </style>
-
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:divider">@color/material_dynamic_neutral80</item>
+        <item name="android:dividerHeight">0.25dp</item>
+        <item name="android:dividerPadding">5dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
 
 </resources>
