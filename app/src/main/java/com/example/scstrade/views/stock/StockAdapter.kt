@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemStocksBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 
 class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
@@ -20,9 +21,9 @@ class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockA
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
             binding.volume.text = "Vol: ${stockItem.v}"
-            binding.bidVol.text = "Bid Vol: ${stockItem.bV}"
+            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
             binding.bid.text = "Bid: ${stockItem.bP}"
-            binding.askVol.text = "Ask Vol: ${stockItem.aV}"
+            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
             binding.ask.text = "Ask: ${stockItem.aP}"
             binding.valueTrade.text = stockItem.cL.toString()
             binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
@@ -48,15 +49,10 @@ class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockA
         holder.bind(list[position])
     }
 
-    public fun addItem(list:List<StockItem>){
+    public fun addItems(list:List<StockItem>){
         this.list=list
         notifyDataSetChanged()
     }
 
-    fun addFilter(sector: String?) {
-        if(sector!=null){
-         this.list.filter { it.sN==sector }.toList()
-            notifyDataSetChanged()
-        }
-    }
+
 }

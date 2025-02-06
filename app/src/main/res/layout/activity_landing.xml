@@ -15,6 +15,47 @@
         android:layout_height="match_parent"
         android:id="@+id/main">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:id="@+id/toolbar"
+            android:background="@drawable/toolbar">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <ImageView
+                   android:layout_width="41dp"
+                   android:layout_height="32dp"
+                   android:layout_marginTop="20dp"
+                   android:layout_alignParentStart="true"
+                   android:id="@+id/logo"
+                   android:src="@drawable/frame"/>
+
+               <TextView
+                   android:id="@+id/scs_trade_p"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_toEndOf="@id/logo"
+                   android:layout_alignTop="@id/logo"
+                   android:text="@string/scs_trade_p"
+                   android:textAppearance="@style/scs_trade_p_toolbar"
+                   android:gravity="top"
+                   />
+
+               <TextView
+                   android:id="@+id/committed_t"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_toEndOf="@id/logo"
+                   android:layout_below="@id/scs_trade_p"
+                   android:text="@string/committed_t"
+                   android:textAppearance="@style/committed_toolbar"
+                   android:gravity="top"
+                   android:translationY="-4dp"
+                   />
+           </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
         <!--<include layout="@layout/mmarket" android:id="@+id/mMarket"/>-->
 
         <androidx.fragment.app.FragmentContainerView
@@ -22,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
+            android:layout_below="@id/toolbar"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/nav_bottom_graph"/>
 

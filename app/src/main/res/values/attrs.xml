@@ -21,6 +21,28 @@
         <attr name="isRightAxis" format="boolean"/>
         <attr name="isLeftAxis" format="boolean"/>
         <attr name="entries" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="VolumeChip">
+        <attr name="android:text" format="string|reference"/>
+        <attr name="android:background" format="color|reference"/>
+    </declare-styleable>
 
+    <declare-styleable name="NetChangeChip">
+        <attr name="android:text" format="string|reference"/>
+        <attr name="android:background" format="color|reference"/>
+    </declare-styleable>
+    <declare-styleable name="HighView">
+        <attr name="android:text" format="string|reference"/>
+    </declare-styleable>
+    <declare-styleable name="LowView">
+        <attr name="android:text" format="string|reference"/>
+    </declare-styleable>
+    <declare-styleable name="TradeValueView">
+        <attr name="android:text" format="string|reference"/>
+        <attr name="android:src" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="TimeChip">
+        <attr name="android:text" format="string|reference"/>
+        <attr name="setSelected" format="boolean"/>
     </declare-styleable>
 </resources>

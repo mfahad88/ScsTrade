@@ -45,6 +45,7 @@ class LandingActivity : AppCompatActivity() {
         setContentView(binding.root)
         initSideMenu()
 
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {

@@ -65,4 +65,8 @@
     <string name="sector">Sector</string>
     <string name="all_stock">All Stock</string>
     <string name="kmiallshr">KMIALLSHR</string>
+    <string name="high_110_89">High: 110,891.35 1378.22(1.24%)</string>
+    <string name="leaders_">Leaders:</string>
+    <string name="gainers_">Gainers</string>
+    <string name="loser_">Losers</string>
 </resources>

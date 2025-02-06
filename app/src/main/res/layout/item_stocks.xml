@@ -117,16 +117,16 @@
         app:layout_constraintStart_toStartOf="@+id/weeks"
         app:layout_constraintTop_toBottomOf="@+id/weeks" />
 
+
     <TextView
         android:id="@+id/high_52"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="@string/high_52"
         android:textAppearance="@style/high_52"
-        app:layout_constraintEnd_toEndOf="@+id/weeks"
-        app:layout_constraintStart_toStartOf="@+id/weeks"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/weeks" />
-
 
     <ImageView
         android:id="@+id/imageView9"
@@ -134,13 +134,13 @@
         android:layout_height="7dp"
         android:src="@drawable/drop_down"
         app:layout_constraintBottom_toBottomOf="@+id/low_52"
-        app:layout_constraintEnd_toStartOf="@+id/high_52"
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintStart_toStartOf="@+id/imageView7"
         app:layout_constraintTop_toTopOf="@+id/low_52" />
 
     <TextView
         android:id="@+id/low_52"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="top"
         android:lineSpacingExtra="-12sp"
@@ -235,13 +235,14 @@
         android:id="@+id/bid_vol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:gravity="top"
         android:text="@string/bid_vol_100"
         android:textAppearance="@style/bid_vol_100"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
 
@@ -262,11 +263,12 @@
         android:id="@+id/ask_vol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:gravity="end"
         android:text="@string/ask_vol_2_2"
         android:textAppearance="@style/ask_vol"
         app:layout_constraintBottom_toBottomOf="@+id/bid"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
+        app:layout_constraintEnd_toEndOf="@+id/low_52"
         app:layout_constraintTop_toTopOf="@+id/bid" />
 
 

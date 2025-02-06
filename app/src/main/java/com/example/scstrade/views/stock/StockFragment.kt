@@ -78,7 +78,7 @@ class StockFragment : Fragment() {
                             it.iN.lowercase().contains("kmi 30")
                         }
                     }
-                    (binding.recyclerStock.adapter as StockAdapter).addItem(list?: emptyList())
+                    (binding.recyclerStock.adapter as StockAdapter).addItems(list?: emptyList())
                 }
             }
         })

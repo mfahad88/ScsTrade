@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/kmiallshr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="@string/kmiallshr"
+        android:textAppearance="@style/kmiallshr"
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/kmiallshr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle_dropdown" />
+
+    <com.example.scstrade.views.widgets.VolumeChip
+        android:id="@+id/volumeChip"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/volumeIndices"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.scstrade.views.widgets.NetChangeChip
+        android:id="@+id/netChangeChip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/netChange"
+        app:layout_constraintEnd_toEndOf="@+id/volumeChip"
+        app:layout_constraintStart_toStartOf="@+id/volumeChip"
+        app:layout_constraintTop_toBottomOf="@+id/volumeChip" />
+
+    <LinearLayout
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/vertical_separator"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tradeValueView"
+        app:layout_editor_absoluteY="40dp" />
+
+    <com.example.scstrade.views.widgets.TradeValueView
+        android:id="@+id/tradeValueView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/netChangeChip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kmiallshr" />
+
+    <com.example.scstrade.views.widgets.HighView
+        android:id="@+id/highView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/high_110_89"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <com.example.scstrade.views.widgets.LowView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/highView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/highView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highView">
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Line"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/candle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Candle"
+            app:setSelected="true" />
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/min1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="1min"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/min5"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="5mins"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/min15"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="15mins"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+        <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/hr1"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="1hr"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+    </LinearLayout>
+
+    <com.example.scstrade.views.widgets.CustomCandlestickChart
+        android:id="@+id/candlestick_chart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"/>
+<!--
+    <com.example.scstrade.views.widgets.mLineChart
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:id="@+id/lineChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+-->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

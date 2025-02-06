@@ -3,10 +3,10 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="#001C43"/>
+            <solid android:color="@color/special_headlines"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/baseline_keyboard_arrow_down_24" >
+    <item android:drawable="@drawable/keyboard_arrow_down" >
 
     </item>
 </layer-list>

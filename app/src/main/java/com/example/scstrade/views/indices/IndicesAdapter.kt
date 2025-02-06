@@ -2,8 +2,11 @@ package com.example.scstrade.views.indices
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemGroupIndicesCardBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
 
@@ -14,9 +17,10 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
         fun bind(kseIndices: KSEIndices) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
             binding.indexValue.text = kseIndices.cURRENTINDEX
+            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
             binding.labelText.text = kseIndices.nETCHANGE
-            binding.volume.text = "Volume: ${kseIndices.vOLUMETRADED}"
-            binding.valueTrade.text = "Value: ${kseIndices.vALUETRADED}"
+            binding.volume.text = "Volume: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
+            binding.valueTrade.text = "Value: ${Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())}"
             binding.high.text = "H: ${kseIndices.hIGHINDEX}"
             binding.l1167000.text = "L: ${kseIndices.lOWINDEX}"
             binding.root.setOnClickListener {

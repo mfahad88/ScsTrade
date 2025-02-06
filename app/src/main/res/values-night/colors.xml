@@ -165,4 +165,6 @@
     <color name="colorSpecialHeadingColorContainer_highContrast">#000000</color>
     <color name="colorOnSpecialHeadingColorContainer_highContrast">#000000</color>
     <color name="item_side_menu">#FFFFFF</color>
+    <color name="surfaceTint">#011500</color>
+    <color name="special_headlines">#FFFFFF</color>
 </resources>

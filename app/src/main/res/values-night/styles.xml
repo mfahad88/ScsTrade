@@ -21,6 +21,7 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="fontFamily">@font/inter_18pt_medium</item>
     </style>
+
     <style name="kse_100">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
@@ -166,9 +167,10 @@
     </style>
 
     <style name="valueTradeIndices">
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textSize">7.96sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="continue_wi">
@@ -224,6 +226,7 @@
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
         <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
     </style>
+
     <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemIconSize">28dp</item>
         <item name="itemTextColor">@android:color/white</item>
@@ -262,6 +265,50 @@
     <style name="kmiallshr">
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="netChangeValue">
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+        <item name="android:textSize">7.96sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/md_theme_inversePrimary</item>
+    </style>
+
+    <style name="line">
+        <item name="android:textSize">8.98sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+
+    <style name="Widget.AppTheme.MyView" parent="">
+        <item name="android:background">@color/gray_600</item>
+        <item name="exampleColor">@color/light_blue_600</item>
+    </style>
+
+    <style name="time_chip_text">
+        <item name="android:textSize">8.98sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="leaders_">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="scs_trade_p_toolbar">
+        <item name="android:textSize">17.41sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="committed_toolbar">
+        <item name="android:textSize">7.42sp</item>
+        <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

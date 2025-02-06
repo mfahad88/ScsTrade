@@ -1,76 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".views.home.HomeFragment">
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         app:cardCornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:contentPaddingTop="10dp"
-        app:contentPaddingBottom="10dp"
-        app:contentPaddingLeft="10dp"
-        app:contentPaddingRight="10dp"
-        app:cardBackgroundColor="#0D136E00">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <include
-            android:id="@+id/mMarket"
-            layout="@layout/mmarket"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/surfaceTint"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp">
 
-        <LinearLayout
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/vertical_separator"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mMarket"/>
+            <include
+                android:id="@+id/mMarket"
+                layout="@layout/mmarket"
 
-        <com.example.scstrade.views.widgets.mLineChart
-            android:id="@+id/lineChart"
-            android:layout_width="0dp"
-            android:layout_height="500dp"
-            android:layout_marginTop="8dp"
-            app:entries='[{"x":"0","y":"1.5"},{"x":"1","y":"10.5"},{"x":"2","y":"12.5"},{"3":"0","y":"15.5"},{"x":"4","y":"18.5"},{"x":"5","y":"19.5"}]'
-            app:isDragEnabled="true"
-            app:isLeftAxis="false"
-            app:isPinchZoom="false"
-            app:isRightAxis="true"
-            app:isScaleEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/vertical_separator"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mMarket" />
+
+            <include
+                android:id="@+id/cardHome"
+                layout="@layout/include_home_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!--<com.example.scstrade.views.widgets.mLineChart
-        android:id="@+id/lineChart"
+    <TextView
+        android:id="@+id/leaders_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/leaders_"
+        android:textAppearance="@style/leaders_"
+        android:translationY="-1.11sp"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
-        android:layout_height="500dp"
-        app:entries='[{"x":"0","y":"1.5"},{"x":"1","y":"10.5"},{"x":"2","y":"12.5"},{"3":"0","y":"15.5"},{"x":"4","y":"18.5"},{"x":"5","y":"19.5"}]'
-        app:isDragEnabled="true"
-        app:isLeftAxis="false"
-        app:isPinchZoom="false"
-        app:isRightAxis="true"
-        app:isScaleEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mMarket" />-->
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerLeaders"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+        app:layout_constraintStart_toStartOf="@+id/leaders_"
+        app:layout_constraintTop_toBottomOf="@+id/leaders_" />
+
+
+    <TextView
+        android:id="@+id/gainer_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/gainers_"
+        android:textAppearance="@style/leaders_"
+        android:translationY="-1.11sp"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerLeaders" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerGainers"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+        app:layout_constraintStart_toStartOf="@+id/leaders_"
+        app:layout_constraintTop_toBottomOf="@+id/gainer_" />
+
+
+    <TextView
+        android:id="@+id/loser_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="top"
+        android:lineSpacingExtra="2sp"
+        android:text="@string/loser_"
+        android:textAppearance="@style/leaders_"
+        android:translationY="-1.11sp"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerGainers" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="80dp"
+        android:id="@+id/recyclerLosers"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+        app:layout_constraintStart_toStartOf="@+id/leaders_"
+        app:layout_constraintTop_toBottomOf="@+id/loser_" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

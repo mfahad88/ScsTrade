@@ -28,7 +28,7 @@
                 android:id="@+id/kse100"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="31dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="12dp"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
@@ -38,7 +38,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.example.scstrade.views.widgets.TradeValueView
                 android:id="@+id/index_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,129 +46,62 @@
                 android:lineSpacingExtra="7sp"
                 android:text="@string/index_value"
                 android:textAppearance="@style/index_value_22sp"
-                android:translationY="-3.42sp"
                 app:layout_constraintStart_toStartOf="@+id/kse100"
                 app:layout_constraintTop_toBottomOf="@+id/kse100" />
 
-            <ImageView
-                android:id="@+id/image_drop_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/drop_up"
-                app:layout_constraintBottom_toBottomOf="@+id/index_value"
-                app:layout_constraintStart_toEndOf="@+id/index_value"
-                app:layout_constraintTop_toTopOf="@+id/index_value" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="8dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/index_value"
-                app:layout_constraintTop_toBottomOf="@+id/index_value"
-                app:srcCompat="@drawable/drop_up" />
-
-            <TextView
+            <com.example.scstrade.views.widgets.HighView
                 android:id="@+id/high"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginBottom="12dp"
                 android:gravity="center|start"
                 android:lineSpacingExtra="12sp"
                 android:text="@string/h_116_700_0"
                 android:textAppearance="@style/h_116_700_0"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-                app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/index_value" />
 
-            <TextView
+            <com.example.scstrade.views.widgets.LowView
                 android:id="@+id/l_116_700_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:gravity="center|start"
                 android:lineSpacingExtra="12sp"
                 android:text="@string/l_116_700_0"
                 android:textAppearance="@style/l_116_700_0"
                 app:layout_constraintBottom_toBottomOf="@+id/high"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/valueTrade"
                 app:layout_constraintTop_toTopOf="@+id/high" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="8dp"
+
+            <com.example.scstrade.views.widgets.NetChangeChip
+                android:id="@+id/label_text"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintBottom_toBottomOf="@+id/l_116_700_0"
-                app:layout_constraintEnd_toStartOf="@+id/l_116_700_0"
-                app:layout_constraintTop_toTopOf="@+id/l_116_700_0"
-                app:srcCompat="@drawable/drop_down" />
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
-                android:layout_width="82.27dp"
-                android:layout_height="16.98dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/light_green_chip"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/label_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="13dp"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/label_text"
-                    android:textAppearance="@style/label_text" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout3"
-                android:layout_width="82.27dp"
-                android:layout_height="16.98dp"
+            <com.example.scstrade.views.widgets.VolumeChip
+                android:id="@+id/valueTrade"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/rounded_gray_chip"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+                android:text="@string/valueTradeIndices"
+                app:layout_constraintEnd_toEndOf="@+id/label_text"
+                app:layout_constraintTop_toBottomOf="@+id/label_text" />
 
-                <TextView
-                    android:id="@+id/valueTrade"
-                    android:layout_width="match_parent"
-                    android:layout_height="13dp"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/valueTradeIndices"
-                    android:textAppearance="@style/valueTradeIndices" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="82.27dp"
-                android:layout_height="16.98dp"
+            <com.example.scstrade.views.widgets.VolumeChip
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
-                android:background="@drawable/rounded_gray_chip"
-                app:layout_constraintEnd_toStartOf="@+id/relativeLayout3"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
-
-                <TextView
-                    android:id="@+id/volume"
-                    android:layout_width="match_parent"
-                    android:layout_height="13dp"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@string/volumeIndices"
-                    android:textAppearance="@style/valueTradeIndices" />
-            </RelativeLayout>
+                android:id="@+id/volume"
+                android:text="@string/volumeIndices"
+                app:layout_constraintEnd_toStartOf="@+id/valueTrade"
+                app:layout_constraintTop_toBottomOf="@+id/label_text"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

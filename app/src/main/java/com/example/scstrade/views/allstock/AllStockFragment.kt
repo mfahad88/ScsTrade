@@ -58,14 +58,14 @@ class AllStockFragment : Fragment() {
                     binding.sector.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
                         override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                             selectedSector = p0?.adapter?.getItem(p2).toString()
-                            (binding.recyclerIndices.adapter as StockAdapter).addItem(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
+                            (binding.recyclerIndices.adapter as StockAdapter).addItems(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
                         }
 
                         override fun onNothingSelected(p0: AdapterView<*>?) {
                         }
 
                     }
-                    (binding.recyclerIndices.adapter as StockAdapter).addItem(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
+                    (binding.recyclerIndices.adapter as StockAdapter).addItems(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
                 }
             }
         })
