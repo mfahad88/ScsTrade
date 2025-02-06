@@ -5,26 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
+import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHomeBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.repository.IndicesRepository
-import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.viewmodels.IndicesViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
-import com.example.scstrade.views.register.IndexAdapter
 import com.example.scstrade.views.stock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
-import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -61,7 +55,9 @@ class HomeFragment : Fragment() {
             CandleEntry(3f, 250f, 200f, 230f, 240f),
             CandleEntry(4f, 260f, 210f, 240f, 250f)
         )
+        binding.cardHome.imageViewDropDown.setOnClickListener {
 
+        }
         binding.cardHome.candlestickChart.setCandleData(entries)
         binding.recyclerLeaders.apply {
             adapter=StockAdapter(emptyList())
@@ -93,6 +89,11 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     Log.e("Home: ",result.data.toString())
                     initMarket(result.data)
+                    initSelection(result.data?.first())
+                    binding.cardHome.imageViewDropDown.setOnClickListener {
+
+                        showDropdownMenu(binding.cardHome.imageViewDropDown,result.data,binding.cardHome.kmiallshr)
+                    }
                 }
             }
         })
@@ -128,6 +129,35 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun initSelection(kseIndices: KSEIndices?) {
+        binding.cardHome.apply {
+            kmiallshr.text=kseIndices?.iNDEXCODE
+            tradeValueView.text=kseIndices?.vALUETRADED
+            volumeChip.text="Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble()?:0.0)}"
+            highView.text = "H: ${kseIndices?.hIGHINDEX}"
+            lowView.text = "L: ${kseIndices?.lOWINDEX}"
+
+
+
+        }
+    }
+
+    private fun showDropdownMenu(view: View, list: List<KSEIndices>?, textView: TextView) {
+        val popupMenu = PopupMenu(requireContext(), view)
+
+        list?.forEach{
+            popupMenu.getMenu().add(it.iNDEXCODE)
+        }
+
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            initSelection(list?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first())
+            textView.setText(item.getTitle()) // Set selected option
+            true
+        }
+
+        popupMenu.show()
+    }
     private fun initMarket(data: List<KSEIndices>?) {
         if(data?.first()?.marketStatus.equals("open",true)){
             binding.mMarket.open.visibility = View.VISIBLE

@@ -12,11 +12,11 @@
         android:layout_marginStart="6dp"
         android:text="@string/kmiallshr"
         android:textAppearance="@style/kmiallshr"
-        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDropDown"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/imageViewDropDown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/kmiallshr"
@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <com.example.scstrade.views.widgets.LowView
+        android:id="@+id/lowView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/highView"
@@ -155,17 +156,18 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"/>
-<!--
-    <com.example.scstrade.views.widgets.mLineChart
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:id="@+id/lineChart"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
--->
+    <!--
+        <com.example.scstrade.views.widgets.mLineChart
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:id="@+id/lineChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+    -->
 
 
 

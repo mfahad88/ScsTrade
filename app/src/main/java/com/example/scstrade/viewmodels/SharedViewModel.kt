@@ -19,6 +19,8 @@ class SharedViewModel : ViewModel() {
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
     private var isFetchAllData=true
     private var isFetchIndices=true
+
+
     fun fetchAllData(){
         isFetchAllData=true
         viewModelScope.launch {
