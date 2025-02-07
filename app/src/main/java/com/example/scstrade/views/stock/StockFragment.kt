@@ -18,6 +18,7 @@ import com.example.scstrade.repository.IndicesRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.IndicesViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.widgets.HorizontalDivider
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,10 +49,8 @@ class StockFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentStockBinding.inflate(inflater, container, false)
-        binding.kse100.text=index
-        binding.back.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        (requireActivity() as LandingActivity).binding.toolbar.customToolbar.navigationIcon
+//        binding.kse100.text=index
         binding.recyclerStock.apply {
             adapter=StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

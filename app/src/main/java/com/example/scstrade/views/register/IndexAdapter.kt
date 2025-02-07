@@ -35,7 +35,7 @@ class IndexAdapter(
         private fun populateChart(data: List<ChartItem>?) {
            try{
                val entries = data?.map {
-                   Entry(Utils.convertDate(it.tradingDate).time/100f,it.tradingClose.toFloat())
+                   Entry(Utils.convertDate(it.tradingDate).toFloat(),it.tradingClose.toFloat())
                }
                binding.lineChart.setEntries(entries)
 

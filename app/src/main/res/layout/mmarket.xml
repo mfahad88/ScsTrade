@@ -29,6 +29,7 @@
         android:layout_height="13dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        app:lottie_repeatMode="restart"
         app:lottie_rawRes="@raw/animate_open" />
 
         <TextView
@@ -45,17 +46,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/close"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/market_stat"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_repeatMode="restart"
-            app:lottie_rawRes="@raw/animate_closed" />
+            app:lottie_rawRes="@raw/animate_closed"
+            app:lottie_repeatMode="restart" />
 
         <TextView
             android:layout_width="wrap_content"

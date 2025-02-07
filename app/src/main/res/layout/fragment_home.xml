@@ -5,131 +5,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/md_theme_surface"
+    android:fillViewport="true"
+    tools:context=".views.home.HomeFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.home.HomeFragment">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="match_parent"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="4dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/load_anim" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/surfaceTint"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="4dp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/mMarket"
-                layout="@layout/mmarket"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/surfaceTint"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp">
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <include
+                    android:id="@+id/mMarket"
+                    layout="@layout/mmarket"
 
-            <LinearLayout
-                android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/vertical_separator"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mMarket" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/cardHome"
-                layout="@layout/include_home_card"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider" />
+                <LinearLayout
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/vertical_separator"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mMarket" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <include
+                    android:id="@+id/cardHome"
+                    layout="@layout/include_home_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
 
-    <TextView
-        android:id="@+id/leaders_"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="top"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/leaders_"
-        android:textAppearance="@style/leaders_"
-        android:translationY="-1.11sp"
-        app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerLeaders"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-        app:layout_constraintStart_toStartOf="@+id/leaders_"
-        app:layout_constraintTop_toBottomOf="@+id/leaders_" />
+        <TextView
+            android:id="@+id/leaders_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/leaders_"
+            android:textAppearance="@style/leaders_"
+            android:translationY="-1.11sp"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
-
-    <TextView
-        android:id="@+id/gainer_"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="top"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/gainers_"
-        android:textAppearance="@style/leaders_"
-        android:translationY="-1.11sp"
-        app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerLeaders" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerGainers"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-        app:layout_constraintStart_toStartOf="@+id/leaders_"
-        app:layout_constraintTop_toBottomOf="@+id/gainer_" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLeaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintStart_toStartOf="@+id/leaders_"
+            app:layout_constraintTop_toBottomOf="@+id/leaders_"
+            tools:listitem="@layout/item_stocks" />
 
 
-    <TextView
-        android:id="@+id/loser_"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="top"
-        android:lineSpacingExtra="2sp"
-        android:text="@string/loser_"
-        android:textAppearance="@style/leaders_"
-        android:translationY="-1.11sp"
-        app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerGainers" />
+        <TextView
+            android:id="@+id/gainer_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/gainers_"
+            android:textAppearance="@style/leaders_"
+            android:translationY="-1.11sp"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerLeaders" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="80dp"
-        android:id="@+id/recyclerLosers"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-        app:layout_constraintStart_toStartOf="@+id/leaders_"
-        app:layout_constraintTop_toBottomOf="@+id/loser_" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerGainers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintStart_toStartOf="@+id/leaders_"
+            app:layout_constraintTop_toBottomOf="@+id/gainer_" />
+
+
+        <TextView
+            android:id="@+id/loser_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/loser_"
+            android:textAppearance="@style/leaders_"
+            android:translationY="-1.11sp"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerGainers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerLosers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="80dp"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintStart_toStartOf="@+id/leaders_"
+            app:layout_constraintTop_toBottomOf="@+id/loser_" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

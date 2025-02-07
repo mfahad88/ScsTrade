@@ -30,16 +30,19 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
+
             />
         <action
             android:id="@+id/action_loginFragment_to_landingActivity"
-            app:destination="@id/landingActivity" />
+            app:destination="@id/landingActivity"
+            />
     </fragment>
     <activity
         android:id="@+id/landingActivity"
         android:name="com.example.scstrade.views.landing.LandingActivity"
         android:label="activity_landing"
-        tools:layout="@layout/activity_landing" />
+        tools:layout="@layout/activity_landing"
+        />
 
 
 </navigation>

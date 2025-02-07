@@ -6,53 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".views.stock.StockFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <TextView
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/back"
-                android:textAppearance="@style/back"
-                app:layout_constraintBottom_toTopOf="@+id/kse100"
-                app:layout_constraintStart_toEndOf="@+id/imageViewBack" />
-
-            <TextView
-                android:id="@+id/kse100"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="top"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/kse100"
-                android:textAppearance="@style/kse100_toolbar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageViewBack"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/baseline_arrow_back_ios_24"
-                app:layout_constraintBottom_toBottomOf="@+id/back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/back" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerStock"
@@ -62,6 +16,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_stocks" />
 </androidx.constraintlayout.widget.ConstraintLayout>

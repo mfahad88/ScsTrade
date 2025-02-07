@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
@@ -40,7 +42,10 @@ class LoginFragment : Fragment() {
         binding=FragmentLoginBinding.inflate(inflater,container,false)
 
         binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_landingActivity)
+            val navController=Navigation.findNavController(requireActivity(),R.id.nav_host_fragment)
+
+            navController.navigate(R.id.action_loginFragment_to_landingActivity)
+            requireActivity().finish()
         }
 
         binding.recyclerIndices.apply {

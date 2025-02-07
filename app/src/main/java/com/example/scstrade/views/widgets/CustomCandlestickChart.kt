@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -19,6 +20,15 @@ class CustomCandlestickChart @JvmOverloads constructor(
         setupChart()
     }
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        parent?.requestDisallowInterceptTouchEvent(true)
+        return super.onTouchEvent(event)
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        parent?.requestDisallowInterceptTouchEvent(true)
+        return super.onInterceptTouchEvent(ev)
+    }
     private fun setupChart() {
         this.description.isEnabled = false
         this.setBackgroundColor(Color.WHITE)
@@ -31,11 +41,11 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.xAxis.setAvoidFirstLastClipping(true)
 
         // Left Y Axis
-        this.axisLeft.setDrawGridLines(true)
-        this.axisLeft.setDrawAxisLine(true)
-
+        this.axisLeft.isEnabled = false
         // Right Y Axis
-        this.axisRight.isEnabled = false
+        this.axisRight.setDrawGridLines(true)
+        this.axisRight.setDrawAxisLine(true)
+        this.axisRight.isEnabled = true
 
         // Disable Legend
         this.legend.isEnabled = false
@@ -45,7 +55,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
         val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
             color = Color.rgb(80, 80, 80)
             shadowColor = Color.DKGRAY
-            shadowWidth = 1.5f
+            shadowWidth = 0.7f
             decreasingColor = Color.RED
             decreasingPaintStyle = Paint.Style.FILL
             increasingColor = Color.GREEN

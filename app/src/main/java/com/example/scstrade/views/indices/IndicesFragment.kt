@@ -22,6 +22,7 @@ import com.example.scstrade.repository.IndicesRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.IndicesViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.widgets.HorizontalDivider
 
 class IndicesFragment : Fragment() {
@@ -40,11 +41,11 @@ class IndicesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
-        val appConfiguration= AppBarConfiguration(/*findNavController().graph*/setOf(
+       /* val appConfiguration= AppBarConfiguration(*//*findNavController().graph*//*setOf(
             R.id.indicesFragment
         ))
-
-        binding.toolbar.setupWithNavController(findNavController(),appConfiguration)
+        (requireActivity() as LandingActivity).binding.toolbar.mainItem.visibility=View.GONE
+        (requireActivity() as LandingActivity).binding.toolbar.customToolbar.setupWithNavController(findNavController(),appConfiguration)*/
         indicesViewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Error -> {

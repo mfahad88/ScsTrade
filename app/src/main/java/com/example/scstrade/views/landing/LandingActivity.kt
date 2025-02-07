@@ -2,41 +2,30 @@ package com.example.scstrade.views.landing
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityLandingBinding
-import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
-import com.example.scstrade.repository.IndicesRepository
-import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.viewmodels.IndicesViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+
 
 class LandingActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityLandingBinding
+    lateinit var binding:ActivityLandingBinding
     private val sharedViewModel:SharedViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +47,15 @@ class LandingActivity : AppCompatActivity() {
         }
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+        val topLevelDestinations = HashSet<Int>()
+        topLevelDestinations.add(R.id.homeFragment)
+        topLevelDestinations.add(R.id.indicesFragment)
+        topLevelDestinations.add(R.id.stockFragment)
+
+
+        val appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations).build()
 //        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        binding.toolbar.setupWithNavController(navController,appBarConfiguration)
+        binding.toolbar.customToolbar.setupWithNavController(navController,appBarConfiguration)
 
         binding.bottomNavigationView.setupWithNavController(navController)
 //        binding.drawerNavView.setupWithNavController(navController)
@@ -142,4 +138,6 @@ class LandingActivity : AppCompatActivity() {
         super.onPause()
         sharedViewModel.stopAll()
     }
+
+
 }
