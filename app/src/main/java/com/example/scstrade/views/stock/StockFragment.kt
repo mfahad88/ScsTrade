@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -49,7 +50,7 @@ class StockFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentStockBinding.inflate(inflater, container, false)
-        (requireActivity() as LandingActivity).binding.toolbar.customToolbar.navigationIcon
+
 //        binding.kse100.text=index
         binding.recyclerStock.apply {
             adapter=StockAdapter(emptyList())
