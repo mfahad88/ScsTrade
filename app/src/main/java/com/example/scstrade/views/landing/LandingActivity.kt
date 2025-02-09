@@ -34,7 +34,8 @@ class LandingActivity : AppCompatActivity() {
         setContentView(binding.root)
         initSideMenu()
 
-
+        sharedViewModel.fetchAllData()
+        sharedViewModel.fetchIndices()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {
@@ -130,14 +131,17 @@ class LandingActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        sharedViewModel.fetchAllData()
-        sharedViewModel.fetchIndices()
+
     }
 
-    override fun onPause() {
+    override fun onStop() {
+        super.onStop()
+        sharedViewModel.stopAll()
+    }
+    /*override fun onPause() {
         super.onPause()
         sharedViewModel.stopAll()
     }
-
+*/
 
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
@@ -25,6 +26,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.stock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
+import com.example.scstrade.views.widgets.TimeChip
 import com.github.mikephil.charting.data.CandleEntry
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -39,6 +41,7 @@ import java.util.Locale
  */
 class HomeFragment : Fragment() {
     private val viewModel: SharedViewModel by activityViewModels()
+    private val homeViewModel:HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,28 +49,52 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as LandingActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-      /*  val appConfiguration= AppBarConfiguration(*//*findNavController().graph*//*setOf(
-            R.id.indicesFragment
-        ))
-        (requireActivity() as LandingActivity).binding.toolbar.customToolbar.setupWithNavController(findNavController(),appConfiguration)
-        (requireActivity() as LandingActivity).binding.toolbar.mainItem.visibility=View.VISIBLE*/
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentHomeBinding.inflate(inflater,container,false)
-        val dataList = listOf(
-            CandleEntry(5f, 100f, 110f, 95f, 105f), // Timestamp in milliseconds
-            CandleEntry(10f, 105f, 115f, 100f, 110f),
-            CandleEntry(15F, 110f, 120f, 105f, 115f)
-        )
-        initCandleStick(dataList)
 
+
+
+        binding.cardHome.apply {
+            line.setOnClickListener {
+                homeViewModel.selectLine()
+            }
+            candle.setOnClickListener {
+                homeViewModel.selectCandle()
+            }
+            homeViewModel.isLineSelected.observe(viewLifecycleOwner, Observer {
+                line.setChipSelected(it)
+            })
+
+            homeViewModel.isCandleSelected.observe(viewLifecycleOwner, Observer {
+                candle.setChipSelected(it)
+            })
+
+            homeViewModel.timeSelected.observe(viewLifecycleOwner, Observer {
+                min1.setChipSelected(it[0])
+                min5.setChipSelected(it[1])
+                min15.setChipSelected(it[2])
+                hr1.setChipSelected(it[3])
+            })
+            min1.setOnClickListener {
+                homeViewModel.selectTime(1)
+            }
+            min5.setOnClickListener {
+                homeViewModel.selectTime(5)
+            }
+
+            min15.setOnClickListener {
+                homeViewModel.selectTime(15)
+            }
+
+            hr1.setOnClickListener {
+                homeViewModel.selectTime(60)
+            }
+
+        }
 
 
         binding.recyclerLeaders.apply {
@@ -141,9 +168,9 @@ class HomeFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    var interval=0
+                    var interval=0L
                     initCandleStick( result.data?.map {
-                        interval+=5
+                        interval+=viewModel.selectedTime!!
                         CandleEntry(interval.toFloat(),it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
                     })
 
@@ -182,13 +209,14 @@ class HomeFragment : Fragment() {
 
 
             if(kmiallshr.text.toString().lowercase().contains("kse all")){
-                viewModel.fetchChart("kseall",1)
+                homeViewModel.setSelectedIndex("kseall")
+//                viewModel.fetchChart("kseall",1)
             }else if(kmiallshr.text.toString().lowercase().contains("kse 100")){
-                viewModel.fetchChart("kse",1)
+//                viewModel.fetchChart("kse",1)
             }else if(kmiallshr.text.toString().lowercase().contains("kse 30")){
-                viewModel.fetchChart("kse30",1)
+//                viewModel.fetchChart("kse30",1)
             }else if(kmiallshr.text.toString().lowercase().contains("kmi 30")){
-                viewModel.fetchChart("kmi30",1)
+//                viewModel.fetchChart("kmi30",1)
             }
         }
     }

@@ -55,7 +55,7 @@ public class TimeChip extends RelativeLayout {
         return binding.tv.getText().toString();
     }
 
-    public void setSelected(Boolean isSelected){
+    public void setChipSelected(Boolean isSelected){
        if(isSelected){
            binding.chip.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.time_chip_selected));
            binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
@@ -64,6 +64,8 @@ public class TimeChip extends RelativeLayout {
            binding.tv.setTextColor(Color.parseColor("#49454F"));
        }
     }
+
+
 
 
 }
