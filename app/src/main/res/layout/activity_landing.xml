@@ -7,23 +7,29 @@
     android:background="@android:color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:openDrawer="start"
+    tools:openDrawer="end"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/md_theme_surface"
         android:id="@+id/main">
 
         <include layout="@layout/custom_toolbar" android:id="@+id/toolbar"/>
-        <!--<include layout="@layout/mmarket" android:id="@+id/mMarket"/>-->
+        <include layout="@layout/mmarket" android:id="@+id/mMarket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:layout_below="@id/toolbar"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/mMarket"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/nav_bottom_graph"/>
 
@@ -53,15 +59,43 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:id="@+id/drawer_nav_view"
-        android:background="@drawable/navigation_background">
+        android:background="@drawable/navigation_background"
+       >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_alignStart="@id/sideMenu"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/close_btn" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/sideMenu"
-            android:layout_marginTop="50dp"
+            tools:listitem="@layout/item_side_menu"
+            android:layout_below="@id/imageViewClose"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+
+            android:scaleType="centerInside"
+            android:layout_alignStart="@id/sideMenu"
+            app:srcCompat="@drawable/open_account"
+            android:layout_below="@id/sideMenu"/>
+    </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>
 
 

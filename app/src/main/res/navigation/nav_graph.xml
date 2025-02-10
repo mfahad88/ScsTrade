@@ -36,6 +36,7 @@
             android:id="@+id/action_loginFragment_to_landingActivity"
             app:destination="@id/landingActivity"
             />
+
     </fragment>
     <activity
         android:id="@+id/landingActivity"

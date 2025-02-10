@@ -2,6 +2,7 @@ package com.example.scstrade.views.landing
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +24,9 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityLandingBinding
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.viewmodels.SharedViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class LandingActivity : AppCompatActivity() {
@@ -60,8 +65,27 @@ class LandingActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 //        binding.drawerNavView.setupWithNavController(navController)
+        sharedViewModel.mutableIndices.observe(this, Observer {
+            binding.mMarket.apply {
+                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
+                    close.visibility= View.VISIBLE
+                    open.visibility = View.GONE
+                }else{
+                    close.visibility= View.GONE
+                    open.visibility = View.VISIBLE
+                }
+                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
 
-
+                // Get the current date and time
+                var formattedDate = sdf.format(Date())
+                dateTime.text = formattedDate
+            }
+        })
+        binding.imageViewClose.setOnClickListener {
+            if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+        }
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
             val options=NavOptions.Builder().setPopUpTo(R.id.nav_bottom_graph,true).build()
             if(item.itemId==R.id.homeFragment){

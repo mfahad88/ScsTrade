@@ -22,7 +22,7 @@ class SharedViewModel : ViewModel() {
     val mutableChart=MutableLiveData<Resource<List<ChartItem>>>()
     private var isFetchAllData=true
     private var isFetchIndices=true
-    public var isLoading=true
+    public var isLoading=false
     var selectedIndex:KSEIndices?=null
     var selectedTime:Long?=1
     var jobChart: Job?=null
@@ -30,20 +30,28 @@ class SharedViewModel : ViewModel() {
 
 
     fun fetchAllData(){
-        isFetchAllData=true
+//        isFetchAllData=true
         viewModelScope.launch {
-          while (isFetchAllData){
+            mutableAllData.value = Resource.Loading()
+            mutableAllData.value = indicesRepository.fetchAllData()
+          /*while (isFetchAllData){
               mutableAllData.value = Resource.Loading()
               mutableAllData.value = indicesRepository.fetchAllData()
 //              delay(5000)
-          }
+          }*/
         }
     }
 
     fun fetchIndices(){
-        isFetchIndices=true
+//        isFetchIndices=true
         viewModelScope.launch {
-            while (isFetchIndices){
+            mutableAllData.value = Resource.Loading()
+            mutableIndices.value = indicesRepository.fetchIndices()
+            if(selectedIndex==null){
+                selectedIndex = indicesRepository.fetchIndices().data?.first()
+                isLoading=false
+            }
+           /* while (isFetchIndices){
                 mutableAllData.value = Resource.Loading()
                 mutableIndices.value = indicesRepository.fetchIndices()
                 if(selectedIndex==null){
@@ -51,7 +59,7 @@ class SharedViewModel : ViewModel() {
                     isLoading=false
                 }
 //                delay(5000)
-            }
+            }*/
         }
     }
 

@@ -81,16 +81,23 @@
         app:layout_constraintBottom_toBottomOf="@+id/highView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/highView" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:measureAllChildren="false"
+        android:scrollbars="none"
+        android:id="@+id/linearLayout2"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/highView">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+       >
 
         <com.example.scstrade.views.widgets.TimeChip
             android:id="@+id/line"
@@ -140,6 +147,16 @@
             app:setSelected="false" />
 
         <com.example.scstrade.views.widgets.TimeChip
+            android:id="@+id/min30"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="30mins"
+            app:layout_constraintStart_toStartOf="@+id/highView"
+            app:layout_constraintTop_toBottomOf="@+id/highView"
+            app:setSelected="false" />
+
+        <com.example.scstrade.views.widgets.TimeChip
             android:id="@+id/hr1"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
@@ -150,9 +167,21 @@
             app:setSelected="false" />
 
     </LinearLayout>
+    </HorizontalScrollView>
 
     <com.example.scstrade.views.widgets.CustomCandlestickChart
         android:id="@+id/candlestick_chart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <com.example.scstrade.views.widgets.mLineChart
+        android:id="@+id/lineChart"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
@@ -160,15 +189,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-    <!--
-        <com.example.scstrade.views.widgets.mLineChart
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:id="@+id/lineChart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-    -->
 
 
 

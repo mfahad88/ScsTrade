@@ -92,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/relativeLayout"
             app:layout_constraintTop_toTopOf="@+id/tradingValue">
-            <com.example.scstrade.views.widgets.CustomLineChart
+            <com.example.scstrade.views.widgets.mLineChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/lineChart" />

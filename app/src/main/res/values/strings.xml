@@ -8,10 +8,10 @@
     <string name="kse_100">KSE 100</string>
     <string name="m_vol_721_9">M.Vol: 721.934m</string>
     <string name="some_id">91,458.58</string>
-    <string name="index_value">91,458.58</string>
+    <string name="index_value">0.0</string>
     <string name="kse100">KSE100</string>
-    <string name="h_116_700_0">H: 116,700.01 +1,441.02 (+1.23%)</string>
-    <string name="l_116_700_0">L: 116,700.01 +1,441.02 (+1.23%)</string>
+    <string name="h_116_700_0">H: 0.0 0.0(0.0%)</string>
+    <string name="l_116_700_0">L: 0.0 0.0(0.0%)</string>
     <string name="full_name">Full Name</string>
     <string name="email">Email</string>
     <string name="reg">REG</string>
@@ -32,7 +32,7 @@
     <string name="ask_0_78">Ask: 0.78</string>
     <string name="label_text">+4,411.27 (+4.03%)</string>
     <string name="valueTradeIndices">Value: 16,757.17m</string>
-    <string name="volumeIndices">Volume: 424.810m</string>
+    <string name="volumeIndices">Volume: 0.0</string>
     <string name="enter_your_name">Enter your Name</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="mobile_number">Mobile Number</string>
@@ -65,7 +65,7 @@
     <string name="sector">Sector</string>
     <string name="all_stock">All Stock</string>
     <string name="kmiallshr">KMIALLSHR</string>
-    <string name="high_110_89">High: 110,891.35 1378.22(1.24%)</string>
+    <string name="high_110_89">High: 0.0 0.0(0.0%)</string>
     <string name="leaders_">Leaders:</string>
     <string name="gainers_">Gainers</string>
     <string name="loser_">Losers</string>

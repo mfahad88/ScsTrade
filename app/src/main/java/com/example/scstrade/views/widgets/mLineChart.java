@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import androidx.annotation.ColorInt;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.example.scstrade.R;
@@ -29,6 +30,7 @@ public class mLineChart extends LineChart {
     private int lineColor;
     private int filledColor;
     private int circleColor;
+
 
     public int getFilledColor() {
         return filledColor;
@@ -96,52 +98,38 @@ public class mLineChart extends LineChart {
                 R.styleable.LabelledTextField,
                 0,0
         );
-        boolean isTouchEnabled=a.getBoolean(R.styleable.mLineChart_isTouchEnabled,false);
-        boolean isPinchZoom=a.getBoolean(R.styleable.mLineChart_isPinchZoom,false);
-        boolean isDragEnabled=a.getBoolean(R.styleable.mLineChart_isDragEnabled,false);
-        boolean isScaleEnabled=a.getBoolean(R.styleable.mLineChart_isScaleEnabled,false);
-        boolean isRightAxis=a.getBoolean(R.styleable.mLineChart_isRightAxis,false);
-        boolean isLeftAxis=a.getBoolean(R.styleable.mLineChart_isLeftAxis,false);
-        String entry=a.getString(R.styleable.mLineChart_entries);
-        if(entry!=null){
-            try{
-                JSONArray jsonArray=new JSONArray(entry);
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject obj = jsonArray.getJSONObject(i);
-                    entries.add(new Entry(Float.parseFloat(obj.getString("x")),Float.parseFloat(obj.getString("y"))));
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        this.setTouchEnabled(isTouchEnabled);
-        this.setPinchZoom(isPinchZoom);
-        this.setDragEnabled(isDragEnabled);
-        this.setScaleEnabled(isScaleEnabled);
 
+        lineColor=ContextCompat.getColor(context,R.color.md_theme_primary);
+//        filledColor=ContextCompat.getColor(context,R.color.md_theme_secondaryFixedDim);
         LineDataSet dataSet=new LineDataSet(entries,"");
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setDrawCircles(false);
+        dataSet.setDrawValues(false);
         dataSet.setCircleColor(circleColor);
         dataSet.setFillColor(filledColor);
         dataSet.setDrawFilled(true);
+        dataSet.setFillDrawable(AppCompatResources.getDrawable(context,R.drawable.shadow_green));
         dataSet.setColor(lineColor);
         dataSet.setLineWidth(2f);
-        dataSet.setDrawValues(true);
+        dataSet.setDrawIcons(false);
+
 
         LineData lineData = new LineData(dataSet);
 
         this.setData(lineData);
-
+        this.getDescription().setEnabled(false);
         XAxis xAxis = this.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
+        xAxis.setDrawGridLines(false);
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(false);
-        leftAxis.setEnabled(isLeftAxis);
+        leftAxis.setEnabled(false);
+
         YAxis rightAxis = this.getAxisRight();
+        rightAxis.setTextSize(5f);
         rightAxis.setDrawLabels(true);
         rightAxis.setDrawGridLines(false);
-        rightAxis.setEnabled(isRightAxis);
+        rightAxis.setEnabled(true);
         this.animateXY(1000,1000);
         this.invalidate();
         a.recycle();

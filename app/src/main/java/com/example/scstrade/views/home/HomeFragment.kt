@@ -1,21 +1,18 @@
 package com.example.scstrade.views.home
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHomeBinding
@@ -23,11 +20,10 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
-import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.stock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
-import com.example.scstrade.views.widgets.TimeChip
 import com.github.mikephil.charting.data.CandleEntry
+import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -55,21 +51,35 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentHomeBinding.inflate(inflater,container,false)
-
-
+        binding.cardHome.lineChart.lineColor= ContextCompat.getColor(requireContext(),R.color.md_theme_primary)
+        binding.cardHome.lineChart.filledColor= ContextCompat.getColor(requireContext(),R.color.md_theme_secondaryFixedDim)
+        binding.cardHome.lineChart.circleColor= Color.TRANSPARENT
 
         binding.cardHome.apply {
             line.setOnClickListener {
+                lineChart.visibility = View.VISIBLE
+                candlestickChart.visibility = View.GONE
+                min1.visibility=View.GONE
+                min1.visibility=View.GONE
+                min1.visibility=View.GONE
+                min1.visibility=View.GONE
+                min1.visibility=View.GONE
                 homeViewModel.selectLine()
+
             }
             candle.setOnClickListener {
+                lineChart.visibility = View.GONE
+                candlestickChart.visibility = View.VISIBLE
                 homeViewModel.selectCandle()
+
             }
             homeViewModel.isLineSelected.observe(viewLifecycleOwner, Observer {
+
                 line.setChipSelected(it)
             })
 
             homeViewModel.isCandleSelected.observe(viewLifecycleOwner, Observer {
+
                 candle.setChipSelected(it)
             })
 
@@ -77,10 +87,12 @@ class HomeFragment : Fragment() {
                 min1.setChipSelected(it[0])
                 min5.setChipSelected(it[1])
                 min15.setChipSelected(it[2])
-                hr1.setChipSelected(it[3])
+                min30.setChipSelected(it[3])
+                hr1.setChipSelected(it[4])
             })
             min1.setOnClickListener {
                 homeViewModel.selectTime(1)
+
             }
             min5.setOnClickListener {
                 homeViewModel.selectTime(5)
@@ -90,9 +102,14 @@ class HomeFragment : Fragment() {
                 homeViewModel.selectTime(15)
             }
 
+            min30.setOnClickListener {
+                homeViewModel.selectTime(30)
+            }
+
             hr1.setOnClickListener {
                 homeViewModel.selectTime(60)
             }
+
 
         }
 
@@ -125,11 +142,12 @@ class HomeFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    Log.e("Home: ",result.data.toString())
                     if(!viewModel.isLoading){
 
-                        initMarket(result.data)
-                        initSelection()
+//                        initMarket(result.data)
+                        if(homeViewModel.selectedIndex.value==null) {
+                            initSelection(result.data?.first())
+                        }
                         binding.cardHome.imageViewDropDown.setOnClickListener {
 
                             showDropdownMenu(binding.cardHome.imageViewDropDown,result.data,binding.cardHome.kmiallshr)
@@ -159,7 +177,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.mutableChart.observe(viewLifecycleOwner, Observer { result->
+        homeViewModel.chartMutable.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {
 
@@ -169,14 +187,36 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     var interval=0L
-                    initCandleStick( result.data?.map {
-                        interval+=viewModel.selectedTime!!
-                        CandleEntry(interval.toFloat(),it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
-                    })
+                    if(!result.data.isNullOrEmpty()){
+                       if(homeViewModel.isCandleSelected.value == true){
+                           initCandleStick( result.data?.map {
+                               if(homeViewModel.timeSelected.value?.indexOf(true)==0){
+                                   interval+=1
+                               } else if(homeViewModel.timeSelected.value?.indexOf(true)==1){
+                                   interval+=5
+                               } else if(homeViewModel.timeSelected.value?.indexOf(true)==2){
+                                   interval+=15
+                               }else if(homeViewModel.timeSelected.value?.indexOf(true)==3){
+                                   interval+=60
+                               }
+
+                               CandleEntry(interval.toFloat(),it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
+                           })
+                       }else{
+
+
+                           binding.cardHome.lineChart.entries = result.data.map {
+                               interval+=1
+                               Entry(interval.toFloat(),it.tradingHigh.toFloat())
+                           }
+                       }
+                    }
 
                 }
             }
         })
+
+
 
         return binding.root
     }
@@ -188,36 +228,37 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun initSelection() {
-        var kseIndices=viewModel.selectedIndex
+    private fun initSelection(kseIndices: KSEIndices?) {
         binding.cardHome.apply {
             kmiallshr.text=kseIndices?.iNDEXCODE
-            tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
-            if(kseIndices?.nETCHANGE?.contains("-")?:false) {
-                tradeValueView.drawable =
-                    AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
-            }else{
-                tradeValueView.drawable =
-                    AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
-            }
-            netChangeChip.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
-            volumeChip.text="Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble()?:0.0)}"
-            highView.text = "H: ${kseIndices?.hIGHINDEX} ${String.format("%.2f",kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
-                    "(${String.format("%.2f",(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
-            lowView.text = "L: ${kseIndices?.lOWINDEX} ${String.format("%.2f",kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
-                    "(${String.format("%.2f",(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
+            if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
+                tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
+                if(kseIndices?.nETCHANGE?.contains("-")?:false) {
+                    tradeValueView.drawable =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
+                }else{
+                    tradeValueView.drawable =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
+                }
+                netChangeChip.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
+                volumeChip.text="Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble()?:0.0)}"
+                highView.text = "H: ${kseIndices?.hIGHINDEX} ${String.format("%.2f",kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
+                        "(${String.format("%.2f",(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
+                lowView.text = "L: ${kseIndices?.lOWINDEX} ${String.format("%.2f",kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
+                        "(${String.format("%.2f",(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
 
 
-            if(kmiallshr.text.toString().lowercase().contains("kse all")){
-                homeViewModel.setSelectedIndex("kseall")
-//                viewModel.fetchChart("kseall",1)
-            }else if(kmiallshr.text.toString().lowercase().contains("kse 100")){
-//                viewModel.fetchChart("kse",1)
-            }else if(kmiallshr.text.toString().lowercase().contains("kse 30")){
-//                viewModel.fetchChart("kse30",1)
-            }else if(kmiallshr.text.toString().lowercase().contains("kmi 30")){
-//                viewModel.fetchChart("kmi30",1)
+                if(kmiallshr.text.toString().lowercase().contains("kse all")){
+                    homeViewModel.setSelectedIndex(kseIndices)
+                }else if(kmiallshr.text.toString().lowercase().contains("kse 100")){
+                    homeViewModel.setSelectedIndex(kseIndices)
+                }else if(kmiallshr.text.toString().lowercase().contains("kse 30")){
+                    homeViewModel.setSelectedIndex(kseIndices)
+                }else if(kmiallshr.text.toString().lowercase().contains("kmi 30")){
+                    homeViewModel.setSelectedIndex(kseIndices)
+                }
             }
+
         }
     }
 
@@ -230,29 +271,15 @@ class HomeFragment : Fragment() {
 
 
         popupMenu.setOnMenuItemClickListener { item ->
-            viewModel.selectedIndex = list?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first()
-            initSelection()
+            initSelection(list?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first())
             textView.setText(item.getTitle()) // Set selected option
+
             true
         }
 
         popupMenu.show()
     }
-    private fun initMarket(data: List<KSEIndices>?) {
-        if(data?.first()?.marketStatus.equals("open",true)){
-            binding.mMarket.open.visibility = View.VISIBLE
-            binding.mMarket.close.visibility = View.GONE
-        }else{
-            binding.mMarket.open.visibility = View.GONE
-            binding.mMarket.close.visibility = View.VISIBLE
-        }
-        var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
 
-        // Get the current date and time
-        var formattedDate = sdf.format(Date())
-        binding.mMarket.dateTime.text = formattedDate
-
-    }
 
 
 }

@@ -15,24 +15,9 @@ import kotlinx.coroutines.launch
 class MainViewModel() : ViewModel() {
     private val repository: MainRepository=MainRepository(RetrofitInstance.api)
     var mutableIndices=  MutableLiveData<Resource<List<KSEIndices>>>(Resource.Loading())
-    private val handler = Handler(Looper.getMainLooper())
     private var delayMillis:Long=1*60*1000
     private var isFetch=true
-    private val updateTask= object :Runnable {
-        override fun run() {
-            fetchIndices()
-            handler.postDelayed(this,delayMillis)
 
-        }
-    }
-
-    private fun startTimer() {
-        handler.post(updateTask)
-    }
-
-    private fun stopTimer(){
-        handler.removeCallbacks(updateTask)
-    }
 
     init {
 //        startTimer()

@@ -24,9 +24,9 @@ class IndexAdapter(
         fun bind(kseIndices: KSEIndices){
             binding.apply {
                 kse100.text = kseIndices.iNDEXCODE
-                tradingValue.text = Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())
+                tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
                 netChange.text = kseIndices.nETCHANGE
-                volume.text = "MVol: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
+                volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble()) else 0.0.toString()}"
                 populateChart(kseIndices.charts)
 
             }
@@ -38,14 +38,16 @@ class IndexAdapter(
                    Entry(Utils.convertDate(it.tradingDate).toFloat(),it.tradingClose.toFloat())
                }
                binding.lineChart.setEntries(entries)
+                binding.lineChart.xAxis.apply {
+                    setDrawLabels(false)
+                }
+//               binding.lineChart.setLineColor(R.color.md_theme_primary)
+//               binding.lineChart.removeGrid()
+//               binding.lineChart.removeAxisValues()
+//               binding.lineChart.removeAxisTitles()
 
-               binding.lineChart.setLineColor(R.color.md_theme_primary)
-               binding.lineChart.removeGrid()
-               binding.lineChart.removeAxisValues()
-               binding.lineChart.removeAxisTitles()
-
-               // Optionally, animate the chart
-               binding.lineChart.animateXY(1000, 1000)
+//               // Optionally, animate the chart
+//               binding.lineChart.animateXY(1000, 1000)
            }catch (e:Exception){
                e.printStackTrace()
            }
