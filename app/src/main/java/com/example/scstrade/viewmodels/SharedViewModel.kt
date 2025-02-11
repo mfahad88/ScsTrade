@@ -19,6 +19,7 @@ class SharedViewModel : ViewModel() {
     private val indicesRepository=IndicesRepository(RetrofitInstance.api)
      val mutableAllData=MutableLiveData<Resource<List<StockItem>>>()
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
+    val mutablePreviousIndices=MutableLiveData<List<KSEIndices>?>()
     val mutableChart=MutableLiveData<Resource<List<ChartItem>>>()
     private var isFetchAllData=true
     private var isFetchIndices=true
@@ -43,23 +44,24 @@ class SharedViewModel : ViewModel() {
     }
 
     fun fetchIndices(){
-//        isFetchIndices=true
+        isFetchIndices=true
         viewModelScope.launch {
-            mutableAllData.value = Resource.Loading()
-            mutableIndices.value = indicesRepository.fetchIndices()
-            if(selectedIndex==null){
+
+
+            /*if(selectedIndex==null){
                 selectedIndex = indicesRepository.fetchIndices().data?.first()
                 isLoading=false
-            }
-           /* while (isFetchIndices){
+            }*/
+            while (isFetchIndices){
+                mutablePreviousIndices.value = mutableIndices.value?.data
                 mutableAllData.value = Resource.Loading()
                 mutableIndices.value = indicesRepository.fetchIndices()
                 if(selectedIndex==null){
                     selectedIndex = indicesRepository.fetchIndices().data?.first()
                     isLoading=false
                 }
-//                delay(5000)
-            }*/
+                delay(5000)
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.scstrade.views.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +40,6 @@ class HomeFragment : Fragment() {
     private val viewModel: SharedViewModel by activityViewModels()
     private val homeViewModel:HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        viewModel.fetchAllData()
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,9 +47,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentHomeBinding.inflate(inflater,container,false)
-        binding.cardHome.lineChart.lineColor= ContextCompat.getColor(requireContext(),R.color.md_theme_primary)
-        binding.cardHome.lineChart.filledColor= ContextCompat.getColor(requireContext(),R.color.md_theme_secondaryFixedDim)
-        binding.cardHome.lineChart.circleColor= Color.TRANSPARENT
 
         binding.cardHome.apply {
             line.setOnClickListener {
@@ -146,7 +139,11 @@ class HomeFragment : Fragment() {
 
 //                        initMarket(result.data)
                         if(homeViewModel.selectedIndex.value==null) {
-                            initSelection(result.data?.first())
+                            initSelection(viewModel.mutablePreviousIndices.value?.filter { it.iNDEXCODE.contains("kse 100",true) }?.first(),result.data?.filter { it.iNDEXCODE.contains("kse 100",true) }?.first())
+                            homeViewModel.fetchChart()
+                        }else{
+                            initSelection(viewModel.mutablePreviousIndices.value?.filter { it.iNDEXCODE.contains(
+                                homeViewModel.selectedIndex.value!!.iNDEXCODE,true) }?.first(),result.data?.filter { it.iNDEXCODE.contains( homeViewModel.selectedIndex.value!!.iNDEXCODE,true) }?.first())
                         }
                         binding.cardHome.imageViewDropDown.setOnClickListener {
 
@@ -228,35 +225,67 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun initSelection(kseIndices: KSEIndices?) {
+    private fun initSelection(prevkseIndices:KSEIndices?,kseIndices: KSEIndices?) {
         binding.cardHome.apply {
             kmiallshr.text=kseIndices?.iNDEXCODE
             if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
-                if(kseIndices?.nETCHANGE?.contains("-")?:false) {
-                    tradeValueView.drawable =
-                        AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
-                }else{
-                    tradeValueView.drawable =
-                        AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
+                if(!kseIndices?.vALUETRADED.equals(prevkseIndices?.vALUETRADED)){
+                    tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
+                    if(kseIndices?.nETCHANGE?.contains("-")?:false) {
+                        tradeValueView.drawable =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
+                    }else{
+                        tradeValueView.drawable =
+                            AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
+                    }
                 }
-                netChangeChip.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
-                volumeChip.text="Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble()?:0.0)}"
-                highView.text = "H: ${kseIndices?.hIGHINDEX} ${String.format("%.2f",kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
-                        "(${String.format("%.2f",(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
-                lowView.text = "L: ${kseIndices?.lOWINDEX} ${String.format("%.2f",kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))} " +
-                        "(${String.format("%.2f",(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100))}%)"
-
-
-                if(kmiallshr.text.toString().lowercase().contains("kse all")){
-                    homeViewModel.setSelectedIndex(kseIndices)
-                }else if(kmiallshr.text.toString().lowercase().contains("kse 100")){
-                    homeViewModel.setSelectedIndex(kseIndices)
-                }else if(kmiallshr.text.toString().lowercase().contains("kse 30")){
-                    homeViewModel.setSelectedIndex(kseIndices)
-                }else if(kmiallshr.text.toString().lowercase().contains("kmi 30")){
-                    homeViewModel.setSelectedIndex(kseIndices)
+                if(!kseIndices?.nETCHANGE.equals(prevkseIndices?.nETCHANGE)) {
+                    netChangeChip.text = "${kseIndices?.nETCHANGE} (${
+                        String.format(
+                            "%.2f",
+                            (kseIndices?.nETCHANGE?.toDouble()
+                                ?.div(kseIndices?.preClose ?: 0.0))?.times(100)
+                        )
+                    }%)"
                 }
+                if(!kseIndices?.vOLUMETRADED.equals(prevkseIndices?.vOLUMETRADED)) {
+                    volumeChip.text =
+                        "Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble() ?: 0.0)}"
+                }
+                if(!kseIndices?.hIGHINDEX.equals(prevkseIndices?.hIGHINDEX)) {
+                    highView.text = "H: ${kseIndices?.hIGHINDEX} ${
+                        String.format(
+                            "%.2f",
+                            kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose ?: 0.0)
+                        )
+                    } " +
+                            "(${
+                                String.format(
+                                    "%.2f",
+                                    (kseIndices?.hIGHINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100)
+                                )
+                            }%)"
+                }
+                if(!kseIndices?.lOWINDEX.equals(prevkseIndices?.lOWINDEX)) {
+                    lowView.text = "L: ${kseIndices?.lOWINDEX} ${
+                        String.format(
+                            "%.2f",
+                            kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose ?: 0.0)
+                        )
+                    } " +
+                            "(${
+                                String.format(
+                                    "%.2f",
+                                    (kseIndices?.lOWINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100)
+                                )
+                            }%)"
+                }
+
+                homeViewModel.setSelectedIndex(kseIndices)
             }
 
         }
@@ -271,7 +300,9 @@ class HomeFragment : Fragment() {
 
 
         popupMenu.setOnMenuItemClickListener { item ->
-            initSelection(list?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first())
+            viewModel.mutablePreviousIndices.value=null
+            initSelection(viewModel.mutablePreviousIndices.value?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first(),list?.filter { it.iNDEXCODE.equals(item.title.toString(),true)}?.first())
+            homeViewModel.fetchChart()
             textView.setText(item.getTitle()) // Set selected option
 
             true

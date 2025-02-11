@@ -18,7 +18,6 @@ class HomeViewModel:ViewModel() {
     val timeSelected=MutableLiveData(arrayOf(true,false,false,false,false))
     val selectedIndex = MutableLiveData<KSEIndices?>()
     val chartMutable=MutableLiveData<Resource<List<ChartItem>>>()
-
     fun fetchChart(){
 
         viewModelScope.launch {
@@ -77,7 +76,7 @@ class HomeViewModel:ViewModel() {
 
     fun setSelectedIndex(kseIndices: KSEIndices?){
         selectedIndex.value = kseIndices
-        fetchChart()
+
     }
 
 }
