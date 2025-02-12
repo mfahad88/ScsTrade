@@ -2,6 +2,8 @@ package com.example.scstrade.views.landing
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
@@ -32,11 +34,14 @@ import java.util.Locale
 class LandingActivity : AppCompatActivity() {
     lateinit var binding:ActivityLandingBinding
     private val sharedViewModel:SharedViewModel by viewModels()
+
+    private var scaleFactor = 1.0f
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityLandingBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
+
         initSideMenu()
 
         sharedViewModel.fetchAllData()
@@ -111,7 +116,6 @@ class LandingActivity : AppCompatActivity() {
 
       }
     }
-
 
 
     override fun onSupportNavigateUp(): Boolean {

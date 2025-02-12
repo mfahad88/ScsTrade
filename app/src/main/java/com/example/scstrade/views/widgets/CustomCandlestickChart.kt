@@ -5,6 +5,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import com.example.scstrade.R
+import com.example.scstrade.helper.Utils
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -34,6 +38,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.setBackgroundColor(Color.WHITE)
         this.setTouchEnabled(true)
         this.setPinchZoom(true)
+        this.background=(AppCompatResources.getDrawable(context,R.drawable.stock_card))
 
         // X Axis Customization
         this.xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -52,8 +57,10 @@ class CustomCandlestickChart @JvmOverloads constructor(
     }
 
     fun setCandleData(dataList: List<CandleEntry>) {
+        val isDark = Utils.isDarkMode(context)
         val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
             color = Color.rgb(80, 80, 80)
+            valueTextColor = if(isDark) Color.WHITE else Color.BLACK
             shadowColor = Color.DKGRAY
             shadowWidth = 0.7f
             decreasingColor = Color.RED

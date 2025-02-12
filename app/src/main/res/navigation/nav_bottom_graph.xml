@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_indices" />
     <fragment
         android:id="@+id/watchlistFragment"
-        android:name="com.example.scstrade.views.WatchlistFragment"
+        android:name="com.example.scstrade.views.watchlist.WatchlistFragment"
         android:label="fragment_watchlist"
         tools:layout="@layout/fragment_watchlist" />
     <fragment

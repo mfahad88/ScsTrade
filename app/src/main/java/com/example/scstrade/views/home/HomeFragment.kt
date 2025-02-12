@@ -1,15 +1,13 @@
 package com.example.scstrade.views.home
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.ScaleGestureDetector
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,15 +18,12 @@ import com.example.scstrade.databinding.FragmentHomeBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
+import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.stock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
 
 
 /**
@@ -38,7 +33,7 @@ import java.util.Locale
  */
 class HomeFragment : Fragment() {
     private val viewModel: SharedViewModel by activityViewModels()
-    private val homeViewModel:HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
     private var entries= emptyList<KSEIndices>()
     override fun onCreateView(
@@ -74,13 +69,35 @@ class HomeFragment : Fragment() {
                 showPopup(it)
             }
 
+            kmiallshr.setOnClickListener {
+                showPopup(imageViewDropDown)
+            }
+
             homeViewModel.apply {
                 isLineSelected.observe(viewLifecycleOwner, Observer {
                     line.setChipSelected(it)
+                    if(it) {
+                        lineChart.visibility = View.VISIBLE
+                        candlestickChart.visibility = View.GONE
+                        min1.isEnabled=false
+                        min5.isEnabled=false
+                        min15.isEnabled=false
+                        min30.isEnabled=false
+                        hr1.isEnabled=false
+                    }
                 })
 
                 isCandleSelected.observe(viewLifecycleOwner, Observer {
                     candle.setChipSelected(it)
+                    if(it) {
+                        lineChart.visibility = View.GONE
+                        candlestickChart.visibility = View.VISIBLE
+                        min1.isEnabled=true
+                        min5.isEnabled=true
+                        min15.isEnabled=true
+                        min30.isEnabled=true
+                        hr1.isEnabled=true
+                    }
                 })
                 selectedTime.observe(viewLifecycleOwner, Observer {
                     min1.setChipSelected(it[0])
@@ -148,9 +165,11 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     entries=result.data?: emptyList()
                     if(homeViewModel.selectedIndex.value==null){
+
                         homeViewModel.setSelectedIndex(result.data?.first {
                             it.iNDEXCODE.contains("kse 100",true)
                         }?: emptyList<KSEIndices>().first())
+                        homeViewModel.fetchChart()
                     }else{
                         homeViewModel.setSelectedIndex(result.data?.first {
                             it.iNDEXCODE.contains(binding.cardHome.kmiallshr.text,true)
@@ -163,6 +182,56 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+
+        viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    (binding.recyclerLeaders.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.v }?.take(10)?: emptyList())
+                    (binding.recyclerGainers.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.cHP }?.take(10)?: emptyList())
+                    (binding.recyclerLosers.adapter as StockAdapter).addItems(result.data?.sortedBy { it.cHP }?.take(10)?: emptyList())
+                }
+            }
+        })
+
+        homeViewModel.chartItem.observe(viewLifecycleOwner, Observer {result->
+           when(result){
+               is Resource.Error -> {}
+               is Resource.Loading -> {}
+               is Resource.Success -> {
+                   var interval=0
+                   if(!result.data.isNullOrEmpty()){
+                       if(homeViewModel.isCandleSelected.value==true){
+                           binding.cardHome.candlestickChart.setCandleData(
+                               result.data?.map {
+                                   if(homeViewModel.selectedTime.value?.indexOf(true)==0){
+                                       interval+=1
+                                   } else if(homeViewModel.selectedTime.value?.indexOf(true)==1){
+                                       interval+=5
+                                   } else if(homeViewModel.selectedTime.value?.indexOf(true)==2){
+                                       interval+=15
+                                   }else if(homeViewModel.selectedTime.value?.indexOf(true)==3){
+                                       interval+=60
+                                   }
+                                   CandleEntry(interval.toFloat(),it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
+                               }?: emptyList()
+                           )
+                       }else{
+                           binding.cardHome.lineChart.entries = result.data.map {
+                               interval+=1
+                               Entry(interval.toFloat(),it.tradingHigh.toFloat())
+                           }
+                       }
+                   }
+               }
+           }
+        })
+
         return binding.root
     }
 
@@ -176,6 +245,7 @@ class HomeFragment : Fragment() {
             homeViewModel.setSelectedIndex(viewModel.mutableIndices.value?.data?.first {
                 it.iNDEXCODE.contains(menu.title.toString(),true)
             }?: emptyList<KSEIndices>().first())
+            homeViewModel.fetchChart()
             true
         }
         popupMenu.show()

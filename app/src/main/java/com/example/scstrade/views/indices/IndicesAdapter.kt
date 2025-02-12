@@ -1,5 +1,6 @@
 package com.example.scstrade.views.indices
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -7,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemGroupIndicesCardBinding
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
+import java.util.Collections
 
 class IndicesAdapter(private val itemList: List<KSEIndices>,
                      private val onItemClick: (KSEIndices) -> Unit) : RecyclerView.Adapter<IndicesAdapter.ViewHolder>() {
@@ -39,4 +40,10 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
     }
 
     override fun getItemCount(): Int = itemList.size
+
+    fun swapItems(context: Context, fromPosition: Int, toPosition: Int) {
+        Collections.swap(itemList, fromPosition, toPosition)
+        Utils.saveSharedPreference(context,"kseIndices",itemList)
+        notifyItemMoved(fromPosition, toPosition)
+    }
 }

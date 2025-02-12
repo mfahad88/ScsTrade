@@ -5,25 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentIndicesBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.repository.IndicesRepository
-import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.viewmodels.IndicesViewModel
+import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
-import com.example.scstrade.views.landing.LandingActivity
-import com.example.scstrade.views.widgets.HorizontalDivider
+import com.google.gson.reflect.TypeToken
 
 class IndicesFragment : Fragment() {
 
@@ -41,11 +35,39 @@ class IndicesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
-       /* val appConfiguration= AppBarConfiguration(*//*findNavController().graph*//*setOf(
-            R.id.indicesFragment
-        ))
-        (requireActivity() as LandingActivity).binding.toolbar.mainItem.visibility=View.GONE
-        (requireActivity() as LandingActivity).binding.toolbar.customToolbar.setupWithNavController(findNavController(),appConfiguration)*/
+
+        val simpleCallback=object:ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,0){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+
+                (recyclerView.adapter as IndicesAdapter).swapItems(recyclerView.context,fromPosition, toPosition)
+                return  true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
+        binding.recyclerView.apply {
+            visibility= View.VISIBLE
+            val typeToken = object:TypeToken<List<KSEIndices>>(){}
+            adapter=IndicesAdapter(Utils.getSharedPreference(requireContext(), emptyList<KSEIndices>(),"kseIndices",typeToken)){ kseIndices ->
+                var bundle=Bundle()
+                bundle.putString("index",kseIndices.iNDEXCODE)
+                findNavController().navigate(R.id.stockFragment,bundle)
+            }
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        }
+
         indicesViewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Error -> {
@@ -58,6 +80,7 @@ class IndicesFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.loader.visibility= View.GONE
+
                     binding.recyclerView.apply {
                         visibility= View.VISIBLE
                         adapter=IndicesAdapter(result.data?: emptyList()){kseIndices ->

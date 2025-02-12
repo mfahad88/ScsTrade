@@ -1,6 +1,5 @@
-package com.example.scstrade.views.home
+package com.example.scstrade.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -60,15 +59,18 @@ class HomeViewModel:ViewModel() {
     fun setSelectedIndex(kseIndices: KSEIndices){
         selectedIndex.value=kseIndices
 
+
     }
 
     fun setSelectedLine(){
         isLineSelected.value = true
         isCandleSelected.value = false
+        setSelectedTime(1)
     }
 
     fun setSelectedCandle(){
         isLineSelected.value = false
         isCandleSelected.value = true
+        setSelectedTime(1)
     }
 }

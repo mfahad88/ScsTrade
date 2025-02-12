@@ -31,15 +31,15 @@ class SharedViewModel : ViewModel() {
 
 
     fun fetchAllData(){
-//        isFetchAllData=true
+        isFetchAllData=true
         viewModelScope.launch {
-            mutableAllData.value = Resource.Loading()
-            mutableAllData.value = indicesRepository.fetchAllData()
-          /*while (isFetchAllData){
+            /*mutableAllData.value = Resource.Loading()
+            mutableAllData.value = indicesRepository.fetchAllData()*/
+          while (isFetchAllData){
               mutableAllData.value = Resource.Loading()
               mutableAllData.value = indicesRepository.fetchAllData()
-//              delay(5000)
-          }*/
+              delay(5000)
+          }
         }
     }
 
