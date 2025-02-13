@@ -11,6 +11,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
+import com.example.scstrade.views.login.LoginFragment
+import com.example.scstrade.views.main.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -30,8 +32,8 @@ class SplashFragment : Fragment() {
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
         lifecycleScope.launch {
             delay(5000)
-
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment,null,)
+            (requireActivity() as MainActivity).loadFragment(LoginFragment())
+//            findNavController().navigate(R.id.action_splashFragment_to_loginFragment,null,)
         }
 
         return  binding.root

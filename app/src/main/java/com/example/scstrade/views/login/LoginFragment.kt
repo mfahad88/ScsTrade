@@ -1,5 +1,6 @@
 package com.example.scstrade.views.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,7 +22,10 @@ import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.ChartViewModel
 import com.example.scstrade.viewmodels.MainViewModel
+import com.example.scstrade.views.landing.LandingActivity
+import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.register.IndexAdapter
+import com.example.scstrade.views.register.RegisterFragment
 import com.example.scstrade.views.widgets.VerticalDivider
 
 
@@ -42,9 +46,12 @@ class LoginFragment : Fragment() {
         binding=FragmentLoginBinding.inflate(inflater,container,false)
 
         binding.button.setOnClickListener {
-            val navController=Navigation.findNavController(requireActivity(),R.id.nav_host_fragment)
+           /* val navController=Navigation.findNavController(requireActivity(),R.id.nav_host_fragment)
 
-            navController.navigate(R.id.action_loginFragment_to_landingActivity)
+            navController.navigate(R.id.action_loginFragment_to_landingActivity)*/
+            val intent= Intent(it.context,LandingActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
 //            requireActivity().finish()
         }
 
@@ -87,7 +94,8 @@ class LoginFragment : Fragment() {
             }
         })
         binding.signUp.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+//            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            (requireActivity() as MainActivity).loadFragment(RegisterFragment(),true)
         }
         return binding.root
     }

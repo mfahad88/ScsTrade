@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -25,7 +26,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityLandingBinding
 import com.example.scstrade.model.data.KeyDescValue
+import com.example.scstrade.model.data.WatchList
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.home.HomeFragment
+import com.example.scstrade.views.market.MarketFragment
+import com.example.scstrade.views.watchlist.WatchlistFragment
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -56,20 +61,6 @@ class LandingActivity : AppCompatActivity() {
             }
             WindowInsetsCompat.CONSUMED
         }
-        val navHostFragment= supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val topLevelDestinations = HashSet<Int>()
-        topLevelDestinations.add(R.id.homeFragment)
-        topLevelDestinations.add(R.id.indicesFragment)
-        topLevelDestinations.add(R.id.stockFragment)
-
-
-        val appBarConfiguration = AppBarConfiguration.Builder(topLevelDestinations).build()
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.toolbar.customToolbar.setupWithNavController(navController,appBarConfiguration)
-
-        binding.bottomNavigationView.setupWithNavController(navController)
-//        binding.drawerNavView.setupWithNavController(navController)
         sharedViewModel.mutableIndices.observe(this, Observer {
             binding.mMarket.apply {
                 if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
@@ -92,12 +83,11 @@ class LandingActivity : AppCompatActivity() {
             }
         }
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
-            val options=NavOptions.Builder().setPopUpTo(R.id.nav_bottom_graph,true).build()
             if(item.itemId==R.id.homeFragment){
-                findNavController(R.id.nav_host_fragment).navigate(R.id.homeFragment,null,options)
+                loadFragment(HomeFragment())
                 true
             }else if(item.itemId==R.id.watchlistFragment){
-                findNavController(R.id.nav_host_fragment).navigate(R.id.watchlistFragment,null,options)
+                loadFragment(WatchlistFragment())
                 true
             }
 
@@ -117,11 +107,21 @@ class LandingActivity : AppCompatActivity() {
       }
     }
 
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController=findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
+        if(isBackStack){
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }else{
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
     }
+
 
 
     private fun initSideMenu() {
@@ -141,10 +141,19 @@ class LandingActivity : AppCompatActivity() {
             adapter= SideMenuAdapter(list){ keyDescValue ->
                 System.out.println("Clicked: ${keyDescValue.toString()}")
                 if(keyDescValue.key?.equals("indices",true)?:false){
-
-                    findNavController(R.id.nav_host_fragment).navigate(R.id.indicesFragment)
+                    val bundle=Bundle()
+                    bundle.putString("key","indices")
+                    val fragment = MarketFragment()
+                    fragment.arguments = bundle
+                    loadFragment(fragment)
+//                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
-                    findNavController(R.id.nav_host_fragment).navigate(R.id.allStockFragment)
+                    val bundle=Bundle()
+                    bundle.putString("key","allStock")
+                    val fragment = MarketFragment()
+                    fragment.arguments = bundle
+                    loadFragment(fragment)
+//                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
                 }
                 binding.drawerLayout.closeDrawers()
             }

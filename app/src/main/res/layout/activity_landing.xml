@@ -24,14 +24,11 @@
             android:layout_marginVertical="10dp"
             android:layout_below="@id/toolbar"/>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_fragment"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            android:layout_below="@id/mMarket"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/nav_bottom_graph"/>
+            android:layout_below="@id/mMarket" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

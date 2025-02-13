@@ -6,21 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.scstrade.R
-/**
- * A simple [Fragment] subclass.
- * Use the [WatchlistFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+import com.example.scstrade.databinding.FragmentWatchlistBinding
+
+
 class WatchlistFragment : Fragment() {
     // TODO: Rename and change types of parameters
-
+    private lateinit var binding: FragmentWatchlistBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_watchlist, container, false)
+        binding = FragmentWatchlistBinding.inflate(inflater,container,false)
+
+        return binding.root
     }
+
+
 
 }

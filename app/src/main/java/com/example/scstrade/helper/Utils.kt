@@ -5,9 +5,14 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
 import android.os.Build
+import android.view.View
+import android.widget.AdapterView.OnItemClickListener
+import androidx.appcompat.widget.PopupMenu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.NumberFormat
 import java.util.Date
+import java.util.Locale
 
 class Utils {
     companion object{
@@ -16,12 +21,16 @@ class Utils {
             print("Hello World!")
         }
 
+        fun commaFormat(value:Double): String {
+            return NumberFormat.getInstance(Locale.US).format(value)
+        }
         fun convertToMillions(value: Double): String {
             return /*if(value>=1_000_000_000.0){
                 String.format("%.1f Bn", value / 1_000_000_000.0)
             }else*/ if (value >= 1_000_000) {
                 // Convert to millions and append "M"
-                String.format("%.1fm", value / 1_000_000.0)
+                String.format("%.2fm",value / 1_000_000.0)
+//                NumberFormat.getInstance(Locale.US).format(million)
             } else {
                 // Return the original value if it's less than a million
                 value.toString()
@@ -70,4 +79,19 @@ class Utils {
         }
     }
 
+    fun showPopup(context: Context,view: View,menuRes:Int?,items:List<String>?,onItemClick:(String)->Unit ){
+        val popupMenu=PopupMenu(context,view)
+        if(menuRes!=null){
+            popupMenu.menuInflater.inflate(menuRes,popupMenu.menu)
+        }else{
+            items?.forEach {
+                popupMenu.menu.add(it)
+            }
+        }
+        popupMenu.setOnMenuItemClickListener {
+            onItemClick(it.title.toString())
+            true
+        }
+        popupMenu.show()
+    }
 }

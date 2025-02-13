@@ -17,6 +17,7 @@
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
         app:expandedHintEnabled="false"
+        android:visibility="gone"
         app:hintTextColor="@color/md_theme_onSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

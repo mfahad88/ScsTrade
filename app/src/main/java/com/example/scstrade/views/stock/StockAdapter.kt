@@ -20,17 +20,17 @@ class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockA
             }
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
-            binding.volume.text = "Vol: ${stockItem.v}"
-            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
-            binding.bid.text = "Bid: ${stockItem.bP}"
-            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
-            binding.ask.text = "Ask: ${stockItem.aP}"
-            binding.valueTrade.text = stockItem.cL.toString()
+            binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
+//            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
+//            binding.bid.text = "Bid: ${stockItem.bP}"
+//            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
+//            binding.ask.text = "Ask: ${stockItem.aP}"
+            binding.valueTrade.text = String.format("%.2f",stockItem.cL)
             binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
-            binding.high.text = stockItem.hP.toString()
-            binding.low.text = stockItem.lP.toString()
-            binding.high52.text = stockItem.high52
-            binding.low52.text = stockItem.low52
+            binding.high.text = "H: ${stockItem.hP.toString()}"
+            binding.low.text = "L: ${stockItem.lP.toString()}"
+//            binding.high52.text = stockItem.high52
+//            binding.low52.text = stockItem.low52
         }
 
 

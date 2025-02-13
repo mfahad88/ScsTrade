@@ -112,14 +112,14 @@ class HomeFragment : Fragment() {
         binding.recyclerLeaders.apply {
             adapter=StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
 
         binding.recyclerGainers.apply {
             adapter=StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
         binding.recyclerLosers.apply {
@@ -135,7 +135,7 @@ class HomeFragment : Fragment() {
                 binding.cardHome.apply {
                     kmiallshr.text=kseIndices?.iNDEXCODE
                     if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                        tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
+                        tradeValueView.text=Utils.commaFormat(kseIndices?.vALUETRADED?.toDouble()?:0.0)
                         if(kseIndices?.nETCHANGE?.contains("-")?:false) {
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)

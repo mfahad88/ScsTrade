@@ -26,6 +26,18 @@
         android:label="fragment_stock"
         tools:layout="@layout/fragment_stock" />
     <fragment
+        android:id="@+id/marketFragment"
+        android:name="com.example.scstrade.views.market.MarketFragment"
+        android:label="fragment_market"
+        tools:layout="@layout/fragment_market" >
+        <action
+            android:id="@+id/action_marketFragment_to_indicesFragment"
+            app:destination="@id/indicesFragment" />
+        <action
+            android:id="@+id/action_marketFragment_to_stockFragment"
+            app:destination="@id/stockFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/allStockFragment"
         android:name="com.example.scstrade.views.allstock.AllStockFragment"
         android:label="fragment_all_stock"

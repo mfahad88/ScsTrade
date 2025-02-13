@@ -15,7 +15,7 @@
     <string name="full_name">Full Name</string>
     <string name="email">Email</string>
     <string name="reg">REG</string>
-    <string name="sariah">Sariah</string>
+    <string name="sariah">Shariah</string>
     <string name="wtl">WTL</string>
     <string name="companyName">Worldcall Telecom Limited</string>
     <string name="volume">Vol: 127,408.831</string>
@@ -63,10 +63,15 @@
     <string name="closed">Closed</string>
     <string name="dec_2024_04">21 Dec 2024 | 04:30PM</string>
     <string name="sector">Sector</string>
-    <string name="all_stock">All Stock</string>
+    <string name="all_stock">All Stocks</string>
     <string name="kmiallshr">KMIALLSHR</string>
     <string name="high_110_89">High: 0.0 0.0(0.0%)</string>
     <string name="leaders_">Leaders:</string>
     <string name="gainers_">Gainers</string>
     <string name="loser_">Losers</string>
+    <string name="default_wat">Default Watchlist</string>
+    <string name="companies">2 Companies</string>
+    <string name="save_compan">Save Company to...</string>
+    <string name="sectors">Sectors</string>
+    <string name="Future">Future</string>
 </resources>

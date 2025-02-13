@@ -27,6 +27,7 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
             binding.root.setOnClickListener {
                 onItemClick(kseIndices)
             }
+
         }
     }
 

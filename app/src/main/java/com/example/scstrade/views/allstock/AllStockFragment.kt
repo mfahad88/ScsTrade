@@ -65,7 +65,8 @@ class AllStockFragment : Fragment() {
                         }
 
                     }
-                    (binding.recyclerIndices.adapter as StockAdapter).addItems(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
+//                    (binding.recyclerIndices.adapter as StockAdapter).addItems(result.data?.filter { it.sN==selectedSector }?.toList()?: emptyList())
+                    (binding.recyclerIndices.adapter as StockAdapter).addItems(result.data?: emptyList())
                 }
             }
         })

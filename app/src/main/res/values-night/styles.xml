@@ -66,14 +66,12 @@
     </style>
 
     <style name="h_116_700_0">
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
     </style>
 
     <style name="l_116_700_0">
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/md_theme_errorContainer_mediumContrast</item>
     </style>
 
@@ -89,21 +87,22 @@
     </style>
 
     <style name="wtl">
-        <item name="android:textSize">15.96sp</item>
-        <item name="android:letterSpacing">0.04</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#1C1C1C</item>
     </style>
 
     <style name="companyName">
-        <item name="android:textSize">10.64sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">#484646</item>
     </style>
 
     <style name="volume">
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
+        <item name="android:fontFamily">@font/inter_28pt_semibold_600</item>
     </style>
 
     <style name="weeks">
@@ -125,26 +124,30 @@
     </style>
 
     <style name="valueTrade">
-        <item name="android:textSize">15.96sp</item>
-        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:letterSpacing">-0.06</item>
         <item name="android:textColor">#2DE500</item>
+        <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
     </style>
 
     <style name="netChange">
-        <item name="android:textSize">10.64sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">-0.01</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
+        <item name="android:fontFamily">@font/inter_28pt_semibold_600</item>
     </style>
 
     <style name="high_stock">
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
     </style>
 
     <style name="low_stock">
-        <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textColor">#D01B10</item>
     </style>
 
@@ -270,7 +273,7 @@
 
     <style name="netChangeValue">
         <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
-        <item name="android:textSize">7.96sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_inversePrimary</item>
     </style>
@@ -303,6 +306,26 @@
 
     <style name="committed_toolbar">
         <item name="android:textSize">7.42sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="default_wat">
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="companies">
+        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
+    </style>
+
+    <style name="save_compan">
+        <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>

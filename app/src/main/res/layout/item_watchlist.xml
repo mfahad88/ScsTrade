@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stock_card">
+
+    <ImageView
+        android:id="@+id/imageViewStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/stars" />
+
+    <TextView
+        android:id="@+id/default_wat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="50dp"
+        android:text="@string/default_wat"
+        android:textAppearance="@style/default_wat"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewStar"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewThree"
+        app:layout_constraintStart_toEndOf="@+id/imageViewStar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewStar" />
+
+    <TextView
+        android:id="@+id/companies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/companies"
+        android:textAppearance="@style/companies"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/default_wat"
+        app:layout_constraintTop_toBottomOf="@+id/default_wat" />
+
+    <ImageView
+        android:id="@+id/imageViewThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/companies"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/default_wat"
+        app:srcCompat="@drawable/three_dots" />
+</androidx.constraintlayout.widget.ConstraintLayout>

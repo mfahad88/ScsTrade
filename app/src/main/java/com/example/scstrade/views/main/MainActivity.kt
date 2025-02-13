@@ -1,21 +1,20 @@
 package com.example.scstrade.views.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.scstrade.R
 import com.example.scstrade.viewmodels.MainViewModel
+import com.example.scstrade.views.splash.SplashFragment
+
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -35,13 +34,23 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        val navHostFragment= supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
+            loadFragment(SplashFragment())
         viewModel.fetchIndices()
-//       NavigationUI.setupActionBarWithNavController(this,navController)
     }
-
+    public fun loadFragment(fragment: Fragment,isBackStack:Boolean = false) {
+        if(isBackStack){
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }else{
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
+    }
     override fun onResume() {
         super.onResume()
 
@@ -51,9 +60,5 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         viewModel.stopIndices()
     }
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp()
-                || super.onSupportNavigateUp()
-    }
+
 }
