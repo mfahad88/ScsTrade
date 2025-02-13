@@ -4,14 +4,13 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
+import android.icu.text.DecimalFormat
 import android.os.Build
 import android.view.View
-import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.widget.PopupMenu
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.NumberFormat
-import java.util.Date
 import java.util.Locale
 
 class Utils {
@@ -25,15 +24,15 @@ class Utils {
             return NumberFormat.getInstance(Locale.US).format(value)
         }
         fun convertToMillions(value: Double): String {
-            return /*if(value>=1_000_000_000.0){
-                String.format("%.1f Bn", value / 1_000_000_000.0)
-            }else*/ if (value >= 1_000_000) {
+            val df: DecimalFormat = DecimalFormat("#,###.##")
+            return  if (value >= 1_000_000) {
                 // Convert to millions and append "M"
-                String.format("%.2fm",value / 1_000_000.0)
+                return df.format(value / 1_000_000) + "M"
+//                String.format("%.2fm", commaFormat(value / 1_000_000.0))
 //                NumberFormat.getInstance(Locale.US).format(million)
             } else {
                 // Return the original value if it's less than a million
-                value.toString()
+                    df.format(value)
             }
 
         }

@@ -26,7 +26,7 @@
 
     <com.example.scstrade.views.widgets.VolumeChip
         android:id="@+id/volumeChip"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/volumeIndices"
         app:layout_constraintEnd_toEndOf="parent"
