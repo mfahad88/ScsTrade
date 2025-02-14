@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.stopIndices()
+//        viewModel.stopIndices()
     }
 
 }

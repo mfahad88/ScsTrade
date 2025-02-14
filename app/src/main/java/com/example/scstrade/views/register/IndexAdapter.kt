@@ -12,7 +12,6 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.viewmodels.ChartViewModel
 import com.github.mikephil.charting.data.Entry
 
 class IndexAdapter(

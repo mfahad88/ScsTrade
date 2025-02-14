@@ -1,15 +1,15 @@
-package com.example.scstrade.views.stock
+package com.example.scstrade.views.allstock
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 
 class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+
     inner class StockViewHolder(private val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)

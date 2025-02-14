@@ -10,6 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentMarketBinding
 import com.example.scstrade.databinding.FragmentWatchlistBinding
+import com.example.scstrade.views.allstock.AllStockFragment
+import com.example.scstrade.views.indices.IndicesFragment
+import com.example.scstrade.views.landing.LandingActivity
+import com.example.scstrade.views.sector.SectorFragment
 import com.google.android.material.tabs.TabLayout
 
 
@@ -22,16 +26,23 @@ class MarketFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMarketBinding.inflate(inflater,container,false)
-        val navHostFragment= childFragmentManager.findFragmentById(R.id.nav_host_market) as NavHostFragment
-        val navController = navHostFragment.navController
-        binding.tabLayout.getTabAt(0)?.select()
-        navController.navigate(R.id.indicesFragment)
+        initSelection()
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text?.toString().equals("indices",true)){
-                    navController.navigate(R.id.indicesFragment)
+                    loadFragment(IndicesFragment())
+//                    navController.navigate(R.id.indicesFragment)
                 }else if(tab?.text?.toString().equals("all stocks",true)){
-                    navController.navigate(R.id.allStockFragment)
+//                    navController.navigate(R.id.allStockFragment)
+                 loadFragment(AllStockFragment())
+                }else if(tab?.text.toString().equals("sectors",true)){
+                    loadFragment(SectorFragment())
+                }else if(tab?.text.toString().equals("Shariah",true)){
+                    val fragment=AllStockFragment()
+                    val bundle=Bundle()
+                    bundle.putString("kmi","true")
+                    fragment.arguments=bundle
+                    loadFragment(fragment)
                 }
             }
 
@@ -45,4 +56,24 @@ class MarketFragment : Fragment() {
         return binding.root
     }
 
+    private fun initSelection() {
+        loadFragment(IndicesFragment())
+        binding.tabLayout.getTabAt(0)?.select()
+    }
+
+    private fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
+        if(isBackStack){
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }else{
+            childFragmentManager
+
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+        }
+    }
 }

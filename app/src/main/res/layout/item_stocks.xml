@@ -50,8 +50,8 @@
             android:background="@drawable/drawable_reg"
             android:backgroundTint="@color/md_theme_primary"
             android:gravity="center"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="1dp"
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="2dp"
             android:text="@string/sariah"
             android:textAppearance="@style/reg"
             app:layout_constraintBottom_toBottomOf="@+id/volume"
@@ -74,8 +74,10 @@
             android:id="@+id/companyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
             android:text="@string/companyName"
             android:textAppearance="@style/companyName"
+            app:layout_constraintEnd_toStartOf="@+id/low"
             app:layout_constraintStart_toStartOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/symbol" />
 

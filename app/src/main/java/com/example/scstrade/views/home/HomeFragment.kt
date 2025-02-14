@@ -2,8 +2,6 @@ package com.example.scstrade.views.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.ScaleGestureDetector
-import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -20,7 +18,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
-import com.example.scstrade.views.stock.StockAdapter
+import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
@@ -110,20 +108,20 @@ class HomeFragment : Fragment() {
         }
 
         binding.recyclerLeaders.apply {
-            adapter=StockAdapter(emptyList())
+            adapter= StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
 
         binding.recyclerGainers.apply {
-            adapter=StockAdapter(emptyList())
+            adapter= StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
         binding.recyclerLosers.apply {
-            adapter=StockAdapter(emptyList())
+            adapter= StockAdapter(emptyList())
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
             isNestedScrollingEnabled=true

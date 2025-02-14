@@ -16,11 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.repository.ChartRepository
-import com.example.scstrade.repository.MainRepository
-import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.viewmodels.ChartViewModel
+
 import com.example.scstrade.viewmodels.MainViewModel
 import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.main.MainActivity
