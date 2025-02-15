@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:text="@string/kmiallshr"
-        android:textFontWeight="700"
         android:textAppearance="@style/kmiallshr"
+        android:textFontWeight="700"
         app:layout_constraintStart_toEndOf="@+id/imageViewDropDown"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,13 +47,13 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/vertical_separator"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tradeValueView"
+        app:layout_constraintTop_toBottomOf="@+id/lowView"
         app:layout_editor_absoluteY="40dp" />
 
     <com.example.scstrade.views.widgets.TradeValueView
@@ -70,35 +70,62 @@
         android:id="@+id/highView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/high_110_89"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/tradeValueView" />
 
     <com.example.scstrade.views.widgets.LowView
         android:id="@+id/lowView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/highView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/highView" />
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="@+id/highView"
+        app:layout_constraintTop_toBottomOf="@+id/highView" />
+
     <HorizontalScrollView
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:measureAllChildren="false"
         android:scrollbars="none"
-        android:id="@+id/linearLayout2"
-        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/highView">
-    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
+    </HorizontalScrollView>
+
+    <com.example.scstrade.views.widgets.CustomCandlestickChart
+        android:id="@+id/candlestick_chart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <com.example.scstrade.views.widgets.mLineChart
+        android:id="@+id/lineChart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/stock_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-       >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
 
         <com.example.scstrade.views.widgets.TimeChip
             android:id="@+id/line"
@@ -168,31 +195,6 @@
             app:setSelected="false" />
 
     </LinearLayout>
-    </HorizontalScrollView>
-
-    <com.example.scstrade.views.widgets.CustomCandlestickChart
-        android:id="@+id/candlestick_chart"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-    <com.example.scstrade.views.widgets.mLineChart
-        android:id="@+id/lineChart"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/stock_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

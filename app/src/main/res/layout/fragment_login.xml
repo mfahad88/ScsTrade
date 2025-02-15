@@ -112,7 +112,7 @@
                 android:id="@+id/sign_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:textFontWeight="600"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="0sp"
@@ -179,7 +179,7 @@
                 android:id="@+id/don_t_have_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:textFontWeight="500"
                 android:layout_marginTop="14dp"
                 android:lineSpacingExtra="2sp"
                 android:text="@string/don_t_have_"
@@ -198,6 +198,7 @@
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="2sp"
                 android:text="@string/sign_up"
+                android:textFontWeight="700"
                 android:textAppearance="@style/sign_up"
                 app:layout_constraintBottom_toBottomOf="@id/don_t_have_"
                 app:layout_constraintEnd_toEndOf="@+id/button"

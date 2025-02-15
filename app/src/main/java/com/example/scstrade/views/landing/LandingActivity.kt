@@ -48,7 +48,8 @@ class LandingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSideMenu()
-
+        binding.bottomNavigationView.selectedItemId=R.id.homeFragment
+        loadFragment(HomeFragment())
         sharedViewModel.fetchAllData()
         sharedViewModel.fetchIndices()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -83,6 +84,7 @@ class LandingActivity : AppCompatActivity() {
             }
         }
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
+//            binding.bottomNavigationView.selectedItemId=item.itemId
             if(item.itemId==R.id.homeFragment){
                 loadFragment(HomeFragment())
                 true

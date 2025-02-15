@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.NetChangeChipBinding;
 import com.example.scstrade.databinding.VolumeChipBinding;
@@ -48,6 +51,13 @@ public class NetChangeChip extends RelativeLayout {
     }
 
     public void setText(String text){
+        if(text.contains("-")){
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.line_red_chip));
+            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
+        }else{
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.light_green_chip));
+            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+        }
         binding.tv.setText(text);
     }
 

@@ -26,15 +26,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="fontFamily">@font/inter_28pt_semibold_600</item>
-        <item name="fontWeight">600</item>
     </style>
 
     <style name="m_vol_721_9">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#ffffff</item>
-        <item name="fontFamily">@font/inter_28pt_semibold_600</item>
 
     </style>
 
@@ -49,7 +46,6 @@
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#484740</item>
-        <item name="fontFamily">@font/inter_28pt_medium_500</item>
     </style>
 
     <style name="kse100">
@@ -59,19 +55,19 @@
     </style>
 
     <style name="index_value_22sp">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="fontFamily">@font/inter_18pt_semibold</item>
+
     </style>
 
     <style name="h_116_700_0">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
     </style>
 
     <style name="l_116_700_0">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/md_theme_errorContainer_mediumContrast</item>
     </style>
 
@@ -87,7 +83,7 @@
     </style>
 
     <style name="wtl">
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">#1C1C1C</item>
     </style>
@@ -203,10 +199,9 @@
     </style>
 
     <style name="sign_in">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:fontFamily">@font/inter_28pt_semibold_600</item>
     </style>
 
     <style name="forgot_pass">
@@ -220,14 +215,12 @@
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
     </style>
 
     <style name="sign_up">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
-        <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
     </style>
 
     <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
@@ -269,7 +262,6 @@
         <item name="android:textSize">22sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:fontFamily">@font/inter_28pt_bold_700</item>
     </style>
 
     <style name="netChangeValue">

@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:gravity="center"
+        android:textFontWeight="700"
         android:textAppearance="@style/index_value_22sp"
         android:text="@string/index_value" />
 
