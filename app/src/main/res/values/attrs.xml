@@ -39,6 +39,7 @@
     </declare-styleable>
     <declare-styleable name="TradeValueView">
         <attr name="android:text" format="string|reference"/>
+        <attr name="android:textSize" format="dimension"/>
         <attr name="android:src" format="reference"/>
     </declare-styleable>
     <declare-styleable name="TimeChip">
