@@ -125,6 +125,7 @@ class HomeFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
             isNestedScrollingEnabled=true
+
         }
 
         homeViewModel.selectedIndex.observe(viewLifecycleOwner, Observer {
@@ -173,10 +174,7 @@ class HomeFragment : Fragment() {
                             it.iNDEXCODE.contains(binding.cardHome.kmiallshr.text,true)
                         }?: emptyList<KSEIndices>().first())
                     }
-                    if(!viewModel.isLoading){
-                        binding.loader.visibility=View.GONE
-                        binding.main.visibility=View.VISIBLE
-                    }
+
                 }
             }
         })
@@ -193,6 +191,10 @@ class HomeFragment : Fragment() {
                     (binding.recyclerLeaders.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.v }?.take(10)?: emptyList())
                     (binding.recyclerGainers.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.cHP }?.take(10)?: emptyList())
                     (binding.recyclerLosers.adapter as StockAdapter).addItems(result.data?.sortedBy { it.cHP }?.take(10)?: emptyList())
+                    if(binding.main.visibility==View.GONE){
+                        binding.loader.visibility=View.GONE
+                        binding.main.visibility=View.VISIBLE
+                    }
                 }
             }
         })

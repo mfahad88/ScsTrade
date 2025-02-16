@@ -19,7 +19,7 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
             binding.indexValue.text = kseIndices.cURRENTINDEX
             binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
-            binding.labelText.text = kseIndices.nETCHANGE
+            binding.labelText.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
             binding.volume.text = "Volume: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
             binding.valueTrade.text = "Value: ${Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())}"
             binding.high.text = "H: ${kseIndices.hIGHINDEX}"

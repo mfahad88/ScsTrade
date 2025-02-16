@@ -57,8 +57,16 @@ class MarketFragment : Fragment() {
     }
 
     private fun initSelection() {
-        loadFragment(IndicesFragment())
-        binding.tabLayout.getTabAt(0)?.select()
+        if(arguments?.getString("key").equals("indices",true)) {
+            loadFragment(IndicesFragment())
+            binding.tabLayout.getTabAt(0)?.select()
+        }else if(arguments?.getString("key").equals("allStocks",true)){
+            loadFragment(AllStockFragment())
+            binding.tabLayout.getTabAt(1)?.select()
+        }else{
+            loadFragment(IndicesFragment())
+            binding.tabLayout.getTabAt(0)?.select()
+        }
     }
 
     private fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {

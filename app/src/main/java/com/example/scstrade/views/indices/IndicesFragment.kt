@@ -1,5 +1,6 @@
 package com.example.scstrade.views.indices
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.allstock.StockActivity
 import com.google.gson.reflect.TypeToken
 
 class IndicesFragment : Fragment() {
@@ -68,7 +70,10 @@ class IndicesFragment : Fragment() {
                         adapter=IndicesAdapter(result.data?: emptyList()){kseIndices ->
                             var bundle=Bundle()
                             bundle.putString("index",kseIndices.iNDEXCODE)
-                            findNavController().navigate(R.id.stockFragment,bundle)
+                            val intent= Intent(requireContext(),StockActivity::class.java)
+                            intent.putExtras(bundle)
+                            startActivity(intent)
+//                            findNavController().navigate(R.id.stockFragment,bundle)
                         }
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                     }

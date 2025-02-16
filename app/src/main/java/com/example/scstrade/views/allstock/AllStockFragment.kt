@@ -22,6 +22,7 @@ class AllStockFragment : Fragment() {
     private var selectedSector:String?=null
     var sector:String?=null
     var kmi:String?=null
+    var index:String?=null
     private var isFirst=true
     private var list= emptyList<StockItem>()
     override fun onCreateView(
@@ -33,8 +34,9 @@ class AllStockFragment : Fragment() {
         initSelection()
         sector=arguments?.getString("sector")?:null
         kmi=arguments?.getString("kmi")?:null
+        index = arguments?.getString("index")?:null
         binding.recyclerIndices.apply {
-            adapter= StockAdapter(emptyList())
+            adapter= StockAdapter(emptyList(),true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
         }
@@ -73,7 +75,19 @@ class AllStockFragment : Fragment() {
                     }else if(kmi!=null){
                         list = result.data?.filter { it.iN.contains("kmi",true) }?: emptyList()
                     } else {
-                        list = result.data ?: emptyList()
+                        if(index!=null){
+                         if(index?.contains("kse 100",true)?:false){
+                             list = result.data?.filter { it.iN.contains("kse 100",true) } ?: emptyList()
+                         }else if(index?.contains("kse 30",true)?:false){
+                             list = result.data?.filter { it.iN.contains("kse 30",true) } ?: emptyList()
+                         }else if(index?.contains("kmi 30",true)?:false){
+                             list = result.data?.filter { it.iN.contains("kmi 30",true) } ?: emptyList()
+                         }else{
+                             list = result.data ?: emptyList()
+                         }
+                        }else {
+                            list = result.data ?: emptyList()
+                        }
                     }
                     when(binding.tabLayout.selectedTabPosition){
 

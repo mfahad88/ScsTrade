@@ -47,7 +47,12 @@ class SectorFragment : Fragment() {
         observer=Observer {
 
             (binding.recyclerViewSector.adapter as SectorAdapter).addItems(it.data?.map { it.sN }?.distinct()?.sortedBy { it }?: emptyList())
+            binding.apply {
+                loader.visibility=View.GONE
+                recyclerViewSector.visibility=View.VISIBLE
+            }
             sharedViewModel.mutableAllData.removeObserver(observer)
+
         }
     }
 }

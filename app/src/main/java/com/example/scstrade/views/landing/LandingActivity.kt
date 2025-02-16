@@ -91,6 +91,9 @@ class LandingActivity : AppCompatActivity() {
             }else if(item.itemId==R.id.watchlistFragment){
                 loadFragment(WatchlistFragment())
                 true
+            }else if(item.itemId==R.id.marketFragment){
+                loadFragment(MarketFragment())
+                true
             }
 
           if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
@@ -147,14 +150,14 @@ class LandingActivity : AppCompatActivity() {
                     bundle.putString("key","indices")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment(fragment)
+                    loadFragment(fragment,true)
 //                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
                     val bundle=Bundle()
-                    bundle.putString("key","allStock")
+                    bundle.putString("key","allStocks")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment(fragment)
+                    loadFragment(fragment,true)
 //                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
                 }
                 binding.drawerLayout.closeDrawers()

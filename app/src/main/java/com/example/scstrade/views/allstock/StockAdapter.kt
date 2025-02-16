@@ -3,15 +3,18 @@ package com.example.scstrade.views.allstock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 
-class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
 
     inner class StockViewHolder(private val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
+
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
                 binding.shariah.visibility= View.VISIBLE
@@ -21,22 +24,36 @@ class StockAdapter(private var list:List<StockItem>):RecyclerView.Adapter<StockA
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
             binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
-//            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
-//            binding.bid.text = "Bid: ${stockItem.bP}"
-//            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
-//            binding.ask.text = "Ask: ${stockItem.aP}"
+            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
+            binding.bid.text = "Bid: ${stockItem.bP}"
+            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
+            binding.ask.text = "Ask: ${stockItem.aP}"
             binding.valueTrade.text = String.format("%.2f",stockItem.cL)
             binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
             binding.high.text = "H: ${stockItem.hP.toString()}"
             binding.low.text = "L: ${stockItem.lP.toString()}"
-//            binding.high52.text = stockItem.high52
-//            binding.low52.text = stockItem.low52
+            binding.high52.text = stockItem.high52
+            binding.low52.text = stockItem.low52
+
+            if(isMore){
+                binding.layoutMore.visibility=View.VISIBLE
+                binding.moreDetail.setOnClickListener {
+                    if(binding.layoutDetails.visibility==View.GONE){
+                        binding.layoutDetails.visibility=View.VISIBLE
+                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.drop_down_icon,0)
+                    }else{
+                        binding.layoutDetails.visibility=View.GONE
+                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.drop_up_icon,0)
+                    }
+                }
+            }
         }
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
+
        val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return  StockViewHolder(binding)
     }

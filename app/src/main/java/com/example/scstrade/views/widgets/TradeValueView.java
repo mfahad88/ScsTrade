@@ -38,11 +38,11 @@ public class TradeValueView extends RelativeLayout {
 
                 String text=a.getString(R.styleable.TradeValueView_android_text);
                 int resource=a.getResourceId(R.styleable.TradeValueView_android_src,-1);
-                float textSize=a.getDimension(R.styleable.TradeValueView_android_textSize,24);
+                float textSize=a.getDimension(R.styleable.TradeValueView_android_textSize,-1);
                 if(text!=null){
                     binding.indexValue.setText(text);
                 }
-                binding.indexValue.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
+                binding.indexValue.setTextSize(textSize);
                 if(resource!=-1){
                     binding.imageDropUp.setImageDrawable(AppCompatResources.getDrawable(getContext(),resource));
                 }
