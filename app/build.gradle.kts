@@ -41,8 +41,8 @@ android {
 
 dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.5")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.8.5")
+    /*implementation ("androidx.navigation:navigation-fragment-ktx:2.8.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.5")*/
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")

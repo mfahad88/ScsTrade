@@ -18,9 +18,7 @@
         <activity
             android:name=".views.allstock.StockActivity"
             android:exported="false" />
-        <activity
-            android:name=".views.landing.LandingActivity"
-            android:exported="false" />
+
         <activity
             android:name=".views.main.MainActivity"
             android:exported="true">

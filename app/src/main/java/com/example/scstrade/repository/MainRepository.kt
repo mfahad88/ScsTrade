@@ -3,12 +3,13 @@ package com.example.scstrade.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 
 class MainRepository(var apiService: ApiService) {
-
     suspend fun getIndices(): Resource<List<KSEIndices>> {
 
         try {
@@ -30,6 +31,22 @@ class MainRepository(var apiService: ApiService) {
         }catch (e:Exception){
 
             return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun fetchAllData(): Resource<List<StockItem>>{
+        try {
+            return Resource.Success(apiService.fetchAllData())
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun getIndexChart(symbol:String, resolution:Int): Resource<List<ChartItem>> {
+        try {
+            return Resource.Success(apiService.getChart(symbol, resolution))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
         }
     }
 }

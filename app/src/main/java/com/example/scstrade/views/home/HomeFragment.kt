@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHomeBinding
@@ -30,8 +30,8 @@ import com.github.mikephil.charting.data.Entry
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-    private val viewModel: SharedViewModel by activityViewModels()
-    private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var viewModel: SharedViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
     private var entries= emptyList<KSEIndices>()
     override fun onCreateView(
@@ -40,7 +40,8 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()

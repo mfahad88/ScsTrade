@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
+
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,13 +18,15 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.allstock.StockActivity
+import com.example.scstrade.views.market.MarketFragment
 import com.google.gson.reflect.TypeToken
 
 class IndicesFragment : Fragment() {
 
     lateinit var binding: FragmentIndicesBinding
-    private val indicesViewModel: SharedViewModel by activityViewModels()
+    private lateinit var viewModel:  SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +40,7 @@ class IndicesFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
 
-
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.recyclerView.apply {
             visibility= View.VISIBLE
@@ -47,12 +48,15 @@ class IndicesFragment : Fragment() {
             adapter=IndicesAdapter(Utils.getSharedPreference(requireContext(), emptyList<KSEIndices>(),"kseIndices",typeToken)){ kseIndices ->
                 var bundle=Bundle()
                 bundle.putString("index",kseIndices.iNDEXCODE)
-                findNavController().navigate(R.id.stockFragment,bundle)
+                val fragment =AllStockFragment()
+                fragment.arguments=bundle
+//                findNavController().navigate(R.id.stockFragment,bundle)
+                (parentFragment as MarketFragment).loadFragment(fragment)
             }
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
 
-        indicesViewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Error -> {
                     binding.loader.visibility= View.GONE

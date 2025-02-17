@@ -6,12 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.repository.ChartRepository
+import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class HomeViewModel:ViewModel() {
-    val repository= ChartRepository(RetrofitInstance.api)
+    val repository= MainRepository(RetrofitInstance.api)
     val isLineSelected=MutableLiveData<Boolean>(true)
     val isCandleSelected=MutableLiveData<Boolean>(false)
     val chartItem = MutableLiveData<Resource<List<ChartItem>>>()

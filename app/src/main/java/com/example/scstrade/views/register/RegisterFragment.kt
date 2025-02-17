@@ -5,21 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.FragmentRegisterBinding
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.repository.MainRepository
-import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.viewmodels.MainViewModel
+import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.widgets.VerticalDivider
 
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var viewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +25,7 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentRegisterBinding.inflate(inflater,container,false)
-
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         bindView()
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             System.out.println(resource.data.toString())

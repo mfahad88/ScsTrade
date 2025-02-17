@@ -1,32 +1,24 @@
 package com.example.scstrade.views.landing
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
-import com.example.scstrade.databinding.ActivityLandingBinding
+import com.example.scstrade.databinding.FragmentLandingBinding
 import com.example.scstrade.model.data.KeyDescValue
-import com.example.scstrade.model.data.WatchList
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.market.MarketFragment
@@ -36,22 +28,21 @@ import java.util.Date
 import java.util.Locale
 
 
-class LandingActivity : AppCompatActivity() {
-    lateinit var binding:ActivityLandingBinding
-    private val sharedViewModel:SharedViewModel by viewModels()
-
-    private var scaleFactor = 1.0f
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding=ActivityLandingBinding.inflate(LayoutInflater.from(this))
-        enableEdgeToEdge()
-        setContentView(binding.root)
-
+class LandingFragment : Fragment() {
+    lateinit var binding: FragmentLandingBinding
+    private lateinit var sharedViewModel: SharedViewModel
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
-        sharedViewModel.fetchAllData()
-        sharedViewModel.fetchIndices()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        sharedViewModel.fetchAllData()
+//        sharedViewModel.fetchIndices()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {
@@ -62,7 +53,7 @@ class LandingActivity : AppCompatActivity() {
             }
             WindowInsetsCompat.CONSUMED
         }
-        sharedViewModel.mutableIndices.observe(this, Observer {
+        sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             binding.mMarket.apply {
                 if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
                     close.visibility= View.VISIBLE
@@ -96,38 +87,36 @@ class LandingActivity : AppCompatActivity() {
                 true
             }
 
-          if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
-              binding.drawerLayout.closeDrawer(GravityCompat.END)
-          }
-          if (item.itemId==R.id.more){
-              if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
-                  binding.drawerLayout.closeDrawer(GravityCompat.END)
-              }else {
-                  binding.drawerLayout.openDrawer(GravityCompat.END)
-              }
-              true
-          }
+            if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            if (item.itemId==R.id.more){
+                if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
+                }else {
+                    binding.drawerLayout.openDrawer(GravityCompat.END)
+                }
+                true
+            }
             false
 
-      }
+        }
+        return binding.root
     }
-
     public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
         if(isBackStack){
-            supportFragmentManager
+            childFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment,"second_level")
                 .addToBackStack(null)
                 .commit()
         }else{
-            supportFragmentManager
+            childFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment,"second_level")
                 .commit()
         }
     }
-
-
 
     private fun initSideMenu() {
         val list:List<KeyDescValue> = listOf(
@@ -142,7 +131,6 @@ class LandingActivity : AppCompatActivity() {
         )
 
         binding.sideMenu.apply {
-            val options=NavOptions.Builder().setPopUpTo(R.id.nav_bottom_graph,true).build()
             adapter= SideMenuAdapter(list){ keyDescValue ->
                 System.out.println("Clicked: ${keyDescValue.toString()}")
                 if(keyDescValue.key?.equals("indices",true)?:false){
@@ -165,25 +153,8 @@ class LandingActivity : AppCompatActivity() {
             layoutManager=
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL,false)
             val divider= DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
-            divider.setDrawable(AppCompatResources.getDrawable(this@LandingActivity,R.drawable.custom_divider)!!)
+            divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
             addItemDecoration(divider)
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        sharedViewModel.stopAll()
-    }
-    /*override fun onPause() {
-        super.onPause()
-        sharedViewModel.stopAll()
-    }
-*/
-
 }

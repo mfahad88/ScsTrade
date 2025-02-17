@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
 import com.example.scstrade.views.login.LoginFragment

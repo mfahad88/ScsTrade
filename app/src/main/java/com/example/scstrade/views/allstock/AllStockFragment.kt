@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.FragmentAllStockBinding
 import com.example.scstrade.model.Resource
@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 class AllStockFragment : Fragment() {
     private lateinit var binding: FragmentAllStockBinding
-    private val viewModel:SharedViewModel by activityViewModels()
+    private lateinit var viewModel:SharedViewModel
     private var selectedSector:String?=null
     var sector:String?=null
     var kmi:String?=null
@@ -32,6 +32,7 @@ class AllStockFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAllStockBinding.inflate(inflater,container,false)
         initSelection()
+        viewModel= ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sector=arguments?.getString("sector")?:null
         kmi=arguments?.getString("kmi")?:null
         index = arguments?.getString("index")?:null

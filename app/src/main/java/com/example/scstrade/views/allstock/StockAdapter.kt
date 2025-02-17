@@ -12,7 +12,7 @@ import com.example.scstrade.model.response.stock.StockItem
 
 class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
 
-    inner class StockViewHolder(private val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
+    inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
 
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
@@ -35,18 +35,7 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
             binding.high52.text = stockItem.high52
             binding.low52.text = stockItem.low52
 
-            if(isMore){
-                binding.layoutMore.visibility=View.VISIBLE
-                binding.moreDetail.setOnClickListener {
-                    if(binding.layoutDetails.visibility==View.GONE){
-                        binding.layoutDetails.visibility=View.VISIBLE
-                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.drop_down_icon,0)
-                    }else{
-                        binding.layoutDetails.visibility=View.GONE
-                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.drop_up_icon,0)
-                    }
-                }
-            }
+
         }
 
 
@@ -64,6 +53,22 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
         holder.bind(list[position])
+
+        if(isMore){
+
+            holder.apply {
+                binding.layoutMore.visibility=View.VISIBLE
+                binding.moreDetail.setOnClickListener {
+                    if(binding.layoutDetails.visibility==View.GONE){
+                        binding.layoutDetails.visibility=View.VISIBLE
+                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.drop_down_icon,0)
+                    }else{
+                        binding.layoutDetails.visibility=View.GONE
+                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.drop_up_icon,0)
+                    }
+                }
+            }
+        }
     }
 
     public fun addItems(list:List<StockItem>){

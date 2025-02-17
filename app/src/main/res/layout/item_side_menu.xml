@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="TextView"
+        android:textFontWeight="500"
+        android:textAppearance="@style/sidemenu_item"
         app:tint="@color/item_side_menu"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
         app:layout_constraintTop_toTopOf="@+id/imageView15" />

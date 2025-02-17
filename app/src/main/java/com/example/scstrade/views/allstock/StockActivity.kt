@@ -3,13 +3,16 @@ package com.example.scstrade.views.allstock
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockBinding
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -19,7 +22,7 @@ import java.util.Locale
 
 class StockActivity : AppCompatActivity() {
     lateinit var binding: ActivityStockBinding
-    private val sharedViewModel:SharedViewModel by viewModels()
+    private lateinit var sharedViewModel:SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityStockBinding.inflate(LayoutInflater.from(this))
@@ -28,10 +31,15 @@ class StockActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.updateLayoutParams<MarginLayoutParams> {
+                leftMargin = systemBars.left
+                rightMargin = systemBars.right
+                bottomMargin = systemBars.bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
-
+        sharedViewModel=ViewModelProvider(this).get(SharedViewModel::class.java)
         sharedViewModel.fetchAllData()
         sharedViewModel.fetchIndices()
         val b= intent.extras
@@ -40,7 +48,7 @@ class StockActivity : AppCompatActivity() {
             fragment.arguments =b
             loadFragment(fragment)
         }
-
+        binding.title.text=b?.getString("sector")?:""
         sharedViewModel.mutableIndices.observe(this, Observer {
             binding.mMarket.apply {
                 if(it.data?.first()?.marketStatus.equals("CLOSE",true)){

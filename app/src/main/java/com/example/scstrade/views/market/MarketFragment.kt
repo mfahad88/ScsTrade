@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentMarketBinding
 import com.example.scstrade.databinding.FragmentWatchlistBinding
 import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.indices.IndicesFragment
-import com.example.scstrade.views.landing.LandingActivity
 import com.example.scstrade.views.sector.SectorFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -31,9 +29,7 @@ class MarketFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text?.toString().equals("indices",true)){
                     loadFragment(IndicesFragment())
-//                    navController.navigate(R.id.indicesFragment)
                 }else if(tab?.text?.toString().equals("all stocks",true)){
-//                    navController.navigate(R.id.allStockFragment)
                  loadFragment(AllStockFragment())
                 }else if(tab?.text.toString().equals("sectors",true)){
                     loadFragment(SectorFragment())
@@ -69,19 +65,21 @@ class MarketFragment : Fragment() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
+    public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
         if(isBackStack){
             childFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment,"third_level")
                 .addToBackStack(null)
                 .commit()
         }else{
             childFragmentManager
 
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, fragment,"third_level")
                 .commit()
         }
     }
+
+
 }
