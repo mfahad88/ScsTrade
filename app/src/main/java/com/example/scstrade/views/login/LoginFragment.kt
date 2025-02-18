@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -21,6 +23,7 @@ import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.register.IndexAdapter
 import com.example.scstrade.views.register.RegisterFragment
 import com.example.scstrade.views.widgets.VerticalDivider
+import com.google.android.material.snackbar.Snackbar
 
 
 /**
@@ -40,14 +43,11 @@ class LoginFragment : Fragment() {
         binding=FragmentLoginBinding.inflate(inflater,container,false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         binding.button.setOnClickListener {
-           /* val navController=Navigation.findNavController(requireActivity(),R.id.nav_host_fragment)
+            if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
+                viewModel.fetchLogin(binding.userName.text,binding.password.text)
+            }
 
-            navController.navigate(R.id.action_loginFragment_to_landingActivity)*/
-          /*  val intent= Intent(it.context,LandingActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()*/
-            (requireActivity() as MainActivity).loadFragment(LandingFragment())
-//            requireActivity().finish()
+
         }
 
         binding.recyclerIndices.apply {
@@ -58,6 +58,30 @@ class LoginFragment : Fragment() {
 
 
         }
+
+        viewModel.mutableLogin.observe(viewLifecycleOwner, Observer { resource->
+            when(resource){
+                is Resource.Error -> {
+                    binding.loader.visibility=View.GONE
+                    Snackbar.make(requireView(),"Invalid login",Snackbar.LENGTH_SHORT)
+                        .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.md_theme_onErrorContainer))
+                        .setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_error))
+                        .show()
+                }
+                is Resource.Loading -> binding.loader.visibility=View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility=View.GONE
+                    if(!resource.data.isNullOrEmpty()){
+                        Utils.saveSharedPreference(requireContext(),"user",resource.data)
+                        Snackbar.make(requireView(),"Success",Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.md_theme_onSuccessContainer))
+                            .setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+                            .show()
+                        (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
+                    }
+                }
+            }
+        })
 
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             when (resource){
@@ -89,7 +113,7 @@ class LoginFragment : Fragment() {
             }
         })
         binding.signUp.setOnClickListener {
-//            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+
             (requireActivity() as MainActivity).loadFragment(RegisterFragment(),true)
         }
         return binding.root

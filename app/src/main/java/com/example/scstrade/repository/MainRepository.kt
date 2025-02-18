@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
@@ -45,6 +46,14 @@ class MainRepository(var apiService: ApiService) {
     suspend fun getIndexChart(symbol:String, resolution:Int): Resource<List<ChartItem>> {
         try {
             return Resource.Success(apiService.getChart(symbol, resolution))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun fetchLogin(email:String,password:String): Resource<List<LoginDataItem>> {
+        try {
+            return Resource.Success(apiService.fetchLogin(email,password))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
@@ -41,12 +42,15 @@ class LandingFragment : Fragment() {
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        binding.toolbar.searchIcon.setOnClickListener {
+            Toast.makeText(requireContext(),"Clicked...",Toast.LENGTH_SHORT).show()
+        }
 //        sharedViewModel.fetchAllData()
 //        sharedViewModel.fetchIndices()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {
-                topMargin = 0
+                topMargin = systemBars.top
                 leftMargin = systemBars.left
                 rightMargin = systemBars.right
                 bottomMargin = systemBars.bottom

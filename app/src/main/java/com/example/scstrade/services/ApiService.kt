@@ -1,6 +1,7 @@
 package com.example.scstrade.services
 
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import retrofit2.http.GET
@@ -16,4 +17,7 @@ interface ApiService {
 
     @GET(value = "/Data?que=AllData")
     suspend fun fetchAllData():List<StockItem>
+
+    @GET(value = "/Login")
+    suspend fun fetchLogin(@Query("RegistrationEmail")email:String,@Query("RegistrationPassword")password:String):List<LoginDataItem>
 }

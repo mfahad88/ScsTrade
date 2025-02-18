@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
@@ -15,10 +16,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-    private val indicesRepository=MainRepository(RetrofitInstance.api)
+    private val repository=MainRepository(RetrofitInstance.api)
      val mutableAllData=MutableLiveData<Resource<List<StockItem>>>()
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
     val mutablePreviousIndices=MutableLiveData<List<KSEIndices>?>()
+    val mutableLogin=MutableLiveData<Resource<List<LoginDataItem>>>()
     private var isFetchAllData=true
     private var isFetchIndices=true
     var selectedIndex:KSEIndices?=null
@@ -31,7 +33,7 @@ class SharedViewModel : ViewModel() {
             mutableAllData.value = indicesRepository.fetchAllData()*/
           while (isFetchAllData){
               mutableAllData.value = Resource.Loading()
-              mutableAllData.value = indicesRepository.fetchAllData()
+              mutableAllData.value = repository.fetchAllData()
               delay(5000)
           }
         }
@@ -49,12 +51,19 @@ class SharedViewModel : ViewModel() {
             while (isFetchIndices){
                 mutablePreviousIndices.value = mutableIndices.value?.data
                 mutableAllData.value = Resource.Loading()
-                mutableIndices.value = indicesRepository.getIndices()
+                mutableIndices.value = repository.getIndices()
                 if(selectedIndex==null){
-                    selectedIndex = indicesRepository.getIndices().data?.first()
+                    selectedIndex = repository.getIndices().data?.first()
                 }
                 delay(5000)
             }
+        }
+    }
+
+    fun fetchLogin(email:String,password:String){
+        viewModelScope.launch {
+            mutableLogin.value = Resource.Loading()
+            mutableLogin.value = repository.fetchLogin(email, password)
         }
     }
 
