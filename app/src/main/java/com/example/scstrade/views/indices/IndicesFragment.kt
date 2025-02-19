@@ -45,7 +45,7 @@ class IndicesFragment : Fragment() {
         binding.recyclerView.apply {
             visibility= View.VISIBLE
             val typeToken = object:TypeToken<List<KSEIndices>>(){}
-            adapter=IndicesAdapter(Utils.getSharedPreference(requireContext(), emptyList<KSEIndices>(),"kseIndices",typeToken)){ kseIndices ->
+            adapter=IndicesAdapter(emptyList()){ kseIndices ->
                 var bundle=Bundle()
                 bundle.putString("index",kseIndices.iNDEXCODE)
                 val fragment =AllStockFragment()

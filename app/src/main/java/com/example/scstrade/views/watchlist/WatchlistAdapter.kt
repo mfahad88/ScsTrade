@@ -5,16 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemWatchlistBinding
-import com.example.scstrade.model.data.WatchList
+import com.example.scstrade.model.response.watchList.WatchListItem
 import java.util.Collections
 
-class WatchListAdapter(private val itemList: List<WatchList>, private val onItemClick: (WatchList) -> Unit) : RecyclerView.Adapter<WatchListAdapter.WatchListViewHolder>() {
+class WatchListAdapter(private val itemList: List<WatchListItem>, private val onItemClick: (WatchListItem) -> Unit) : RecyclerView.Adapter<WatchListAdapter.WatchListViewHolder>() {
 
     class WatchListViewHolder(private val binding: ItemWatchlistBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WatchList, onItemClick: (WatchList) -> Unit) {
-            binding.defaultWat.text = item.name
-            binding.companies.text = item.numberCompany
+        fun bind(item: WatchListItem, onItemClick: (WatchListItem) -> Unit) {
+            binding.defaultWat.text = item.watchListMainName
             binding.imageViewThree.setOnClickListener { onItemClick(item) }
         }
     }

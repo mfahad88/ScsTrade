@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
+
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()
@@ -78,11 +79,7 @@ class HomeFragment : Fragment() {
                     if(it) {
                         lineChart.visibility = View.VISIBLE
                         candlestickChart.visibility = View.GONE
-                        min1.isEnabled=false
-                        min5.isEnabled=false
-                        min15.isEnabled=false
-                        min30.isEnabled=false
-                        hr1.isEnabled=false
+
                     }
                 })
 
@@ -91,11 +88,7 @@ class HomeFragment : Fragment() {
                     if(it) {
                         lineChart.visibility = View.GONE
                         candlestickChart.visibility = View.VISIBLE
-                        min1.isEnabled=true
-                        min5.isEnabled=true
-                        min15.isEnabled=true
-                        min30.isEnabled=true
-                        hr1.isEnabled=true
+
                     }
                 })
                 selectedTime.observe(viewLifecycleOwner, Observer {

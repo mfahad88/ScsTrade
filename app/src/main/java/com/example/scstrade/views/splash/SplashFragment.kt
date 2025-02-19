@@ -9,8 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -30,8 +35,13 @@ class SplashFragment : Fragment() {
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
         lifecycleScope.launch {
             delay(5000)
-            (requireActivity() as MainActivity).loadFragment(LoginFragment())
-//            findNavController().navigate(R.id.action_splashFragment_to_loginFragment,null,)
+
+            if(Utils.getSharedPreference(requireContext(), listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()){
+                (requireActivity() as MainActivity).loadFragment(LandingFragment())
+            }else{
+                (requireActivity() as MainActivity).loadFragment(LoginFragment())
+            }
+
         }
 
         return  binding.root

@@ -50,7 +50,7 @@
     </style>
 
     <style name="kse100">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textColor">#1C1C1C</item>
     </style>
@@ -243,24 +243,24 @@
     </style>
 
     <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconSize">28dp</item>
+        <item name="itemIconSize">30dp</item>
         <item name="itemTextColor">@android:color/white</item>
         <item name="itemIconTint">@android:color/white</item>
-        <item name="itemActiveIndicatorStyle">@style/CustomActiveIndicator</item>
+        <!--<item name="itemActiveIndicatorStyle">@style/CustomActiveIndicator</item>-->
 
     </style>
 
     <style name="CustomActiveIndicator">
         <item name="android:color">#1AFFFFFF</item>
-        <item name="android:height">90dp</item>
+        <item name="android:height">80dp</item>
         <item name="android:width">80dp</item>
         <item name="shapeAppearance">@style/CustomIndicatorShape</item>
 
     </style>
 
-    <style name="CustomIndicatorShape" parent="ShapeAppearance.Material3.SmallComponent">
+    <style name="CustomIndicatorShape" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">20%</item>
+        <item name="cornerSize">10%</item>
     </style>
 
     <style name="indices">
@@ -453,6 +453,11 @@
         <item name="android:textColor">@color/md_theme_outline</item> <!-- Text color -->
         <item name="android:textSize">12sp</item> <!-- Text size -->
         <item name="android:elevation">4dp</item> <!-- Shadow effect -->
+    </style>
+
+    <style name="filledButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:backgroundTint">@color/md_theme_primary</item>
     </style>
 
 </resources>

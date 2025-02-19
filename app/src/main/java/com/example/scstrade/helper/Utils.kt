@@ -8,6 +8,9 @@ import android.icu.text.DecimalFormat
 import android.os.Build
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
+import com.example.scstrade.R
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.NumberFormat
@@ -70,27 +73,85 @@ class Utils {
             val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
             val json = sharedPreferences.getString(key,null)
             val gson=Gson()
+
             if(json !=null && typeToken !=null){
                return gson.fromJson(json,typeToken.type)
             }else{
                 return defaultValue
             }
         }
-    }
 
-    fun showPopup(context: Context,view: View,menuRes:Int?,items:List<String>?,onItemClick:(String)->Unit ){
-        val popupMenu=PopupMenu(context,view)
-        if(menuRes!=null){
-            popupMenu.menuInflater.inflate(menuRes,popupMenu.menu)
-        }else{
-            items?.forEach {
-                popupMenu.menu.add(it)
+        fun removeSharedPrefence(context: Context,key:String){
+            val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
+            val editor=sharedPreferences.edit()
+            editor.remove(key)
+            editor.apply()
+        }
+
+        fun showPopup(context: Context,view: View,menuRes:Int?,items:List<String>?,onItemClick:(String)->Unit ){
+            val popupMenu=PopupMenu(context,view)
+            if(menuRes!=null){
+                popupMenu.menuInflater.inflate(menuRes,popupMenu.menu)
+            }else{
+                items?.forEach {
+                    popupMenu.menu.add(it)
+                }
+            }
+            popupMenu.setOnMenuItemClickListener {
+                onItemClick(it.title.toString())
+                true
+            }
+            popupMenu.show()
+        }
+
+        fun showError(view: View,message:String){
+            if(isDarkMode(view.context)){
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_errorContainer))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+                    .show()
+            }else {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_error))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+                    .show()
             }
         }
-        popupMenu.setOnMenuItemClickListener {
-            onItemClick(it.title.toString())
-            true
+
+        fun showSuccess(view: View,message:String){
+            if(isDarkMode(view.context)){
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_secondaryFixedDim))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+                    .show()
+            }else {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_primary))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+                    .show()
+            }
         }
-        popupMenu.show()
     }
+
+
 }

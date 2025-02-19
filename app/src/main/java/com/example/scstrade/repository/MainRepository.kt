@@ -11,7 +11,14 @@ import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 
 class MainRepository(var apiService: ApiService) {
-    suspend fun getIndices(): Resource<List<KSEIndices>> {
+    suspend fun getIndices():Resource<List<KSEIndices>>{
+        try{
+            return  Resource.Success(apiService.getIndices())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+    suspend fun getWithChartIndices(): Resource<List<KSEIndices>> {
 
         try {
             val list=apiService.getIndices().map {

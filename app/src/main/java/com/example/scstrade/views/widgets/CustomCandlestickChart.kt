@@ -59,6 +59,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
     fun setCandleData(dataList: List<CandleEntry>) {
         val isDark = Utils.isDarkMode(context)
         val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
+
             color = Color.rgb(80, 80, 80)
             valueTextColor = if(isDark) Color.WHITE else Color.BLACK
             shadowColor = Color.DKGRAY
@@ -68,8 +69,8 @@ class CustomCandlestickChart @JvmOverloads constructor(
             increasingColor = Color.GREEN
             increasingPaintStyle = Paint.Style.FILL
             neutralColor = Color.BLUE
+            setDrawValues(false)
         }
-
         this.data = CandleData(candleDataSet)
         this.invalidate()
     }

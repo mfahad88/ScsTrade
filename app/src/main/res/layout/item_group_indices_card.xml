@@ -8,7 +8,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         app:cardElevation="5dp"
         app:strokeWidth="0dp"
         android:layout_marginTop="20dp"
@@ -21,6 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="10dp"
             android:background="@drawable/stock_card">
 
             <TextView
@@ -29,36 +30,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="12dp"
-                android:gravity="top"
-                android:lineSpacingExtra="3sp"
+                android:textFontWeight="600"
                 android:text="@string/kse100"
                 android:textAppearance="@style/kse100"
-                android:translationY="-1.27sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.scstrade.views.widgets.TradeValueView
+            <TextView
                 android:id="@+id/index_value"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:textSize="12sp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="32dp"
-                android:text="@string/index_value"
-                app:layout_constraintEnd_toStartOf="@+id/valueTrade"
+                android:drawableEnd="@drawable/drop_down"
+                android:drawablePadding="5dp"
+                android:gravity="top"
+                android:text="113,924.41"
+                android:textAppearance="@style/index_value_24sp"
+                android:textFontWeight="700"
                 app:layout_constraintStart_toStartOf="@+id/kse100"
                 app:layout_constraintTop_toBottomOf="@+id/kse100" />
 
 
             <com.example.scstrade.views.widgets.HighView
                 android:id="@+id/high"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:gravity="center|start"
                 android:lineSpacingExtra="12sp"
                 android:text="@string/h_116_700_0"
                 android:textAppearance="@style/h_116_700_0"
+                app:layout_constraintEnd_toStartOf="@+id/volume"
                 app:layout_constraintStart_toStartOf="@+id/index_value"
                 app:layout_constraintTop_toBottomOf="@+id/index_value" />
 

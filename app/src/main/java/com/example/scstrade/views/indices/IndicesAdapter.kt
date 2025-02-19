@@ -17,8 +17,9 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
-            binding.indexValue.text = kseIndices.cURRENTINDEX
-            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
+            binding.indexValue.text = Utils.commaFormat(kseIndices.cURRENTINDEX.toDouble())
+            binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
+//            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
             binding.labelText.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
             binding.volume.text = "Volume: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
             binding.valueTrade.text = "Value: ${Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())}"
@@ -44,7 +45,6 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
 
     fun swapItems(context: Context, fromPosition: Int, toPosition: Int) {
         Collections.swap(itemList, fromPosition, toPosition)
-        Utils.saveSharedPreference(context,"kseIndices",itemList)
         notifyItemMoved(fromPosition, toPosition)
     }
 }

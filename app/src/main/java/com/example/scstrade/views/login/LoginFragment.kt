@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 
@@ -63,20 +64,24 @@ class LoginFragment : Fragment() {
             when(resource){
                 is Resource.Error -> {
                     binding.loader.visibility=View.GONE
-                    Snackbar.make(requireView(),"Invalid login",Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.md_theme_onErrorContainer))
-                        .setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_error))
-                        .show()
+                    Utils.showError(requireView(),"Invalid login")
                 }
                 is Resource.Loading -> binding.loader.visibility=View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     if(!resource.data.isNullOrEmpty()){
-                        Utils.saveSharedPreference(requireContext(),"user",resource.data)
-                        Snackbar.make(requireView(),"Success",Snackbar.LENGTH_SHORT)
-                            .setBackgroundTint(ContextCompat.getColor(requireContext(),R.color.md_theme_onSuccessContainer))
-                            .setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-                            .show()
+                        if(binding.rememberMe.isChecked) {
+                           Utils.saveSharedPreference(requireContext(),AppConstants.IS_REMEMBER,
+                               listOf(true)
+                           )
+                        }
+                        Utils.saveSharedPreference(
+                            requireContext(),
+                            AppConstants.USER,
+                            resource.data
+                        )
+                        Utils.showSuccess(requireView(),"Success")
+
                         (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
                     }
                 }

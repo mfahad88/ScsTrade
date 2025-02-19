@@ -19,9 +19,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLandingBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.home.HomeFragment
+import com.example.scstrade.views.login.LoginFragment
+import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import java.text.SimpleDateFormat
@@ -80,7 +84,9 @@ class LandingFragment : Fragment() {
         }
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
 //            binding.bottomNavigationView.selectedItemId=item.itemId
+            item.setChecked(true)
             if(item.itemId==R.id.homeFragment){
+
                 loadFragment(HomeFragment())
                 true
             }else if(item.itemId==R.id.watchlistFragment){
@@ -111,13 +117,13 @@ class LandingFragment : Fragment() {
         if(isBackStack){
             childFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment,"second_level")
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             childFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment,"second_level")
+                .replace(R.id.fragment_container, fragment)
                 .commit()
         }
     }
@@ -131,7 +137,8 @@ class LandingFragment : Fragment() {
             KeyDescValue("Technical",null,R.drawable.technicals),
             KeyDescValue("SCS Portfolio",null,R.drawable.scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.my_portfolio),
-            KeyDescValue("Announcements",null,R.drawable.announcements)
+            KeyDescValue("Announcements",null,R.drawable.announcements),
+            KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
 
         binding.sideMenu.apply {
@@ -143,14 +150,16 @@ class LandingFragment : Fragment() {
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
                     loadFragment(fragment,true)
-//                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
                     val bundle=Bundle()
                     bundle.putString("key","allStocks")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
                     loadFragment(fragment,true)
-//                    findNavController(R.id.nav_host_fragment).navigate(R.id.marketFragment,bundle)
+                }else if(keyDescValue.key?.equals("logout",true)?:false){
+                    Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
+                    Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
+                    (requireActivity() as MainActivity).loadFragment(LoginFragment())
                 }
                 binding.drawerLayout.closeDrawers()
             }

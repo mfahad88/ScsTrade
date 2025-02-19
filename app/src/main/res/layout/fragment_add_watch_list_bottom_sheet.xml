@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="15dp"
+    >
 
     <TextView
         android:id="@+id/create_a_ne"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textFontWeight="600"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/create_a_ne"
         android:textAppearance="@style/create_a_ne"
+        android:textFontWeight="600"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,9 +25,11 @@
         android:id="@+id/create_watch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textFontWeight="400"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/create_watch"
         android:textAppearance="@style/create_watch"
+        android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_a_ne" />
@@ -31,8 +39,10 @@
         style="@style/CustomEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
 
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/enter_watch_list_name"
         android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,20 +55,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="Add"
+        style="@style/filledButton"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextName"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editTextName"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonCancel"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/md_theme_outline"
         android:backgroundTint="@null"
         android:text="Cancel"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/md_theme_outline"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAdd"
         app:layout_constraintStart_toStartOf="@+id/buttonAdd"
         app:layout_constraintTop_toBottomOf="@+id/buttonAdd" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,9 +21,8 @@ class SharedViewModel : ViewModel() {
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
     val mutablePreviousIndices=MutableLiveData<List<KSEIndices>?>()
     val mutableLogin=MutableLiveData<Resource<List<LoginDataItem>>>()
-    private var isFetchAllData=true
-    private var isFetchIndices=true
-    var selectedIndex:KSEIndices?=null
+    var isFetchAllData=true
+    var isFetchIndices=true
 
 
     fun fetchAllData(){
@@ -51,10 +50,7 @@ class SharedViewModel : ViewModel() {
             while (isFetchIndices){
                 mutablePreviousIndices.value = mutableIndices.value?.data
                 mutableAllData.value = Resource.Loading()
-                mutableIndices.value = repository.getIndices()
-                if(selectedIndex==null){
-                    selectedIndex = repository.getIndices().data?.first()
-                }
+                mutableIndices.value = repository.getWithChartIndices()
                 delay(5000)
             }
         }
