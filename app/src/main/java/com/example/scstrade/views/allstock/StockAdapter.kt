@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.views.watchlist.WatchListDetailDiffCallback
 
 class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
 
@@ -72,8 +74,11 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
     }
 
     public fun addItems(list:List<StockItem>){
+//        val diffCallback=WatchListDetailDiffCallback(this.list,list)
+//        val diffResult=DiffUtil.calculateDiff(diffCallback)
         this.list=list
         notifyDataSetChanged()
+//        diffResult.dispatchUpdatesTo(this)
     }
 
 

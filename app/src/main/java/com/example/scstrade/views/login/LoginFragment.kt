@@ -17,6 +17,7 @@ import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.services.AppDatabase
 
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.landing.LandingFragment
@@ -34,7 +35,6 @@ import com.google.android.material.snackbar.Snackbar
  */
 class LoginFragment : Fragment() {
     private  lateinit var viewModel: SharedViewModel
-
     private lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +47,8 @@ class LoginFragment : Fragment() {
             if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
                 viewModel.fetchLogin(binding.userName.text,binding.password.text)
             }
-
-
         }
-
+        viewModel.fetchIndices()
         binding.recyclerIndices.apply {
             adapter= IndexAdapter(emptyList())
             layoutManager=

@@ -33,7 +33,7 @@ class WatchlistFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentWatchlistBinding.inflate(inflater,container,false)
-        viewModel = ViewModelProvider(this).get(WatchListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(WatchListViewModel::class.java)
         binding.fab.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             bottomSheetFragment.show(childFragmentManager,"AddWatchList")
@@ -57,6 +57,7 @@ class WatchlistFragment : Fragment() {
                         addItemDecoration(HorizontalDivider(30))
                         adapter=WatchListAdapter(result.data?.sortedBy { it.watchListPosition }?.toList()?: emptyList()){
                             viewModel.selectedItem = it
+                            (parentFragment as LandingFragment).loadFragment(WatchListDetailFragment(),true)
                         }
                     }
                }

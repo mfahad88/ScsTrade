@@ -34,5 +34,5 @@ interface ApiService {
     suspend fun getWatchList(@Query("ActionType")type:String, @Query("RegistrationID") userId:Int):List<WatchListItem>
 
     @GET(value = "/WatchList")
-    suspend fun getWatchListDetail(@Query("ActionType")type:String, @Query("WatchListPosition")position: Int):List<WatchListDetailItem>
+    suspend fun getWatchListDetail(@Query("ActionType")type:String, @Query("WatchListID")position: Int):List<WatchListDetailItem>
 }

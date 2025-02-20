@@ -1,5 +1,7 @@
 package com.example.scstrade.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,8 +12,8 @@ import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.launch
 
-class HomeViewModel:ViewModel() {
-    val repository= MainRepository(RetrofitInstance.api)
+class HomeViewModel(application: Application):AndroidViewModel(application) {
+    val repository: MainRepository= MainRepository(RetrofitInstance.api,application)
     val isLineSelected=MutableLiveData<Boolean>(true)
     val isCandleSelected=MutableLiveData<Boolean>(false)
     val chartItem = MutableLiveData<Resource<List<ChartItem>>>()

@@ -1,16 +1,17 @@
 package com.example.scstrade.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Context
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.dao.StockDao
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
-import com.example.scstrade.services.RetrofitInstance
+import com.example.scstrade.services.AppDatabase
 
-class MainRepository(var apiService: ApiService) {
+class MainRepository(val apiService: ApiService,val context: Context) {
+
     suspend fun getIndices():Resource<List<KSEIndices>>{
         try{
             return  Resource.Success(apiService.getIndices())
@@ -21,7 +22,7 @@ class MainRepository(var apiService: ApiService) {
     suspend fun getWithChartIndices(): Resource<List<KSEIndices>> {
 
         try {
-            val list=apiService.getIndices().map {
+          /*  val list=apiService.getIndices().map {
                 if(it.iNDEXCODE.lowercase().contains("kse all")){
                     it.charts=apiService.getChart("kseall",1)
                 }else if(it.iNDEXCODE.lowercase().contains("kse 30")){
@@ -32,10 +33,10 @@ class MainRepository(var apiService: ApiService) {
                     it.charts=apiService.getChart("kmi30",1)
                 }
                 it
-            }
+            }*/
 
-
-            return  Resource.Success(list)
+           return Resource.Success(AppDatabase.getDatabase(context).marketDao().getIndices())
+//            return  Resource.Success(apiService.getIndices())
         }catch (e:Exception){
 
             return  Resource.Error(e.message?:"An error occurred",null)
@@ -44,11 +45,15 @@ class MainRepository(var apiService: ApiService) {
 
     suspend fun fetchAllData(): Resource<List<StockItem>>{
         try {
-            return Resource.Success(apiService.fetchAllData())
+
+//            return Resource.Success(apiService.fetchAllData())
+            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred")
         }
     }
+
+
 
     suspend fun getIndexChart(symbol:String, resolution:Int): Resource<List<ChartItem>> {
         try {

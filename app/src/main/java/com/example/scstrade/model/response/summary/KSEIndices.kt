@@ -1,9 +1,12 @@
 package com.example.scstrade.model.summary
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.scstrade.model.response.chart.ChartItem
 import com.google.gson.annotations.SerializedName
-
+@Entity(tableName = "kse_indices")
 data class KSEIndices(
+    @PrimaryKey(autoGenerate = true) val id:Int=0,
     @SerializedName("CURRENT_INDEX")
     val cURRENTINDEX: String,
     @SerializedName("HIGH_INDEX")
@@ -22,6 +25,5 @@ data class KSEIndices(
     val vALUETRADED: String,
     @SerializedName("VOLUME_TRADED")
     val vOLUMETRADED: String,
-    var charts:List<ChartItem>
 
 )

@@ -1,9 +1,23 @@
 package com.example.scstrade.model.response.chart
 
 
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import com.example.scstrade.model.summary.KSEIndices
 import com.google.gson.annotations.SerializedName
-
+@Entity(
+    tableName = "chart_items",
+    foreignKeys = [ForeignKey(
+        entity = KSEIndices::class,
+        parentColumns = ["id"],
+        childColumns = ["kseIndexId"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class ChartItem(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val kseIndexId: Int,
     @SerializedName("trading_close")
     val tradingClose: Double,
     @SerializedName("trading_date")

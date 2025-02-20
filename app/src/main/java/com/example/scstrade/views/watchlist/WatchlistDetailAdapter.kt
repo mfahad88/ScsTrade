@@ -1,29 +1,28 @@
 package com.example.scstrade.views.watchlist
 
+import androidx.recyclerview.widget.RecyclerView
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.example.scstrade.databinding.ItemWatchlistBinding
-import com.example.scstrade.model.response.watchList.WatchListItem
+import com.example.scstrade.databinding.ItemStocksBinding
 import java.util.Collections
 
-class WatchListAdapter(private val itemList: List<WatchListItem>, private val onItemClick: (WatchListItem) -> Unit) : RecyclerView.Adapter<WatchListAdapter.WatchListViewHolder>() {
+class WatchListDetailAdapter(private val itemList: MutableList<String>, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
 
-    class WatchListViewHolder(private val binding: ItemWatchlistBinding) : RecyclerView.ViewHolder(binding.root) {
+    class WatchListDetailViewHolder(private val binding: ItemStocksBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WatchListItem, onItemClick: (WatchListItem) -> Unit) {
-            binding.defaultWat.text = item.watchListMainName
+        fun bind(item: String, onItemClick: (String) -> Unit) {
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListViewHolder {
-        val binding = ItemWatchlistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return WatchListViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListDetailViewHolder {
+        val binding = ItemStocksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return WatchListDetailViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: WatchListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WatchListDetailViewHolder, position: Int) {
         holder.bind(itemList[position], onItemClick)
     }
 

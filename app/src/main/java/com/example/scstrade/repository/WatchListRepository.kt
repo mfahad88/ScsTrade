@@ -1,12 +1,15 @@
 package com.example.scstrade.repository
 
+import android.content.Context
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.services.ApiService
+import com.example.scstrade.services.AppDatabase
 import retrofit2.http.Query
 
-class WatchListRepository(var apiService: ApiService) {
+class WatchListRepository(var apiService: ApiService,val context: Context) {
 
     suspend fun createWatchList(name:String, position:Int, userId:Int): Resource<String> {
         try{
@@ -32,9 +35,21 @@ class WatchListRepository(var apiService: ApiService) {
         }
     }
 
-    suspend fun getWatchListDetail(position:Int): Resource<List<WatchListDetailItem>> {
+    suspend fun getWatchListDetail(position:Int): Resource<List<StockItem>> {
         try{
-            return Resource.Success(apiService.getWatchListDetail("GetSymbols", position))
+            val symbols=apiService.getWatchListDetail("GetSymbols", position).sortedBy { it.watchListPosition }.map { it.watchListSymbol.lowercase() }
+            val filterList=ArrayList<StockItem>()
+            symbols.forEach {
+                AppDatabase.getDatabase(context).marketDao().getMarkets(symbols).forEachIndexed { index, stockItem ->
+                    if(it.equals(stockItem.sYM,true)){
+                        filterList.add(stockItem)
+                    }
+                }
+
+            }
+
+
+            return Resource.Success(filterList)
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }

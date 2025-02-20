@@ -16,6 +16,9 @@ import com.example.scstrade.databinding.FragmentHomeBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
+import com.example.scstrade.repository.MainRepository
+import com.example.scstrade.services.AppDatabase
+import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.allstock.StockAdapter
@@ -42,7 +45,8 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
-
+        viewModel.fetchAllData()
+        viewModel.fetchIndices()
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()
