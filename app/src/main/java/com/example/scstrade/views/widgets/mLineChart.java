@@ -30,7 +30,7 @@ public class mLineChart extends LineChart {
     private int lineColor;
     private int filledColor;
     private int circleColor;
-
+    LineDataSet dataSet;
 
     public int getFilledColor() {
         return filledColor;
@@ -65,7 +65,12 @@ public class mLineChart extends LineChart {
     }
 
     public void setEntries(List<Entry> entries) {
-        this.entries = entries;
+//        this.entries = entries;
+        if(entries!=null) {
+            for (int i = 0; i < entries.size(); i++) {
+                dataSet.addEntry(entries.get(i));
+            }
+        }
         init(context,attrs);
     }
 
@@ -101,7 +106,8 @@ public class mLineChart extends LineChart {
 
         lineColor=ContextCompat.getColor(context,R.color.md_theme_primary);
 //        filledColor=ContextCompat.getColor(context,R.color.md_theme_secondaryFixedDim);
-        LineDataSet dataSet=new LineDataSet(entries,"");
+        dataSet=new LineDataSet(new ArrayList<>(),"");
+
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setDrawCircles(false);
         dataSet.setDrawValues(false);
@@ -130,8 +136,10 @@ public class mLineChart extends LineChart {
         rightAxis.setDrawLabels(true);
         rightAxis.setDrawGridLines(false);
         rightAxis.setEnabled(true);
-        this.animateXY(1000,1000);
-        this.invalidate();
+
+        this.notifyDataSetChanged();
+//        this.animateXY(5000,5000);
+//        this.invalidate();
         a.recycle();
     }
 }

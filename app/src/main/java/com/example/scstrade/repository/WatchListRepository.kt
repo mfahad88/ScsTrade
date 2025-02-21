@@ -35,21 +35,21 @@ class WatchListRepository(var apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun getWatchListDetail(position:Int): Resource<List<StockItem>> {
+    suspend fun getWatchListDetail(position:Int): Resource<List<WatchListDetailItem>> {
         try{
             val symbols=apiService.getWatchListDetail("GetSymbols", position).sortedBy { it.watchListPosition }.map { it.watchListSymbol.lowercase() }
-            val filterList=ArrayList<StockItem>()
-            symbols.forEach {
-                AppDatabase.getDatabase(context).marketDao().getMarkets(symbols).forEachIndexed { index, stockItem ->
-                    if(it.equals(stockItem.sYM,true)){
-                        filterList.add(stockItem)
-                    }
-                }
-
-            }
 
 
-            return Resource.Success(filterList)
+
+            return Resource.Success(apiService.getWatchListDetail("GetSymbols", position).sortedBy { it.watchListPosition })
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun deleteSymbol(symId:Int): Resource<String>{
+        try{
+            return Resource.Success(apiService.deleteSymbol("DeleteSymbol",symId))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }

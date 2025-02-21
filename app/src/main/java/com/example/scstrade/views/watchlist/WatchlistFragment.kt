@@ -18,6 +18,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 
@@ -55,16 +56,40 @@ class WatchlistFragment : Fragment() {
                     binding.recyclerView.apply {
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                         addItemDecoration(HorizontalDivider(30))
-                        adapter=WatchListAdapter(result.data?.sortedBy { it.watchListPosition }?.toList()?: emptyList()){
+                        adapter=WatchListAdapter(result.data?.sortedBy { it.watchListPosition }?.toList()?: emptyList(), onItemClick = {it->
                             viewModel.selectedItem = it
-                            (parentFragment as LandingFragment).loadFragment(WatchListDetailFragment(),true)
-                        }
+                                loadFragment(WatchListDetailFragment())
+//                            (requireActivity() as MainActivity).loadFragment(WatchListDetailFragment(),true)
+//                            (parentFragment as LandingFragment).loadFragment(WatchListDetailFragment(),true)
+                        }, onItemPopupClick = {str,item->
+                            if(str.contains("delete",true)) {
+                                viewModel.deleteWatchList(item.watchListMainID,login.registrationID)
+
+                            }
+                        })
                     }
                }
            }
        })
 
+        viewModel.mutableDelete.observe(viewLifecycleOwner, Observer {
+            when(it){
+                is Resource.Error -> Utils.showError(binding.root,it.message?:"Error occurred")
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    viewModel.getWatchList(login.registrationID)
+                }
+            }
+        })
+
         return binding.root
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container,fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun fetchUser() {

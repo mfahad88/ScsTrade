@@ -1,21 +1,20 @@
 package com.example.scstrade.views.register
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemIndicesCardBinding
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.Resource
-import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.summary.KSEIndices
+import com.example.scstrade.viewmodels.SharedViewModel
 import com.github.mikephil.charting.data.Entry
 
 class IndexAdapter(
     private var list: List<KSEIndices>,
+    val viewModel: SharedViewModel,
+    val viewLifecycleOwner: LifecycleOwner,
 ):RecyclerView.Adapter<IndexAdapter.IndexViewHolder>() {
 
     inner class  IndexViewHolder(private val binding: ItemIndicesCardBinding):RecyclerView.ViewHolder(binding.root){
@@ -26,27 +25,37 @@ class IndexAdapter(
                 tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
                 netChange.text = kseIndices.nETCHANGE
                 volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble()) else 0.0.toString()}"
-//                populateChart(kseIndices.charts)
+                populateChart(kseIndices.iNDEXCODE)
 
             }
         }
 
-        private fun populateChart(data: List<ChartItem>?) {
+        private fun populateChart(data: String) {
            try{
-               val entries = data?.map {
-                   Entry(Utils.convertDate(it.tradingDate).toFloat(),it.tradingClose.toFloat())
-               }
-               binding.lineChart.setEntries(entries)
-                binding.lineChart.xAxis.apply {
-                    setDrawLabels(false)
+               var interval = 0
+                if(data.contains("kse all",true)){
+                    viewModel.fetchChart("kseall")
+                }else if(data.contains("kse 100",true)){
+                    viewModel.fetchChart("kse")
+                }else if(data.contains("kse 30",true)){
+                    viewModel.fetchChart("kse")
+                }else if(data.contains("kmi 30",true)){
+                    viewModel.fetchChart("kmi30")
                 }
-//               binding.lineChart.setLineColor(R.color.md_theme_primary)
-//               binding.lineChart.removeGrid()
-//               binding.lineChart.removeAxisValues()
-//               binding.lineChart.removeAxisTitles()
+                viewModel.mutableChart.observe(viewLifecycleOwner, Observer { result->
 
-//               // Optionally, animate the chart
-//               binding.lineChart.animateXY(1000, 1000)
+                    val entries = result.data?.map {
+                        interval+=1
+                        Entry(interval.toFloat(),it.tradingHigh.toFloat())
+                    }
+                    binding.lineChart.setEntries(entries)
+                    binding.lineChart.notifyDataSetChanged()
+                    binding.lineChart.moveViewToX(interval.toFloat())
+                    binding.lineChart.xAxis.apply {
+                        setDrawLabels(false)
+                    }
+                })
+
            }catch (e:Exception){
                e.printStackTrace()
            }

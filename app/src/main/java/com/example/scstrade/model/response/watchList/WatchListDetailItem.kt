@@ -7,5 +7,7 @@ data class WatchListDetailItem(
     @SerializedName("WatchListPosition")
     val watchListPosition: Int,
     @SerializedName("WatchListSymbol")
-    val watchListSymbol: String
+    val watchListSymbol: String,
+    @SerializedName("WatchListDetailID")
+    val watchListDetailID:Int
 )

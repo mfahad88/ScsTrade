@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -21,7 +20,9 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLandingBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
+import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
@@ -49,6 +50,12 @@ class LandingFragment : Fragment() {
         binding.toolbar.searchIcon.setOnClickListener {
             Toast.makeText(requireContext(),"Clicked...",Toast.LENGTH_SHORT).show()
         }
+       /* requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+
+            }
+
+        })*/
 //        sharedViewModel.fetchAllData()
 //        sharedViewModel.fetchIndices()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -62,20 +69,7 @@ class LandingFragment : Fragment() {
             WindowInsetsCompat.CONSUMED
         }
         sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
-            binding.mMarket.apply {
-                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
-                    close.visibility= View.VISIBLE
-                    open.visibility = View.GONE
-                }else{
-                    close.visibility= View.GONE
-                    open.visibility = View.VISIBLE
-                }
-                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
-
-                // Get the current date and time
-                var formattedDate = sdf.format(Date())
-                dateTime.text = formattedDate
-            }
+            updateMarket(it)
         })
         binding.imageViewClose.setOnClickListener {
             if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
@@ -113,6 +107,27 @@ class LandingFragment : Fragment() {
         }
         return binding.root
     }
+
+    private fun updateMarket(it: Resource<List<KSEIndices>>) {
+        binding.mMarket.apply {
+            if(it.data?.isNotEmpty()?:false){
+                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
+                    close.visibility= View.VISIBLE
+                    open.visibility = View.GONE
+                }else{
+                    close.visibility= View.GONE
+                    open.visibility = View.VISIBLE
+                }
+                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
+
+                // Get the current date and time
+                var formattedDate = sdf.format(Date())
+                dateTime.text = formattedDate
+            }
+        }
+    }
+
+
     public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
         if(isBackStack){
             childFragmentManager

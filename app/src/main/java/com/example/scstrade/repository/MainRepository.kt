@@ -70,4 +70,12 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return Resource.Error(e.message?:"An error occurred",null)
         }
     }
+
+    suspend fun registerUser(fullName:String,email: String,mobile:String,password: String): Resource<List<LoginDataItem>> {
+        try{
+            return Resource.Success(apiService.registration(email,fullName,mobile,password))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
 }

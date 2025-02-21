@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }else{
             supportFragmentManager
-                .beginTransaction()
+               .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }

@@ -135,14 +135,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="30dp"
+                android:inputType="textPassword"
+                app:hintText="Password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
             <RelativeLayout
                 android:id="@+id/relativeLayout4"
                 android:layout_width="94dp"
                 android:layout_height="62dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/rounded_country_code"
-                app:layout_constraintStart_toStartOf="@+id/email"
-                app:layout_constraintTop_toBottomOf="@+id/email">
+                app:layout_constraintStart_toStartOf="@+id/password"
+                app:layout_constraintTop_toBottomOf="@+id/password">
 
 
                 <com.example.scstrade.views.widgets.CustomSpinner
@@ -166,26 +179,15 @@
                 app:layout_constraintStart_toEndOf="@+id/relativeLayout4"
                 app:layout_constraintTop_toTopOf="@+id/relativeLayout4" />
 
-            <CheckBox
-                android:id="@+id/rememberMe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:text="@string/remember_me"
-                app:layout_constraintStart_toStartOf="@+id/relativeLayout4"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout4" />
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
-                app:layout_constraintStart_toStartOf="@+id/rememberMe"
-                app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
+                app:layout_constraintStart_toStartOf="@+id/email"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout4" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"

@@ -1,23 +1,20 @@
 package com.example.scstrade.views.login
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.core.view.isEmpty
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.services.AppDatabase
 
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.landing.LandingFragment
@@ -25,7 +22,7 @@ import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.register.IndexAdapter
 import com.example.scstrade.views.register.RegisterFragment
 import com.example.scstrade.views.widgets.VerticalDivider
-import com.google.android.material.snackbar.Snackbar
+
 
 
 /**
@@ -46,11 +43,13 @@ class LoginFragment : Fragment() {
         binding.button.setOnClickListener {
             if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
                 viewModel.fetchLogin(binding.userName.text,binding.password.text)
+            }else{
+                Utils.showError(binding.root,"Please provide valid username and password")
             }
         }
         viewModel.fetchIndices()
         binding.recyclerIndices.apply {
-            adapter= IndexAdapter(emptyList())
+            adapter= IndexAdapter(emptyList(),viewModel,viewLifecycleOwner)
             layoutManager=
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             addItemDecoration(VerticalDivider())
