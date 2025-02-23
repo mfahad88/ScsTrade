@@ -37,10 +37,6 @@ class WatchListRepository(var apiService: ApiService,val context: Context) {
 
     suspend fun getWatchListDetail(position:Int): Resource<List<WatchListDetailItem>> {
         try{
-            val symbols=apiService.getWatchListDetail("GetSymbols", position).sortedBy { it.watchListPosition }.map { it.watchListSymbol.lowercase() }
-
-
-
             return Resource.Success(apiService.getWatchListDetail("GetSymbols", position).sortedBy { it.watchListPosition })
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)

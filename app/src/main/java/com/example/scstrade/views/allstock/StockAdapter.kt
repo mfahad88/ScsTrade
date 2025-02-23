@@ -11,7 +11,6 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
-import com.example.scstrade.views.watchlist.WatchListDetailDiffCallback
 import java.util.Collections
 
 class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {

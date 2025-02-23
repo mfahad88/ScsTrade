@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 //        viewModel.fetchAllData()
 //        viewModel.fetchIndices()
+        
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()

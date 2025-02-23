@@ -3,12 +3,8 @@ package com.example.scstrade.views
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.viewmodels.SharedViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel

@@ -14,6 +14,7 @@ import com.example.scstrade.repository.WatchListRepository
 import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class WatchListViewModel(application: Application):AndroidViewModel(application) {
@@ -25,7 +26,6 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
     val mutableWatchListItem=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableWatchListDetail=MutableLiveData<Resource<List<StockItem>>>()
     val mutableWatchDetail=MutableLiveData<List<WatchListDetailItem>>()
-    var selectedItem:WatchListItem?=null
     fun createWatchList(name:String, position:Int, userId:Int){
         viewModelScope.launch {
             mutableCreate.value=Resource.Loading()
@@ -53,22 +53,23 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
             mutableWatchListItem.value=repository.getWatchList(userId)
         }
     }
-    fun getWatchListDetail(context: Context, watchListId:Int){
-        mutableWatchListDetail.value = Resource.Loading()
-        viewModelScope.launch(Dispatchers.IO) {
+    fun getWatchListDetail(sharedViewModel: SharedViewModel, watchListId:Int){
+        viewModelScope.launch {
+            mutableWatchListDetail.value = Resource.Loading()
             val watchList=repository.getWatchListDetail(watchListId).data
-            mutableWatchDetail.postValue(watchList?: emptyList())
-            val symbols =watchList?.map { it.watchListSymbol.lowercase() }?: emptyList()
-            val filterList=ArrayList<StockItem>()
-            symbols.forEach {
-                AppDatabase.getDatabase(context).marketDao().getMarkets(symbols).forEachIndexed { index, stockItem ->
-                    if(it.equals(stockItem.sYM,true)){
-                        filterList.add(stockItem)
+            try{
+                val filterList = ArrayList<StockItem>()
+                watchList?.forEach { it1 ->
+                    sharedViewModel.mutableAllData.value?.data?.forEach { it2 ->
+                        if (it1.watchListSymbol.equals(it2.sYM, true)) {
+                            filterList.add(it2)
+                        }
                     }
                 }
-
+                mutableWatchListDetail.value = Resource.Success(filterList)
+            }catch (e:Exception){
+                mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
             }
-            mutableWatchListDetail.postValue(Resource.Success(filterList))
         }
     }
 }

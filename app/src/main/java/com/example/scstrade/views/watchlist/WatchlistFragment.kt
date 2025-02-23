@@ -1,5 +1,6 @@
 package com.example.scstrade.views.watchlist
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,6 @@ import com.google.gson.reflect.TypeToken
 
 
 class WatchlistFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentWatchlistBinding
     lateinit var viewModel: WatchListViewModel
     lateinit var login:LoginDataItem
@@ -38,6 +38,10 @@ class WatchlistFragment : Fragment() {
         binding.fab.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             bottomSheetFragment.show(childFragmentManager,"AddWatchList")
+        }
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(HorizontalDivider(30))
         }
        fetchUser()
         viewModel.getWatchList(login.registrationID)
@@ -54,13 +58,11 @@ class WatchlistFragment : Fragment() {
                    binding.loader.visibility = View.GONE
                    binding.recyclerView.visibility = View.VISIBLE
                     binding.recyclerView.apply {
-                        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                        addItemDecoration(HorizontalDivider(30))
                         adapter=WatchListAdapter(result.data?.sortedBy { it.watchListPosition }?.toList()?: emptyList(), onItemClick = {it->
-                            viewModel.selectedItem = it
-                                loadFragment(WatchListDetailFragment())
-//                            (requireActivity() as MainActivity).loadFragment(WatchListDetailFragment(),true)
-//                            (parentFragment as LandingFragment).loadFragment(WatchListDetailFragment(),true)
+                            val intent = Intent(requireContext(),WatchListDetailActivity::class.java)
+                            intent.putExtra(AppConstants.WATCHLIST_SELECTED_ITEM,it.watchListMainID)
+                            startActivity(intent)
+
                         }, onItemPopupClick = {str,item->
                             if(str.contains("delete",true)) {
                                 viewModel.deleteWatchList(item.watchListMainID,login.registrationID)
