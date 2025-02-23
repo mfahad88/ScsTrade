@@ -12,6 +12,7 @@ import com.example.scstrade.databinding.FragmentAllStockBinding
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -32,7 +33,8 @@ class AllStockFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAllStockBinding.inflate(inflater,container,false)
         initSelection()
-        viewModel= ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        viewModel= ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = (requireActivity().application as MyApp).viewModel
         sector=arguments?.getString("sector")?:null
         kmi=arguments?.getString("kmi")?:null
         index = arguments?.getString("index")?:null

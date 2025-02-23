@@ -16,6 +16,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.widgets.VerticalDivider
@@ -31,7 +32,8 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentRegisterBinding.inflate(inflater,container,false)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = (requireActivity().application as MyApp).viewModel
         bindView()
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             System.out.println(resource.data.toString())

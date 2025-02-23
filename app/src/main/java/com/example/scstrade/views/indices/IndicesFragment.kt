@@ -18,6 +18,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.allstock.StockActivity
 import com.example.scstrade.views.market.MarketFragment
@@ -40,7 +41,8 @@ class IndicesFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
 
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = (requireActivity().application as MyApp).viewModel
 
         binding.recyclerView.apply {
             visibility= View.VISIBLE

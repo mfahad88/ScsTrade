@@ -17,6 +17,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.register.IndexAdapter
@@ -39,7 +40,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentLoginBinding.inflate(inflater,container,false)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel=(requireActivity().application as MyApp).viewModel
         binding.button.setOnClickListener {
             if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
                 viewModel.fetchLogin(binding.userName.text,binding.password.text)

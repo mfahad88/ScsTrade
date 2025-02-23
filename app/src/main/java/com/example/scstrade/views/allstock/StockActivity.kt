@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockBinding
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,9 +40,9 @@ class StockActivity : AppCompatActivity() {
             }
             WindowInsetsCompat.CONSUMED
         }
-        sharedViewModel=ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedViewModel.fetchAllData()
-        sharedViewModel.fetchIndices()
+        sharedViewModel=(application as MyApp).viewModel
+//        sharedViewModel.fetchAllData()
+//        sharedViewModel.fetchIndices()
         val b= intent.extras
         if(b!=null) {
             val fragment = AllStockFragment()

@@ -46,8 +46,8 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun fetchAllData(): Resource<List<StockItem>>{
         try {
 
-//            return Resource.Success(apiService.fetchAllData())
-            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
+            return Resource.Success(apiService.fetchAllData())
+//            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred")
         }

@@ -22,8 +22,8 @@ import com.example.scstrade.databinding.ActivityMainBinding
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
-import com.example.scstrade.services.SyncManager
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.splash.SplashFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
+        viewModel = (application as MyApp).viewModel
 
-
-        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

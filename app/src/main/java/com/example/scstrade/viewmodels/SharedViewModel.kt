@@ -50,7 +50,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.IO) {
             while(true) {
 //            mutableAllData.value = Resource.Loading()
-                mutableIndices.postValue(repository.getWithChartIndices())
+                mutableIndices.postValue(repository.getIndices())
                 delay(5000)
             }
         }

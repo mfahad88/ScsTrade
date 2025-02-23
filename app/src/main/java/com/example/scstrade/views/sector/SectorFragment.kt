@@ -13,6 +13,7 @@ import com.example.scstrade.databinding.FragmentSectorBinding
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.allstock.StockActivity
 import com.example.scstrade.views.landing.LandingFragment
@@ -30,7 +31,8 @@ class SectorFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSectorBinding.inflate(inflater,container,false)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.recyclerViewSector.apply {
             adapter=SectorAdapter(emptyList()){
                 val bundle =Bundle()

@@ -21,6 +21,7 @@ import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
@@ -43,10 +44,11 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
-        viewModel.fetchAllData()
-        viewModel.fetchIndices()
+//        viewModel.fetchAllData()
+//        viewModel.fetchIndices()
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()

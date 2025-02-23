@@ -24,6 +24,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
@@ -46,7 +47,8 @@ class LandingFragment : Fragment() {
         initSideMenu()
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+//        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.toolbar.searchIcon.setOnClickListener {
             Toast.makeText(requireContext(),"Clicked...",Toast.LENGTH_SHORT).show()
         }
