@@ -16,6 +16,7 @@ import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
     private val repository=MainRepository(RetrofitInstance.api,application)
@@ -30,7 +31,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(true) {
-                mutableAllData.postValue(repository.fetchAllData())
+                val result =repository.fetchAllData()
+                withContext(Dispatchers.Main){
+                    mutableAllData.value = result
+                }
                 delay(5000)
             }
         }
@@ -50,7 +54,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.IO) {
             while(true) {
 //            mutableAllData.value = Resource.Loading()
-                mutableIndices.postValue(repository.getIndices())
+                val result =repository.getIndices()
+                withContext(Dispatchers.Main){
+                    mutableIndices.value=result
+                }
+
                 delay(5000)
             }
         }
