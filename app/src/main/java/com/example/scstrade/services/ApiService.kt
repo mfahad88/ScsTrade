@@ -31,16 +31,15 @@ interface ApiService {
 
     @GET(value = "/WatchList")
     suspend fun createWatchList(
-        @Query("ActionType") type: String, @Query("WatchListName") name: String,
-        @Query("WatchListPosition") position: Int, @Query("RegistrationID") userId: Int
-    ): String
+        @Query("ActionType") type: String, @Query("WatchListName") name: String,@Query("RegistrationID") userId: Int
+    ): List<WatchListItem>
 
     @GET(value = "/WatchList")
     suspend fun deleteWatchList(
         @Query("ActionType") type: String,
         @Query("WatchListID") watchListId: Int,
         @Query("RegistrationID") userId: Int
-    ): String
+    ): List<WatchListItem>
 
     @GET(value = "/WatchList")
     suspend fun getWatchList(
@@ -65,6 +64,22 @@ interface ApiService {
     @GET(value = "/WatchList")
     suspend fun deleteSymbol(
         @Query("ActionType") type:String,
-        @Query("SymbolID") symId:Int
-    ):String
+        @Query("WatchListDetailID") watchListDetailId:Int,
+        @Query("WatchListID") watchListID:Int
+    ):List<WatchListDetailItem>
+
+    @GET(value = "/WatchList")
+    suspend fun addSymbol(
+        @Query("ActionType") type:String,
+        @Query("WatchListID")watchListId:Int,
+        @Query("symbol") symbol:String
+    ):List<WatchListDetailItem>
+
+    @GET(value = "/WatchList")
+    suspend fun updateWatchList(
+        @Query("ActionType") type:String,
+        @Query("WatchListName") watchListName:String,
+        @Query("WatchListID") watchListId:Int,
+        @Query("RegistrationID") registrationID:Int
+    ):List<WatchListItem>
 }

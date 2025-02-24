@@ -81,4 +81,7 @@
     <string name="create_a_ne">Create a New Watch list Group</string>
     <string name="create_watch">Create a new watch list group to organize and track your selected companies for easier management of your investments.</string>
     <string name="enter_watch_list_name">Enter Watch List Name</string>
+    <string name="enter_symbol">Enter Symbol</string>
+    <string name="symbol">Symbol</string>
+    <string name="cable_elect"><![CDATA[Cable & electrical goods]]></string>
 </resources>

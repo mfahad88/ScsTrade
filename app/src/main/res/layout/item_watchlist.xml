@@ -29,13 +29,13 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewStar"
         app:layout_constraintTop_toTopOf="@+id/imageViewStar" />
 
+
     <TextView
         android:id="@+id/companies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:text="@string/companies"
-        android:visibility="gone"
         android:textAppearance="@style/companies"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/default_wat"

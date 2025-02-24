@@ -1,6 +1,7 @@
-package com.example.scstrade.views.watchlist
+package com.example.scstrade.views.watchlist.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +19,13 @@ class WatchListAdapter(private val itemList: List<WatchListItem>, private val on
             onItemClick: (WatchListItem) -> Unit,
             onItemPopupClick: (String,WatchListItem) -> Unit
         ) {
-
-            binding.defaultWat.text = item.watchListMainName
+            if(item.WatchListMainDefault==false){
+                binding.imageViewThree.visibility= View.VISIBLE
+            }else{
+                binding.imageViewThree.visibility= View.GONE
+            }
+            binding.defaultWat.text = item.WatchListMainName
+            binding.companies.text = "${item.SymbolCount} companies"
             binding.imageViewThree.setOnClickListener {
                 Utils.showPopup(binding.root.context,it,null, listOf("Edit Name","Delete Watchlist") ?: emptyList()){
                     onItemPopupClick(it,item)

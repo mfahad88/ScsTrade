@@ -16,20 +16,23 @@ import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WatchListViewModel(application: Application):AndroidViewModel(application) {
 
     val repository=WatchListRepository(RetrofitInstance.api,application)
-    val mutableCreate=MutableLiveData<Resource<String>>()
-    val mutableDelete=MutableLiveData<Resource<String>>()
-    val mutableSymDelete=MutableLiveData<Resource<String>>()
+    val mutableCreate=MutableLiveData<Resource<List<WatchListItem>>>()
+    val mutableDelete=MutableLiveData<Resource<List<WatchListItem>>>()
+    val mutableSymDelete=MutableLiveData<Resource<List<WatchListDetailItem>>>()
+    val mutableSymAdd=MutableLiveData<Resource<List<WatchListDetailItem>>>()
     val mutableWatchListItem=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableWatchListDetail=MutableLiveData<Resource<List<StockItem>>>()
-    val mutableWatchDetail=MutableLiveData<List<WatchListDetailItem>>()
-    fun createWatchList(name:String, position:Int, userId:Int){
+    val mutableWatchListDetailItem=MutableLiveData<List<WatchListDetailItem>>()
+    fun createWatchList(name:String, userId:Int){
         viewModelScope.launch {
             mutableCreate.value=Resource.Loading()
-            mutableCreate.value=repository.createWatchList(name, position, userId)
+            mutableCreate.value=repository.createWatchList(name, userId)
+            mutableWatchListItem.value = mutableCreate.value
         }
     }
 
@@ -37,13 +40,33 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
        viewModelScope.launch {
            mutableDelete.value=Resource.Loading()
            mutableDelete.value=repository.deleteWatchList(watchListId, userId)
+           mutableWatchListItem.value = mutableDelete.value
        }
     }
 
-    fun deleteSymbol(symId:Int){
+    fun deleteSymbol(watchListDetailId:Int, watchListID:Int){
         viewModelScope.launch {
             mutableSymDelete.value = Resource.Loading()
-            mutableSymDelete.value = repository.deleteSymbol(symId)
+            mutableSymDelete.value = repository.deleteSymbol(watchListDetailId, watchListID)
+        }
+    }
+
+    fun addSymbol(sharedViewModel:SharedViewModel,watchListId: Int,symbol:String){
+        mutableSymAdd.value = Resource.Loading()
+        viewModelScope.launch {
+            val result=repository.addSymbol(watchListId, symbol)
+            mutableWatchListDetailItem.value=result.data?: emptyList()
+            mutableSymAdd.value = result
+            val filterList = ArrayList<StockItem>()
+            result.data?.forEach { it1 ->
+                sharedViewModel.mutableAllData.value?.data?.forEach { it2 ->
+                    if (it1.watchListSymbol.equals(it2.sYM, true)) {
+                        filterList.add(it2)
+                    }
+                }
+            }
+            mutableWatchListDetail.value = Resource.Success(filterList)
+
         }
     }
 
@@ -57,6 +80,7 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
         viewModelScope.launch {
             mutableWatchListDetail.value = Resource.Loading()
             val watchList=repository.getWatchListDetail(watchListId).data
+            mutableWatchListDetailItem.value=watchList?: emptyList()
             try{
                 val filterList = ArrayList<StockItem>()
                 watchList?.forEach { it1 ->
@@ -70,6 +94,13 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
             }catch (e:Exception){
                 mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
             }
+        }
+    }
+
+    fun updateWatchList(text: String, watchListItem: WatchListItem, registrationID: Int) {
+        viewModelScope.launch {
+            mutableWatchListItem.value = Resource.Loading()
+            mutableWatchListItem.value =  repository.updateWatchList(text,watchListItem.WatchListMainID,registrationID)
         }
     }
 }

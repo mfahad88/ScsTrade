@@ -11,15 +11,15 @@ import retrofit2.http.Query
 
 class WatchListRepository(var apiService: ApiService,val context: Context) {
 
-    suspend fun createWatchList(name:String, position:Int, userId:Int): Resource<String> {
+    suspend fun createWatchList(name:String, userId:Int): Resource<List<WatchListItem>> {
         try{
-            return Resource.Success(apiService.createWatchList("Create",name, position, userId))
+            return Resource.Success(apiService.createWatchList("Create",name, userId))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }
     }
 
-    suspend fun deleteWatchList(watchListId:Int, userId:Int): Resource<String> {
+    suspend fun deleteWatchList(watchListId:Int, userId:Int): Resource<List<WatchListItem>> {
         try{
             return Resource.Success(apiService.deleteWatchList("DeleteWatchList",watchListId, userId))
         }catch (e:Exception){
@@ -43,11 +43,26 @@ class WatchListRepository(var apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun deleteSymbol(symId:Int): Resource<String>{
+    suspend fun deleteSymbol(watchListDetailId:Int, watchListID:Int): Resource<List<WatchListDetailItem>>{
         try{
-            return Resource.Success(apiService.deleteSymbol("DeleteSymbol",symId))
+            return Resource.Success(apiService.deleteSymbol("DeleteSymbol",watchListDetailId, watchListID))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun addSymbol(watchListId: Int,symbol:String): Resource<List<WatchListDetailItem>> {
+        try{
+            return Resource.Success(apiService.addSymbol("AddSymbol",watchListId, symbol))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+    suspend fun updateWatchList(watchListName:String,watchListId: Int,userId: Int): Resource<List<WatchListItem>>{
+        try {
+            return Resource.Success(apiService.updateWatchList("UpdateWatchList",watchListName,watchListId, userId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
         }
     }
 }

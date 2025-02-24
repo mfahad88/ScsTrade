@@ -1,4 +1,4 @@
-package com.example.scstrade.views.watchlist
+package com.example.scstrade.views.watchlist.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 
@@ -9,13 +9,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.scstrade.databinding.ItemWatchlistDetailBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import java.util.Collections
 
 class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
-
     class WatchListDetailViewHolder(private val binding: ItemWatchlistDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(stockItem: StockItem, onItemClick: (String,StockItem) -> Unit) {
+        fun bind(
+            stockItem: StockItem,
+            onItemClick: (String, StockItem) -> Unit
+        ) {
 
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
@@ -58,10 +61,8 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
         return list.size
     }
 
-    public fun addItems(list:List<StockItem>){
-
+    public fun addItems(list: List<StockItem>){
         this.list=list
-
         notifyDataSetChanged()
     }
 

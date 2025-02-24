@@ -4,14 +4,14 @@ package com.example.scstrade.model.response.watchList
 import com.google.gson.annotations.SerializedName
 
 data class WatchListItem(
-    @SerializedName("WatchListDetailID")
-    val watchListDetailID: Int,
     @SerializedName("WatchListMainID")
-    val watchListMainID: Int,
+    val WatchListMainID: Int,
     @SerializedName("WatchListMainName")
-    val watchListMainName: String,
-    @SerializedName("WatchListPosition")
-    val watchListPosition: Int,
-    @SerializedName("WatchListSymbol")
-    val watchListSymbol: String
+    val WatchListMainName: String,
+    @SerializedName("WatchListMainPosition")
+    val WatchListMainPosition: Int,
+    @SerializedName("SymbolCount")
+    val SymbolCount: Int?,
+    @SerializedName("WatchListMainDefault")
+    val WatchListMainDefault: Boolean?
 )

@@ -2,6 +2,7 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -38,10 +39,15 @@ public class LabelledTextField extends LinearLayout {
                 if(hintField!=null){
                     binding.textInputEditText.setHint(hintField);
                 }
+
             }finally {
                 a.recycle();
             }
         }
+    }
+
+    public void addTextChangedListener(TextWatcher watcher){
+        binding.textInputEditText.addTextChangedListener(watcher);
     }
 
     public void setHint(String hint){
