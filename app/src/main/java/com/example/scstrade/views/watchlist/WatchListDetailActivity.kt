@@ -1,5 +1,6 @@
 package com.example.scstrade.views.watchlist
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.ActivityWatchListDetailBinding
 import com.example.scstrade.helper.AppConstants
@@ -33,9 +36,10 @@ class WatchListDetailActivity : AppCompatActivity() {
     lateinit var binding:ActivityWatchListDetailBinding
     var list= emptyList<WatchListDetailItem>()
     var WatchListMainID:Int?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel= (application as MyApp).watchListViewModel
+        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
         sharedViewModel = (application as MyApp).viewModel
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
@@ -48,17 +52,34 @@ class WatchListDetailActivity : AppCompatActivity() {
 
         val bundle=intent.extras
         WatchListMainID=bundle?.getInt(AppConstants.WatchListMainID)?:0
+
         binding.buttonAdd.setOnClickListener {
             val intent= Intent(this,AddSymbolActivity::class.java)
             if (bundle != null) {
                 intent.putExtras(bundle)
             }
+
             startActivity(intent)
         }
 
 
+        viewModel.mutableWatchListDetail.observe(this, Observer {result->
+            when(result){
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                    Utils.showError(binding.root,result.message?:"An error occurred")
+                }
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
 
-        viewModel.getWatchListDetail(sharedViewModel,WatchListMainID?:0)
+
+                    (binding.recyclerView.adapter as WatchListDetailAdapter).addItems(result.data?: emptyList())
+                }
+            }
+
+        })
+
         viewModel.mutableWatchListDetailItem.observe(this, Observer {
             list=it
         })
@@ -105,10 +126,10 @@ class WatchListDetailActivity : AppCompatActivity() {
                     close.visibility= View.GONE
                     open.visibility = View.VISIBLE
                 }
-                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
+                val sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
 
                 // Get the current date and time
-                var formattedDate = sdf.format(Date())
+                val formattedDate = sdf.format(Date())
                 dateTime.text = formattedDate
             }
         }
@@ -116,21 +137,7 @@ class WatchListDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.mutableWatchListDetail.observe(this, Observer {result->
-            when(result){
-                is Resource.Error -> {
-                    binding.loader.visibility = View.GONE
-                    Utils.showError(binding.root,result.message?:"An error occurred")
-                }
-                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
-                is Resource.Success -> {
-                    binding.loader.visibility = View.GONE
+        viewModel.getWatchListDetail(sharedViewModel,WatchListMainID?:0)
 
-
-                    (binding.recyclerView.adapter as WatchListDetailAdapter).addItems(result.data?: emptyList())
-                }
-            }
-
-        })
     }
 }

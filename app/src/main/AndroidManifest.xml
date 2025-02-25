@@ -18,6 +18,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".views.fundamental.FundamentalDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.fundamental.FundamentalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.technicals.TechnicalsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.technicals.TechnicalsActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.watchlist.AddSymbolActivity"
             android:exported="false" />
         <activity

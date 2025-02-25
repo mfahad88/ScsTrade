@@ -84,4 +84,7 @@
     <string name="enter_symbol">Enter Symbol</string>
     <string name="symbol">Symbol</string>
     <string name="cable_elect"><![CDATA[Cable & electrical goods]]></string>
+    <string name="e_p_e">E P/E</string>
+    <string name="price">Price</string>
+    <string name="avg_vol">Avg. Vol</string>
 </resources>

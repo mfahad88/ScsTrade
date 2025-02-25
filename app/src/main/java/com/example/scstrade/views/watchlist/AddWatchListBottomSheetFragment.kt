@@ -1,14 +1,13 @@
 package com.example.scstrade.views.watchlist
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAddWatchListBottomSheetBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -23,7 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-class AddWatchListBottomSheetFragment : BottomSheetDialogFragment() {
+class AddWatchListBottomSheetFragment() : BottomSheetDialogFragment() {
     lateinit var binding:FragmentAddWatchListBottomSheetBinding
     lateinit var viewModel: WatchListViewModel
     lateinit var login:LoginDataItem
@@ -35,6 +34,7 @@ class AddWatchListBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=FragmentAddWatchListBottomSheetBinding.inflate(inflater,container,false)
+
         mode=arguments?.getInt(AppConstants.MODE)?:0
         if(mode==1){
             Log.e("Argus--->", arguments?.getString(AppConstants.WATCHLIST_ID).toString())
@@ -57,6 +57,9 @@ class AddWatchListBottomSheetFragment : BottomSheetDialogFragment() {
                     )
                 }else{
                     viewModel.updateWatchList(binding.editTextName.text.toString(),watchListItem,login.registrationID)
+                    val result = Bundle().apply { putString(AppConstants.BOTTOM_SHEET_STATUS,"Done") }
+                    parentFragmentManager.setFragmentResult(AppConstants.BOTTOM_SHEET,result)
+
                     dismiss()
                 }
             }else{
@@ -73,8 +76,9 @@ class AddWatchListBottomSheetFragment : BottomSheetDialogFragment() {
 
                 }
                 is Resource.Success -> {
-//                    viewModel.getWatchList(login.registrationID)
-                    (parentFragment as WatchlistFragment).observeWatchList()
+                    val result = Bundle().apply { putString(AppConstants.BOTTOM_SHEET_STATUS,"Done") }
+                    parentFragmentManager.setFragmentResult(AppConstants.BOTTOM_SHEET,result)
+
                     this.dismiss()
                 }
             }
@@ -90,4 +94,6 @@ class AddWatchListBottomSheetFragment : BottomSheetDialogFragment() {
         login=user.first()
         Log.e("User: ",user.toString())
     }
+
+
 }

@@ -1,8 +1,12 @@
 package com.example.scstrade.services
 
+import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.model.response.technicals.TechnicalDetailData
+import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -82,4 +86,16 @@ interface ApiService {
         @Query("WatchListID") watchListId:Int,
         @Query("RegistrationID") registrationID:Int
     ):List<WatchListItem>
+
+    @GET(value = "/Data?que=Technicals")
+    suspend fun getTechnicals():List<TechnicalData>
+
+    @GET(value = "/Data")
+    suspend fun getTechnicalDetails(@Query("que")que:String):List<TechnicalDetailData>
+
+    @GET(value = "/Data?que=Fundamentals")
+    suspend fun getFundamental():List<FundamentalData>
+
+    @GET(value = "/Data")
+    suspend fun getFundamentalDetails(@Query("que")que:String):List<FundamentalDetailData>
 }

@@ -1,13 +1,17 @@
 package com.example.scstrade.views.watchlist
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,7 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAddSymbolBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -26,6 +32,7 @@ import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.SymbolAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
+import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -34,12 +41,14 @@ class AddSymbolActivity : AppCompatActivity() {
     lateinit var binding:ActivityAddSymbolBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var viewModel: WatchListViewModel
+    lateinit var login:LoginDataItem
     var selectedItem=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddSymbolBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
+        fetchUser()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
@@ -47,7 +56,7 @@ class AddSymbolActivity : AppCompatActivity() {
         }
         val bundle=intent.extras
         selectedItem=bundle?.getInt(AppConstants.WatchListMainID)?:0
-        viewModel = (this.application as MyApp).watchListViewModel
+        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
         sharedViewModel = (this.application as MyApp).viewModel
         binding.symbol.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -84,6 +93,7 @@ class AddSymbolActivity : AppCompatActivity() {
 
                 binding.recyclerView.adapter= SymbolAdapter(value.data?: emptyList()){
                     viewModel.addSymbol(sharedViewModel,selectedItem,it.sYM)
+
 //                    viewModel.getWatchListDetail(sharedViewModel,selectedItem)
 
                 }
@@ -112,12 +122,21 @@ class AddSymbolActivity : AppCompatActivity() {
                     close.visibility= View.GONE
                     open.visibility = View.VISIBLE
                 }
-                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
+                val sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
 
                 // Get the current date and time
-                var formattedDate = sdf.format(Date())
+                val formattedDate = sdf.format(Date())
                 dateTime.text = formattedDate
             }
         }
     }
+
+    private fun fetchUser() {
+        val listType = object : TypeToken<List<LoginDataItem>>() {}
+        val user= Utils.getSharedPreference(this, emptyList<LoginDataItem>(),AppConstants.USER,listType)
+        login=user.first()
+        Log.e("User: ",user.toString())
+    }
+
+
 }

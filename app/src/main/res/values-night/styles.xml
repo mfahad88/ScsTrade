@@ -391,4 +391,12 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#1C1B1B</item>
     </style>
+
+    <style name="symbol"></style>
+
+    <style name="symbol_wtl"></style>
+
+    <style name="symbol_companyName"></style>
+
+    <style name="e_p_e"></style>
 </resources>

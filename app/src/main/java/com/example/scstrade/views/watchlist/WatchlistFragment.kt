@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +18,6 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.Gson
@@ -34,7 +34,7 @@ class WatchlistFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentWatchlistBinding.inflate(inflater,container,false)
-        viewModel = (requireActivity().application as MyApp).watchListViewModel
+        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
         binding.buttonAdd.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             val bundle=Bundle()
@@ -50,6 +50,13 @@ class WatchlistFragment : Fragment() {
         viewModel.getWatchList(login.registrationID)
 
         observeWatchList()
+        childFragmentManager.setFragmentResultListener(AppConstants.BOTTOM_SHEET,this){_,bundle->
+            val result = bundle.getString(AppConstants.BOTTOM_SHEET_STATUS)
+            if(result.equals("done",true)){
+                viewModel.getWatchList(login.registrationID)
+//                observeWatchList()
+            }
+        }
 
         viewModel.mutableDelete.observe(viewLifecycleOwner, Observer {
             when(it){
@@ -63,6 +70,7 @@ class WatchlistFragment : Fragment() {
 
         return binding.root
     }
+
 
    public fun observeWatchList(){
        viewModel.mutableWatchListItem.observe(viewLifecycleOwner, Observer { result->

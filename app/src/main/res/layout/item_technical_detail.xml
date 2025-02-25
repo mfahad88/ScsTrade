@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FCF8F8"
+
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/image"
+                android:layout_alignParentStart="true"
+                />
+
+            <TextView
+                android:id="@+id/symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/wtl"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/symbol_wtl"
+                android:textFontWeight="600"
+                android:layout_toEndOf="@id/imageViewLogo"/>
+
+            <TextView
+                android:id="@+id/companyName"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/companyName"
+                android:textAppearance="@style/symbol_companyName"
+
+                android:textFontWeight="400"
+                android:layout_below="@id/imageViewLogo"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/e_p_e"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textFontWeight="600"
+            android:text="1.25"
+            android:gravity="start"
+            android:textAppearance="@style/e_p_e"
+            />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textFontWeight="600"
+            android:text="35.36"
+            android:gravity="start"
+            android:textAppearance="@style/e_p_e"
+            />
+
+        <TextView
+            android:id="@+id/avg_vol"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textFontWeight="600"
+            android:text="8,616,226"
+            android:layout_gravity="start|end"
+            android:textAppearance="@style/e_p_e"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="bottom"
+        android:background="@color/md_theme_outlineVariant" />
+
+</LinearLayout>

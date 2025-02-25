@@ -2,10 +2,13 @@ package com.example.scstrade.repository
 
 import android.content.Context
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.dao.StockDao
+import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.model.response.technicals.TechnicalDetailData
+import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
@@ -74,6 +77,38 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun registerUser(fullName:String,email: String,mobile:String,password: String): Resource<List<LoginDataItem>> {
         try{
             return Resource.Success(apiService.registration(email,fullName,mobile,password))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getTechnicals(): Resource<List<TechnicalData>> {
+        try {
+            return Resource.Success(apiService.getTechnicals())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getTechnicalDetails(que:String): Resource<List<TechnicalDetailData>> {
+        try {
+            return Resource.Success(apiService.getTechnicalDetails(que))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getFundamental(): Resource<List<FundamentalData>> {
+        try{
+            return Resource.Success(apiService.getFundamental())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getFundamentalDetails(que:String): Resource<List<FundamentalDetailData>> {
+        try {
+            return Resource.Success(apiService.getFundamentalDetails(que))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

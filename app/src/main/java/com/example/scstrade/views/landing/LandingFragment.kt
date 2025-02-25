@@ -1,5 +1,6 @@
 package com.example.scstrade.views.landing
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,10 +26,12 @@ import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.fundamental.FundamentalActivity
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
+import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -177,6 +180,12 @@ class LandingFragment : Fragment() {
                     Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())
+                }else if(keyDescValue.key?.equals("technical",true)?:false){
+                    val intent = Intent(requireContext(),TechnicalsActivity::class.java)
+                    startActivity(intent)
+                }else if(keyDescValue.key?.equals("fundamental",true)?:false){
+                    val intent = Intent(requireContext(),FundamentalActivity::class.java)
+                    startActivity(intent)
                 }
                 binding.drawerLayout.closeDrawers()
             }
