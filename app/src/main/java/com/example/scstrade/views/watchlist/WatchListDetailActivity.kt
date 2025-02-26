@@ -23,6 +23,7 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
+import com.example.scstrade.viewmodels.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListDetailAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
@@ -39,8 +40,11 @@ class WatchListDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
+
         sharedViewModel = (application as MyApp).viewModel
+        viewModel= ViewModelProvider(this,
+            WatchListViewModelFactory(this.application,sharedViewModel)
+        ).get(WatchListViewModel::class.java)
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -93,7 +97,7 @@ class WatchListDetailActivity : AppCompatActivity() {
                 is Resource.Loading -> binding.loader.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                    viewModel.getWatchListDetail(sharedViewModel,WatchListMainID?:0)
+                    viewModel.getWatchListDetail(WatchListMainID?:0)
                 }
             }
         })
@@ -137,7 +141,7 @@ class WatchListDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getWatchListDetail(sharedViewModel,WatchListMainID?:0)
+        viewModel.getWatchListDetail(WatchListMainID?:0)
 
     }
 }

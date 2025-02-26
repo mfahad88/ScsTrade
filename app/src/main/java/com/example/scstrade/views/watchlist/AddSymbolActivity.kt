@@ -29,6 +29,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
+import com.example.scstrade.viewmodels.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.SymbolAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
@@ -56,7 +57,9 @@ class AddSymbolActivity : AppCompatActivity() {
         }
         val bundle=intent.extras
         selectedItem=bundle?.getInt(AppConstants.WatchListMainID)?:0
-        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
+        viewModel= ViewModelProvider(this,
+            WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
+        ).get(WatchListViewModel::class.java)
         sharedViewModel = (this.application as MyApp).viewModel
         binding.symbol.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -92,7 +95,7 @@ class AddSymbolActivity : AppCompatActivity() {
                 binding.sector.adapter=ArrayAdapter(this@AddSymbolActivity,android.R.layout.simple_list_item_1,list)
 
                 binding.recyclerView.adapter= SymbolAdapter(value.data?: emptyList()){
-                    viewModel.addSymbol(sharedViewModel,selectedItem,it.sYM)
+                    viewModel.addSymbol(selectedItem,it.sYM)
 
 //                    viewModel.getWatchListDetail(sharedViewModel,selectedItem)
 

@@ -17,6 +17,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.technicals.adapter.TechnicalDetailAdapter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

@@ -48,6 +48,7 @@ class LandingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
+
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -72,10 +73,12 @@ class LandingFragment : Fragment() {
                 bottomMargin = systemBars.bottom
             }
             WindowInsetsCompat.CONSUMED
+
         }
         sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
         })
+
         binding.imageViewClose.setOnClickListener {
             if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
@@ -113,6 +116,7 @@ class LandingFragment : Fragment() {
         return binding.root
     }
 
+
     private fun updateMarket(it: Resource<List<KSEIndices>>) {
         binding.mMarket.apply {
             if(it.data?.isNotEmpty()?:false){
@@ -147,6 +151,8 @@ class LandingFragment : Fragment() {
                 .commit()
         }
     }
+
+
 
     private fun initSideMenu() {
         val list:List<KeyDescValue> = listOf(

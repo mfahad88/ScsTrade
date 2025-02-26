@@ -65,12 +65,8 @@ public class mLineChart extends LineChart {
     }
 
     public void setEntries(List<Entry> entries) {
-//        this.entries = entries;
-        if(entries!=null) {
-            for (int i = 0; i < entries.size(); i++) {
-                dataSet.addEntry(entries.get(i));
-            }
-        }
+        this.entries = entries;
+
         init(context,attrs);
     }
 
@@ -106,7 +102,7 @@ public class mLineChart extends LineChart {
 
         lineColor=ContextCompat.getColor(context,R.color.md_theme_primary);
 //        filledColor=ContextCompat.getColor(context,R.color.md_theme_secondaryFixedDim);
-        dataSet=new LineDataSet(new ArrayList<>(),"");
+        dataSet=new LineDataSet(entries,"");
 
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setDrawCircles(false);
@@ -139,7 +135,7 @@ public class mLineChart extends LineChart {
 
         this.notifyDataSetChanged();
 //        this.animateXY(5000,5000);
-//        this.invalidate();
+        this.invalidate();
         a.recycle();
     }
 }

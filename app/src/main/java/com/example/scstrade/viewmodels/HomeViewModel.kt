@@ -10,6 +10,7 @@ import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application):AndroidViewModel(application) {
@@ -22,17 +23,26 @@ class HomeViewModel(application: Application):AndroidViewModel(application) {
 
     fun fetchChart(){
         viewModelScope.launch {
-            chartItem.value=repository.getIndexChart(
-                if(selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kmi 30")?:false) "kmi30"
-                else if(selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 100")?:false) "kse"
-                else if(selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 30")?:false) "kse30"
-                else "kseall",
-                if(selectedTime.value?.indexOf(true)==0) 1
-                else if (selectedTime.value?.indexOf(true)==1) 5
-                else if (selectedTime.value?.indexOf(true)==2) 15
-                else if(selectedTime.value?.indexOf(true)==3) 30
-                else 60
-            )
+            while (true) {
+                chartItem.value = repository.getIndexChart(
+                    if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kmi 30")
+                            ?: false
+                    ) "kmi30"
+                    else if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 100")
+                            ?: false
+                    ) "kse"
+                    else if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 30")
+                            ?: false
+                    ) "kse30"
+                    else "kseall",
+                    if (selectedTime.value?.indexOf(true) == 0) 1
+                    else if (selectedTime.value?.indexOf(true) == 1) 5
+                    else if (selectedTime.value?.indexOf(true) == 2) 15
+                    else if (selectedTime.value?.indexOf(true) == 3) 30
+                    else 60
+                )
+                delay(5000)
+            }
         }
     }
 

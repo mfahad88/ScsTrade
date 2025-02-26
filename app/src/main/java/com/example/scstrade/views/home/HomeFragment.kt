@@ -47,9 +47,10 @@ class HomeFragment : Fragment() {
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
+
 //        viewModel.fetchAllData()
 //        viewModel.fetchIndices()
-        
+
         binding.cardHome.apply {
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()
@@ -169,7 +170,9 @@ class HomeFragment : Fragment() {
                         homeViewModel.setSelectedIndex(result.data?.first {
                             it.iNDEXCODE.contains("kse 100",true)
                         }?: emptyList<KSEIndices>().first())
-                        homeViewModel.fetchChart()
+                        homeViewModel.setSelectedLine()
+
+//                        homeViewModel.fetchChart()
                     }else{
                         homeViewModel.setSelectedIndex(result.data?.first {
                             it.iNDEXCODE.contains(binding.cardHome.kmiallshr.text,true)
@@ -227,6 +230,7 @@ class HomeFragment : Fragment() {
                                interval+=1
                                Entry(interval.toFloat(),it.tradingHigh.toFloat())
                            }
+
                        }
                    }
                }

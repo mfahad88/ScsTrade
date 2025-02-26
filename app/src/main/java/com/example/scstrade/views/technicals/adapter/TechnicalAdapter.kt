@@ -1,36 +1,29 @@
-package com.example.scstrade.views.fundamental
+package com.example.scstrade.views.technicals.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scstrade.databinding.ItemTechnicalDetailBinding
-import com.example.scstrade.model.response.fundamental.FundamentalDetailData
-
+import com.example.scstrade.databinding.ItemSectorBinding
+import com.example.scstrade.model.response.technicals.TechnicalData
 import java.util.Collections
 
-class FundamentalDetailAdapter(private val itemList: List<FundamentalDetailData>, private val onItemClick: (FundamentalDetailData) -> Unit) : RecyclerView.Adapter<FundamentalDetailAdapter.FundamentalDetailViewHolder>() {
+class TechnicalAdapter(private val itemList: List<TechnicalData>, private val onItemClick: (TechnicalData) -> Unit) : RecyclerView.Adapter<TechnicalAdapter.TechnicalViewHolder>() {
 
-    class FundamentalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TechnicalViewHolder(private val binding: ItemSectorBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: FundamentalDetailData, onItemClick: (FundamentalDetailData) -> Unit) {
-            binding.apply {
-                symbol.text=item.symbol
-                ePE.text=item.ePE.toString()
-                price.text = item.price.toString()
-//                avgVol.text = item.avgVol
-                companyName.text = item.companyName
-            }
+        fun bind(item: TechnicalData, onItemClick: (TechnicalData) -> Unit) {
+            binding.textView.text = item.technicals
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundamentalDetailViewHolder {
-        val binding = ItemTechnicalDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FundamentalDetailViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TechnicalViewHolder {
+        val binding = ItemSectorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TechnicalViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FundamentalDetailViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TechnicalViewHolder, position: Int) {
         holder.bind(itemList[position], onItemClick)
     }
 

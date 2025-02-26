@@ -1,24 +1,21 @@
 package com.example.scstrade.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.repository.WatchListRepository
-import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class WatchListViewModel(application: Application):AndroidViewModel(application) {
+class WatchListViewModel(application: Application,private  val sharedViewModel: SharedViewModel):AndroidViewModel(application) {
 
     val repository=WatchListRepository(RetrofitInstance.api,application)
     val mutableCreate=MutableLiveData<Resource<List<WatchListItem>>>()
@@ -52,7 +49,7 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
         }
     }
 
-    fun addSymbol(sharedViewModel:SharedViewModel,watchListId: Int,symbol:String){
+    fun addSymbol(watchListId: Int,symbol:String){
         mutableSymAdd.value = Resource.Loading()
         viewModelScope.launch {
             val result=repository.addSymbol(watchListId, symbol)
@@ -79,7 +76,7 @@ class WatchListViewModel(application: Application):AndroidViewModel(application)
             mutableWatchListItem.value=repository.getWatchList(userId)
         }
     }
-    fun getWatchListDetail(sharedViewModel: SharedViewModel, watchListId:Int){
+    fun getWatchListDetail(watchListId:Int){
         mutableWatchListDetail.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
 

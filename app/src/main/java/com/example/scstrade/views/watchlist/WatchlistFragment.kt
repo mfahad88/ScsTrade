@@ -18,6 +18,8 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.WatchListViewModel
+import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.Gson
@@ -34,7 +36,7 @@ class WatchlistFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentWatchlistBinding.inflate(inflater,container,false)
-        viewModel= ViewModelProvider(this).get(WatchListViewModel::class.java)
+        viewModel= ViewModelProvider(this,WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)).get(WatchListViewModel::class.java)
         binding.buttonAdd.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             val bundle=Bundle()

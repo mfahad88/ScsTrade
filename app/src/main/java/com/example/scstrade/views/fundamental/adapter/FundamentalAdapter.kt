@@ -1,29 +1,29 @@
-package com.example.scstrade.views.technicals
+package com.example.scstrade.views.fundamental.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemSectorBinding
-import com.example.scstrade.model.response.technicals.TechnicalData
+import com.example.scstrade.model.response.fundamental.FundamentalData
 import java.util.Collections
 
-class TechnicalAdapter(private val itemList: List<TechnicalData>, private val onItemClick: (TechnicalData) -> Unit) : RecyclerView.Adapter<TechnicalAdapter.TechnicalViewHolder>() {
+class FundamentalAdapter(private val itemList: List<FundamentalData>, private val onItemClick: (FundamentalData) -> Unit) : RecyclerView.Adapter<FundamentalAdapter.FundamentalViewHolder>() {
 
-    class TechnicalViewHolder(private val binding: ItemSectorBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FundamentalViewHolder(private val binding: ItemSectorBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TechnicalData, onItemClick: (TechnicalData) -> Unit) {
-            binding.textView.text = item.technicals
+        fun bind(item: FundamentalData, onItemClick: (FundamentalData) -> Unit) {
+            binding.textView.text = item.fundamentals
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TechnicalViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundamentalViewHolder {
         val binding = ItemSectorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TechnicalViewHolder(binding)
+        return FundamentalViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TechnicalViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FundamentalViewHolder, position: Int) {
         holder.bind(itemList[position], onItemClick)
     }
 

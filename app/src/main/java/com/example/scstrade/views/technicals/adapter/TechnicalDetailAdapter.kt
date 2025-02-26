@@ -1,11 +1,10 @@
-package com.example.scstrade.views.technicals
+package com.example.scstrade.views.technicals.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemTechnicalDetailBinding
-import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import java.util.Collections
 

@@ -17,7 +17,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.technicals.TechnicalDetailAdapter
+import com.example.scstrade.views.fundamental.adapter.FundamentalDetailAdapter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,7 +30,7 @@ class FundamentalDetailActivity : AppCompatActivity() {
         viewModel = (this.application as MyApp).viewModel
         binding = ActivityFundamentalDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
-        setContentView(R.layout.activity_fundamental_detail)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
