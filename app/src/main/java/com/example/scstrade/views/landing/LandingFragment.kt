@@ -75,9 +75,9 @@ class LandingFragment : Fragment() {
             WindowInsetsCompat.CONSUMED
 
         }
-        sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
+   /*     sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
-        })
+        })*/
 
         binding.imageViewClose.setOnClickListener {
             if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
@@ -117,7 +117,7 @@ class LandingFragment : Fragment() {
     }
 
 
-    private fun updateMarket(it: Resource<List<KSEIndices>>) {
+  /*  private fun updateMarket(it: Resource<List<KSEIndices>>) {
         binding.mMarket.apply {
             if(it.data?.isNotEmpty()?:false){
                 if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
@@ -134,7 +134,7 @@ class LandingFragment : Fragment() {
                 dateTime.text = formattedDate
             }
         }
-    }
+    }*/
 
 
     public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
