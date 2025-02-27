@@ -49,23 +49,6 @@ class StockActivity : AppCompatActivity() {
             fragment.arguments =b
             loadFragment(fragment)
         }
-        binding.title.text=b?.getString("sector")?:""
-        sharedViewModel.mutableIndices.observe(this, Observer {
-            binding.mMarket.apply {
-                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
-                    close.visibility= View.VISIBLE
-                    open.visibility = View.GONE
-                }else{
-                    close.visibility= View.GONE
-                    open.visibility = View.VISIBLE
-                }
-                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
-
-                // Get the current date and time
-                var formattedDate = sdf.format(Date())
-                dateTime.text = formattedDate
-            }
-        })
 
     }
 

@@ -9,8 +9,11 @@ android {
     compileSdk = 35
     buildFeatures{
         viewBinding=true
+        compose=true
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
     defaultConfig {
         applicationId = "com.example.scstrade"
         minSdk = 21
@@ -75,5 +78,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("androidx.compose.ui:ui:1.7.7")
+    implementation ("androidx.compose.material:material:1.7.7")
 
 }

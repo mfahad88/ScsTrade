@@ -31,6 +31,7 @@ import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
+import com.example.scstrade.views.news.NewsActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import java.text.SimpleDateFormat
@@ -96,6 +97,9 @@ class LandingFragment : Fragment() {
                 true
             }else if(item.itemId==R.id.marketFragment){
                 loadFragment(MarketFragment())
+                true
+            }else if(item.itemId==R.id.news){
+                startActivity(Intent(requireContext(),NewsActivity::class.java))
                 true
             }
 

@@ -9,6 +9,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
@@ -109,6 +110,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun getFundamentalDetails(que:String): Resource<List<FundamentalDetailData>> {
         try {
             return Resource.Success(apiService.getFundamentalDetails(que))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun news(): Resource<List<NewsData>> {
+        try {
+            return Resource.Success(apiService.news())
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

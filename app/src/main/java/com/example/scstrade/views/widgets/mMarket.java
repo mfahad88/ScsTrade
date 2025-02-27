@@ -3,11 +3,14 @@ package com.example.scstrade.views.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewTreeLifecycleOwner;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.MmarketBinding;
@@ -34,6 +37,7 @@ public class mMarket extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         binding=MmarketBinding.inflate(LayoutInflater.from(context),this,true);
+        Log.e("LifecycleOwner", "Context class: " + context.getClass().getName()+" "+(context instanceof AppCompatActivity));
         if(attrs!=null){
             TypedArray a=getContext().getTheme().obtainStyledAttributes(
                     attrs,
@@ -41,9 +45,12 @@ public class mMarket extends LinearLayout {
                     0,0
             );
             try{
+
                 SharedViewModel sharedViewModel=((MyApp) context.getApplicationContext()).viewModel;
-                sharedViewModel.getMutableIndices().observe((AppCompatActivity)context, listResource -> {
-                    if(!Objects.requireNonNull(listResource.getData()).isEmpty()){
+                LifecycleOwner lifecycleOwner =  (LifecycleOwner) context;
+
+                sharedViewModel.getMutableIndices().observe(lifecycleOwner, listResource -> {
+                    if(listResource.getData()!=null){
                         if(listResource.getData().get(0).getMarketStatus().equalsIgnoreCase("close")){
                             binding.close.setVisibility(VISIBLE);
                             binding.open.setVisibility(GONE);
@@ -55,7 +62,10 @@ public class mMarket extends LinearLayout {
                         binding.dateTime.setText(sdf.format(new Date()));
                     }
                 });
-            }finally {
+            }catch (Exception e){
+                Log.e("LifecycleOwner",e.getMessage());
+            }
+            finally {
                 a.recycle();
             }
         }

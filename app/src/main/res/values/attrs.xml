@@ -46,4 +46,5 @@
         <attr name="android:text" format="string|reference"/>
         <attr name="setSelected" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="mMarket"></declare-styleable>
 </resources>

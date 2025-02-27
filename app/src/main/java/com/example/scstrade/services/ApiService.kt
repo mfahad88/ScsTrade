@@ -7,6 +7,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -98,4 +99,7 @@ interface ApiService {
 
     @GET(value = "/Data")
     suspend fun getFundamentalDetails(@Query("que")que:String):List<FundamentalDetailData>
+
+    @GET(value = "/Data?que=News")
+    suspend fun news():List<NewsData>
 }

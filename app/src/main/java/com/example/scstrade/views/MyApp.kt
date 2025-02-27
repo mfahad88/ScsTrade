@@ -17,6 +17,9 @@ class MyApp : Application() {
             fetchIndices()
             fetchAllData()
         }
+
+
+
        /* CoroutineScope(Dispatchers.Main).launch {
             while (true){
                 val syncResults = SyncManager(applicationContext).syncData()

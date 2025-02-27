@@ -115,29 +115,10 @@ class WatchListDetailActivity : AppCompatActivity() {
             (binding.recyclerView.adapter as WatchListDetailAdapter).getItemTouchHelper().attachToRecyclerView(this)
         }
 
-        sharedViewModel.mutableIndices.observe(this, Observer {
-            updateMarket(it)
-        })
+
     }
 
-    private fun updateMarket(it: Resource<List<KSEIndices>>) {
-        binding.mMarket.apply {
-            if(it.data?.isNotEmpty()?:false){
-                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
-                    close.visibility= View.VISIBLE
-                    open.visibility = View.GONE
-                }else{
-                    close.visibility= View.GONE
-                    open.visibility = View.VISIBLE
-                }
-                val sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
 
-                // Get the current date and time
-                val formattedDate = sdf.format(Date())
-                dateTime.text = formattedDate
-            }
-        }
-    }
 
     override fun onResume() {
         super.onResume()

@@ -15,29 +15,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="90dp"/>
-
-    <include
-        android:id="@+id/mMarket"
-        layout="@layout/mmarket"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/symbol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="15dp"
         app:hintText="@string/symbol"
         app:hintTextField="@string/enter_symbol"
-        app:layout_constraintEnd_toEndOf="@+id/mMarket"
-        app:layout_constraintStart_toStartOf="@+id/mMarket"
-        app:layout_constraintTop_toBottomOf="@+id/mMarket" />
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Spinner
         android:id="@+id/sector"
@@ -46,17 +35,16 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:paddingVertical="5dp"
-        app:layout_constraintEnd_toEndOf="@id/mMarket"
-        app:layout_constraintStart_toStartOf="@id/mMarket"
+        app:layout_constraintEnd_toEndOf="@id/symbol"
+        app:layout_constraintStart_toStartOf="@id/symbol"
         app:layout_constraintTop_toBottomOf="@id/symbol" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/mMarket"
-        app:layout_constraintStart_toStartOf="@id/mMarket"
+        app:layout_constraintEnd_toEndOf="@id/symbol"
+        app:layout_constraintStart_toStartOf="@id/symbol"
         app:layout_constraintTop_toBottomOf="@id/sector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,17 +14,20 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityMainBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.splash.SplashFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -38,9 +41,18 @@ class MainActivity : AppCompatActivity() {
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel
 
-//        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        setContentView(binding.root)
 
+
+        setContentView(binding.root)
+        val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
+        viewModel.isConnected.observe(this, Observer {
+
+            if(!it){
+                snackbar.show()
+            }else{
+                snackbar.dismiss()
+            }
+        })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

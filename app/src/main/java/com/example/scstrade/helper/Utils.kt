@@ -14,7 +14,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class Utils {
     companion object{
@@ -23,32 +26,37 @@ class Utils {
             print("Hello World!")
         }
 
-        fun commaFormat(value:Double): String {
+        fun commaFormat(value:Double?): String {
             return NumberFormat.getInstance(Locale.US).format(value)
         }
-        fun convertToMillions(value: Double): String {
+        fun convertToMillions(value: Double?): String {
             val df: DecimalFormat = DecimalFormat("#,###.##")
-            return  if (value >= 1_000_000) {
-                // Convert to millions and append "M"
-                return df.format(value / 1_000_000) + "M"
-//                String.format("%.2fm", commaFormat(value / 1_000_000.0))
-//                NumberFormat.getInstance(Locale.US).format(million)
-            } else {
-                // Return the original value if it's less than a million
-                    df.format(value)
+            if(value!=null){
+                if (value >= 1_000_000) {
+                    // Convert to millions and append "M"
+                    return df.format(value / 1_000_000) + "M"
+                } else {
+                    return df.format(value)
+                }
+            }else{
+                return "0.0"
             }
 
         }
 
-        fun convertDate(dateString:String): Long {
+        fun convertDate(dateString:String): String {
 
-            if (dateString != null && dateString.startsWith("/Date(") && dateString.endsWith(")/")) {
-                val timestamp = dateString.substring(6, dateString.length - 2).toLong()
-                return timestamp / (5 * 60 * 1000) * (5 * 60 * 1000)
+            // Extract the timestamp (milliseconds)
+            val timestamp = dateString.substringAfter("(").substringBefore(")").toLong()
 
-            }else{
-                return  0
-            }
+            // Convert to Date
+            val date = Date(timestamp)
+
+            // Define the output format
+            val sdf = SimpleDateFormat("dd MMM yyyy | hh:mm a", Locale.ENGLISH)
+            sdf.timeZone = TimeZone.getDefault() // Set timezone if needed
+
+            return sdf.format(date)
          }
 
         fun isDarkMode(context: Context): Boolean {
@@ -104,9 +112,10 @@ class Utils {
             popupMenu.show()
         }
 
-        fun showError(view: View,message:String){
+        fun showInternetError(view: View,message:String,duration:Int=Snackbar.LENGTH_SHORT): Snackbar {
+            val snackbar:Snackbar
             if(isDarkMode(view.context)){
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                snackbar = Snackbar.make(view, message, duration)
                     .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_errorContainer))
                     .setTextColor(
                         ContextCompat.getColor(
@@ -114,9 +123,9 @@ class Utils {
                             R.color.md_theme_surfaceContainerLowest
                         )
                     )
-                    .show()
+
             }else {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                snackbar= Snackbar.make(view, message, duration)
                     .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_error))
                     .setTextColor(
                         ContextCompat.getColor(
@@ -124,8 +133,35 @@ class Utils {
                             R.color.md_theme_surfaceContainerLowest
                         )
                     )
-                    .show()
             }
+            return snackbar
+        }
+
+
+        fun showError(view: View,message:String,duration:Int=Snackbar.LENGTH_SHORT): Snackbar {
+            val snackbar:Snackbar
+            if(isDarkMode(view.context)){
+                snackbar = Snackbar.make(view, message, duration)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_errorContainer))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+
+            }else {
+                snackbar= Snackbar.make(view, message, duration)
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_error))
+                    .setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.md_theme_surfaceContainerLowest
+                        )
+                    )
+            }
+            snackbar.show()
+            return snackbar
         }
 
         fun showSuccess(view: View,message:String){
