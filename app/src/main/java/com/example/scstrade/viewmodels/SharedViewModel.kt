@@ -1,7 +1,10 @@
 package com.example.scstrade.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
@@ -24,7 +27,8 @@ import kotlinx.coroutines.withContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
     private val repository=MainRepository(RetrofitInstance.api,application)
-     val mutableAllData=MutableLiveData<Resource<List<StockItem>>>()
+    val mutableAllData=MutableLiveData<Resource<List<StockItem>>>()
+    val mutableFuture=MutableLiveData<Resource<List<StockItem>>>()
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
     val mutableLogin=MutableLiveData<Resource<List<LoginDataItem>>>()
     val mutableRegister=MutableLiveData<Resource<List<LoginDataItem>>>()
@@ -40,11 +44,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val isConnected = ConnectivityObserver(application)
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
-            while(true) {
+            while(isFetchAllData) {
                 if(isConnected.value==true) {
-                    val result = repository.fetchAllData()
+                    val result = repository.fetchAllData("AllData")
+                    val result1 = repository.fetchAllData("FutureData")
                     withContext(Dispatchers.Main) {
                         mutableAllData.value = result
+                        mutableFuture.value = result1
                     }
                     delay(5000)
                 }
@@ -70,7 +76,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun fetchIndices(){
 
         viewModelScope.launch(Dispatchers.IO) {
-            while(true) {
+            while(isFetchIndices) {
 //            mutableAllData.value = Resource.Loading()
                 if (isConnected.value == true) {
                     val result = repository.getIndices()
@@ -150,11 +156,16 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun news(){
+    fun news(index:Int){
         mutableNews.value = Resource.Loading()
         if(isConnected.value==true){
             viewModelScope.launch (Dispatchers.IO){
-                val result=repository.news()
+                var result:Resource<List<NewsData>> = Resource.Loading()
+                if(index==0){
+                    result=repository.news()
+                }else if(index==1){
+
+                }
                 withContext(Dispatchers.Main){
                     mutableNews.value = result
                 }
@@ -162,6 +173,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("SharedViewModel", "ViewModel is cleared")
+    }
     fun stopAll(){
         isFetchIndices=false
         isFetchAllData=false

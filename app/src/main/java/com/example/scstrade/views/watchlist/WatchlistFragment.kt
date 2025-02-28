@@ -49,13 +49,13 @@ class WatchlistFragment : Fragment() {
             addItemDecoration(HorizontalDivider(30))
         }
        fetchUser()
-        viewModel.getWatchList(login.registrationID)
+        viewModel.getWatchList(login.registrationID?:0)
 
         observeWatchList()
         childFragmentManager.setFragmentResultListener(AppConstants.BOTTOM_SHEET,this){_,bundle->
             val result = bundle.getString(AppConstants.BOTTOM_SHEET_STATUS)
             if(result.equals("done",true)){
-                viewModel.getWatchList(login.registrationID)
+                viewModel.getWatchList(login.registrationID?:0)
 //                observeWatchList()
             }
         }
@@ -96,7 +96,7 @@ class WatchlistFragment : Fragment() {
 
                            }, onItemPopupClick = {str,item->
                                if(str.contains("delete",true)) {
-                                   viewModel.deleteWatchList(item.WatchListMainID,login.registrationID)
+                                   viewModel.deleteWatchList(item.WatchListMainID,login.registrationID?:0)
                                }else if(str.contains("edit",true)){
                                    val bottomSheetFragment=AddWatchListBottomSheetFragment()
                                    val bundle=Bundle()

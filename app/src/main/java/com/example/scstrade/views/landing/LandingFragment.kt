@@ -1,5 +1,6 @@
 package com.example.scstrade.views.landing
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -76,6 +79,20 @@ class LandingFragment : Fragment() {
             WindowInsetsCompat.CONSUMED
 
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val fragmentManager = requireActivity().supportFragmentManager
+                if (fragmentManager.backStackEntryCount > 0) {
+                    // 🔙 Pop fragment from back stack
+                    fragmentManager.popBackStack()
+                } else {
+                    // 🚪 Close the app
+                    showExitDialog()
+                }
+            }
+
+        })
    /*     sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
         })*/
@@ -120,7 +137,14 @@ class LandingFragment : Fragment() {
         return binding.root
     }
 
-
+    private fun showExitDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Exit App")
+            .setMessage("Are you sure you want to exit?")
+            .setPositiveButton("Yes") { _, _ -> requireActivity().finish() } // 🚪 Close the app
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() } // ❌ Dismiss
+            .show()
+    }
   /*  private fun updateMarket(it: Resource<List<KSEIndices>>) {
         binding.mMarket.apply {
             if(it.data?.isNotEmpty()?:false){

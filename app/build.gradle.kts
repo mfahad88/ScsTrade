@@ -81,5 +81,6 @@ dependencies {
 
     implementation ("androidx.compose.ui:ui:1.7.7")
     implementation ("androidx.compose.material:material:1.7.7")
-
+//    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+//    implementation ("com.prof18.rssparser:rssparser:1.1")
 }

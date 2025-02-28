@@ -61,7 +61,7 @@ class RegisterFragment : Fragment() {
                 is Resource.Loading -> binding.loader.visibility=View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
-                    if(resource.data?.isNotEmpty()?:false){
+                    if(resource.data?.isNotEmpty() == true){
                         Utils.showSuccess(binding.root,"Successfully Register")
                         Utils.saveSharedPreference(requireContext(),AppConstants.USER,resource.data?: emptyList())
                         loadFragment(LandingFragment(),false)

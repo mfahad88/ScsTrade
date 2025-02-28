@@ -49,7 +49,7 @@ class IndexAdapter(
                         Entry(interval.toFloat(),it.tradingHigh.toFloat())
                     }
                     binding.lineChart.setEntries(entries)
-                    binding.lineChart.notifyDataSetChanged()
+
                     binding.lineChart.moveViewToX(interval.toFloat())
                     binding.lineChart.xAxis.apply {
                         setDrawLabels(false)

@@ -47,10 +47,10 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun fetchAllData(): Resource<List<StockItem>>{
+    suspend fun fetchAllData(que: String): Resource<List<StockItem>>{
         try {
 
-            return Resource.Success(apiService.fetchAllData())
+            return Resource.Success(apiService.fetchAllData(que))
 //            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred")
@@ -122,4 +122,27 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return Resource.Error(e.message?:"An error occurred",null)
         }
     }
+
+
+
+   /* suspend fun newsTribune() : Resource<List<Article>>{
+        var resource:Resource<List<Article>> = Resource.Loading()
+        try {
+            val parser=Parser()
+            parser.execute("https://tribune.com.pk/feed/business")
+            parser.onFinish(object: Parser.OnTaskCompleted{
+                override fun onTaskCompleted(list: ArrayList<Article>?) {
+                    resource = Resource.Success(list?: emptyList())
+                }
+
+                override fun onError() {
+                    resource = Resource.Error("An error occurred",null)
+                }
+
+            })
+        }catch (e:Exception){
+            resource =  Resource.Error(e.message?:"An error occurred",null)
+        }
+        return resource
+    }*/
 }

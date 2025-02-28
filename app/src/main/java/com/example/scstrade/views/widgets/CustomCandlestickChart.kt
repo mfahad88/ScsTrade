@@ -38,12 +38,16 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.setBackgroundColor(Color.WHITE)
         this.setTouchEnabled(true)
         this.setPinchZoom(true)
+        this.isDragEnabled=true
         this.background=(AppCompatResources.getDrawable(context,R.drawable.stock_card))
 
         // X Axis Customization
         this.xAxis.position = XAxis.XAxisPosition.BOTTOM
         this.xAxis.setDrawGridLines(false)
         this.xAxis.setAvoidFirstLastClipping(true)
+        this.xAxis.setDrawLabels(false)
+//        this.xAxis.axisMinimum=10f
+//        this.xAxis.axisMaximum=200f
 
         // Left Y Axis
         this.axisLeft.isEnabled = false
@@ -72,6 +76,8 @@ class CustomCandlestickChart @JvmOverloads constructor(
             setDrawValues(false)
         }
         this.data = CandleData(candleDataSet)
+//        this.setVisibleXRange(10f,30f)
+        setupChart()
         this.invalidate()
     }
 }

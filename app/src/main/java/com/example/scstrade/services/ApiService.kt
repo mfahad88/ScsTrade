@@ -25,8 +25,8 @@ interface ApiService {
         @Query("resolution") resolution: Int
     ): List<ChartItem>
 
-    @GET(value = "/Data?que=AllData")
-    suspend fun fetchAllData(): List<StockItem>
+    @GET(value = "/Data")
+    suspend fun fetchAllData(@Query("que") que: String): List<StockItem>
 
     @GET(value = "/Login")
     suspend fun fetchLogin(

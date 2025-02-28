@@ -1,17 +1,26 @@
 package com.example.scstrade.views
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.views.main.MainActivity
 
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     override fun onCreate() {
-        super.onCreate()
+        super<Application>.onCreate()
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
         viewModel.apply {
             fetchIndices()
@@ -19,14 +28,36 @@ class MyApp : Application() {
         }
 
 
+        registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
+            override fun onActivityCreated(p0: Activity, p1: Bundle?) {
 
-       /* CoroutineScope(Dispatchers.Main).launch {
-            while (true){
-                val syncResults = SyncManager(applicationContext).syncData()
-                Log.e("Result-->",syncResults.toString())
-                delay(5000)
             }
-        }*/
 
+            override fun onActivityStarted(p0: Activity) {
+            }
+
+            override fun onActivityResumed(p0: Activity) {
+            }
+
+            override fun onActivityPaused(p0: Activity) {
+            }
+
+            override fun onActivityStopped(p0: Activity) {
+                if(p0 is MainActivity) {
+                    Log.e("Stop", "Done")
+                }
+            }
+
+            override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
+            }
+
+            override fun onActivityDestroyed(p0: Activity) {
+                if(p0 is MainActivity) {
+                    viewModel.stopAll()
+                }
+            }
+
+        })
     }
+
 }

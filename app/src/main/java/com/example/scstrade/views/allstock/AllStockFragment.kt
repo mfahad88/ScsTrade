@@ -24,6 +24,7 @@ class AllStockFragment : Fragment() {
     var sector:String?=null
     var kmi:String?=null
     var index:String?=null
+    var future:String?=null
     private var isFirst=true
     private var list= emptyList<StockItem>()
     override fun onCreateView(
@@ -38,6 +39,7 @@ class AllStockFragment : Fragment() {
         sector=arguments?.getString("sector")?:null
         kmi=arguments?.getString("kmi")?:null
         index = arguments?.getString("index")?:null
+        future = arguments?.getString("future")?:null
         binding.recyclerIndices.apply {
             adapter= StockAdapter(emptyList(),true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
@@ -64,48 +66,74 @@ class AllStockFragment : Fragment() {
             }
         })
 
-        viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
-            when(result){
-                is Resource.Error -> {
+        if(future!=null){
+            viewModel.mutableFuture.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        list = result.data ?: emptyList()
 
-                }
-                is Resource.Loading -> {
+                        when(binding.tabLayout.selectedTabPosition){
 
-                }
-                is Resource.Success -> {
-                    if(sector!=null){
-                        list=result.data?.filter { it.sN.equals(sector) }?: emptyList()
-                    }else if(kmi!=null){
-                        list = result.data?.filter { it.iN.contains("kmi",true) }?: emptyList()
-                    } else {
-                        if(index!=null){
-                         if(index?.contains("kse 100",true)?:false){
-                             list = result.data?.filter { it.iN.contains("kse 100",true) } ?: emptyList()
-                         }else if(index?.contains("kse 30",true)?:false){
-                             list = result.data?.filter { it.iN.contains("kse 30",true) } ?: emptyList()
-                         }else if(index?.contains("kmi 30",true)?:false){
-                             list = result.data?.filter { it.iN.contains("kmi 30",true) } ?: emptyList()
-                         }else{
-                             list = result.data ?: emptyList()
-                         }
-                        }else {
-                            list = result.data ?: emptyList()
+                            0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
+                            1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
+                            2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
+                            3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
                         }
-                    }
-                    when(binding.tabLayout.selectedTabPosition){
-
-                        0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
-                        1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
-                        2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
-                        3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
-                    }
 //                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
-                    binding.loader.visibility=View.GONE
-                    binding.recyclerIndices.visibility = View.VISIBLE
-
+                        binding.loader.visibility=View.GONE
+                        binding.recyclerIndices.visibility = View.VISIBLE
+                    }
                 }
-            }
-        })
+            })
+        }else{
+
+            viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> {
+
+                    }
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        if(sector!=null){
+                            list=result.data?.filter { it.sN.equals(sector) }?: emptyList()
+                        }else if(kmi!=null){
+                            list = result.data?.filter { it.iN.contains("kmi",true) }?: emptyList()
+                        }
+                        else {
+                            if(index!=null){
+                                if(index?.contains("kse 100",true)?:false){
+                                    list = result.data?.filter { it.iN.contains("kse 100",true) } ?: emptyList()
+                                }else if(index?.contains("kse 30",true)?:false){
+                                    list = result.data?.filter { it.iN.contains("kse 30",true) } ?: emptyList()
+                                }else if(index?.contains("kmi 30",true)?:false){
+                                    list = result.data?.filter { it.iN.contains("kmi 30",true) } ?: emptyList()
+                                }else{
+                                    list = result.data ?: emptyList()
+                                }
+                            }else {
+                                list = result.data ?: emptyList()
+                            }
+                        }
+                        when(binding.tabLayout.selectedTabPosition){
+
+                            0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
+                            1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
+                            2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
+                            3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
+                        }
+//                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
+                        binding.loader.visibility=View.GONE
+                        binding.recyclerIndices.visibility = View.VISIBLE
+
+                    }
+                }
+            })
+        }
+
 
 
         return binding.root

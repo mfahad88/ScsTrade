@@ -79,7 +79,10 @@ class LoginFragment : Fragment() {
                             resource.data
                         )
                         Utils.showSuccess(requireView(),"Success")
-
+                        viewModel.mutableLogin.removeObservers(this)
+                        viewModel.mutableLogin.value=null
+                        binding.userName.text=null
+                        binding.password.text= null
                         (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
                     }
                 }

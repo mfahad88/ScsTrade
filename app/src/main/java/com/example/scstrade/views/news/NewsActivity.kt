@@ -24,6 +24,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asFlow
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNewsBinding
 import com.example.scstrade.helper.Utils
@@ -67,124 +69,141 @@ class NewsActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
-        sharedViewModel.news()
-        sharedViewModel.mutableNews.observe(this, Observer {
-            when (it){
-                is Resource.Error -> {}
-                is Resource.Loading ->{}
-                is Resource.Success -> {
-                    binding.horizontalList.setContent {
-                        newsChannels(
-                            listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),
-                            listOf(R.drawable.scs_logo,R.drawable.br_logo,R.drawable.tri_logo,R.drawable.pft_logo,R.drawable.mettis_logo,R.drawable.dwn_logo),
-                            it.data?: emptyList()
-                        )
-                    }
-                }
+        sharedViewModel.news(0)
+
+
+
+        binding.horizontalList.setContent {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                newsChannels(
+                    listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),
+                    listOf(
+                        R.drawable.scs_logo,
+                        R.drawable.br_logo,
+                        R.drawable.tri_logo,
+                        R.drawable.pft_logo,
+                        R.drawable.mettis_logo,
+                        R.drawable.dwn_logo
+                    )
+                )
+               val data= sharedViewModel.mutableNews.asFlow().collectAsState(initial = Resource.Loading())
+                newList(data = data.value.data?: emptyList())
+              
             }
-        })
+        }
+        
+        
 
     }
     @Composable
-    private fun newsChannels(list: List<String>, images: List<Int>, data: List<NewsData>) {
+    private fun newsChannels(list: List<String>, images: List<Int>) {
       var selectedTabIndex by remember { mutableStateOf(0) }
-      var isExpanded by remember { mutableStateOf(false) }
-        Column(modifier = Modifier.fillMaxSize()) {
-            ScrollableTabRow(
-                selectedTabIndex = selectedTabIndex,
-                backgroundColor= Color.Transparent,
-                contentColor = colorResource(id = R.color.colorDarkerr),
-                edgePadding = 15.dp,
-                divider = {},
-                indicator = {tabPositions ->
-                  TabRowDefaults.Indicator(
-                      modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                      color = colorResource(id = R.color.md_theme_primary),
-                      height = 2.dp
-                  )
-                }
-            ) {
 
-                list.forEachIndexed { index, s ->
-                    Tab(selected = selectedTabIndex==index, onClick = {
-                        selectedTabIndex=index
-                    },
-                        text = {
-
-                            Column (verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally){
-                                Image(painter = painterResource(id = images[index]), contentDescription = list[index], modifier = Modifier.size(24.dp))
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(text = list[index],
-                                   fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
-                                    fontWeight = FontWeight(500),
-                                    color = colorResource(id = R.color.colorDarkerr)
-                                )
-
-                            }
-                        }
-                    )
-                }
+        ScrollableTabRow(
+            selectedTabIndex = selectedTabIndex,
+            backgroundColor= Color.Transparent,
+            contentColor = colorResource(id = R.color.colorDarkerr),
+            edgePadding = 15.dp,
+            divider = {},
+            indicator = {tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    color = colorResource(id = R.color.md_theme_primary),
+                    height = 2.dp
+                )
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            if(selectedTabIndex>0) {
-                DropdownMenu(expanded = isExpanded, onDismissRequest = {
-                    isExpanded = false
-                }) {
+        ) {
 
-                }
-            }
-            Box(modifier = Modifier.padding(horizontal = 20.dp)) {
-
-                LazyColumn {
-                    items(data.size) { index ->
-                        Column {
-                            Row {
-                                Box(
-                                    modifier = Modifier.weight(3f),
-                                    content = {
-                                        Text(
-                                            text = data[index].newsDesc,
-                                            fontSize = 16.sp,
-                                            maxLines = 2,
-                                            fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
-                                            fontWeight = FontWeight(600),
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
-                                    }
-                                )
-                                Box(
-                                    modifier = Modifier.weight(1f),
-                                    content = {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.news_empty),
-                                            contentDescription = "Dawn",
-                                            contentScale = ContentScale.FillBounds
-                                        )
-                                    }
-                                )
-                            }
-                            Row {
-                                Image(
-                                    painter = painterResource(id = R.drawable.clock),
-                                    contentDescription = "Clock",
-                                    modifier = Modifier.size(15.dp)
-                                )
-                                Text(
-                                    text = Utils.convertDate(data[index].newsDate),
-                                    style = TextStyle(
-                                        fontSize = 12.sp,
-                                        fontFamily = FontFamily(Font(R.font.custom_font)),
-                                        fontWeight = FontWeight(500),
-                                        color = Color(0xFF79776F)
-                                    )
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(15.dp))
-                        }
-
+            list.forEachIndexed { index, s ->
+                Tab(selected = selectedTabIndex==index, onClick = {
+                    selectedTabIndex=index
+                    if(index==0){
+                        sharedViewModel.news(index)
                     }
+                },
+                    text = {
+
+                        Column (verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally){
+                            Image(painter = painterResource(id = images[index]), contentDescription = list[index], modifier = Modifier.size(24.dp))
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Text(text = list[index],
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
+                                fontWeight = FontWeight(500),
+                                color = colorResource(id = R.color.colorDarkerr)
+                            )
+
+                        }
+                    }
+                )
+            }
+        }
+    }
+    
+    @Composable
+    fun newList(data: List<NewsData>){
+
+        Box(modifier = Modifier.padding(horizontal = 20.dp)) {
+
+            LazyColumn {
+                items(data.size) { index ->
+                    Row{
+                        Box(
+                            modifier = Modifier
+                                .weight(3f),
+                            content = {
+                                Column {
+                                    Text(
+                                        text = data[index].newsDesc,
+                                        fontSize = 16.sp,
+                                        maxLines = 2,
+                                        fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
+                                        fontWeight = FontWeight(600),
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                    Row (
+                                        modifier = Modifier.padding(top = 2.dp),
+                                    ){
+
+                                        Image(
+                                            painter = painterResource(id = R.drawable.clock),
+                                            contentDescription = "Clock",
+                                            modifier = Modifier.size(15.dp)
+                                        )
+                                        Text(
+                                            text = Utils.convertDate(data[index].newsDate),
+
+                                            style = TextStyle(
+                                                fontSize = 12.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(500),
+                                                color = Color(0xFF79776F)
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+
+                        )
+
+                        Box(
+                            modifier = Modifier
+                                .weight(1f),
+                            content = {
+                                Image(
+                                    painter = painterResource(id = R.drawable.news_empty),
+                                    contentDescription = "Dawn",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Fit
+                                )
+                            }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+
                 }
             }
         }

@@ -39,6 +39,12 @@ class MarketFragment : Fragment() {
                     bundle.putString("kmi","true")
                     fragment.arguments=bundle
                     loadFragment(fragment)
+                }else if(tab?.text.toString().equals("future",true)){
+                    val fragment=AllStockFragment()
+                    val bundle=Bundle()
+                    bundle.putString("future","true")
+                    fragment.arguments=bundle
+                    loadFragment(fragment)
                 }
             }
 

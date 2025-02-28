@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginDataItem(
     @SerializedName("RegistrationDate")
-    val registrationDate: String,
+    val registrationDate: String?,
     @SerializedName("RegistrationEmail")
-    val registrationEmail: String,
+    val registrationEmail: String?,
     @SerializedName("RegistrationID")
-    val registrationID: Int,
-    @SerializedName("RegistrationLastName")
-    val registrationLastName: String,
+    val registrationID: Int?,
+    /*@SerializedName("RegistrationLastName")
+    val registrationLastName: String?,*/
     @SerializedName("RegistrationName")
-    val registrationName: String,
+    val registrationName: String?,
     @SerializedName("RegistrationPassword")
-    val registrationPassword: String,
+    val registrationPassword: String?,
     @SerializedName("RegistrationPhone")
-    val registrationPhone: String,
+    val registrationPhone: String?,
     @SerializedName("RegistrationStatus")
-    val registrationStatus: Boolean
+    val registrationStatus: Boolean?
 )

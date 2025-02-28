@@ -55,10 +55,10 @@ class AddWatchListBottomSheetFragment() : BottomSheetDialogFragment() {
                 if(mode==0) {
                     viewModel.createWatchList(
                         binding.editTextName.text.toString(),
-                        login.registrationID
+                        login.registrationID?:0
                     )
                 }else{
-                    viewModel.updateWatchList(binding.editTextName.text.toString(),watchListItem,login.registrationID)
+                    viewModel.updateWatchList(binding.editTextName.text.toString(),watchListItem,login.registrationID?:0)
                     val result = Bundle().apply { putString(AppConstants.BOTTOM_SHEET_STATUS,"Done") }
                     parentFragmentManager.setFragmentResult(AppConstants.BOTTOM_SHEET,result)
 

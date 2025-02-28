@@ -211,7 +211,14 @@ class HomeFragment : Fragment() {
                    var interval=0
                    if(!result.data.isNullOrEmpty()){
                        if(homeViewModel.isCandleSelected.value==true){
-                           binding.cardHome.candlestickChart.setCandleData(
+                           var candleEntry:ArrayList<CandleEntry>?= ArrayList()
+                           result.data.forEachIndexed { index, it ->
+                               candleEntry?.add(
+                                   CandleEntry(index.toFloat(), it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat()))
+                           }
+
+                           binding.cardHome.candlestickChart.setCandleData(candleEntry?: emptyList())
+                          /* binding.cardHome.candlestickChart.setCandleData(
                                result.data?.map {
                                    if(homeViewModel.selectedTime.value?.indexOf(true)==0){
                                        interval+=1
@@ -224,7 +231,7 @@ class HomeFragment : Fragment() {
                                    }
                                    CandleEntry(interval.toFloat(),it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
                                }?: emptyList()
-                           )
+                           )*/
                        }else{
                            binding.cardHome.lineChart.entries = result.data.map {
                                interval+=1
