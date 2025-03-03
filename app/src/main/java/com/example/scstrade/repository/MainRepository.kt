@@ -1,5 +1,6 @@
 package com.example.scstrade.repository
 
+import RssFeed
 import android.content.Context
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.fundamental.FundamentalData
@@ -10,9 +11,18 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 class MainRepository(val apiService: ApiService,val context: Context) {
 
@@ -125,24 +135,101 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
 
 
-   /* suspend fun newsTribune() : Resource<List<Article>>{
-        var resource:Resource<List<Article>> = Resource.Loading()
-        try {
-            val parser=Parser()
-            parser.execute("https://tribune.com.pk/feed/business")
-            parser.onFinish(object: Parser.OnTaskCompleted{
-                override fun onTaskCompleted(list: ArrayList<Article>?) {
-                    resource = Resource.Success(list?: emptyList())
+    suspend fun newsTribune() : Resource<RssFeed> {
+        var resource:Resource<RssFeed> = Resource.Loading()
+        fetchRss("https://tribune.com.pk/feed/business"){
+            if(it!=null){
+                val xmlMapper=XmlMapper().apply {
+                    registerModule(KotlinModule.Builder().build())
                 }
+                val rssFeed=xmlMapper.readValue(it,RssFeed::class.java)
 
-                override fun onError() {
-                    resource = Resource.Error("An error occurred",null)
-                }
-
-            })
-        }catch (e:Exception){
-            resource =  Resource.Error(e.message?:"An error occurred",null)
+                resource = Resource.Success(rssFeed)
+            }else{
+                resource = Resource.Error("An error occurred")
+            }
         }
         return resource
-    }*/
+    }
+
+    suspend fun newsBusiness() : Resource<RssWrapper> {
+        var resource:Resource<RssWrapper> = Resource.Loading()
+        fetchRss("https://www.brecorder.com/feeds/latest-news"){
+            if(it!=null){
+                val xmlMapper=XmlMapper().apply {
+                    registerModule(KotlinModule.Builder().build())
+                }
+                val rssFeed=xmlMapper.readValue(it,RssWrapper::class.java)
+
+                resource = Resource.Success(rssFeed)
+            }else{
+                resource = Resource.Error("An error occurred")
+            }
+        }
+        return resource
+    }
+
+    suspend fun newsProfit() : Resource<com.example.scstrade.model.response.news.profit.RssFeed> {
+        var resource:Resource<com.example.scstrade.model.response.news.profit.RssFeed> = Resource.Loading()
+        fetchRss("https://profit.pakistantoday.com.pk/feed/"){
+            if(it!=null){
+                val xmlMapper=XmlMapper().apply {
+                    registerModule(KotlinModule.Builder().build())
+                }
+                val rssFeed=xmlMapper.readValue(it,com.example.scstrade.model.response.news.profit.RssFeed::class.java)
+
+                resource = Resource.Success(rssFeed)
+            }else{
+                resource = Resource.Error("An error occurred")
+            }
+        }
+        return resource
+    }
+
+    suspend fun newsMettis() : Resource<com.example.scstrade.model.response.news.mettis.RssFeed> {
+        var resource:Resource<com.example.scstrade.model.response.news.mettis.RssFeed> = Resource.Loading()
+        fetchRss("https://mettisglobal.news/feed/"){
+            if(it!=null){
+                val xmlMapper=XmlMapper().apply {
+                    registerModule(KotlinModule.Builder().build())
+                }
+                val rssFeed=xmlMapper.readValue(it,com.example.scstrade.model.response.news.mettis.RssFeed::class.java)
+
+                resource = Resource.Success(rssFeed)
+            }else{
+                resource = Resource.Error("An error occurred")
+            }
+        }
+        return resource
+    }
+
+    suspend fun newsDawn() : Resource<com.example.scstrade.model.response.news.dawn.RssFeed> {
+        var resource:Resource<com.example.scstrade.model.response.news.dawn.RssFeed> = Resource.Loading()
+        fetchRss("https://www.dawn.com/feeds/business"){
+            if(it!=null){
+                val xmlMapper=XmlMapper().apply {
+                    registerModule(KotlinModule.Builder().build())
+                }
+                val rssFeed=xmlMapper.readValue(it,com.example.scstrade.model.response.news.dawn.RssFeed::class.java)
+
+                resource = Resource.Success(rssFeed)
+            }else{
+                resource = Resource.Error("An error occurred")
+            }
+        }
+        return resource
+    }
+
+    fun fetchRss(url:String,callback:(String?) -> Unit){
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).execute().use { response->
+            if(response.isSuccessful){
+                callback(response.body?.string())
+            }else{
+                callback(null)
+            }
+        }
+
+    }
 }

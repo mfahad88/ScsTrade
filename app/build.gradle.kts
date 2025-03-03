@@ -83,4 +83,11 @@ dependencies {
     implementation ("androidx.compose.material:material:1.7.7")
 //    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 //    implementation ("com.prof18.rssparser:rssparser:1.1")
+
+    implementation ("com.fasterxml.jackson.core:jackson-core:2.18.3")
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.18.3")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("javax.xml.stream:stax-api:1.0")
 }

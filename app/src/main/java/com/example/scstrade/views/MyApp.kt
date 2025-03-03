@@ -4,16 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.viewmodels.SharedViewModel
-import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.viewmodels.WatchListViewModelFactory
 import com.example.scstrade.views.main.MainActivity
 
 

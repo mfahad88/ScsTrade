@@ -1,5 +1,6 @@
 package com.example.scstrade.viewmodels
 
+import RssFeed
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -17,6 +18,8 @@ import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.news.brecoder.RssChannel
+import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
@@ -39,6 +42,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableFundamental=MutableLiveData<Resource<List<FundamentalData>>>()
     val mutableFundamentalDetail=MutableLiveData<Resource<List<FundamentalDetailData>>>()
     val mutableNews=MutableLiveData<Resource<List<NewsData>>>()
+    val mutableTribune=MutableLiveData<Resource<RssFeed>>()
+    val mutableBrecoder=MutableLiveData<Resource<RssWrapper>>()
+    val mutableProfit=MutableLiveData<Resource<com.example.scstrade.model.response.news.profit.RssFeed>>()
+    val mutableMettis=MutableLiveData<Resource<com.example.scstrade.model.response.news.mettis.RssFeed>>()
+    val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
+
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -156,16 +165,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun news(index:Int){
+    fun news(){
         mutableNews.value = Resource.Loading()
         if(isConnected.value==true){
             viewModelScope.launch (Dispatchers.IO){
                 var result:Resource<List<NewsData>> = Resource.Loading()
-                if(index==0){
-                    result=repository.news()
-                }else if(index==1){
-
-                }
+                result=repository.news()
                 withContext(Dispatchers.Main){
                     mutableNews.value = result
                 }
@@ -173,6 +178,66 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun tribuneNews(){
+        mutableTribune.value  = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.newsTribune()
+                withContext(Dispatchers.Main){
+                    mutableTribune.value = result
+                }
+            }
+        }
+    }
+
+    fun brecoderNews(){
+        mutableBrecoder.value  = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.newsBusiness()
+                withContext(Dispatchers.Main){
+                    mutableBrecoder.value = result
+                }
+            }
+        }
+    }
+
+    fun profitNews(){
+        mutableProfit.value  = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.newsProfit()
+                withContext(Dispatchers.Main){
+                    mutableProfit.value = result
+                }
+            }
+        }
+    }
+
+
+    fun mettisNews(){
+        mutableMettis.value  = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.newsMettis()
+                withContext(Dispatchers.Main){
+                    mutableMettis.value = result
+                }
+            }
+        }
+    }
+
+    fun dawnNews(){
+        mutableDawn.value  = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.newsDawn()
+                withContext(Dispatchers.Main){
+                    mutableDawn.value = result
+                }
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
