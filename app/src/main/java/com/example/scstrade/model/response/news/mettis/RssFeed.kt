@@ -1,12 +1,15 @@
 package com.example.scstrade.model.response.news.mettis
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.dataformat.xml.annotation.*
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @JacksonXmlRootElement(localName = "rss")
 data class RssFeed(
     @JacksonXmlProperty(localName = "channel")
     val channel: Channel
 )
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 data class Channel(
     @JacksonXmlProperty(localName = "title")
@@ -31,6 +34,7 @@ data class Channel(
     @JacksonXmlProperty(localName = "image")
     val image: RssImage?
 )
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 data class RssItem(
     @JacksonXmlProperty(localName = "title")
@@ -51,6 +55,7 @@ data class RssItem(
     @JacksonXmlProperty(localName = "category")
     val category: String? = null
 )
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 data class RssImage(
     @JacksonXmlProperty(localName = "url")

@@ -17,12 +17,9 @@ import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
-import java.io.IOException
+
 
 class MainRepository(val apiService: ApiService,val context: Context) {
 
@@ -156,6 +153,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         var resource:Resource<RssWrapper> = Resource.Loading()
         fetchRss("https://www.brecorder.com/feeds/latest-news"){
             if(it!=null){
+
                 val xmlMapper=XmlMapper().apply {
                     registerModule(KotlinModule.Builder().build())
                 }

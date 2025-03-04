@@ -18,7 +18,6 @@ import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
-import com.example.scstrade.model.response.news.brecoder.RssChannel
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository

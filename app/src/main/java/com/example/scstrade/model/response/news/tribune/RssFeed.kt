@@ -30,6 +30,7 @@ data class RssItem(
     @field:JacksonXmlProperty(localName = "category") val category: String? = null,
     @field:JacksonXmlProperty(localName = "guid") val guid: String? = null,
     @field:JacksonXmlProperty(localName = "description") val description: String? = null,
+    @field:JacksonXmlProperty(localName = "encoded", namespace = "content") val content:String?=null,
     @field:JacksonXmlProperty(localName = "image") val image: Image? = null
 )
 

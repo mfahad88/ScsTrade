@@ -1,13 +1,14 @@
 package com.example.scstrade.model.response.news.profit
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.dataformat.xml.annotation.*
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "rss")
 data class RssFeed(
     @JacksonXmlProperty(localName = "channel")
     val channel: Channel
 )
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Channel(
     @JacksonXmlProperty(localName = "title")
     val title: String,
@@ -28,7 +29,7 @@ data class Channel(
     @JacksonXmlProperty(localName = "item")
     val items: List<RssItem>
 )
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class RssItem(
     @JacksonXmlProperty(localName = "title")
     val title: String,

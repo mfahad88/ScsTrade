@@ -1,12 +1,14 @@
 package com.example.scstrade.views.news
 
 import RssItem
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,12 +20,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
@@ -49,14 +49,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
 import coil.compose.rememberAsyncImagePainter
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNewsBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.news.brecoder.Item
+import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 
@@ -108,11 +110,11 @@ class NewsActivity : AppCompatActivity() {
       var selectedTabIndex by remember { mutableStateOf(0) }
 
         Column {
-            ScrollableTabRow(
+            TabRow(
                 selectedTabIndex = selectedTabIndex,
                 backgroundColor= Color.Transparent,
                 contentColor = colorResource(id = R.color.colorDarkerr),
-                edgePadding = 15.dp,
+//                edgePadding = 15.dp,
                 divider = {},
                 indicator = {tabPositions ->
                     TabRowDefaults.Indicator(
@@ -124,7 +126,9 @@ class NewsActivity : AppCompatActivity() {
             ) {
 
                 list.forEachIndexed { index, s ->
-                    Tab(selected = selectedTabIndex==index, onClick = {
+                    Tab(selected = selectedTabIndex==index,
+                    modifier = Modifier.weight(1f),
+                        onClick = {
                         selectedTabIndex=index
                         when (index){
                             0-> sharedViewModel.news()
@@ -144,7 +148,11 @@ class NewsActivity : AppCompatActivity() {
                                     fontSize = 12.sp,
                                     fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
                                     fontWeight = FontWeight(500),
-                                    color = colorResource(id = R.color.colorDarkerr)
+                                    color = colorResource(id = R.color.colorDarkerr),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+
+
                                 )
 
                             }
@@ -156,38 +164,130 @@ class NewsActivity : AppCompatActivity() {
             when (selectedTabIndex) {
                 0 -> {
                     val data= sharedViewModel.mutableNews.asFlow().collectAsState(initial = Resource.Loading())
-                    newList(data = data.value.data?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> {
+                            binding.loader.visibility= View.VISIBLE
+                        }
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newList(data = data.value.data?: emptyList())
+                        }
+                    }
                 }
                 1 -> {
                     val data = sharedViewModel.mutableBrecoder.asFlow().collectAsState(initial = Resource.Loading())
-                    newsListTribune(data=data.value.data?.channel?.item?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> binding.loader.visibility= View.VISIBLE
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.BRECODER)
+                                intent.putExtra(AppConstants.TITLE,(it as Item).title)
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }
                 2 -> {
                     val data = sharedViewModel.mutableTribune.asFlow().collectAsState(initial = Resource.Loading())
-                    newsListTribune(data=data.value.data?.channel?.items?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> binding.loader.visibility= View.VISIBLE
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.TRIBUNE)
+                                intent.putExtra(AppConstants.TITLE,(it as RssItem).title)
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }
                 3 -> {
                     val data = sharedViewModel.mutableProfit.asFlow().collectAsState(initial = Resource.Loading())
-                    newsListTribune(data=data.value.data?.channel?.items?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> binding.loader.visibility= View.VISIBLE
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.PROFIT)
+                                intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.profit.RssItem).title)
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }
                 4 -> {
                     val data = sharedViewModel.mutableMettis.asFlow().collectAsState(initial = Resource.Loading())
-                    newsListTribune(data=data.value.data?.channel?.items?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> binding.loader.visibility= View.VISIBLE
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.METTIS)
+                                intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.mettis.RssItem).title)
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }
                 5 -> {
                     val data = sharedViewModel.mutableDawn.asFlow().collectAsState(initial = Resource.Loading())
-                    newsListTribune(data=data.value.data?.channel?.items?: emptyList())
+                    when(data.value){
+                        is Resource.Error -> {
+                            binding.loader.visibility= View.GONE
+                            Utils.showError(binding.root,data.value.message?:"An error occurred")
+                        }
+                        is Resource.Loading -> binding.loader.visibility= View.VISIBLE
+                        is Resource.Success -> {
+                            binding.loader.visibility= View.GONE
+                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.DAWN)
+                                intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.dawn.RssItem).title)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+
                 }
             }
         }
     }
 
     @Composable
-    private fun newsListTribune(data: List<Any>) {
+    private fun newsListTribune(data: List<Any>,onItemClick:(Any)->Unit) {
         Box(modifier = Modifier.padding(horizontal = 20.dp)) {
             LazyColumn {
                 items(data.size) { index ->
-                    Row {
+                    Row (modifier = Modifier.clickable {
+                        onItemClick(data[index])
+                    }){
+
                         Box(
                             modifier = Modifier
                                 .weight(2f),
@@ -206,6 +306,7 @@ class NewsActivity : AppCompatActivity() {
                                         else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) (data[index] as com.example.scstrade.model.response.news.dawn.RssItem).title.trim()
                                         else "No Description" ,
                                         fontSize = 16.sp,
+                                        minLines = 3,
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
                                         fontWeight = FontWeight(600),
@@ -257,7 +358,7 @@ class NewsActivity : AppCompatActivity() {
                                     else if(data[index] is com.example.scstrade.model.response.news.profit.RssItem) rememberAsyncImagePainter(extractImage((data[index] as com.example.scstrade.model.response.news.profit.RssItem).description))
                                     else if(data[index] is com.example.scstrade.model.response.news.mettis.RssItem) rememberAsyncImagePainter(extractImage((data[index] as com.example.scstrade.model.response.news.mettis.RssItem).description))
                                     else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) rememberAsyncImagePainter((data[index] as com.example.scstrade.model.response.news.dawn.RssItem).mediaContent?.url)
-                                    else painterResource(id = R.drawable.news_empty) ,
+                                    else painterResource(id = R.drawable.news_empty_old) ,
                                     contentDescription = "Dawn",
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -329,10 +430,10 @@ class NewsActivity : AppCompatActivity() {
                                 .weight(1f),
                             content = {
                                 Image(
-                                    painter = painterResource(id = R.drawable.news_empty),
+                                    painter = painterResource(id = R.drawable.news_empty_old),
                                     contentDescription = "Dawn",
                                     modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Fit
+                                    contentScale = ContentScale.FillWidth
                                 )
                             }
                         )

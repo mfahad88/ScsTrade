@@ -1,0 +1,203 @@
+package com.example.scstrade.views.news
+
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.view.LayoutInflater
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.scstrade.R
+import com.example.scstrade.databinding.ActivityNewsDetailBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
+import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
+
+class NewsDetailActivity : AppCompatActivity() {
+    lateinit var binding: ActivityNewsDetailBinding
+    lateinit var newsType:String
+    lateinit var title:String
+    lateinit var sharedViewModel: SharedViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding=ActivityNewsDetailBinding.inflate(LayoutInflater.from(this))
+        sharedViewModel=(this.application as MyApp).viewModel
+        enableEdgeToEdge()
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        newsType= intent.extras?.getString(AppConstants.NEWS_TYPE).toString()
+        title = intent.extras?.getString(AppConstants.TITLE).toString()
+        if(newsType.equals(AppConstants.BRECODER,true)){
+            sharedViewModel.mutableBrecoder.observe(this, Observer {result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        if(data?.mediaContent!=null) {
+                            Glide.with(this).load(data.mediaContent.url)
+                                .transform(RoundedCorners(30))
+                                .into(binding.imageViewNews)
+                            binding.cardTitle.setTextColor(Color.WHITE)
+                            binding.pubDate.setTextColor(Color.WHITE)
+                            binding.imageView14.setColorFilter(Color.WHITE)
+                        }
+                        binding.cardTitle.text = data?.title
+                        binding.pubDate.text = data?.pubDate
+                        binding.description.text = HtmlCompat.fromHtml(data?.description?:"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        binding.description.movementMethod = LinkMovementMethod.getInstance()
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+        }else if(newsType.equals(AppConstants.TRIBUNE,true)){
+
+            sharedViewModel.mutableTribune.observe(this, Observer {result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+
+                        if(data?.image?.img?.src!=null) {
+                            Glide.with(this).load(data.image.img.src)
+                                .transform(RoundedCorners(30))
+                                .into(binding.imageViewNews)
+                            binding.cardTitle.setTextColor(Color.WHITE)
+                            binding.pubDate.setTextColor(Color.WHITE)
+                            binding.imageView14.setColorFilter(Color.WHITE)
+                        }
+                        binding.cardTitle.text = data?.title
+                        binding.pubDate.text = data?.pubDate
+                        binding.description.text = HtmlCompat.fromHtml(data?.content?.trim()?:"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        binding.description.movementMethod = LinkMovementMethod.getInstance()
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+
+        }else if(newsType.equals(AppConstants.PROFIT,true)){
+
+            sharedViewModel.mutableProfit.observe(this, Observer {result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        if(data?.description!=null) {
+                            if (extractImage(data.description) != null) {
+                                Glide.with(this).load(extractImage(data.description))
+                                    .transform(RoundedCorners(30))
+                                    .into(binding.imageViewNews)
+                                binding.cardTitle.setTextColor(Color.WHITE)
+                                binding.pubDate.setTextColor(Color.WHITE)
+                                binding.imageView14.setColorFilter(Color.WHITE)
+                            }
+                        }
+                        binding.cardTitle.text = data?.title
+                        binding.pubDate.text = data?.pubDate
+                        binding.description.text = HtmlCompat.fromHtml(data?.description?.trim()?:"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        binding.description.movementMethod = LinkMovementMethod.getInstance()
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+
+        }else if(newsType.equals(AppConstants.METTIS,true)){
+
+            sharedViewModel.mutableMettis.observe(this, Observer {result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        if(data?.description!=null) {
+                            if (extractImage(data.description) != null) {
+                                Glide.with(this).load(extractImage(data.description))
+                                    .transform(RoundedCorners(30))
+                                    .into(binding.imageViewNews)
+                                binding.cardTitle.setTextColor(Color.WHITE)
+                                binding.pubDate.setTextColor(Color.WHITE)
+                                binding.imageView14.setColorFilter(Color.WHITE)
+                            }
+                        }
+                        binding.cardTitle.text = data?.title
+                        binding.pubDate.text = data?.pubDate
+                        binding.description.text = HtmlCompat.fromHtml(data?.description?.trim()?:"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        binding.description.movementMethod = LinkMovementMethod.getInstance()
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+
+
+        }else if(newsType.equals(AppConstants.DAWN,true)){
+            sharedViewModel.mutableDawn.observe(this, Observer {result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        if(data?.mediaContent!=null) {
+                            Glide.with(this).load(data.mediaContent.url)
+                                .transform(RoundedCorners(30))
+                                .into(binding.imageViewNews)
+                            binding.cardTitle.setTextColor(Color.WHITE)
+                            binding.pubDate.setTextColor(Color.WHITE)
+                            binding.imageView14.setColorFilter(Color.WHITE)
+                        }
+                        binding.cardTitle.text = data?.title
+                        binding.pubDate.text = data?.pubDate
+                        binding.description.text = HtmlCompat.fromHtml(data?.description?:"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                        binding.description.movementMethod = LinkMovementMethod.getInstance()
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    fun extractImage(input: String): String? {
+        val regex = """src=["'](https?://[^"']+)["']""".toRegex()
+        return regex.find(input)?.groupValues?.get(1) // Returns first matched group
+    }
+}
