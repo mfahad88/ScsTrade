@@ -505,7 +505,7 @@
     <style name="the_pakista">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 

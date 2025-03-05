@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.target.Target
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNewsDetailBinding
 import com.example.scstrade.helper.AppConstants
@@ -23,7 +24,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 
-class NewsDetailActivity : AppCompatActivity() {
+class  NewsDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewsDetailBinding
     lateinit var newsType:String
     lateinit var title:String
@@ -36,12 +37,33 @@ class NewsDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
         newsType= intent.extras?.getString(AppConstants.NEWS_TYPE).toString()
         title = intent.extras?.getString(AppConstants.TITLE).toString()
-        if(newsType.equals(AppConstants.BRECODER,true)){
+        if(newsType.equals(AppConstants.SCS,true)){
+            sharedViewModel.mutableNews.observe(this, Observer { result->
+                when(result){
+                    is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data = result.data?.filter { it.newsDesc.equals(title,true) }?.first()
+                        binding.cardTitle.text = data?.newsDesc
+                        binding.pubDate.text = Utils.convertDate(data?.newsDate?:"")
+                        binding.description.text = data?.newsDesc?.replace(Regex("Source:\\s*https?://\\S+"), "")
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
+                        binding.source.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(extractSource(data?.newsDesc?:"")))
+                            this.startActivity(intent)
+                        }
+                    }
+                }
+            })
+        }
+       else if(newsType.equals(AppConstants.BRECODER,true)){
             sharedViewModel.mutableBrecoder.observe(this, Observer {result->
                 when(result){
                     is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
@@ -50,14 +72,14 @@ class NewsDetailActivity : AppCompatActivity() {
                         val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
                         if(data?.mediaContent!=null) {
                             Glide.with(this).load(data.mediaContent.url)
-                                .transform(RoundedCorners(30))
+                                .transform(RoundedCorners(50))
                                 .into(binding.imageViewNews)
-                            binding.cardTitle.setTextColor(Color.WHITE)
-                            binding.pubDate.setTextColor(Color.WHITE)
-                            binding.imageView14.setColorFilter(Color.WHITE)
                         }
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = data?.pubDate
+                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.description?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
@@ -80,14 +102,14 @@ class NewsDetailActivity : AppCompatActivity() {
 
                         if(data?.image?.img?.src!=null) {
                             Glide.with(this).load(data.image.img.src)
-                                .transform(RoundedCorners(30))
+                                .transform(RoundedCorners(50))
                                 .into(binding.imageViewNews)
-                            binding.cardTitle.setTextColor(Color.WHITE)
-                            binding.pubDate.setTextColor(Color.WHITE)
-                            binding.imageView14.setColorFilter(Color.WHITE)
                         }
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = data?.pubDate
+                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.content?.trim()?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
@@ -111,15 +133,15 @@ class NewsDetailActivity : AppCompatActivity() {
                         if(data?.description!=null) {
                             if (extractImage(data.description) != null) {
                                 Glide.with(this).load(extractImage(data.description))
-                                    .transform(RoundedCorners(30))
+                                    .transform(RoundedCorners(50))
                                     .into(binding.imageViewNews)
-                                binding.cardTitle.setTextColor(Color.WHITE)
-                                binding.pubDate.setTextColor(Color.WHITE)
-                                binding.imageView14.setColorFilter(Color.WHITE)
                             }
                         }
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = data?.pubDate
+                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.description?.trim()?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
@@ -143,15 +165,15 @@ class NewsDetailActivity : AppCompatActivity() {
                         if(data?.description!=null) {
                             if (extractImage(data.description) != null) {
                                 Glide.with(this).load(extractImage(data.description))
-                                    .transform(RoundedCorners(30))
+                                    .transform(RoundedCorners(50))
                                     .into(binding.imageViewNews)
-                                binding.cardTitle.setTextColor(Color.WHITE)
-                                binding.pubDate.setTextColor(Color.WHITE)
-                                binding.imageView14.setColorFilter(Color.WHITE)
                             }
                         }
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = data?.pubDate
+                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.description?.trim()?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
@@ -174,14 +196,14 @@ class NewsDetailActivity : AppCompatActivity() {
                         val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
                         if(data?.mediaContent!=null) {
                             Glide.with(this).load(data.mediaContent.url)
-                                .transform(RoundedCorners(30))
+                                .transform(RoundedCorners(50))
                                 .into(binding.imageViewNews)
-                            binding.cardTitle.setTextColor(Color.WHITE)
-                            binding.pubDate.setTextColor(Color.WHITE)
-                            binding.imageView14.setColorFilter(Color.WHITE)
                         }
+                        binding.cardTitle.setTextColor(Color.WHITE)
+                        binding.pubDate.setTextColor(Color.WHITE)
+                        binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = data?.pubDate
+                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.description?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
@@ -199,5 +221,10 @@ class NewsDetailActivity : AppCompatActivity() {
     fun extractImage(input: String): String? {
         val regex = """src=["'](https?://[^"']+)["']""".toRegex()
         return regex.find(input)?.groupValues?.get(1) // Returns first matched group
+    }
+
+    fun extractSource(input:String): String? {
+        val regex = Regex("(?<=Source:)\\s*(https?://\\S+)")
+        return regex.find(input)?.value
     }
 }

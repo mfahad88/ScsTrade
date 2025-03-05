@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134999720068",
+    "project_id": "scstrade-pro-f9822",
+    "storage_bucket": "scstrade-pro-f9822.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134999720068:android:957a96a2646e02d62442d1",
+        "android_client_info": {
+          "package_name": "com.scstrade.scstradepro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-sUPCU1bYPMrQvkB-OoQUqObyCKJn1Gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

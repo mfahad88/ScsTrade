@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -15,7 +16,7 @@ android {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
     defaultConfig {
-        applicationId = "com.example.scstrade"
+        applicationId = "com.scstrade.scstradepro"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -47,7 +48,7 @@ dependencies {
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
-
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     kapt("androidx.room:room-compiler:$room_version")

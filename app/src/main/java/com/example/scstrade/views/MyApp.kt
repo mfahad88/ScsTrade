@@ -2,17 +2,22 @@ package com.example.scstrade.views
 
 import android.app.Activity
 import android.app.Application
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     override fun onCreate() {
         super<Application>.onCreate()
+        getSha1Fingerprint()
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
         viewModel.apply {
             fetchIndices()
@@ -51,5 +56,22 @@ class MyApp : Application() {
 
         })
     }
-
+    fun getSha1Fingerprint() {
+        try {
+            val packageInfo: PackageInfo = packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            for (signature in packageInfo.signatures!!) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA-1")
+                md.update(signature.toByteArray())
+                val sha1Fingerprint = md.digest().joinToString(":") { "%02X".format(it) }
+                Log.d("SHA-1 Fingerprint", sha1Fingerprint)
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        }
+    }
 }

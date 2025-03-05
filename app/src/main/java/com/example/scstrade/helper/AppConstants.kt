@@ -3,6 +3,7 @@ package com.example.scstrade.helper
 class AppConstants {
     companion object{
         val TITLE = "title"
+        val SCS: String = "scs"
         val BRECODER: String = "brecoder"
         val TRIBUNE="tribune"
         val PROFIT="profit"

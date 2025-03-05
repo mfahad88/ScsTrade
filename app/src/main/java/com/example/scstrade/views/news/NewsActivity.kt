@@ -174,7 +174,14 @@ class NewsActivity : AppCompatActivity() {
                         }
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
-                            newList(data = data.value.data?: emptyList())
+                            newList(data = data.value.data?: emptyList()){
+
+                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
+                                intent.putExtra(AppConstants.TITLE,it.newsDesc)
+                                startActivity(intent)
+                            }
+
                         }
                     }
                 }
@@ -323,12 +330,12 @@ class NewsActivity : AppCompatActivity() {
                                             modifier = Modifier.size(15.dp)
                                         )
                                         Text(
-                                            text =  if(data[index] is RssItem) (data[index] as RssItem).pubDate?.trim() ?: ""
+                                            text =  Utils.convertDateBrFormat(if(data[index] is RssItem) (data[index] as RssItem).pubDate?.trim() ?: ""
                                             else if(data[index] is com.example.scstrade.model.response.news.brecoder.Item ) (data[index] as com.example.scstrade.model.response.news.brecoder.Item).pubDate?.trim()?:""
                                             else if (data[index] is com.example.scstrade.model.response.news.profit.RssItem ) (data[index] as com.example.scstrade.model.response.news.profit.RssItem).pubDate.trim()
                                             else if (data[index] is com.example.scstrade.model.response.news.mettis.RssItem ) (data[index] as com.example.scstrade.model.response.news.mettis.RssItem).pubDate.trim()
                                             else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) (data[index] as com.example.scstrade.model.response.news.dawn.RssItem).pubDate.trim()
-                                            else "" ,
+                                            else "" ),
 
                                             style = TextStyle(
                                                 fontSize = 12.sp,
@@ -379,13 +386,15 @@ class NewsActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun newList(data: List<NewsData>){
+    fun newList(data: List<NewsData>,onItemClick:(NewsData)->Unit){
 
         Box(modifier = Modifier.padding(horizontal = 20.dp)) {
 
             LazyColumn {
                 items(data.size) { index ->
-                    Row{
+                    Row(modifier = Modifier.clickable {
+                        onItemClick(data[index])
+                    }){
                         Box(
                             modifier = Modifier
                                 .weight(3f),

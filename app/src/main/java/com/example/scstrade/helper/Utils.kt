@@ -59,6 +59,18 @@ class Utils {
             return sdf.format(date)
          }
 
+        fun convertDateBrFormat(inputDate: String): String {
+            return try {
+                val inputFormat = SimpleDateFormat("EEE, dd MMM yy HH:mm:ss Z", Locale.ENGLISH)
+                val outputFormat = SimpleDateFormat("dd MMM yyyy | hh:mm a", Locale.ENGLISH)
+
+                val date: Date = inputFormat.parse(inputDate)!!
+                outputFormat.format(date)  // Return formatted date
+            } catch (e: Exception) {
+                "Invalid Date"  // Handle parsing errors
+            }
+        }
+
         fun isDarkMode(context: Context): Boolean {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
