@@ -1,5 +1,6 @@
 package com.example.scstrade.views.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.ChartActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
@@ -52,6 +54,10 @@ class HomeFragment : Fragment() {
 //        viewModel.fetchIndices()
 
         binding.cardHome.apply {
+            zoom.setOnClickListener {
+                val intent = Intent(requireContext(),ChartActivity::class.java)
+                startActivity(intent)
+            }
             line.setOnClickListener {
                 homeViewModel.setSelectedLine()
             }

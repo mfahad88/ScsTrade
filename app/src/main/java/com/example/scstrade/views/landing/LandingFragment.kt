@@ -29,12 +29,13 @@ import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.contact.ContactActivity
 import com.example.scstrade.views.fundamental.FundamentalActivity
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
-import com.example.scstrade.views.news.NewsActivity
+import com.example.scstrade.views.news.NewsFragment
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import java.text.SimpleDateFormat
@@ -116,7 +117,7 @@ class LandingFragment : Fragment() {
                 loadFragment(MarketFragment())
                 true
             }else if(item.itemId==R.id.news){
-                startActivity(Intent(requireContext(),NewsActivity::class.java))
+                loadFragment(NewsFragment())
                 true
             }
 
@@ -194,6 +195,9 @@ class LandingFragment : Fragment() {
             KeyDescValue("Announcements",null,R.drawable.announcements),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
+        binding.contact.setOnClickListener {
+            startActivity(Intent(requireContext(),ContactActivity::class.java))
+        }
 
         binding.sideMenu.apply {
             adapter= SideMenuAdapter(list){ keyDescValue ->

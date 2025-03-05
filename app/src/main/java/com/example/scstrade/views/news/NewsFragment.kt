@@ -3,10 +3,10 @@ package com.example.scstrade.views.news
 import RssItem
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,8 +20,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
@@ -47,43 +50,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.asFlow
 import coil.compose.rememberAsyncImagePainter
 import com.example.scstrade.R
-import com.example.scstrade.databinding.ActivityNewsBinding
+import com.example.scstrade.databinding.FragmentNewsBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.Item
-import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 
-class NewsActivity : AppCompatActivity() {
-    lateinit var binding:ActivityNewsBinding
-    lateinit var sharedViewModel: SharedViewModel
 
+class NewsFragment : Fragment() {
+    lateinit var binding: FragmentNewsBinding
+    lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityNewsBinding.inflate(LayoutInflater.from(this))
-        enableEdgeToEdge()
-        setContentView(binding.root)
-        sharedViewModel=(this.application as MyApp).viewModel
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
-            insets
-        }
+       
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding=FragmentNewsBinding.inflate(inflater,container,false)
+        sharedViewModel=(requireActivity().application as MyApp).viewModel
         sharedViewModel.news()
 
 
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.horizontalList.setContent {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 newsChannels(
                     listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),
@@ -98,22 +104,22 @@ class NewsActivity : AppCompatActivity() {
                 )
 
 
-              
+
             }
         }
-        
-        
-
     }
     @Composable
     private fun newsChannels(list: List<String>, images: List<Int>) {
-      var selectedTabIndex by remember { mutableStateOf(0) }
+        var selectedTabIndex by remember { mutableStateOf(0) }
 
-        Column {
+        Column (
+            modifier = Modifier.fillMaxSize()
+        ){
             TabRow(
                 selectedTabIndex = selectedTabIndex,
                 backgroundColor= Color.Transparent,
                 contentColor = colorResource(id = R.color.colorDarkerr),
+                modifier = Modifier.fillMaxWidth(),
 //                edgePadding = 15.dp,
                 divider = {},
                 indicator = {tabPositions ->
@@ -127,18 +133,18 @@ class NewsActivity : AppCompatActivity() {
 
                 list.forEachIndexed { index, s ->
                     Tab(selected = selectedTabIndex==index,
-                    modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f),
                         onClick = {
-                        selectedTabIndex=index
-                        when (index){
-                            0-> sharedViewModel.news()
-                            1-> sharedViewModel.brecoderNews()
-                            2-> sharedViewModel.tribuneNews()
-                            3-> sharedViewModel.profitNews()
-                            4-> sharedViewModel.mettisNews()
-                            5-> sharedViewModel.dawnNews()
-                        }
-                    },
+                            selectedTabIndex=index
+                            when (index){
+                                0-> sharedViewModel.news()
+                                1-> sharedViewModel.brecoderNews()
+                                2-> sharedViewModel.tribuneNews()
+                                3-> sharedViewModel.profitNews()
+                                4-> sharedViewModel.mettisNews()
+                                5-> sharedViewModel.dawnNews()
+                            }
+                        },
                         text = {
 
                             Column (verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally){
@@ -150,10 +156,10 @@ class NewsActivity : AppCompatActivity() {
                                     fontWeight = FontWeight(500),
                                     color = colorResource(id = R.color.colorDarkerr),
                                     maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
+                                    overflow = TextOverflow.Clip,
 
 
-                                )
+                                    )
 
                             }
                         }
@@ -176,7 +182,7 @@ class NewsActivity : AppCompatActivity() {
                             binding.loader.visibility= View.GONE
                             newList(data = data.value.data?: emptyList()){
 
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
                                 intent.putExtra(AppConstants.TITLE,it.newsDesc)
                                 startActivity(intent)
@@ -196,7 +202,7 @@ class NewsActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
                             newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.BRECODER)
                                 intent.putExtra(AppConstants.TITLE,(it as Item).title)
                                 startActivity(intent)
@@ -216,7 +222,7 @@ class NewsActivity : AppCompatActivity() {
                             binding.loader.visibility= View.GONE
                             newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
 
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.TRIBUNE)
                                 intent.putExtra(AppConstants.TITLE,(it as RssItem).title)
                                 startActivity(intent)
@@ -235,7 +241,7 @@ class NewsActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
                             newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.PROFIT)
                                 intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.profit.RssItem).title)
                                 startActivity(intent)
@@ -254,7 +260,7 @@ class NewsActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
                             newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.METTIS)
                                 intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.mettis.RssItem).title)
                                 startActivity(intent)
@@ -273,7 +279,7 @@ class NewsActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
                             newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
-                                val intent= Intent(this@NewsActivity,NewsDetailActivity::class.java)
+                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.DAWN)
                                 intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.dawn.RssItem).title)
                                 startActivity(intent)
@@ -355,11 +361,11 @@ class NewsActivity : AppCompatActivity() {
                                 .weight(1f),
                             content = {
                                 Image(
-                                   /* painter = if (data[index].image != null) rememberAsyncImagePainter(
-                                        data[index].image?.img?.src
-                                    ) else painterResource(
-                                        id = R.drawable.news_empty
-                                    ),*/
+                                    /* painter = if (data[index].image != null) rememberAsyncImagePainter(
+                                         data[index].image?.img?.src
+                                     ) else painterResource(
+                                         id = R.drawable.news_empty
+                                     ),*/
                                     painter =  if(data[index] is RssItem) rememberAsyncImagePainter((data[index] as RssItem).image?.img?.src)
                                     else if(data[index] is com.example.scstrade.model.response.news.brecoder.Item) rememberAsyncImagePainter((data[index] as com.example.scstrade.model.response.news.brecoder.Item).mediaContent?.url)
                                     else if(data[index] is com.example.scstrade.model.response.news.profit.RssItem) rememberAsyncImagePainter(extractImage((data[index] as com.example.scstrade.model.response.news.profit.RssItem).description))

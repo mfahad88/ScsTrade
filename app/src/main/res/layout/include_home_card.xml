@@ -95,27 +95,41 @@
 
     </HorizontalScrollView>
 
-    <com.example.scstrade.views.widgets.CustomCandlestickChart
-        android:id="@+id/candlestick_chart"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <com.example.scstrade.views.widgets.mLineChart
-        android:id="@+id/lineChart"
+
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/stock_card"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+
+
+        <com.example.scstrade.views.widgets.mLineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/stock_card"
+            />
+
+        <com.example.scstrade.views.widgets.CustomCandlestickChart
+            android:id="@+id/candlestick_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:id="@+id/zoom"
+            android:src="@drawable/zoom_out"/>
+    </FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout3"

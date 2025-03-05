@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.contact.ContactActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/custom_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView3"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardBackgroundColor="#011900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:strokeWidth="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/frame" />
+
+            <TextView
+                android:id="@+id/scs_trade_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageViewLogo"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/imageViewLogo"
+                android:text="@string/scs_trade_p"
+                android:textAppearance="@style/scs_trade_p_contact"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/committed_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scs_trade_p"
+                android:layout_alignStart="@id/scs_trade_p"
+                android:text="@string/committed_t"
+                android:textAppearance="@style/committed_t_contact"
+                android:textFontWeight="400" />
+
+            <TextView
+                android:id="@+id/office_timi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/scs_trade_p"
+                android:layout_marginStart="40dp"
+                android:layout_toEndOf="@id/scs_trade_p"
+                android:text="@string/office_timi"
+                android:textAppearance="@style/office_timi"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/am_to_5pm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/office_timi"
+                android:layout_alignStart="@id/office_timi"
+                android:text="@string/am_to_5pm"
+                android:textAppearance="@style/am_to_5pm"
+                android:textFontWeight="500" />
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/office_timi"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/am_to_5pm"
+                app:srcCompat="@drawable/animate_open" />
+
+            <TextView
+                android:id="@+id/open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/office_timi"
+                android:layout_toEndOf="@id/imageView17"
+                android:text="@string/open"
+                android:textAppearance="@style/open_contact" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/horizontalList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView3"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView3"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
+</androidx.constraintlayout.widget.ConstraintLayout>

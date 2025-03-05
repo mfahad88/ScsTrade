@@ -87,11 +87,70 @@
                 android:adjustViewBounds="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-
                 android:scaleType="centerInside"
+                android:id="@+id/aof"
                 android:layout_alignStart="@id/sideMenu"
                 app:srcCompat="@drawable/open_account"
                 android:layout_below="@id/sideMenu"/>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:cardBackgroundColor="@android:color/white"
+                android:id="@+id/contact"
+                android:layout_below="@id/aof"
+                android:layout_alignStart="@id/aof"
+                android:layout_alignEnd="@id/aof">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/monogram"
+                        android:id="@+id/callIcon"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/contact_sup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/callIcon"
+                        android:layout_alignTop="@id/callIcon"
+                        android:textFontWeight="500"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/contact_sup"
+                        android:textAppearance="@style/contact_sup"
+                        />
+
+                    <TextView
+                        android:id="@+id/here_to_hel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/contact_sup"
+                        android:layout_alignStart="@id/contact_sup"
+                        android:textFontWeight="400"
+                        android:text="@string/here_to_hel"
+                        android:textAppearance="@style/here_to_hel"
+                        />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/baseline_play_arrow_24" />
+
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>
 
