@@ -12,6 +12,7 @@ import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.contact.ContactData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalData
@@ -46,7 +47,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableProfit=MutableLiveData<Resource<com.example.scstrade.model.response.news.profit.RssFeed>>()
     val mutableMettis=MutableLiveData<Resource<com.example.scstrade.model.response.news.mettis.RssFeed>>()
     val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
-
+    val mutableContactUs=MutableLiveData<Resource<List<ContactData>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -233,6 +234,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.newsDawn()
                 withContext(Dispatchers.Main){
                     mutableDawn.value = result
+                }
+            }
+        }
+    }
+
+    fun contactUs(){
+        mutableContactUs.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.contactUs()
+                withContext(Dispatchers.Main){
+                    mutableContactUs.value = result
                 }
             }
         }

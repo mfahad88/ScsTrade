@@ -10,7 +10,7 @@ import java.util.Date
 
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://dataapi.scstrade.com"
+    val BASE_URL = "https://dataapi.scstrade.com"
 
     val api: ApiService by lazy {
         val interceptor= HttpLoggingInterceptor()

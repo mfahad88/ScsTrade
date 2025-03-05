@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.contact.ContactData
 import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
@@ -228,6 +229,13 @@ class MainRepository(val apiService: ApiService,val context: Context) {
                 callback(null)
             }
         }
+    }
 
+    suspend fun contactUs(): Resource<List<ContactData>> {
+        try {
+            return Resource.Success(apiService.contact())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
     }
 }

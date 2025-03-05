@@ -2,6 +2,7 @@ package com.example.scstrade.services
 
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
+import com.example.scstrade.model.response.contact.ContactData
 import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
@@ -102,4 +103,7 @@ interface ApiService {
 
     @GET(value = "/Data?que=News")
     suspend fun news():List<NewsData>
+
+    @GET(value = "ContactUS")
+    suspend fun contact():List<ContactData>
 }
