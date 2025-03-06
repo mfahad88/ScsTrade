@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.contact.ContactActivity">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/topbar"
         layout="@layout/custom_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +22,7 @@
         app:cardBackgroundColor="#011900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/topbar"
         app:strokeWidth="0dp">
 
         <RelativeLayout
@@ -42,7 +41,7 @@
                 app:srcCompat="@drawable/frame" />
 
             <TextView
-                android:id="@+id/scs_trade_p"
+                android:id="@+id/scs_trade_p_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/imageViewLogo"
@@ -56,8 +55,8 @@
                 android:id="@+id/committed_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/scs_trade_p"
-                android:layout_alignStart="@id/scs_trade_p"
+                android:layout_below="@id/scs_trade_p_"
+                android:layout_alignStart="@id/scs_trade_p_"
                 android:text="@string/committed_t"
                 android:textAppearance="@style/committed_t_contact"
                 android:textFontWeight="400" />
@@ -66,9 +65,9 @@
                 android:id="@+id/office_timi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/scs_trade_p"
+                android:layout_alignTop="@id/scs_trade_p_"
                 android:layout_marginStart="40dp"
-                android:layout_toEndOf="@id/scs_trade_p"
+                android:layout_toEndOf="@id/scs_trade_p_"
                 android:text="@string/office_timi"
                 android:textAppearance="@style/office_timi"
                 android:textFontWeight="500" />
@@ -93,7 +92,6 @@
                 app:srcCompat="@drawable/animate_open" />
 
             <TextView
-                android:id="@+id/open"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/office_timi"
@@ -104,10 +102,24 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/load_anim" />
+
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/horizontalList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView3"
         app:layout_constraintStart_toStartOf="@+id/materialCardView3"

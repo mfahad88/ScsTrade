@@ -419,4 +419,14 @@
     <style name="am_to_5pm"></style>
 
     <style name="open_contact"></style>
+
+    <style name="warning"></style>
+
+    <style name="are_you_sur"></style>
+
+    <style name="label_no"></style>
+
+    <style name="label_yes"></style>
+
+    <style name="your_portfo"></style>
 </resources>

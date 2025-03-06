@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:paddingHorizontal="40dp">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/deleteImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/aniamte_delete" />
+
+    <TextView
+        android:id="@+id/your_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/your_watch"
+        android:textAppearance="@style/your_portfo"
+        android:textFontWeight="600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteImage" />
+
+    <RelativeLayout
+        android:id="@+id/buttonContinue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_primary_container"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/your_delete"
+        app:layout_constraintStart_toStartOf="@+id/your_delete"
+        app:layout_constraintTop_toBottomOf="@+id/your_delete">
+
+        <TextView
+            android:id="@+id/label_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/continueB"
+            android:textAppearance="@style/label_no" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,9 +15,9 @@ data class ContactData(
     @SerializedName("ContactUsMap")
     val contactUsMap: String?,
     @SerializedName("ContactUsName")
-    val contactUsName: String,
+    val contactUsName: String?,
     @SerializedName("ContactUsPhone")
-    val contactUsPhone: String,
+    val contactUsPhone: String?,
     @SerializedName("ContactUsWhatsApp")
     val contactUsWhatsApp: String?
 )

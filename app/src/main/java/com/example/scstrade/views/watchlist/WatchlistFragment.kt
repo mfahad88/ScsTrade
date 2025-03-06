@@ -65,6 +65,7 @@ class WatchlistFragment : Fragment() {
                 is Resource.Error -> Utils.showError(binding.root,it.message?:"Error occurred")
                 is Resource.Loading -> {}
                 is Resource.Success -> {
+                    Utils.showDeleteBottomSheet(requireContext(),"Your watchlist has been deleted.")
 //                    viewModel.getWatchList(login.registrationID)
                 }
             }
@@ -96,7 +97,9 @@ class WatchlistFragment : Fragment() {
 
                            }, onItemPopupClick = {str,item->
                                if(str.contains("delete",true)) {
-                                   viewModel.deleteWatchList(item.WatchListMainID,login.registrationID?:0)
+                                   Utils.showConfirmationDialog(requireContext(),null,null,null){
+                                       viewModel.deleteWatchList(item.WatchListMainID,login.registrationID?:0)
+                                   }
                                }else if(str.contains("edit",true)){
                                    val bottomSheetFragment=AddWatchListBottomSheetFragment()
                                    val bundle=Bundle()

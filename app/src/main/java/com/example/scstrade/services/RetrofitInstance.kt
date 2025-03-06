@@ -20,7 +20,7 @@ object RetrofitInstance {
             .build()
         val gson: Gson = GsonBuilder()
             .registerTypeAdapter(Date::class.java, DateDeserializer())
-            .registerTypeAdapter(String::class.java,StringTypeAdapter())
+//            .registerTypeAdapter(String::class.java,StringTypeAdapter())
             .create()
         Retrofit.Builder()
             .baseUrl(BASE_URL)

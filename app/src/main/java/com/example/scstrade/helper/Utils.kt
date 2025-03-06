@@ -1,5 +1,6 @@
 package com.example.scstrade.helper
 
+import android.app.Dialog
 import android.app.UiModeManager
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -7,9 +8,13 @@ import android.content.res.Configuration
 import android.icu.text.DecimalFormat
 import android.os.Build
 import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.example.scstrade.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -199,7 +204,46 @@ class Utils {
                     .show()
             }
         }
-    }
+        fun showConfirmationDialog(context:Context,icon:Int?,title:String?,message:String?,onItemYes:(() -> Unit)? = null): Dialog {
+            val dialog=Dialog(context)
+            dialog.setContentView(R.layout.dialog_delete)
+            dialog.window?.setBackgroundDrawableResource(R.drawable.rounded_white_container)
+            dialog.window?.attributes?.windowAnimations = android.R.style.Animation_Dialog
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.setCancelable(false)
+            if(icon!=null){
+                dialog.findViewById<ImageView>(R.id.imageViewIcon).setImageDrawable(ContextCompat.getDrawable(context,icon))
+            }
 
+            if(title!=null){
+                dialog.findViewById<TextView>(R.id.title).text = title
+            }
+            if(message!=null){
+                dialog.findViewById<TextView>(R.id.message).text = message
+            }
+            dialog.findViewById<RelativeLayout>(R.id.buttonNo).setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.findViewById<RelativeLayout>(R.id.buttonYes).setOnClickListener {
+                dialog.dismiss()
+                onItemYes?.invoke()
+            }
+            dialog.show()
+            return dialog
+        }
+        fun showDeleteBottomSheet(context: Context,message: String?, onItemContinue: (() -> Unit)? = null): BottomSheetDialog {
+            val bottomSheetDialog=BottomSheetDialog(context)
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_deleted)
+            if(message!=null){
+                bottomSheetDialog.findViewById<TextView>(R.id.your_delete)?.text = message
+            }
+            bottomSheetDialog.findViewById<RelativeLayout>(R.id.buttonContinue)?.setOnClickListener {
+                onItemContinue?.invoke()
+                bottomSheetDialog.dismiss()
+            }
+            bottomSheetDialog.show()
+            return bottomSheetDialog
+        }
+    }
 
 }

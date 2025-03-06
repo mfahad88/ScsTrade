@@ -94,4 +94,10 @@
     <string name="here_to_hel">Here to Help, Ready to Support!</string>
     <string name="office_timi">Office Timings:</string>
     <string name="am_to_5pm">9am to 5pm</string>
+    <string name="warning">Warning</string>
+    <string name="are_you_sur">Are you sure you want to delete your watchlist?</string>
+    <string name="label_no">No</string>
+    <string name="label_yes">Yes</string>
+    <string name="your_watch">Your watchlist has been deleted</string>
+    <string name="continueB">Continue</string>
 </resources>
