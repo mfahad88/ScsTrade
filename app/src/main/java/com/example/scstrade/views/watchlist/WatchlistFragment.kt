@@ -49,7 +49,7 @@ class WatchlistFragment : Fragment() {
             addItemDecoration(HorizontalDivider(30))
         }
        fetchUser()
-        viewModel.getWatchList(login.registrationID?:0)
+
 
         observeWatchList()
         childFragmentManager.setFragmentResultListener(AppConstants.BOTTOM_SHEET,this){_,bundle->
@@ -115,6 +115,11 @@ class WatchlistFragment : Fragment() {
            }
        })
    }
+
+    override fun onResume() {
+        viewModel.getWatchList(login.registrationID?:0)
+        super.onResume()
+    }
 
     private fun loadFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()

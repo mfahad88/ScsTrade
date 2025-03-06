@@ -103,7 +103,6 @@ class WatchListDetailActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
                     viewModel.getWatchListDetail(WatchListMainID?:0)
-                    viewModel.getWatchList(login.registrationID?:-1)
                     Utils.showDeleteBottomSheet(this,"Your symbol has been deleted from current watchlist.")
 
                 }
