@@ -20,5 +20,6 @@ class AppConstants {
         val WatchListMainID: String = "watchlist_selected_item"
         val IS_REMEMBER: String="isRemember"
         val USER="user"
+
     }
 }

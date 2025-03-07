@@ -605,4 +605,51 @@
         <item name="android:textColor">#1C1C1C</item>
     </style>
 
+    <style name="fauji_foods">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+    </style>
+
+    <style name="food_person">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+    </style>
+
+    <style name="label_text_reg">
+        <item name="android:textSize">8sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="label_text_index">
+        <item name="android:textSize">8.61sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="rs_">
+        <item name="android:textSize">32sp</item>
+        <item name="android:letterSpacing">-0.08</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+    </style>
+
+    <style name="valueTrade_snapshot">
+        <item name="android:textSize">40sp</item>
+        <item name="android:letterSpacing">-0.06</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+    </style>
+
+    <style name="netChange_snapshot">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">@color/md_theme_secondaryFixedDim</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+    </style>
+
 </resources>

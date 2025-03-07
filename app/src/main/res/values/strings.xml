@@ -100,4 +100,11 @@
     <string name="label_yes">Yes</string>
     <string name="your_watch">Your watchlist has been deleted</string>
     <string name="continueB">Continue</string>
+    <string name="fauji_foods">Fauji Foods Limited</string>
+    <string name="food_person"><![CDATA[Food & Personal Care Products]]></string>
+    <string name="label_text_reg">REG</string>
+    <string name="label_text_index">KSE 100</string>
+    <string name="rs_">Rs.</string>
+    <string name="valueTrade_snapshot">218.80</string>
+    <string name="netChange_snapshot">0.62 (3.28%)</string>
 </resources>
