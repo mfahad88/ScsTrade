@@ -13,6 +13,7 @@ import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
@@ -234,6 +235,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun contactUs(): Resource<List<ContactData>> {
         try {
             return Resource.Success(apiService.contact())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun snapshotOverview(symbol:String):Resource<Overview>{
+        try {
+            return Resource.Success(apiService.snapshotOver(symbol))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

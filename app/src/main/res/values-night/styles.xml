@@ -443,4 +443,10 @@
     <style name="valueTrade_snapshot"></style>
 
     <style name="netChange_snapshot"></style>
+
+    <style name="volume_"></style>
+
+    <style name="volume_value"></style>
+
+    <style name="rs_218_76"></style>
 </resources>

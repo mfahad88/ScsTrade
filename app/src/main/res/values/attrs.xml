@@ -47,4 +47,9 @@
         <attr name="setSelected" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="mMarket"></declare-styleable>
+    <declare-styleable name="DayRange">
+        <attr name="lowPrice" format="float"/>
+        <attr name="highPrice" format="float"/>
+        <attr name="closePrice" format="float"/>
+    </declare-styleable>
 </resources>

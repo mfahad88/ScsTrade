@@ -20,6 +20,7 @@ import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
@@ -48,6 +49,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableMettis=MutableLiveData<Resource<com.example.scstrade.model.response.news.mettis.RssFeed>>()
     val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
     val mutableContactUs=MutableLiveData<Resource<List<ContactData>>>()
+    val mutableOverview=MutableLiveData<Resource<Overview>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -246,6 +248,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.contactUs()
                 withContext(Dispatchers.Main){
                     mutableContactUs.value = result
+                }
+            }
+        }
+    }
+
+    fun snapshotOverview(symbol: String){
+        mutableOverview.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.snapshotOverview(symbol)
+                withContext(Dispatchers.Main){
+                    mutableOverview.value = result
                 }
             }
         }

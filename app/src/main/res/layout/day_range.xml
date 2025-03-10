@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/progress"
+        android:layout_alignEnd="@id/progress"
+        android:layout_alignParentTop="true"
+        android:id="@+id/dayRange"
+        >
+
+        <TextView
+            android:id="@+id/low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="700"
+            android:layout_alignParentStart="true"
+            android:text="@string/rs_218_76"
+            android:textAppearance="@style/rs_218_76"
+            />
+
+        <TextView
+            android:id="@+id/high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="700"
+            android:layout_alignParentEnd="true"
+            android:text="@string/rs_218_76"
+            android:textAppearance="@style/rs_218_76"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/dayRange"
+        android:layout_marginTop="4dp"
+        android:id="@+id/progress"
+        android:layout_height="10dp">
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:backgroundTint="#A50026"
+            android:background="@drawable/rounded_rectangle" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#D73027" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#F46D43" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#FDAE61" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#FEE08B" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#D9EF8B" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#A6D96A" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#66BD63" />
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="2dp"
+            android:background="#1A9850" />
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:rotation="180"
+            android:layout_marginStart="2dp"
+            android:backgroundTint="#006837"
+            android:background="@drawable/rounded_rectangle"/>
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/indicator"
+        android:layout_below="@id/progress"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/drop_up"
+        app:tint="#000000" />
+</RelativeLayout>

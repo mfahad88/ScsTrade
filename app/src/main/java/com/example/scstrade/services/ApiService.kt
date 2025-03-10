@@ -9,6 +9,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -106,4 +107,7 @@ interface ApiService {
 
     @GET(value = "ContactUS")
     suspend fun contact():List<ContactData>
+
+    @GET(value = "/SnapOverview")
+    suspend fun snapshotOver(@Query("symbolin")symbol:String):Overview
 }

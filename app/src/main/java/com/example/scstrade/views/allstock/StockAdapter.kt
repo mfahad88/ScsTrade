@@ -1,5 +1,6 @@
 package com.example.scstrade.views.allstock
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,21 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemStocksBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.util.Collections
 
 class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
 
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
-
+            binding.root.setOnClickListener {
+                val intent= Intent(binding.root.context,SnapshotActivity::class.java)
+                intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
+                binding.root.context.startActivity(intent)
+            }
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
                 binding.shariah.visibility= View.VISIBLE
@@ -56,6 +63,8 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
         holder.bind(list[position])
+
+
 
         if(isMore){
 

@@ -107,4 +107,9 @@
     <string name="rs_">Rs.</string>
     <string name="valueTrade_snapshot">218.80</string>
     <string name="netChange_snapshot">0.62 (3.28%)</string>
+    <string name="volume_">Volume:</string>
+    <string name="volume_value">2,548,950</string>
+    <string name="avg_volume_">Avg Volume (12M):</string>
+    <string name="market_cap_">Market Cap:</string>
+    <string name="rs_218_76">Rs. 218.76</string>
 </resources>
