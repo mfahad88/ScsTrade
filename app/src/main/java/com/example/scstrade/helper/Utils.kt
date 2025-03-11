@@ -32,7 +32,7 @@ class Utils {
         }
 
         fun commaFormat(value:Double?): String {
-            return NumberFormat.getInstance(Locale.US).format(value)
+            return  NumberFormat.getInstance(Locale.US).format(String.format("%.2f",value).toDouble())
         }
         fun convertToMillions(value: Double?): String {
             val df: DecimalFormat = DecimalFormat("#,###.##")

@@ -449,4 +449,12 @@
     <style name="volume_value"></style>
 
     <style name="rs_218_76"></style>
+
+    <style name="day_s_range"></style>
+
+    <style name="performance"></style>
+
+    <style name="one_pecent"></style>
+
+    <style name="one_month"></style>
 </resources>
