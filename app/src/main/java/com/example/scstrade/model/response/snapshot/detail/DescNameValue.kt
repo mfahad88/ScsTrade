@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class DescNameValue(
     @SerializedName("desc")
-    val desc: String,
+    val desc: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("value")
-    val value: String
+    val value: String?
 )

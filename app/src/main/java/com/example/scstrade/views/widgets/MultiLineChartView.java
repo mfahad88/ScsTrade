@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MultiLineChartView extends LineChart {
+    public MultiLineChartView(Context context) {
+        super(context);
+        setupChart();
+    }
+
     public MultiLineChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupChart();
@@ -39,7 +44,6 @@ public class MultiLineChartView extends LineChart {
         // Y-Axis Configuration
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawLabels(false);
-        leftAxis.setAxisMinimum(100f);
         leftAxis.setTextSize(12f);
         this.getAxisRight().setEnabled(false);
 
@@ -48,39 +52,42 @@ public class MultiLineChartView extends LineChart {
         legend.setTextSize(12f);
     }
 
-    public void setChartData(List<String> labels, List<Entry> greenLineEntries, List<Entry> blueLineEntries, List<Entry> blackLineEntries) {
-        List<String> strings=new ArrayList<>();
-        strings.add("100");
-        strings.add("300");
-        strings.add("500");
-        strings.add("700");
-        strings.add("900");
+    public void setChartData(List<String> labels,List<String> legends, List<Entry> greenLineEntries, List<Entry> blueLineEntries, List<Entry> blackLineEntries,List<Integer> colors) {
+        LineData lineData = new LineData();
+        if(greenLineEntries!=null) {
+            // Green Line DataSet
+            LineDataSet greenLineDataSet = new LineDataSet(greenLineEntries, legends.get(0));
+            greenLineDataSet.setColor(colors.get(0));
+            greenLineDataSet.setCircleColor(colors.get(0));
+            greenLineDataSet.setValueTextSize(12f);
+            greenLineDataSet.setLineWidth(2f);
+            lineData.addDataSet(greenLineDataSet);
+        }
 
+        if(blueLineEntries!=null) {
+            // Blue Line DataSet
+            LineDataSet blueLineDataSet = new LineDataSet(blueLineEntries, legends.get(1));
+            blueLineDataSet.setColor(colors.get(1));
+            blueLineDataSet.setCircleColor(colors.get(1));
+            blueLineDataSet.setValueTextSize(12f);
+            blueLineDataSet.setLineWidth(2f);
+            lineData.addDataSet(blueLineDataSet);
+        }
 
-        // Green Line DataSet
-        LineDataSet greenLineDataSet = new LineDataSet(greenLineEntries, "Green Line");
-        greenLineDataSet.setColor(Color.GREEN);
-        greenLineDataSet.setCircleColor(Color.GREEN);
-        greenLineDataSet.setValueTextSize(12f);
-        greenLineDataSet.setLineWidth(2f);
-
-        // Blue Line DataSet
-        LineDataSet blueLineDataSet = new LineDataSet(blueLineEntries, "Blue Line");
-        blueLineDataSet.setColor(Color.BLUE);
-        blueLineDataSet.setCircleColor(Color.BLUE);
-        blueLineDataSet.setValueTextSize(12f);
-        blueLineDataSet.setLineWidth(2f);
-
-        // Black Line DataSet
-        LineDataSet blackLineDataSet = new LineDataSet(blackLineEntries, "Black Line");
-        blackLineDataSet.setColor(Color.BLACK);
-        blackLineDataSet.setCircleColor(Color.BLACK);
-        blackLineDataSet.setValueTextSize(12f);
-        blackLineDataSet.setLineWidth(2f);
+        if(blackLineEntries!=null) {
+            // Black Line DataSet
+            LineDataSet blackLineDataSet = new LineDataSet(blackLineEntries, legends.get(2));
+            blackLineDataSet.setColor(colors.get(2));
+            blackLineDataSet.setCircleColor(colors.get(2));
+            blackLineDataSet.setValueTextSize(12f);
+            blackLineDataSet.setLineWidth(2f);
+            lineData.addDataSet(blackLineDataSet);
+        }
 
         // Combine Data
-        LineData lineData = new LineData(greenLineDataSet, blueLineDataSet, blackLineDataSet);
-        this.getAxisLeft().setValueFormatter(new IndexAxisValueFormatter(strings));
+
+
+//        this.getAxisLeft().setValueFormatter(new IndexAxisValueFormatter(strings));
         // Apply Data to Chart
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.setData(lineData);

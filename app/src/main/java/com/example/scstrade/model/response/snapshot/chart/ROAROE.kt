@@ -9,7 +9,7 @@ data class ROAROE(
     @SerializedName("Return_On_Assets")
     val returnOnAssets: List<Double>,
     @SerializedName("Return_On_CE")
-    val returnOnCE: List<Int>,
+    val returnOnCE: List<Double>,
     @SerializedName("Return_On_Equity")
     val returnOnEquity: List<Double>,
     @SerializedName("Year")

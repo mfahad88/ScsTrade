@@ -21,6 +21,8 @@ import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
+import com.example.scstrade.model.response.snapshot.chart.Charting
+import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
@@ -50,6 +52,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
     val mutableContactUs=MutableLiveData<Resource<List<ContactData>>>()
     val mutableOverview=MutableLiveData<Resource<Overview>>()
+    val mutableDetail=MutableLiveData<Resource<List<DetailItem>>>()
+    val mutableSnapShotChart=MutableLiveData<Resource<Charting>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -260,6 +264,30 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.snapshotOverview(symbol)
                 withContext(Dispatchers.Main){
                     mutableOverview.value = result
+                }
+            }
+        }
+    }
+
+    fun snapshotDetail(symbol: String){
+        mutableDetail.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.snapshotDetail(symbol)
+                withContext(Dispatchers.Main){
+                    mutableDetail.value = result
+                }
+            }
+        }
+    }
+
+    fun snapshotChart(symbol: String){
+        mutableSnapShotChart.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.snapshotChart(symbol)
+                withContext(Dispatchers.Main){
+                    mutableSnapShotChart.value = result
                 }
             }
         }

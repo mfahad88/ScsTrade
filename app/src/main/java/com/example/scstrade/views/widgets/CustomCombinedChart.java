@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomCombinedChart extends CombinedChart {
+
+    public CustomCombinedChart(Context context) {
+        super(context);
+        setupChart();
+    }
+
     public CustomCombinedChart(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupChart();
@@ -49,7 +55,6 @@ public class CustomCombinedChart extends CombinedChart {
         // Configure Left Y-Axis
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(true);
-        leftAxis.setAxisMinimum(0f);
 
         // Disable Right Y-Axis
         this.getAxisRight().setEnabled(false);

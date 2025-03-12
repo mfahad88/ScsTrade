@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.scstrade.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -19,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomBarChart extends BarChart {
+    public CustomBarChart(Context context) {
+        super(context);
+        setupBarChart();
+    }
+
     public CustomBarChart(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupBarChart();
@@ -53,7 +61,6 @@ public class CustomBarChart extends BarChart {
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setTextSize(12f);
-
         this.getAxisRight().setEnabled(false);
 
         this.getLegend().setEnabled(false);
@@ -63,16 +70,24 @@ public class CustomBarChart extends BarChart {
     }
 
 
-    public void setChartData(List<String> labels, List<Float> values, float barWidth, int... barColors) {
+    public void setChartData(List<String> labels, List<Float> values, float barWidth) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             entries.add(new BarEntry(i, values.get(i)));
         }
-
+        List<Integer> colors = new ArrayList<>();
         BarDataSet dataSet = new BarDataSet(entries, "Sales");
-        dataSet.setColors(barColors);
+        for (BarEntry entry : entries) {
+            if (entry.getY() >= 0) {
+                colors.add(ContextCompat.getColor(getContext(), R.color.md_theme_primary)); // Positive values - Green
+            } else {
+                colors.add(ContextCompat.getColor(getContext(), R.color.md_theme_errorContainer)); // Negative values - Red
+            }
+        }
+        dataSet.setColors(colors);
         dataSet.setValueTextColor(Color.BLACK);
         dataSet.setValueTextSize(12f);
+
 
         BarData data = new BarData(dataSet);
         data.setBarWidth(barWidth);

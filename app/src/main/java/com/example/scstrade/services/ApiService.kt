@@ -10,6 +10,8 @@ import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.snapshot.Overview
+import com.example.scstrade.model.response.snapshot.chart.Charting
+import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -110,4 +112,10 @@ interface ApiService {
 
     @GET(value = "/SnapOverview")
     suspend fun snapshotOver(@Query("symbolin")symbol:String):Overview
+
+    @GET(value = "/SnapDetails")
+    suspend fun snapshotDetail(@Query("symbolin")symbol:String):List<DetailItem>
+
+    @GET(value = "/SnapCharting")
+    suspend fun snapshotChart(@Query("symbolin")symbol:String) : Charting
 }

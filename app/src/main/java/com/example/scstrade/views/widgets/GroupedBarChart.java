@@ -1,6 +1,7 @@
 package com.example.scstrade.views.widgets;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -49,7 +50,6 @@ public class GroupedBarChart extends BarChart {
         
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(false);
-        leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawZeroLine(true);
         Legend legend = this.getLegend();
@@ -60,20 +60,24 @@ public class GroupedBarChart extends BarChart {
         this.getAxisRight().setEnabled(false);
     }
 
-    public void setGroupedBarData(List<BarEntry> group1, List<BarEntry> group2, List<BarEntry> group3, String label1, String label2, String label3) {
+    public void setGroupedBarData(List<BarEntry> group1, List<BarEntry> group2, List<BarEntry> group3,List<BarEntry> group4, String label1, String label2, String label3,String label4) {
         float groupSpace = 0.1f;
         float barSpace = 0.05f;
         float barWidth = 0.2f;
 
         BarDataSet set1 = new BarDataSet(group1, label1);
-        set1.setColor(0xFF6200EE); // Purple
+        set1.setColor(Color.parseColor("#7cb5ec")); // Purple
 
         BarDataSet set2 = new BarDataSet(group2, label2);
-        set2.setColor(0xFFFF5722); // Orange
+        set2.setColor(Color.parseColor("#434348")); // Orange
 
         BarDataSet set3 = new BarDataSet(group3, label3);
-        set2.setColor(0xFFFF5722); // Orange
-        BarData data = new BarData(set1, set2,set3);
+        set3.setColor(Color.parseColor("#90ed7d")); // Orange
+
+        BarDataSet set4 = new BarDataSet(group4, label4);
+        set4.setColor(Color.parseColor("#f7a35c")); // Orange
+
+        BarData data = new BarData(set1, set2,set3,set4);
         data.setBarWidth(barWidth);
         
         this.setData(data);

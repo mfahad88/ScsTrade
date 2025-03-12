@@ -21,6 +21,8 @@ class SnapshotActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySnapshotBinding.inflate(LayoutInflater.from(this))
         sharedViewModel=(this.application as MyApp).viewModel
+        sharedViewModel.snapshotChart(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+        sharedViewModel.snapshotDetail(intent.extras?.getString(AppConstants.SYMBOL)?:"")
         sharedViewModel.snapshotOverview(intent.extras?.getString(AppConstants.SYMBOL)?:"")
         enableEdgeToEdge()
         setContentView(binding.root)
