@@ -23,6 +23,7 @@ import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
+import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.RetrofitInstance
@@ -54,6 +55,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableOverview=MutableLiveData<Resource<Overview>>()
     val mutableDetail=MutableLiveData<Resource<List<DetailItem>>>()
     val mutableSnapShotChart=MutableLiveData<Resource<Charting>>()
+    val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -288,6 +290,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.snapshotChart(symbol)
                 withContext(Dispatchers.Main){
                     mutableSnapShotChart.value = result
+                }
+            }
+        }
+    }
+
+    fun yearsDetails(symbol: String){
+        mutableYears.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.yearsDetails(symbol)
+                withContext(Dispatchers.Main){
+                    mutableYears.value = result
                 }
             }
         }

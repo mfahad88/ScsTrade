@@ -60,7 +60,7 @@ public class CustomCombinedChart extends CombinedChart {
         this.getAxisRight().setEnabled(false);
     }
 
-    public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels) {
+    public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor) {
         CombinedData data = new CombinedData();
 
 
@@ -69,8 +69,9 @@ public class CustomCombinedChart extends CombinedChart {
         data.setData(lineData);
 
         // Bar Data (Book Value)
-        BarData barData = generateBarData(barValues);
+        BarData barData = generateBarData(barValues,barColor);
         barData.setBarWidth(0.5f);
+
         data.setData(barData);
 
         // Set Data to Chart
@@ -79,14 +80,15 @@ public class CustomCombinedChart extends CombinedChart {
         this.invalidate();
     }
 
-    private BarData generateBarData(List<Float> values) {
+    private BarData generateBarData(List<Float> values, int barColor) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             entries.add(new BarEntry(i, values.get(i)));
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Book Value");
-        dataSet.setColor(Color.BLUE);
+
+        dataSet.setColor(barColor);
         dataSet.setValueTextColor(Color.BLACK);
         dataSet.setValueTextSize(10f);
 

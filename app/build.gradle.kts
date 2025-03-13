@@ -17,7 +17,7 @@ android {
     }
     defaultConfig {
         applicationId = "com.scstrade.scstradepro"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -47,7 +47,6 @@ android {
 dependencies {
     val room_version = "2.6.1"
 
-    implementation("androidx.room:room-runtime:$room_version")
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project

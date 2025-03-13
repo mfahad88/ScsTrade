@@ -17,17 +17,17 @@ data class Charting(
     @SerializedName("EPSYear")
     val ePSYear: EPSYear,
     @SerializedName("Enterprise")
-    val enterprise: Any?,
+    val enterprise: Enterprise?,
     @SerializedName("Insurance")
-    val insurance: Any?,
+    val insurance: Insurance?,
     @SerializedName("Payout")
     val payout: Payout,
     @SerializedName("Profitablity")
-    val profitablity: Any?,
+    val profitablity: Profitablity?,
     @SerializedName("ROAROE")
     val rOAROE: ROAROE,
     @SerializedName("Sales")
-    val sales: Any?,
+    val sales: Sales?,
     @SerializedName("StockIndex")
     val stockIndex: StockIndex
 )

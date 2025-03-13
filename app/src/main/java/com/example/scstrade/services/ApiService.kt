@@ -12,6 +12,7 @@ import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
+import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -118,4 +119,7 @@ interface ApiService {
 
     @GET(value = "/SnapCharting")
     suspend fun snapshotChart(@Query("symbolin")symbol:String) : Charting
+
+    @GET(value = "/YearsDetails")
+    suspend fun yearsDetails(@Query("symbolin")symbol:String): List<YearDetailsItem>
 }

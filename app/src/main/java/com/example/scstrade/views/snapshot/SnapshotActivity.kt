@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivitySnapshotBinding
 import com.example.scstrade.helper.AppConstants
@@ -21,9 +22,14 @@ class SnapshotActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySnapshotBinding.inflate(LayoutInflater.from(this))
         sharedViewModel=(this.application as MyApp).viewModel
-        sharedViewModel.snapshotChart(intent.extras?.getString(AppConstants.SYMBOL)?:"")
-        sharedViewModel.snapshotDetail(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+
         sharedViewModel.snapshotOverview(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+        sharedViewModel.mutableOverview.observe(this, Observer { result->
+            if(result.data!=null){
+                sharedViewModel.snapshotChart(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+                sharedViewModel.snapshotDetail(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+            }
+        })
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -36,6 +42,10 @@ class SnapshotActivity : AppCompatActivity() {
 
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.text){
+                    "Overview"->loadFragment(OverviewFragment())
+                    "Income Statements"->loadFragment(IncomeStatementFragment())
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {

@@ -7,9 +7,16 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fillViewport="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/main"
+        android:visibility="gone"
         tools:context=".views.snapshot.OverviewFragment">
 
         <com.google.android.material.card.MaterialCardView
@@ -514,5 +521,15 @@
             app:layout_constraintStart_toStartOf="@+id/materialCardView2"
             app:layout_constraintTop_toBottomOf="@+id/combineChart" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/load_anim" />
+    </FrameLayout>
 
 </androidx.core.widget.NestedScrollView>

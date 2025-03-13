@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -88,29 +89,35 @@ class OverviewFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    binding.onePecent.text = "${result.data?.oneMonthReturn}%"
-                    binding.threePecent.text = "${result.data?.twoMonthReturn}%"
-                    binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
-                    binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
-                    val res=sharedViewModel.mutableAllData.value
-                    val item=res?.data?.filter { it.sYM.equals(requireActivity().intent.extras?.getString(AppConstants.SYMBOL),true) }?.first()
-                    binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
-                    binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
-                    binding.valueTrade.text = item?.cL.toString()
-                    binding.netChange.text = "${item?.cH.toString()}(${String.format("%.2f",item?.cHP)}%)"
-                    if(item?.iN!="") {
-                        binding.labelTextIndex.text =
-                            item?.iN?.substring(0, item?.iN?.indexOf("|") ?: 0)
-                    }
-                    binding.volumeValue.text = Utils.commaFormat(item?.v?.toDouble())
-                    binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())
-                    binding.marketCapValue.text = Utils.commaFormat(result.data?.marketCap?.toDouble())
-                    binding.companyName.text = item?.nM
-                    binding.sector.text = item?.sN
-                    binding.ratios.setContent {
-                        populateRatios(data = result.data)
-                    }
+                   try{
+                       binding.onePecent.text = "${result.data?.oneMonthReturn}%"
+                       binding.threePecent.text = "${result.data?.twoMonthReturn}%"
+                       binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
+                       binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
+                       val res=sharedViewModel.mutableAllData.value
+                       val item=res?.data?.filter { it.sYM.equals(requireActivity().intent.extras?.getString(AppConstants.SYMBOL),true) }?.first()
+                       binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
+                       binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
+                       binding.valueTrade.text = item?.cL.toString()
+                       binding.netChange.text = "${item?.cH.toString()}(${String.format("%.2f",item?.cHP)}%)"
+                       if(item?.iN!="") {
+                           binding.labelTextIndex.text =
+                               item?.iN?.substring(0, item?.iN?.indexOf("|") ?: 0)
+                       }
+                       binding.volumeValue.text = Utils.commaFormat(item?.v?.toDouble())
+                       binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())
+                       binding.marketCapValue.text = Utils.commaFormat(result.data?.marketCap?.toDouble())
+                       binding.companyName.text = item?.nM
+                       binding.sector.text = item?.sN
+                       binding.ratios.setContent {
 
+                           populateRatios(data = result.data)
+                       }
+                       binding.loader.visibility = View.GONE
+                       binding.main.visibility = View.VISIBLE
+                   }catch(e:Exception){
+                       e.printStackTrace()
+                   }
                 }
             }
         })
@@ -373,7 +380,7 @@ class OverviewFragment : Fragment() {
             }
             if(detail?.snapShot?.advancesAndDeposits!=null) {
                 ExpandableList(
-                    "Advance And Deposit",
+                    "Advances And Deposits",
                     detail.snapShot.advancesAndDeposits,
                     charting.data
                 )
@@ -390,6 +397,53 @@ class OverviewFragment : Fragment() {
                     charting.data
                 )
                 Spacer(modifier = Modifier.height(5.dp))
+            }
+
+            if(detail?.snapShot?.profitablility!=null){
+                ExpandableList(
+                    "Profitablility",
+                    detail.snapShot.profitablility,
+                    charting.data
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+            }
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Card(
+                modifier = Modifier
+                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+                elevation = 0.dp,
+                shape = RoundedCornerShape(10.dp),
+            ){
+                Column (
+                    modifier = Modifier.padding(horizontal = 15.dp, vertical = 20.dp)
+                ){
+                    Text(
+                        text = "About Company:",
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            lineHeight = 27.sp,
+                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                            fontWeight = FontWeight(700),
+                            color = colorResource(id = R.color.md_theme_primary),
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = data?.description?:"",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            lineHeight = 30.08.sp,
+                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                            fontWeight = FontWeight(500),
+                            color = Color(0xFF000000),
+                        )
+                    )
+
+                }
             }
         }
 
@@ -505,7 +559,8 @@ class OverviewFragment : Fragment() {
                                     ?.toMutableList(),
                                 charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }
                                     ?.toList(),
-                                charting?.bookValue?.year
+                                charting?.bookValue?.year,
+                                android.graphics.Color.parseColor("#7cb5ec")
                             )
                         }
                     )
@@ -534,7 +589,81 @@ class OverviewFragment : Fragment() {
                         .height(250.dp),
                     factory = { context -> CustomCombinedChart(context) },
                     update = {
-                       it.setChartData(charting?.dividend?.dividend?.map { it.toFloat() },charting?.dividend?.dividendYieldPer?.map { it.toFloat() },charting?.dividend?.year)
+                       it.setChartData(charting?.dividend?.dividend?.map { it.toFloat() },charting?.dividend?.dividendYieldPer?.map { it.toFloat() },charting?.dividend?.year,android.graphics.Color.parseColor("#ffaa07"))
+                    }
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    factory = { context -> MultiLineChartView(context) },
+                    update = {
+                        it.setChartData(charting?.payout?.year,
+                            listOf("Payout"),charting?.payout?.payoutRatio?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
+                            listOf(android.graphics.Color.parseColor("#000000"))
+                        )
+                    }
+                )
+            }
+
+            if(title.equals("Cash",true)){
+
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    factory = { context -> MultiLineChartView(context) },
+                    update = {
+                        it.setChartData(charting?.cash?.year,
+                            listOf("Cash per Share"),charting?.cash?.cashPerShare?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
+                            listOf(android.graphics.Color.parseColor("#7cb5ec"))
+                        )
+                    }
+                )
+            }
+
+            if(title.equals("Advances And Deposits",true)){
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    factory = { context -> MultiLineChartView(context) },
+                    update = {
+                        it.setChartData(charting?.aDR?.year,
+                            listOf("Equity to Ad","ADR","Cash to DPR"),charting?.aDR?.equityToAd?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.aDR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.cashToDPR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),
+                            listOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
+                        )
+                    }
+                )
+            }
+
+            if(title.equals("Profitablility",true)){
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    factory = { context -> MultiLineChartView(context) },
+                    update = {
+                        it.setChartData(charting?.profitablity?.year,
+                            listOf("Net Profit Margin","Gross Profit Margin"),charting?.profitablity?.netProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.profitablity?.grossProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
+                            listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
+                        )
+                    }
+                )
+            }
+            if(title.equals("Insurance",true)){
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    factory = { context -> MultiLineChartView(context) },
+                    update = {
+                        it.setChartData(charting?.insurance?.year,
+                            listOf("UWR to PAT","II to PAT"),charting?.insurance?.uWRToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.insurance?.iIToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
+                            listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
+                        )
                     }
                 )
             }
