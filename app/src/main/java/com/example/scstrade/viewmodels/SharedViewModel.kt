@@ -18,6 +18,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
@@ -56,6 +57,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDetail=MutableLiveData<Resource<List<DetailItem>>>()
     val mutableSnapShotChart=MutableLiveData<Resource<Charting>>()
     val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
+    val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -302,6 +304,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.yearsDetails(symbol)
                 withContext(Dispatchers.Main){
                     mutableYears.value = result
+                }
+            }
+        }
+    }
+
+    fun incomeStatement(symbol:String,year:String,quarter:String){
+        mutableIncomeStatement.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.incomeStatement(symbol,year, quarter)
+                withContext(Dispatchers.Main){
+                    mutableIncomeStatement.value = result
                 }
             }
         }

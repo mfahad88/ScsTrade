@@ -34,11 +34,7 @@
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".views.news.NewsActivity"
-            android:configChanges="orientation|screenSize"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".views.portfolio.PortfolioActivity"
             android:configChanges="orientation|screenSize"

@@ -8,6 +8,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -122,4 +123,16 @@ interface ApiService {
 
     @GET(value = "/YearsDetails")
     suspend fun yearsDetails(@Query("symbolin")symbol:String): List<YearDetailsItem>
+
+    @GET(value = "/IncomeStatement")
+    suspend fun incomeStatement1(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter1")q:String?):List<IncomeStatementDataItem>
+
+    @GET(value = "/IncomeStatement")
+    suspend fun incomeStatement2(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter2")q:String?):List<IncomeStatementDataItem>
+
+    @GET(value = "/IncomeStatement")
+    suspend fun incomeStatement3(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter3")q:String?):List<IncomeStatementDataItem>
+
+    @GET(value = "/IncomeStatement")
+    suspend fun incomeStatement4(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter4")q:String?):List<IncomeStatementDataItem>
 }

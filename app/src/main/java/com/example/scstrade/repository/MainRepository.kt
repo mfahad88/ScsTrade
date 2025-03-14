@@ -11,6 +11,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
@@ -276,6 +277,24 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun yearsDetails(symbol: String): Resource<List<YearDetailsItem>> {
         try {
             return Resource.Success(apiService.yearsDetails(symbol))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun incomeStatement(symbol:String,year:String,quarter:String): Resource<List<IncomeStatementDataItem>> {
+        try {
+            if(quarter.contains("1")) {
+                return Resource.Success(apiService.incomeStatement1(symbol, year, ""))
+            }else if(quarter.contains("2")) {
+                return Resource.Success(apiService.incomeStatement2(symbol, year, ""))
+            }
+            else if(quarter.contains("3")) {
+                return Resource.Success(apiService.incomeStatement3(symbol, year, ""))
+            }
+            else {
+                return Resource.Success(apiService.incomeStatement4(symbol, year, ""))
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }
