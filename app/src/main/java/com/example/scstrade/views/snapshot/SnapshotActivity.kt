@@ -46,6 +46,7 @@ class SnapshotActivity : AppCompatActivity() {
                     "Overview"->loadFragment(OverviewFragment())
                     "Income Statements"->loadFragment(IncomeStatementFragment())
                     "Balance Sheet" -> loadFragment(BalanceSheetFragment())
+                    "Announcements" -> loadFragment(AnnouncementsFragment())
                 }
             }
 
