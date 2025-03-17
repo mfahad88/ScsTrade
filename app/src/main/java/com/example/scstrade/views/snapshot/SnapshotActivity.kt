@@ -45,6 +45,7 @@ class SnapshotActivity : AppCompatActivity() {
                 when(tab?.text){
                     "Overview"->loadFragment(OverviewFragment())
                     "Income Statements"->loadFragment(IncomeStatementFragment())
+                    "Balance Sheet" -> loadFragment(BalanceSheetFragment())
                 }
             }
 

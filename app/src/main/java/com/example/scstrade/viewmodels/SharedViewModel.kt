@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.contact.ContactData
@@ -58,6 +59,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableSnapShotChart=MutableLiveData<Resource<Charting>>()
     val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
     val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
+    val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -316,6 +318,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.incomeStatement(symbol,year, quarter)
                 withContext(Dispatchers.Main){
                     mutableIncomeStatement.value = result
+                }
+            }
+        }
+    }
+
+    fun balanceSheet(symbol:String,year:String,quarter:String){
+        mutableBalanceSheet.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.balanceSheet(symbol,year, quarter)
+                withContext(Dispatchers.Main){
+                    mutableBalanceSheet.value = result
                 }
             }
         }

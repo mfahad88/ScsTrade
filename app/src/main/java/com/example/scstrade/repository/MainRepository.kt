@@ -3,6 +3,7 @@ package com.example.scstrade.repository
 import RssFeed
 import android.content.Context
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.contact.ContactData
@@ -294,6 +295,24 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             }
             else {
                 return Resource.Success(apiService.incomeStatement4(symbol, year, ""))
+            }
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun balanceSheet(symbol:String,year:String,quarter:String): Resource<List<BalanceSheetDataItem>> {
+        try {
+            if(quarter.contains("1")) {
+                return Resource.Success(apiService.balanceSheet1(symbol, year, ""))
+            }else if(quarter.contains("2")) {
+                return Resource.Success(apiService.balanceSheet2(symbol, year, ""))
+            }
+            else if(quarter.contains("3")) {
+                return Resource.Success(apiService.balanceSheet3(symbol, year, ""))
+            }
+            else {
+                return Resource.Success(apiService.balanceSheet4(symbol, year, ""))
             }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)

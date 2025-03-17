@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
 import com.example.scstrade.R
-import com.example.scstrade.databinding.FragmentIncomeStatementBinding
+import com.example.scstrade.databinding.FragmentBalanceSheetBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
@@ -54,9 +54,10 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 
 
-class IncomeStatementFragment : Fragment() {
+class BalanceSheetFragment : Fragment() {
     lateinit var sharedViewModel: SharedViewModel
-    lateinit var binding: FragmentIncomeStatementBinding
+    lateinit var binding: FragmentBalanceSheetBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
@@ -70,7 +71,7 @@ class IncomeStatementFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentIncomeStatementBinding.inflate(inflater, container, false)
+        binding = FragmentBalanceSheetBinding.inflate(inflater,container,false)
         sharedViewModel.mutableYears.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Error -> {
@@ -98,7 +99,7 @@ class IncomeStatementFragment : Fragment() {
                                 mutableStateOf(result.data?.filter { it.yeartext.equals(selectedYear) }
                                     ?.map { it.quarterNumber }?.toList()?.first())
                             }
-                            sharedViewModel.incomeStatement(
+                            sharedViewModel.balanceSheet(
                                 requireActivity().intent.extras?.getString(
                                     AppConstants.SYMBOL
                                 ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
@@ -134,8 +135,8 @@ class IncomeStatementFragment : Fragment() {
                             }
 
                             Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp)) {
-                                val incomeStatement =
-                                    sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
+                                val balanceSheet =
+                                    sharedViewModel.mutableBalanceSheet.asFlow().collectAsState(
                                         initial = Resource.Loading()
                                     ).value.data
                                 Column {
@@ -185,29 +186,25 @@ class IncomeStatementFragment : Fragment() {
                                             )
                                         }
                                     }
-                                    if(incomeStatement?.isNotEmpty() == true) {
+                                    if(balanceSheet?.isNotEmpty() == true) {
                                         Column (modifier = Modifier.padding(horizontal = 15.dp)){
-                                            cardItem("Cash", Utils.commaFormat(incomeStatement?.first()?.cash))
+                                            cardItem("Cost Of Sales", Utils.commaFormat(balanceSheet?.first()?.Cost_Of_Sales))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Current Asset", Utils.commaFormat(incomeStatement?.first()?.currentAsset))
+                                            cardItem("Finance Cost", Utils.commaFormat(balanceSheet?.first()?.Finance_Cost))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Current Liability", Utils.commaFormat(incomeStatement?.first()?.currentLiability))
+                                            cardItem("Gross Profit", Utils.commaFormat(balanceSheet?.first()?.Gross_Profit))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Fixed Asset", Utils.commaFormat(incomeStatement?.first()?.fixedAsset))
+                                            cardItem("Operating Profit", Utils.commaFormat(balanceSheet?.first()?.Operating_Profit))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Fixed Liability", Utils.commaFormat(incomeStatement?.first()?.fixedLiability))
+                                            cardItem("Other Income", Utils.commaFormat(balanceSheet?.first()?.Other_Income))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Inventory", Utils.commaFormat(incomeStatement?.first()?.inventory))
+                                            cardItem("Profit Before Tax", Utils.commaFormat(balanceSheet?.first()?.Profit_Before_Tax))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Investments", Utils.commaFormat(incomeStatement?.first()?.investments))
+                                            cardItem("Profit After Tax", Utils.commaFormat(balanceSheet?.first()?.Profit_After_Tax))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem("Paid Up Capital", Utils.commaFormat(incomeStatement?.first()?.paidUpCapital))
+                                            cardItem("Sales", Utils.commaFormat(balanceSheet?.first()?.Sales))
                                             Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem(key = "Total Assets", value = Utils.commaFormat(incomeStatement?.first()?.totalAssets))
-                                            Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem(key = "Total Equity", value = Utils.commaFormat(incomeStatement?.first()?.totalEquity))
-                                            Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                            cardItem(key = "Total Liabilities", value = Utils.commaFormat(incomeStatement?.first()?.totalLiabilities))
+                                            cardItem(key = "Taxation", value = Utils.commaFormat(balanceSheet?.first()?.Taxation))
                                         }
                                     }else{
                                         Column(modifier = Modifier.padding(10.dp)) {
