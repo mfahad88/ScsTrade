@@ -4,24 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivitySnapshotBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.viewmodels.WatchListViewModel
+import com.example.scstrade.viewmodels.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 
 class SnapshotActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySnapshotBinding
     private lateinit var sharedViewModel: SharedViewModel
+    lateinit var watchListViewModel: WatchListViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySnapshotBinding.inflate(LayoutInflater.from(this))
         sharedViewModel=(this.application as MyApp).viewModel
+        watchListViewModel = ViewModelProvider(this,
+            WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
+        ).get(WatchListViewModel::class.java)
 
         sharedViewModel.snapshotOverview(intent.extras?.getString(AppConstants.SYMBOL)?:"")
         sharedViewModel.mutableOverview.observe(this, Observer { result->
@@ -39,6 +48,14 @@ class SnapshotActivity : AppCompatActivity() {
         }
         binding.tabLayout.getTabAt(0)?.select()
         loadFragment(OverviewFragment())
+
+        binding.floatingActionButton.setOnClickListener {
+            val bottomSheet=BottomSheetDialog(this)
+            bottomSheet.setContentView(R.layout.bottom_watchlist)
+            bottomSheet.findViewById<ComposeView>(R.id.list)?.setContent {
+
+            }
+        }
 
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {

@@ -4,6 +4,7 @@ import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.contact.ContactData
+import com.example.scstrade.model.response.distribution.DistributionDataItem
 import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
@@ -148,4 +149,16 @@ interface ApiService {
 
     @GET(value = "/BalanceSheet")
     suspend fun balanceSheet4(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter4")q:String?):List<BalanceSheetDataItem>
+
+    @GET(value = "/Distribution")
+    suspend fun distribution1(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter1")q:String?):List<DistributionDataItem>
+
+    @GET(value = "/Distribution")
+    suspend fun distribution2(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter2")q:String?):List<DistributionDataItem>
+
+    @GET(value = "/Distribution")
+    suspend fun distribution3(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter3")q:String?):List<DistributionDataItem>
+
+    @GET(value = "/Distribution")
+    suspend fun distribution4(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter4")q:String?):List<DistributionDataItem>
 }

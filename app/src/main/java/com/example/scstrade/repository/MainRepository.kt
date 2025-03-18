@@ -7,6 +7,7 @@ import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.contact.ContactData
+import com.example.scstrade.model.response.distribution.DistributionDataItem
 import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
@@ -313,6 +314,24 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             }
             else {
                 return Resource.Success(apiService.balanceSheet4(symbol, year, ""))
+            }
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun distribution(symbol:String,year:String,quarter:String): Resource<List<DistributionDataItem>> {
+        try {
+            if(quarter.contains("1")) {
+                return Resource.Success(apiService.distribution1(symbol, year, ""))
+            }else if(quarter.contains("2")) {
+                return Resource.Success(apiService.distribution2(symbol, year, ""))
+            }
+            else if(quarter.contains("3")) {
+                return Resource.Success(apiService.distribution3(symbol, year, ""))
+            }
+            else {
+                return Resource.Success(apiService.distribution4(symbol, year, ""))
             }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)

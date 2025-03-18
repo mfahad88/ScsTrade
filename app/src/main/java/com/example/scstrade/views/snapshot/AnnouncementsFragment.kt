@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,9 +21,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -61,7 +65,7 @@ class AnnouncementsFragment : Fragment() {
           item {
               Column {
                   Row {
-                      Box (modifier = Modifier.weight(0.8f)){
+                      Box (modifier = Modifier.weight(0.7f)){
                           Text(
                               text = "Transmission of Quarterly Report\nfor the Period Ended Septembe....",
                               style = TextStyle(
@@ -73,19 +77,36 @@ class AnnouncementsFragment : Fragment() {
                               )
                           )
                       }
-                      Box(modifier = Modifier.weight(0.2f)){
+                      Box(modifier = Modifier.weight(0.3f)){
                           Row{
-                              Box(modifier = Modifier.size(21.dp).border(width = 1.dp, color = Color.Gray,
-                                  RoundedCornerShape(21.dp)
-                              )) {  }
+                              Box(modifier = Modifier
+                                  .size(32.dp)
+                                  .border(
+                                      width = 1.dp, color = Color(0xFF79776F),
+                                      RoundedCornerShape(21.dp)
+                                  )) {
+                                  Image(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "View", modifier = Modifier.align(Alignment.Center).padding(7.dp))
+                              }
                               Spacer(modifier = Modifier.width(8.dp))
-                              Box(modifier = Modifier.size(21.dp).border(width = 1.dp, color = Color.Gray,
-                                  RoundedCornerShape(21.dp)
-                              )) {  }
+                              Box(modifier = Modifier
+                                  .size(32.dp)
+                                  .border(
+                                      width = 1.dp, color = Color(0xFF79776F),
+                                      RoundedCornerShape(21.dp)
+                                  )) {
+                                  Image(painter = painterResource(id = R.drawable.baseline_arrow_downward_24), contentDescription = "Download", modifier = Modifier.align(Alignment.Center).padding(7.dp))
+                              }
                               Spacer(modifier = Modifier.width(8.dp))
-                              Box(modifier = Modifier.size(21.dp).border(width = 1.dp, color = Color.Gray,
-                                  RoundedCornerShape(21.dp)
-                              )) {  }
+                              Box(modifier = Modifier
+                                  .size(32.dp)
+                                  .border(
+                                      width = 1.dp, color = Color(0xFF79776F),
+                                      RoundedCornerShape(21.dp)
+                                  )) {
+                                  Image(painter = painterResource(id = R.drawable.baseline_share_24), contentDescription = "Share", colorFilter = ColorFilter.tint(color = colorResource(
+                                      id = R.color.md_theme_primary
+                                  )), modifier = Modifier.align(Alignment.Center).padding(7.dp))
+                              }
                           }
                       }
                   }

@@ -133,7 +133,7 @@ class IncomeStatementFragment : Fragment() {
                                 }
                             }
 
-                            Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp)) {
+                            Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
                                 val incomeStatement =
                                     sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
                                         initial = Resource.Loading()

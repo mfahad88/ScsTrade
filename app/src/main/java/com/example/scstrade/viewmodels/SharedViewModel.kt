@@ -14,6 +14,7 @@ import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.response.contact.ContactData
+import com.example.scstrade.model.response.distribution.DistributionDataItem
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalData
@@ -60,6 +61,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
     val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
+    val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -330,6 +332,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.balanceSheet(symbol,year, quarter)
                 withContext(Dispatchers.Main){
                     mutableBalanceSheet.value = result
+                }
+            }
+        }
+    }
+
+    fun distribution(symbol:String,year:String,quarter:String){
+        mutableDistribution.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.distribution(symbol,year, quarter)
+                withContext(Dispatchers.Main){
+                    mutableDistribution.value = result
                 }
             }
         }

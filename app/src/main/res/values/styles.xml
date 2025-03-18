@@ -701,4 +701,12 @@
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
+    <style name="new_watchlist">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+
+    </style>
+
+
 </resources>
