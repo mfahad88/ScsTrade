@@ -121,4 +121,5 @@
     <string name="six_month">6 Month</string>
     <string name="one_year">1 Year</string>
     <string name="new_watchlist">New Watch List</string>
+    <string name="company_add">Company added to the watch list</string>
 </resources>

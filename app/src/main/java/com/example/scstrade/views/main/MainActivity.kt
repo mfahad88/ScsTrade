@@ -1,5 +1,6 @@
 package com.example.scstrade.views.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,7 @@ import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.splash.SplashFragment
+import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -93,5 +95,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
 //        viewModel.stopIndices()
     }
+
+
 
 }

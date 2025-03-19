@@ -72,6 +72,8 @@ class LoginFragment : Fragment() {
                                listOf(true)
                            )
                         }
+
+
                         Utils.saveSharedPreference(
                             requireContext(),
                             AppConstants.USER,

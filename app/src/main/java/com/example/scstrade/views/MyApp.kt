@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
 import java.security.MessageDigest
@@ -15,6 +16,7 @@ import java.security.NoSuchAlgorithmException
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
+    lateinit var login: LoginDataItem
     override fun onCreate() {
         super<Application>.onCreate()
         getSha1Fingerprint()

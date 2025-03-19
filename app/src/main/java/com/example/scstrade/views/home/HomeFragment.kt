@@ -1,10 +1,13 @@
 package com.example.scstrade.views.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -25,6 +28,8 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.ChartActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.StockAdapter
+import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
@@ -49,6 +54,7 @@ class HomeFragment : Fragment() {
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
+
 
 //        viewModel.fetchAllData()
 //        viewModel.fetchIndices()
@@ -268,5 +274,7 @@ class HomeFragment : Fragment() {
         }
         popupMenu.show()
     }
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.scstrade.views.landing
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
@@ -26,6 +28,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
@@ -38,6 +41,7 @@ import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
+import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,6 +50,7 @@ import java.util.Locale
 class LandingFragment : Fragment() {
     lateinit var binding: FragmentLandingBinding
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +65,10 @@ class LandingFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.toolbar.searchIcon.setOnClickListener {
             Toast.makeText(requireContext(),"Clicked...",Toast.LENGTH_SHORT).show()
+
         }
+
+        fetchUser()
        /* requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
 
@@ -136,6 +144,12 @@ class LandingFragment : Fragment() {
 
         }
         return binding.root
+    }
+
+    private fun fetchUser() {
+        val listType = object : TypeToken<List<LoginDataItem>>() {}
+        val user= Utils.getSharedPreference(requireContext(), emptyList<LoginDataItem>(),AppConstants.USER,listType)
+        (requireActivity().application as MyApp).login=user.first()
     }
 
     private fun showExitDialog() {
@@ -232,6 +246,17 @@ class LandingFragment : Fragment() {
             val divider= DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
             divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
             addItemDecoration(divider)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            val fragmentToOpen = data?.getStringExtra("fragment_to_open")
+            if (fragmentToOpen != null) {
+                loadFragment(WatchlistFragment())
+            }
+
         }
     }
 }

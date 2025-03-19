@@ -13,5 +13,6 @@ data class WatchListItem(
     @SerializedName("SymbolCount")
     val SymbolCount: Int?,
     @SerializedName("WatchListMainDefault")
-    val WatchListMainDefault: Boolean?
+    val WatchListMainDefault: Boolean?,
+    var isChecked: Boolean =false
 )
