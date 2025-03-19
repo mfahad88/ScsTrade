@@ -90,7 +90,12 @@ class SnapshotActivity : AppCompatActivity() {
             bottomSheet.findViewById<RelativeLayout>(R.id.new_watchlist)?.setOnClickListener {
                 bottomSheet.setContentView(R.layout.fragment_add_watch_list_bottom_sheet)
                 bottomSheet.findViewById<MaterialButton>(R.id.buttonAdd)!!.setOnClickListener {
-                    watchListViewModel.createWatchList(bottomSheet.findViewById<EditText>(R.id.editTextName)?.text.toString(),(this.application as MyApp).login.registrationID?:0)
+                    if(bottomSheet.findViewById<EditText>(R.id.editTextName)?.text?.isNotEmpty() == true) {
+                        watchListViewModel.createWatchList(
+                            bottomSheet.findViewById<EditText>(R.id.editTextName)?.text.toString(),
+                            (this.application as MyApp).login.registrationID ?: 0
+                        )
+                    }
                 }
                 bottomSheet.findViewById<MaterialButton>(R.id.buttonCancel)!!.setOnClickListener {
                     bottomSheet.dismiss()
@@ -153,16 +158,22 @@ class SnapshotActivity : AppCompatActivity() {
                         }
 
                         bottomSheet.findViewById<MaterialButton>(R.id.btnSave)?.setOnClickListener {
+                            if(checkedStates.any { it }) {
+                                watchListViewModel.mutableWatchListItem.value?.data?.forEach {
+                                    if (it.isChecked) {
+                                        watchListViewModel.addSymbol(
+                                            it.WatchListMainID,
+                                            intent.extras?.getString(AppConstants.SYMBOL) ?: ""
+                                        )
+                                    }
 
-                            watchListViewModel.mutableWatchListItem.value?.data?.forEach {
-                                if(it.isChecked){
-                                    watchListViewModel.addSymbol(it.WatchListMainID,intent.extras?.getString(AppConstants.SYMBOL)?:"")
                                 }
-
+                                bottomSheet.setContentView(R.layout.bottom_added)
+                                bottomSheet.findViewById<MaterialButton>(R.id.btnContinue)!!
+                                    .setOnClickListener { bottomSheet.dismiss() }
+                            }else{
+                                bottomSheet.dismiss()
                             }
-                            bottomSheet.setContentView(R.layout.bottom_added)
-                            bottomSheet.findViewById<MaterialButton>(R.id.btnContinue)!!
-                                .setOnClickListener { bottomSheet.dismiss() }
 
                         }
                     }
