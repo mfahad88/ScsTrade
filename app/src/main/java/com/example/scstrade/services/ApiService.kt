@@ -1,5 +1,6 @@
 package com.example.scstrade.services
 
+import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -161,4 +162,7 @@ interface ApiService {
 
     @GET(value = "/Distribution")
     suspend fun distribution4(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter4")q:String?):List<DistributionDataItem>
+
+    @GET(value = "/Announcements")
+    suspend fun announcements(@Query("type")type:String,@Query("symbol")symbol:String):List<AnnouncementDataItem>
 }

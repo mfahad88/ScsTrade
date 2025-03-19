@@ -3,6 +3,7 @@ package com.example.scstrade.repository
 import RssFeed
 import android.content.Context
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -336,5 +337,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }
+    }
+
+    suspend fun announcements(type:String,symbol:String): Resource<List<AnnouncementDataItem>> {
+       return try{
+            Resource.Success(apiService.announcements(type, symbol))
+        }catch (e:Exception){
+           Resource.Error(e.message?:"An error occurred",null)
+        }
+
     }
 }

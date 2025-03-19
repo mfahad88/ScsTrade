@@ -1,10 +1,13 @@
 package com.example.scstrade.views.snapshot
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.SpinnerAdapter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -34,17 +37,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAnnouncementsBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.model.Resource
+import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
 
 
 class AnnouncementsFragment : Fragment() {
     lateinit var binding:FragmentAnnouncementsBinding
+    lateinit var sharedViewModel: SharedViewModel
+    lateinit var symbol:String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,89 +58,110 @@ class AnnouncementsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAnnouncementsBinding.inflate(inflater,container,false)
+        sharedViewModel= (requireActivity().application as MyApp).viewModel
+        symbol = requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
+        sharedViewModel.announcement("Announcements",symbol)
         binding.loader.visibility = View.GONE
         binding.main.visibility=View.VISIBLE
+
         binding.main.setContent {
             AnnouncementItems()
         }
+        sharedViewModel.mutableAnnouncement.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+
+                    binding.spinnerAnnouncement.adapter=ArrayAdapter(requireContext(),android.R.layout.simple_dropdown_item_1line,result.data?.distinct()?.filter { !it.announcementType.isNullOrEmpty() }?.map { it.announcementType }?.toMutableList()?: emptyList())
+                }
+            }
+        })
+
         return binding.root
     }
     @Composable
     private fun AnnouncementItems(){
         LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {
-          item {
-              Column {
-                  Row {
-                      Box (modifier = Modifier.weight(0.7f)){
-                          Text(
-                              text = "Transmission of Quarterly Report\nfor the Period Ended Septembe....",
-                              style = TextStyle(
-                                  fontSize = 16.sp,
-                                  lineHeight = 19.sp,
-                                  fontFamily = FontFamily(Font(R.font.custom_font)),
-                                  fontWeight = FontWeight(500),
-                                  color = colorResource(R.color.md_theme_primary),
-                              )
-                          )
-                      }
-                      Box(modifier = Modifier.weight(0.3f)){
-                          Row{
-                              Box(modifier = Modifier
-                                  .size(32.dp)
-                                  .border(
-                                      width = 1.dp, color = Color(0xFF79776F),
-                                      RoundedCornerShape(21.dp)
-                                  )) {
-                                  Image(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "View", modifier = Modifier.align(Alignment.Center).padding(7.dp))
-                              }
-                              Spacer(modifier = Modifier.width(8.dp))
-                              Box(modifier = Modifier
-                                  .size(32.dp)
-                                  .border(
-                                      width = 1.dp, color = Color(0xFF79776F),
-                                      RoundedCornerShape(21.dp)
-                                  )) {
-                                  Image(painter = painterResource(id = R.drawable.baseline_arrow_downward_24), contentDescription = "Download", modifier = Modifier.align(Alignment.Center).padding(7.dp))
-                              }
-                              Spacer(modifier = Modifier.width(8.dp))
-                              Box(modifier = Modifier
-                                  .size(32.dp)
-                                  .border(
-                                      width = 1.dp, color = Color(0xFF79776F),
-                                      RoundedCornerShape(21.dp)
-                                  )) {
-                                  Image(painter = painterResource(id = R.drawable.baseline_share_24), contentDescription = "Share", colorFilter = ColorFilter.tint(color = colorResource(
-                                      id = R.color.md_theme_primary
-                                  )), modifier = Modifier.align(Alignment.Center).padding(7.dp))
-                              }
-                          }
-                      }
-                  }
-                  Spacer(modifier = Modifier.height(3.dp))
-                  Row{
-                      Text(
-                          text = "21 Dec 2024 | 04:30PM",
-                          style = TextStyle(
-                              fontSize = 14.sp,
-                              lineHeight = 20.sp,
-                              fontFamily = FontFamily(Font(R.font.custom_font)),
-                              fontWeight = FontWeight(500),
-                              color = Color(0xFF1C1B1B),
-                              textAlign = TextAlign.Center,
-                              letterSpacing = 0.1.sp,
-                          )
-                      )
-                  }
-                  Spacer(modifier = Modifier.height(10.dp))
-                  Row{
-                      Divider(
-                          color = Color(0xFFE5E2E1),
-                          modifier = Modifier.fillMaxWidth(),
-                          thickness = 1.dp
-                      )
-                  }
-              }
-          }
+            item {
+                Column {
+                    Row {
+                        Box (modifier = Modifier.weight(0.7f)){
+                            Text(
+                                text = "Transmission of Quarterly Report\nfor the Period Ended Septembe....",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    lineHeight = 19.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(500),
+                                    color = colorResource(R.color.md_theme_primary),
+                                )
+                            )
+                        }
+                        Box(modifier = Modifier.weight(0.3f)){
+                            Row{
+                                Box(modifier = Modifier
+                                    .size(32.dp)
+                                    .border(
+                                        width = 1.dp, color = Color(0xFF79776F),
+                                        RoundedCornerShape(21.dp)
+                                    )) {
+                                    Image(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "View", modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(7.dp))
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Box(modifier = Modifier
+                                    .size(32.dp)
+                                    .border(
+                                        width = 1.dp, color = Color(0xFF79776F),
+                                        RoundedCornerShape(21.dp)
+                                    )) {
+                                    Image(painter = painterResource(id = R.drawable.baseline_arrow_downward_24), contentDescription = "Download", modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(7.dp))
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Box(modifier = Modifier
+                                    .size(32.dp)
+                                    .border(
+                                        width = 1.dp, color = Color(0xFF79776F),
+                                        RoundedCornerShape(21.dp)
+                                    )) {
+                                    Image(painter = painterResource(id = R.drawable.baseline_share_24), contentDescription = "Share", colorFilter = ColorFilter.tint(color = colorResource(
+                                        id = R.color.md_theme_primary
+                                    )), modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(7.dp))
+                                }
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Row{
+                        Text(
+                            text = "21 Dec 2024 | 04:30PM",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                lineHeight = 20.sp,
+                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                fontWeight = FontWeight(500),
+                                color = Color(0xFF1C1B1B),
+                                textAlign = TextAlign.Center,
+                                letterSpacing = 0.1.sp,
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row{
+                        Divider(
+                            color = Color(0xFFE5E2E1),
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 1.dp
+                        )
+                    }
+                }
+            }
         }
     }
 
