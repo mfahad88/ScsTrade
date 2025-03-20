@@ -49,6 +49,18 @@ class Utils {
 
         }
 
+        fun convertDateString(dateString: String,format: String): String {
+            // Extract the timestamp value from the string
+            val timestamp = dateString.replace(Regex("[^0-9]"), "").toLong()
+
+            // Convert to Date
+            val date = Date(timestamp)
+
+            // Format the date to "dd/MM/yyyy"
+            val sdf = SimpleDateFormat(format, Locale.getDefault())
+            return sdf.format(date)
+        }
+
         fun convertDate(dateString:String): String {
 
             // Extract the timestamp (milliseconds)

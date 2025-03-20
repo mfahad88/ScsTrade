@@ -22,6 +22,7 @@ import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
+import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
@@ -64,7 +65,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableAnnouncement=MutableLiveData<Resource<List<AnnouncementDataItem>>>()
-    val mutableInsider=MutableLiveData<Resource<List<AnnouncementDataItem>>>()
+    val mutableInsider=MutableLiveData<Resource<List<InsiderDataItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -352,25 +353,25 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun announcement(type:String,symbol: String){
-        if(type.equals("announcements",true)) {
-            mutableAnnouncement.value = Resource.Loading()
-            if (isConnected.value == true){
-                viewModelScope.launch(Dispatchers.IO){
-                    val result = repository.announcements(type, symbol)
-                    withContext(Dispatchers.Main){
-                        mutableAnnouncement.value = result
-                    }
+    fun announcement(symbol: String){
+        mutableAnnouncement.value = Resource.Loading()
+        if (isConnected.value == true){
+            viewModelScope.launch(Dispatchers.IO){
+                val result = repository.announcements( symbol)
+                withContext(Dispatchers.Main){
+                    mutableAnnouncement.value = result
                 }
             }
-        }else{
-            mutableInsider.value = Resource.Loading()
-            if (isConnected.value == true){
-                viewModelScope.launch(Dispatchers.IO){
-                    val result = repository.announcements(type, symbol)
-                    withContext(Dispatchers.Main){
-                        mutableInsider.value = result
-                    }
+        }
+    }
+
+    fun insider(symbol: String){
+        mutableInsider.value = Resource.Loading()
+        if (isConnected.value == true){
+            viewModelScope.launch(Dispatchers.IO){
+                val result = repository.insider( symbol)
+                withContext(Dispatchers.Main){
+                    mutableInsider.value = result
                 }
             }
         }

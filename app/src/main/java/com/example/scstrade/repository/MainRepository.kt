@@ -15,6 +15,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
+import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.snapshot.Overview
@@ -339,11 +340,20 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun announcements(type:String,symbol:String): Resource<List<AnnouncementDataItem>> {
+    suspend fun announcements(symbol:String): Resource<List<AnnouncementDataItem>> {
        return try{
-            Resource.Success(apiService.announcements(type, symbol))
+            Resource.Success(apiService.announcements("Announcements", symbol))
         }catch (e:Exception){
            Resource.Error(e.message?:"An error occurred",null)
+        }
+
+    }
+
+    suspend fun insider(symbol:String): Resource<List<InsiderDataItem>> {
+        return try{
+            Resource.Success(apiService.insider("Insider", symbol))
+        }catch (e:Exception){
+            Resource.Error(e.message?:"An error occurred",null)
         }
 
     }

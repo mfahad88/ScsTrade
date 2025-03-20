@@ -12,6 +12,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
+import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -165,4 +166,7 @@ interface ApiService {
 
     @GET(value = "/Announcements")
     suspend fun announcements(@Query("type")type:String,@Query("symbol")symbol:String):List<AnnouncementDataItem>
+
+    @GET(value = "/Insider")
+    suspend fun insider(@Query("type")type:String,@Query("symbol")symbol:String):List<InsiderDataItem>
 }
