@@ -17,8 +17,13 @@ fun downloadPdf(context: Context, url: String, callback: (File?) -> Unit) {
                 callback(null)
                 return@Thread
             }
+            /*val cacheDir = context.cacheDir
+            if(cacheDir.exists()){
+                cacheDir.listFiles().forEach { it.delete() }
+            }*/
 
-            val file = File(context.cacheDir, "downloaded_pdf.pdf")
+            val file = File(context.cacheDir, url.substringAfterLast("/"))
+
             val inputStream = response.body?.byteStream()
             val outputStream = FileOutputStream(file)
 
@@ -28,6 +33,7 @@ fun downloadPdf(context: Context, url: String, callback: (File?) -> Unit) {
             outputStream.close()
 
             callback(file)
+            file.deleteOnExit()
         } catch (e: Exception) {
             e.printStackTrace()
             callback(null)

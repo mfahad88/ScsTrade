@@ -39,6 +39,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -216,6 +220,9 @@ class AnnouncementsFragment : Fragment() {
     }
     @Composable
     private fun AnnouncementItems(list: List<AnnouncementItem>?) {
+        var toggleImage by remember {
+            mutableStateOf(true)
+        }
         LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {
             items(list?.size?:0) { index ->
                 Column {
@@ -243,17 +250,24 @@ class AnnouncementsFragment : Fragment() {
                                     Image(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "View", modifier = Modifier
                                         .align(Alignment.Center)
                                         .padding(7.dp)
-                                        .clickable {
-                                           val dialog= Dialog(requireContext())
+                                        .clickable(enabled = toggleImage) {
+                                            toggleImage = false
+                                            val dialog = Dialog(requireContext())
                                             dialog.setContentView(R.layout.dialog_image)
-                                            Glide.with(requireContext()).load(list?.get(index)?.imageLink).into(dialog.findViewById<ZoomImageView>(R.id.imageView))
+                                            Glide
+                                                .with(requireContext())
+                                                .load(list?.get(index)?.imageLink)
+                                                .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
                                             dialog.setCancelable(false)
                                             dialog.setCanceledOnTouchOutside(false)
 //                                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                                            dialog.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
-                                                dialog.dismiss()
-                                            }
+                                            dialog
+                                                .findViewById<ImageView>(R.id.btnClose)
+                                                .setOnClickListener {
+                                                    dialog.dismiss()
+                                                }
                                             dialog.show()
+                                            toggleImage = true
                                         }
                                     )
                                 }
@@ -267,19 +281,34 @@ class AnnouncementsFragment : Fragment() {
                                     Image(painter = painterResource(id = R.drawable.baseline_arrow_downward_24), contentDescription = "Download", modifier = Modifier
                                         .align(Alignment.Center)
                                         .padding(7.dp)
-                                        .clickable {
-                                            val dialog= Dialog(requireContext())
-                                            dialog.setContentView(R.layout.dialog_image)
-                                            dialog.setCancelable(false)
-                                            dialog.setCanceledOnTouchOutside(false)
-//                                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                                            dialog.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
-                                                dialog.dismiss()
-                                            }
-                                            dialog.show()
-                                            downloadPdf(requireContext(),list?.get(index)?.pdfLink?:""){file ->
+                                        .clickable(enabled = toggleImage) {
+                                            binding.loader.visibility = View.VISIBLE
+                                            toggleImage = false
+                                            downloadPdf(
+                                                requireContext(),
+                                                list?.get(index)?.pdfLink ?: ""
+                                            ) { file ->
                                                 requireActivity().runOnUiThread {
-                                                    file?.let { renderPdfPage(it, dialog.findViewById<ZoomImageView>(R.id.imageView)) }
+                                                    val uri: Uri = FileProvider.getUriForFile(
+                                                        requireContext(),
+                                                        "${requireContext().packageName}.fileprovider",
+                                                        file!!
+                                                    )
+
+                                                    val openIntent =
+                                                        Intent(Intent.ACTION_VIEW).apply {
+                                                            setDataAndType(uri, "application/pdf")
+                                                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                                        }
+
+                                                    startActivity(
+                                                        Intent.createChooser(
+                                                            openIntent,
+                                                            "Open PDF"
+                                                        )
+                                                    )
+                                                    binding.loader.visibility = View.GONE
+                                                    toggleImage = true
                                                 }
 
                                             }
@@ -297,9 +326,18 @@ class AnnouncementsFragment : Fragment() {
                                     )), modifier = Modifier
                                         .align(Alignment.Center)
                                         .padding(7.dp)
-                                        .clickable {
-                                            downloadPdf(requireContext(),list?.get(index)?.pdfLink?:""){file ->
-                                                file?.let { sharePdf(it) }
+                                        .clickable(enabled = toggleImage) {
+                                            binding.loader.visibility = View.VISIBLE
+                                            toggleImage = false
+                                            downloadPdf(
+                                                requireContext(),
+                                                list?.get(index)?.pdfLink ?: ""
+                                            ) { file ->
+                                                requireActivity().runOnUiThread {
+                                                    file?.let { sharePdf(it)
+                                                        toggleImage = true
+                                                    }
+                                                }
 
                                             }
                                         })
@@ -359,6 +397,8 @@ class AnnouncementsFragment : Fragment() {
         }
 
         startActivity(Intent.createChooser(shareIntent, "Share PDF via"))
+        binding.loader.visibility = View.GONE
+
     }
 
 }
