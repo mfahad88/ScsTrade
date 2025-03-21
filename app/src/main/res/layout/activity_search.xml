@@ -5,26 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.search.SearchActivity">
+    <include layout="@layout/custom_toolbar" android:id="@+id/toolbar"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/gray_container"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/imageView"
             android:gravity="center_vertical"
+            android:id="@+id/searchText"
+            android:background="@null"
+            android:backgroundTint="@null"
             android:hint="Search Company" />
 
         <ImageView

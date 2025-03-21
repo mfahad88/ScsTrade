@@ -39,6 +39,7 @@ import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
+import com.example.scstrade.views.search.SearchActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.google.gson.reflect.TypeToken
@@ -58,15 +59,14 @@ class LandingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
-
+        binding.toolbar.searchIcon.setOnClickListener {
+            startActivity(Intent(requireContext(),SearchActivity::class.java))
+        }
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
-        binding.toolbar.searchIcon.setOnClickListener {
-            Toast.makeText(requireContext(),"Clicked...",Toast.LENGTH_SHORT).show()
 
-        }
 
         fetchUser()
        /* requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :OnBackPressedCallback(true){
