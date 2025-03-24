@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":MyCalendar-sdk"))
     val room_version = "2.6.1"
 
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))

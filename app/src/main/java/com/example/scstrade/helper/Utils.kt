@@ -49,6 +49,16 @@ class Utils {
 
         }
 
+        fun compareDates(date1:String,date2:String): Boolean {
+            val timestamp1 = date1.replace(Regex("[^0-9]"), "").toLong()
+            val sdf=SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
+            val timestamp2 = sdf.parse(date2)?.time
+            return if(sdf.format(Date(timestamp1)).compareTo(sdf.format(Date(timestamp2?:0L)))!=0){
+                false
+            }else {
+                true
+            }
+        }
         fun convertDateString(dateString: String,format: String): String {
             // Extract the timestamp value from the string
             val timestamp = dateString.replace(Regex("[^0-9]"), "").toLong()

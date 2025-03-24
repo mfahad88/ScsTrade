@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/imageView"
             android:gravity="center_vertical"
-            android:text="03/10/2025" />
+            android:text="" />
 
     </RelativeLayout>
 

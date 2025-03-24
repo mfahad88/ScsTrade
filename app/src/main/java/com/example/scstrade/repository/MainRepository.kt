@@ -4,6 +4,7 @@ import RssFeed
 import android.content.Context
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
+import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -340,9 +341,17 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun announcements(symbol:String): Resource<List<AnnouncementDataItem>> {
+    suspend fun announcementType(): Resource<List<AnnouncementTypeDataItem>> {
+        return try {
+            Resource.Success(apiService.announcementType("List"))
+        }catch (e:Exception){
+            Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun announcements(symbol: String, type: String): Resource<List<AnnouncementDataItem>> {
        return try{
-            Resource.Success(apiService.announcements("Announcements", symbol))
+            Resource.Success(apiService.announcements(type, symbol))
         }catch (e:Exception){
            Resource.Error(e.message?:"An error occurred",null)
         }

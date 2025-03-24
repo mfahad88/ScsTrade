@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".views.search.SearchActivity">
     <include layout="@layout/custom_toolbar" android:id="@+id/toolbar"/>
 
@@ -22,6 +23,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:lines="1"
+            android:maxLines="1"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/imageView"
             android:gravity="center_vertical"

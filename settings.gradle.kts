@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ScsTrade"
 include(":app")
+include(":MyCalendar-sdk")

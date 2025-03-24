@@ -4,13 +4,12 @@ import RssFeed
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
+import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -65,6 +64,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableAnnouncement=MutableLiveData<Resource<List<AnnouncementDataItem>>>()
+    val mutableAnnouncementType=MutableLiveData<Resource<List<AnnouncementTypeDataItem>>>()
     val mutableInsider=MutableLiveData<Resource<List<InsiderDataItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
@@ -353,11 +353,23 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun announcement(symbol: String){
+    fun announcementType() {
+        mutableAnnouncementType.value = Resource.Loading()
+        if (isConnected.value == true){
+            viewModelScope.launch(Dispatchers.IO){
+                val result = repository.announcementType()
+                withContext(Dispatchers.Main){
+                    mutableAnnouncementType.value = result
+                }
+            }
+        }
+    }
+
+    fun announcement(symbol: String,type:String){
         mutableAnnouncement.value = Resource.Loading()
         if (isConnected.value == true){
             viewModelScope.launch(Dispatchers.IO){
-                val result = repository.announcements( symbol)
+                val result = repository.announcements( symbol,type)
                 withContext(Dispatchers.Main){
                     mutableAnnouncement.value = result
                 }

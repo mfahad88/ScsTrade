@@ -1,9 +1,12 @@
 package com.example.scstrade.views.search
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
@@ -70,7 +73,7 @@ class SearchActivity : AppCompatActivity() {
         binding.searchText.addTextChangedListener {
             val search=it.toString()
           lifecycleScope.launch {
-              val allData= withContext(Dispatchers.Main){
+              val allData= withContext(Dispatchers.Default){
                   sharedViewModel.mutableAllData.value?.data?.filter {
                       if(!binding.spinnerSector.selectedItem.toString().equals("all sector",true)){
                           it.sN.equals(binding.spinnerSector.selectedItem.toString())
@@ -126,6 +129,7 @@ class SearchActivity : AppCompatActivity() {
                         val intent= Intent(binding.root.context, SnapshotActivity::class.java)
                         intent.putExtra(AppConstants.SYMBOL, allData?.get(index)?.sYM)
                         startActivity(intent)
+                        finish()
                     }) {
                         Box (modifier = Modifier.weight(1f)){
                             Text(

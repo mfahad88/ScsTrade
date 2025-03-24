@@ -65,6 +65,7 @@ import androidx.core.view.get
 import androidx.lifecycle.Observer
 import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
+import com.example.mycalendar_sdk.CustomDatePickerDialog
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAnnouncementsBinding
 import com.example.scstrade.helper.AppConstants
@@ -86,6 +87,7 @@ class AnnouncementsFragment : Fragment() {
     lateinit var binding:FragmentAnnouncementsBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var symbol:String
+    val sdf=SimpleDateFormat("dd/MM/yyyy")
 
 
     override fun onCreateView(
@@ -96,59 +98,55 @@ class AnnouncementsFragment : Fragment() {
         binding = FragmentAnnouncementsBinding.inflate(inflater,container,false)
         sharedViewModel= (requireActivity().application as MyApp).viewModel
         symbol = requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
-        sharedViewModel.announcement(symbol)
+        sharedViewModel.announcementType()
         sharedViewModel.insider(symbol)
         binding.loader.visibility = View.GONE
         binding.main.visibility=View.VISIBLE
-
+        binding.textDate.text = sdf.format(Date())
         binding.relativeLayoutDate.setOnClickListener {
            showDatePicker(binding.textDate)
         }
-        sharedViewModel.mutableAnnouncement.observe(viewLifecycleOwner, Observer { result->
+        sharedViewModel.mutableAnnouncementType.observe(viewLifecycleOwner, Observer { result->
             when(result){
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                }
+                is Resource.Loading -> {
+                }
                 is Resource.Success -> {
                     val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_dropdown_item_1line)
-                    adapter.add("All Announcements")
-                    adapter.addAll(result.data?.distinct()?.filter { !it.announcementType.isNullOrEmpty() }?.map { it.announcementType }?.toMutableList()?: emptyList())
-                    if(!sharedViewModel.mutableInsider.value?.data.isNullOrEmpty()){
-                        adapter.add("Insider")
+                    result.data?.map { it.type }?.forEach {
+                        adapter.add(it)
                     }
+                    binding.loader.visibility = View.GONE
+
                     binding.spinnerAnnouncement.adapter=adapter
                 }
             }
         })
 
+        sharedViewModel.mutableAnnouncement.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
+                    binding.main.setContent {
+                        AnnouncementItems(list = result.data?.filter {
+                            Utils.compareDates(it.bmDate?:"",binding.textDate.text.toString())
+                        }?.map { AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink) }?.toList())
+                    }
+                }
+            }
+        })
+
+
         binding.spinnerAnnouncement.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                binding.main.setContent {
-                   if(p0?.getItemAtPosition(p2).toString().equals("insider",true)) {
-                       AnnouncementItems(sharedViewModel.mutableInsider.value?.data?.filter {
-                           (Utils.convertDateString(it.insiderTransactionPostDate ?: "", "dd/MM/yyyy")
-                                       .equals(binding.textDate.text))
-                       }?.map { AnnouncementItem(it.insiderTransactionDesc,it.insiderTransactionPostDate,it.insiderTransactionPostDate,it.insiderTransactionImageLink,it.insiderTransactionPDFLink) }?.toList())
-                   }else if (p0?.getItemAtPosition(p2).toString().equals("all announcements",true)){
-                       val list = mutableListOf<AnnouncementItem>()
-                       sharedViewModel.mutableAnnouncement.value?.data?.forEach {
-                           list.add(AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink))
-                           sharedViewModel.mutableInsider.value?.data?.forEach { it2->
-                               if(it.bmDate.equals(it2.insiderTransactionPostDate)){
-                                   list.add(AnnouncementItem(it2.insiderTransactionDesc,it2.insiderTransactionPostDate,it2.insiderTransactionPostDate,it2.insiderTransactionImageLink,it2.insiderTransactionPDFLink))
-                               }
-                           }
-                       }
-                       AnnouncementItems(list = list.filter { Utils.convertDateString(it.date?:"","dd/MM/yyyy").equals(binding.textDate.text) })
-                   }else{
-                       AnnouncementItems(sharedViewModel.mutableAnnouncement.value?.data?.filter {
-                           (it.announcementType?.equals(
-                               p0?.getItemAtPosition(p2).toString(),
-                               true
-                           ) ?: false &&
-                                   Utils.convertDateString(it.bmDate ?: "", "dd/MM/yyyy")
-                                       .equals(binding.textDate.text))
-                       }?.map{AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink)}?.toList())
-                   }
+                    sharedViewModel.announcement(symbol,p0?.getItemAtPosition(p2).toString())
+
                }
             }
 
@@ -164,45 +162,37 @@ class AnnouncementsFragment : Fragment() {
 
 
     private fun showDatePicker(textView: TextView) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+        val dialog = CustomDatePickerDialog{date->
+            textView.text = date
+        }
+        dialog.show(requireActivity().supportFragmentManager, "CUSTOM_DATE_PICKER")
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val sdf=SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+            val year = if(textView.text.isNullOrEmpty()) calendar.get(Calendar.YEAR) else textView.text.split("/").get(2).toInt()
+            val month = if(textView.text.isNullOrEmpty()) calendar.get(Calendar.MONTH) else textView.text.split("/").get(1).toInt()-1
+            val day = if(textView.text.isNullOrEmpty()) calendar.get(Calendar.DAY_OF_MONTH) else textView.text.split("/").get(0).toInt()
+            textView.text = sdf.format(calendar.time)
 
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 { _, selectedYear, selectedMonth, selectedDay ->
-                    val sdf=SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-//                    val cal=Calendar.getInstance()
+
                     calendar.set(selectedYear,selectedMonth,selectedDay)
                     textView.text = sdf.format(calendar.time)
                     binding.main.setContent {
-                        if(binding.spinnerAnnouncement.selectedItem.toString().equals("insider",true)){
-                            AnnouncementItems(list = sharedViewModel.mutableInsider.value?.data?.filter { Utils.convertDateString(it.insiderTransactionPostDate?:"","dd/MM/yyyy").equals(textView.text) }
-                                ?.map {
-                                    AnnouncementItem(it.insiderTransactionDesc,it.insiderTransactionPostDate,it.insiderTransactionPostDate,it.insiderTransactionImageLink,it.insiderTransactionPDFLink)
-                                }?.toList())
-                        }else if(binding.spinnerAnnouncement.selectedItem.toString().equals("all announcements",true)){
-                            val list = mutableListOf<AnnouncementItem>()
-                            sharedViewModel.mutableAnnouncement.value?.data?.forEach {
-                                list.add(AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink))
-                                sharedViewModel.mutableInsider.value?.data?.forEach { it2->
-                                    if(it.bmDate.equals(it2.insiderTransactionPostDate)){
-                                        list.add(AnnouncementItem(it2.insiderTransactionDesc,it2.insiderTransactionPostDate,it2.insiderTransactionPostDate,it2.insiderTransactionImageLink,it2.insiderTransactionPDFLink))
-                                    }
-                                }
-                            }
-                            AnnouncementItems(list = list.filter { Utils.convertDateString(it.date?:"","dd/MM/yyyy").equals(binding.textDate.text) })
-                        } else{
-
-                            AnnouncementItems(list = sharedViewModel.mutableAnnouncement.value?.data?.filter { (it.announcementType?.equals(binding.spinnerAnnouncement.selectedItem.toString())?:false && Utils.convertDateString(it.bmDate?:"","dd/MM/yyyy").equals(textView.text.toString()))}?.map { AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime, imageLink = it.bmImageLink, pdfLink = it.bmPDFLink) }?.toList())
-                        }
-
+                        val result=sharedViewModel.mutableAnnouncement.value
+                        AnnouncementItems(list = result?.data?.filter {
+                             Utils.compareDates(it.bmDate?:"",binding.textDate.text.toString())
+                        }?.map { AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink) }?.toList())
                     }
                 },
                 year, month, day
             )
+            datePickerDialog.setCancelable(false)
+            datePickerDialog.setCanceledOnTouchOutside(false)
             datePickerDialog.show()
         } else {
             val date = Date()
@@ -215,7 +205,7 @@ class AnnouncementsFragment : Fragment() {
                 date.year, date.month, date.day
             )
             datePickerDialog.show()
-        }
+        }*/
 
     }
     @Composable
@@ -334,7 +324,8 @@ class AnnouncementsFragment : Fragment() {
                                                 list?.get(index)?.pdfLink ?: ""
                                             ) { file ->
                                                 requireActivity().runOnUiThread {
-                                                    file?.let { sharePdf(it)
+                                                    file?.let {
+                                                        sharePdf(it)
                                                         toggleImage = true
                                                     }
                                                 }
@@ -348,7 +339,7 @@ class AnnouncementsFragment : Fragment() {
                     Spacer(modifier = Modifier.height(3.dp))
                     Row{
                         Text(
-                            text = "${Utils.convertDateString(list?.get(index)?.date?:"","dd MMM yyyy")} | ${list?.get(index)?.time?:""}",
+                            text = "${Utils.convertDateString(list?.get(index)?.date?:"","dd MMM yyyy")} ${if(list?.get(index)?.time?.isNotEmpty()==true) "| ${list?.get(index)?.time?:""}" else ""}",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 lineHeight = 20.sp,
@@ -372,19 +363,7 @@ class AnnouncementsFragment : Fragment() {
             }
         }
     }
-    private fun renderPdfPage(pdfFile: File, imageView: ImageView) {
-        val fileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY)
-        val pdfRenderer = PdfRenderer(fileDescriptor)
-        val page = pdfRenderer.openPage(0) // Open first page
 
-        val bitmap = Bitmap.createBitmap(page.width, page.height, Bitmap.Config.ARGB_8888)
-        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-
-        imageView.setImageBitmap(bitmap)
-
-        page.close()
-        pdfRenderer.close()
-    }
     private fun sharePdf(file: File) {
         if (!file.exists()) return
 
