@@ -1,56 +1,30 @@
 package com.example.scstrade.views.snapshot
 
-import android.app.DatePickerDialog
-import android.app.Dialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.pdf.PdfRenderer
-import android.icu.util.Calendar
-import android.media.Image
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -58,29 +32,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.get
 import androidx.lifecycle.Observer
-import coil.compose.AsyncImage
-import com.bumptech.glide.Glide
 import com.example.mycalendar_sdk.CustomDatePickerDialog
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAnnouncementsBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.helper.downloadPdf
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.widgets.ZoomImageView
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 
 class AnnouncementsFragment : Fragment() {
@@ -135,7 +101,7 @@ class AnnouncementsFragment : Fragment() {
                     binding.main.setContent {
                         AnnouncementItems(list = result.data?.filter {
                             Utils.compareDates(it.bmDate?:"",binding.textDate.text.toString())
-                        }?.map { AnnouncementItem(it.bmDesc,it.bmDate,it.bmTime,it.bmImageLink,it.bmPDFLink) }?.toList())
+                        }?.toList())
                     }
                 }
             }
@@ -165,6 +131,12 @@ class AnnouncementsFragment : Fragment() {
 
         val dialog = CustomDatePickerDialog{date->
             textView.text = date
+            binding.main.setContent {
+                val result=sharedViewModel.mutableAnnouncement.value
+                AnnouncementItems(list = result?.data?.filter {
+                    Utils.compareDates(it.bmDate?:"",binding.textDate.text.toString())
+                }?.toList())
+            }
         }
         dialog.show(requireActivity().supportFragmentManager, "CUSTOM_DATE_PICKER")
       /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -209,156 +181,35 @@ class AnnouncementsFragment : Fragment() {
 
     }
     @Composable
-    private fun AnnouncementItems(list: List<AnnouncementItem>?) {
+    private fun AnnouncementItems(list: List<AnnouncementDataItem>?) {
         var toggleImage by remember {
             mutableStateOf(true)
         }
         LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {
             items(list?.size?:0) { index ->
-                Column {
-                    Row {
-                        Box (modifier = Modifier.weight(0.7f)){
-                            Text(
-                                text = list?.get(index)?.desc?:"",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    lineHeight = 19.sp,
-                                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                                    fontWeight = FontWeight(500),
-                                    color = colorResource(R.color.md_theme_primary),
-                                )
-                            )
-                        }
-                        Box(modifier = Modifier.weight(0.3f)){
-                            Row{
-                                Box(modifier = Modifier
-                                    .size(32.dp)
-                                    .border(
-                                        width = 1.dp, color = Color(0xFF79776F),
-                                        RoundedCornerShape(21.dp)
-                                    )) {
-                                    Image(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "View", modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .padding(7.dp)
-                                        .clickable(enabled = toggleImage) {
-                                            toggleImage = false
-                                            val dialog = Dialog(requireContext())
-                                            dialog.setContentView(R.layout.dialog_image)
-                                            Glide
-                                                .with(requireContext())
-                                                .load(list?.get(index)?.imageLink)
-                                                .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
-                                            dialog.setCancelable(false)
-                                            dialog.setCanceledOnTouchOutside(false)
-//                                            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-                                            dialog
-                                                .findViewById<ImageView>(R.id.btnClose)
-                                                .setOnClickListener {
-                                                    dialog.dismiss()
-                                                }
-                                            dialog.show()
-                                            toggleImage = true
-                                        }
-                                    )
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Box(modifier = Modifier
-                                    .size(32.dp)
-                                    .border(
-                                        width = 1.dp, color = Color(0xFF79776F),
-                                        RoundedCornerShape(21.dp)
-                                    )) {
-                                    Image(painter = painterResource(id = R.drawable.baseline_arrow_downward_24), contentDescription = "Download", modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .padding(7.dp)
-                                        .clickable(enabled = toggleImage) {
-                                            binding.loader.visibility = View.VISIBLE
-                                            toggleImage = false
-                                            downloadPdf(
-                                                requireContext(),
-                                                list?.get(index)?.pdfLink ?: ""
-                                            ) { file ->
-                                                requireActivity().runOnUiThread {
-                                                    val uri: Uri = FileProvider.getUriForFile(
-                                                        requireContext(),
-                                                        "${requireContext().packageName}.fileprovider",
-                                                        file!!
-                                                    )
-
-                                                    val openIntent =
-                                                        Intent(Intent.ACTION_VIEW).apply {
-                                                            setDataAndType(uri, "application/pdf")
-                                                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                                        }
-
-                                                    startActivity(
-                                                        Intent.createChooser(
-                                                            openIntent,
-                                                            "Open PDF"
-                                                        )
-                                                    )
-                                                    binding.loader.visibility = View.GONE
-                                                    toggleImage = true
-                                                }
-
-                                            }
-                                        })
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Box(modifier = Modifier
-                                    .size(32.dp)
-                                    .border(
-                                        width = 1.dp, color = Color(0xFF79776F),
-                                        RoundedCornerShape(21.dp)
-                                    )) {
-                                    Image(painter = painterResource(id = R.drawable.baseline_share_24), contentDescription = "Share", colorFilter = ColorFilter.tint(color = colorResource(
-                                        id = R.color.md_theme_primary
-                                    )), modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .padding(7.dp)
-                                        .clickable(enabled = toggleImage) {
-                                            binding.loader.visibility = View.VISIBLE
-                                            toggleImage = false
-                                            downloadPdf(
-                                                requireContext(),
-                                                list?.get(index)?.pdfLink ?: ""
-                                            ) { file ->
-                                                requireActivity().runOnUiThread {
-                                                    file?.let {
-                                                        sharePdf(it)
-                                                        toggleImage = true
-                                                    }
-                                                }
-
-                                            }
-                                        })
-                                }
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(3.dp))
-                    Row{
-                        Text(
-                            text = "${Utils.convertDateString(list?.get(index)?.date?:"","dd MMM yyyy")} ${if(list?.get(index)?.time?.isNotEmpty()==true) "| ${list?.get(index)?.time?:""}" else ""}",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                lineHeight = 20.sp,
-                                fontFamily = FontFamily(Font(R.font.custom_font)),
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF1C1B1B),
-                                textAlign = TextAlign.Center,
-                                letterSpacing = 0.1.sp,
-                            )
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row{
-                        Divider(
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.fillMaxWidth(),
-                            thickness = 1.dp
-                        )
-                    }
+                Column{
+                    Text(list?.get(index)?.announcementType?:"",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            lineHeight = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                            fontWeight = FontWeight(500),
+                            color = when(list?.get(index)?.announcementType){
+                                "Board Meetings" -> Color(0xFF187376)
+                                "Shareholder Meetings" -> Color(0x1A1A73E8)
+                                "Financial Result" -> Color(0x1AA44FA9)
+                                "Material Information" -> Color(0x1A1A73E8)
+                                else -> Color(0x1A625B71)
+                            },
+                            textAlign = TextAlign.Center,
+                            letterSpacing = 0.1.sp,
+                        ),
+                        modifier = Modifier
+                            .padding(0.dp)
+                            .width(126.dp)
+                            .height(20.dp)
+                            .background(color = Color(0x1A187376), shape = RoundedCornerShape(size = 6.dp))
+                    )
                 }
             }
         }
