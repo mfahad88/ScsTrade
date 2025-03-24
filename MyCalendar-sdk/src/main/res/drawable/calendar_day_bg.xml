@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Selected State -->
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <solid android:color="#FF9800"/>  <!-- Orange for selected date -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+
+    <!-- Pressed State -->
+    <item android:state_pressed="true">
+        <shape android:shape="oval">
+            <solid android:color="#FFC107"/>  <!-- Light Orange when pressed -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+
+    <!-- Default State -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FBFBFB"/>  <!-- Default Gray -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+
+</selector>
