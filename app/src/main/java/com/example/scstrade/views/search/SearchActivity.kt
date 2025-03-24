@@ -79,7 +79,7 @@ class SearchActivity : AppCompatActivity() {
                       }
                   }?.filter {
                       if(!search.isNullOrEmpty()){
-                          (it.sN.equals(binding.searchText.text.toString(),true)||it.nM.contains(binding.searchText.text.toString(),true))
+                          it.toString().startsWith(binding.searchText.text.toString(),true)|| it.toString().contains(binding.searchText.text.toString(),true)|| it.toString().equals(binding.searchText.text.toString(),true)
                       }else{
                           true
                       }
