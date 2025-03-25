@@ -63,9 +63,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
-    val mutableAnnouncement=MutableLiveData<Resource<List<AnnouncementDataItem>>>()
-    val mutableAnnouncementType=MutableLiveData<Resource<List<AnnouncementTypeDataItem>>>()
-    val mutableInsider=MutableLiveData<Resource<List<InsiderDataItem>>>()
+
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -353,41 +351,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun announcementType() {
-        mutableAnnouncementType.value = Resource.Loading()
-        if (isConnected.value == true){
-            viewModelScope.launch(Dispatchers.IO){
-                val result = repository.announcementType()
-                withContext(Dispatchers.Main){
-                    mutableAnnouncementType.value = result
-                }
-            }
-        }
-    }
 
-    fun announcement(symbol: String,type:String){
-        mutableAnnouncement.value = Resource.Loading()
-        if (isConnected.value == true){
-            viewModelScope.launch(Dispatchers.IO){
-                val result = repository.announcements( symbol,type)
-                withContext(Dispatchers.Main){
-                    mutableAnnouncement.value = result
-                }
-            }
-        }
-    }
-
-    fun insider(symbol: String){
-        mutableInsider.value = Resource.Loading()
-        if (isConnected.value == true){
-            viewModelScope.launch(Dispatchers.IO){
-                val result = repository.insider( symbol)
-                withContext(Dispatchers.Main){
-                    mutableInsider.value = result
-                }
-            }
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()

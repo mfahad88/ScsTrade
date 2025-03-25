@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
@@ -36,7 +35,9 @@ class WatchlistFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentWatchlistBinding.inflate(inflater,container,false)
-        viewModel= ViewModelProvider(this,WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)).get(WatchListViewModel::class.java)
+        viewModel= ViewModelProvider(this,
+            WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)
+        ).get(WatchListViewModel::class.java)
         binding.buttonAdd.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             val bundle=Bundle()

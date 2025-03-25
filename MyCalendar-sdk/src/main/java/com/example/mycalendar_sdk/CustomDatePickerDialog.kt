@@ -21,7 +21,7 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
     private var calendar = Calendar.getInstance()
     private val dateFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     private var selectedDate: Date? = null
-
+    public var availableDates= emptyList<String>()
     private val handler = Handler(Looper.getMainLooper()) // For long press
     private var isLongPressing = false // Long press flag
 
@@ -33,13 +33,11 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
         val width = (displayMetrics.widthPixels * 0.9).toInt()
         dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
         val view =dialog
-     /*   val builder = android.app.AlertDialog.Builder(requireContext())
-        val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_custom_date_picker, null)
-        builder.setView(view)*/
+
 
         tvMonthYear = view.findViewById(R.id.tvMonthYear)
-        val btnPrevMonth = view.findViewById<Button>(R.id.btnPrevMonth)
-        val btnNextMonth = view.findViewById<Button>(R.id.btnNextMonth)
+        val btnPrevMonth = view.findViewById<TextView>(R.id.btnPrevMonth)
+        val btnNextMonth = view.findViewById<TextView>(R.id.btnNextMonth)
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         val btnOk = view.findViewById<Button>(R.id.btnOk)
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView)
@@ -68,7 +66,7 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
         return dialog
     }
 
-    private fun setupLongPress(button: Button, monthChange: Int) {
+    private fun setupLongPress(button: TextView, monthChange: Int) {
         button.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {

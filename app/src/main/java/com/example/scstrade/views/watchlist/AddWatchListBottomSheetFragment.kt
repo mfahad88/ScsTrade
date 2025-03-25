@@ -1,12 +1,10 @@
 package com.example.scstrade.views.watchlist
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.databinding.FragmentAddWatchListBottomSheetBinding
@@ -16,7 +14,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
@@ -48,7 +46,9 @@ class AddWatchListBottomSheetFragment() : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this,WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)).get(WatchListViewModel::class.java)
+        viewModel = ViewModelProvider(this,
+            WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)
+        ).get(WatchListViewModel::class.java)
         fetchUser()
         binding.buttonAdd.setOnClickListener {
             if(binding.editTextName.text.toString().isNotEmpty()){

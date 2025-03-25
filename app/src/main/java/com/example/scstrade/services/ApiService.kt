@@ -171,6 +171,6 @@ interface ApiService {
     @GET(value = "/Announcements")
     suspend fun announcements(@Query("type")type:String,@Query("symbol")symbol:String):List<AnnouncementDataItem>
 
-    @GET(value = "/Insider")
+    @GET(value = "/Announcements")
     suspend fun insider(@Query("type")type:String,@Query("symbol")symbol:String):List<InsiderDataItem>
 }

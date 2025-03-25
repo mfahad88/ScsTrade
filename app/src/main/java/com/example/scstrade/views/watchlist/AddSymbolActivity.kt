@@ -1,7 +1,5 @@
 package com.example.scstrade.views.watchlist
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,7 +9,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,17 +23,13 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
-import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.SymbolAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class AddSymbolActivity : AppCompatActivity() {
     lateinit var binding:ActivityAddSymbolBinding

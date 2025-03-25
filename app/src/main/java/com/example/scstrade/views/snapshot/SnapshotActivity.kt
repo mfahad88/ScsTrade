@@ -1,7 +1,5 @@
 package com.example.scstrade.views.snapshot
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -10,17 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxColors
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +24,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
@@ -41,14 +34,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asFlow
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivitySnapshotBinding
+import com.example.scstrade.factories.SnapshotViewModelFactory
 import com.example.scstrade.helper.AppConstants
-import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
-import com.example.scstrade.viewmodels.WatchListViewModelFactory
+import com.example.scstrade.factories.WatchListViewModelFactory
+import com.example.scstrade.viewmodels.SnapshotViewModel
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.landing.LandingFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
@@ -56,16 +49,19 @@ import com.google.android.material.tabs.TabLayout
 class SnapshotActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySnapshotBinding
     private lateinit var sharedViewModel: SharedViewModel
+    lateinit var snapshotViewModel: SnapshotViewModel
     lateinit var watchListViewModel: WatchListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySnapshotBinding.inflate(LayoutInflater.from(this))
         sharedViewModel=(this.application as MyApp).viewModel
+        snapshotViewModel = ViewModelProvider(this,
+            SnapshotViewModelFactory(this.application,(this.application as MyApp).viewModel)
+        ).get(SnapshotViewModel::class.java)
         watchListViewModel = ViewModelProvider(this,
             WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
-
         sharedViewModel.snapshotOverview(intent.extras?.getString(AppConstants.SYMBOL)?:"")
         sharedViewModel.mutableOverview.observe(this, Observer { result->
             if(result.data!=null){

@@ -13,24 +13,28 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <Button
+        <TextView
             android:id="@+id/btnPrevMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="24sp"
             android:text="◀" />
 
         <TextView
             android:id="@+id/tvMonthYear"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginHorizontal="20dp"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnNextMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="24sp"
             android:text="▶" />
     </LinearLayout>
 
