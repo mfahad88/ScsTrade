@@ -35,11 +35,9 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
 
     fun announcement(symbol: String,type:String){
         mutableAnnouncementItem.value = Resource.Loading()
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch{
             val result = repository.announcements( symbol,type)
-            withContext(Dispatchers.Main){
-                mutableAnnouncementItem.value = result
-            }
+            mutableAnnouncementItem.value = result
         }
     }
 

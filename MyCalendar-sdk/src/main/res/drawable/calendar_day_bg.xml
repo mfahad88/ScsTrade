@@ -20,7 +20,7 @@
     <!-- Default State -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="#FBFBFB"/>  <!-- Default Gray -->
+            <solid android:color="#80FBFBFB"/>  <!-- Default Gray -->
             <corners android:radius="10dp"/>
         </shape>
     </item>

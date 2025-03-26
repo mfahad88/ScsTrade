@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.Button
@@ -42,7 +43,8 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
         val btnOk = view.findViewById<Button>(R.id.btnOk)
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView)
 
-        calendarAdapter = CalendarAdapter(generateDaysForMonth()) { date ->
+        calendarAdapter = CalendarAdapter(generateDaysForMonth(),availableDates.map { val timestamp = it.replace(Regex("[^0-9]"), "").toLong()
+            SimpleDateFormat("dd MMM yyyy").format(timestamp) }.filter { SimpleDateFormat("MMM yyyy").format(Date(it)).equals(SimpleDateFormat("MMM yyyy").format(generateDaysForMonth().first())) }.toHashSet()) { date ->
             selectedDate = date
         }
 
@@ -84,7 +86,8 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
     }
 
     private fun startRepeatingTask(monthChange: Int) {
-        handler.postDelayed(object : Runnable {
+        handler.postDelayed(
+            object : Runnable {
             override fun run() {
                 if (isLongPressing) {
                     updateMonth(monthChange)
@@ -96,7 +99,9 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
 
     private fun updateMonth(monthChange: Int) {
         calendar.add(Calendar.MONTH, monthChange)
-        calendarAdapter.updateData(generateDaysForMonth())
+
+        calendarAdapter.updateData(generateDaysForMonth(),availableDates.map { val timestamp = it.replace(Regex("[^0-9]"), "").toLong()
+            SimpleDateFormat("dd MMM yyyy").format(timestamp) }.filter { SimpleDateFormat("MMM yyyy").format(Date(it)).equals(SimpleDateFormat("MMM yyyy").format(generateDaysForMonth().first())) }.toHashSet())
         updateMonthYear()
     }
 

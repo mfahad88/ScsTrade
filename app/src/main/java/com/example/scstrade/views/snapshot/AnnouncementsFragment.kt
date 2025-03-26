@@ -23,6 +23,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -91,7 +92,14 @@ class AnnouncementsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentAnnouncementsBinding.inflate(inflater,container,false)
+
         init()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.relativeLayoutDate.setOnClickListener {
             showDatePicker(binding.textDate)
         }
@@ -105,9 +113,49 @@ class AnnouncementsFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     val announcementItem=result.data
-                    binding.main.setContent {
+                    if(binding.spinnerAnnouncement.selectedItem.toString().equals("All",true)){
+                        val list= ArrayList<AnnouncementDataItem>()
+                        list.addAll(announcementItem?.filter { Utils.compareDates(
+                            it.bmDate ?: "0L",
+                            binding.textDate.text.toString()
+                        ) }?: emptyList())
 
-                        AnnouncementItems(list = announcementItem?.filter { Utils.compareDates(it.bmDate?:"0L",binding.textDate.text.toString()) }?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol,true) }?.first())
+                        list.addAll(snapshotViewModel.mutableInsider.value?.data?.filter {
+                            Utils.compareDates(
+                                it.insiderTransactionPostDate ?: "0L",
+                                binding.textDate.text.toString()
+                            )
+                        }?.map { AnnouncementDataItem("Insider", bmDesc = it.insiderTransactionDesc, bmDate = it.insiderTransactionPostDate, bmImageLink = it.insiderTransactionImageLink, bmPDFLink = it.insiderTransactionPDFLink, companyCode = null, bmEpsQuarter = null, bmEpsCum = null, bmQuarterNumber = null, bmRightPrice = null, bmRightD = null, bmRightP = null, bmRightPer = null, bmBcStartd = null, bmDividend = null, bmBcLd = null, bmTime = null, bmYear = null, bmBcExp = null, bmBonus = null, bmPlace = null, bmBcEndd = null) }?: emptyList())
+
+                        binding.main.setContent {
+
+                            AnnouncementItems(
+                                list = list, sharedViewModel.mutableAllData.value?.data?.filter {
+                                    it.sYM.equals(
+                                        symbol,
+                                        true
+                                    )
+                                }?.first()
+                            )
+                        }
+                    }else {
+                        binding.main.setContent {
+
+                            AnnouncementItems(
+                                list = announcementItem?.filter {
+                                    Utils.compareDates(
+                                        it.bmDate ?: "0L",
+                                        binding.textDate.text.toString()
+                                    )
+                                } ?: emptyList(),
+                                sharedViewModel.mutableAllData.value?.data?.filter {
+                                    it.sYM.equals(
+                                        symbol,
+                                        true
+                                    )
+                                }?.first()
+                            )
+                        }
                     }
                 }
             }
@@ -118,9 +166,11 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Error -> {}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    binding.main.setContent {
-                        AnnouncementItems(list = result.data?.filter { Utils.compareDates(it.insiderTransactionPostDate?:"0L",binding.textDate.text.toString()) }
-                            ?.map { AnnouncementDataItem("Insider", bmDesc = it.insiderTransactionDesc, bmDate = it.insiderTransactionPostDate, bmImageLink = it.insiderTransactionImageLink, bmPDFLink = it.insiderTransactionPDFLink, companyCode = null, bmEpsQuarter = null, bmEpsCum = null, bmQuarterNumber = null, bmRightPrice = null, bmRightD = null, bmRightP = null, bmRightPer = null, bmBcStartd = null, bmDividend = null, bmBcLd = null, bmTime = null, bmYear = null, bmBcExp = null, bmBonus = null, bmPlace = null, bmBcEndd = null) }?.toList()?: emptyList(), stockItem = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol,true) }?.first())
+                    if(binding.spinnerAnnouncement.selectedItem.toString().equals("insider",true)){
+                        binding.main.setContent {
+                            AnnouncementItems(list = result.data?.filter { Utils.compareDates(it.insiderTransactionPostDate?:"0L",binding.textDate.text.toString()) }
+                                ?.map { AnnouncementDataItem("Insider", bmDesc = it.insiderTransactionDesc, bmDate = it.insiderTransactionPostDate, bmImageLink = it.insiderTransactionImageLink, bmPDFLink = it.insiderTransactionPDFLink, companyCode = null, bmEpsQuarter = null, bmEpsCum = null, bmQuarterNumber = null, bmRightPrice = null, bmRightD = null, bmRightP = null, bmRightPer = null, bmBcStartd = null, bmDividend = null, bmBcLd = null, bmTime = null, bmYear = null, bmBcExp = null, bmBonus = null, bmPlace = null, bmBcEndd = null) }?.toList()?: emptyList(), stockItem = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol,true) }?.first())
+                        }
                     }
                 }
             }
@@ -128,11 +178,29 @@ class AnnouncementsFragment : Fragment() {
 
         binding.spinnerAnnouncement.onItemSelectedListener=object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-                if(binding.spinnerAnnouncement.selectedItem.toString().equals("Insider",true)){
-                    snapshotViewModel.insider(symbol)
-                }else {
-                    snapshotViewModel.announcement(symbol, binding.spinnerAnnouncement.selectedItem.toString())
+               /* binding.textDate.text=""
+                binding.main.setContent {
+                    AnnouncementItems(list = emptyList(), stockItem = null)
+                }*/
+                if(binding.textDate.text.isNotEmpty()) {
+                    if (binding.spinnerAnnouncement.selectedItem.toString()
+                            .equals("Insider", true)
+                    ) {
+                        snapshotViewModel.insider(symbol)
+                    } else if (binding.spinnerAnnouncement.selectedItem.toString()
+                            .equals("All", true)
+                    ) {
+                        snapshotViewModel.insider(symbol)
+                        snapshotViewModel.announcement(
+                            symbol,
+                            binding.spinnerAnnouncement.selectedItem.toString()
+                        )
+                    } else {
+                        snapshotViewModel.announcement(
+                            symbol,
+                            binding.spinnerAnnouncement.selectedItem.toString()
+                        )
+                    }
                 }
 
 
@@ -157,15 +225,15 @@ class AnnouncementsFragment : Fragment() {
                     binding.loader.visibility = View.GONE
                     binding.main.visibility=View.VISIBLE
                     binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
+                    /*snapshotViewModel.announcement(symbol,"All")
 
-                    binding.spinnerAnnouncement.setSelection(0,true)
-                    snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString())
+                    snapshotViewModel.insider(symbol)*/
+
+
 
                 }
             }
         })
-
-        return binding.root
     }
 
     private fun init() {
@@ -183,12 +251,27 @@ class AnnouncementsFragment : Fragment() {
             textView.text = date
             if(binding.spinnerAnnouncement.selectedItem.toString().equals("Insider",true)){
                 snapshotViewModel.insider(symbol)
+            }else if(binding.spinnerAnnouncement.selectedItem.toString().equals("All",true)){
+                snapshotViewModel.insider(symbol)
+                snapshotViewModel.announcement(symbol, binding.spinnerAnnouncement.selectedItem.toString())
             }else {
                 snapshotViewModel.announcement(symbol, binding.spinnerAnnouncement.selectedItem.toString())
             }
-//            snapshotViewModel.filterByType(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())
         }
-
+        if(binding.spinnerAnnouncement.selectedItem.toString().equals("Insider",true)){
+            dialog.availableDates =
+                snapshotViewModel.mutableInsider.value?.data?.map { it.insiderTransactionPostDate ?: "0L" }
+                    ?.toList() ?: emptyList<String>()
+        }else if(binding.spinnerAnnouncement.selectedItem.toString().equals("All",true)){
+            val list=ArrayList<String>()
+            list.addAll(snapshotViewModel.mutableAnnouncementItem.value?.data?.map { it.bmDate ?: "0L" }?.toList()?: emptyList())
+            list.addAll(snapshotViewModel.mutableInsider.value?.data?.map { it.insiderTransactionPostDate ?: "0L" }?.toList() ?: emptyList<String>())
+            dialog.availableDates = list
+        } else{
+            dialog.availableDates =
+                snapshotViewModel.mutableAnnouncementItem.value?.data?.map { it.bmDate ?: "0L" }
+                    ?.toList() ?: emptyList<String>()
+        }
         dialog.show(requireActivity().supportFragmentManager, "CUSTOM_DATE_PICKER")
     }
     @Composable
@@ -242,8 +325,8 @@ class AnnouncementsFragment : Fragment() {
                         .height(20.dp)
                         .background(
                             color = when (list?.get(index)?.announcementType) {
-                                "Board Meetings" -> colorResource(id = R.color.md_theme_tertiaryContainer)
-                                "Shareholder Meetings" -> colorResource(id = R.color.md_theme_tertiaryContainer)
+                                "Board Meetings" -> Color(0x1A187376)
+                                "Shareholder Meetings" -> Color(0x1AA44FA9)
                                 "Financial Result" -> Color(0x1AA44FA9)
                                 "Material Information" -> Color(0x1A1A73E8)
                                 else -> Color(0x1A625B71)
@@ -509,9 +592,9 @@ class AnnouncementsFragment : Fragment() {
     private @Composable
     fun GridView(map:Map<String,String>) {
         LazyHorizontalGrid(rows = GridCells.Fixed(map.size/2),
-            modifier = Modifier.height(40.dp),
+            modifier = Modifier.height(50.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
 
         ) {
             items(map.size){index->
