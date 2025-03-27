@@ -8,6 +8,8 @@ import android.content.res.Configuration
 import android.icu.text.DecimalFormat
 import android.os.Build
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -51,7 +53,7 @@ class Utils {
 
         fun compareDates(date1:String,date2:String): Boolean {
             val timestamp1 = date1.replace(Regex("[^0-9]"), "").toLong()
-            val sdf=SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
+            val sdf=SimpleDateFormat("dd/MM/yy",Locale.getDefault())
             val timestamp2 = sdf.parse(date2)?.time
             return if(sdf.format(Date(timestamp1)).compareTo(sdf.format(Date(timestamp2?:0L)))!=0){
                 false
@@ -85,7 +87,10 @@ class Utils {
 
             return sdf.format(date)
          }
-
+        fun hideKeyboard(context: Context, editText: EditText) {
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+        }
         fun convertDateBrFormat(inputDate: String): String {
             return try {
                 val inputFormat = SimpleDateFormat("EEE, dd MMM yy HH:mm:ss Z", Locale.ENGLISH)

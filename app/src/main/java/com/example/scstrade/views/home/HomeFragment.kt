@@ -224,7 +224,7 @@ class HomeFragment : Fragment() {
                    if(!result.data.isNullOrEmpty()){
                        if(homeViewModel.isCandleSelected.value==true){
                            var candleEntry:ArrayList<CandleEntry>?= ArrayList()
-                           result.data.forEachIndexed { index, it ->
+                           result.data?.forEachIndexed { index, it ->
                                candleEntry?.add(
                                    CandleEntry(index.toFloat(), it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat()))
                            }
@@ -245,7 +245,7 @@ class HomeFragment : Fragment() {
                                }?: emptyList()
                            )*/
                        }else{
-                           binding.cardHome.lineChart.entries = result.data.map {
+                           binding.cardHome.lineChart.entries = result.data?.map {
                                interval+=1
                                Entry(interval.toFloat(),it.tradingHigh.toFloat())
                            }

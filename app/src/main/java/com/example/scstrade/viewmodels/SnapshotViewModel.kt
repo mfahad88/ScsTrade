@@ -33,21 +33,37 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
         }
     }
 
-    fun announcement(symbol: String,type:String){
+    fun announcement(symbol: String,type:String,date:String?){
         mutableAnnouncementItem.value = Resource.Loading()
-        viewModelScope.launch{
+        if(type.equals("all",true)){
+            insider(symbol)
+        }
+        viewModelScope.launch(Dispatchers.IO){
             val result = repository.announcements( symbol,type)
-            mutableAnnouncementItem.value = result
+
+            withContext(Dispatchers.Main){
+                val list=ArrayList<AnnouncementDataItem>()
+                if(date.isNullOrBlank()) {
+                    list.addAll(result.data?: emptyList())
+                    list.addAll(mutableInsider.value?.data?.map { AnnouncementDataItem("Insider", bmDesc = it.insiderTransactionDesc, bmDate = it.insiderTransactionPostDate, bmImageLink = it.insiderTransactionImageLink, bmPDFLink = it.insiderTransactionPDFLink, companyCode = null, bmEpsQuarter = null, bmEpsCum = null, bmQuarterNumber = null, bmRightPrice = null, bmRightD = null, bmRightP = null, bmRightPer = null, bmBcStartd = null, bmDividend = null, bmBcLd = null, bmTime = null, bmYear = null, bmBcExp = null, bmBonus = null, bmPlace = null, bmBcEndd = null)}
+                        ?: emptyList())
+                }else{
+                    list.addAll(result.data?.filter { Utils.compareDates(it.bmDate?:"0L",date) }?: emptyList())
+                    list.addAll(mutableInsider.value?.data?.filter {  Utils.compareDates(it.insiderTransactionPostDate ?: "0L", date) }?.map { AnnouncementDataItem("Insider", bmDesc = it.insiderTransactionDesc, bmDate = it.insiderTransactionPostDate, bmImageLink = it.insiderTransactionImageLink, bmPDFLink = it.insiderTransactionPDFLink, companyCode = null, bmEpsQuarter = null, bmEpsCum = null, bmQuarterNumber = null, bmRightPrice = null, bmRightD = null, bmRightP = null, bmRightPer = null, bmBcStartd = null, bmDividend = null, bmBcLd = null, bmTime = null, bmYear = null, bmBcExp = null, bmBonus = null, bmPlace = null, bmBcEndd = null)}
+                        ?: emptyList())
+                }
+
+                mutableAnnouncementItem.value = Resource.Success(list.sortedByDescending { it.bmDate })
+
+            }
         }
     }
 
     fun insider(symbol: String){
         mutableInsider.value = Resource.Loading()
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch{
             val result = repository.insider( symbol)
-            withContext(Dispatchers.Main){
-                mutableInsider.value = result
-            }
+            mutableInsider.value = result
         }
     }
 

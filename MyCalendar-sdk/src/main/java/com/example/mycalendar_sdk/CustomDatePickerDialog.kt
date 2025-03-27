@@ -60,7 +60,7 @@ class CustomDatePickerDialog(private val onDateSelected: (String) -> Unit) : Dia
 
         btnOk.setOnClickListener {
             selectedDate?.let {
-                onDateSelected(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(it))
+                onDateSelected(SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(it))
             }
             dismiss()
         }

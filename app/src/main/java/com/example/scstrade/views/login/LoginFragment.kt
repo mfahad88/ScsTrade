@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
                         Utils.saveSharedPreference(
                             requireContext(),
                             AppConstants.USER,
-                            resource.data
+                            resource.data?: emptyList()
                         )
                         Utils.showSuccess(requireView(),"Success")
                         viewModel.mutableLogin.removeObservers(this)
