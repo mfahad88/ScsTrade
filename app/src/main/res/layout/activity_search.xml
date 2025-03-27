@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".views.search.SearchActivity">
-    <include layout="@layout/custom_toolbar" android:id="@+id/toolbar"/>
+    <com.example.scstrade.views.widgets.mMarket android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"

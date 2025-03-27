@@ -7,9 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".views.news.NewsDetailActivity">
 
-    <include
+    <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/mMarket"
-        layout="@layout/custom_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".views.contact.ContactActivity">
 
-    <include
+    <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/topbar"
-        layout="@layout/custom_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"

@@ -17,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -59,9 +60,13 @@ class LandingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
-        binding.toolbar.searchIcon.setOnClickListener {
-            startActivity(Intent(requireContext(),SearchActivity::class.java))
+        binding.toolbar.binding.apply {
+            toolbarWithLogo.visibility = View.VISIBLE
+            toolbarWithBack.visibility = View.GONE
         }
+       /* binding.toolbar.searchIcon.setOnClickListener {
+            startActivity(Intent(requireContext(),SearchActivity::class.java))
+        }*/
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -77,8 +82,8 @@ class LandingFragment : Fragment() {
         })*/
 //        sharedViewModel.fetchAllData()
 //        sharedViewModel.fetchIndices()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+     /*   ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.updateLayoutParams<MarginLayoutParams> {
                 topMargin = systemBars.top
                 leftMargin = systemBars.left
@@ -86,8 +91,8 @@ class LandingFragment : Fragment() {
                 bottomMargin = systemBars.bottom
             }
             WindowInsetsCompat.CONSUMED
+        }*/
 
-        }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

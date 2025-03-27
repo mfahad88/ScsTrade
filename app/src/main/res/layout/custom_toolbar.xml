@@ -18,44 +18,98 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/mainItem"
+
             >
-            <!-- Left Icon or Logo -->
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/frame"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:contentDescription="Logo" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:id="@+id/toolbarWithLogo">
 
-            <!-- Title and Subtitle -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/frame"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="Logo" />
 
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toRightOf="@id/logo"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/title"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SCS Trade Pro"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/subTitle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/logo"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SCS Trade Pro"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/subTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connect to intelligent investing"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:id="@+id/toolbarWithBack">
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Connect to intelligent investing"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:padding="5dp"
+                    android:layout_marginTop="7dp"
+                    android:id="@+id/backButton">
+                    <TextView
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/back"
+                        android:layout_toEndOf="@id/imageBack"
+                        android:textAppearance="@style/back"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="5dp"
+                        android:src="@drawable/arrow_back"
+                        android:layout_alignTop="@id/back"
+                        android:layout_alignBottom="@id/back"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/imageBack"
+                        app:tint="@android:color/white" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/title_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/automobile_"
+                    android:textAppearance="@style/automobile_"
+                    android:layout_alignStart="@id/backButton"
+                    android:layout_below="@id/backButton"
+                    />
+            </RelativeLayout>
+
 
             <!-- Notification Icon -->
             <ImageView
@@ -86,14 +140,94 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <com.example.scstrade.views.widgets.mMarket
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mMarket"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="5dp"
-        android:layout_below="@id/toolbar"
-        android:layout_alignParentStart="true"/>
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="20dp"
+        >
+
+        <TextView
+            android:id="@+id/market_stat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/market_stat"
+            android:textAppearance="@style/market_stat"
+            android:layout_weight="0.3"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/open"
+            android:gravity="start"
+            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.2">
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_repeatMode="restart"
+                app:lottie_rawRes="@raw/animate_open" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/open"
+                android:textAppearance="@style/open"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/close"
+            android:layout_weight="0.2"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/market_stat"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center_vertical"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/animate_closed"
+                app:lottie_repeatMode="restart" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/closed"
+                android:textAppearance="@style/closed"
+
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dateTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:layout_weight="0.5"
+            android:text="@string/dec_2024_04"
+            android:textAppearance="@style/dec_2024_04"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

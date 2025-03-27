@@ -6,13 +6,18 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.WindowManager
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -42,9 +47,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel
-
-
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setContentView(binding.root)
         val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
         viewModel.isConnected.observe(this, Observer {
@@ -55,16 +58,24 @@ class MainActivity : AppCompatActivity() {
                 snackbar.dismiss()
             }
         })
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val cutoutInsets = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(cutoutInsets.left, cutoutInsets.top, cutoutInsets.right, cutoutInsets.bottom)
+            insets
+        }
+
+    /*    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            v.setPadding(0, systemBars.top, 0, 0)
             v.updateLayoutParams<MarginLayoutParams> {
+                topMargin = systemBars.top
                 leftMargin = systemBars.left
                 rightMargin = systemBars.right
                 bottomMargin = systemBars.bottom
             }
             WindowInsetsCompat.CONSUMED
-        }
+
+        }*/
 
             loadFragment(SplashFragment())
 //        viewModel.fetchIndices()

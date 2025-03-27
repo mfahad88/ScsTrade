@@ -8,7 +8,13 @@
     android:background="@android:color/white"
     tools:context=".views.snapshot.SnapshotActivity">
 
-    <include layout="@layout/custom_toolbar" android:id="@+id/toolbar"/>
+    <com.example.scstrade.views.widgets.mMarket
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.tabs.TabLayout

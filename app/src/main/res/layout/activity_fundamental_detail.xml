@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".views.technicals.TechnicalsActivity">
-    <include layout="@layout/custom_toolbar"
+    <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

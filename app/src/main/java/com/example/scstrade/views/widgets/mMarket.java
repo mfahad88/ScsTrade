@@ -1,10 +1,13 @@
 package com.example.scstrade.views.widgets;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -13,9 +16,11 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
 import com.example.scstrade.R;
+import com.example.scstrade.databinding.CustomToolbarBinding;
 import com.example.scstrade.databinding.MmarketBinding;
 import com.example.scstrade.viewmodels.SharedViewModel;
 import com.example.scstrade.views.MyApp;
+import com.example.scstrade.views.search.SearchActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,8 +28,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class mMarket extends LinearLayout {
-   public MmarketBinding binding;
-
+   public CustomToolbarBinding binding;
+    private OnBackClickListener backClickListener;
     public mMarket(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -36,7 +41,7 @@ public class mMarket extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        binding=MmarketBinding.inflate(LayoutInflater.from(context),this,true);
+        binding= CustomToolbarBinding.inflate(LayoutInflater.from(context),this,true);
         Log.e("LifecycleOwner", "Context class: " + context.getClass().getName()+" "+(context instanceof AppCompatActivity));
         if(attrs!=null){
             TypedArray a=getContext().getTheme().obtainStyledAttributes(
@@ -62,6 +67,20 @@ public class mMarket extends LinearLayout {
                         binding.dateTime.setText(sdf.format(new Date()));
                     }
                 });
+                binding.searchIcon.setOnClickListener(view -> {
+                   context.startActivity(new Intent(context, SearchActivity.class));
+                });
+
+                binding.backButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (backClickListener != null) {
+                            backClickListener.onBackClicked();
+                        } else if (context instanceof Activity) {
+                            ((Activity) context).onBackPressed();
+                        }
+                    }
+                });
             }catch (Exception e){
                 Log.e("LifecycleOwner",e.getMessage());
             }
@@ -71,5 +90,13 @@ public class mMarket extends LinearLayout {
         }
 
 
+    }
+
+    public void setOnBackClickListener(OnBackClickListener listener) {
+        this.backClickListener = listener;
+    }
+
+    public interface OnBackClickListener {
+        void onBackClicked();
     }
 }
