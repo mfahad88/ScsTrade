@@ -278,45 +278,47 @@ class AnnouncementsFragment : Fragment() {
                         map["End Date"] = announcementItem?.bmBcEndd ?: ""
                     }
                     Column {
-                        Row(
-                            modifier = Modifier
-                                .padding(0.dp)
-                                .width(126.dp)
-                                .height(20.dp)
-                                .background(
-                                    color = when (list?.get(index)?.announcementType) {
-                                        "Board Meetings" -> Color(0x1A187376)
-                                        "Shareholder Meetings" -> Color(0x1AA44FA9)
-                                        "Financial Result" -> Color(0x1AA44FA9)
-                                        "Material Information" -> Color(0x1A1A73E8)
-                                        else -> Color(0x1A625B71)
-                                    },
-                                    shape = RoundedCornerShape(size = 6.dp)
-                                ),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                list?.get(index)?.announcementType ?: "",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    lineHeight = 20.sp,
-                                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                                    fontWeight = FontWeight(500),
-                                    color = when (list?.get(index)?.announcementType) {
-                                        "Board Meetings" -> Color(0xFF187376)
-                                        "Shareholder Meetings" -> Color(0xFF187376)
-                                        "Financial Result" -> Color(0xFFA44FA9)
-                                        "Material Information" -> Color(0xFF1A73E8)
-                                        else -> Color(0xFF625B71)
-                                    },
-                                    textAlign = TextAlign.Center,
-                                    letterSpacing = 0.1.sp,
-                                ),
+                        if(binding.spinnerAnnouncement.selectedItem.toString().equals("all",true)){
+                            Row(
+                                modifier = Modifier
+                                    .padding(0.dp)
+                                    .width(126.dp)
+                                    .height(20.dp)
+                                    .background(
+                                        color = when (list?.get(index)?.announcementType) {
+                                            "Board Meetings" -> Color(0x1A187376)
+                                            "Shareholder Meetings" -> Color(0x1AA44FA9)
+                                            "Financial Result" -> Color(0x1AA44FA9)
+                                            "Material Information" -> Color(0x1A1A73E8)
+                                            else -> Color(0x1A625B71)
+                                        },
+                                        shape = RoundedCornerShape(size = 6.dp)
+                                    ),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    list?.get(index)?.announcementType ?: "",
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        lineHeight = 20.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(500),
+                                        color = when (list?.get(index)?.announcementType) {
+                                            "Board Meetings" -> Color(0xFF187376)
+                                            "Shareholder Meetings" -> Color(0xFF187376)
+                                            "Financial Result" -> Color(0xFFA44FA9)
+                                            "Material Information" -> Color(0xFF1A73E8)
+                                            else -> Color(0xFF625B71)
+                                        },
+                                        textAlign = TextAlign.Center,
+                                        letterSpacing = 0.1.sp,
+                                    ),
 
-                                )
+                                    )
+                            }
+                            Spacer(modifier = Modifier.height(7.dp))
                         }
-                        Spacer(modifier = Modifier.height(7.dp))
                         Row {
                             Text(
                                 text = stockItem?.sYM ?: "",
