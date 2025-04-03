@@ -11,6 +11,7 @@ import com.example.scstrade.databinding.FragmentMarketBinding
 import com.example.scstrade.databinding.FragmentWatchlistBinding
 import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.indices.IndicesFragment
+import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.sector.SectorFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -24,6 +25,12 @@ class MarketFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMarketBinding.inflate(inflater,container,false)
+        (parentFragment as LandingFragment).binding.toolbar.apply {
+            binding.titleItem.text = "Market"
+            binding.toolbarWithLogo.visibility = View.GONE
+            binding.toolbarWithBack.visibility = View.VISIBLE
+            binding.backButton.visibility = View.GONE
+        }
         initSelection()
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
