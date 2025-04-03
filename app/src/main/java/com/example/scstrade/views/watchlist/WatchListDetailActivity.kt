@@ -45,10 +45,28 @@ class WatchListDetailActivity : AppCompatActivity() {
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
-            insets
+        binding.toolbar.binding.apply {
+            toolbarWithBack.visibility = View.VISIBLE
+            backButton.visibility = View.VISIBLE
+            toolbarWithLogo.visibility = View.GONE
+            titleItem.text = "Watchlist"
+        }
+        binding.toolbar.setOnBackClickListener {
+            finish()
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { view, windowInsets ->
+
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            Log.e("Padding: ", insets.top.toString())
+            view.setPadding(0,insets.top,0,insets.bottom)
+            windowInsets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            view.setPadding(0,0,0,insets.bottom)
+            windowInsets
         }
         fetchUser(this)
 

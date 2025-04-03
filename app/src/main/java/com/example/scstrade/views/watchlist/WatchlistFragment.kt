@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +21,8 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.watchlist.adapter.WatchListAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.Gson
@@ -38,6 +42,19 @@ class WatchlistFragment : Fragment() {
         viewModel= ViewModelProvider(this,
             WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
+        (parentFragment as LandingFragment).binding.toolbar.binding.apply {
+            toolbarWithBack.visibility = View.VISIBLE
+            toolbarWithLogo.visibility = View.GONE
+            titleItem.text = "Watchlist"
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            view.setPadding(0,0,0,insets.bottom+250)
+            windowInsets
+        }
+
         binding.buttonAdd.setOnClickListener {
             val bottomSheetFragment=AddWatchListBottomSheetFragment()
             val bundle=Bundle()

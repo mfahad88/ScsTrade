@@ -6,6 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
@@ -33,6 +37,13 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomItem){ v, windowInsets->
+            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                bottomMargin=insets.bottom+31
+            }
+            windowInsets
+        }
         lifecycleScope.launch {
             delay(5000)
 

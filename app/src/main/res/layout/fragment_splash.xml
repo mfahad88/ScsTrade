@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     tools:context=".views.splash.SplashFragment">
 
 
@@ -50,6 +51,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="96dp"
         android:gravity="top"
+        android:textFontWeight="400"
         android:lineSpacingExtra="-5sp"
         android:text="@string/this_next_g"
         android:textAppearance="@style/this_next_g"
@@ -57,31 +59,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/connecting_"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="top"
-        android:lineSpacingExtra="0sp"
-        android:text="@string/connecting_"
-        android:textAppearance="@style/connecting_"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/progressBar"
-        app:layout_constraintTop_toBottomOf="@+id/this_next_g" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:indeterminateDrawable="@drawable/image_for_rotation"
-        app:layout_constraintBottom_toBottomOf="@+id/connecting_"
+        android:orientation="horizontal"
+        android:id="@+id/bottomItem"
+        app:layout_constraintEnd_toEndOf="@+id/this_next_g"
         app:layout_constraintStart_toStartOf="@+id/this_next_g"
-        app:layout_constraintTop_toTopOf="@+id/connecting_" />
+        app:layout_constraintTop_toBottomOf="@+id/this_next_g">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/image_for_rotation" />
+
+        <TextView
+            android:id="@+id/connecting_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/connecting_"
+            android:textAppearance="@style/connecting_" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

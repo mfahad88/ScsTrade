@@ -54,7 +54,10 @@ class HomeFragment : Fragment() {
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
-
+        (parentFragment as LandingFragment).binding.toolbar.binding.apply {
+            toolbarWithLogo.visibility = View.VISIBLE
+            toolbarWithBack.visibility = View.GONE
+        }
 
 //        viewModel.fetchAllData()
 //        viewModel.fetchIndices()

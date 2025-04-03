@@ -1,5 +1,6 @@
 package com.example.scstrade.helper
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.UiModeManager
 import android.content.Context
@@ -8,6 +9,7 @@ import android.content.res.Configuration
 import android.icu.text.DecimalFormat
 import android.os.Build
 import android.view.View
+import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -90,6 +92,23 @@ class Utils {
         fun hideKeyboard(context: Context, editText: EditText) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
+        }
+        fun setSystemBarIcons(activity: Activity, darkIcons: Boolean) {
+            val window =activity.window
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // Android 11+ (API 30+)
+                val controller = window.insetsController
+                controller?.setSystemBarsAppearance(
+                    if (darkIcons) WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS else 0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                )
+            } else {
+                // Android 6+ (API 23+)
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility =
+                    if (darkIcons) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+            }
         }
         fun convertDateBrFormat(inputDate: String): String {
             return try {

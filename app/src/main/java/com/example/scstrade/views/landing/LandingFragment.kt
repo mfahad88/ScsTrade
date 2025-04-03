@@ -3,12 +3,14 @@ package com.example.scstrade.views.landing
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -16,9 +18,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -64,9 +68,19 @@ class LandingFragment : Fragment() {
             toolbarWithLogo.visibility = View.VISIBLE
             toolbarWithBack.visibility = View.GONE
         }
-       /* binding.toolbar.searchIcon.setOnClickListener {
-            startActivity(Intent(requireContext(),SearchActivity::class.java))
-        }*/
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            view.setPadding(0,insets.top,0,insets.bottom)
+            windowInsets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
+            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                bottomMargin=insets.bottom+31
+            }
+            windowInsets
+        }
+        Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -74,24 +88,7 @@ class LandingFragment : Fragment() {
 
 
         fetchUser()
-       /* requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
 
-            }
-
-        })*/
-//        sharedViewModel.fetchAllData()
-//        sharedViewModel.fetchIndices()
-     /*   ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            v.updateLayoutParams<MarginLayoutParams> {
-                topMargin = systemBars.top
-                leftMargin = systemBars.left
-                rightMargin = systemBars.right
-                bottomMargin = systemBars.bottom
-            }
-            WindowInsetsCompat.CONSUMED
-        }*/
 
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){

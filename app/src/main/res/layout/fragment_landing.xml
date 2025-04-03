@@ -23,6 +23,7 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="170dp"
              />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -32,7 +33,7 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
+                >
                 <com.example.scstrade.views.widgets.mMarket
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

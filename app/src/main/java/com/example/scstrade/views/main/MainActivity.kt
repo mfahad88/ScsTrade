@@ -43,12 +43,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: SharedViewModel
     lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         setContentView(binding.root)
+        Utils.setSystemBarIcons(this,darkIcons = false)
         val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
         viewModel.isConnected.observe(this, Observer {
 
@@ -58,28 +59,10 @@ class MainActivity : AppCompatActivity() {
                 snackbar.dismiss()
             }
         })
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val cutoutInsets = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(cutoutInsets.left, cutoutInsets.top, cutoutInsets.right, cutoutInsets.bottom)
-            insets
-        }
 
-    /*    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(0, systemBars.top, 0, 0)
-            v.updateLayoutParams<MarginLayoutParams> {
-                topMargin = systemBars.top
-                leftMargin = systemBars.left
-                rightMargin = systemBars.right
-                bottomMargin = systemBars.bottom
-            }
-            WindowInsetsCompat.CONSUMED
-
-        }*/
 
             loadFragment(SplashFragment())
-//        viewModel.fetchIndices()
-//        viewModel.fetchAllData()
+
     }
     public fun loadFragment(fragment: Fragment,isBackStack:Boolean = false) {
         if(isBackStack){

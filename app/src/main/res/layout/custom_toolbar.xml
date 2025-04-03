@@ -9,7 +9,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="120dp"
+
         android:background="@drawable/toolbar"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp">
@@ -38,7 +39,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_centerVertical="true"
                     android:layout_marginStart="8dp"
                     android:layout_toRightOf="@id/logo"
@@ -66,15 +66,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:id="@+id/toolbarWithBack">
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbarWithBack"
+                android:visibility="visible"
+                android:layout_toStartOf="@id/searchIcon">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_marginTop="7dp"
+                    android:paddingHorizontal="5dp"
+                    android:visibility="gone"
                     android:id="@+id/backButton">
                     <TextView
                         android:id="@+id/back"
@@ -114,13 +115,14 @@
             <!-- Notification Icon -->
             <ImageView
                 android:id="@+id/notificationIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/notifications_none"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:padding="10dp"
                 android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="10dp"
                 android:contentDescription="Notifications" />
 
             <!-- Search Icon -->
@@ -133,7 +135,6 @@
                 android:src="@drawable/search_24"
                 android:layout_gravity="end"
                 android:padding="10dp"
-
                 android:layout_toLeftOf="@id/notificationIcon"
                 android:contentDescription="Search" />
 
