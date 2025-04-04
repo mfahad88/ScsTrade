@@ -122,4 +122,7 @@
     <string name="one_year">1 Year</string>
     <string name="new_watchlist">New Watch List</string>
     <string name="company_add">Company added to the watch list</string>
+    <string name="initial">S</string>
+    <string name="syed_abdull">Syed Abdullah Shahid</string>
+    <string name="basic_infor">Basic Information</string>
 </resources>

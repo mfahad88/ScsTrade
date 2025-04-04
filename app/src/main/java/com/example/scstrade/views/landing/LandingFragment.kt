@@ -44,6 +44,7 @@ import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
+import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.search.SearchActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
@@ -107,7 +108,9 @@ class LandingFragment : Fragment() {
    /*     sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
         })*/
-
+        binding.profile.setOnClickListener {
+            startActivity(Intent(requireContext(),ProfileActivity::class.java))
+        }
         binding.imageViewClose.setOnClickListener {
             if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
@@ -152,6 +155,11 @@ class LandingFragment : Fragment() {
         val listType = object : TypeToken<List<LoginDataItem>>() {}
         val user= Utils.getSharedPreference(requireContext(), emptyList<LoginDataItem>(),AppConstants.USER,listType)
         (requireActivity().application as MyApp).login=user.first()
+        (requireActivity().application as MyApp).login.apply {
+            binding.profileName.text=registrationName
+            binding.profileEmail.text = registrationEmail
+            binding.roundedAvatar.text = registrationName!![0].toString()
+        }
     }
 
     private fun showExitDialog() {
