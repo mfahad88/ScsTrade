@@ -54,15 +54,23 @@ class SearchActivity : AppCompatActivity() {
     lateinit var sharedViewModel: SharedViewModel
     lateinit var adapter: ArrayAdapter<String>
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding=ActivitySearchBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
-        enableEdgeToEdge()
+
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        binding.toolbar.binding.apply {
+            toolbarWithBack.visibility = View.VISIBLE
+            toolbarWithLogo.visibility = View.GONE
+            backButton.visibility = View.GONE
+            titleItem.text = "Search"
+            searchIcon.visibility = View.INVISIBLE
         }
         adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1)
         binding.spinnerSector.adapter=adapter

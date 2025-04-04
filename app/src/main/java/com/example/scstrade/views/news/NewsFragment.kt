@@ -61,6 +61,7 @@ import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.Item
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.landing.LandingFragment
 
 
 class NewsFragment : Fragment() {
@@ -79,7 +80,12 @@ class NewsFragment : Fragment() {
         binding=FragmentNewsBinding.inflate(inflater,container,false)
         sharedViewModel=(requireActivity().application as MyApp).viewModel
         sharedViewModel.news()
-
+        (parentFragment as LandingFragment).binding.toolbar.binding.apply {
+            toolbarWithLogo.visibility = View.GONE
+            toolbarWithBack.visibility = View.VISIBLE
+            backButton.visibility = View.GONE
+            titleItem.text = "News"
+        }
 
         return binding.root
     }

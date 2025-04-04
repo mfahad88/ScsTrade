@@ -1,5 +1,7 @@
 package com.example.scstrade.views.watchlist.adapter
 
+import android.content.Context
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
@@ -9,7 +11,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.scstrade.databinding.ItemWatchlistDetailBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
-import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import java.util.Collections
 
 class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
@@ -66,7 +67,7 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
         notifyDataSetChanged()
     }
 
-    fun swapItems(fromPosition: Int, toPosition: Int) {
+    fun swapItems(context: Context, fromPosition: Int, toPosition: Int) {
         Collections.swap(list, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
@@ -76,7 +77,8 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
-                swapItems(fromPosition, toPosition)
+
+                swapItems(viewHolder.itemView.context,fromPosition, toPosition)
                 return true
             }
 

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -21,6 +23,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.allstock.StockActivity
+import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.market.MarketFragment
 import com.google.gson.reflect.TypeToken
 
@@ -44,6 +47,13 @@ class IndicesFragment : Fragment() {
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView){v,insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+
         binding.recyclerView.apply {
             visibility= View.VISIBLE
             val typeToken = object:TypeToken<List<KSEIndices>>(){}
@@ -52,8 +62,9 @@ class IndicesFragment : Fragment() {
                 bundle.putString("index",kseIndices.iNDEXCODE)
                 val fragment =AllStockFragment()
                 fragment.arguments=bundle
-//                findNavController().navigate(R.id.stockFragment,bundle)
+
                 (parentFragment as MarketFragment).loadFragment(fragment)
+
             }
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }

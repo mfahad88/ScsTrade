@@ -17,6 +17,8 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockBinding
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.market.MarketFragment
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,20 +27,29 @@ class StockActivity : AppCompatActivity() {
     lateinit var binding: ActivityStockBinding
     private lateinit var sharedViewModel:SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding=ActivityStockBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-        enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            v.updateLayoutParams<MarginLayoutParams> {
-                leftMargin = systemBars.left
-                rightMargin = systemBars.right
-                bottomMargin = systemBars.bottom
-            }
-            WindowInsetsCompat.CONSUMED
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer){v,insets->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+       binding.toolbar.binding.apply {
+            toolbarWithBack.visibility = View.VISIBLE
+            toolbarWithLogo.visibility = View.GONE
+            backButton.visibility = View.VISIBLE
+//            titleItem.text = kseIndices.iNDEXCODE
         }
         sharedViewModel=(application as MyApp).viewModel
 //        sharedViewModel.fetchAllData()
@@ -46,6 +57,11 @@ class StockActivity : AppCompatActivity() {
         val b= intent.extras
         if(b!=null) {
             val fragment = AllStockFragment()
+            if(b.getString("index")!=null) {
+                binding.toolbar.binding.titleItem.text = b.getString("index")?.replace("Index", "")
+            }else if (b.getString("sector")!=null){
+                binding.toolbar.binding.titleItem.text = b.getString("sector")
+            }
             fragment.arguments =b
             loadFragment(fragment)
         }

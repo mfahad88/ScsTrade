@@ -213,6 +213,7 @@ class LandingFragment : Fragment() {
         )
         binding.contact.setOnClickListener {
             startActivity(Intent(requireContext(),ContactActivity::class.java))
+            binding.drawerLayout.closeDrawer(GravityCompat.END)
         }
 
         binding.sideMenu.apply {
@@ -248,6 +249,7 @@ class LandingFragment : Fragment() {
             val divider= DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
             divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
             addItemDecoration(divider)
+
         }
     }
 

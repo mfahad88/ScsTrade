@@ -17,7 +17,9 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.indices.IndicesFragment
 import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.tabs.TabLayout
@@ -46,7 +48,11 @@ class AllStockFragment : Fragment() {
         kmi=arguments?.getString("kmi")?:null
         index = arguments?.getString("index")?:null
         future = arguments?.getString("future")?:null
-
+     /*   ((parentFragment as MarketFragment).parentFragment as LandingFragment).binding.toolbar.binding.apply {
+            toolbarWithBack.visibility = View.VISIBLE
+            toolbarWithLogo.visibility = View.GONE
+            backButton.visibility = View.VISIBLE
+        }*/
         binding.recyclerIndices.apply {
             adapter= StockAdapter(emptyList(),true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

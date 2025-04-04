@@ -70,12 +70,23 @@ class ContactActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        Utils.setSystemBarIcons(this,false)
+        binding.toolbar.binding.apply {
+            toolbarWithLogo.visibility = View.GONE
+            toolbarWithBack.visibility = View.VISIBLE
+            backButton.visibility = View.GONE
+            titleItem.text = "Contact & Support"
+        }
         sharedViewModel.contactUs()
         binding.horizontalList.setContent {
             showContactList()

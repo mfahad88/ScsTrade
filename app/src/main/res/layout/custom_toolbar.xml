@@ -68,34 +68,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/toolbarWithBack"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_toStartOf="@id/searchIcon">
 
                 <RelativeLayout
+                    android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="5dp"
-                    android:visibility="gone"
-                    android:id="@+id/backButton">
+                    android:visibility="visible">
+
                     <TextView
                         android:id="@+id/back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/back"
                         android:layout_toEndOf="@id/imageBack"
-                        android:textAppearance="@style/back"
-                        />
+                        android:text="@string/back"
+                        android:textAppearance="@style/back" />
 
                     <ImageView
+                        android:id="@+id/imageBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="5dp"
-                        android:src="@drawable/arrow_back"
                         android:layout_alignTop="@id/back"
                         android:layout_alignBottom="@id/back"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
-                        android:id="@+id/imageBack"
+                        android:layout_alignParentTop="true"
+                        android:paddingEnd="5dp"
+                        android:src="@drawable/arrow_back"
                         app:tint="@android:color/white" />
 
                 </RelativeLayout>

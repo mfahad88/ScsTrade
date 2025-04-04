@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -35,11 +36,19 @@ class  NewsDetailActivity : AppCompatActivity() {
         sharedViewModel=(this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+        binding.toolbar.binding.apply {
+            toolbarWithLogo.visibility = View.GONE
+            toolbarWithBack.visibility = View.VISIBLE
+            backButton.visibility = View.VISIBLE
+            titleItem.text = "News"
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
         newsType= intent.extras?.getString(AppConstants.NEWS_TYPE).toString()
         title = intent.extras?.getString(AppConstants.TITLE).toString()
         if(newsType.equals(AppConstants.SCS,true)){

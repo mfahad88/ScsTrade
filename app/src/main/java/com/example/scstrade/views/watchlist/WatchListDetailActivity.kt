@@ -22,6 +22,7 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
+import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListDetailAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
