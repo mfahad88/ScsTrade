@@ -81,6 +81,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.SnapshotViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.announcement.AnnoucementActivity
 import com.example.scstrade.views.widgets.ZoomImageView
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.io.File
@@ -205,8 +206,9 @@ class AnnouncementsFragment : Fragment() {
 
     private fun init() {
         symbol = requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
-        snapshotViewModel = (requireActivity() as SnapshotActivity).snapshotViewModel
-        sharedViewModel = ((requireActivity() as SnapshotActivity).application as MyApp).viewModel
+
+        snapshotViewModel = if(requireActivity() is SnapshotActivity) (requireActivity() as SnapshotActivity).snapshotViewModel else (requireActivity() as AnnoucementActivity).snapshotViewModel
+        sharedViewModel = if(requireActivity() is SnapshotActivity) ((requireActivity() as SnapshotActivity).application as MyApp).viewModel else ((requireActivity() as AnnoucementActivity).application as MyApp).viewModel
 //        binding.textDate.text = sdf.format(Date())
         snapshotViewModel.announcementType()
 

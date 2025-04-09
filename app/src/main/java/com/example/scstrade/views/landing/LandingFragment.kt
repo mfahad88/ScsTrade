@@ -37,7 +37,9 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.announcement.AnnoucementActivity
 import com.example.scstrade.views.contact.ContactActivity
+import com.example.scstrade.views.detailquote.DetailQuoteActivity
 import com.example.scstrade.views.fundamental.FundamentalActivity
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
@@ -248,6 +250,12 @@ class LandingFragment : Fragment() {
                     startActivity(intent)
                 }else if(keyDescValue.key?.equals("fundamental",true)?:false){
                     val intent = Intent(requireContext(),FundamentalActivity::class.java)
+                    startActivity(intent)
+                }else if(keyDescValue.key?.equals("detailed quote",true)?:false){
+                    val intent = Intent(requireContext(),DetailQuoteActivity::class.java)
+                    startActivity(intent)
+                }else if(keyDescValue.key?.equals("announcements",true)?:false){
+                    val intent = Intent(requireContext(),AnnoucementActivity::class.java)
                     startActivity(intent)
                 }
                 binding.drawerLayout.closeDrawers()

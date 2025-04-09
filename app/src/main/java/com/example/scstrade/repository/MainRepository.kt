@@ -30,6 +30,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import retrofit2.Response
 
 
 class MainRepository(val apiService: ApiService,val context: Context) {
@@ -351,7 +352,11 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
     suspend fun announcements(symbol: String, type: String): Resource<List<AnnouncementDataItem>> {
        return try{
-            Resource.Success(apiService.announcements(type, symbol))
+           if(symbol.equals("")){
+               Resource.Success(apiService.announcements(type))
+           }else {
+               Resource.Success(apiService.announcements(type, symbol))
+           }
         }catch (e:Exception){
            Resource.Error(e.message?:"An error occurred",null)
         }
@@ -365,5 +370,16 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             Resource.Error(e.message?:"An error occurred",null)
         }
 
+    }
+
+    suspend fun updateProfile(email: String,name:String,phone:String,password: String,id:Int){
+        val response=apiService.updateProfile(email,name,phone,password,id)
+        if(response.isSuccessful){
+            if((response.body() ?: "") is String){
+
+            }else{
+
+            }
+        }
     }
 }

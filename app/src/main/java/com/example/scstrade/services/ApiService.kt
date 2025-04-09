@@ -22,6 +22,9 @@ import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
+import com.google.gson.JsonElement
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -172,5 +175,14 @@ interface ApiService {
     suspend fun announcements(@Query("type")type:String,@Query("symbol")symbol:String):List<AnnouncementDataItem>
 
     @GET(value = "/Announcements")
+    suspend fun announcements(@Query("type")type:String):List<AnnouncementDataItem>
+    @GET(value = "/Announcements")
     suspend fun insider(@Query("type")type:String,@Query("symbol")symbol:String):List<InsiderDataItem>
+
+    @GET(value="/Registration")
+    suspend fun updateProfile(@Query("RegistrationEmail") email: String,
+                         @Query("RegistrationName") fullName: String,
+                         @Query("RegistrationPhone") phone: String,
+                         @Query("RegistrationPassword") password: String,
+                         @Query("RegistrationID")id:Int):Response<JsonElement>
 }

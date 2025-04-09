@@ -19,10 +19,12 @@ import com.google.gson.reflect.TypeToken
 class ChartActivity : AppCompatActivity() {
     lateinit var binding: ActivityChartBinding
     lateinit var login: LoginDataItem
+    lateinit var indices:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChartBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
+        indices=intent.getStringExtra("Indices")?:"KSE 100"
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,10 +35,17 @@ class ChartActivity : AppCompatActivity() {
         binding.chart.webViewClient = WebViewClient()
         fetchUser(this)
         if(Utils.isDarkMode(this)){
-            binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=${login.registrationEmail}&symbol=ogdc")
-        }else{
+            when(indices){
+                "KSE All Share Index" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE All"}")
+                else -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${indices}")
 
-            binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=${login.registrationEmail}&symbol=ogdc")
+            }
+
+        }else{
+            when(indices){
+                "KSE All Share Index" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE All"}")
+                else -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=E${login.registrationEmail}&symbol=${indices}")
+            }
         }
 
     }

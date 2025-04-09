@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
         binding.cardHome.apply {
             zoom.setOnClickListener {
                 val intent = Intent(requireContext(),ChartActivity::class.java)
+                intent.putExtra("Indices",binding.cardHome.kmiallshr.text.toString())
                 startActivity(intent)
             }
             line.setOnClickListener {
