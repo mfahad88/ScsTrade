@@ -133,12 +133,7 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
                     binding.main.setContent {
-                        AnnouncementItems(list = result.data?: emptyList(), stockItem = sharedViewModel.mutableAllData.value?.data?.filter {
-                            it.sYM.equals(
-                                symbol,
-                                true
-                            )
-                        }?.first())
+                        AnnouncementItems(list = result.data?: emptyList())
                     }
                 }
             }
@@ -236,10 +231,16 @@ class AnnouncementsFragment : Fragment() {
         dialog.show(requireActivity().supportFragmentManager, "CUSTOM_DATE_PICKER")
     }
     @Composable
-    private fun AnnouncementItems(list: List<AnnouncementDataItem>, stockItem: StockItem?) {
+    private fun AnnouncementItems(list: List<AnnouncementDataItem>) {
         /*var isExpanded by remember {
             mutableStateOf(MutableList(list.size){false})
         }*/
+       val stockItem= sharedViewModel.mutableAllData.value?.data?.filter {
+            it.sYM.equals(
+                list.map { it.companyCode }.first(),
+                true
+            )
+        }?.first()
         val isExpanded = remember { mutableStateListOf(*Array(list.size) { false }) }
         if(list.size>0) {
             LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {

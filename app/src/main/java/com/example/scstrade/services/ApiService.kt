@@ -179,6 +179,9 @@ interface ApiService {
     @GET(value = "/Announcements")
     suspend fun insider(@Query("type")type:String,@Query("symbol")symbol:String):List<InsiderDataItem>
 
+    @GET(value = "/Announcements")
+    suspend fun insider(@Query("type")type:String):List<InsiderDataItem>
+
     @GET(value="/Registration")
     suspend fun updateProfile(@Query("RegistrationEmail") email: String,
                          @Query("RegistrationName") fullName: String,

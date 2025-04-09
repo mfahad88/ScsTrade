@@ -364,10 +364,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     }
 
     suspend fun insider(symbol:String): Resource<List<InsiderDataItem>> {
-        return try{
-            Resource.Success(apiService.insider("Insider", symbol))
+        try{
+            if(symbol.equals("")){
+                return Resource.Success(apiService.insider("Insider"))
+            }else {
+                return Resource.Success(apiService.insider("Insider", symbol))
+            }
         }catch (e:Exception){
-            Resource.Error(e.message?:"An error occurred",null)
+            return Resource.Error(e.message?:"An error occurred",null)
         }
 
     }
