@@ -46,9 +46,10 @@ android {
 
 dependencies {
     implementation(project(":MyCalendar-sdk"))
+    implementation(libs.firebase.auth.ktx)
     val room_version = "2.6.1"
 
-    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+//    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     kapt("androidx.room:room-compiler:$room_version")
@@ -91,4 +92,5 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("javax.xml.stream:stax-api:1.0")
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
 }

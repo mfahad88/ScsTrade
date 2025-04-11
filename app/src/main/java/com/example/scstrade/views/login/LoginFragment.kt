@@ -1,12 +1,16 @@
 package com.example.scstrade.views.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -18,6 +22,12 @@ import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.register.IndexAdapter
 import com.example.scstrade.views.register.RegisterFragment
 import com.example.scstrade.views.widgets.VerticalDivider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 
 /**
@@ -28,6 +38,19 @@ import com.example.scstrade.views.widgets.VerticalDivider
 class LoginFragment : Fragment() {
     private  lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var firebaseAuth: FirebaseAuth
+    private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val data = result.data
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val account = task.getResult(ApiException::class.java)!!
+            firebaseAuthWithGoogle(account.idToken!!)
+        } catch (e: ApiException) {
+            Log.w("GoogleSignIn", "Google sign in failed", e)
+            Toast.makeText(requireContext(), "Google sign-in failed", Toast.LENGTH_SHORT).show()
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,10 +58,17 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLoginBinding.inflate(inflater,container,false)
         viewModel=(requireActivity().application as MyApp).viewModel
+        firebaseAuth = FirebaseAuth.getInstance()
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id)) // from google-services.json
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         binding.google.setOnClickListener {
-
+            signInWithGoogle()
        }
         binding.button.setOnClickListener {
             if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
@@ -126,6 +156,24 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    private fun signInWithGoogle() {
+        val signInIntent = googleSignInClient.signInIntent
+        signInLauncher.launch(signInIntent)
+    }
 
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+
+                    Toast.makeText(requireContext(), "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    // Navigate or update UI here
+                } else {
+                    Toast.makeText(requireContext(), "Authentication Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 
 }

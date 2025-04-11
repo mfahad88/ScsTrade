@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "134999720068",
-    "project_id": "scstrade-pro-f9822",
-    "storage_bucket": "scstrade-pro-f9822.firebasestorage.app"
+    "project_number": "44387316280",
+    "project_id": "scstrade-b7c6f",
+    "storage_bucket": "scstrade-b7c6f.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:134999720068:android:957a96a2646e02d62442d1",
+        "mobilesdk_app_id": "1:44387316280:android:db2c9028609ac8b228accd",
         "android_client_info": {
           "package_name": "com.scstrade.scstradepro"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "44387316280-aec3lg46418uge98pv51mmhf5p3p1c7v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scstrade.scstradepro",
+            "certificate_hash": "97ba53d7fc98b4a8edb275c314e728514f735418"
+          }
+        },
+        {
+          "client_id": "44387316280-rj8nrvcjqa6hdahgr05b4tidnr5gbi7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyD-sUPCU1bYPMrQvkB-OoQUqObyCKJn1Gw"
+          "current_key": "AIzaSyBTMNARccqr-0Qj0ou4pUtiuWShuiUgzTg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44387316280-rj8nrvcjqa6hdahgr05b4tidnr5gbi7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -11,6 +11,7 @@
         <attr name="hintText" format="string"/>
         <attr name="hintTextField" format="string"/>
         <attr name="android:inputType" format="reference"/>
+        <attr name="android:maxLength" format="integer"/>
         <attr name="passwordToggleEnabled" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="mLineChart">

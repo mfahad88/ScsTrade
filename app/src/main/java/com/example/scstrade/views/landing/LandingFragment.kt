@@ -46,6 +46,7 @@ import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
+import com.example.scstrade.views.portfolio.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.search.SearchActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
@@ -256,6 +257,9 @@ class LandingFragment : Fragment() {
                     startActivity(intent)
                 }else if(keyDescValue.key?.equals("announcements",true)?:false){
                     val intent = Intent(requireContext(),AnnoucementActivity::class.java)
+                    startActivity(intent)
+                }else if(keyDescValue.key?.equals("SCS Portfolio",true)?:false){
+                    val intent = Intent(requireContext(),PortfolioActivity::class.java)
                     startActivity(intent)
                 }
                 binding.drawerLayout.closeDrawers()
