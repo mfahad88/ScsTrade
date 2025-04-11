@@ -70,12 +70,14 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
-                .commit()
+                .commitAllowingStateLoss()
+//                .commit()
         }else{
             supportFragmentManager
                .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
-                .commit()
+                .commitAllowingStateLoss()
+//                .commit()
         }
     }
 

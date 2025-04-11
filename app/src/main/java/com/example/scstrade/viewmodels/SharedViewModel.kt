@@ -63,6 +63,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
+    val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
 
     var isFetchAllData=true
     var isFetchIndices=true
@@ -351,7 +352,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-
+    fun updateProfile(email: String,name:String,phone:String,password: String,id:Int){
+        mutableUpdateProfile.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result =repository.updateProfile(email, name, phone, password, id)
+                withContext(Dispatchers.Main){
+                    mutableUpdateProfile.value = result
+                }
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

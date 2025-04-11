@@ -2,6 +2,7 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class LabelledTextField extends LinearLayout {
                 String hint = a.getString(R.styleable.LabelledTextField_hintText);
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
+                binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,20)) });
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 if(hint!=null){
                     binding.textInputLayout.setHint(hint);

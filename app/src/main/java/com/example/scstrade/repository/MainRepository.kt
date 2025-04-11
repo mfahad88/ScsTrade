@@ -28,6 +28,8 @@ import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Response
@@ -376,14 +378,26 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
     }
 
-    suspend fun updateProfile(email: String,name:String,phone:String,password: String,id:Int){
-        val response=apiService.updateProfile(email,name,phone,password,id)
-        if(response.isSuccessful){
-            if((response.body() ?: "") is String){
+    suspend fun updateProfile(email: String,name:String,phone:String,password: String,id:Int): Resource<List<LoginDataItem>> {
 
+        try{
+            val response=apiService.updateProfile(email,name,phone,password,id)
+
+            if(response.isSuccessful){
+                val gson = Gson()
+                if(response.body()?.isJsonPrimitive == true){
+                    return Resource.Error(response.body()?.asString?:"An error occurred",null)
+                }else{
+                    val type = object : TypeToken<List<LoginDataItem>>() {}.type
+                    val profile:List<LoginDataItem> = gson.fromJson(response.body(),type)
+                    return Resource.Success(profile)
+                }
             }else{
-
+                return Resource.Error(response.errorBody()?.string()?:"An error occurred",null)
             }
+        }catch ( e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
         }
     }
+
 }

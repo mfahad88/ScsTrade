@@ -90,7 +90,7 @@ class LandingFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
 
 
-        fetchUser()
+
 
 
 
@@ -267,6 +267,11 @@ class LandingFragment : Fragment() {
             addItemDecoration(divider)
 
         }
+    }
+
+    override fun onResume() {
+        fetchUser()
+        super.onResume()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
