@@ -24,6 +24,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -64,6 +65,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
+
+    val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
 
     var isFetchAllData=true
     var isFetchIndices=true
@@ -364,6 +367,33 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun getPortfolio(registrationId:Int?){
+        mutablePortfolio.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                if(registrationId!=null) {
+                    val result = repository.getPortfolio(registrationId)
+                    withContext(Dispatchers.Main){
+                        mutablePortfolio.value = result
+                    }
+                }
+            }
+        }
+    }
+
+    fun cretePortfolio(name:String?,registrationId: Int?){
+        mutablePortfolio.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.createPortfolio(name?:"",registrationId?:-1)
+                withContext(Dispatchers.Main){
+                    mutablePortfolio.value = result
+                }
+            }
+        }
+    }
+
+
     override fun onCleared() {
         super.onCleared()
         Log.d("SharedViewModel", "ViewModel is cleared")
@@ -371,6 +401,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun stopAll(){
         isFetchIndices=false
         isFetchAllData=false
+    }
+
+    fun deletePortfolio(portfolioMainID: Int, registrationID: Int) {
+        mutablePortfolio.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.deletePortfolio(portfolioMainID,registrationID)
+                withContext(Dispatchers.Main){
+                    mutablePortfolio.value = result
+                }
+            }
+        }
+
     }
 
 

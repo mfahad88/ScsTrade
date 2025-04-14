@@ -19,6 +19,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -400,4 +401,28 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
+    suspend fun getPortfolio(registrationId:Int): Resource<List<PortfolioItem>> {
+        try{
+            return Resource.Success(apiService.getPortfolio(registrationID = registrationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+
+    }
+
+    suspend fun createPortfolio(name: String, registrationId: Int): Resource<List<PortfolioItem>> {
+        try{
+            return Resource.Success(apiService.createPortfolio(portfolioName = name, registrationID = registrationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun deletePortfolio(portfolioMainID: Int, registrationID: Int): Resource<List<PortfolioItem>> {
+        try{
+            return Resource.Success(apiService.deletePortfolio(portfolioMainID = portfolioMainID, registrationID = registrationID))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
 }

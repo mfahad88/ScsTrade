@@ -29,16 +29,7 @@ class WatchListAdapter(private val itemList: List<WatchListItem>, private val on
             binding.imageViewThree.setOnClickListener {
                 Utils.showPopup(binding.root.context,it,null, listOf("Edit Name","Delete Watchlist") ?: emptyList()){
                     onItemPopupClick(it,item)
-                   /* val listType = object : TypeToken<List<LoginDataItem>>() {}
-                    val user= Utils.getSharedPreference(binding.root.context, emptyList<LoginDataItem>(),
-                        AppConstants.USER,listType)
-                   val login=user.first()
-                    if(it.equals("Delete Watchlist",true)) {
-                        (binding.root.parent as WatchlistFragment).viewModel.deleteWatchList(
-                            item.watchListMainID,
-                            login.registrationID
-                        )
-                    }*/
+
                 }
 //                onItemClick(item)
             }

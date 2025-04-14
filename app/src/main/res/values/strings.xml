@@ -126,4 +126,10 @@
     <string name="syed_abdull">Syed Abdullah Shahid</string>
     <string name="basic_infor">Basic Information</string>
     <string name="default_web_client_id">44387316280-rj8nrvcjqa6hdahgr05b4tidnr5gbi7g.apps.googleusercontent.com</string>
+    <string name="create_a_portfolio">+ Create a portfolio</string>
+    <string name="create_a_new_portfolio_group">Create a New Portfolio Group</string>
+    <string name="create_a_new_portfolio_group_to_organize_and_track_your_investments_easily">Create a new portfolio group to organize and track your investments easily.</string>
+    <string name="current_mar">Current Market Value</string>
+    <string name="current_mar_value">0.00</string>
+    <string name="total_compa">Total Companies</string>
 </resources>
