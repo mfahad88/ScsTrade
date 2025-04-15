@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".views.portfolio.PortfolioDetailActivity">
 
+    <com.example.scstrade.views.widgets.mMarket
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_mar"
         android:layout_width="wrap_content"
@@ -16,7 +24,7 @@
         app:layout_constraintEnd_toStartOf="@+id/card_compan"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:strokeWidth="0dp">
 
         <LinearLayout
@@ -52,7 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/card_mar"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+
         app:strokeWidth="0dp">
 
         <LinearLayout
@@ -81,10 +90,357 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:strokeWidth="0dp"
+        app:contentPaddingTop="15dp"
+        app:contentPaddingLeft="5dp"
+        app:contentPaddingRight="5dp"
+        app:contentPaddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="@+id/card_compan"
         app:layout_constraintStart_toStartOf="@+id/card_mar"
-        app:layout_constraintTop_toBottomOf="@+id/card_mar" />
+        app:layout_constraintTop_toBottomOf="@+id/card_mar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/p_l_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/p_l_summary"
+                android:textAppearance="@style/p_l_summary"
+                android:textFontWeight="600"
+                />
+
+            <RelativeLayout
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circular_drop_down"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/p_l_summary"
+                android:weightSum="2"
+                android:id="@+id/holdings"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="59dp"
+                    android:layout_gravity="start"
+                    app:cardBackgroundColor="#EDFFE0"
+                    app:strokeColor="@color/md_theme_primary"
+                    android:layout_weight="0.975">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/days_p_l_ho"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textFontWeight="400"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/days_p_l_ho"
+                            android:textAppearance="@style/days_p_l_ho"
+                            />
+
+                        <TextView
+                            android:id="@+id/days_p_l_ho_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/days_p_l_ho_value"
+                            android:textAppearance="@style/days_p_l_ho_value"
+                            android:gravity="center_horizontal|top"
+                            android:textFontWeight="600"
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"/>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="59dp"
+                    android:layout_weight="0.975"
+                    app:cardBackgroundColor="#EDFFE0"
+                    app:strokeColor="@color/md_theme_primary"
+                    android:layout_gravity="end">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/total_p_l_h"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textFontWeight="400"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/total_p_l_h"
+                            android:textAppearance="@style/days_p_l_ho"
+                            />
+
+                        <TextView
+                            android:id="@+id/total_p_l_h_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/days_p_l_ho_value"
+                            android:textAppearance="@style/days_p_l_ho_value"
+                            android:gravity="center_horizontal|top"
+                            android:textFontWeight="600"
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/holdings">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingHorizontal="15dp"
+                        android:orientation="horizontal"
+                        android:background="@color/colorDarkerr"
+                        android:weightSum="3">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textFontWeight="700"
+                            android:text="@string/summary"
+                            android:textAppearance="@style/summary"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:textFontWeight="700"
+                            android:text="@string/cost"
+                            android:textAppearance="@style/summary"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:textFontWeight="700"
+                            android:text="@string/p_l"
+                            android:textAppearance="@style/summary"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingHorizontal="15dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textFontWeight="500"
+                            android:text="@string/total"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:id="@+id/total_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:textFontWeight="500"
+                            android:text="@string/total_cost"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:id="@+id/total_p_l"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:textFontWeight="500"
+                            android:text="@string/total_p_l"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="start|center_vertical"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingHorizontal="15dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+                        <TextView
+                            android:id="@+id/holding"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textFontWeight="500"
+                            android:text="@string/holding"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:id="@+id/holding_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.6"
+                            android:textFontWeight="500"
+                            android:text="@string/total_cost"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:id="@+id/holding_p_l"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:textFontWeight="500"
+                            android:text="@string/total_p_l"
+                            android:textAppearance="@style/total"
+                            android:layout_gravity="start|center_vertical"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:paddingHorizontal="15dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+                    <TextView
+                        android:id="@+id/history"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textFontWeight="500"
+                        android:text="@string/history"
+                        android:textAppearance="@style/total"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/history_cost"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:textFontWeight="500"
+                        android:text="@string/history_cost"
+                        android:textAppearance="@style/total"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/history_p_l"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:textFontWeight="500"
+                        android:text="@string/history_p_l"
+                        android:textAppearance="@style/total"
+                        android:layout_gravity="start|center_vertical"
+                        />
+                </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="Add to watchlist"
+        style="@style/CustomFloatingActionButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/baseline_add_24"
+        />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="146dp"
+        android:layout_height="124dp"
+        app:strokeWidth="0dp"
+        android:visibility="gone"
+        android:id="@+id/floating_menu"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:paddingVertical="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/new_buy_trade"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:textFontWeight="500"
+                android:text="@string/new_buy_trade"
+                android:textAppearance="@style/new_buy_trade"
+                android:lineSpacingExtra="3sp"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/sell_trade"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textFontWeight="500"
+                android:paddingVertical="5dp"
+                android:text="@string/sell_trade"
+                android:textAppearance="@style/new_buy_trade"
+                android:lineSpacingExtra="3sp"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/add_dividend"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textFontWeight="500"
+                android:paddingVertical="5dp"
+                android:text="@string/add_dividend"
+                android:textAppearance="@style/new_buy_trade"
+                android:lineSpacingExtra="3sp"
+                android:gravity="center"
+                />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

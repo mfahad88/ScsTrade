@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.portfolio.BuySellActivity">
+
+
+    <com.example.scstrade.views.widgets.mMarket
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/buy_container"
+        layout="@layout/layout_buy_stock"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/dividend_container"
+        layout="@layout/layout_add_dividend"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/sell_container"
+        layout="@layout/layout_sell_stock"
+        android:visibility="gone" />
+
+</LinearLayout>

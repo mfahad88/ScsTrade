@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="15dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+    <TextView
+        android:id="@+id/buy_stocks_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buy_stocks_"
+        android:textAppearance="@style/buy_stocks_"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/invest_in_s"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/invest_in_s"
+        android:textAppearance="@style/invest_in_s"
+        android:textFontWeight="400"
+        android:translationY="-1.38sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buy_stocks_" />
+
+    <RelativeLayout
+        android:id="@+id/relative_symbol"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/gray_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/invest_in_s">
+
+        <EditText
+            android:id="@+id/symbol"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:drawableEnd="@drawable/search_gray"
+            android:hint="Enter symbol"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_share"
+        android:layout_width="175dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/gray_container"
+        app:layout_constraintEnd_toStartOf="@+id/relative_buy_price"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relative_symbol">
+        <EditText
+            android:id="@+id/shares"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Enter shares"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_buy_price"
+        android:layout_width="175dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/gray_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/relative_share"
+        app:layout_constraintTop_toBottomOf="@id/relative_symbol">
+        <EditText
+            android:id="@+id/buy_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Enter Buy Price"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relative_comission"
+        android:layout_width="187dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/gray_container"
+        app:layout_constraintStart_toStartOf="@+id/relative_share"
+        app:layout_constraintTop_toBottomOf="@+id/relative_share">
+
+        <EditText
+            android:id="@+id/comission_share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Commission Per Share"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/input_text"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="7sp"
+        android:text="@string/input_text"
+        android:textAppearance="@style/input_text"
+        app:layout_constraintStart_toEndOf="@+id/relative_comission"
+        app:layout_constraintTop_toTopOf="@+id/relative_comission" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/relative_comission"
+        app:layout_constraintTop_toBottomOf="@+id/input_text">
+
+        <RadioButton
+            android:id="@+id/radioShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Rs/Share" />
+
+        <RadioButton
+            android:id="@+id/radioVar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="Var %" />
+    </RadioGroup>
+
+
+    <RelativeLayout
+        android:id="@+id/relative_date"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/gray_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/relative_share"
+        app:layout_constraintTop_toBottomOf="@+id/relative_comission">
+
+        <EditText
+            android:id="@+id/purchase_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Select Purchase Date"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Buy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
