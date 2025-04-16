@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:id="@+id/main"
         android:visibility="gone"
+        tools:visibility="visible"
         tools:context=".views.snapshot.OverviewFragment">
 
         <com.google.android.material.card.MaterialCardView

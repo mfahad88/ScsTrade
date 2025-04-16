@@ -12,7 +12,8 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
@@ -20,6 +21,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super<Application>.onCreate()
         getSha1Fingerprint()
+
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
         viewModel.apply {
             fetchIndices()

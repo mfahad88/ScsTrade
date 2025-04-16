@@ -158,4 +158,24 @@
     <string name="avg_buy_price">Avg Buy Price:</string>
     <string name="sell_stocks"><![CDATA[Sell Stocks & Manage Your Portfolio]]></string>
     <string name="easily_sell">Easily sell your stocks to adjust your portfolio. Choose the stock, set the quantity, and complete your trade efficiently.</string>
+    <string name="facebook_app_id">325684013944376</string>
+    <string name="fb_login_protocol_scheme">fb325684013944376</string>
+    <string name="facebook_client_token">34f5211826811219d21ae6d99d507be0</string>
+    <string name="ffl">FFL</string>
+    <string name="my_portfolio">MY PORTFOLIO</string>
+    <string name="cost_pkr_">Cost (PKR)</string>
+    <string name="value_pkr_">Value (PKR)</string>
+    <string name="total_cost_sum">49,102</string>
+    <string name="total_value">51,104</string>
+    <string name="total_p_l_sum">+2,002</string>
+    <string name="holding_cost_sum">44,833</string>
+    <string name="holding_value">46,830</string>
+    <string name="holding_p_l_sum">+1,997</string>
+    <string name="history_cost_sum">4,237</string>
+    <string name="history_value">4,747</string>
+    <string name="history_p_l_sum">+5</string>
+    <array name="p_l_array">
+        <item>P&amp;L</item>
+        <item>P&amp;L %</item>
+    </array>
 </resources>

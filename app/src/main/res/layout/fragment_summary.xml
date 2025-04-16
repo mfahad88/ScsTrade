@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.portfolio.SummaryFragment">
+
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/snapshot_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ffl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textFontWeight="700"
+        android:text="@string/ffl"
+        android:textAppearance="@style/ffl"
+        app:layout_constraintStart_toEndOf="@+id/imageView20"
+        app:layout_constraintTop_toTopOf="@+id/imageView20" />
+
+
+    <TextView
+        android:id="@+id/fauji_foods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="400"
+        android:text="@string/fauji_foods"
+        android:textAppearance="@style/fauji_foods_summary"
+        app:layout_constraintStart_toStartOf="@+id/ffl"
+        app:layout_constraintTop_toBottomOf="@+id/ffl" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView6"
+        android:layout_width="113dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="11dp"
+        app:cardBackgroundColor="#1A1A73E8"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintStart_toStartOf="@+id/fauji_foods"
+        app:layout_constraintTop_toBottomOf="@+id/fauji_foods"
+        app:strokeWidth="0dp">
+
+        <TextView
+            android:id="@+id/my_portfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/my_portfolio"
+            android:textAppearance="@style/my_portfolio" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materialCardView6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/colorDarkerr"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/cost_pkr_"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textFontWeight="500"
+                android:text="@string/cost_pkr_"
+                android:textAppearance="@style/cost_pkr_"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/value_pkr_"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textFontWeight="500"
+                android:text="@string/value_pkr_"
+                android:textAppearance="@style/cost_pkr_"
+                android:layout_weight="1"
+                />
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                style="@style/custom_spinner_style"
+                android:entries="@array/p_l_array"/>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/total"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/total_cost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/total_cost_sum"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/total_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/total_value"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/total_p_l"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/total_p_l_sum"
+                android:textAppearance="@style/total_p_l"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="#E5E2E1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/holding"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/holding"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/holding_cost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/holding_cost_sum"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/holding_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/holding_value"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/holding_p_l"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/holding_p_l_sum"
+                android:textAppearance="@style/total_p_l"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="#E5E2E1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/history"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/history"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/history_cost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/history_cost_sum"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/history_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/history_value"
+                android:textAppearance="@style/total"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/history_p_l"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/history_p_l_sum"
+                android:textAppearance="@style/total_p_l"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="#E5E2E1"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
