@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout4"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.portfolio.HoldingFragment">
+    <com.example.scstrade.views.widgets.mMarket
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/toolbar"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_current_mar"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        app:cardBackgroundColor="@color/md_theme_surfaceBright"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/current_mar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:text="@string/current_mar"
+                android:textAppearance="@style/current_mar" />
+
+            <TextView
+                android:id="@+id/current_mar_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:text="@string/current_mar_value_holding"
+                android:textAppearance="@style/current_mar_value_holding"
+                android:textFontWeight="700" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/holdings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/p_l_summary"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_current_mar">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_gravity="start"
+            android:layout_weight="0.975"
+            app:cardBackgroundColor="#EDFFE0"
+            app:strokeColor="@color/md_theme_primary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/days_p_l_ho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/days_p_l_ho"
+                    android:textAppearance="@style/days_p_l_ho"
+                    android:textFontWeight="400" />
+
+                <TextView
+                    android:id="@+id/days_p_l_ho_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal|top"
+                    android:text="@string/days_p_l_ho_value"
+                    android:textAppearance="@style/days_p_l_ho_value"
+                    android:textFontWeight="600" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="59dp"
+            android:layout_gravity="end"
+            android:layout_weight="0.975"
+            app:cardBackgroundColor="#EDFFE0"
+            app:strokeColor="@color/md_theme_primary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_p_l_h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/total_p_l_h"
+                    android:textAppearance="@style/days_p_l_ho"
+                    android:textFontWeight="400" />
+
+                <TextView
+                    android:id="@+id/total_p_l_h_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal|top"
+                    android:text="@string/days_p_l_ho_value"
+                    android:textAppearance="@style/days_p_l_ho_value"
+                    android:textFontWeight="600" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
