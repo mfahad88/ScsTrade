@@ -1,9 +1,11 @@
 package com.example.scstrade.views.portfolio
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
@@ -62,6 +64,8 @@ class PortfolioActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
         login=(this.application as MyApp).login
         sharedViewModel = (this.application as MyApp).viewModel
         sharedViewModel.getPortfolio(login.registrationID)
@@ -85,7 +89,8 @@ class PortfolioActivity : AppCompatActivity() {
                     binding.loader.visibility = View.GONE
                     binding.recyclerView.apply {
                         adapter = PortFolioAdapter(result.data?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
-
+                            Toast.makeText(this@PortfolioActivity,it.toString(),Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@PortfolioActivity,PortfolioDetailActivity::class.java))
                         }, onItemPopupClick = {str,item->
                             if(str.contains("delete",true)) {
                                 Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){

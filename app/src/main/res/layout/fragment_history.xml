@@ -29,20 +29,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/current_mar"
+                android:id="@+id/historical_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
-                android:text="@string/current_mar"
+                android:text="@string/historical_"
                 android:textAppearance="@style/current_mar" />
 
             <TextView
-                android:id="@+id/current_mar_value"
+                android:id="@+id/historical_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
-                android:text="@string/current_mar_value_holding"
-                android:textAppearance="@style/current_mar_value_holding"
+                android:text="@string/historical_value"
+                android:textAppearance="@style/historical_value"
                 android:textFontWeight="700" />
         </LinearLayout>
 
@@ -76,23 +76,23 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/days_p_l_ho"
+                    android:id="@+id/net_p_l_on_"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/days_p_l_ho"
+                    android:text="@string/net_p_l_on_"
                     android:textAppearance="@style/days_p_l_ho"
                     android:textFontWeight="400" />
 
                 <TextView
-                    android:id="@+id/days_p_l_ho_value"
+                    android:id="@+id/net_p_l_on_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal|top"
-                    android:text="@string/days_p_l_ho_value"
-                    android:textAppearance="@style/days_p_l_ho_value"
+                    android:text="@string/net_p_l_on_value"
+                    android:textAppearance="@style/net_p_l_on_value"
                     android:textFontWeight="600" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -107,8 +107,8 @@
             android:layout_height="59dp"
             android:layout_gravity="end"
             android:layout_weight="0.975"
-            app:cardBackgroundColor="#EDFFE0"
-            app:strokeColor="@color/md_theme_primary">
+            app:cardBackgroundColor="#FCF8F8"
+            app:strokeColor="@color/md_theme_onSurfaceVariant">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,23 +116,23 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/total_p_l_h"
+                    android:id="@+id/dividend_ea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="@string/total_p_l_h"
-                    android:textAppearance="@style/days_p_l_ho"
+                    android:text="@string/dividend_ea"
+                    android:textAppearance="@style/dividend_ea"
                     android:textFontWeight="400" />
 
                 <TextView
-                    android:id="@+id/total_p_l_h_value"
+                    android:id="@+id/dividend_ea_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal|top"
-                    android:text="@string/days_p_l_ho_value"
-                    android:textAppearance="@style/days_p_l_ho_value"
+                    android:text="@string/dividend_ea_value"
+                    android:textAppearance="@style/dividend_ea_value"
                     android:textFontWeight="600" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -151,37 +151,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/holdings">
         <TextView
-            android:id="@+id/purchase_co"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:text="@string/purchase_co"
-            android:textAppearance="@style/purchase_co"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:id="@+id/avg_buy_pri"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:text="@string/avg_buy_pri"
-            android:textAppearance="@style/purchase_co"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:id="@+id/share_owned"
+            android:id="@+id/profit_book"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:text="@string/share_owned"
+            android:text="@string/profit_book"
             android:textAppearance="@style/purchase_co"
             android:layout_weight="1"
             />
 
         <TextView
-            android:id="@+id/current_pri"
+            android:id="@+id/loss_booked"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:text="@string/loss_booked"
+            android:textAppearance="@style/purchase_co"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/purchased_c"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:text="@string/purchased_c"
+            android:textAppearance="@style/purchase_co"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/sold"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:text="@string/current_pri"
+            android:text="@string/sold"
             android:textAppearance="@style/purchase_co"
             android:layout_weight="1"
             />
@@ -201,40 +201,40 @@
         app:layout_constraintTop_toBottomOf="@+id/header">
 
         <TextView
-            android:id="@+id/purchase_co_value"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/purchase_co_value"
-            android:textAppearance="@style/purchase_co_value"
-            android:textFontWeight="600" />
-
-
-        <TextView
-            android:id="@+id/avg_buy_pri_value"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/avg_buy_pri_value"
-            android:textAppearance="@style/purchase_co_value"
-            android:textFontWeight="600" />
-
-
-        <TextView
-            android:id="@+id/share_owned_value"
+            android:id="@+id/profit_book_value"
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/share_owned_value"
+            android:text="@string/profit_book_value"
+            android:textAppearance="@style/purchase_co_value"
+            android:textFontWeight="600" />
+
+
+        <TextView
+            android:id="@+id/loss_booked_value"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/loss_booked_value"
+            android:textAppearance="@style/purchase_co_value"
+            android:textFontWeight="600" />
+
+
+        <TextView
+            android:id="@+id/purchased_c_value"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/purchased_c_value"
             android:textAppearance="@style/purchase_co_value"
             android:textFontWeight="600" />
 
         <TextView
-            android:id="@+id/current_pri_value"
+            android:id="@+id/sold_value"
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/current_pri_value"
+            android:text="@string/sold_value"
             android:textAppearance="@style/purchase_co_value"
             android:textFontWeight="600" />
 
@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:textFontWeight="400"
                     android:layout_gravity="center"
-                    android:text="@string/buy_transac"
+                    android:text="@string/sell_trades"
                     android:textAppearance="@style/buy_transac"
 
                     />
@@ -283,34 +283,34 @@
                 android:background="@color/colorDarkerr">
                 <TextView
                     android:id="@+id/buy_date"
-                    android:layout_width="20dp"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/buy_date"
+                    android:text="@string/date_qty"
                     android:textAppearance="@style/buy_date"
                     />
                 <TextView
                     android:id="@+id/shares"
-                    android:layout_width="10dp"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:text="@string/shares"
+                    android:layout_weight="1"
+                    android:text="@string/net_price"
                     android:textAppearance="@style/buy_date"
                     />
+
                 <TextView
                     android:id="@+id/price_cost"
                     android:layout_width="15dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/price_cost"
-                    android:textAppearance="@style/buy_date"
-                    />
+                    android:text="@string/net_value"
+                    android:textAppearance="@style/buy_date" />
                 <TextView
                     android:id="@+id/current_p_l"
-                    android:layout_width="10dp"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.8"
-                    android:text="@string/current_p_l"
+                    android:layout_weight="1"
+                    android:text="@string/p_l_on_sell"
                     android:textAppearance="@style/buy_date"
                     />
             </LinearLayout>
@@ -322,7 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/recyclerView"
-                    tools:listitem="@layout/item_holding"
+                    tools:listitem="@layout/item_history"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             </LinearLayout>
         </LinearLayout>

@@ -2,6 +2,9 @@ package com.example.scstrade.helper
 
 class AppConstants {
     companion object{
+        val IS_BUY = "isBuy"
+        val IS_Sell = "isSell"
+        val IS_Dividend = "isDividend"
         val TITLE = "title"
         val SCS: String = "scs"
         val BRECODER: String = "brecoder"
