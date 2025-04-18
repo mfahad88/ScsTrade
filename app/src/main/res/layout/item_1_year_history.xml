@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:strokeWidth="0dp"
+    app:cardElevation="2dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:background="@color/md_theme_surfaceBright">
+        <TextView
+            android:id="@+id/symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="700"
+            android:text="@string/wtl"
+            android:textAppearance="@style/wtl"
+            android:lineSpacingExtra="-4sp"
+            android:gravity="top"
+            />
+
+        <TextView
+            android:id="@+id/you_made_a_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/symbol"
+            android:text="@string/you_made_a_"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_toLeftOf="@id/imageViewMenu"
+            android:textAppearance="@style/you_made_a_"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:padding="10dp"
+            app:tint="@color/colorDarkerr"
+            app:srcCompat="@drawable/three_dots" />
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

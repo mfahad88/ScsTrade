@@ -15,6 +15,7 @@ import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -199,4 +200,7 @@ interface ApiService {
 
     @GET(value = "/Portfolio")
     suspend fun deletePortfolio(@Query("ActionType")actionType:String="DeletePortfolio",@Query("PortfolioMainID")portfolioMainID:Int,@Query("RegistrationID")registrationID: Int):List<PortfolioItem>
+
+    @GET(value = "/Portfolio")
+    suspend fun getPortfolioDetail(@Query("ActionType")actionType:String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID: Int):List<PortfolioDetailItem>
 }

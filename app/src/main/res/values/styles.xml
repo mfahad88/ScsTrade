@@ -974,4 +974,34 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#313030</item>
     </style>
+
+    <style name="day_s_p_l">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#313030</item>
+    </style>
+
+    <style name="days_p_l">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#313030</item>
+    </style>
+
+    <style name="days_percent_p_l">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#910000</item>
+    </style>
+
+    <style name="btn_sell">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="you_made_a_">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#313030</item>
+    </style>
 </resources>

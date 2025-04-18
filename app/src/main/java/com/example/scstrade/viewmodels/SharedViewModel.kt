@@ -24,6 +24,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -65,9 +66,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
-
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
-
+    val mutablePortfolioDetail=MutableLiveData<Resource<List<PortfolioDetailItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -388,6 +388,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.createPortfolio(name?:"",registrationId?:-1)
                 withContext(Dispatchers.Main){
                     mutablePortfolio.value = result
+                }
+            }
+        }
+    }
+
+    fun getPortfolioDetail(registrationId: Int?){
+        mutablePortfolioDetail.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.getPortfolioDetail(registrationId?:-1)
+                withContext(Dispatchers.Main){
+                    mutablePortfolioDetail.value = result
                 }
             }
         }

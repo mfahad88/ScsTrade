@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     app:strokeWidth="0dp"
     app:cardElevation="3dp"
     app:cardCornerRadius="4dp">
@@ -158,6 +158,117 @@
             android:layout_marginTop="10dp"
             android:layout_below="@id/total_cost_value"
             android:background="@color/material_dynamic_neutral90"/>
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="400"
+            android:layout_below="@id/separator_2"
+            android:text="@string/day_s_p_l"
+            android:textAppearance="@style/day_s_p_l"
+            />
+
+        <TextView
+            android:id="@+id/days_p_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="600"
+            android:layout_below="@id/days"
+            android:text="@string/days_p_l"
+            android:textAppearance="@style/days_p_l"
+            />
+
+        <TextView
+            android:id="@+id/days_percent_p_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="600"
+            android:layout_below="@id/days"
+            android:layout_toEndOf="@id/days_p_l"
+            android:text="@string/days_percent_p_l"
+            android:textAppearance="@style/days_percent_p_l"
+            />
+
+
+
+        <TextView
+            android:id="@+id/total_p_l_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/days"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="400"
+            android:layout_below="@id/separator_2"
+            android:text="@string/total_p_l_title"
+            android:textAppearance="@style/day_s_p_l"
+            />
+
+        <TextView
+            android:id="@+id/total_p_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/days"
+            android:layout_alignStart="@id/total_p_l_title"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="600"
+            android:layout_below="@id/days"
+            android:text="@string/days_p_l"
+            android:textAppearance="@style/days_p_l"
+            />
+
+        <TextView
+            android:id="@+id/total_percent_p_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:textFontWeight="600"
+            android:layout_below="@id/days"
+            android:layout_toEndOf="@id/total_p_l"
+            android:text="@string/days_percent_p_l"
+            android:textAppearance="@style/days_percent_p_l"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/three_dots"
+            android:padding="10dp"
+            android:src="@drawable/three_dots"
+            android:layout_alignTop="@id/days"
+            android:layout_alignBottom="@id/days_percent_p_l"
+            android:layout_toEndOf="@id/total_percent_p_l"
+            android:layout_marginStart="10dp"
+            app:tint="@color/colorDarkerr" />
+
+        <ImageView
+            android:id="@+id/snapshot_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_alignTop="@id/three_dots"
+            android:layout_alignBottom="@id/three_dots"
+            android:layout_toEndOf="@id/three_dots"
+            app:srcCompat="@drawable/snapshot_logo" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_sell"
+            android:text="Sell"
+            android:textAppearance="@style/btn_sell"
+            android:layout_alignTop="@id/three_dots"
+            android:layout_alignBottom="@id/three_dots"
+            android:layout_toEndOf="@id/snapshot_logo"/>
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

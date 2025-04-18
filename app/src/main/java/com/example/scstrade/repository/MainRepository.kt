@@ -19,6 +19,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -423,6 +424,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return Resource.Success(apiService.deletePortfolio(portfolioMainID = portfolioMainID, registrationID = registrationID))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getPortfolioDetail(registrationId: Int):Resource<List<PortfolioDetailItem>>{
+        try{
+            return  Resource.Success(apiService.getPortfolioDetail(portfolioMainID = registrationId))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
         }
     }
 }

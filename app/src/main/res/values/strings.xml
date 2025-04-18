@@ -229,6 +229,12 @@
     <string name="avg_buy_value">213.05</string>
     <string name="share">Share</string>
     <string name="share_value">200</string>
+    <string name="day_s_p_l"><![CDATA[Day’s P&L]]></string>
+    <string name="days_p_l">-28</string>
+    <string name="days_percent_p_l">(-0.07%)</string>
+    <string name="total_p_l_title"><![CDATA[Total P&L]]></string>
+    <string name="history_1_y"><![CDATA[(1 year sold & dividend)]]></string>
+    <string name="you_made_a_">You made a total <b>Profit</b> of <b>Rs. 5</b> with an increase of <b>+0.12%</b></string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>
