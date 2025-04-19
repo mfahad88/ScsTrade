@@ -88,8 +88,59 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     binding.recyclerView.apply {
-                        val list= mutableListOf<PortfolioDetailItem>()
-                        Log.e("List--->",result.data?.groupBy { it.portfolioSymbol }?.mapValues { (_, details) ->
+                        val list= result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
+                            val totalAmount = items.sumOf {
+                                if(it.portfolioType.equals("buy",true)){
+                                    it.portfolioQuantity
+                                }else{
+                                    -it.portfolioQuantity
+                                }
+                            }
+                            val totalCost = items.sumOf {
+                                if(it.portfolioType.equals("buy",true)) {
+                                    it.portfolioQuantity * it.portfolioRate
+                                }else{
+                                    -(it.portfolioQuantity * it.portfolioRate)
+                                }
+                            }
+                            val totalShares= items.sumOf {
+                                if(it.portfolioType.equals("buy",true)){
+                                    it.portfolioQuantity
+                                }else{
+                                    -it.portfolioQuantity
+                                }
+                            }
+
+                            val avgBuy= totalCost/totalShares
+                            val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(key,true) }?.map { it.cL }?.first()
+                            val currentValue = totalShares.toDouble() * currentPrice!!
+                            val totalPL= "${currentValue - totalCost} (${((currentValue - totalCost)/totalCost)*100}%)"
+                            val totalBuy = items.sumOf {
+                                it.portfolioQuantity * it.portfolioRate
+                            }
+                            val totalNow = items.sumOf {
+                                it.portfolioQuantity * currentPrice
+                            }
+
+
+                            val perSharePL= "${totalNow - totalBuy} (${((totalNow - totalBuy)/totalBuy)*100}%)"
+
+                            mapOf(
+                                "TotalBuyAmount" to totalAmount,
+                                "TotalCost" to totalCost,
+                                "TotalShare" to totalShares,
+                                "AverageBuy" to avgBuy,
+                                "CurrentPrice" to currentPrice,
+                                "CurrentValue" to currentValue,
+                                "TotalP/L" to totalPL,
+                                "TotalBuy" to totalBuy,
+                                "TotalNow" to totalNow,
+                                "PerShareP/L" to perSharePL
+                            )
+                        }
+
+                        Log.e("List--->",list.toString())
+                        /*Log.e("List--->",result.data?.groupBy { it.portfolioSymbol }?.mapValues { (_, details) ->
                             val totalBuyQty = details.filter { it.portfolioType.equals("BUY",true) }.sumOf { it.portfolioQuantity }
                             val totalSellQty = details.filter { it.portfolioType.equals("SELL",true) }.sumOf { it.portfolioQuantity }
 
@@ -111,7 +162,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                                 "TotalSellAmount" to totalSellAmount,
                                 "TotalCommission" to totalCommission
                             )
-                        }?.toMap().toString())
+                        }?.toMap().toString())*/
 
 //                        result.data?.groupBy { it.portfolioSymbol }.mapValues {  }.mapValues { it. }
                     }
