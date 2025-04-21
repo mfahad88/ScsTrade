@@ -38,6 +38,18 @@ class Utils {
         fun commaFormat(value:Double?): String {
             return  NumberFormat.getInstance(Locale.US).format(String.format("%.2f",value).toDouble())
         }
+        fun roundTwoDecimal(value:Double?):String{
+            if(value!=null) {
+                val decimal=value.toString().substringAfter(".","")
+                if(decimal.length>2) {
+                    return String.format("%.2f", value)
+                }else{
+                    return value.toString()
+                }
+            }else{
+                return (value?:"0.00").toString()
+            }
+        }
         fun convertToMillions(value: Double?): String {
             val df: DecimalFormat = DecimalFormat("#,###.##")
             if(value!=null){

@@ -46,13 +46,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/invest_in_s">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/symbol"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:drawableEnd="@drawable/search_gray"
             android:hint="Enter symbol"
+            android:completionThreshold="1"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
@@ -152,6 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
+        android:id="@+id/radio_commission_type"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/relative_comission"
         app:layout_constraintTop_toBottomOf="@+id/input_text">
@@ -161,6 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:checked="true"
             android:text="Rs/Share" />
 
         <RadioButton

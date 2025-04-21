@@ -173,26 +173,26 @@
 
         <TextView
             android:id="@+id/days_p_l"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
             android:layout_below="@id/days"
-            android:text="@string/days_p_l"
+            android:text="10,000"
             android:textAppearance="@style/days_p_l"
             />
 
         <TextView
             android:id="@+id/days_percent_p_l"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
             android:layout_below="@id/days"
             android:layout_toEndOf="@id/days_p_l"
-            android:text="@string/days_percent_p_l"
+            android:text="(100%)"
             android:textAppearance="@style/days_percent_p_l"
             />
 
@@ -213,27 +213,27 @@
 
         <TextView
             android:id="@+id/total_p_l"
-            android:layout_width="wrap_content"
+            android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/days"
             android:layout_alignStart="@id/total_p_l_title"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
             android:layout_below="@id/days"
-            android:text="@string/days_p_l"
+            android:text="10,0000"
             android:textAppearance="@style/days_p_l"
             />
 
         <TextView
             android:id="@+id/total_percent_p_l"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
             android:layout_below="@id/days"
             android:layout_toEndOf="@id/total_p_l"
-            android:text="@string/days_percent_p_l"
+            android:text="(100%)"
             android:textAppearance="@style/days_percent_p_l"
             />
 
@@ -241,19 +241,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/three_dots"
-            android:padding="10dp"
+            android:padding="7dp"
             android:src="@drawable/three_dots"
             android:layout_alignTop="@id/days"
             android:layout_alignBottom="@id/days_percent_p_l"
             android:layout_toEndOf="@id/total_percent_p_l"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="2dp"
             app:tint="@color/colorDarkerr" />
 
         <ImageView
             android:id="@+id/snapshot_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="5dp"
             android:layout_marginStart="5dp"
             android:layout_alignTop="@id/three_dots"
             android:layout_alignBottom="@id/three_dots"
@@ -262,11 +262,13 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:id="@+id/btn_sell"
             android:text="Sell"
+            android:textSize="12sp"
+            android:layout_marginBottom="7dp"
             android:textAppearance="@style/btn_sell"
-            android:layout_alignTop="@id/three_dots"
+
             android:layout_alignBottom="@id/three_dots"
             android:layout_toEndOf="@id/snapshot_logo"/>
     </RelativeLayout>

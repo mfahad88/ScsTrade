@@ -6,20 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
-import com.example.scstrade.R
-import com.example.scstrade.databinding.ActivityPortfolioBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.ActivityPortfolioDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.data.KeyDescValue
+import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.login.LoginDataItem
-import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.google.gson.reflect.TypeToken
@@ -87,8 +86,10 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                 is Resource.Loading -> {}
                 is Resource.Success -> {
+                    val list= mutableListOf<ShareInHand>()
                     binding.recyclerView.apply {
-                        val list= result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
+                        result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
+
                             val totalAmount = items.sumOf {
                                 if(it.portfolioType.equals("buy",true)){
                                     it.portfolioQuantity
@@ -112,9 +113,13 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             }
 
                             val avgBuy= totalCost/totalShares
+                            val closingPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(key,true) }?.map { it.oC }?.first()
                             val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(key,true) }?.map { it.cL }?.first()
                             val currentValue = totalShares.toDouble() * currentPrice!!
-                            val totalPL= "${currentValue - totalCost} (${((currentValue - totalCost)/totalCost)*100}%)"
+                            val dayPL= "${(currentPrice.minus(closingPrice?:0.0)).times(totalShares)}"
+                            val percentdayPL = ((currentPrice.minus(closingPrice!!)).div(avgBuy)).times(100).toString()
+                            val totalPL= "${(currentPrice.minus(avgBuy).times(totalShares))}"
+                            val percentTotalPL=((currentPrice.minus(avgBuy)).div(avgBuy)).times(100).toString()
                             val totalBuy = items.sumOf {
                                 it.portfolioQuantity * it.portfolioRate
                             }
@@ -124,47 +129,38 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
 
                             val perSharePL= "${totalNow - totalBuy} (${((totalNow - totalBuy)/totalBuy)*100}%)"
+                            list.add(ShareInHand( items.first().portfolioSymbol,
+                                Utils.roundTwoDecimal(totalCost),
+                                Utils.roundTwoDecimal(avgBuy),
+                                Utils.roundTwoDecimal(currentValue),
+                                totalShares.toString(),
+                                Utils.roundTwoDecimal(dayPL.toDouble()),
+                                Utils.roundTwoDecimal(percentdayPL.toDouble()),
+                                Utils.roundTwoDecimal(totalPL.toDouble()),
+                                Utils.roundTwoDecimal(percentTotalPL.toDouble())))
 
-                            mapOf(
-                                "TotalBuyAmount" to totalAmount,
+                           /* adapter=ShareInHandAdapter(  mapOf(
+                                "Symbol" to items.first().portfolioSymbol,
                                 "TotalCost" to totalCost,
-                                "TotalShare" to totalShares,
-                                "AverageBuy" to avgBuy,
-                                "CurrentPrice" to currentPrice,
-                                "CurrentValue" to currentValue,
-                                "TotalP/L" to totalPL,
-                                "TotalBuy" to totalBuy,
-                                "TotalNow" to totalNow,
-                                "PerShareP/L" to perSharePL
-                            )
-                        }
+                                "AvgBuy" to avgBuy,
+                                "Share" to totalShares,
+                                "MarketValue" to currentValue,
+                                "DayP/L" to dayPL,
+                                "TotalP/L" to totalPL
+                            ).map {
+                                KeyDescValue(it.key,it.value.toString(),null)
+                            }){
 
-                        Log.e("List--->",list.toString())
-                        /*Log.e("List--->",result.data?.groupBy { it.portfolioSymbol }?.mapValues { (_, details) ->
-                            val totalBuyQty = details.filter { it.portfolioType.equals("BUY",true) }.sumOf { it.portfolioQuantity }
-                            val totalSellQty = details.filter { it.portfolioType.equals("SELL",true) }.sumOf { it.portfolioQuantity }
-
-                            val totalBuyAmount = details.filter { it.portfolioType == "BUY" }
-                                .sumOf { it.portfolioQuantity * it.portfolioRate }
-
-                            val totalSellAmount = details.filter { it.portfolioType == "SELL" }
-                                .sumOf { it.portfolioQuantity * it.portfolioRate }
-
-                            val totalCommission = details.sumOf {
-                                val commissionRate = it.portfolioCommission / 100
-                                it.portfolioQuantity * it.portfolioRate * commissionRate
                             }
 
-                            mapOf(
-                                "TotalBuyQuantity" to totalBuyQty,
-                                "TotalSellQuantity" to totalSellQty,
-                                "TotalBuyAmount" to totalBuyAmount,
-                                "TotalSellAmount" to totalSellAmount,
-                                "TotalCommission" to totalCommission
-                            )
-                        }?.toMap().toString())*/
+                            layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)*/
 
-//                        result.data?.groupBy { it.portfolioSymbol }.mapValues {  }.mapValues { it. }
+                        }
+                        adapter = ShareInHandAdapter(list){
+
+                        }
+                        layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
+
                     }
                 }
             }
