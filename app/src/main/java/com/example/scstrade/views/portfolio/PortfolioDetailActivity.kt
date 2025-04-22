@@ -19,6 +19,8 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.google.gson.reflect.TypeToken
@@ -27,6 +29,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPortfolioDetailBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var login: LoginDataItem
+    var portfolioMainID:Int?=-1
+    var portfolioDetailItem: PortfolioDetailItem?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,7 +49,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        sharedViewModel.getPortfolioDetail(login.registrationID)
+        portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        sharedViewModel.getPortfolioDetail(portfolioMainID)
 
         binding.apply {
             viewDetail.setOnClickListener {
@@ -66,18 +71,25 @@ class PortfolioDetailActivity : AppCompatActivity() {
             newBuyTrade.setOnClickListener {
                 val intent = Intent(this.root.context,BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_BUY,true)
+                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
                 startActivity(intent)
+            }
+            sellTrade.setOnClickListener {
+                if(binding.recyclerView.adapter?.itemCount?:0>0) {
+                    val intent = Intent(this.root.context, BuySellActivity::class.java)
+                    intent.putExtra(AppConstants.IS_Sell, true)
+                    intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                    startActivity(intent)
+                }else{
+                    Utils.showError(binding.main,"You have no stocks....")
+                }
             }
 
-            sellTrade.setOnClickListener {
-                val intent = Intent(this.root.context,BuySellActivity::class.java)
-                intent.putExtra(AppConstants.IS_Sell,true)
-                startActivity(intent)
-            }
 
             addDividend.setOnClickListener {
                 val intent = Intent(this.root.context,BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_Dividend,true)
+                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
                 startActivity(intent)
             }
         }
@@ -89,7 +101,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                     val list= mutableListOf<ShareInHand>()
                     binding.recyclerView.apply {
                         result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
-
+                            portfolioDetailItem = items.first()
                             val totalAmount = items.sumOf {
                                 if(it.portfolioType.equals("buy",true)){
                                     it.portfolioQuantity
@@ -156,8 +168,13 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)*/
 
                         }
-                        adapter = ShareInHandAdapter(list){
+                        adapter = ShareInHandAdapter(list){res->
 
+                            val intent = Intent(this.context, BuySellActivity::class.java)
+                            intent.putExtra(AppConstants.IS_Sell, true)
+                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList() as ArrayList)
+                            startActivity(intent)
                         }
                         layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
 

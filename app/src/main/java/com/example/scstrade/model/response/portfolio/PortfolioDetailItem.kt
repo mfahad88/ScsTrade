@@ -1,8 +1,10 @@
 package com.example.scstrade.model.response.portfolio
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-
+import kotlinx.parcelize.Parcelize
+@Parcelize
 data class PortfolioDetailItem(
     @SerializedName("PortfolioCommission")
     val portfolioCommission: Double,
@@ -17,11 +19,11 @@ data class PortfolioDetailItem(
     @SerializedName("PortfolioPosition")
     val portfolioPosition: Int,
     @SerializedName("PortfolioQuantity")
-    val portfolioQuantity: Int,
+    var portfolioQuantity: Int,
     @SerializedName("PortfolioRate")
     val portfolioRate: Double,
     @SerializedName("PortfolioSymbol")
     val portfolioSymbol: String,
     @SerializedName("PortfolioType")
     val portfolioType: String
-)
+):Parcelable

@@ -3,6 +3,7 @@ package com.example.scstrade.model.response.portfolio
 
 import com.google.gson.annotations.SerializedName
 
+
 data class PortfolioItem(
     @SerializedName("PortfolioMainDefault")
     val portfolioMainDefault: Boolean,

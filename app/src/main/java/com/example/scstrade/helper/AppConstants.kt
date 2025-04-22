@@ -2,6 +2,10 @@ package com.example.scstrade.helper
 
 class AppConstants {
     companion object{
+        val STOCK_INFO: String?="stockInfo"
+        val PORTFOLIO_MAIN_ID: String?="portfolioMainId"
+        val PORTFOLIO_ITEM: String?="portfolioItem"
+        val PORTFOLIO_DETAIL= "portfolioDetail"
         val IS_BUY = "isBuy"
         val IS_Sell = "isSell"
         val IS_Dividend = "isDividend"

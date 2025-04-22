@@ -23,9 +23,11 @@ class ShareInHandAdapter(val itemList: List<ShareInHand>, private val onItemClic
             binding.daysPercentPL.text = "(${item.percentdayPL}%)"
             binding.totalPL.text = item.totalPL
             binding.totalPercentPL.text = "(${item.percenttotalPL}%)"
+            binding.btnSell.setOnClickListener {
+                onItemClick(item)
+            }
 
 
-            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 

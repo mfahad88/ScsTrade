@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityPortfolioBinding
 import com.example.scstrade.databinding.BottomPortfolioBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
@@ -89,8 +90,10 @@ class PortfolioActivity : AppCompatActivity() {
                     binding.loader.visibility = View.GONE
                     binding.recyclerView.apply {
                         adapter = PortFolioAdapter(result.data?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
-                            Toast.makeText(this@PortfolioActivity,it.toString(),Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@PortfolioActivity,PortfolioDetailActivity::class.java))
+
+                            val intent=Intent(this@PortfolioActivity,PortfolioDetailActivity::class.java)
+                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,it.portfolioMainID)
+                            startActivity(intent)
                         }, onItemPopupClick = {str,item->
                             if(str.contains("delete",true)) {
                                 Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){

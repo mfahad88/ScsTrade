@@ -7,6 +7,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -23,6 +24,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -32,6 +34,7 @@ class BuySellActivity : AppCompatActivity() {
     lateinit var binding: ActivityBuySellBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var list:List<String>
+    lateinit var stockList:ArrayList<PortfolioDetailItem>
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +43,10 @@ class BuySellActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
         list = sharedViewModel.mutableAllData.value?.data?.map { "${it.sYM}-${it.nM}" }?.toList()?: emptyList()
+        val porfolioDetail=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
+            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
 //            (binding.sellContainer as View).visibility = View.VISIBLE
         }
         if(intent.getBooleanExtra(AppConstants.IS_BUY,false)){
@@ -65,7 +70,7 @@ class BuySellActivity : AppCompatActivity() {
             binding.buyContainer.apply {
                 symbol.setAdapter(adapter)
                 symbol.setOnDismissListener {
-                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".equals(symbol.text.toString(),true) }?.first()
+                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
                     buyPrice.setText(symbol?.oC.toString())
                     val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
@@ -77,13 +82,67 @@ class BuySellActivity : AppCompatActivity() {
                 button2.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                     Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+                        sharedViewModel.buyStock(
+                            portfolioMainID=porfolioDetail,portfolioDate=purchaseDate.text.toString(),portfolioSymbol=symbol.text.split("-").first(),
+                            portfolioQuantity=shares.text.toString(),portfolioRate=buyPrice.text.toString(),portfolioCommission=comissionShare.text.toString(),
+                            portfolioCommissionType= if(radioCommissionType.checkedRadioButtonId==R.id.radioShare) "Rs" else "Percentage",portfolioPosition = "0"
+                        )
+                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+                        finish()
                     }else{
                         Utils.showError(root,"Empty fields not allowed...")
                     }
                 }
             }
+        }
 
+        if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE){
+            Log.e("Stocks",stockList.toString())
+            val holdings = stockList.filter { it.portfolioType.equals("buy",true)  }.toMutableList()
+            val qty=stockList.filter { it.portfolioType.equals("buy",true) }.sumOf { it.portfolioQuantity }
+            val sym=stockList.first().portfolioSymbol
+            val askPrice= sharedViewModel.mutableAllData.value?.data?.map { it.aP }?.first()
+            val totalCost = stockList.filter { it.portfolioType.equals("buy",true) }.sumOf {
+                it.portfolioQuantity * it.portfolioRate
+            }
+
+            val totalShares= stockList.filter { it.portfolioType.equals("buy",true) }.sumOf {
+                it.portfolioQuantity
+            }
+            val avgBuy= totalCost/totalShares
+            binding.sellContainer.apply {
+                availableShareValue.text = "${qty}"
+                symbol.setText(sym)
+                buyPrice.setText(Utils.roundTwoDecimal(askPrice))
+                avgBuyPriceValue.setText("${avgBuy}")
+                buttonSell.setOnClickListener {
+                    val quantityToSell = shares.text.toString().toInt()
+                    var quantityRemaining = quantityToSell
+                    var totalCost = 0.0
+
+
+                    while (quantityRemaining > 0 && holdings.isNotEmpty()) {
+                        val lot = holdings.first()
+                        val sellQuantity = minOf(lot.portfolioQuantity, quantityRemaining)
+
+                        lot.portfolioQuantity -= sellQuantity
+                        quantityRemaining -= sellQuantity
+
+
+                        if (lot.portfolioQuantity == 0) {
+                            holdings.removeAt(0)
+                        }
+                    }
+
+                    sharedViewModel
+
+                   /* if (quantityRemaining > 0) {
+                        println("⚠️ Not enough shares to sell. $quantityRemaining remaining unsold.")
+                    }*/
+                    Log.e("Stocks",holdings.toString())
+                }
+
+            }
 
         }
     }
@@ -99,7 +158,7 @@ class BuySellActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = selectedDateInMillis
             }
-            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
             binding.buyContainer.purchaseDate.setText(date)
         }
     }
