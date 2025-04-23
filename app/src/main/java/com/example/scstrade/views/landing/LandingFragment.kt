@@ -1,40 +1,29 @@
 package com.example.scstrade.views.landing
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.WindowInsetsController
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.setPadding
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLandingBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.response.login.LoginDataItem
-import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.announcement.AnnoucementActivity
@@ -46,15 +35,11 @@ import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
-import com.example.scstrade.views.portfolio.PortfolioActivity
+import com.example.scstrade.views.portfolio.activities.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
-import com.example.scstrade.views.search.SearchActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.google.gson.reflect.TypeToken
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 
 class LandingFragment : Fragment() {
@@ -259,7 +244,7 @@ class LandingFragment : Fragment() {
                     val intent = Intent(requireContext(),AnnoucementActivity::class.java)
                     startActivity(intent)
                 }else if(keyDescValue.key?.equals("SCS Portfolio",true)?:false){
-                    val intent = Intent(requireContext(),PortfolioActivity::class.java)
+                    val intent = Intent(requireContext(), PortfolioActivity::class.java)
                     startActivity(intent)
                 }
                 binding.drawerLayout.closeDrawers()

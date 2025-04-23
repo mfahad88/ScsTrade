@@ -1,25 +1,21 @@
-package com.example.scstrade.views.portfolio
+package com.example.scstrade.views.portfolio.activities
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.Filter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.helper.AppConstants
@@ -76,8 +72,10 @@ class BuySellActivity : AppCompatActivity() {
                     manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
 
                 }
-                purchaseDate.setOnClickListener {
-                    showDatePicker()
+                purchaseDate.setOnFocusChangeListener { view, b ->
+                    if(b){
+                        showDatePicker()
+                    }
                 }
                 button2.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
@@ -101,7 +99,7 @@ class BuySellActivity : AppCompatActivity() {
             val holdings = stockList.filter { it.portfolioType.equals("buy",true)  }.toMutableList()
             val qty=stockList.filter { it.portfolioType.equals("buy",true) }.sumOf { it.portfolioQuantity }
             val sym=stockList.first().portfolioSymbol
-            val askPrice= sharedViewModel.mutableAllData.value?.data?.map { it.aP }?.first()
+            val askPrice= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym,true) }?.map { it.aP }?.first()
             val totalCost = stockList.filter { it.portfolioType.equals("buy",true) }.sumOf {
                 it.portfolioQuantity * it.portfolioRate
             }
@@ -115,31 +113,60 @@ class BuySellActivity : AppCompatActivity() {
                 symbol.setText(sym)
                 buyPrice.setText(Utils.roundTwoDecimal(askPrice))
                 avgBuyPriceValue.setText("${avgBuy}")
+                purchaseDate.setOnFocusChangeListener { view, b ->
+                    if(b){
+                        showDatePicker()
+                    }
+                }
                 buttonSell.setOnClickListener {
-                    val quantityToSell = shares.text.toString().toInt()
-                    var quantityRemaining = quantityToSell
-                    var totalCost = 0.0
+                    if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
+                        && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
+                        val quantityToSell = shares.text.toString().toInt()
+                        var quantityRemaining = quantityToSell
+                        var totalCost = 0.0
 
 
-                    while (quantityRemaining > 0 && holdings.isNotEmpty()) {
-                        val lot = holdings.first()
-                        val sellQuantity = minOf(lot.portfolioQuantity, quantityRemaining)
+                        while (quantityRemaining > 0 && holdings.isNotEmpty()) {
+                            val lot = holdings.first()
+                            val sellQuantity = minOf(lot.portfolioQuantity, quantityRemaining)
 
-                        lot.portfolioQuantity -= sellQuantity
-                        quantityRemaining -= sellQuantity
+                            lot.portfolioQuantity -= sellQuantity
+                            quantityRemaining -= sellQuantity
 
 
-                        if (lot.portfolioQuantity == 0) {
-                            holdings.removeAt(0)
+                            if (lot.portfolioQuantity == 0) {
+                                holdings.removeAt(0)
+                            }
+
+                            if(sellQuantity>0) {
+                                sharedViewModel.sellStock(
+                                    portfolioMainID = porfolioDetail,
+                                    portfolioDate = purchaseDate.text.toString(),
+                                    portfolioSymbol = symbol.text.split("-").first(),
+                                    portfolioQuantity = sellQuantity.toString(),
+                                    portfolioRate = buyPrice.text.toString(),
+                                    portfolioCommission = comissionShare.text.toString(),
+                                    portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                    portfolioPosition = "0"
+                                )
+                            }
+
+//                            Log.e("Stocks",sellQuantity.toString())
                         }
+
+                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+                        finish()
+                    }else{
+                        Utils.showError(root,"Empty fields not allowed...")
                     }
 
-                    sharedViewModel
+
+
 
                    /* if (quantityRemaining > 0) {
                         println("⚠️ Not enough shares to sell. $quantityRemaining remaining unsold.")
                     }*/
-                    Log.e("Stocks",holdings.toString())
+
                 }
 
             }

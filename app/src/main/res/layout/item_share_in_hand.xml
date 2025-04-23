@@ -237,23 +237,23 @@
             android:textAppearance="@style/days_percent_p_l"
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/three_dots"
-            android:padding="7dp"
-            android:src="@drawable/three_dots"
-            android:layout_alignTop="@id/days"
-            android:layout_alignBottom="@id/days_percent_p_l"
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/three_dots"
+                android:padding="7dp"
+                android:src="@drawable/three_dots"
+                android:layout_alignBottom="@id/days_percent_p_l"
             android:layout_toEndOf="@id/total_percent_p_l"
-            android:layout_marginStart="2dp"
-            app:tint="@color/colorDarkerr" />
+                app:tint="@color/colorDarkerr" />
+
 
         <ImageView
             android:id="@+id/snapshot_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+
             android:layout_marginStart="5dp"
             android:layout_alignTop="@id/three_dots"
             android:layout_alignBottom="@id/three_dots"
@@ -266,7 +266,6 @@
             android:id="@+id/btn_sell"
             android:text="Sell"
             android:textSize="12sp"
-            android:layout_marginBottom="7dp"
             android:textAppearance="@style/btn_sell"
 
             android:layout_alignBottom="@id/three_dots"

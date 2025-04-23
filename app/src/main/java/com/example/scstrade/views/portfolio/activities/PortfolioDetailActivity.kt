@@ -1,4 +1,4 @@
-package com.example.scstrade.views.portfolio
+package com.example.scstrade.views.portfolio.activities
 
 import android.content.Context
 import android.content.Intent
@@ -16,13 +16,12 @@ import com.example.scstrade.databinding.ActivityPortfolioDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
-import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
 import com.google.gson.reflect.TypeToken
 
 class PortfolioDetailActivity : AppCompatActivity() {
@@ -69,7 +68,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
             }
 
             newBuyTrade.setOnClickListener {
-                val intent = Intent(this.root.context,BuySellActivity::class.java)
+                val intent = Intent(this.root.context, BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_BUY,true)
                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
                 startActivity(intent)
@@ -87,7 +86,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
 
             addDividend.setOnClickListener {
-                val intent = Intent(this.root.context,BuySellActivity::class.java)
+                val intent = Intent(this.root.context, BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_Dividend,true)
                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
                 startActivity(intent)
@@ -168,14 +167,22 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)*/
 
                         }
-                        adapter = ShareInHandAdapter(list){res->
+                        adapter = ShareInHandAdapter(list, onItemClick = {res->
 
                             val intent = Intent(this.context, BuySellActivity::class.java)
                             intent.putExtra(AppConstants.IS_Sell, true)
                             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
                             intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList() as ArrayList)
                             startActivity(intent)
-                        }
+
+                        },onItemClickSnapshot = {
+                            val intent = Intent(this.context, StockDetailActivity::class.java)
+
+                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                            intent.putExtra(AppConstants.SYMBOL,it.symbol)
+//                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList() as ArrayList)
+                            startActivity(intent)
+                        })
                         layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
 
                     }

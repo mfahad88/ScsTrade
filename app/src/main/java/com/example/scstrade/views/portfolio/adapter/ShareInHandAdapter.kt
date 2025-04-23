@@ -1,4 +1,4 @@
-package com.example.scstrade.views.portfolio
+package com.example.scstrade.views.portfolio.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import com.example.scstrade.databinding.ItemShareInHandBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.data.ShareInHand
 
-class ShareInHandAdapter(val itemList: List<ShareInHand>, private val onItemClick: (ShareInHand) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
+class ShareInHandAdapter(val itemList: List<ShareInHand>, private val onItemClick: (ShareInHand) -> Unit,private val onItemClickSnapshot: (ShareInHand) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
 
     class ShareInHandViewHolder(private val binding: ItemShareInHandBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item:ShareInHand, onItemClick: (ShareInHand) -> Unit) {
+        fun bind(item:ShareInHand, onItemClick: (ShareInHand) -> Unit,onItemClickSnapshot: (ShareInHand) -> Unit) {
             Log.e("Item--->",item.toString())
             binding.symbol.text = item.symbol
             binding.totalCostValue.text = item.totalCost
@@ -26,7 +26,14 @@ class ShareInHandAdapter(val itemList: List<ShareInHand>, private val onItemClic
             binding.btnSell.setOnClickListener {
                 onItemClick(item)
             }
+            binding.threeDots.setOnClickListener {
+                Utils.showPopup(binding.root.context,binding.threeDots,null, listOf("Edit Name")){
 
+                }
+            }
+            binding.snapshotLogo.setOnClickListener {
+                onItemClickSnapshot(item)
+            }
 
         }
     }
@@ -39,7 +46,7 @@ class ShareInHandAdapter(val itemList: List<ShareInHand>, private val onItemClic
     override fun onBindViewHolder(holder: ShareInHandViewHolder, position: Int) {
 
 
-        holder.bind(itemList[position], onItemClick)
+        holder.bind(itemList[position], onItemClick,onItemClickSnapshot)
     }
 
     override fun getItemCount(): Int {

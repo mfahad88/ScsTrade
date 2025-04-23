@@ -1,45 +1,16 @@
-package com.example.scstrade.views.portfolio
+package com.example.scstrade.views.portfolio.activities
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityPortfolioBinding
 import com.example.scstrade.databinding.BottomPortfolioBinding
 import com.example.scstrade.helper.AppConstants
@@ -48,6 +19,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.adapter.PortFolioAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -91,7 +63,7 @@ class PortfolioActivity : AppCompatActivity() {
                     binding.recyclerView.apply {
                         adapter = PortFolioAdapter(result.data?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
 
-                            val intent=Intent(this@PortfolioActivity,PortfolioDetailActivity::class.java)
+                            val intent=Intent(this@PortfolioActivity, PortfolioDetailActivity::class.java)
                             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,it.portfolioMainID)
                             startActivity(intent)
                         }, onItemPopupClick = {str,item->

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.portfolio.StockDetailActivity">
+    tools:context=".views.portfolio.activities.StockDetailActivity">
 
 
     <com.example.scstrade.views.widgets.mMarket
@@ -39,10 +39,11 @@
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tabLayout"
-        android:id="@+id/fragment_container"/>
+        android:layout_marginTop="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

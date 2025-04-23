@@ -208,6 +208,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
+        android:id="@+id/radioCommissionType"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/relative_comission"
         app:layout_constraintTop_toBottomOf="@+id/input_text">

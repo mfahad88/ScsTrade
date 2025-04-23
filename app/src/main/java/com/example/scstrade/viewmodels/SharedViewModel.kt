@@ -430,6 +430,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun sellStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
+        mutablePortfolioDetail.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                    portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
+                withContext(Dispatchers.Main){
+                    mutablePortfolioDetail.value = result
+                }
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         Log.d("SharedViewModel", "ViewModel is cleared")

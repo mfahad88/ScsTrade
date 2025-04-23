@@ -235,6 +235,7 @@
     <string name="total_p_l_title"><![CDATA[Total P&L]]></string>
     <string name="history_1_y"><![CDATA[(1 year sold & dividend)]]></string>
     <string name="you_made_a_">You made a total <b>Profit</b> of <b>Rs. 5</b> with an increase of <b>+0.12%</b></string>
+    <string name="edit_name">Edit Name</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

@@ -1,14 +1,12 @@
-package com.example.scstrade.views.portfolio
+package com.example.scstrade.views.portfolio.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemPortfolioBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.PortfolioItem
-import com.example.scstrade.model.response.watchList.WatchListItem
 import java.util.Collections
 
 class PortFolioAdapter(private val itemList: List<PortfolioItem>, private val onItemClick: (PortfolioItem) -> Unit,private val onItemPopupClick: (String, PortfolioItem) -> Unit) : RecyclerView.Adapter<PortFolioAdapter.PortFolioViewHolder>() {

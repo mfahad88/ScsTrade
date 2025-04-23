@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".views.portfolio.StockDetailActivity"
+            android:name=".views.portfolio.activities.StockDetailActivity"
             android:exported="false" />
 
         <meta-data
@@ -46,10 +46,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.portfolio.BuySellActivity"
+            android:name=".views.portfolio.activities.BuySellActivity"
             android:exported="false" />
         <activity
-            android:name=".views.portfolio.PortfolioDetailActivity"
+            android:name=".views.portfolio.activities.PortfolioDetailActivity"
             android:exported="false" />
         <activity
             android:name=".views.announcement.AnnoucementActivity"
@@ -96,7 +96,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.portfolio.PortfolioActivity"
+            android:name=".views.portfolio.activities.PortfolioActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait" />

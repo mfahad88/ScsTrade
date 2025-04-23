@@ -11,7 +11,7 @@
         android:background="@color/md_theme_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.portfolio.PortfolioDetailActivity">
+        tools:context=".views.portfolio.activities.PortfolioDetailActivity">
 
         <com.example.scstrade.views.widgets.mMarket
             android:layout_width="0dp"
