@@ -18,12 +18,14 @@ import com.google.android.material.tabs.TabLayout
 class StockDetailActivity : AppCompatActivity() {
     private var portfolioMainID: Int=-1
     lateinit var binding:ActivityStockDetailBinding
+    var symbol:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -31,11 +33,11 @@ class StockDetailActivity : AppCompatActivity() {
         }
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab?.text?.equals(R.string.summary)?:false){
+                if(tab!!.text!!.equals(getString(R.string.summary))){
                     loadFragment(SummaryFragment())
-                }else if(tab?.text?.equals(R.string.history)?:false){
+                }else if(tab.text!!.equals(getString(R.string.history))){
                     loadFragment(HistoryFragment())
-                }else{
+                }else if(tab.text!!.equals(getString(R.string.holding))){
                     loadFragment(HoldingFragment())
                 }
             }

@@ -7,20 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemHoldingBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
-import com.example.scstrade.model.response.portfolio.PortfolioItem
 
 import java.util.Collections
 
 class HoldingAdapter(private val itemList: List<PortfolioDetailItem>, private val onItemClick: (PortfolioDetailItem) -> Unit) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
-
+    var currentPrice:Double = 0.00
     class HoldingViewHolder(private val binding: ItemHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: PortfolioDetailItem, onItemClick: (PortfolioDetailItem) -> Unit) {
+        fun bind(
+            item: PortfolioDetailItem,
+            currentPrice: Double,
+            onItemClick: (PortfolioDetailItem) -> Unit
+        ) {
             binding.apply {
                 dateValue.text = Utils.convertDateString(item.portfolioDate,"dd-MM-yyyy")
                 sharesValue.text = "${item.portfolioQuantity}"
-                netPriceValue.text = "${item.portfolioRate}"
-                netCostValue.text = "${item.portfolioRate.times(item.portfolioQuantity)}"
+                netPriceValue.text = "${Utils.roundTwoDecimal(item.portfolioRate)}"
+                netCostValue.text = "${Utils.roundTwoDecimal(item.portfolioRate.times(item.portfolioQuantity))}"
+                currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
+                        "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
             }
             binding.root.setOnClickListener { onItemClick(item) }
         }
@@ -32,11 +37,16 @@ class HoldingAdapter(private val itemList: List<PortfolioDetailItem>, private va
     }
 
     override fun onBindViewHolder(holder: HoldingViewHolder, position: Int) {
-        holder.bind(itemList[position], onItemClick)
+        holder.bind(itemList[position],currentPrice, onItemClick)
     }
 
     override fun getItemCount(): Int {
         return itemList.size
+    }
+
+    fun setcurrentPrice(currentPrice:Double){
+        this.currentPrice = currentPrice
+        notifyDataSetChanged()
     }
 
     fun swapItems(fromPosition: Int, toPosition: Int) {

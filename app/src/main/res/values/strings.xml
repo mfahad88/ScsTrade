@@ -183,7 +183,7 @@
     <string name="avg_buy_pri_value">219.58</string>
     <string name="share_owned_value">210</string>
     <string name="current_pri_value">213.58</string>
-    <string name="buy_transac">Buy Transactions (OGDC)</string>
+    <string name="buy_transac">Buy Transactions (%s)</string>
     <string name="buy_date">Buy Date</string>
     <string name="shares">Shares</string>
     <string name="price_cost">Price/Cost</string>
