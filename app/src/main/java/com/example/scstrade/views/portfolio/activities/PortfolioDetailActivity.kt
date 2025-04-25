@@ -172,7 +172,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             val intent = Intent(this.context, BuySellActivity::class.java)
                             intent.putExtra(AppConstants.IS_Sell, true)
                             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList() as ArrayList)
+                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList()?.toCollection(ArrayList()))
                             startActivity(intent)
 
                         },onItemClickSnapshot = {
