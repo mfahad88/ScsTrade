@@ -67,7 +67,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
-    val mutablePortfolioDetail=MutableLiveData<Resource<List<PortfolioDetailItem>>>()
+    val mutablePortfolioDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
     var isFetchAllData=true
     var isFetchIndices=true
     val isConnected = ConnectivityObserver(application)
@@ -411,7 +411,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.buyTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
                 withContext(Dispatchers.Main){
-                    mutablePortfolioDetail.value = result
+//                    mutablePortfolioDetail.value = result
                 }
             }
         }
@@ -424,7 +424,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.buyStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
                 withContext(Dispatchers.Main){
-                    mutablePortfolioDetail.value = result
+//                    mutablePortfolioDetail.value = result
                 }
             }
         }
@@ -437,7 +437,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
                 withContext(Dispatchers.Main){
-                    mutablePortfolioDetail.value = result
+                    getPortfolioDetail(portfolioMainID)
+//                    mutablePortfolioDetail.value = result
                 }
             }
         }

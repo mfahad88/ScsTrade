@@ -185,13 +185,13 @@
 
         <TextView
             android:id="@+id/days_percent_p_l"
-            android:layout_width="45dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
-            android:layout_below="@id/days"
-            android:layout_toEndOf="@id/days_p_l"
+            android:layout_below="@id/days_p_l"
+            android:layout_alignStart="@id/days_p_l"
             android:text="(100%)"
             android:textAppearance="@style/days_percent_p_l"
             />
@@ -226,13 +226,13 @@
 
         <TextView
             android:id="@+id/total_percent_p_l"
-            android:layout_width="45dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="4dp"
             android:textFontWeight="600"
-            android:layout_below="@id/days"
-            android:layout_toEndOf="@id/total_p_l"
+            android:layout_below="@id/total_p_l"
+            android:layout_alignStart="@id/total_p_l"
             android:text="(100%)"
             android:textAppearance="@style/days_percent_p_l"
             />
@@ -242,10 +242,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/three_dots"
-                android:padding="7dp"
+                android:padding="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:src="@drawable/three_dots"
-                android:layout_alignBottom="@id/days_percent_p_l"
-            android:layout_toEndOf="@id/total_percent_p_l"
+                android:layout_toStartOf="@id/snapshot_logo"
+                android:layout_alignTop="@id/total_p_l"
                 app:tint="@color/colorDarkerr" />
 
 
@@ -253,11 +254,10 @@
             android:id="@+id/snapshot_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_marginStart="5dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_alignTop="@id/three_dots"
             android:layout_alignBottom="@id/three_dots"
-            android:layout_toEndOf="@id/three_dots"
+            android:layout_toStartOf="@id/btn_sell"
             app:srcCompat="@drawable/snapshot_logo" />
 
         <Button
@@ -266,10 +266,10 @@
             android:id="@+id/btn_sell"
             android:text="Sell"
             android:textSize="12sp"
+            android:layout_marginHorizontal="10dp"
             android:textAppearance="@style/btn_sell"
-
-            android:layout_alignBottom="@id/three_dots"
-            android:layout_toEndOf="@id/snapshot_logo"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/three_dots" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

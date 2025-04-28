@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -30,7 +32,7 @@ class BuySellActivity : AppCompatActivity() {
     lateinit var binding: ActivityBuySellBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var list:List<String>
-    lateinit var stockList:ArrayList<PortfolioDetailItem>
+//    lateinit var stockList:ArrayList<PortfolioDetailItem>
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class BuySellActivity : AppCompatActivity() {
         val porfolioDetail=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
-            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
+//            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
 //            (binding.sellContainer as View).visibility = View.VISIBLE
         }
         if(intent.getBooleanExtra(AppConstants.IS_BUY,false)){
@@ -74,7 +76,7 @@ class BuySellActivity : AppCompatActivity() {
                 }
                 purchaseDate.setOnFocusChangeListener { view, b ->
                     if(b){
-                        showDatePicker()
+                        showDatePicker(purchaseDate)
                     }
                 }
                 button2.setOnClickListener {
@@ -95,19 +97,12 @@ class BuySellActivity : AppCompatActivity() {
         }
 
         if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE){
-            Log.e("Stocks",stockList.toString())
-            val holdings = stockList.filter { it.portfolioType.equals("buy",true)  }.toMutableList()
-            val qty=stockList.filter { it.portfolioType.equals("buy",true) }.sumOf { it.portfolioQuantity }
-            val sym=stockList.first().portfolioSymbol
+            val sym=intent.getStringExtra(AppConstants.SYMBOL)
+            val v=sharedViewModel.mutablePortfolioDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.first()
+            val qty=v?.quantity
             val askPrice= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym,true) }?.map { it.aP }?.first()
-            val totalCost = stockList.filter { it.portfolioType.equals("buy",true) }.sumOf {
-                it.portfolioQuantity * it.portfolioRate
-            }
-
-            val totalShares= stockList.filter { it.portfolioType.equals("buy",true) }.sumOf {
-                it.portfolioQuantity
-            }
-            val avgBuy= totalCost/totalShares
+            val totalCost = v?.price?.toDouble()
+            val avgBuy= totalCost?.div(v.quantity.toInt())
             binding.sellContainer.apply {
                 availableShareValue.text = "${qty}"
                 symbol.setText(sym)
@@ -115,44 +110,22 @@ class BuySellActivity : AppCompatActivity() {
                 avgBuyPriceValue.setText("${avgBuy}")
                 purchaseDate.setOnFocusChangeListener { view, b ->
                     if(b){
-                        showDatePicker()
+                        showDatePicker(purchaseDate)
                     }
                 }
                 buttonSell.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                        val quantityToSell = shares.text.toString().toInt()
-                        var quantityRemaining = quantityToSell
-                        var totalCost = 0.0
-
-
-                        while (quantityRemaining > 0 && holdings.isNotEmpty()) {
-                            val lot = holdings.first()
-                            val sellQuantity = minOf(lot.portfolioQuantity, quantityRemaining)
-
-                            lot.portfolioQuantity -= sellQuantity
-                            quantityRemaining -= sellQuantity
-
-
-                            if (lot.portfolioQuantity == 0) {
-                                holdings.removeAt(0)
-                            }
-
-                            if(sellQuantity>0) {
-                                sharedViewModel.sellStock(
-                                    portfolioMainID = porfolioDetail,
-                                    portfolioDate = purchaseDate.text.toString(),
-                                    portfolioSymbol = symbol.text.split("-").first(),
-                                    portfolioQuantity = sellQuantity.toString(),
-                                    portfolioRate = buyPrice.text.toString(),
-                                    portfolioCommission = comissionShare.text.toString(),
-                                    portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                                    portfolioPosition = "0"
-                                )
-                            }
-
-//                            Log.e("Stocks",sellQuantity.toString())
-                        }
+                        sharedViewModel.sellStock(
+                            portfolioMainID = porfolioDetail,
+                            portfolioDate = purchaseDate.text.toString(),
+                            portfolioSymbol = symbol.text.split("-").first(),
+                            portfolioQuantity = shares.text.toString(),
+                            portfolioRate = buyPrice.text.toString(),
+                            portfolioCommission = comissionShare.text.toString(),
+                            portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                            portfolioPosition = "0"
+                        )
 
                         Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
                         finish()
@@ -160,12 +133,6 @@ class BuySellActivity : AppCompatActivity() {
                         Utils.showError(root,"Empty fields not allowed...")
                     }
 
-
-
-
-                   /* if (quantityRemaining > 0) {
-                        println("⚠️ Not enough shares to sell. $quantityRemaining remaining unsold.")
-                    }*/
 
                 }
 
@@ -175,7 +142,7 @@ class BuySellActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun showDatePicker() {
+    private fun showDatePicker(tv:EditText) {
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select a date")
             .build()
@@ -186,7 +153,7 @@ class BuySellActivity : AppCompatActivity() {
                 timeInMillis = selectedDateInMillis
             }
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
-            binding.buyContainer.purchaseDate.setText(date)
+            tv.setText(date)
         }
     }
 }

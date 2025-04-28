@@ -44,7 +44,7 @@ class HoldingFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    var totalPurchase = 0.00
+                    /*var totalPurchase = 0.00
                     result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol,true) }
                         ?.filter { it.portfolioType.equals("buy",true) }?.map { it.portfolioRate.times(it.portfolioQuantity) }?.forEach {
                             totalPurchase+=it
@@ -74,8 +74,8 @@ class HoldingFragment : Fragment() {
                     binding.currentPriValue.text = "${Utils.roundTwoDecimal(currentPrice?:0.00)}"
                     binding.daysPLHoValue.text = "${Utils.roundTwoDecimal(dayPL)} (${Utils.roundTwoDecimal(percentdayPL)}%)"
                     binding.totalPLHValue.text = "${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(percentTotalPL)}%)"
-                  /* result.data?.filter {it.portfolioType.equals("buy",true) && it.portfolioType  }?.groupBy { it.portfolioSymbol }?.entries.sumOf {i  }
-                    binding.purchaseCoValue.text = "${Utils.roundTwoDecimal(purchaseCost)}"*/
+                  *//* result.data?.filter {it.portfolioType.equals("buy",true) && it.portfolioType  }?.groupBy { it.portfolioSymbol }?.entries.sumOf {i  }
+                    binding.purchaseCoValue.text = "${Utils.roundTwoDecimal(purchaseCost)}"*//*
 
                     binding.recyclerView.apply {
                         adapter=HoldingAdapter(result.data?.filter {it.portfolioSymbol.equals(stockDetailActivity.symbol,true)  }?.filter { it.portfolioType.equals("buy",true) }?: emptyList()){
@@ -83,7 +83,7 @@ class HoldingFragment : Fragment() {
                         }
                         (adapter as HoldingAdapter).setcurrentPrice(currentPrice?:0.00)
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                    }
+                    }*/
                 }
             }
 

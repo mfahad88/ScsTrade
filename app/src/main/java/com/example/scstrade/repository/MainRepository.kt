@@ -427,7 +427,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun getPortfolioDetail(portfolioMainID: Int):Resource<List<PortfolioDetailItem>>{
+    suspend fun getPortfolioDetail(portfolioMainID: Int):Resource<PortfolioDetailItem>{
         try{
             return  Resource.Success(apiService.getPortfolioDetail(portfolioMainID = portfolioMainID))
         }catch (e:Exception){

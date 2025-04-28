@@ -19,14 +19,14 @@ class HoldingAdapter(private val itemList: List<PortfolioDetailItem>, private va
             currentPrice: Double,
             onItemClick: (PortfolioDetailItem) -> Unit
         ) {
-            binding.apply {
+            /*binding.apply {
                 dateValue.text = Utils.convertDateString(item.portfolioDate,"dd-MM-yyyy")
                 sharesValue.text = "${item.portfolioQuantity}"
                 netPriceValue.text = "${Utils.roundTwoDecimal(item.portfolioRate)}"
                 netCostValue.text = "${Utils.roundTwoDecimal(item.portfolioRate.times(item.portfolioQuantity))}"
                 currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
                         "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
-            }
+            }*/
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }

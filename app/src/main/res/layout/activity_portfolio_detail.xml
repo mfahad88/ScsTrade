@@ -25,7 +25,7 @@
             android:id="@+id/card_mar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toStartOf="@+id/card_compan"
             app:layout_constraintHorizontal_bias="0.5"
@@ -62,7 +62,7 @@
             android:id="@+id/card_compan"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="10dp"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -110,7 +110,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="15dp"
+                android:paddingHorizontal="10dp"
                 android:paddingVertical="7dp"
                 android:background="@color/md_theme_surfaceBright">
 

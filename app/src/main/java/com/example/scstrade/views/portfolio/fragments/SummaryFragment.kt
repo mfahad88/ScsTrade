@@ -39,7 +39,7 @@ class SummaryFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                  val holdingCost=  result.data?.groupBy { it.portfolioSymbol }?.mapValues { (_,items) -> items.sumOf { if(it.portfolioType.equals("buy",true)){
+                 /* val holdingCost=  result.data?.groupBy { it.portfolioSymbol }?.mapValues { (_,items) -> items.sumOf { if(it.portfolioType.equals("buy",true)){
                         (it.portfolioQuantity.times(it.portfolioRate))+it.portfolioCommission
                     }else{
                         0.0
@@ -66,7 +66,7 @@ class SummaryFragment : Fragment() {
                         binding.holdingPL.setTextColor(requireContext().getColor(R.color.md_theme_errorContainer))
                     }else{
                         binding.holdingPL.setTextColor(requireContext().getColor(R.color.md_theme_primary))
-                    }
+                    }*/
                 }
             }
         })

@@ -99,6 +99,22 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     val list= mutableListOf<ShareInHand>()
                     binding.recyclerView.apply {
+
+
+                        adapter = ShareInHandAdapter(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList(),
+                            onItemClick = { res->
+                                val intent = Intent(this.context, BuySellActivity::class.java)
+                                intent.putExtra(AppConstants.IS_Sell, true)
+                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                                intent.putExtra(AppConstants.SYMBOL, res.symbol)
+                                startActivity(intent)
+                        }, onItemClickSnapshot = {
+
+                            })
+
+                        layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+                    }
+                    /*binding.recyclerView.apply {
                         result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
                             portfolioDetailItem = items.first()
                             val totalAmount = items.sumOf {
@@ -185,7 +201,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         })
                         layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
 
-                    }
+                    }*/
                 }
             }
         })

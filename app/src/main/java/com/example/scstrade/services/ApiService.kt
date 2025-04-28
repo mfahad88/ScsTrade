@@ -202,7 +202,7 @@ interface ApiService {
     suspend fun deletePortfolio(@Query("ActionType")actionType:String="DeletePortfolio",@Query("PortfolioMainID")portfolioMainID:Int,@Query("RegistrationID")registrationID: Int):List<PortfolioItem>
 
     @GET(value = "/Portfolio")
-    suspend fun getPortfolioDetail(@Query("ActionType")actionType:String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID: Int):List<PortfolioDetailItem>
+    suspend fun getPortfolioDetail(@Query("ActionType")actionType:String="GetPortfolioFinal",@Query("PortfolioMainID")portfolioMainID: Int):PortfolioDetailItem
 
     @GET(value = "/Portfolio")
     suspend fun buyTrade(@Query("ActionType")actionType:String="AddTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDate")portfolioDate:String,
