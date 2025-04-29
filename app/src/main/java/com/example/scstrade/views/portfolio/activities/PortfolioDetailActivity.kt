@@ -37,6 +37,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel
+        sharedViewModel.isFetchPortfolioFinal=true
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -49,9 +50,10 @@ class PortfolioDetailActivity : AppCompatActivity() {
             insets
         }
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
-        sharedViewModel.getPortfolioDetail(portfolioMainID)
+        sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
 
         binding.apply {
+            linearLayoutHistory.visibility = View.GONE
             viewDetail.setOnClickListener {
                 if(summaryCard.visibility == View.VISIBLE){
                     summaryCard.visibility = View.GONE
@@ -72,6 +74,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 intent.putExtra(AppConstants.IS_BUY,true)
                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
                 startActivity(intent)
+                floatingMenu.visibility = View.GONE
             }
             sellTrade.setOnClickListener {
                 if(binding.recyclerView.adapter?.itemCount?:0>0) {
@@ -82,17 +85,24 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 }else{
                     Utils.showError(binding.main,"You have no stocks....")
                 }
+                floatingMenu.visibility = View.GONE
             }
-
 
             addDividend.setOnClickListener {
-                val intent = Intent(this.root.context, BuySellActivity::class.java)
-                intent.putExtra(AppConstants.IS_Dividend,true)
-                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
-                startActivity(intent)
+                if(binding.recyclerView.adapter?.itemCount?:0>0) {
+                    val intent = Intent(this.root.context, BuySellActivity::class.java)
+                    intent.putExtra(AppConstants.IS_Dividend, true)
+                    intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                    startActivity(intent)
+                }else{
+                    Utils.showError(binding.main,"You have no stocks....")
+                }
+                floatingMenu.visibility = View.GONE
             }
+
+
         }
-        sharedViewModel.mutablePortfolioDetail.observe(this, Observer { result->
+        sharedViewModel.mutablePortfolioFinalDetail.observe(this, Observer { result->
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                 is Resource.Loading -> {}
@@ -108,100 +118,16 @@ class PortfolioDetailActivity : AppCompatActivity() {
                                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
                                 intent.putExtra(AppConstants.SYMBOL, res.symbol)
                                 startActivity(intent)
-                        }, onItemClickSnapshot = {
-
+                        }, onItemClickSnapshot = {res->
+                                val intent = Intent(this.context, StockDetailActivity::class.java)
+                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                                intent.putExtra(AppConstants.SYMBOL, res.symbol)
+                                startActivity(intent)
                             })
 
                         layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
                     }
-                    /*binding.recyclerView.apply {
-                        result.data?.groupBy { it.portfolioSymbol }?.mapValues { (key,items)->
-                            portfolioDetailItem = items.first()
-                            val totalAmount = items.sumOf {
-                                if(it.portfolioType.equals("buy",true)){
-                                    it.portfolioQuantity
-                                }else{
-                                    -it.portfolioQuantity
-                                }
-                            }
-                            val totalCost = items.sumOf {
-                                if(it.portfolioType.equals("buy",true)) {
-                                    it.portfolioQuantity * it.portfolioRate
-                                }else{
-                                    -(it.portfolioQuantity * it.portfolioRate)
-                                }
-                            }
-                            val totalShares= items.sumOf {
-                                if(it.portfolioType.equals("buy",true)){
-                                    it.portfolioQuantity
-                                }else{
-                                    -it.portfolioQuantity
-                                }
-                            }
 
-                            val avgBuy= totalCost/totalShares
-                            val closingPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(key,true) }?.map { it.oC }?.first()
-                            val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(key,true) }?.map { it.cL }?.first()
-                            val currentValue = totalShares.toDouble() * currentPrice!!
-                            val dayPL= "${(currentPrice.minus(closingPrice?:0.0)).times(totalShares)}"
-                            val percentdayPL = ((currentPrice.minus(closingPrice!!)).div(avgBuy)).times(100).toString()
-                            val totalPL= "${(currentPrice.minus(avgBuy).times(totalShares))}"
-                            val percentTotalPL=((currentPrice.minus(avgBuy)).div(avgBuy)).times(100).toString()
-                            val totalBuy = items.sumOf {
-                                it.portfolioQuantity * it.portfolioRate
-                            }
-                            val totalNow = items.sumOf {
-                                it.portfolioQuantity * currentPrice
-                            }
-
-
-                            val perSharePL= "${totalNow - totalBuy} (${((totalNow - totalBuy)/totalBuy)*100}%)"
-                            list.add(ShareInHand( items.first().portfolioSymbol,
-                                Utils.roundTwoDecimal(totalCost),
-                                Utils.roundTwoDecimal(avgBuy),
-                                Utils.roundTwoDecimal(currentValue),
-                                totalShares.toString(),
-                                Utils.roundTwoDecimal(dayPL.toDouble()),
-                                Utils.roundTwoDecimal(percentdayPL.toDouble()),
-                                Utils.roundTwoDecimal(totalPL.toDouble()),
-                                Utils.roundTwoDecimal(percentTotalPL.toDouble())))
-
-                           /* adapter=ShareInHandAdapter(  mapOf(
-                                "Symbol" to items.first().portfolioSymbol,
-                                "TotalCost" to totalCost,
-                                "AvgBuy" to avgBuy,
-                                "Share" to totalShares,
-                                "MarketValue" to currentValue,
-                                "DayP/L" to dayPL,
-                                "TotalP/L" to totalPL
-                            ).map {
-                                KeyDescValue(it.key,it.value.toString(),null)
-                            }){
-
-                            }
-
-                            layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)*/
-
-                        }
-                        adapter = ShareInHandAdapter(list, onItemClick = {res->
-
-                            val intent = Intent(this.context, BuySellActivity::class.java)
-                            intent.putExtra(AppConstants.IS_Sell, true)
-                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList()?.toCollection(ArrayList()))
-                            startActivity(intent)
-
-                        },onItemClickSnapshot = {
-                            val intent = Intent(this.context, StockDetailActivity::class.java)
-
-                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                            intent.putExtra(AppConstants.SYMBOL,it.symbol)
-//                            intent.putParcelableArrayListExtra(AppConstants.STOCK_INFO,   result.data?.filter { it.portfolioSymbol.equals(res.symbol,true)}?.toList() as ArrayList)
-                            startActivity(intent)
-                        })
-                        layoutManager=LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
-
-                    }*/
                 }
             }
         })
@@ -214,5 +140,10 @@ class PortfolioDetailActivity : AppCompatActivity() {
             AppConstants.USER,listType)
         login=user.first()
         Log.e("User: ",user.toString())
+    }
+
+    override fun onDestroy() {
+        sharedViewModel.stopPortfolioFinal()
+        super.onDestroy()
     }
 }

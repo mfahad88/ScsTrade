@@ -9,7 +9,7 @@
     android:weightSum="5">
 
     <LinearLayout
-        android:layout_width="15dp"
+        android:layout_width="45dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="18dp"
+        android:layout_width="25dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -78,7 +78,7 @@
             android:textAppearance="@style/net_price_value" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="18dp"
+        android:layout_width="25dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -114,7 +114,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/p_l_on_sell_value"
-        android:layout_width="15dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textFontWeight="500"

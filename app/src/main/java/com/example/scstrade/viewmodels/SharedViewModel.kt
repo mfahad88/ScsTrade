@@ -24,6 +24,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
@@ -67,9 +68,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
-    val mutablePortfolioDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
+    val mutablePortfolioFinalDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
+    val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
+    var isFetchPortfolioFinal=true
     val isConnected = ConnectivityObserver(application)
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -393,24 +396,27 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun getPortfolioDetail(portfolioMainID: Int?){
-        mutablePortfolioDetail.value = Resource.Loading()
+    fun getPortfolioFinalDetail(portfolioMainID: Int?){
+        mutablePortfolioFinalDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
-                val result = repository.getPortfolioDetail(portfolioMainID?:-1)
-                withContext(Dispatchers.Main){
-                    mutablePortfolioDetail.value = result
+                while (isFetchPortfolioFinal) {
+                    val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+                    withContext(Dispatchers.Main) {
+                        mutablePortfolioFinalDetail.value = result
+                    }
+                    delay(5000)
                 }
             }
         }
     }
     fun buyTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
-        mutablePortfolioDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
                 val result = repository.buyTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
                 withContext(Dispatchers.Main){
+                    val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
 //                    mutablePortfolioDetail.value = result
                 }
             }
@@ -418,12 +424,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun buyStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
-        mutablePortfolioDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
                 val result = repository.buyStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
+//                 repository.getPortfolioDetail(portfolioMainID ?: -1)
                 withContext(Dispatchers.Main){
+
 //                    mutablePortfolioDetail.value = result
                 }
             }
@@ -431,14 +438,37 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun sellStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
-        mutablePortfolioDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
                 val result = repository.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
+                repository.getPortfolioDetail(portfolioMainID ?: -1)
                 withContext(Dispatchers.Main){
-                    getPortfolioDetail(portfolioMainID)
+
 //                    mutablePortfolioDetail.value = result
+                }
+            }
+        }
+    }
+
+    fun addDividend(dividendSymbol:String,dividendQuantity:String,dividendPerShare:String, dividendDate:String, portfolioMainID:String){
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.addDividend(dividendSymbol, dividendQuantity, dividendPerShare, dividendDate, portfolioMainID)
+                withContext(Dispatchers.Main){
+                    mutableDividend.value=result
+                }
+            }
+        }
+    }
+
+    fun getDividend(portfolioMainID:String){
+        mutableDividend.value=Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.getDividend( portfolioMainID)
+                withContext(Dispatchers.Main){
+                    mutableDividend.value=result
                 }
             }
         }
@@ -451,6 +481,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun stopAll(){
         isFetchIndices=false
         isFetchAllData=false
+    }
+
+    fun stopPortfolioFinal(){
+        isFetchPortfolioFinal = false
     }
 
     fun deletePortfolio(portfolioMainID: Int, registrationID: Int) {

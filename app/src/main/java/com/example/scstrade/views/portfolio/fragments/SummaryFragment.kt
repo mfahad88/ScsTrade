@@ -32,7 +32,7 @@ class SummaryFragment : Fragment() {
         binding = FragmentSummaryBinding.inflate(inflater)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity= requireActivity() as StockDetailActivity
-        sharedViewModel.mutablePortfolioDetail.observe(viewLifecycleOwner, Observer { result->
+        sharedViewModel.mutablePortfolioFinalDetail.observe(viewLifecycleOwner, Observer { result->
             when (result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
                 is Resource.Loading -> {

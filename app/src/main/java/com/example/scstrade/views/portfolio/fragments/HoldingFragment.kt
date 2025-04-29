@@ -36,7 +36,7 @@ class HoldingFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity=(requireActivity() as StockDetailActivity)
         binding.buyTransac.text = getString(R.string.buy_transac,stockDetailActivity.symbol)
-        sharedViewModel.mutablePortfolioDetail.observe(viewLifecycleOwner, Observer {result->
+        sharedViewModel.mutablePortfolioFinalDetail.observe(viewLifecycleOwner, Observer {result->
 
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")

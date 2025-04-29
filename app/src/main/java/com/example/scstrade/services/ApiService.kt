@@ -15,6 +15,7 @@ import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
@@ -221,4 +222,11 @@ interface ApiService {
                          @Query("PortfolioSymbol")portfolioSymbol:String,@Query("PortfolioQuantity")portfolioQuantity:String,@Query("PortfolioType")portfolioType:String="SELL",
                          @Query("PortfolioRate")portfolioRate:String,@Query("PortfolioCommission")portfolioCommission:String,@Query("PortfolioCommissionType")portfolioCommissionType:String,
                          @Query("PortfolioPosition")portfolioPosition:String):List<PortfolioDetailItem>
+
+
+    @GET(value = "/Portfolio")
+    suspend fun addDividend(@Query("ActionType")actionType: String="AddDividend",@Query("DividendSymbol")dividendSymbol:String,@Query("DividendQuantity")dividendQuantity:String,@Query("DividendPerShare")dividendPerShare:String,
+                            @Query("DividendDate")dividendDate:String, @Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
+
+    suspend fun getDividend(@Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
 }

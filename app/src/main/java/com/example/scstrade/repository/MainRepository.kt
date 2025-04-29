@@ -19,6 +19,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.snapshot.Overview
@@ -35,6 +36,7 @@ import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Response
+import retrofit2.http.Query
 
 
 class MainRepository(val apiService: ApiService,val context: Context) {
@@ -457,6 +459,22 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         try{
             return  Resource.Success(apiService.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                 portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun addDividend(dividendSymbol:String,dividendQuantity:String,dividendPerShare:String, dividendDate:String, portfolioMainID:String): Resource<List<DividendItem>> {
+        try {
+            return Resource.Success(apiService.addDividend(dividendSymbol = dividendSymbol, portfolioMainID = portfolioMainID, dividendQuantity = dividendQuantity, dividendDate = dividendDate, dividendPerShare = dividendPerShare))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getDividend(portfolioMainID:String): Resource<List<DividendItem>> {
+        try {
+            return Resource.Success(apiService.getDividend(portfolioMainID))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }

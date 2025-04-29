@@ -95,4 +95,6 @@ dependencies {
     implementation("javax.xml.stream:stax-api:1.0")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
     implementation ("com.facebook.android:facebook-login:[8,9)")
+    debugImplementation ("com.github.chuckerteam.chucker:library:4.1.0")
+    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.1.0")
 }

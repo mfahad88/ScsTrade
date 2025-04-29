@@ -32,7 +32,7 @@ class BuySellActivity : AppCompatActivity() {
     lateinit var binding: ActivityBuySellBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var list:List<String>
-//    lateinit var stockList:ArrayList<PortfolioDetailItem>
+    //    lateinit var stockList:ArrayList<PortfolioDetailItem>
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +98,7 @@ class BuySellActivity : AppCompatActivity() {
 
         if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE){
             val sym=intent.getStringExtra(AppConstants.SYMBOL)
-            val v=sharedViewModel.mutablePortfolioDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.first()
+            val v=sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.first()
             val qty=v?.quantity
             val askPrice= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym,true) }?.map { it.aP }?.first()
             val totalCost = v?.price?.toDouble()
@@ -106,7 +106,7 @@ class BuySellActivity : AppCompatActivity() {
             binding.sellContainer.apply {
                 availableShareValue.text = "${qty}"
                 symbol.setText(sym)
-                buyPrice.setText(Utils.roundTwoDecimal(askPrice))
+                buyPrice.setText(Utils.roundTwoDecimal(askPrice?:0.00))
                 avgBuyPriceValue.setText("${avgBuy}")
                 purchaseDate.setOnFocusChangeListener { view, b ->
                     if(b){
@@ -138,6 +138,40 @@ class BuySellActivity : AppCompatActivity() {
 
             }
 
+        }
+
+        if( findViewById<View>(R.id.dividend_container).visibility == View.VISIBLE){
+            val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
+
+            binding.dividendContainer.apply {
+                symbol.setAdapter(adapter)
+                symbol.setOnDismissListener {
+                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
+                    val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
+
+                }
+                dividendDate.setOnFocusChangeListener { view, b ->
+                    if(b){
+                        showDatePicker(dividendDate)
+                    }
+                }
+                btnDividend.setOnClickListener {
+                    if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && dividendShare.text.isNotEmpty() && dividendDate.text.isNotEmpty()){
+                        sharedViewModel.addDividend(
+                            dividendSymbol = symbol.text.toString(),
+                            dividendDate = dividendDate.text.toString(),
+                            portfolioMainID = porfolioDetail.toString(),
+                            dividendQuantity = shares.text.toString(),
+                            dividendPerShare = dividendShare.text.toString()
+                        )
+                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+                        finish()
+                    }else{
+                        Utils.showError(root,"Empty fields not allowed...")
+                    }
+                }
+            }
         }
     }
 

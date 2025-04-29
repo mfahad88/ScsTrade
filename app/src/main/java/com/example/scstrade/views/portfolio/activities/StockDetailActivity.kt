@@ -16,7 +16,7 @@ import com.example.scstrade.views.portfolio.fragments.SummaryFragment
 import com.google.android.material.tabs.TabLayout
 
 class StockDetailActivity : AppCompatActivity() {
-    private var portfolioMainID: Int=-1
+    var portfolioMainID: Int=-1
     lateinit var binding:ActivityStockDetailBinding
     var symbol:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {

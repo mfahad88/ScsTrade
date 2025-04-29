@@ -209,7 +209,7 @@
     <string name="loss_booked_value">0</string>
     <string name="purchased_c_value">4,269.40</string>
     <string name="sold">Sold Value</string>
-    <string name="sell_trades">Sell Trades (OGDC 1 year history)</string>
+    <string name="sell_trades">Sell Trades (%s 1 year history)</string>
     <string name="date_qty">Date/ Qty</string>
     <string name="net_value">Net Value</string>
     <string name="p_l_on_sell">P/L on Sell</string>

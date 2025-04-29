@@ -1,5 +1,6 @@
 package com.example.scstrade.helper
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.Dialog
 import android.app.UiModeManager
@@ -42,9 +43,13 @@ class Utils {
             if(value!=null) {
                 val decimal=value.toString().substringAfter(".","")
                 if(decimal.length>2) {
-                    return String.format("%.2f", value)
+                    return String.format("%,.2f", value)
                 }else{
-                    return value.toString()
+                    if(value>=1000){
+                    return String.format("%,.2f", value)
+                    }else{
+                        return value.toString()
+                    }
                 }
             }else{
                 return (value?:"0.00").toString()
@@ -63,6 +68,20 @@ class Utils {
                 return "0.0"
             }
 
+        }
+
+        fun animatedValueChange(tv: TextView,from: Double,to:Double,duration: Long = 4000){
+            val animator = ValueAnimator.ofFloat(from.toFloat(), to.toFloat()).apply {
+                this.duration = duration
+                this.setEvaluator { fraction, startValue, endValue ->
+                    startValue as Float + (endValue as Float - startValue) * fraction
+                }
+                addUpdateListener { animation ->
+                    val current = (animation.animatedValue as Float).toDouble()
+                    tv.setText(roundTwoDecimal(current))
+                }
+            }
+            animator.start()
         }
 
         fun compareDates(date1:String,date2:String): Boolean {
