@@ -22,6 +22,7 @@ import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -474,7 +475,15 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
     suspend fun getDividend(portfolioMainID:String): Resource<List<DividendItem>> {
         try {
-            return Resource.Success(apiService.getDividend(portfolioMainID))
+            return Resource.Success(apiService.getDividend(portfolioMainID = portfolioMainID))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getPortfolioItemDetail(portfolioMainID:Int,portfolioSymbol:String): Resource<List<PortfolioItemDetail>> {
+        try {
+            return Resource.Success(apiService.getPortfolioItemDetail(portfolioMainID = portfolioMainID, portfolioSymbol = portfolioSymbol))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }

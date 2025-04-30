@@ -3,8 +3,10 @@ package com.example.scstrade.views.portfolio.adapter
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemHistoryBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.CloseTrade
@@ -28,12 +30,12 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
 
             }
             binding.sellPriceValue.text = Utils.roundTwoDecimal(item.salPrice.toDouble())
-
             binding.purchasePrValue.text = Utils.roundTwoDecimal(item.purPrice.toDouble())
             binding.netPriceValue.text = Utils.roundTwoDecimal(item.purAmount.toDouble())
             binding.netCostValue.text = Utils.roundTwoDecimal(item.salAmount.toDouble())
             binding.quantitySoValue.text = item.salQuantity
             binding.pLOnSellValue.text = "${Utils.roundTwoDecimal((item.salAmount.toDouble() - item.purAmount.toDouble()))}(${Utils.roundTwoDecimal(((item.salAmount.toDouble() - item.purAmount.toDouble()).div(item.salAmount.toDouble())).times(100))}%)"
+            binding.pLOnSellValue.setTextColor(if(binding.pLOnSellValue.text.contains("-")) ContextCompat.getColor(binding.root.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(binding.root.context, R.color.md_theme_primary))
             binding.root.setOnClickListener { onItemClick(item) }
         }
     }

@@ -129,6 +129,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
                     }
 
                 }
+
+                null -> {}
             }
         })
 

@@ -18,6 +18,7 @@ import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -227,6 +228,8 @@ interface ApiService {
     @GET(value = "/Portfolio")
     suspend fun addDividend(@Query("ActionType")actionType: String="AddDividend",@Query("DividendSymbol")dividendSymbol:String,@Query("DividendQuantity")dividendQuantity:String,@Query("DividendPerShare")dividendPerShare:String,
                             @Query("DividendDate")dividendDate:String, @Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
-
-    suspend fun getDividend(@Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
+    @GET(value = "/Portfolio")
+    suspend fun getDividend(@Query("ActionType")actionType: String="GetDividend",@Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
+    @GET(value = "/Portfolio")
+    suspend fun getPortfolioItemDetail(@Query("ActionType")actionType: String="GetPortfolioItemDetails",@Query("PortfolioMainID")portfolioMainID:Int,@Query("PortfolioSymbol")portfolioSymbol:String):List<PortfolioItemDetail>
 }

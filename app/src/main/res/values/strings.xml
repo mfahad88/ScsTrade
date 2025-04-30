@@ -236,6 +236,7 @@
     <string name="history_1_y"><![CDATA[(1 year sold & dividend)]]></string>
     <string name="you_made_a_">You made a total <b>Profit</b> of <b>Rs. 5</b> with an increase of <b>+0.12%</b></string>
     <string name="edit_name">Edit Name</string>
+    <string name="dividend_trades">Dividends (%s 1 year history)</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

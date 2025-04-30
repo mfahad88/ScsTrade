@@ -27,6 +27,7 @@ import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioItem
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -70,6 +71,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
     val mutablePortfolioFinalDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
     val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
+    val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=true
@@ -456,7 +458,21 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             viewModelScope.launch (Dispatchers.IO){
                 val result = repository.addDividend(dividendSymbol, dividendQuantity, dividendPerShare, dividendDate, portfolioMainID)
                 withContext(Dispatchers.Main){
+
                     mutableDividend.value=result
+                }
+            }
+        }
+    }
+
+    fun getPortfolioItemDetail(portfolioMainID:Int,portfolioSymbol:String){
+        mutablePortfolioItemDetail.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.getPortfolioItemDetail(portfolioMainID, portfolioSymbol)
+                withContext(Dispatchers.Main){
+
+                    mutablePortfolioItemDetail.value=result
                 }
             }
         }
