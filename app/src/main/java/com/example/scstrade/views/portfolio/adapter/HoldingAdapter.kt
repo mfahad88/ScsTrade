@@ -2,8 +2,10 @@ package com.example.scstrade.views.portfolio.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemHoldingBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
@@ -19,10 +21,12 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
             onItemClick: (PortfolioItemDetail) -> Unit
         ) {
             binding.apply {
-                dateValue.text = Utils.convertDateString(item.date,"dd-MM-yyyy")
+                dateValue.text = Utils.convertDateString(item.date,"dd-MMM-yyyy")
                 sharesValue.text = "${item.quantity}"
                 netPriceValue.text = "${Utils.roundTwoDecimal(item.rate.toDouble())}"
                 netCostValue.text = "${Utils.roundTwoDecimal(item.rate.toDouble().times(item.quantity.toDouble()))}"
+                currentPLValue.text = "${Utils.roundTwoDecimal(item.currentPL)} (${Utils.roundTwoDecimal(item.currentPercentPL)}%)"
+                currentPLValue.setTextColor(if(currentPLValue.text.contains("-")) ContextCompat.getColor(itemView.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(itemView.context, R.color.md_theme_primary))
 //                currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
 //                        "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
             }

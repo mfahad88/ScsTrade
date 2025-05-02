@@ -70,6 +70,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
     val mutablePortfolioFinalDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
+    val mutablePortfolioFinalDetailOnce=MutableLiveData<Resource<PortfolioDetailItem>>()
     val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     var isFetchAllData=true
@@ -408,6 +409,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         mutablePortfolioFinalDetail.value = result
                     }
                     delay(5000)
+                }
+            }
+        }
+    }
+
+    fun getPortfolioFinalDetailOnce(portfolioMainID: Int?){
+        mutablePortfolioFinalDetailOnce.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+                withContext(Dispatchers.Main) {
+                    mutablePortfolioFinalDetailOnce.value = result
                 }
             }
         }

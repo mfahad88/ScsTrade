@@ -12,6 +12,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHoldingBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
@@ -51,8 +52,33 @@ class HoldingFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.recyclerView.apply {
+                        val shares=result.data?.map { it.quantity.toDouble() }?.sumOf { it }
+                        val purchaseCost= result.data?.map { (it.rate.toDouble().times(it.quantity.toDouble())) }?.sumOf { it }
+                        val avgBuyPrice = purchaseCost?.div(shares?:0.0)
+                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
+                        val currentMarketValue = currentPrice?.times(shares?:0.0)
+                        val daysPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cH }?.first()?.times(shares?:0.0)
+                        val daysPercentPL = ((currentMarketValue?.minus(purchaseCost?:0.0))?.div(purchaseCost?:0.0))?.times(100)
+                         val totalPL= currentMarketValue?.minus(purchaseCost?:0.0)
+                        val totalPercentPL= (totalPL?.div(purchaseCost?:0.0))?.times(100)
+                        binding.apply {
+                            currentPriValue.text = Utils.roundTwoDecimal(currentPrice)
+                            shareOwnedValue.text = "${shares}"
+                            purchaseCoValue.text = Utils.roundTwoDecimal(purchaseCost)
+                            avgBuyPriValue.text = Utils.roundTwoDecimal(avgBuyPrice)
+                            currentMarValue.text = Utils.roundTwoDecimal(currentMarketValue)
+                            daysPLHoValue.text = "${Utils.roundTwoDecimal(daysPL)} (${Utils.roundTwoDecimal(daysPercentPL)}%)"
+                            totalPLHValue.text = "${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(totalPercentPL)}%)"
+                        }
+                        val list= mutableListOf<PortfolioItemDetail>()
 
-                        adapter = HoldingAdapter(result.data?: emptyList()){
+                        result.data?.forEach {
+                            list.add(PortfolioItemDetail(it.date,it.quantity,it.rate,(currentPrice!!.minus(it.rate.toDouble())).times(it.quantity.toDouble()),
+                                ((currentPrice.times(it.quantity.toInt()).minus(it.rate.toDouble().times(it.quantity.toInt()))).div(it.rate.toDouble().times(it.quantity.toInt()))).times(100)
+                            ))
+                        }
+
+                        adapter = HoldingAdapter(list){
 
                         }
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

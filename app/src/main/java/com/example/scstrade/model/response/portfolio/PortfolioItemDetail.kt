@@ -9,5 +9,7 @@ data class PortfolioItemDetail(
     @SerializedName("Quantity")
     val quantity: String,
     @SerializedName("Rate")
-    val rate: String
+    val rate: String,
+    val currentPL:Double,
+    val currentPercentPL:Double
 )
