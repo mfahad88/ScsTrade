@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
-        android:background="@color/md_theme_surface"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".views.portfolio.activities.PortfolioDetailActivity">
-
+        android:layout_height="match_parent">
         <com.example.scstrade.views.widgets.mMarket
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,533 +17,566 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_mar"
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:cardElevation="2dp"
-            app:layout_constraintEnd_toStartOf="@+id/card_compan"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:strokeWidth="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/md_theme_surfaceBright"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="5dp">
-
-                <TextView
-                    android:id="@+id/current_mar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_mar"
-                    android:textAppearance="@style/current_mar" />
-
-                <TextView
-                    android:id="@+id/current_mar_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_mar_value"
-                    android:textAppearance="@style/current_mar_value"
-                    android:textFontWeight="600" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_compan"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:cardElevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/card_mar"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:translationZ="1dp"
+            app:lottie_rawRes="@raw/load_anim" />
 
-            app:strokeWidth="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:background="@color/md_theme_surface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:context=".views.portfolio.activities.PortfolioDetailActivity">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/md_theme_surfaceBright"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="5dp">
 
-                <TextView
-                    android:id="@+id/total_compa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total_compa"
-                    android:textAppearance="@style/current_mar" />
-
-                <TextView
-                    android:id="@+id/total_compa_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_mar_value"
-                    android:textAppearance="@style/current_mar_value"
-                    android:textFontWeight="600" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="117dp"
-            android:layout_marginTop="10dp"
-            app:strokeWidth="0dp"
-            app:cardElevation="2dp"
-            android:id="@+id/p_l_card"
-            app:layout_constraintEnd_toEndOf="@+id/card_compan"
-            app:layout_constraintStart_toStartOf="@+id/card_mar"
-            app:layout_constraintTop_toBottomOf="@+id/card_mar">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="7dp"
-                android:background="@color/md_theme_surfaceBright">
-
-                <TextView
-                    android:id="@+id/p_l_summary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/p_l_summary"
-                    android:textAppearance="@style/p_l_summary"
-                    android:textFontWeight="600"
-                    />
-
-                <RelativeLayout
-                    android:layout_width="103dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/view_detail"
-                    android:background="@drawable/circular_drop_down"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true">
-                    <TextView
-                        android:id="@+id/view_det"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/view_det"
-                        android:textAppearance="@style/view_det" />
-
-                    <ImageView
-                        android:layout_width="8dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:src="@drawable/drop_down"
-                        android:layout_toEndOf="@id/view_det"
-                        android:layout_centerVertical="true"
-                        app:tint="@color/colorDarkerr" />
-
-                </RelativeLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_mar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/card_compan"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_below="@id/p_l_summary"
-                    android:weightSum="2"
-                    android:id="@+id/holdings"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:background="@color/md_theme_surfaceBright"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="5dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="59dp"
-                        android:layout_gravity="start"
-                        app:cardBackgroundColor="#EDFFE0"
-                        app:strokeColor="@color/md_theme_primary"
-                        android:layout_weight="0.975">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/days_p_l_ho"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:textFontWeight="400"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/days_p_l_ho"
-                                android:textAppearance="@style/days_p_l_ho"
-                                />
-
-                            <TextView
-                                android:id="@+id/days_p_l_ho_value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/days_p_l_ho_value"
-                                android:textAppearance="@style/days_p_l_ho_value"
-                                android:gravity="center_horizontal|top"
-                                android:textFontWeight="600"
-                                />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/current_mar"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.05"/>
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="59dp"
-                        android:layout_weight="0.975"
-                        app:cardBackgroundColor="#EDFFE0"
-                        app:strokeColor="@color/md_theme_primary"
-                        android:layout_gravity="end">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/total_p_l_h"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:textFontWeight="400"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/total_p_l_h"
-                                android:textAppearance="@style/days_p_l_ho"
-                                />
+                        android:text="@string/current_mar"
+                        android:textAppearance="@style/current_mar" />
 
-                            <TextView
-                                android:id="@+id/total_p_l_h_value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/days_p_l_ho_value"
-                                android:textAppearance="@style/days_p_l_ho_value"
-                                android:gravity="center_horizontal|top"
-                                android:textFontWeight="600"
-                                />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
+                    <TextView
+                        android:id="@+id/current_mar_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current_mar_value"
+                        android:textAppearance="@style/current_mar_value"
+                        android:textFontWeight="600" />
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_compan"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/card_mar"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+
+                app:strokeWidth="0dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/summary_card"
-                    android:visibility="gone"
-                    android:layout_below="@id/holdings">
+                    android:layout_height="match_parent"
+                    android:background="@color/md_theme_surfaceBright"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="5dp">
+
+                    <TextView
+                        android:id="@+id/total_compa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_compa"
+                        android:textAppearance="@style/current_mar" />
+
+                    <TextView
+                        android:id="@+id/total_compa_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current_mar_value"
+                        android:textAppearance="@style/current_mar_value"
+                        android:textFontWeight="600" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/p_l_card"
+                android:layout_width="0dp"
+                android:layout_height="117dp"
+                android:layout_marginTop="10dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="@+id/card_compan"
+                app:layout_constraintStart_toStartOf="@+id/card_mar"
+                app:layout_constraintTop_toBottomOf="@+id/card_mar"
+                app:strokeWidth="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/md_theme_surfaceBright"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="7dp">
+
+                    <TextView
+                        android:id="@+id/p_l_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/p_l_summary"
+                        android:textAppearance="@style/p_l_summary"
+                        android:textFontWeight="600" />
+
+                    <RelativeLayout
+                        android:id="@+id/view_detail"
+                        android:layout_width="103dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/circular_drop_down">
+
+                        <TextView
+                            android:id="@+id/view_det"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/view_det"
+                            android:textAppearance="@style/view_det" />
+
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="3dp"
+                            android:layout_toEndOf="@id/view_det"
+                            android:src="@drawable/drop_down"
+                            app:tint="@color/colorDarkerr" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
+                        android:id="@+id/holdings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_below="@id/p_l_summary"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="59dp"
+                            android:layout_gravity="start"
+                            android:layout_weight="0.975"
+                            app:cardBackgroundColor="#EDFFE0"
+                            app:strokeColor="@color/md_theme_primary">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/days_p_l_ho"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/days_p_l_ho"
+                                    android:textAppearance="@style/days_p_l_ho"
+                                    android:textFontWeight="400" />
+
+                                <TextView
+                                    android:id="@+id/days_p_l_ho_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center_horizontal|top"
+                                    android:text="@string/days_p_l_ho_value"
+                                    android:textAppearance="@style/days_p_l_ho_value"
+                                    android:textFontWeight="600" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:paddingHorizontal="15dp"
-                            android:orientation="horizontal"
-                            android:background="@color/colorDarkerr"
-                            android:weightSum="3">
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textFontWeight="700"
-                                android:text="@string/summary"
-                                android:textAppearance="@style/summary"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:textFontWeight="700"
-                                android:text="@string/cost"
-                                android:textAppearance="@style/summary"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.4"
-                                android:textFontWeight="700"
-                                android:text="@string/p_l"
-                                android:textAppearance="@style/summary"
-                                android:layout_gravity="center"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:paddingHorizontal="15dp"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
-                            <TextView
-                                android:id="@+id/total"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textFontWeight="500"
-                                android:text="@string/total"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/total_cost"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:textFontWeight="500"
-                                android:text="@string/total_cost"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/total_p_l"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.4"
-                                android:textFontWeight="500"
-                                android:text="@string/total_p_l"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="start|center_vertical"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:paddingHorizontal="15dp"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
-                            <TextView
-                                android:id="@+id/holding"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textFontWeight="500"
-                                android:text="@string/holding"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/holding_cost"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:textFontWeight="500"
-                                android:text="@string/total_cost"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/holding_p_l"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.4"
-                                android:textFontWeight="500"
-                                android:text="@string/total_p_l"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="start|center_vertical"
-                                />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:paddingHorizontal="15dp"
-                            android:orientation="horizontal"
-                            android:weightSum="3">
-                            <TextView
-                                android:id="@+id/history"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textFontWeight="500"
-                                android:text="@string/history"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/history_cost"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:textFontWeight="500"
-                                android:text="@string/history_cost"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/history_p_l"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.4"
-                                android:textFontWeight="500"
-                                android:text="@string/history_p_l"
-                                android:textAppearance="@style/total"
-                                android:layout_gravity="start|center_vertical"
-                                />
-                        </LinearLayout>
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.05" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="59dp"
+                            android:layout_gravity="end"
+                            android:layout_weight="0.975"
+                            app:cardBackgroundColor="#EDFFE0"
+                            app:strokeColor="@color/md_theme_primary">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/total_p_l_h"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/total_p_l_h"
+                                    android:textAppearance="@style/days_p_l_ho"
+                                    android:textFontWeight="400" />
+
+                                <TextView
+                                    android:id="@+id/total_p_l_h_value"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center_horizontal|top"
+                                    android:text="@string/days_p_l_ho_value"
+                                    android:textAppearance="@style/days_p_l_ho_value"
+                                    android:textFontWeight="600" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
-            </RelativeLayout>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/summary_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/holdings"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
 
-        </com.google.android.material.card.MaterialCardView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linearLayout7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/p_l_card"
-            app:layout_constraintStart_toStartOf="@id/p_l_card"
-            app:layout_constraintTop_toBottomOf="@id/p_l_card">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@color/colorDarkerr"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="15dp"
+                                android:weightSum="3">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/holding"
-                android:textAppearance="@style/holding_sha"
-                android:textFontWeight="600" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:text="@string/summary"
+                                    android:textAppearance="@style/summary"
+                                    android:textFontWeight="700" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/share_in"
-                android:textAppearance="@style/share_in"
-                android:textFontWeight="400" />
-        </LinearLayout>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.6"
+                                    android:text="@string/cost"
+                                    android:textAppearance="@style/summary"
+                                    android:textFontWeight="700" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerView"
-            android:nestedScrollingEnabled="false"
-            tools:itemCount="1"
-            android:layout_marginHorizontal="15dp"
-            tools:listitem="@layout/item_share_in_hand"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1.4"
+                                    android:text="@string/p_l"
+                                    android:textAppearance="@style/summary"
+                                    android:textFontWeight="700" />
+                            </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="15dp"
+                                android:weightSum="3">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutHistory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/p_l_card"
-            app:layout_constraintStart_toStartOf="@id/p_l_card"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView">
+                                <TextView
+                                    android:id="@+id/total"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:text="@string/total"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/history"
-                android:textAppearance="@style/holding_sha"
-                android:textFontWeight="600" />
+                                <TextView
+                                    android:id="@+id/total_cost"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.6"
+                                    android:text="@string/total_cost"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/history_1_y"
-                android:textAppearance="@style/share_in"
-                android:textFontWeight="400" />
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/recyclerHistory"
-            tools:itemCount="1"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_1_year_history"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutHistory" />
+                                <TextView
+                                    android:id="@+id/total_p_l"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start|center_vertical"
+                                    android:layout_weight="1.4"
+                                    android:text="@string/total_p_l"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+                            </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:contentDescription="Add to watchlist"
-            style="@style/CustomFloatingActionButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/baseline_add_24"
-            />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="15dp"
+                                android:weightSum="3">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            app:strokeWidth="0dp"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_marginBottom="10dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/md_theme_surface"
-            android:id="@+id/floating_menu"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButton">
+                                <TextView
+                                    android:id="@+id/holding"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:text="@string/holding"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+
+                                <TextView
+                                    android:id="@+id/holding_cost"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.6"
+                                    android:text="@string/total_cost"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+
+                                <TextView
+                                    android:id="@+id/holding_p_l"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start|center_vertical"
+                                    android:layout_weight="1.4"
+                                    android:text="@string/total_p_l"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="15dp"
+                                android:weightSum="3">
+
+                                <TextView
+                                    android:id="@+id/history"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:text="@string/history"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+
+                                <TextView
+                                    android:id="@+id/history_cost"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.6"
+                                    android:text="@string/history_cost"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+
+                                <TextView
+                                    android:id="@+id/history_p_l"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start|center_vertical"
+                                    android:layout_weight="1.4"
+                                    android:text="@string/history_p_l"
+                                    android:textAppearance="@style/total"
+                                    android:textFontWeight="500" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:paddingVertical="10dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/new_buy_trade"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textFontWeight="500"
-                    android:text="@string/new_buy_trade"
-                    android:textAppearance="@style/new_buy_trade"
-                    android:lineSpacingExtra="3sp"
-                    android:gravity="start"
-                    />
+                android:id="@+id/linearLayout7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/p_l_card"
+                app:layout_constraintStart_toStartOf="@id/p_l_card"
+                app:layout_constraintTop_toBottomOf="@id/p_l_card">
 
                 <TextView
-                    android:id="@+id/sell_trade"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textFontWeight="500"
-                    android:paddingVertical="5dp"
-                    android:visibility="gone"
-                    android:text="@string/sell_trade"
-                    android:textAppearance="@style/new_buy_trade"
-                    android:lineSpacingExtra="3sp"
-                    android:gravity="start"
-                    />
+                    android:text="@string/holding"
+                    android:textAppearance="@style/holding_sha"
+                    android:textFontWeight="600" />
 
                 <TextView
-                    android:id="@+id/add_dividend"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textFontWeight="500"
-                    android:paddingVertical="5dp"
-                    android:text="@string/add_dividend"
-                    android:textAppearance="@style/new_buy_trade"
-                    android:lineSpacingExtra="3sp"
-                    android:gravity="start"
-                    />
+                    android:layout_marginStart="4dp"
+                    android:text="@string/share_in"
+                    android:textAppearance="@style/share_in"
+                    android:textFontWeight="400" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_share_in_hand" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/p_l_card"
+                app:layout_constraintStart_toStartOf="@id/p_l_card"
+                app:layout_constraintTop_toBottomOf="@id/recyclerView">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/history"
+                    android:textAppearance="@style/holding_sha"
+                    android:textFontWeight="600" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/history_1_y"
+                    android:textAppearance="@style/share_in"
+                    android:textFontWeight="400" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutHistory"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_1_year_history" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                style="@style/CustomFloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:contentDescription="Add to watchlist"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/baseline_add_24" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/floating_menu"
+                android:layout_width="146dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/md_theme_surface"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+                app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+                app:strokeWidth="0dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:id="@+id/new_buy_trade"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:lineSpacingExtra="3sp"
+                        android:paddingVertical="5dp"
+                        android:text="@string/new_buy_trade"
+                        android:textAppearance="@style/new_buy_trade"
+                        android:textFontWeight="500" />
+
+                    <TextView
+                        android:id="@+id/sell_trade"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:lineSpacingExtra="3sp"
+                        android:paddingVertical="5dp"
+                        android:text="@string/sell_trade"
+                        android:textAppearance="@style/new_buy_trade"
+                        android:textFontWeight="500"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/add_dividend"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:lineSpacingExtra="3sp"
+                        android:paddingVertical="5dp"
+                        android:text="@string/add_dividend"
+                        android:textAppearance="@style/new_buy_trade"
+                        android:textFontWeight="500" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

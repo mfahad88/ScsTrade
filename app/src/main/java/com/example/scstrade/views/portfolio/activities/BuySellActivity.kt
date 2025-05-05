@@ -23,6 +23,7 @@ import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -63,6 +64,7 @@ class BuySellActivity : AppCompatActivity() {
 
 
         if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){
+
             val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
 
             binding.buyContainer.apply {
@@ -79,18 +81,50 @@ class BuySellActivity : AppCompatActivity() {
                         showDatePicker(purchaseDate)
                     }
                 }
+                if(intent.getIntExtra(AppConstants.MODE,0)==1){
+                    val portfolioDetailItem=intent.getParcelableExtra<PortfolioItemDetail>(AppConstants.PORTFOLIO_ITEM)
+                    binding.buyContainer.apply {
+
+                        symbol.setText(intent.getStringExtra(AppConstants.SYMBOL))
+                        shares.setText(portfolioDetailItem?.quantity)
+                        buyPrice.setText(portfolioDetailItem?.rate)
+
+                    }
+                }
+
                 button2.setOnClickListener {
-                    if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
-                        && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                        sharedViewModel.buyStock(
-                            portfolioMainID=porfolioDetail,portfolioDate=purchaseDate.text.toString(),portfolioSymbol=symbol.text.split("-").first(),
-                            portfolioQuantity=shares.text.toString(),portfolioRate=buyPrice.text.toString(),portfolioCommission=comissionShare.text.toString(),
-                            portfolioCommissionType= if(radioCommissionType.checkedRadioButtonId==R.id.radioShare) "Rs" else "Percentage",portfolioPosition = "0"
-                        )
-                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+                    if (symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
+                        && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId != null && purchaseDate.text.isNotEmpty()
+                    ) {
+                       if(intent.getIntExtra(AppConstants.MODE,0)==0){
+                           sharedViewModel.buyStock(
+                               portfolioMainID = porfolioDetail,
+                               portfolioDate = purchaseDate.text.toString(),
+                               portfolioSymbol = symbol.text.split("-").first(),
+                               portfolioQuantity = shares.text.toString(),
+                               portfolioRate = buyPrice.text.toString(),
+                               portfolioCommission = comissionShare.text.toString(),
+                               portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                               portfolioPosition = "0"
+                           )
+                           sharedViewModel.getPortfolioItemDetail(porfolioDetail,symbol.text.split("-").first())
+                       }else{
+                           /*sharedViewModel.updateTrade(
+                               portfolioMainID = porfolioDetail,
+                               portfolioDate = purchaseDate.text.toString(),
+                               portfolioSymbol = symbol.text.split("-").first(),
+                               portfolioQuantity = shares.text.toString(),
+                               portfolioRate = buyPrice.text.toString(),
+                               portfolioCommission = comissionShare.text.toString(),
+                               portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                               portfolioPosition = "0",
+                               portfolioDetailID =
+                           )*/
+                       }
+                        Toast.makeText(it.context, "Done", Toast.LENGTH_SHORT).show()
                         finish()
-                    }else{
-                        Utils.showError(root,"Empty fields not allowed...")
+                    } else {
+                        Utils.showError(root, "Empty fields not allowed...")
                     }
                 }
             }

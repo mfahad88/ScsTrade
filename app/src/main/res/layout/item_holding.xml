@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="10dp"
     android:paddingVertical="15dp"
     android:weightSum="5">
@@ -72,11 +72,70 @@
         android:text="@string/current_p_l_value"
         android:textAppearance="@style/current_p_l_value" />
 
-    <ImageView
-        android:layout_width="3dp"
+    <FrameLayout
+        android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:layout_weight="0.5"
-        android:src="@drawable/three_dots"
-        app:tint="@color/colorDarkerr"/>
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:id="@+id/three_dots"
+            android:src="@drawable/three_dots"
+            app:tint="@color/colorDarkerr"/>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/floating_menu"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/md_theme_surface"
+            app:cardElevation="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+            app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+            app:strokeWidth="0dp"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/edit"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:lineSpacingExtra="3sp"
+                    android:paddingVertical="5dp"
+                    android:drawableStart="@drawable/baseline_edit_24"
+                    android:text="Edit"
+                    android:drawablePadding="10dp"
+                    android:textAppearance="@style/new_buy_trade"
+                    android:textFontWeight="500" />
+
+                <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:lineSpacingExtra="3sp"
+                    android:paddingVertical="5dp"
+                    android:drawablePadding="10dp"
+                    android:text="Delete"
+                    android:drawableStart="@drawable/baseline_delete_24"
+                    android:textAppearance="@style/new_buy_trade"
+                    android:textFontWeight="500" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </FrameLayout>
+
 </LinearLayout>

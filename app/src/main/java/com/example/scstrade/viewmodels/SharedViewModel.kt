@@ -75,7 +75,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     var isFetchAllData=true
     var isFetchIndices=true
-    var isFetchPortfolioFinal=true
+    var isFetchPortfolioFinal=false
     val isConnected = ConnectivityObserver(application)
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -403,8 +403,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         mutablePortfolioFinalDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
+
+
                 while (isFetchPortfolioFinal) {
                     val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+
                     withContext(Dispatchers.Main) {
                         mutablePortfolioFinalDetail.value = result
                     }
@@ -429,6 +432,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
                 val result = repository.buyTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                    portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
+                withContext(Dispatchers.Main){
+                    val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+//                    mutablePortfolioDetail.value = result
+                }
+            }
+        }
+    }
+
+    fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
                 withContext(Dispatchers.Main){
                     val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
@@ -511,7 +527,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         isFetchIndices=false
         isFetchAllData=false
     }
-
+    fun startPortfolioFinal(){
+        isFetchPortfolioFinal = true
+    }
     fun stopPortfolioFinal(){
         isFetchPortfolioFinal = false
     }

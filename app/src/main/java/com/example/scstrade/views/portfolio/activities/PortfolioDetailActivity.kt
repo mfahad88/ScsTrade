@@ -2,6 +2,7 @@ package com.example.scstrade.views.portfolio.activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,7 +23,9 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
+import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
 import com.google.gson.reflect.TypeToken
+import kotlin.math.roundToInt
 
 class PortfolioDetailActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPortfolioDetailBinding
@@ -37,7 +40,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel
-        sharedViewModel.isFetchPortfolioFinal=true
+        sharedViewModel.startPortfolioFinal()
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -69,6 +72,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 }
             }
 
+//            recyclerView.addItemDecoration(VerticalSpaceItemDecoration(10, color = Color.parseColor("#ffffff")))
             newBuyTrade.setOnClickListener {
                 val intent = Intent(this.root.context, BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_BUY,true)
@@ -99,33 +103,60 @@ class PortfolioDetailActivity : AppCompatActivity() {
                 }
                 floatingMenu.visibility = View.GONE
             }
+            recyclerView.apply {
 
+
+                adapter = ShareInHandAdapter(
+                    onItemClick = { res->
+                        val intent = Intent(this.context, BuySellActivity::class.java)
+                        intent.putExtra(AppConstants.IS_Sell, true)
+                        intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                        intent.putExtra(AppConstants.SYMBOL, res.symbol)
+                        startActivity(intent)
+                    }, onItemClickSnapshot = {res->
+                        val intent = Intent(this.context, StockDetailActivity::class.java)
+                        intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                        intent.putExtra(AppConstants.SYMBOL, res.symbol)
+                        startActivity(intent)
+                    })
+
+                layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+
+            }
 
         }
+
+
         sharedViewModel.mutablePortfolioFinalDetail.observe(this, Observer { result->
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    val list= mutableListOf<ShareInHand>()
-                    binding.recyclerView.apply {
+                    var currentMarketValue=0.0
+                    var daysPL=0.0
+                    var totalCost=0.0
+                    result.data?.fifoPortfolio?.forEach {res->
+                        val shares=res.quantity.toInt()
+                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
+                        val ch = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cH }?.first()
+
+                        totalCost = totalCost.plus(res.price.toDouble().times(res.quantity.toInt()))
+                        daysPL+=ch?.times(shares)?:0.0
+                        currentMarketValue+=currentPrice?.times(shares)?:0.0
+                    }
+                    binding.currentMarValue.text = Utils.commaSeparated(currentMarketValue.roundToInt())
+                    binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
+                    binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
+                    (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
 
 
-                        adapter = ShareInHandAdapter(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList(),
-                            onItemClick = { res->
-                                val intent = Intent(this.context, BuySellActivity::class.java)
-                                intent.putExtra(AppConstants.IS_Sell, true)
-                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                                intent.putExtra(AppConstants.SYMBOL, res.symbol)
-                                startActivity(intent)
-                        }, onItemClickSnapshot = {res->
-                                val intent = Intent(this.context, StockDetailActivity::class.java)
-                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                                intent.putExtra(AppConstants.SYMBOL, res.symbol)
-                                startActivity(intent)
-                            })
+                    binding.apply {
+                        totalCompaValue.text = "${binding.recyclerView.adapter?.itemCount}"
+                    }
 
-                        layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+                    binding.apply {
+                        loader.visibility = View.GONE
+                        main.visibility = View.VISIBLE
                     }
 
                 }
@@ -142,6 +173,11 @@ class PortfolioDetailActivity : AppCompatActivity() {
             AppConstants.USER,listType)
         login=user.first()
         Log.e("User: ",user.toString())
+    }
+
+    override fun onStop() {
+        sharedViewModel.stopPortfolioFinal()
+        super.onStop()
     }
 
     override fun onDestroy() {

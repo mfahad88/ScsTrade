@@ -9,6 +9,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
 import android.icu.text.DecimalFormat
 import android.os.Build
+import android.os.Handler
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
@@ -18,11 +19,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -53,6 +57,14 @@ class Utils {
                 }
             }else{
                 return (value?:"0.00").toString()
+            }
+        }
+
+        fun commaSeparated(value:Int):String{
+            if(value>=1000) {
+                return String.format("%,d", value)
+            }else{
+                return value.toString()
             }
         }
         fun convertToMillions(value: Double?): String {
@@ -316,6 +328,10 @@ class Utils {
             }
             bottomSheetDialog.findViewById<RelativeLayout>(R.id.buttonContinue)?.setOnClickListener {
                 onItemContinue?.invoke()
+                bottomSheetDialog.dismiss()
+            }
+            bottomSheetDialog.lifecycleScope.launch {
+                delay(5000)
                 bottomSheetDialog.dismiss()
             }
             bottomSheetDialog.show()

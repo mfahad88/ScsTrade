@@ -1,6 +1,7 @@
 package com.example.scstrade.views.portfolio.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,12 +14,15 @@ import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 
 import java.util.Collections
 
-class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private val onItemClick: (PortfolioItemDetail) -> Unit) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
+class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private val onItemClick: (PortfolioItemDetail) -> Unit,private val onItemEditClick: (PortfolioItemDetail) -> Unit,
+                     private val onItemDeleteClick: (PortfolioItemDetail) -> Unit) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
     class HoldingViewHolder(private val binding: ItemHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             item: PortfolioItemDetail,
-            onItemClick: (PortfolioItemDetail) -> Unit
+            onItemClick: (PortfolioItemDetail) -> Unit,
+            onItemEditClick: (PortfolioItemDetail) -> Unit,
+            onItemDeleteClick: (PortfolioItemDetail) -> Unit
         ) {
             binding.apply {
                 dateValue.text = Utils.convertDateString(item.date,"dd-MMM-yyyy")
@@ -27,6 +31,22 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
                 netCostValue.text = "${Utils.roundTwoDecimal(item.rate.toDouble().times(item.quantity.toDouble()))}"
                 currentPLValue.text = "${Utils.roundTwoDecimal(item.currentPL)} (${Utils.roundTwoDecimal(item.currentPercentPL)}%)"
                 currentPLValue.setTextColor(if(currentPLValue.text.contains("-")) ContextCompat.getColor(itemView.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(itemView.context, R.color.md_theme_primary))
+                threeDots.setOnClickListener {
+                    if(binding.floatingMenu.visibility == View.GONE) {
+                        binding.floatingMenu.visibility = View.VISIBLE
+                    }else{
+                        binding.floatingMenu.visibility = View.GONE
+                    }
+                }
+
+                edit.setOnClickListener {
+                    onItemEditClick(item)
+                    binding.floatingMenu.visibility = View.GONE
+                }
+                delete.setOnClickListener {
+                    onItemDeleteClick(item)
+                    binding.floatingMenu.visibility = View.GONE
+                }
 //                currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
 //                        "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
             }
@@ -40,7 +60,7 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
     }
 
     override fun onBindViewHolder(holder: HoldingViewHolder, position: Int) {
-        holder.bind(itemList[position], onItemClick)
+        holder.bind(itemList[position], onItemClick,onItemEditClick,onItemDeleteClick)
     }
 
     override fun getItemCount(): Int {

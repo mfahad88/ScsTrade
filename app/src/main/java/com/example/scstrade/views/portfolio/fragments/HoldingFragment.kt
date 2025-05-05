@@ -1,5 +1,6 @@
 package com.example.scstrade.views.portfolio.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHoldingBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.activities.BuySellActivity
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
 import com.example.scstrade.views.portfolio.adapter.HoldingAdapter
 
@@ -69,6 +72,8 @@ class HoldingFragment : Fragment() {
                             currentMarValue.text = Utils.roundTwoDecimal(currentMarketValue)
                             daysPLHoValue.text = "${Utils.roundTwoDecimal(daysPL)} (${Utils.roundTwoDecimal(daysPercentPL)}%)"
                             totalPLHValue.text = "${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(totalPercentPL)}%)"
+                            mainContainer.visibility = View.VISIBLE
+                            loader.visibility = View.GONE
                         }
                         val list= mutableListOf<PortfolioItemDetail>()
 
@@ -78,9 +83,20 @@ class HoldingFragment : Fragment() {
                             ))
                         }
 
-                        adapter = HoldingAdapter(list){
+                        adapter = HoldingAdapter(list, onItemClick = {
 
-                        }
+                        }, onItemEditClick = {
+                            val intent = Intent(requireContext(), BuySellActivity::class.java)
+                            intent.putExtra(AppConstants.IS_BUY,true)
+                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,stockDetailActivity.portfolioMainID)
+                            intent.putExtra(AppConstants.SYMBOL,stockDetailActivity.symbol)
+                            intent.putExtra(AppConstants.MODE,1)
+                            intent.putExtra(AppConstants.PORTFOLIO_ITEM,it)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }, onItemDeleteClick = {
+
+                        })
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                     }
                 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     app:strokeWidth="0dp"
     app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/md_theme_surfaceBright"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout

@@ -10,8 +10,9 @@ import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
 import com.example.scstrade.model.response.stock.StockItem
 
-class ShareInHandAdapter(val itemList: List<FifoPortfolio>,val list:List<StockItem>, private val onItemClick: (FifoPortfolio) -> Unit,private val onItemClickSnapshot: (FifoPortfolio) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
-
+class ShareInHandAdapter( private val onItemClick: (FifoPortfolio) -> Unit,private val onItemClickSnapshot: (FifoPortfolio) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
+    val itemList= mutableListOf<FifoPortfolio>()
+    val list = mutableListOf<StockItem>()
     class ShareInHandViewHolder(private val binding: ItemShareInHandBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item:FifoPortfolio,stockItem: StockItem, onItemClick: (FifoPortfolio) -> Unit,onItemClickSnapshot: (FifoPortfolio) -> Unit) {
@@ -64,5 +65,12 @@ class ShareInHandAdapter(val itemList: List<FifoPortfolio>,val list:List<StockIt
         return itemList.size
     }
 
+    fun submitList(itemList:List<FifoPortfolio>, list:List<StockItem>){
+        this.itemList.clear()
+        this.itemList.addAll(itemList)
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 
 }

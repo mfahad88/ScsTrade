@@ -32,7 +32,7 @@ class PortfolioActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityPortfolioBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.main)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -70,6 +70,7 @@ class PortfolioActivity : AppCompatActivity() {
                             if(str.contains("delete",true)) {
                                 Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){
                                     sharedViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
+                                    Utils.showDeleteBottomSheet(this@PortfolioActivity,"Your portfolio has been deleted.")
 
                                 }
                             }

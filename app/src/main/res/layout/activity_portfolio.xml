@@ -7,7 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".views.portfolio.activities.PortfolioActivity">
 
-
+    <com.example.scstrade.views.widgets.mMarket
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loader"
         android:layout_width="wrap_content"
@@ -21,14 +27,14 @@
         app:lottie_rawRes="@raw/load_anim" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/recyclerView"
-        tools:listitem="@layout/item_portfolio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:listitem="@layout/item_portfolio" />
 
     <Button
         android:id="@+id/btnCreate"

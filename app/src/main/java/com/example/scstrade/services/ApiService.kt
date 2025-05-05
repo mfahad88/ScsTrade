@@ -213,6 +213,12 @@ interface ApiService {
                          @Query("PortfolioPosition")portfolioPosition:String,@Query("PortfolioDetailID")portfolioDetailID:String):List<PortfolioDetailItem>
 
     @GET(value = "/Portfolio")
+    suspend fun updateTrade(@Query("ActionType")actionType:String="UpdateTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDate")portfolioDate:String,
+                         @Query("PortfolioSymbol")portfolioSymbol:String,@Query("PortfolioQuantity")portfolioQuantity:String,@Query("PortfolioType")portfolioType:String="BUY",
+                         @Query("PortfolioRate")portfolioRate:String,@Query("PortfolioCommission")portfolioCommission:String,@Query("PortfolioCommissionType")portfolioCommissionType:String,
+                         @Query("PortfolioPosition")portfolioPosition:String,@Query("PortfolioDetailID")portfolioDetailID:String):List<PortfolioDetailItem>
+
+    @GET(value = "/Portfolio")
     suspend fun buyStock(@Query("ActionType")actionType:String="AddTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDate")portfolioDate:String,
                          @Query("PortfolioSymbol")portfolioSymbol:String,@Query("PortfolioQuantity")portfolioQuantity:String,@Query("PortfolioType")portfolioType:String="BUY",
                          @Query("PortfolioRate")portfolioRate:String,@Query("PortfolioCommission")portfolioCommission:String,@Query("PortfolioCommissionType")portfolioCommissionType:String,

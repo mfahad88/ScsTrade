@@ -31,6 +31,9 @@ class StockDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.tabLayout.getTabAt(0)?.select()
+        loadFragment(SummaryFragment())
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab!!.text!!.equals(getString(R.string.summary))){
