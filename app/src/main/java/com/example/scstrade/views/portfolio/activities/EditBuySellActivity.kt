@@ -8,51 +8,46 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.scstrade.R
-import com.example.scstrade.databinding.ActivityStockDetailBinding
+import com.example.scstrade.databinding.ActivityBuySellBinding
+import com.example.scstrade.databinding.ActivityEditBuySellBinding
 import com.example.scstrade.helper.AppConstants
-import com.example.scstrade.views.portfolio.fragments.HistoryFragment
-import com.example.scstrade.views.portfolio.fragments.HoldingFragment
-import com.example.scstrade.views.portfolio.fragments.SummaryFragment
+import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.fragments.BuyFragment
+import com.example.scstrade.views.portfolio.fragments.SellFragment
 import com.google.android.material.tabs.TabLayout
 
-class StockDetailActivity : AppCompatActivity() {
-    var portfolioMainID: Int=-1
-    lateinit var binding:ActivityStockDetailBinding
-    var symbol:String = ""
+class EditBuySellActivity : AppCompatActivity() {
+    lateinit var binding: ActivityEditBuySellBinding
+    lateinit var sharedViewModel: SharedViewModel
+    var portfolioMainID=-1
+    var symbol=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
-        setContentView(binding.root)
-        portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        binding = ActivityEditBuySellBinding.inflate(LayoutInflater.from(this))
+        sharedViewModel = (this.application as MyApp).viewModel
+        portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID, -1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
+        sharedViewModel.getPortfolioDetails(portfolioMainID)
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
         binding.tabLayout.getTabAt(0)?.select()
-        loadFragment(SummaryFragment())
+        loadFragment(BuyFragment())
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab!!.text!!.equals(getString(R.string.summary))){
-                    loadFragment(SummaryFragment())
-                }else if(tab.text!!.equals(getString(R.string.history))){
-                    loadFragment(HistoryFragment())
-                }else if(tab.text!!.equals(getString(R.string.holding))){
-                    loadFragment(HoldingFragment())
+                if(tab?.text?.toString().equals("Buy",false)){
+                    loadFragment(BuyFragment())
+                }else{
+                    loadFragment(SellFragment())
                 }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -65,13 +60,13 @@ class StockDetailActivity : AppCompatActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
-                .replace(binding.fragmentContainer.id, fragment)
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             supportFragmentManager
                 .beginTransaction()
-                .replace(binding.fragmentContainer.id,fragment)
+                .replace(R.id.fragment_container, fragment)
                 .commit()
         }
     }

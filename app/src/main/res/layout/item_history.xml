@@ -6,10 +6,10 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="10dp"
     android:paddingVertical="15dp"
-    android:weightSum="5">
+    android:weightSum="4">
 
     <LinearLayout
-        android:layout_width="45dp"
+        android:layout_width="0dp"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -114,7 +114,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/p_l_on_sell_value"
-        android:layout_width="25dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textFontWeight="500"
@@ -128,6 +128,7 @@
         android:padding="10dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.5"
+        android:visibility="gone"
         android:src="@drawable/three_dots"
         app:tint="@color/colorDarkerr"/>
 </LinearLayout>

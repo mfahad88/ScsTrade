@@ -118,6 +118,11 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
                         intent.putExtra(AppConstants.SYMBOL, res.symbol)
                         startActivity(intent)
+                    }, onItemEditClick = {res->
+                        val intent = Intent(this.context, EditBuySellActivity::class.java)
+                        intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                        intent.putExtra(AppConstants.SYMBOL, res.symbol)
+                        startActivity(intent)
                     })
 
                 layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)

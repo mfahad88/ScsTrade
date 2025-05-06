@@ -23,6 +23,7 @@ import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
@@ -42,7 +43,8 @@ class BuySellActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
         list = sharedViewModel.mutableAllData.value?.data?.map { "${it.sYM}-${it.nM}" }?.toList()?: emptyList()
-        val porfolioDetail=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        val porfolioMainId=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        val portfolioDetails=intent.getParcelableExtra<PortfolioDetails>(AppConstants.PORTFOLIO_DETAIL)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
 //            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
@@ -68,6 +70,8 @@ class BuySellActivity : AppCompatActivity() {
             val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
 
             binding.buyContainer.apply {
+
+
                 symbol.setAdapter(adapter)
                 symbol.setOnDismissListener {
                     val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
@@ -82,13 +86,17 @@ class BuySellActivity : AppCompatActivity() {
                     }
                 }
                 if(intent.getIntExtra(AppConstants.MODE,0)==1){
-                    val portfolioDetailItem=intent.getParcelableExtra<PortfolioItemDetail>(AppConstants.PORTFOLIO_ITEM)
-                    binding.buyContainer.apply {
-
-                        symbol.setText(intent.getStringExtra(AppConstants.SYMBOL))
-                        shares.setText(portfolioDetailItem?.quantity)
-                        buyPrice.setText(portfolioDetailItem?.rate)
-
+                    symbol.setText(portfolioDetails?.portfolioSymbol)
+                    shares.setText(portfolioDetails?.portfolioQuantity.toString())
+                    buyPrice.setText(portfolioDetails?.portfolioRate.toString())
+                    purchaseDate.setText(Utils.convertDateString(portfolioDetails?.portfolioDate?:"01-01-1990","yyyy-MM-dd"))
+                    comissionShare.setText(portfolioDetails?.portfolioCommission.toString())
+                    if(portfolioDetails?.portfolioCommissionType.equals("Rs",true)){
+                        radioShare.isChecked=true
+                        radioVar.isChecked=false
+                    }else{
+                        radioShare.isChecked=false
+                        radioVar.isChecked=true
                     }
                 }
 
@@ -96,31 +104,32 @@ class BuySellActivity : AppCompatActivity() {
                     if (symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId != null && purchaseDate.text.isNotEmpty()
                     ) {
-                       if(intent.getIntExtra(AppConstants.MODE,0)==0){
-                           sharedViewModel.buyStock(
-                               portfolioMainID = porfolioDetail,
-                               portfolioDate = purchaseDate.text.toString(),
-                               portfolioSymbol = symbol.text.split("-").first(),
-                               portfolioQuantity = shares.text.toString(),
-                               portfolioRate = buyPrice.text.toString(),
-                               portfolioCommission = comissionShare.text.toString(),
-                               portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                               portfolioPosition = "0"
-                           )
-                           sharedViewModel.getPortfolioItemDetail(porfolioDetail,symbol.text.split("-").first())
-                       }else{
-                           /*sharedViewModel.updateTrade(
-                               portfolioMainID = porfolioDetail,
-                               portfolioDate = purchaseDate.text.toString(),
-                               portfolioSymbol = symbol.text.split("-").first(),
-                               portfolioQuantity = shares.text.toString(),
-                               portfolioRate = buyPrice.text.toString(),
-                               portfolioCommission = comissionShare.text.toString(),
-                               portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                               portfolioPosition = "0",
-                               portfolioDetailID =
-                           )*/
-                       }
+                        if(intent.getIntExtra(AppConstants.MODE,0)==0){
+                            sharedViewModel.buyStock(
+                                portfolioMainID = porfolioMainId,
+                                portfolioDate = purchaseDate.text.toString(),
+                                portfolioSymbol = symbol.text.split("-").first(),
+                                portfolioQuantity = shares.text.toString(),
+                                portfolioRate = buyPrice.text.toString(),
+                                portfolioCommission = comissionShare.text.toString(),
+                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                portfolioPosition = "0"
+                            )
+                            sharedViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
+                        }else{
+                            sharedViewModel.updateTrade(
+                                portfolioMainID = porfolioMainId,
+                                portfolioType = "BUY",
+                                portfolioDate = purchaseDate.text.toString(),
+                                portfolioSymbol = symbol.text.split("-").first(),
+                                portfolioQuantity = shares.text.toString(),
+                                portfolioRate = buyPrice.text.toString(),
+                                portfolioCommission = comissionShare.text.toString(),
+                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                portfolioPosition = "0",
+                                portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
+                            )
+                        }
                         Toast.makeText(it.context, "Done", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
@@ -131,38 +140,83 @@ class BuySellActivity : AppCompatActivity() {
         }
 
         if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE){
-            val sym=intent.getStringExtra(AppConstants.SYMBOL)
-            val v=sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.first()
-            val qty=v?.quantity
-            val askPrice= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym,true) }?.map { it.aP }?.first()
-            val totalCost = v?.price?.toDouble()
-            val avgBuy= totalCost?.div(v.quantity.toInt())
+
+
             binding.sellContainer.apply {
-                availableShareValue.text = "${qty}"
-                symbol.setText(sym)
-                buyPrice.setText(Utils.roundTwoDecimal(askPrice?:0.00))
-                avgBuyPriceValue.setText("${avgBuy}")
-                purchaseDate.setOnFocusChangeListener { view, b ->
-                    if(b){
-                        showDatePicker(purchaseDate)
+                if(intent.getIntExtra(AppConstants.MODE,0)==0) {
+                    val sym = intent.getStringExtra(AppConstants.SYMBOL)
+                    val v =
+                        sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                            it.symbol.equals(
+                                sym,
+                                true
+                            )
+                        }?.first()
+                    val qty = v?.quantity
+                    val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                        it.sYM.equals(
+                            sym,
+                            true
+                        )
+                    }?.map { it.aP }?.first()
+                    val totalCost = v?.price?.toDouble()
+                    val avgBuy = totalCost?.div(v.quantity.toInt())
+                    availableShareValue.text = "${qty}"
+                    symbol.setText(sym)
+                    buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
+                    avgBuyPriceValue.setText("${avgBuy}")
+                    purchaseDate.setOnFocusChangeListener { view, b ->
+                        if (b) {
+                            showDatePicker(purchaseDate)
+                        }
+                    }
+                }else{
+                    availableShareValue.visibility=View.GONE
+                    avgBuyPriceValue.visibility = View.GONE
+                    symbol.setText(portfolioDetails?.portfolioSymbol)
+                    shares.setText(portfolioDetails?.portfolioQuantity.toString())
+                    buyPrice.setText(portfolioDetails?.portfolioRate.toString())
+                    purchaseDate.setText(Utils.convertDateString(portfolioDetails?.portfolioDate?:"01-01-1990","yyyy-MM-dd"))
+                    comissionShare.setText(portfolioDetails?.portfolioCommission.toString())
+                    if(portfolioDetails?.portfolioCommissionType.equals("Rs",true)){
+                        radioShare.isChecked=true
+                        radioVar.isChecked=false
+                    }else{
+                        radioShare.isChecked=false
+                        radioVar.isChecked=true
                     }
                 }
                 buttonSell.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                        sharedViewModel.sellStock(
-                            portfolioMainID = porfolioDetail,
-                            portfolioDate = purchaseDate.text.toString(),
-                            portfolioSymbol = symbol.text.split("-").first(),
-                            portfolioQuantity = shares.text.toString(),
-                            portfolioRate = buyPrice.text.toString(),
-                            portfolioCommission = comissionShare.text.toString(),
-                            portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                            portfolioPosition = "0"
-                        )
-
+                        if(intent.getIntExtra(AppConstants.MODE,0)==0){
+                            sharedViewModel.sellStock(
+                                portfolioMainID = porfolioMainId,
+                                portfolioDate = purchaseDate.text.toString(),
+                                portfolioSymbol = symbol.text.split("-").first(),
+                                portfolioQuantity = shares.text.toString(),
+                                portfolioRate = buyPrice.text.toString(),
+                                portfolioCommission = comissionShare.text.toString(),
+                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                portfolioPosition = "0"
+                            )
+                        }else{
+                            sharedViewModel.updateTrade(
+                                portfolioMainID = porfolioMainId,
+                                portfolioType = "SELL",
+                                portfolioDate = purchaseDate.text.toString(),
+                                portfolioSymbol = symbol.text.split("-").first(),
+                                portfolioQuantity = shares.text.toString(),
+                                portfolioRate = buyPrice.text.toString(),
+                                portfolioCommission = comissionShare.text.toString(),
+                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                portfolioPosition = "0",
+                                portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
+                            )
+                        }
                         Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
                         finish()
+
                     }else{
                         Utils.showError(root,"Empty fields not allowed...")
                     }
@@ -195,7 +249,7 @@ class BuySellActivity : AppCompatActivity() {
                         sharedViewModel.addDividend(
                             dividendSymbol = symbol.text.toString(),
                             dividendDate = dividendDate.text.toString(),
-                            portfolioMainID = porfolioDetail.toString(),
+                            portfolioMainID = porfolioMainId.toString(),
                             dividendQuantity = shares.text.toString(),
                             dividendPerShare = dividendShare.text.toString()
                         )

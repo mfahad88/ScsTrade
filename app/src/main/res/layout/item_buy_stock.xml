@@ -12,7 +12,7 @@
         android:id="@+id/date_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:text="@string/feb_25"
         android:textAppearance="@style/feb_25" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/shares_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="@string/shares_value"
         android:textAppearance="@style/feb_25" />
@@ -32,12 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/net_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/net_price"
-            android:textAppearance="@style/net_price" />
 
         <TextView
             android:id="@+id/net_price_value"
@@ -47,45 +41,27 @@
             android:text="@string/net_price_value"
             android:textAppearance="@style/net_price_value" />
 
-        <TextView
-            android:id="@+id/net_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/net_cost"
-            android:textAppearance="@style/net_price" />
 
-        <TextView
-            android:id="@+id/net_cost_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_cost_value"
-            android:textAppearance="@style/net_price_value" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/current_p_l_value"
+
+
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textFontWeight="500"
-        android:text="@string/current_p_l_value"
-        android:textAppearance="@style/current_p_l_value" />
+        android:layout_weight="0.5"
+        android:padding="10dp"
 
-    <FrameLayout
+        android:id="@+id/three_dots"
+        android:src="@drawable/three_dots"
+        app:tint="@color/colorDarkerr"/>
+   <!-- <FrameLayout
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:visibility="gone"
         android:layout_weight="0.5">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/three_dots"
-            android:src="@drawable/three_dots"
-            app:tint="@color/colorDarkerr"/>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/floating_menu"
             android:layout_width="130dp"
@@ -137,6 +113,6 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-    </FrameLayout>
+    </FrameLayout>-->
 
 </LinearLayout>

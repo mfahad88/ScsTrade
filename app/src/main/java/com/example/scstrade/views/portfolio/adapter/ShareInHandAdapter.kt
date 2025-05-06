@@ -10,12 +10,12 @@ import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
 import com.example.scstrade.model.response.stock.StockItem
 
-class ShareInHandAdapter( private val onItemClick: (FifoPortfolio) -> Unit,private val onItemClickSnapshot: (FifoPortfolio) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
+class ShareInHandAdapter( private val onItemClick: (FifoPortfolio) -> Unit,private val onItemEditClick: (FifoPortfolio) -> Unit,private val onItemClickSnapshot: (FifoPortfolio) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
     val itemList= mutableListOf<FifoPortfolio>()
     val list = mutableListOf<StockItem>()
     class ShareInHandViewHolder(private val binding: ItemShareInHandBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item:FifoPortfolio,stockItem: StockItem, onItemClick: (FifoPortfolio) -> Unit,onItemClickSnapshot: (FifoPortfolio) -> Unit) {
+        fun bind(item:FifoPortfolio,stockItem: StockItem, onItemClick: (FifoPortfolio) -> Unit,onItemEditClick: (FifoPortfolio) -> Unit,onItemClickSnapshot: (FifoPortfolio) -> Unit) {
             Log.e("Item--->",item.toString())
             val totalCost = item.price.toDouble().times(item.quantity.toInt())
             val marketValue = stockItem.cL.times(item.quantity.toInt())
@@ -39,8 +39,11 @@ class ShareInHandAdapter( private val onItemClick: (FifoPortfolio) -> Unit,priva
                 onItemClick(item)
             }
             binding.threeDots.setOnClickListener {
-                Utils.showPopup(binding.root.context,binding.threeDots,null, listOf("Edit Name")){
 
+                Utils.showPopup(binding.root.context,binding.threeDots,null, listOf("Edit Company","Delete Company")){
+                    if(it.contains("Edit",true)){
+                        onItemEditClick(item)
+                    }
                 }
             }
             binding.snapshotLogo.setOnClickListener {
@@ -58,7 +61,7 @@ class ShareInHandAdapter( private val onItemClick: (FifoPortfolio) -> Unit,priva
     override fun onBindViewHolder(holder: ShareInHandViewHolder, position: Int) {
 
 
-        holder.bind(itemList[position],list.filter { it.sYM.equals(itemList[position].symbol,true) }.first(), onItemClick,onItemClickSnapshot)
+        holder.bind(itemList[position],list.filter { it.sYM.equals(itemList[position].symbol,true) }.first(), onItemClick,onItemEditClick,onItemClickSnapshot)
     }
 
     override fun getItemCount(): Int {

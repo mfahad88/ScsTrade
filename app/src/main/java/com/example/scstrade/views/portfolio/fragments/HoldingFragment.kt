@@ -80,7 +80,7 @@ class HoldingFragment : Fragment() {
                         result.data?.forEach {
                             list.add(PortfolioItemDetail(it.date,it.quantity,it.rate,(currentPrice!!.minus(it.rate.toDouble())).times(it.quantity.toDouble()),
                                 ((currentPrice.times(it.quantity.toInt()).minus(it.rate.toDouble().times(it.quantity.toInt()))).div(it.rate.toDouble().times(it.quantity.toInt()))).times(100)
-                            ))
+                            ,null))
                         }
 
                         adapter = HoldingAdapter(list, onItemClick = {

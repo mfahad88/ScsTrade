@@ -30,6 +30,7 @@ class MarketFragment : Fragment() {
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text?.toString().equals("indices",true)){
+
                     loadFragment(IndicesFragment())
                 }else if(tab?.text?.toString().equals("all stocks",true)){
                  loadFragment(AllStockFragment())

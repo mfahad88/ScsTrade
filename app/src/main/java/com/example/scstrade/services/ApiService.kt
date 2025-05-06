@@ -17,6 +17,7 @@ import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
@@ -214,9 +215,14 @@ interface ApiService {
 
     @GET(value = "/Portfolio")
     suspend fun updateTrade(@Query("ActionType")actionType:String="UpdateTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDate")portfolioDate:String,
-                         @Query("PortfolioSymbol")portfolioSymbol:String,@Query("PortfolioQuantity")portfolioQuantity:String,@Query("PortfolioType")portfolioType:String="BUY",
+                         @Query("PortfolioSymbol")portfolioSymbol:String,@Query("PortfolioQuantity")portfolioQuantity:String,@Query("PortfolioType")portfolioType:String,
                          @Query("PortfolioRate")portfolioRate:String,@Query("PortfolioCommission")portfolioCommission:String,@Query("PortfolioCommissionType")portfolioCommissionType:String,
-                         @Query("PortfolioPosition")portfolioPosition:String,@Query("PortfolioDetailID")portfolioDetailID:String):List<PortfolioDetailItem>
+                         @Query("PortfolioPosition")portfolioPosition:String,@Query("PortfolioDetailID")portfolioDetailID:String):List<PortfolioDetails>
+
+
+
+    @GET(value = "/Portfolio")
+    suspend fun deleteTrade(@Query("ActionType")actionType:String="DeleteTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDetailID")portfolioDetailID:Int):List<PortfolioDetails>
 
     @GET(value = "/Portfolio")
     suspend fun buyStock(@Query("ActionType")actionType:String="AddTrade",@Query("PortfolioMainID")portfolioMainID: Int,@Query("PortfolioDate")portfolioDate:String,
@@ -238,4 +244,7 @@ interface ApiService {
     suspend fun getDividend(@Query("ActionType")actionType: String="GetDividend",@Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
     @GET(value = "/Portfolio")
     suspend fun getPortfolioItemDetail(@Query("ActionType")actionType: String="GetPortfolioItemDetails",@Query("PortfolioMainID")portfolioMainID:Int,@Query("PortfolioSymbol")portfolioSymbol:String):List<PortfolioItemDetail>
+
+    @GET(value = "/Portfolio")
+    suspend fun getPortfolioDetails(@Query("ActionType")actionType: String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID:Int):List<PortfolioDetails>
 }

@@ -26,6 +26,7 @@ import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
@@ -73,6 +74,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutablePortfolioFinalDetailOnce=MutableLiveData<Resource<PortfolioDetailItem>>()
     val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
+    val mutablePortfolioDetails = MutableLiveData<Resource<List<PortfolioDetails>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
@@ -441,14 +443,24 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
+    fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioType:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
-                val result = repository.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                val result = repository.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioType = portfolioType, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
                 withContext(Dispatchers.Main){
-                    val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
-//                    mutablePortfolioDetail.value = result
+                    mutablePortfolioDetails.value = result
+                }
+            }
+        }
+    }
+
+    fun deleteTrade(portfolioMainID: Int,portfolioDetailID:Int){
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.deleteTrade(portfolioMainID = portfolioMainID, portfolioDetailID = portfolioDetailID)
+                withContext(Dispatchers.Main){
+                    mutablePortfolioDetails.value = result
                 }
             }
         }
@@ -502,6 +514,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 withContext(Dispatchers.Main){
 
                     mutablePortfolioItemDetail.value=result
+                }
+            }
+        }
+    }
+
+    fun getPortfolioDetails(portfolioMainID:Int){
+        mutablePortfolioDetails.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val  result = repository.getPortfolioDetails(portfolioMainID)
+                withContext(Dispatchers.Main){
+                    mutablePortfolioDetails.value = result
                 }
             }
         }

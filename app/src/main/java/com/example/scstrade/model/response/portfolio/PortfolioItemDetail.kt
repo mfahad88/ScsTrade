@@ -13,6 +13,7 @@ data class PortfolioItemDetail(
     val quantity: String,
     @SerializedName("Rate")
     val rate: String,
-    val currentPL:Double,
-    val currentPercentPL:Double
+    val currentPL:Double?,
+    val currentPercentPL:Double?,
+    val id:Int?
 ) : Parcelable

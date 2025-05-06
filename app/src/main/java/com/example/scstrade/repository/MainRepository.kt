@@ -21,6 +21,7 @@ import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
+import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
@@ -447,10 +448,18 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String):Resource<List<PortfolioDetailItem>>{
+    suspend fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioType:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String):Resource<List<PortfolioDetails>>{
         try{
-            return  Resource.Success(apiService.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+            return  Resource.Success(apiService.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity, portfolioType = portfolioType,
                 portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun deleteTrade(portfolioMainID: Int,portfolioDetailID:Int): Resource<List<PortfolioDetails>> {
+        try{
+            return  Resource.Success(apiService.deleteTrade(portfolioMainID = portfolioMainID, portfolioDetailID = portfolioDetailID))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }
@@ -493,6 +502,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun getPortfolioItemDetail(portfolioMainID:Int,portfolioSymbol:String): Resource<List<PortfolioItemDetail>> {
         try {
             return Resource.Success(apiService.getPortfolioItemDetail(portfolioMainID = portfolioMainID, portfolioSymbol = portfolioSymbol))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getPortfolioDetails(portfolioMainID:Int): Resource<List<PortfolioDetails>> {
+        try {
+            return Resource.Success(apiService.getPortfolioDetails(portfolioMainID = portfolioMainID))
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }

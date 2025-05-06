@@ -49,21 +49,19 @@ class HistoryFragment : Fragment() {
     lateinit var sharedViewModel: SharedViewModel
     lateinit var stockDetailActivity: StockDetailActivity
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedViewModel = (requireActivity().application as MyApp).viewModel
-        stockDetailActivity = (requireActivity() as StockDetailActivity)
-        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
-//        sharedViewModel.stopPortfolioFinal()
-        sharedViewModel.getPortfolioFinalDetail(stockDetailActivity.portfolioMainID)
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHistoryBinding.inflate(inflater)
 
+        binding = FragmentHistoryBinding.inflate(inflater)
+        sharedViewModel = (requireActivity().application as MyApp).viewModel
+        stockDetailActivity = (requireActivity() as StockDetailActivity)
+        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
+//        sharedViewModel.stopPortfolioFinal()
+        sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
         binding.apply {
             buyTransac.text = getString(R.string.sell_trades,stockDetailActivity.symbol)
             dividends.text = getString(R.string.dividend_trades,stockDetailActivity.symbol)
@@ -73,7 +71,7 @@ class HistoryFragment : Fragment() {
             }
         }
 
-        sharedViewModel.mutablePortfolioFinalDetail.observe(viewLifecycleOwner, Observer {result->
+        sharedViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer {result->
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                 is Resource.Loading -> {
@@ -81,6 +79,8 @@ class HistoryFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     try {
+                        binding.loader.visibility = View.GONE
+                        binding.mainContainer.visibility = View.VISIBLE
                         val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
                         val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
                         val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
@@ -118,8 +118,7 @@ class HistoryFragment : Fragment() {
                                 binding.materialCardViewSell.visibility = View.GONE
                             }
                         }
-                        binding.loader.visibility = View.GONE
-                        binding.mainContainer.visibility = View.VISIBLE
+
                     }catch (e:Exception){
                         e.printStackTrace()
                     }
