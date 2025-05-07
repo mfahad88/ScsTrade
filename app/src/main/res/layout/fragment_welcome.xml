@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.aof.fragments.WelcomeFragment">
+
+    <TextView
+        android:id="@+id/open_your"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="23dp"
+        android:textFontWeight="500"
+        android:text="@string/open_your"
+        android:textAppearance="@style/open_your"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scstrade_di"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scstrade_di"
+        android:textFontWeight="700"
+        android:textAppearance="@style/scstrade_di"
+        app:layout_constraintStart_toStartOf="@+id/open_your"
+        app:layout_constraintTop_toBottomOf="@+id/open_your" />
+
+    <TextView
+        android:id="@+id/digital_account"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/digital_account"
+        android:textAppearance="@style/digital_account"
+        android:textFontWeight="500"
+        app:layout_constraintBottom_toBottomOf="@+id/scstrade_di"
+        app:layout_constraintStart_toEndOf="@+id/scstrade_di"
+        app:layout_constraintTop_toBottomOf="@+id/open_your" />
+
+    <TextView
+        android:id="@+id/trade_anywh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="@string/trade_anywh"
+        android:textAppearance="@style/trade_anywh"
+        android:textFontWeight="400"
+        app:layout_constraintStart_toStartOf="@+id/scstrade_di"
+        app:layout_constraintTop_toBottomOf="@+id/scstrade_di" />
+
+    <TextView
+        android:id="@+id/by_filling_"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="top"
+        android:lineSpacingExtra="6sp"
+        android:text="@string/by_filling_"
+        android:textAppearance="@style/by_filling_"
+        android:textFontWeight="400"
+        android:translationY="-2.82sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/trade_anywh"
+        app:layout_constraintTop_toBottomOf="@+id/trade_anywh" />
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/green_check"
+        app:layout_constraintBottom_toBottomOf="@+id/manage_your"
+        app:layout_constraintStart_toStartOf="@+id/by_filling_"
+        app:layout_constraintTop_toTopOf="@+id/manage_your" />
+
+    <TextView
+        android:id="@+id/manage_your"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="27dp"
+        android:text="@string/manage_your"
+        android:textAppearance="@style/manage_your"
+        android:textFontWeight="400"
+        app:layout_constraintStart_toEndOf="@+id/imageView23"
+        app:layout_constraintTop_toBottomOf="@+id/by_filling_" />
+
+    <ImageView
+        android:id="@+id/imageView24"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/green_check"
+        app:layout_constraintBottom_toBottomOf="@+id/stay_updated"
+        app:layout_constraintStart_toStartOf="@+id/imageView23"
+        app:layout_constraintTop_toTopOf="@+id/stay_updated" />
+
+    <TextView
+        android:id="@+id/stay_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/stay_updated"
+        android:textAppearance="@style/manage_your"
+        android:textFontWeight="400"
+        app:layout_constraintStart_toEndOf="@+id/imageView24"
+        app:layout_constraintTop_toBottomOf="@+id/manage_your" />
+
+
+
+    <ImageView
+        android:id="@+id/imageView25"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/green_check"
+        app:layout_constraintBottom_toBottomOf="@+id/buy_sell"
+        app:layout_constraintStart_toStartOf="@+id/imageView24"
+        app:layout_constraintTop_toTopOf="@+id/buy_sell" />
+
+    <TextView
+        android:id="@+id/buy_sell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/buy_sell"
+        android:textAppearance="@style/manage_your"
+        android:textFontWeight="400"
+        app:layout_constraintStart_toEndOf="@+id/imageView25"
+        app:layout_constraintTop_toBottomOf="@+id/stay_updated" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Signup"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Login" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

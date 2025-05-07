@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tell_us_abo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="23dp"
+        android:gravity="top"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/tell_us_abo_your_se"
+        android:textAppearance="@style/tell_us_abo"
+        android:textFontWeight="500"
+        android:translationY="-1.4sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:id="@+id/fullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:inputType="text"
+        android:maxLength="50"
+        app:hintText="@string/full_name"
+        app:hintTextField="@string/enter_your_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:id="@+id/emailAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:inputType="text"
+        android:maxLength="50"
+        app:hintText="@string/email"
+        app:hintTextField="@string/enter_your_email"
+        app:layout_constraintEnd_toEndOf="@+id/fullName"
+        app:layout_constraintStart_toStartOf="@+id/fullName"
+        app:layout_constraintTop_toBottomOf="@+id/fullName" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        app:contentPaddingLeft="15dp"
+        app:contentPaddingRight="15dp"
+        app:contentPaddingTop="10dp"
+        app:contentPaddingBottom="10dp"
+        app:strokeWidth="0dp"
+        android:id="@+id/residential_status"
+        app:cardBackgroundColor="@color/md_theme_surfaceBright"
+        app:layout_constraintEnd_toEndOf="@+id/emailAddress"
+        app:layout_constraintStart_toStartOf="@+id/emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/residential"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="500"
+                android:text="@string/residential"
+                android:textAppearance="@style/residential"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/residential">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/resident"
+                    android:layout_width="0dp"
+                    android:layout_height="37dp"
+                    android:layout_weight="0.8"
+                    android:textAppearance="@style/resident"
+                    android:text="@string/resident" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/non_resident"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="0.8"
+                    android:textAppearance="@style/non_resident"
+                    android:text="@string/non_resident" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputNic"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/nic_type"
+        app:boxBackgroundMode="outline"
+        app:expandedHintEnabled="false"
+        app:layout_constraintEnd_toEndOf="@+id/residential_status"
+        app:layout_constraintStart_toStartOf="@+id/residential_status"
+        app:layout_constraintTop_toBottomOf="@+id/residential_status">
+
+        <AutoCompleteTextView
+            android:id="@+id/dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_your_nic_type"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:id="@+id/nic_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:maxLength="50"
+        app:hintText="@string/nic_num"
+        app:hintTextField="@string/enter_nic_num"
+        app:layout_constraintEnd_toEndOf="@+id/fullName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fullName"
+        app:layout_constraintTop_toBottomOf="@+id/textInputNic" />
+
+    <TextView
+        android:id="@+id/supporting_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="right|top"
+        android:lineSpacingExtra="1sp"
+        android:text="@string/supporting_"
+        android:textAppearance="@style/supporting_"
+        android:translationY="-0.74sp"
+        app:layout_constraintEnd_toEndOf="@+id/nic_card"
+        app:layout_constraintTop_toBottomOf="@+id/nic_card" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Back"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Continue" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
