@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_terms"
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
+    android:layout_marginTop="20dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/md_theme_surfaceBright"
+    app:layout_constraintEnd_toEndOf="@+id/let_s_agree"
+    app:layout_constraintStart_toStartOf="@+id/let_s_agree"
+    app:layout_constraintTop_toBottomOf="@+id/let_s_agree"
+   >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:id="@+id/checkBox"
+            android:checked="true"/>
+
+        <TextView
+            android:id="@+id/accept_gene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_toEndOf="@id/checkBox"
+            android:layout_alignTop="@id/checkBox"
+            android:layout_alignBottom="@id/checkBox"
+            android:text="@string/accept_gene"
+            android:textAppearance="@style/accept_gene" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="172dp"
+            android:layout_height="35dp"
+            app:cardCornerRadius="20dp"
+            app:strokeColor="#1A73E8"
+            android:id="@+id/card_download_pdf"
+            android:layout_below="@id/accept_gene"
+            android:layout_alignStart="@id/accept_gene">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/icon"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_aof"
+                    />
+
+                <TextView
+                    android:id="@+id/download_pdf"
+                    android:layout_toEndOf="@id/icon"
+                    android:layout_width="107dp"
+                    android:layout_height="24dp"
+                    android:text="@string/download_pdf"
+                    android:textAppearance="@style/download_pdf"
+                    android:lineSpacingExtra="5sp"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

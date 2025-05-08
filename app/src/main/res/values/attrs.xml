@@ -10,9 +10,20 @@
     <declare-styleable name="LabelledTextField">
         <attr name="hintText" format="string"/>
         <attr name="hintTextField" format="string"/>
+        <attr name="android:drawableEnd" format="reference"/>
         <attr name="android:inputType" format="reference"/>
         <attr name="android:maxLength" format="integer"/>
         <attr name="passwordToggleEnabled" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="TermsConditionView">
+        <attr name="buttonTitle" format="string"/>
+        <attr name="title" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="LabelledTextIconField">
+        <attr name="hintLabelText" format="string"/>
+        <attr name="hintLabelTextField" format="string"/>
+        <attr name="android:inputType" format="reference"/>
+        <attr name="android:maxLength" format="integer"/>
     </declare-styleable>
     <declare-styleable name="LabelSpinner">
 

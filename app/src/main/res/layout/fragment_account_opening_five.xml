@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.aof.fragments.accountopening.AccountOpeningFiveFragment">
+
+    <TextView
+        android:id="@+id/tell_us_abo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="128dp"
+        android:text="@string/otp_verific"
+        android:textAppearance="@style/tell_us_abo"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/your_otp_ha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="96dp"
+        android:gravity="top"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/your_otp_ha"
+        android:textAppearance="@style/your_otp_ha"
+        android:translationY="-1.82sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tell_us_abo"
+        app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+
+
+    <com.goodiebag.pinview.Pinview
+        android:id="@+id/pinview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="15dp"
+        app:cursorVisible="false"
+        app:forceKeyboard="true"
+        app:hint="0"
+        app:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/your_otp_ha"
+        app:password="false"
+        app:pinHeight="40dp"
+        app:pinLength="4"
+        app:pinWidth="40dp" />
+
+    <TextView
+        android:id="@+id/didn_t_rece"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:textFontWeight="500"
+        android:text="@string/didn_t_rece"
+        android:textAppearance="@style/didn_t_rece"
+        app:layout_constraintEnd_toEndOf="@+id/pinview"
+        app:layout_constraintStart_toStartOf="@+id/pinview"
+        app:layout_constraintTop_toBottomOf="@+id/pinview" />
+
+    <TextView
+        android:id="@+id/resend_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal|top"
+        android:textFontWeight="500"
+        android:text="@string/resend_in_4"
+        android:textAppearance="@style/resend_in_4"
+        app:layout_constraintEnd_toEndOf="@+id/pinview"
+        app:layout_constraintStart_toStartOf="@+id/pinview"
+        app:layout_constraintTop_toBottomOf="@+id/didn_t_rece" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView7"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="13dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/pinview"
+        app:layout_constraintStart_toStartOf="@+id/pinview"
+        app:layout_constraintTop_toBottomOf="@+id/resend_in"
+        app:strokeColor="#FF9500">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFECD2">
+
+            <ImageView
+                android:id="@+id/imageIcon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/icon_info_orange" />
+
+            <TextView
+                android:id="@+id/you_must_en"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toEndOf="@id/imageIcon"
+                android:gravity="top"
+                android:lineSpacingExtra="4sp"
+                android:text="@string/you_must_en"
+                android:textAppearance="@style/you_must_en"
+                android:translationY="-2.03sp" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="0.8"
+        android:text="@string/verifty_otp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView7"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

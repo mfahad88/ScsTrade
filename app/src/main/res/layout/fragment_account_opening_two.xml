@@ -213,7 +213,7 @@
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_"
+            android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.8"

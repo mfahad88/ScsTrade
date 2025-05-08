@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tell_us_abo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="128dp"
+            android:gravity="top"
+            android:lineSpacingExtra="3sp"
+            android:text="@string/if_any_refe"
+            android:textAppearance="@style/tell_us_abo"
+            android:textFontWeight="500"
+            android:translationY="-1.4sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.example.scstrade.views.widgets.LabelledTextField
+            android:id="@+id/mobileNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:inputType="text"
+            android:maxLength="50"
+            app:hintText="@string/reference"
+            app:hintTextField="@string/enter_your_reference"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_i_human"
+            android:layout_width="0dp"
+            android:layout_height="113dp"
+            android:layout_marginTop="20dp"
+            app:contentPaddingLeft="15dp"
+            app:contentPaddingRight="15dp"
+            app:contentPaddingTop="10dp"
+            app:contentPaddingBottom="10dp"
+            app:cardBackgroundColor="@color/md_theme_surfaceBright"
+            app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
+            app:layout_constraintStart_toStartOf="@+id/mobileNumber"
+            app:layout_constraintTop_toBottomOf="@+id/mobileNumber">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/i_am_a_huma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="400"
+                    android:text="@string/i_am_a_huma"
+                    android:textAppearance="@style/i_am_a_huma"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:id="@+id/captcha_view"
+                    android:layout_width="115dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="7dp"
+                    android:background="#65558F"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/i_am_a_huma">
+
+                    <TextView
+                        android:id="@+id/captcha_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_horizontal|top"
+                        android:text="@string/ax"
+                        android:textAppearance="@style/ax" />
+                </RelativeLayout>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="16dp"
+                    app:cardCornerRadius="4dp"
+                    app:strokeColor="@color/md_theme_outline"
+                    app:layout_constraintBottom_toBottomOf="@+id/captcha_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/captcha_view"
+                    app:layout_constraintTop_toTopOf="@+id/captcha_view">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/captcha_input"
+                            android:paddingHorizontal="5dp"
+                            android:text="Please Enter Recaptcha"
+                            android:background="@android:color/transparent"
+                            android:layout_centerInParent="true"/>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/let_s_agree"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/let_s_agree"
+            android:textAppearance="@style/tell_us_abo"
+            android:textFontWeight="500"
+            app:layout_constraintEnd_toEndOf="@+id/card_i_human"
+            app:layout_constraintStart_toStartOf="@+id/card_i_human"
+            app:layout_constraintTop_toBottomOf="@+id/card_i_human" />
+
+        <com.example.scstrade.views.widgets.TermsConditionView
+            android:id="@+id/card_terms_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/let_s_agree"
+            app:layout_constraintStart_toStartOf="@+id/let_s_agree"
+            app:layout_constraintTop_toBottomOf="@+id/let_s_agree"/>
+
+        <com.example.scstrade.views.widgets.TermsConditionView
+            android:id="@+id/card_terms_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/let_s_agree"
+            app:layout_constraintStart_toStartOf="@+id/let_s_agree"
+            app:layout_constraintTop_toBottomOf="@+id/card_terms_one"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_terms_two"
+            app:layout_constraintVertical_bias="1.0">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="Back" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="@string/signup_next" />
+        </LinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

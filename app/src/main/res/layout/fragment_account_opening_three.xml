@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -202,6 +201,82 @@
         app:layout_constraintEnd_toEndOf="@+id/cardViewIconDelete" />
 
 
+    <TextView
+        android:id="@+id/nic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/nic_back"
+        android:textAppearance="@style/proof_of_ib"
+        app:layout_constraintStart_toStartOf="@+id/nic_front"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewBack"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="66dp"
+        app:cardBackgroundColor="@color/md_theme_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/nic_back"
+        app:layout_constraintTop_toBottomOf="@+id/nic_back">
+
+        <RelativeLayout
+            android:id="@+id/select_nic_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/view_file_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:text="@string/view_file"
+                android:textAppearance="@style/select_file" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/icon_upload" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/required_nic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/required"
+        android:textStyle="italic"
+        android:textAppearance="@style/required"
+        app:layout_constraintBottom_toTopOf="@+id/cardViewIconBackDelete"
+        app:layout_constraintEnd_toEndOf="@+id/cardViewIconBackDelete" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewIconBackDelete"
+        android:layout_width="34dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        app:cardBackgroundColor="@color/colorDarkerr"
+        app:layout_constraintBottom_toBottomOf="@+id/cardViewBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardViewBack">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_delete_24"
+            app:tint="@android:color/white" />
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -226,7 +301,7 @@
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_"
+            android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.8"
