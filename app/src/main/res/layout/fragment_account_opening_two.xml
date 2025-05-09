@@ -51,7 +51,19 @@
         app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
         app:layout_constraintTop_toBottomOf="@+id/mobileNumber" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.scstrade.views.widgets.LabelledSpinner
+        android:id="@+id/textInputMobile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:entries="@array/p_l_array"
+        app:hintLabel="@string/mobile_number_is_registered_under"
+        app:dropdownLabel="Select Registered Person"
+        app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
+        app:layout_constraintStart_toStartOf="@+id/mobileNumber"
+        app:layout_constraintTop_toBottomOf="@+id/mobileNumber"/>
+
+    <!--<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputMobile"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
@@ -70,7 +82,7 @@
             android:layout_height="wrap_content"
             android:hint="Select Registered Person"
             android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>-->
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"

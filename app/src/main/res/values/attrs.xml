@@ -25,8 +25,10 @@
         <attr name="android:inputType" format="reference"/>
         <attr name="android:maxLength" format="integer"/>
     </declare-styleable>
-    <declare-styleable name="LabelSpinner">
-
+    <declare-styleable name="LabelledSpinner">
+        <attr name="hintLabel" format="string"/>
+        <attr name="dropdownLabel" format="string" />
+        <attr name="entries" format="reference" />
     </declare-styleable>
     <declare-styleable name="mLineChart">
         <!--<attr name="isTouchEnabled" format="boolean"/>
