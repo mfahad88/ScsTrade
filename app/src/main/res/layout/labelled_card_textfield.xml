@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:strokeWidth="0dp"
+
+    app:contentPaddingTop="8dp"
+    app:contentPaddingBottom="8dp"
+    app:contentPaddingLeft="15dp"
+    app:contentPaddingRight="15dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/kindly_ente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="500"
+            android:text="@string/kindly_ente"
+            android:textAppearance="@style/kindly_ente"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:cardCornerRadius="4dp"
+            android:layout_marginTop="12dp"
+            app:strokeColor="@color/md_theme_outline">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text1"
+                android:hint="@string/enter_your"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
+                android:background="@android:color/transparent"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:cardCornerRadius="4dp"
+            android:layout_marginTop="10dp"
+            app:strokeColor="@color/md_theme_outline">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/text2"
+                android:hint="@string/residence_number"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
+                android:background="@android:color/transparent"/>
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

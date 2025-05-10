@@ -39,6 +39,10 @@
         <attr name="isLeftAxis" format="boolean"/>
         <attr name="entries" format="string"/>-->
     </declare-styleable>
+    <declare-styleable name="LabelledCardTextField">
+        <attr name="hint1" format="string"/>
+        <attr name="hint2" format="string"/>
+    </declare-styleable>
     <declare-styleable name="VolumeChip">
         <attr name="android:text" format="string|reference"/>
         <attr name="android:background" format="color|reference"/>

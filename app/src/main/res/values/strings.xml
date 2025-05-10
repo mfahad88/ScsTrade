@@ -315,6 +315,9 @@
     <string name="do_you_wish">Do you wish to subscribe to free of cost CDC IVR Service?</string>
     <string name="save_next">Save &amp; Next</string>
     <string name="yes">Yes</string>
+    <string name="kindly_ente">Kindly enter your phone numbers</string>
+    <string name="enter_your">Enter your Office Number</string>
+    <string name="residence_number">Enter your Residence Number</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

@@ -47,7 +47,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/no"
+                    android:id="@+id/no_btn"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.8"
@@ -59,7 +59,7 @@
                     android:layout_weight="0.2"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/yes"
+                    android:id="@+id/yes_btn"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.8"
@@ -188,7 +188,7 @@
                 android:layout_below="@id/do_you_wish">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/no"
+                    android:id="@+id/no_ivr_btn"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.8"
@@ -200,7 +200,7 @@
                     android:layout_weight="0.2"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/yes"
+                    android:id="@+id/yes_ivr_btn"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="0.8"
