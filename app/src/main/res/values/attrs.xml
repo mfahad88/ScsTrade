@@ -30,6 +30,18 @@
         <attr name="dropdownLabel" format="string" />
         <attr name="entries" format="reference" />
     </declare-styleable>
+    <declare-styleable name="DualOptionToggleView">
+        <attr name="titleDualOption" format="string"/>
+        <attr name="hintDualOption" format="string"/>
+        <attr name="titleButton1" format="string"/>
+        <attr name="titleButton2" format="string"/>
+        <attr name="drawable" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="DualDropdownSelectorView">
+        <attr name="titleDualDropdown" format="string"/>
+        <attr name="hintDualDropdown1" format="string"/>
+        <attr name="hintDualDropdown2" format="string"/>
+    </declare-styleable>
     <declare-styleable name="mLineChart">
         <!--<attr name="isTouchEnabled" format="boolean"/>
         <attr name="isPinchZoom" format="boolean"/>
