@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textInput"
+
     android:hint="@string/mobile_number_is_registered_under"
     app:boxBackgroundMode="outline"
     app:expandedHintEnabled="false"
@@ -14,6 +15,7 @@
         android:id="@+id/dropdown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:hint="Select Registered Person"
         android:inputType="none" />
 

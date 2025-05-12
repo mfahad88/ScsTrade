@@ -10,6 +10,7 @@
     <declare-styleable name="LabelledTextField">
         <attr name="hintText" format="string"/>
         <attr name="hintTextField" format="string"/>
+        <attr name="android:text" format="string"/>
         <attr name="android:drawableEnd" format="reference"/>
         <attr name="android:inputType" format="reference"/>
         <attr name="android:maxLength" format="integer"/>
@@ -32,6 +33,7 @@
     </declare-styleable>
     <declare-styleable name="DualOptionToggleView">
         <attr name="titleDualOption" format="string"/>
+        <attr name="subTitleDualOption" format="string"/>
         <attr name="hintDualOption" format="string"/>
         <attr name="titleButton1" format="string"/>
         <attr name="titleButton2" format="string"/>
@@ -39,6 +41,10 @@
     </declare-styleable>
     <declare-styleable name="DualDropdownSelectorView">
         <attr name="titleDualDropdown" format="string"/>
+        <attr name="typeDualDropdown" format="enum">
+            <enum name="dropdown" value="0"/>
+            <enum name="text" value="1"/>
+        </attr>
         <attr name="hintDualDropdown1" format="string"/>
         <attr name="hintDualDropdown2" format="string"/>
     </declare-styleable>

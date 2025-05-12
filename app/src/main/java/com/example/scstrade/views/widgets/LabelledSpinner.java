@@ -38,9 +38,10 @@ public class LabelledSpinner extends TextInputLayout {
                 if(dropdownLabel!=null){
                     binding.dropdown.setHint(dropdownLabel);
                 }
+                if(a.getTextArray(R.styleable.LabelledSpinner_entries)!=null) {
 
-
-                binding.dropdown.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1,a.getTextArray(R.styleable.LabelledSpinner_entries)));
+                    binding.dropdown.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, a.getTextArray(R.styleable.LabelledSpinner_entries)));
+                }
 
             }finally {
                 a.recycle();

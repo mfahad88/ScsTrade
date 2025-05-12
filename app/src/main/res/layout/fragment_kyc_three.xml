@@ -7,209 +7,52 @@
     android:paddingHorizontal="15dp"
     tools:context=".views.aof.fragments.kyc.KycThreeFragment">
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="15dp"
-        app:strokeWidth="0dp"
+    <com.example.scstrade.views.widgets.DualOptionToggleView
         android:id="@+id/cardNic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="15dp"
-            android:background="@color/md_theme_surfaceBright">
-            <TextView
-                android:id="@+id/is_your_nic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textFontWeight="500"
-                android:text="@string/is_your_nic"
-                android:textAppearance="@style/is_your_nic"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:id="@+id/linear_no_yes"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="12dp"
-                android:layout_below="@id/is_your_nic"
-                android:gravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/no_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.8"
-                    android:text="No"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/yes_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.8"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:text="Yes" />
-            </LinearLayout>
-            <com.example.scstrade.views.widgets.LabelledTextField
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linear_no_yes"
-                app:hintText=""
-                android:id="@+id/nic_expiry"
-                app:hintTextField="@string/select_nic_expiry_date"
-                android:drawableEnd="@drawable/baseline_calendar_today_24"/>
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/cardPlaceBirth"
-        app:strokeWidth="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardNic">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="15dp"
-            android:background="@color/md_theme_surfaceBright">
-            <TextView
-                android:id="@+id/place_of_bi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textFontWeight="500"
-                android:text="@string/place_of_bi"
-                android:textAppearance="@style/is_your_nic"
-                />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputCountry"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/place_of_bi"
-                android:layout_marginTop="12dp"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/dropdown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="29dp"
-                    android:hint="@string/select_your_country"
-                    android:inputType="none"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputCity"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textInputCountry"
-                android:layout_marginTop="20dp"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/dropdownCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="29dp"
-                    android:hint="@string/select_your_city"
-                    android:inputType="none"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="133dp"
-        android:layout_marginTop="20dp"
-        app:strokeWidth="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardPlaceBirth">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp"
+        app:titleButton1="No"
+        app:titleButton2="Yes"
+        app:hintDualOption="@string/select_nic_expiry_date"
+        app:drawable="@drawable/baseline_calendar_today_24"
+        app:titleDualOption="@string/is_your_nic" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="8dp">
-            <TextView
-                android:id="@+id/cdc_ivr_ser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textFontWeight="500"
-                android:text="@string/cdc_ivr_ser"
-                android:textAppearance="@style/cdc_ivr_ser"
-                />
 
-            <TextView
-                android:id="@+id/do_you_wish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cdc_ivr_ser"
-                android:text="@string/do_you_wish"
-                android:textAppearance="@style/do_you_wish"
-                />
+    <com.example.scstrade.views.widgets.DualDropdownSelectorView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/placeBirth"
+        app:typeDualDropdown="text"
+        app:titleDualDropdown="@string/place_of_bi"
+        app:hintDualDropdown1="@string/select_your_country"
+        app:hintDualDropdown2="@string/select_your_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardNic"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/do_you_wish">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/no_ivr_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.8"
-                    android:text="No"
-                    />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/yes_ivr_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.8"
-                    android:text="@string/yes"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
-            </LinearLayout>
-        </RelativeLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/ivr_service"
+        app:layout_constraintTop_toBottomOf="@+id/placeBirth"
+        app:strokeWidth="0dp"
+        app:titleDualOption="@string/cdc_ivr_ser"
+        app:subTitleDualOption="@string/do_you_wish"
+        app:titleButton1="No"
+        app:titleButton2="Yes"/>
 
     <LinearLayout
         android:layout_width="match_parent"

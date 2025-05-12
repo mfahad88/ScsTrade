@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.aof.fragments.kyc.KycFiveFragment">
+
+    <TextView
+        android:id="@+id/tell_us_abo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:gravity="top"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/tell_us_abo_contact"
+        android:textAppearance="@style/tell_us_abo"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.scstrade.views.widgets.DualDropdownSelectorView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/office_residence_number"
+        app:typeDualDropdown="text"
+        app:titleDualDropdown="@string/kindly_ente"
+        app:hintDualDropdown1="@string/enter_your_office"
+        app:hintDualDropdown2="Enter your Residence Number"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+
+    <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/parmanent_addr"
+        app:titleDualOption="@string/is_your_mai"
+        app:titleButton1="No"
+        app:titleButton2="Yes"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/office_residence_number"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/no_worries"
+        app:cardBackgroundColor="#F4F9FF"
+        app:strokeColor="#1A73E8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/parmanent_addr">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_no_worries" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="600"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/no_worries_"
+                    android:textAppearance="@style/no_worries_"
+                    />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/please_tap_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:paddingEnd="90dp"
+                android:textFontWeight="400"
+                android:text="@string/please_tap_"
+                android:textAppearance="@style/please_tap_"
+
+                />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Back"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Continue" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.scstrade.R;
@@ -16,16 +18,10 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 public class DualDropdownSelectorView extends MaterialCardView {
-    DualDropdownSelectorViewBinding binding;
+    private DualDropdownSelectorViewBinding binding;
     ArrayAdapter adapter1,adapter2;
-    public void setSelectedListener1(AdapterView.OnItemSelectedListener selectedListener1) {
-        binding.autocompleteTextview1.setOnItemSelectedListener(selectedListener1);
-    }
-
-    public void setSelectedListener2(AdapterView.OnItemSelectedListener selectedListener2) {
-        binding.autocompleteTextview2.setOnItemSelectedListener(selectedListener2);
-    }
-
+    public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
+    public EditText textview_1,textview_2;
 
     public DualDropdownSelectorView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +39,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
             );
 
             String titleDualDropdown=a.getString(R.styleable.DualDropdownSelectorView_titleDualDropdown);
+            int type= a.getInt(R.styleable.DualDropdownSelectorView_typeDualDropdown,0);
             String hint1= a.getString(R.styleable.DualDropdownSelectorView_hintDualDropdown1);
             String hint2= a.getString(R.styleable.DualDropdownSelectorView_hintDualDropdown2);
             if(titleDualDropdown!=null){
@@ -52,24 +49,51 @@ public class DualDropdownSelectorView extends MaterialCardView {
                 binding.title.setVisibility(View.GONE);
             }
 
+            if(type==0){
+                binding.dropdownMenu1.setVisibility(View.VISIBLE);
+                binding.dropdown1.setVisibility(View.GONE);
+
+                binding.dropdownMenu2.setVisibility(View.VISIBLE);
+                binding.dropdown2.setVisibility(View.GONE);
+            }else{
+                binding.dropdownMenu1.setVisibility(View.GONE);
+                binding.dropdown1.setVisibility(View.VISIBLE);
+
+                binding.dropdownMenu2.setVisibility(View.GONE);
+                binding.dropdown2.setVisibility(View.VISIBLE);
+            }
+
             binding.autocompleteTextview1.setHint(hint1);
             binding.autocompleteTextview2.setHint(hint2);
+
+            binding.textview1.setHint(hint1);
+            binding.textview2.setHint(hint2);
+
+            textview_1 = binding.textview1;
+            textview_2 = binding.textview2;
+            autoCompleteTextView1=binding.autocompleteTextview1;
+            autoCompleteTextView2=binding.autocompleteTextview2;
+
 
 
         }
     }
 
     public void setList1(List<String> list){
-       this.adapter1= new ArrayAdapter(this.binding.getRoot().getContext(), android.R.layout.simple_list_item_1,list);
-       this.binding.autocompleteTextview1.setAdapter(this.adapter1);
+        if(!list.isEmpty()) {
+            adapter1 = new ArrayAdapter(this.binding.getRoot().getContext(), android.R.layout.simple_list_item_1, list);
+            binding.autocompleteTextview1.setAdapter(adapter1);
+        }
+
     }
 
     public void setList2(List<String> list){
-        this.adapter2= new ArrayAdapter(this.binding.getRoot().getContext(), android.R.layout.simple_list_item_1,list);
-        this.binding.autocompleteTextview2.setAdapter(this.adapter2);
+        if(!list.isEmpty()) {
+            adapter2 = new ArrayAdapter(this.binding.getRoot().getContext(), android.R.layout.simple_list_item_1, list);
+            binding.autocompleteTextview2.setAdapter(adapter2);
+        }
 
     }
-
 
 
 }

@@ -32,6 +32,7 @@ public class LabelledTextField extends LinearLayout {
             try {
                 String hint = a.getString(R.styleable.LabelledTextField_hintText);
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
+                String text = a.getString(R.styleable.LabelledTextField_android_text);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
                 binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,20)) });
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
@@ -41,6 +42,9 @@ public class LabelledTextField extends LinearLayout {
                 }
                 if(hintField!=null){
                     binding.textInputEditText.setHint(hintField);
+                }
+                if(text!=null){
+                    binding.textInputEditText.setText(text);
                 }
 
             }finally {

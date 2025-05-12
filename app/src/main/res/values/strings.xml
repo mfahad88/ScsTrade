@@ -318,6 +318,17 @@
     <string name="kindly_ente">Kindly enter your phone numbers</string>
     <string name="enter_your">Enter your Office Number</string>
     <string name="residence_number">Enter your Residence Number</string>
+    <string name="tell_us_abo_contact">"Tell us about your Contact Information "</string>
+    <string name="enter_your_">Enter your Mailing Address</string>
+    <string name="mailing_country">Mailing Country</string>
+    <string name="select_your_mailing_country">Select your Mailing Country</string>
+    <string name="mailing_province">Mailing Province</string>
+    <string name="select_your_province">Select your Province</string>
+    <string name="mailing_city">Mailing City</string>
+    <string name="enter_your_office">Enter your Office Number</string>
+    <string name="is_your_mai">Is your mailing address the same as your permanent address?</string>
+    <string name="no_worries_">No worries!</string>
+    <string name="please_tap_">Please Tap \'Continue\' to enter your permanent address details on the next step.</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     app:strokeWidth="0dp"
     app:cardCornerRadius="12dp">
 
@@ -20,15 +21,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/select_your"
+            tools:text="@string/select_your"
             android:textAppearance="@style/select_your"
             android:textFontWeight="500" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/select_your"
+            android:id="@+id/sub_heading"
+            android:textFontWeight="500"
+            android:paddingEnd="100dp"
+            android:textAppearance="@style/do_you_wish"
+            tools:text="@string/do_you_wish"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@id/select_your"
+            android:layout_below="@id/sub_heading"
             android:layout_marginTop="12dp"
             android:id="@+id/linearButton"
             android:gravity="center_horizontal"
@@ -47,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Single"
+                    tools:text="Single"
                     android:textAppearance="@style/single_btn" />
 
             </RelativeLayout>
@@ -70,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Married"
+                    tools:text="Married"
                     android:textAppearance="@style/single_btn" />
 
             </RelativeLayout>
@@ -80,6 +91,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp"
+            android:id="@+id/textField"
             app:cardBackgroundColor="@android:color/white"
             app:strokeColor="@color/md_theme_outline"
             android:layout_below="@id/linearButton">
@@ -95,7 +107,7 @@
                     android:layout_toStartOf="@id/imageView"
                     android:id="@+id/editText"
                     android:paddingHorizontal="10dp"
-                    android:hint="Please select"
+                    tools:hint="Please select"
                     android:background="@android:color/transparent" />
 
                 <ImageView

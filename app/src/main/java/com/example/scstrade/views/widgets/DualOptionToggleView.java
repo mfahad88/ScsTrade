@@ -2,11 +2,14 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualOptionToggleViewBinding;
@@ -30,6 +33,7 @@ public class DualOptionToggleView extends RelativeLayout {
             try{
 
                 String title=a.getString(R.styleable.DualOptionToggleView_titleDualOption);
+                String subTitle=a.getString(R.styleable.DualOptionToggleView_subTitleDualOption);
                 String hint= a.getString(R.styleable.DualOptionToggleView_hintDualOption);
                 String btn1=a.getString(R.styleable.DualOptionToggleView_titleButton1);
                 String btn2=a.getString(R.styleable.DualOptionToggleView_titleButton2);
@@ -48,30 +52,44 @@ public class DualOptionToggleView extends RelativeLayout {
                 }else{
                     binding.imageView.setVisibility(View.GONE);
                 }
+                if(hint!=null) {
+                    binding.editText.setHint(hint);
+                    binding.textField.setVisibility(View.VISIBLE);
+                }else{
+                    binding.textField.setVisibility(View.GONE);
+                }
 
-                binding.editText.setHint(hint);
+                if(subTitle!=null){
+                    binding.subHeading.setText(subTitle);
+                    binding.subHeading.setVisibility(View.VISIBLE);
+                }else{
+                    binding.subHeading.setVisibility(View.GONE);
+                }
 
                 binding.text1.setText(btn1);
                 binding.text2.setText(btn2);
-                binding.btnSingle.setSelected(true);
+                toggleSelection(true);
 
                 binding.btnSingle.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        binding.btnSingle.setSelected(true);
-                        binding.btnMarried.setSelected(false);
-                        listenerOne.onClick();
+                        toggleSelection(true);
+                        if(listenerOne!=null) {
+                            listenerOne.onClick();
+                        }
                     }
                 });
 
                 binding.btnMarried.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        binding.btnSingle.setSelected(false);
-                        binding.btnMarried.setSelected(true);
-                        listenerTwo.onClick();
+                        toggleSelection(false);
+                        if(listenerTwo!=null) {
+                            listenerTwo.onClick();
+                        }
                     }
                 });
+
             }finally {
                 a.recycle();
             }
@@ -87,5 +105,19 @@ public class DualOptionToggleView extends RelativeLayout {
     }
     public interface OnButtonClickListener {
         void onClick();
+    }
+
+    public void toggleSelection(Boolean isButtonOneSelected){
+        if(isButtonOneSelected){
+            binding.btnSingle.setSelected(true);
+            binding.btnMarried.setSelected(false);
+            binding.text1.setTextColor(Color.parseColor("#ffffff"));
+            binding.text2.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(),R.color.md_theme_primary));
+        }else{
+            binding.btnSingle.setSelected(false);
+            binding.btnMarried.setSelected(true);
+            binding.text1.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(),R.color.md_theme_primary));
+            binding.text2.setTextColor(Color.parseColor("#ffffff"));
+        }
     }
 }
