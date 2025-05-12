@@ -6,6 +6,7 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ public class LabelledTextField extends LinearLayout {
                 String hint = a.getString(R.styleable.LabelledTextField_hintText);
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
                 String text = a.getString(R.styleable.LabelledTextField_android_text);
+                String infoText= a.getString(R.styleable.LabelledTextField_infoText);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
                 binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,20)) });
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
@@ -45,6 +47,13 @@ public class LabelledTextField extends LinearLayout {
                 }
                 if(text!=null){
                     binding.textInputEditText.setText(text);
+                }
+
+                if(infoText!=null){
+                    binding.supporting.setText(infoText);
+                    binding.supporting.setVisibility(View.VISIBLE);
+                }else{
+                    binding.supporting.setVisibility(View.GONE);
                 }
 
             }finally {

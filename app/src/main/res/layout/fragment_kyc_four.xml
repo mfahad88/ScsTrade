@@ -45,35 +45,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="4dp"
-        android:id="@+id/card_mailing_address"
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="top"
+        android:layout_marginTop="20dp"
+        android:id="@+id/mailing_address"
+        android:inputType="text|textMultiLine"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="5dp"
+        android:hint="@string/enter_your_"
+        android:background="@drawable/drawable_text_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:orientation="vertical">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="top"
-                android:id="@+id/mailing_address"
-                android:inputType="text|textMultiLine"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="5dp"
-                android:hint="@string/enter_your_"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintTop_toBottomOf="@+id/email"/>
 
     <com.example.scstrade.views.widgets.LabelledSpinner
         android:layout_width="0dp"
@@ -85,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_mailing_address"/>
+        app:layout_constraintTop_toBottomOf="@+id/mailing_address"/>
 
 
     <com.example.scstrade.views.widgets.LabelledSpinner

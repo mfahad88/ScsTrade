@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.aof.fragments.kyc.KycNineFragment">
+
+    <TextView
+        android:id="@+id/tell_us_abo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:gravity="top"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/please_prov_nominee"
+        android:textAppearance="@style/tell_us_abo"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/nominee"
+        app:titleDualOption="@string/do_you_have_a_nominee"
+        app:titleButton1="No"
+        app:titleButton2="Yes"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:id="@+id/nominee_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nominee">
+
+        <com.example.scstrade.views.widgets.LabelledSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nominee_relation"
+            app:hintLabel="@string/nominee_relation"
+            app:dropdownLabel="@string/spouse"/>
+
+        <com.example.scstrade.views.widgets.LabelledTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/nominee_name"
+            app:hintText="@string/nominee_name"
+            app:hintTextField="@string/enter_nominee_name"/>
+
+        <com.example.scstrade.views.widgets.LabelledSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/uin_type"
+            app:hintLabel="@string/uin_type"
+            app:dropdownLabel="@string/cnic"/>
+
+        <com.example.scstrade.views.widgets.LabelledTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/uin_number"
+            app:hintText="@string/uin"
+            app:hintTextField="@string/enter_uin_number"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Back"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Continue" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

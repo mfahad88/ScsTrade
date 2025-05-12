@@ -10,6 +10,7 @@
     <declare-styleable name="LabelledTextField">
         <attr name="hintText" format="string"/>
         <attr name="hintTextField" format="string"/>
+        <attr name="infoText" format="string"/>
         <attr name="android:text" format="string"/>
         <attr name="android:drawableEnd" format="reference"/>
         <attr name="android:inputType" format="reference"/>

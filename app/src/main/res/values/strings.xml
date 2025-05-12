@@ -250,7 +250,7 @@
     <string name="buy_sell">Buy, sell, and trade stocks with ease.</string>
     <string name="log_in_your">Log in your email</string>
     <string name="login_now">Login Now</string>
-    <string name="tell_us_abo"><![CDATA[Tell us about your Contact & IBAN]]></string>
+    <string name="tell_us_abo">Tell us about your Contact &amp; IBAN</string>
     <string name="supporting_">(Without hyphen \"-\")</string>
     <string name="mobile_number_is_registered_under">Mobile Number is registered under</string>
     <string name="iban_number">IBAN Number</string>
@@ -329,6 +329,30 @@
     <string name="is_your_mai">Is your mailing address the same as your permanent address?</string>
     <string name="no_worries_">No worries!</string>
     <string name="please_tap_">Please Tap \'Continue\' to enter your permanent address details on the next step.</string>
+    <string name="enter_your_parmanent">Enter your Permanent Address</string>
+    <string name="permanent_country">Permanent Country</string>
+    <string name="select_your_permanent_country">Select your Permanent Country</string>
+    <string name="permanent_province">Permanent Province</string>
+    <string name="select_your_permanent_province">Select your Province</string>
+    <string name="permanent_city">Permanent City</string>
+    <string name="please_prov">Please provide your attorney\'s complete details for verification.</string>
+    <string name="is_the_attorney_yourself_or_someone_else">Is the attorney yourself or someone else?</string>
+    <string name="self">Self</string>
+    <string name="someone_else">Someone else</string>
+    <string name="cnic">CNIC</string>
+    <string name="is_attorney">Is Attorney NIC valid for a lifetime?</string>
+    <string name="is_nominee">Is Nominee NIC valid for a lifetime?</string>
+    <string name="enter_your_mailing_address">Enter your Mailing Address</string>
+    <string name="residence_num">Residence Number</string>
+    <string name="please_prov_nominee">Please provide the nominee details for record and verification.</string>
+    <string name="do_you_have_a_nominee">Do you have a Nominee?</string>
+    <string name="nominee_relation">Nominee Relation</string>
+    <string name="spouse">Spouse</string>
+    <string name="nominee_name">Nominee Name</string>
+    <string name="enter_nominee_name">Enter Nominee Name</string>
+    <string name="enter_uin_number">Enter UIN Number</string>
+    <string name="enter_nominee_address">Enter Nominee Address</string>
+    <string name="nominee_nic">Nominee NIC Front</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

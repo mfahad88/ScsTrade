@@ -13,8 +13,10 @@ import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFou
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningThreeFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningTwoFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycEightFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycFourFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycSevenFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycThreeFragment
 
 class AofActivity : AppCompatActivity() {
@@ -30,7 +32,7 @@ class AofActivity : AppCompatActivity() {
             insets
         }
 
-        loadFragment(KycFourFragment())
+        loadFragment(KycEightFragment())
     }
 
 

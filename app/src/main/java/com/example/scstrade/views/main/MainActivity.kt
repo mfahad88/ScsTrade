@@ -37,6 +37,7 @@ import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -49,7 +50,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
         FacebookSdk.sdkInitialize(this)
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                    return@addOnCompleteListener
+                }
 
+                // Get new FCM registration token
+                val token = task.result
+                Log.d("FCM", "Token: $token")
+                // TODO: Send token to your backend server here
+            }
         AppEventsLogger.activateApp(this)
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel

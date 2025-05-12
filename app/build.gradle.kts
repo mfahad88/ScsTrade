@@ -93,6 +93,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation("javax.xml.stream:stax-api:1.0")
+    implementation ("com.google.firebase:firebase-messaging:23.4.1")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
     implementation ("com.facebook.android:facebook-login:[8,9)")
     implementation ("com.github.GoodieBag:Pinview:v1.4")

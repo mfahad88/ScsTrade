@@ -14,6 +14,8 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
@@ -21,7 +23,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super<Application>.onCreate()
         getSha1Fingerprint()
-
+        FirebaseApp.initializeApp(this)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
         viewModel.apply {
             fetchIndices()
