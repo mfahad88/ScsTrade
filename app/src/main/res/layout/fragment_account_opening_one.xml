@@ -50,8 +50,21 @@
         app:layout_constraintStart_toStartOf="@+id/fullName"
         app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
+    <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:titleDualOption="@string/residential"
+        app:titleButton1="@string/resident"
+        app:titleButton2="@string/non_resident"
+        android:id="@+id/residential_status"
+        app:layout_constraintEnd_toEndOf="@+id/emailAddress"
+        app:layout_constraintStart_toStartOf="@+id/emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress">
 
-    <com.google.android.material.card.MaterialCardView
+    </com.example.scstrade.views.widgets.DualOptionToggleView>
+
+ <!--   <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
@@ -96,8 +109,8 @@
                     android:layout_width="0dp"
                     android:layout_height="37dp"
                     android:layout_weight="0.8"
-                    android:textAppearance="@style/resident"
-                    android:text="@string/resident" />
+                    android:text="@string/resident"
+                    android:textAppearance="@style/resident" />
 
                 <View
                     android:layout_width="0dp"
@@ -116,7 +129,7 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>-->
 
 
     <com.google.android.material.textfield.TextInputLayout

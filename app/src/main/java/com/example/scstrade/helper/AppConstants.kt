@@ -39,5 +39,9 @@ class AppConstants {
             mapOf("NICOP - OVERSEAS PAKISTANI CARD" to "NICOP"),
             mapOf("POC - PAKISTAN ORIGIN CARD" to "POC")
         )
+        val RESIDENTIAL_STATUS= listOf(
+            mapOf("Resident" to "01"),
+            mapOf("Non-Resident" to "02")
+        )
     }
 }

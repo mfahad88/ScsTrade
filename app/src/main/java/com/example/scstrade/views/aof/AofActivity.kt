@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAofBinding
+import com.example.scstrade.repository.AofRepository
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.aof.fragments.WelcomeFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFourFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
@@ -24,9 +28,12 @@ import com.example.scstrade.views.aof.fragments.kyc.KycThreeFragment
 
 class AofActivity : AppCompatActivity() {
     lateinit var binding:ActivityAofBinding
+    lateinit var viewModel: AofViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityAofBinding.inflate(LayoutInflater.from(this))
+        viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
+            AofViewModel::class.java)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

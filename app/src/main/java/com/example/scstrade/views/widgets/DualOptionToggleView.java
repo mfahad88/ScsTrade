@@ -68,7 +68,7 @@ public class DualOptionToggleView extends RelativeLayout {
 
                 binding.text1.setText(btn1);
                 binding.text2.setText(btn2);
-                toggleSelection(true);
+//                toggleSelection(true);
 
                 binding.btnSingle.setOnClickListener(new OnClickListener() {
                     @Override
