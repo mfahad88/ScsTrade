@@ -84,18 +84,18 @@ class AccountOpeningOneFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            fullName.text = viewModel.getSelfInfo()[0]
-            emailAddress.text = viewModel.getSelfInfo()[1]
-            if(viewModel.getSelfInfo()[2].equals("01")){
+            fullName.text = viewModel.getSelfInfo().fullName
+            emailAddress.text = viewModel.getSelfInfo().emailAddress
+            if(viewModel.getSelfInfo().residentialStatus.equals("01")){
                 residentialStatus.toggleSelection(true)
                 resident="01"
-            }else if(viewModel.getSelfInfo()[2].equals("02")){
+            }else if(viewModel.getSelfInfo().residentialStatus.equals("02")){
                 residentialStatus.toggleSelection(false)
                 resident="02"
             }
 
-            nicType.setText(viewModel.getSelfInfo()[3])
-            nicCard.text=viewModel.getSelfInfo()[4]
+            nicType.setText(viewModel.getSelfInfo().nicType)
+            nicCard.text=viewModel.getSelfInfo().nicNumber
         }
     }
 

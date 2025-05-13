@@ -2,6 +2,7 @@ package com.example.scstrade.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.example.scstrade.model.data.AccountOpening
 import com.example.scstrade.repository.AofRepository
 
 class AofViewModel(application: Application): AndroidViewModel(application) {
@@ -12,7 +13,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         repository.saveSelfInfo(fname, email, residential, nicType, nicNumber)
     }
 
-    public fun getSelfInfo(): List<String?>{
+    public fun getSelfInfo(): AccountOpening {
         return repository.getSelfInfo()
     }
 }

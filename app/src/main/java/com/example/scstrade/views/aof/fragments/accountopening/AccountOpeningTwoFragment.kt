@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentAccountOpeningTwoBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -13,13 +14,15 @@ import com.example.scstrade.R
  * create an instance of this fragment.
  */
 class AccountOpeningTwoFragment : Fragment() {
-
+    lateinit var binding: FragmentAccountOpeningTwoBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_opening_two, container, false)
+        binding = FragmentAccountOpeningTwoBinding.inflate(inflater,container,false)
+
+        return binding.root
     }
 
 
