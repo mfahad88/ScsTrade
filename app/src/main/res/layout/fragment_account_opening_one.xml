@@ -133,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/residential_status">
 
         <AutoCompleteTextView
-            android:id="@+id/dropdown"
+            android:id="@+id/nic_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/select_your_nic_type"

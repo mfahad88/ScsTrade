@@ -353,8 +353,44 @@
     <string name="enter_uin_number">Enter UIN Number</string>
     <string name="enter_nominee_address">Enter Nominee Address</string>
     <string name="nominee_nic">Nominee NIC Front</string>
+    <string name="upload_all_nominee">Upload all the necessary documents for your Nominee</string>
+    <string name="nominee_nic_back">Nominee NIC Back</string>
+    <string name="please_prov_record">Please provide the Other details for record and verification.</string>
+    <string name="what_is_you">What is your account type?</string>
+    <string name="normal">Normal</string>
+    <string name="sahulat">Sahulat</string>
+    <string name="select_your_gross">Select your Gross Annual Income</string>
+    <string name="gross_annual_incomeslab">Gross Annual IncomeSLAB</string>
+    <string name="source_of_income">Source of Income</string>
+    <string name="enter_your_source">Enter your Source of income</string>
+    <string name="what_is_you_occ">What is your occupation?</string>
+    <string name="enter_your_occupation">Enter your Occupation</string>
+    <string name="please_prov_job">Please provide your job details.</string>
+    <string name="enter_your_job_designation">Enter your Job Designation</string>
+    <string name="enter_your_department">Enter your Department</string>
+    <string name="please_prov_employer">Please provide your employer details.</string>
+    <string name="enter_your_job_employer_name">Enter your Job Employer Name</string>
+    <string name="enter_your_employer_address">Enter your employer address</string>
+    <string name="please_spec">Please specify your Zakat status.</string>
+    <string name="select_your_zakat_status">Select your Zakat Status</string>
+    <string name="please_select_your_bank_from_the_list_below">Please select your bank from the list below:</string>
+    <string name="are_you_a_r">Are you a Resident Pakistani or an Overseas Pakistani?</string>
+    <string name="resident_pakistani">Resident Pakistani</string>
+    <string name="overseas_pakistani">Overseas Pakistani</string>
+    <string name="proof_of_pe">Proof of Permanent Address</string>
+    <string name="income_proo">Income Proof with Employer Address*</string>
+    <string name="specimen_si">Specimen Signature</string>
+    <string name="zakat_decla">Zakat Declaration</string>
+    <string name="undertaking">Undertaking</string>
+    <string name="whatever_in"><![CDATA[Whatever information is provided is correct to the best of my knowledge & belief.]]></string>
+    <string name="i_don_t_accept">I don\'t Accept</string>
+    <string name="i_accept">I Accept</string>
+    <string name="congratulats">Congratulations!</string>
+    <string name="you_have_su">"You have successfully completed all prerequisite of opening an account,Now wait we will get back to you! "</string>
+    <string name="go_to_dashboard">Go to Dashboard</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>
     </array>
+
 </resources>

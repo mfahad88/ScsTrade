@@ -42,12 +42,21 @@
     </declare-styleable>
     <declare-styleable name="DualDropdownSelectorView">
         <attr name="titleDualDropdown" format="string"/>
-        <attr name="typeDualDropdown" format="enum">
+        <attr name="typeDualDropdown1" format="enum">
+            <enum name="dropdown" value="0"/>
+            <enum name="text" value="1"/>
+        </attr>
+        <attr name="typeDualDropdown2" format="enum">
             <enum name="dropdown" value="0"/>
             <enum name="text" value="1"/>
         </attr>
         <attr name="hintDualDropdown1" format="string"/>
         <attr name="hintDualDropdown2" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="FileUploadCamera">
+        <attr name="titleFileUpload" format="string"/>
+        <attr name="colorFileUpload" format="color"/>
+
     </declare-styleable>
     <declare-styleable name="mLineChart">
         <!--<attr name="isTouchEnabled" format="boolean"/>

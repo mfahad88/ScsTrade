@@ -9,12 +9,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAofBinding
+import com.example.scstrade.views.aof.fragments.WelcomeFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFourFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningThreeFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningTwoFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycEightFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycElevenFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycFourFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycFourteenFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycSevenFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycThreeFragment
@@ -32,7 +35,7 @@ class AofActivity : AppCompatActivity() {
             insets
         }
 
-        loadFragment(KycEightFragment())
+        loadFragment(WelcomeFragment())
     }
 
 

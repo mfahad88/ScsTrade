@@ -98,6 +98,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="27dp"
+            android:visibility="gone"
             android:id="@+id/file_name"
             android:layout_marginEnd="96dp"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView8"

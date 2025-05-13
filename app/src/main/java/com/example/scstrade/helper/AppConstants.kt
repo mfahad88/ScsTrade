@@ -27,6 +27,17 @@ class AppConstants {
         val WatchListMainID: String = "watchlist_selected_item"
         val IS_REMEMBER: String="isRemember"
         val USER="user"
+        val ACCOUNT_OPENING_FULLNAME="account_opening_fullname"
+        val ACCOUNT_OPENING_EMAIL="account_opening_email"
+        val ACCOUNT_OPENING_RESIDENTIAL="account_opening_residential"
+        val ACCOUNT_OPENING_NIC_TYPE="account_opening_nic_type"
+        val ACCOUNT_OPENING_NIC_NUMBER="account_opening_nic_number"
 
+        val NIC_TYPE= listOf(
+            mapOf("SNIC - SMART CARD WITH CHIP" to "SNIC"),
+            mapOf("CNIC - CARD WITHOUT CHIP" to "CNIC"),
+            mapOf("NICOP - OVERSEAS PAKISTANI CARD" to "NICOP"),
+            mapOf("POC - PAKISTAN ORIGIN CARD" to "POC")
+        )
     }
 }

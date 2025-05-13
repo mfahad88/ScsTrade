@@ -39,7 +39,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
             );
 
             String titleDualDropdown=a.getString(R.styleable.DualDropdownSelectorView_titleDualDropdown);
-            int type= a.getInt(R.styleable.DualDropdownSelectorView_typeDualDropdown,0);
+            int type1= a.getInt(R.styleable.DualDropdownSelectorView_typeDualDropdown1,0);
+            int type2= a.getInt(R.styleable.DualDropdownSelectorView_typeDualDropdown2,0);
             String hint1= a.getString(R.styleable.DualDropdownSelectorView_hintDualDropdown1);
             String hint2= a.getString(R.styleable.DualDropdownSelectorView_hintDualDropdown2);
             if(titleDualDropdown!=null){
@@ -49,25 +50,52 @@ public class DualDropdownSelectorView extends MaterialCardView {
                 binding.title.setVisibility(View.GONE);
             }
 
-            if(type==0){
+            if(type1==0){
                 binding.dropdownMenu1.setVisibility(View.VISIBLE);
                 binding.dropdown1.setVisibility(View.GONE);
 
-                binding.dropdownMenu2.setVisibility(View.VISIBLE);
-                binding.dropdown2.setVisibility(View.GONE);
             }else{
                 binding.dropdownMenu1.setVisibility(View.GONE);
                 binding.dropdown1.setVisibility(View.VISIBLE);
 
+            }
+
+            if(type2==0){
+                binding.dropdownMenu2.setVisibility(View.VISIBLE);
+                binding.dropdown2.setVisibility(View.GONE);
+            }else{
                 binding.dropdownMenu2.setVisibility(View.GONE);
                 binding.dropdown2.setVisibility(View.VISIBLE);
             }
 
-            binding.autocompleteTextview1.setHint(hint1);
-            binding.autocompleteTextview2.setHint(hint2);
-
-            binding.textview1.setHint(hint1);
-            binding.textview2.setHint(hint2);
+            if(hint1!=null) {
+                binding.autocompleteTextview1.setHint(hint1);
+                binding.autocompleteTextview1.setVisibility(VISIBLE);
+            }else{
+                binding.autocompleteTextview1.setVisibility(GONE);
+                binding.dropdownMenu1.setVisibility(View.GONE);
+                binding.dropdown1.setVisibility(View.GONE);
+            }
+            if(hint2!=null) {
+                binding.autocompleteTextview2.setHint(hint2);
+                binding.autocompleteTextview2.setVisibility(VISIBLE);
+            }else{
+                binding.autocompleteTextview2.setVisibility(GONE);
+                binding.dropdownMenu2.setVisibility(View.GONE);
+                binding.dropdown2.setVisibility(View.GONE);
+            }
+            if(hint1!=null) {
+                binding.textview1.setHint(hint1);
+                binding.textview1.setVisibility(View.VISIBLE);
+            }else{
+                binding.textview1.setVisibility(View.GONE);
+            }
+            if(hint2!=null) {
+                binding.textview2.setHint(hint2);
+                binding.textview2.setVisibility(View.VISIBLE);
+            }else{
+                binding.textview2.setVisibility(View.GONE);
+            }
 
             textview_1 = binding.textview1;
             textview_2 = binding.textview2;

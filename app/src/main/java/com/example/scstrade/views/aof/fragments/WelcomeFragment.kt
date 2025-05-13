@@ -6,16 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentWelcomeBinding
+import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
 
 
 class WelcomeFragment : Fragment() {
-
+    private lateinit var binding: FragmentWelcomeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false)
+        binding=FragmentWelcomeBinding.inflate(inflater,container,false)
+        binding.signup.setOnClickListener {
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
+        }
+        return binding.root
     }
 
 
