@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,8 +14,11 @@ import com.example.scstrade.R;
 import com.example.scstrade.databinding.LabelledSpinnerBinding;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
+
 public class LabelledSpinner extends TextInputLayout {
     LabelledSpinnerBinding binding;
+    public AutoCompleteTextView dropdown;
     public LabelledSpinner(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -42,10 +46,14 @@ public class LabelledSpinner extends TextInputLayout {
 
                     binding.dropdown.setAdapter(new ArrayAdapter(context, android.R.layout.simple_list_item_1, a.getTextArray(R.styleable.LabelledSpinner_entries)));
                 }
-
+                dropdown=binding.dropdown;
             }finally {
                 a.recycle();
             }
         }
+    }
+
+    public void setEntries(List<String> entries){
+        binding.dropdown.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,entries));
     }
 }

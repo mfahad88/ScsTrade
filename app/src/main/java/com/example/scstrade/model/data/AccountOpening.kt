@@ -10,7 +10,10 @@ data class AccountOpening(
     var registerUnder:String?,
     var ibanNumber:String?,
     var proofIban:String?,
+    var proofIbanImage:String?,
     var nicFront:String?,
+    var nicFrontImage:String?,
     var nicBack:String?,
+    var nicBackImage:String?,
     var reference:String?
 )

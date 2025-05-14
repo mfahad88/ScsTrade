@@ -13,7 +13,23 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         repository.saveSelfInfo(fname, email, residential, nicType, nicNumber)
     }
 
+    public fun saveContactIban(mobileNumber:String, registerUnder:String,iban:String){
+        repository.saveContactIban(mobileNumber, registerUnder,iban)
+    }
+    fun saveDocuments(ibanFileName:String,iban:String,nicFrontFileName:String,nicFront:String,nicBackFileName:String,nicBack:String){
+        repository.saveDocuments(ibanFileName, iban, nicFrontFileName, nicFront, nicBackFileName, nicBack)
+    }
+
     public fun getSelfInfo(): AccountOpening {
         return repository.getSelfInfo()
     }
+
+    public fun getContactIban(): AccountOpening {
+        return repository.getContactIban()
+    }
+
+    fun getDocuments(): AccountOpening {
+        return repository.getDocuments()
+    }
+
 }

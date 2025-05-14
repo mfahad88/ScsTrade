@@ -27,7 +27,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
-        android:inputType="text"
+        android:inputType="phone"
         android:maxLength="50"
         app:hintText="@string/mobile_number"
         app:hintTextField="@string/enter_your_mobile_number"
@@ -55,41 +55,17 @@
         android:layout_marginTop="40dp"
         app:entries="@array/p_l_array"
         app:hintLabel="@string/mobile_number_is_registered_under"
-        app:dropdownLabel="Select Registered Person"
+        app:dropdownLabel="@string/select_registered_person"
         app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
         app:layout_constraintStart_toStartOf="@+id/mobileNumber"
         app:layout_constraintTop_toBottomOf="@+id/mobileNumber"/>
 
-    <!--<com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputMobile"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/mobile_number_is_registered_under"
-        app:boxBackgroundMode="outline"
-        app:expandedHintEnabled="false"
-        app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
-        app:layout_constraintStart_toStartOf="@+id/mobileNumber"
-        app:layout_constraintTop_toBottomOf="@+id/mobileNumber">
-
-        <AutoCompleteTextView
-            android:id="@+id/dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Select Registered Person"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>-->
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:contentPaddingLeft="15dp"
-        app:contentPaddingRight="15dp"
-        app:contentPaddingTop="10dp"
-        app:contentPaddingBottom="10dp"
-        app:cardBackgroundColor="@color/md_theme_surfaceBright"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputMobile"
         app:layout_constraintStart_toStartOf="@+id/textInputMobile"
         app:layout_constraintTop_toBottomOf="@+id/textInputMobile">
@@ -97,7 +73,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-          >
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:background="@color/md_theme_surfaceBright">
 
             <TextView
                 android:id="@+id/iban_nu"
@@ -141,7 +119,10 @@
                 <EditText
                     android:layout_toEndOf="@id/separator"
                     android:layout_width="85dp"
+                    android:id="@+id/code"
                     android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="2"
                     android:hint="@string/enter_code"
                     android:textAppearance="@style/enter_code"
                     android:layout_centerVertical="true"
@@ -150,25 +131,18 @@
                     android:layout_height="wrap_content"/>
             </RelativeLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputBank"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <com.example.scstrade.views.widgets.LabelledSpinner
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-
                 android:layout_marginStart="8dp"
+                android:id="@+id/textInputBank"
+                app:hintLabel=""
+                app:dropdownLabel="Select Bank"
                 app:layout_constraintBottom_toBottomOf="@+id/layout_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/layout_code"
-                app:layout_constraintTop_toTopOf="@+id/layout_code">
+                app:layout_constraintTop_toTopOf="@+id/layout_code"/>
 
-                <AutoCompleteTextView
-                    android:id="@+id/dropdownBank"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Select Bank"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.example.scstrade.views.widgets.LabelledTextField
@@ -176,24 +150,63 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
-                android:inputType="text"
-                android:maxLength="50"
+                android:inputType="number"
+                android:maxLength="16"
                 app:hintText="@string/iban_number"
                 app:hintTextField="@string/enter_your_iban_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_code" />
 
-            <TextView
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iban">
+                <TextView
+                    android:id="@+id/c_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="PK"
+                    android:textAppearance="@style/pk_36_scbl_"/>
+
+                <TextView
+                    android:id="@+id/bank_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    tools:text="36"
+                    android:textAppearance="@style/pk_36_scbl_"/>
+
+                <TextView
+                    android:id="@+id/bank_swift"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    tools:text="SCBL"
+                    android:textAppearance="@style/pk_36_scbl_"/>
+
+                <TextView
+                    android:id="@+id/iban_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    tools:text="0000001123456702"
+                    android:textAppearance="@style/pk_36_scbl_"/>
+            </LinearLayout>
+           <!-- <TextView
                 android:id="@+id/pk_36_scbl_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@string/pk_36_scbl_"
+                tools:text="@string/pk_36_scbl_"
                 android:textAppearance="@style/pk_36_scbl_"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iban" />
+                app:layout_constraintTop_toBottomOf="@+id/iban" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

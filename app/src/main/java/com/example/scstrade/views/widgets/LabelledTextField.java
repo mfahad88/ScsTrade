@@ -13,9 +13,11 @@ import androidx.annotation.Nullable;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.LabelledTextfieldBinding;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LabelledTextField extends LinearLayout {
     LabelledTextfieldBinding binding;
+    public TextInputEditText textInputEditText;
     public LabelledTextField(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -55,16 +57,14 @@ public class LabelledTextField extends LinearLayout {
                 }else{
                     binding.supporting.setVisibility(View.GONE);
                 }
-
+                textInputEditText=binding.textInputEditText;
             }finally {
                 a.recycle();
             }
         }
     }
 
-    public void addTextChangedListener(TextWatcher watcher){
-        binding.textInputEditText.addTextChangedListener(watcher);
-    }
+
 
     public void setHint(String hint){
         binding.textInputLayout.setHint(hint);

@@ -7,9 +7,14 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.icu.text.DecimalFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
@@ -27,6 +32,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -174,7 +181,43 @@ class Utils {
                 (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
             }
         }
+        fun getFileNameFromUri(context: Context,uri: Uri): String? {
+            var name: String? = null
+            val projection = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)
 
+            context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                if (cursor.moveToFirst()) {
+                    name = cursor.getString(nameIndex)
+                }
+            }
+
+            return name
+        }
+        fun uriToBitmap(context: Context, imageUri: Uri): Bitmap? {
+            return try {
+                if (Build.VERSION.SDK_INT < 28) {
+                    MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+                } else {
+                    val source = ImageDecoder.createSource(context.contentResolver, imageUri)
+                    ImageDecoder.decodeBitmap(source)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                null
+            }
+        }
+        fun bitmapToBase64(bitmap: Bitmap): String {
+            val outputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+            val byteArray = outputStream.toByteArray()
+            return Base64.encodeToString(byteArray, Base64.DEFAULT)
+        }
+
+        fun convertImageUriToBase64(context: Context, imageUri: Uri): String? {
+            val bitmap = uriToBitmap(context, imageUri)
+            return bitmap?.let { bitmapToBase64(it) }
+        }
         fun saveSharedPreference(context: Context,key:String,value:List<Any>){
             val gson=Gson()
             val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)

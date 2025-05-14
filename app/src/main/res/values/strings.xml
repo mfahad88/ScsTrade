@@ -388,6 +388,7 @@
     <string name="congratulats">Congratulations!</string>
     <string name="you_have_su">"You have successfully completed all prerequisite of opening an account,Now wait we will get back to you! "</string>
     <string name="go_to_dashboard">Go to Dashboard</string>
+    <string name="select_registered_person">Select Registered Person</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

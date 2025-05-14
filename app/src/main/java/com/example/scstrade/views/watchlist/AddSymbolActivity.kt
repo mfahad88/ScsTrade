@@ -54,7 +54,7 @@ class AddSymbolActivity : AppCompatActivity() {
             WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
         sharedViewModel = (this.application as MyApp).viewModel
-        binding.symbol.addTextChangedListener(object : TextWatcher{
+        binding.symbol.textInputEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
