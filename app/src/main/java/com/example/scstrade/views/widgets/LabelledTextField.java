@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LabelledTextField extends LinearLayout {
     LabelledTextfieldBinding binding;
     public TextInputEditText textInputEditText;
+    private OnFocus listener;
     public LabelledTextField(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -58,14 +59,25 @@ public class LabelledTextField extends LinearLayout {
                     binding.supporting.setVisibility(View.GONE);
                 }
                 textInputEditText=binding.textInputEditText;
+                binding.textInputEditText.setOnFocusChangeListener((view, b) -> {
+                    if(listener!=null) {
+                        listener.onChange(b);
+                    }
+                });
+
             }finally {
                 a.recycle();
             }
         }
+
     }
 
-
-
+    public void setOnFocusListener(OnFocus listener){
+        this.listener=listener;
+    }
+    public interface OnFocus{
+        void onChange(boolean b);
+    }
     public void setHint(String hint){
         binding.textInputLayout.setHint(hint);
     }

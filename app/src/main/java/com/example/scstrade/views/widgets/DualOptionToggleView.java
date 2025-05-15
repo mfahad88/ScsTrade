@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import androidx.core.content.ContextCompat;
@@ -16,7 +17,9 @@ import com.example.scstrade.databinding.DualOptionToggleViewBinding;
 
 public class DualOptionToggleView extends RelativeLayout {
     DualOptionToggleViewBinding binding;
+    public EditText editText;
     private OnButtonClickListener listenerOne, listenerTwo;
+    private OnFocus listener;
     public DualOptionToggleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -54,6 +57,7 @@ public class DualOptionToggleView extends RelativeLayout {
                 }
                 if(hint!=null) {
                     binding.editText.setHint(hint);
+                    editText=binding.editText;
                     binding.textField.setVisibility(View.VISIBLE);
                 }else{
                     binding.textField.setVisibility(View.GONE);
@@ -79,7 +83,11 @@ public class DualOptionToggleView extends RelativeLayout {
                         }
                     }
                 });
-
+                binding.textField.setOnFocusChangeListener((view, b) -> {
+                    if(listener!=null){
+                        listener.onChange(b);
+                    }
+                });
                 binding.btnMarried.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -105,6 +113,13 @@ public class DualOptionToggleView extends RelativeLayout {
     }
     public interface OnButtonClickListener {
         void onClick();
+    }
+
+    public void setOnFocusListener(OnFocus listener){
+        this.listener=listener;
+    }
+    public interface OnFocus{
+        void onChange(boolean b);
     }
 
     public void toggleSelection(Boolean isButtonOneSelected){

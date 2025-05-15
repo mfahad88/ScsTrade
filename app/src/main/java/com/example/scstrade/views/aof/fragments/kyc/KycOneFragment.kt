@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.example.scstrade.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.scstrade.databinding.FragmentKycOneBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
+import java.text.SimpleDateFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -18,43 +20,73 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class KycOneFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentKycOneBinding
+    lateinit var viewModel: AofViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_one, container, false)
-    }
+        binding = FragmentKycOneBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
+        populateDropdown()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycOneFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycOneFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding.apply {
+
+            dobInputLayout.setOnFocusListener {
+                if(it){
+                    Utils.showDatePicker(requireContext()){ day, month, year ->
+                        val selectedDate = "$day-$month-$year"
+                        dobInputLayout.textInputEditText.setText(selectedDate)
+                    }
+                }
+
+            }
+            btnContinue.setOnClickListener {
+                if(uinType.text.isNotEmpty() && uinNumber.textInputEditText.text?.isNotEmpty()?:false && fullName.textInputEditText.text?.isNotEmpty()?:false
+                    && dropdownTitle.text.isNotEmpty() && dobInputLayout.textInputEditText.text?.isNotEmpty()?:false
+                    && motherName.textInputEditText.text?.isNotEmpty()?:false && dropdownNationality.text.isNotEmpty()){
+
+                    viewModel.basicData.uinType= uinType.text.toString()
+                    viewModel.basicData.uinNumber= uinNumber.text.toString()
+                    viewModel.basicData.salutation= dropdownTitle.text.toString()
+                    viewModel.basicData.fullNicName= fullName.text.toString()
+                    viewModel.basicData.dob= dobInputLayout.textInputEditText.text.toString()
+                    viewModel.basicData.motherMaidenName= motherName.textInputEditText.text.toString()
+                    viewModel.basicData.nationality= dropdownNationality.text.toString()
+                    viewModel.saveBasicData()
+                    (requireActivity() as AofActivity).loadFragment(KycTwoFragment())
+
+                }else{
+                    Utils.showError(requireView(), getString(R.string.empty_fields_not_allowed))
                 }
             }
+        }
+
+        return binding.root
     }
+
+    private fun populateDropdown() {
+
+        binding.uinType.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.IDTYPE.map { it.first }))
+        binding.dropdownTitle.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.SALUTATION.map { it.first }))
+        binding.dropdownNationality.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.COUNTRY.map { it.first }))
+    }
+
+    private fun initFields() {
+        val basicData =viewModel.getbasicData()
+        binding.apply {
+            uinType.setText(basicData.uinType)
+            uinNumber.textInputEditText.setText(basicData.uinNumber)
+            dropdownTitle.setText(basicData.salutation)
+            fullName.textInputEditText.setText(basicData.fullNicName)
+            dobInputLayout.textInputEditText.setText(basicData.dob)
+            motherName.textInputEditText.setText(basicData.motherMaidenName)
+            dropdownNationality.setText(basicData.nationality)
+        }
+    }
+
+
 }

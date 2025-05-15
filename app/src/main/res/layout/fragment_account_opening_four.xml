@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.example.scstrade.views.widgets.LabelledTextField
-            android:id="@+id/mobileNumber"
+            android:id="@+id/reference"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -53,9 +53,9 @@
             app:contentPaddingTop="10dp"
             app:contentPaddingBottom="10dp"
             app:cardBackgroundColor="@color/md_theme_surfaceBright"
-            app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
-            app:layout_constraintStart_toStartOf="@+id/mobileNumber"
-            app:layout_constraintTop_toBottomOf="@+id/mobileNumber">
+            app:layout_constraintEnd_toEndOf="@+id/reference"
+            app:layout_constraintStart_toStartOf="@+id/reference"
+            app:layout_constraintTop_toBottomOf="@+id/reference">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
 
                 <RelativeLayout
                     android:id="@+id/captcha_view"
-                    android:layout_width="115dp"
+                    android:layout_width="100dp"
                     android:layout_height="56dp"
                     android:layout_marginTop="7dp"
                     android:background="#65558F"
@@ -95,7 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="0dp"
                     app:cardCornerRadius="4dp"
                     app:strokeColor="@color/md_theme_outline"
                     app:layout_constraintBottom_toBottomOf="@+id/captcha_view"
@@ -112,7 +112,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/captcha_input"
                             android:paddingHorizontal="5dp"
-                            android:text="Please Enter Recaptcha"
+                            android:hint="Please Enter Recaptcha"
                             android:background="@android:color/transparent"
                             android:layout_centerInParent="true"/>
                     </RelativeLayout>

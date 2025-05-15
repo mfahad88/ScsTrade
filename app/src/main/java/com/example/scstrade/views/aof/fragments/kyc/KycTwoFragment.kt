@@ -1,60 +1,129 @@
 package com.example.scstrade.views.aof.fragments.kyc
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycTwoBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KycTwoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class KycTwoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var binding: FragmentKycTwoBinding
+    var martialStatus = ""
+    var relationship = ""
+    lateinit var viewModel: AofViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_two, container, false)
-    }
+        binding = FragmentKycTwoBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycTwoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycTwoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding.maritalStatus.apply {
+            setOnButtonOneClickListener {
+                martialStatus=AppConstants.MARITAL_STATUS.get(0).values.first()
+            }
+            setOnButtonTwoClickListener{
+                martialStatus=AppConstants.MARITAL_STATUS.get(1).values.first()
+            }
+        }
+
+
+
+        binding.apply {
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycOneFragment())
+            }
+            btnFather.setOnClickListener {
+                btnFather.isSelected=true
+                btnHusband.isSelected=false
+                binding.textFather.setTextColor(Color.parseColor("#ffffff"))
+                binding.textHusband.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.md_theme_primary
+                    )
+                )
+                relationship=AppConstants.RELATIONSHIP.get(0).values.first()
+
+            }
+
+            btnHusband.setOnClickListener {
+                btnFather.isSelected=false
+                btnHusband.isSelected=true
+                binding.textHusband.setTextColor(Color.parseColor("#ffffff"))
+                binding.textFather.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.md_theme_primary
+                    )
+                )
+                relationship=AppConstants.RELATIONSHIP.get(1).values.first()
+            }
+
+            btnContinue.setOnClickListener {
+                if(martialStatus.isNotEmpty() && relationship.isNotEmpty() && name.text.isNotEmpty()){
+                    viewModel.basicData.maritalStatus = martialStatus
+                    viewModel.basicData.relationShip = relationship
+                    viewModel.basicData.relationshipName = name.text.toString()
+                    viewModel.saveBasicData()
+                    (requireActivity() as AofActivity).loadFragment(KycThreeFragment())
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
             }
+        }
+        return binding.root
     }
+
+    private fun initFields() {
+       val basicData = viewModel.getbasicData()
+        binding.name.setText(basicData.relationshipName)
+        if(basicData.maritalStatus.equals("s",true)){
+            martialStatus=AppConstants.MARITAL_STATUS.get(0).values.first()
+            binding.maritalStatus.toggleSelection(true)
+        }else if(basicData.maritalStatus.equals("m",true)){
+            martialStatus=AppConstants.MARITAL_STATUS.get(1).values.first()
+            binding.maritalStatus.toggleSelection(false)
+        }
+
+        if(basicData.relationShip.equals("f",true)){
+            binding.btnFather.isSelected = true
+            binding.btnHusband.isSelected = false
+            relationship=AppConstants.RELATIONSHIP.get(0).values.first()
+            binding.textFather.setTextColor(Color.parseColor("#ffffff"))
+            binding.textHusband.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.md_theme_primary
+                )
+            )
+        }else if(basicData.relationShip.equals("h",true)){
+            binding.btnFather.isSelected = false
+            binding.btnHusband.isSelected = true
+            relationship=AppConstants.RELATIONSHIP.get(1).values.first()
+            binding.textHusband.setTextColor(Color.parseColor("#ffffff"))
+            binding.textFather.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.md_theme_primary
+                )
+            )
+        }
+
+
+    }
+
 }

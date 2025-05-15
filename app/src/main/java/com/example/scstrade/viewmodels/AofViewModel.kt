@@ -3,12 +3,14 @@ package com.example.scstrade.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.scstrade.model.data.AccountOpening
+import com.example.scstrade.model.data.BasicData
+import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.repository.AofRepository
 
 class AofViewModel(application: Application): AndroidViewModel(application) {
-    val repository=AofRepository(application)
-
-
+    private val repository=AofRepository(application)
+    val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     public fun saveSelfInfo(fname:String,email:String, residential:String,nicType: String,nicNumber:String){
         repository.saveSelfInfo(fname, email, residential, nicType, nicNumber)
     }
@@ -20,6 +22,14 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         repository.saveDocuments(ibanFileName, iban, nicFrontFileName, nicFront, nicBackFileName, nicBack)
     }
 
+    fun saveReference(name:String){
+        repository.saveReference(name)
+    }
+
+    fun saveBasicData(){
+        repository.saveBasicData(basicData)
+    }
+
     public fun getSelfInfo(): AccountOpening {
         return repository.getSelfInfo()
     }
@@ -28,8 +38,15 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         return repository.getContactIban()
     }
 
-    fun getDocuments(): AccountOpening {
+    public fun getDocuments(): AccountOpening {
         return repository.getDocuments()
     }
 
+    public fun getReference(): AccountOpening {
+        return repository.getReference()
+    }
+
+    public fun getbasicData(): BasicData {
+        return repository.getbasicData()
+    }
 }

@@ -33,6 +33,7 @@
         </service>
         <activity
             android:name=".views.aof.AofActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <activity
             android:name=".views.portfolio.activities.EditBuySellActivity"

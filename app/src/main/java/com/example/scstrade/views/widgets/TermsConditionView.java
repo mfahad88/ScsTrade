@@ -2,10 +2,8 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.TermsConditionBinding;
@@ -47,5 +45,12 @@ public class TermsConditionView extends MaterialCardView {
 
     }
 
+    public void setChecked(boolean isChecked){
+        binding.checkBox.setChecked(isChecked);
+    }
+
+    public boolean getChecked(){
+        return binding.checkBox.isChecked();
+    }
 
 }

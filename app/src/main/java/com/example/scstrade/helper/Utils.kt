@@ -2,6 +2,7 @@ package com.example.scstrade.helper
 
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.UiModeManager
 import android.content.Context
@@ -10,6 +11,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.icu.text.DecimalFormat
+import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -18,6 +20,7 @@ import android.util.Base64
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -207,6 +210,13 @@ class Utils {
                 null
             }
         }
+
+        fun generateCaptchaText(length: Int = 6): String {
+            val allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            return (1..length)
+                .map { allowedChars.random() }
+                .joinToString("")
+        }
         fun bitmapToBase64(bitmap: Bitmap): String {
             val outputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
@@ -237,7 +247,18 @@ class Utils {
                 return defaultValue
             }
         }
+        fun showDatePicker(context: Context, onDateSelected: (day: Int, month: Int, year: Int) -> Unit) {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            val datePickerDialog = DatePickerDialog(context, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+                onDateSelected(selectedDay, selectedMonth + 1, selectedYear)
+            }, year, month, day)
+
+            datePickerDialog.show()
+        }
         fun removeSharedPrefence(context: Context,key:String){
             val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
             val editor=sharedPreferences.edit()

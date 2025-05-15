@@ -389,6 +389,13 @@
     <string name="you_have_su">"You have successfully completed all prerequisite of opening an account,Now wait we will get back to you! "</string>
     <string name="go_to_dashboard">Go to Dashboard</string>
     <string name="select_registered_person">Select Registered Person</string>
+    <string name="recaptcha_not_matched">Recaptcha not matched...</string>
+    <string name="read_terms_conditions_to_continue"><![CDATA[Read terms & conditions to continue.]]></string>
+    <string name="empty_fields_not_allowed">Empty fields not allowed</string>
+    <string name="single">Single</string>
+    <string name="married">Married</string>
+    <string name="father">Father</string>
+    <string name="husband">Husband</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

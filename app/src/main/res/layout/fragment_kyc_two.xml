@@ -8,7 +8,7 @@
     tools:context=".views.aof.fragments.kyc.KycTwoFragment">
 
 
-    <com.google.android.material.card.MaterialCardView
+    <!--<com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="97dp"
         app:cardElevation="0dp"
@@ -65,8 +65,17 @@
             </LinearLayout>
 
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+    </com.google.android.material.card.MaterialCardView>-->
+    <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleButton1="@string/single"
+        app:titleButton2="@string/married"
+        app:titleDualOption="@string/select_your"
+        android:id="@+id/marital_status"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
@@ -76,7 +85,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardMartialStatus" >
+        app:layout_constraintTop_toBottomOf="@id/marital_status" >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,34 +104,50 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_below="@id/choose_your"
                 android:id="@+id/family"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:weightSum="1">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/father"
+                <RelativeLayout
+                    android:id="@+id/btn_father"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:text="Father"
-                    android:textAppearance="@style/single"
-                    />
+                    android:background="@drawable/drawable_toggle">
+
+                    <TextView
+                        android:id="@+id/textFather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/father"
+                        android:textAppearance="@style/single_btn" />
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.1"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/husband"
+                <RelativeLayout
+                    android:id="@+id/btn_husband"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:text="Husband"
-                    android:textAppearance="@style/single"
-                    style="@style/Widget.Material3.Button.OutlinedButton"/>
+                    android:background="@drawable/drawable_toggle">
 
+                    <TextView
+                        android:id="@+id/textHusband"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/husband"
+                        android:textAppearance="@style/single_btn" />
+
+                </RelativeLayout>
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView

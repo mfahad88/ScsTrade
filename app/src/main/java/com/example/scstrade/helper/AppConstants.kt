@@ -45,6 +45,35 @@ class AppConstants {
         val DOCUMENT_NIC_BACK_NAME = "document_nic_back_name"
         val DOCUMENT_NIC_BACK= "document_nic_back"
 
+        val ACCOUNT_OPENING_REFERENCE= "account_opening_reference"
+
+        val BASIC_DATA_UIN_TYPE = "basic_data_uin_type"
+        val BASIC_DATA_UIN_NUMBER = "basic_data_uin_number"
+        val BASIC_DATA_SALUTATION = "basic_data_salutation"
+        val BASIC_DATA_FULL_NIC_NAME = "basic_data_full_nic_name"
+        val BASIC_DATA_DOB= "basic_data_dob"
+        val BASIC_DATA_MOTHER_MAIDEN_NAME = "basic_data_mother_maiden_name"
+        val BASIC_DATA_NATIONALITY = "basic_data_nationality"
+        val BASIC_DATA_MARITAL_STATUS = "basic_data_marital_status"
+        val BASIC_DATA_RELATIONSHIP = "basic_data_relationship"
+        val BASIC_DATA_RELATIONSHIP_NAME = "basic_data_relationship_name"
+        val BASIC_DATA_NIC_TYPE = "BASIC_DATA_NIC_TYPE"
+        val BASIC_DATA_NIC_EXPIRY = "BASIC_DATA_NIC_EXPIRY"
+        val BASIC_DATA_POB_COUNTRY = "BASIC_DATA_POB_COUNTRY"
+        val BASIC_DATA_POB_CITY = "BASIC_DATA_POB_CITY"
+        val BASIC_DATA_IVR_SERVICE = "BASIC_DATA_IVR_SERVICE"
+
+        val CONTACT_DETAIL_MOBILE_NUMBER="CONTACT_DETAIL_MOBILE_NUMBER"
+        val CONTACT_DETAIL_EMAIL_ADDRESS="CONTACT_DETAIL_EMAIL_ADDRESS"
+        val CONTACT_DETAIL_MAILING_ADDRESS="CONTACT_DETAIL_MAILING_ADDRESS"
+        val CONTACT_DETAIL_MAILING_PROVINCE="CONTACT_DETAIL_MAILING_PROVINCE"
+        val CONTACT_DETAIL_MAILING_CITY="CONTACT_DETAIL_MAILING_CITY"
+        val CONTACT_DETAIL_OFFICE_NUMBER="CONTACT_DETAIL_OFFICE_NUMBER"
+        val CONTACT_DETAIL_RESIDENCE_NUMBER="CONTACT_DETAIL_RESIDENCE_NUMBER"
+        val CONTACT_DETAIL_PERMANENT_ADDRESS="CONTACT_DETAIL_PERMANENT_ADDRESS"
+        val CONTACT_DETAIL_PERMANENT_COUNTRY="CONTACT_DETAIL_PERMANENT_COUNTRY"
+
+
         val NIC_TYPE= listOf(
             mapOf("SNIC - SMART CARD WITH CHIP" to "SNIC"),
             mapOf("CNIC - CARD WITHOUT CHIP" to "CNIC"),
@@ -55,6 +84,7 @@ class AppConstants {
             mapOf("Resident" to "01"),
             mapOf("Non-Resident" to "02")
         )
+
 
         val RELATIVE_RELATION= listOf(
             mapOf("MY NAME" to "1"),
@@ -112,6 +142,48 @@ class AppConstants {
             mapOf("UNIL" to "UNIL"),
             mapOf("ZTBL" to "ZTBL")
 
+        )
+
+        val MARITAL_STATUS= listOf(
+            mapOf("Single" to "S"),
+            mapOf("Married" to "M")
+        )
+
+        val RELATIONSHIP = listOf(
+            mapOf("Father" to "F"),
+            mapOf("Husband" to "H")
+        )
+
+        val SALUTATION = listOf(
+            "MR" to "MR",
+            "MRS" to "MRS",
+            "MS" to "MS"
+        )
+
+        val IVRSTATUS = listOf(
+            mapOf("Yes" to "Y"),
+            mapOf("NO" to "N")
+        )
+
+        val LIFETIMECNICSTATUS = listOf(
+            mapOf("Life time CNIC is available" to "Y"),
+            mapOf("Life Time CNIC is not avilable and expiry date is provided" to "N")
+        )
+
+        val IDTYPE = listOf(
+            "SNIC - SMART CARD WITH CHIP" to "SNIC",
+            "CNIC - CARD WITHOUT CHIP" to "CNIC",
+            "NICOP - OVERSEAS PAKISTANI CARD" to "NICOP",
+            "POC - PAKISTAN ORIGIN CARD" to "POC"
+        )
+        val  COUNTRY = listOf(
+            "Pakistan" to "PAK",
+            "India" to "AS"
+        )
+
+        val CITY = listOf(
+            "Karachi" to "0001",
+            "Bazdar" to "0002"
         )
     }
 }

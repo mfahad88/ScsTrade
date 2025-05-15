@@ -3,11 +3,15 @@ package com.example.scstrade.repository
 import android.content.Context
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.model.data.AccountOpening
+import com.example.scstrade.model.data.BasicData
+import com.example.scstrade.model.data.ContactDetail
 
 class AofRepository (val context: Context){
 
     private val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     private val accountOpening = AccountOpening(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    private val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    private val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     public fun saveSelfInfo(fname:String,email:String, residential:String,nicType: String,nicNumber:String){
         sharedPreferences.edit().apply {
             putString(AppConstants.ACCOUNT_OPENING_FULLNAME,fname)
@@ -68,5 +72,110 @@ class AofRepository (val context: Context){
         accountOpening.nicBackImage=sharedPreferences.getString(AppConstants.DOCUMENT_NIC_BACK,"")
 
         return accountOpening
+    }
+
+    fun saveReference(name: String) {
+        sharedPreferences.edit().apply{
+            putString(AppConstants.ACCOUNT_OPENING_REFERENCE,name)
+            apply()
+        }
+    }
+
+    fun getReference(): AccountOpening {
+        accountOpening.reference = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REFERENCE,"")
+        return accountOpening
+    }
+
+
+    fun saveBasicData(basicData: BasicData){
+        sharedPreferences.edit().apply {
+            if(basicData.uinType?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_UIN_TYPE,basicData.uinType)
+            }
+
+            if(basicData.uinNumber?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_UIN_NUMBER,basicData.uinNumber)
+            }
+
+            if(basicData.fullNicName?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_FULL_NIC_NAME,basicData.fullNicName)
+            }
+
+            if(basicData.salutation?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_SALUTATION,basicData.salutation)
+            }
+
+            if(basicData.dob?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_DOB,basicData.dob)
+            }
+
+            if(basicData.motherMaidenName?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_MOTHER_MAIDEN_NAME,basicData.motherMaidenName)
+            }
+
+            if(basicData.nationality?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_NATIONALITY,basicData.nationality)
+            }
+
+            if(basicData.maritalStatus?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_MARITAL_STATUS,basicData.maritalStatus)
+            }
+
+            if(basicData.relationShip?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_RELATIONSHIP,basicData.relationShip)
+            }
+
+            if(basicData.relationshipName?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_RELATIONSHIP_NAME,basicData.relationshipName)
+            }
+
+            if(basicData.nicType?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_NIC_TYPE,basicData.nicType)
+            }
+
+            if(basicData.nicValid?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_NIC_EXPIRY,basicData.nicValid)
+            }
+
+            if(basicData.pobCountry?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_POB_COUNTRY,basicData.pobCountry)
+            }
+
+            if(basicData.pobCountry?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_POB_CITY,basicData.pobCountry)
+            }
+
+            if(basicData.ivrService?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_IVR_SERVICE,basicData.ivrService)
+            }
+            apply()
+        }
+    }
+
+    fun getbasicData(): BasicData {
+        basicData.uinType = sharedPreferences.getString(AppConstants.BASIC_DATA_UIN_TYPE,"")
+        basicData.uinNumber = sharedPreferences.getString(AppConstants.BASIC_DATA_UIN_NUMBER,"")
+        basicData.salutation = sharedPreferences.getString(AppConstants.BASIC_DATA_SALUTATION,"")
+        basicData.fullNicName = sharedPreferences.getString(AppConstants.BASIC_DATA_FULL_NIC_NAME,"")
+        basicData.dob = sharedPreferences.getString(AppConstants.BASIC_DATA_DOB,"")
+        basicData.motherMaidenName = sharedPreferences.getString(AppConstants.BASIC_DATA_MOTHER_MAIDEN_NAME,"")
+        basicData.nationality = sharedPreferences.getString(AppConstants.BASIC_DATA_NATIONALITY,"")
+        basicData.maritalStatus = sharedPreferences.getString(AppConstants.BASIC_DATA_MARITAL_STATUS,"")
+        basicData.relationShip = sharedPreferences.getString(AppConstants.BASIC_DATA_RELATIONSHIP,"")
+        basicData.relationshipName = sharedPreferences.getString(AppConstants.BASIC_DATA_RELATIONSHIP_NAME,"")
+        basicData.nicType = sharedPreferences.getString(AppConstants.BASIC_DATA_NIC_TYPE,"")
+        basicData.nicValid = sharedPreferences.getString(AppConstants.BASIC_DATA_NIC_EXPIRY,"")
+        basicData.pobCountry = sharedPreferences.getString(AppConstants.BASIC_DATA_POB_COUNTRY,"")
+        basicData.pobCity = sharedPreferences.getString(AppConstants.BASIC_DATA_POB_CITY,"")
+        basicData.ivrService = sharedPreferences.getString(AppConstants.BASIC_DATA_IVR_SERVICE,"")
+        return basicData
+    }
+
+    fun saveContactDetail(contactDetail: ContactDetail){
+        sharedPreferences.edit().apply{
+            if(contactDetail.mobileNumber?.isNotEmpty()?:false){
+
+            }
+        }
     }
 }
