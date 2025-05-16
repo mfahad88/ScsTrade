@@ -1,16 +1,19 @@
 package com.example.scstrade.views.aof.fragments.kyc
 
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.scstrade.databinding.FragmentKycFiveBinding
+import com.example.scstrade.databinding.FragmentKycSixBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -18,43 +21,101 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class KycSixFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var viewModel: AofViewModel
+    lateinit var binding: FragmentKycSixBinding
+    var parmanent_address:String?=null
+    var parmanent_country:String?=null
+    var parmanent_province:String?=null
+    var parmanent_city:String?=null
+    var parmanent_office_number:String?=null
+    var parmanent_residence_number:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_six, container, false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        binding = FragmentKycSixBinding.inflate(inflater,container,false)
+        initFields()
+        populateDropdown()
+
+        binding.apply {
+            phoneNumbers.textview_1.inputType=InputType.TYPE_CLASS_PHONE
+            phoneNumbers.textview_2.inputType=InputType.TYPE_CLASS_PHONE
+            parmanentAddr.addTextChangedListener {
+                parmanent_address=it.toString()
+            }
+
+            phoneNumbers.textview_1.addTextChangedListener {
+                parmanent_office_number=it.toString()
+            }
+
+            phoneNumbers.textview_2.addTextChangedListener {
+                parmanent_residence_number=it.toString()
+            }
+
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
+            }
+
+            btnContinue.setOnClickListener {
+                if(parmanent_address?.isNotEmpty()?:false && parmanent_country?.isNotEmpty()?:false &&
+                    parmanent_province?.isNotEmpty()?:false && parmanent_city?.isNotEmpty()?:false){
+                    viewModel.contactDetail.apply {
+                        parmanentAddress=parmanent_address
+                        parmanentCountry=parmanent_country
+                        parmanentProvince = parmanent_province
+                        parmanentCity = parmanent_city
+                        parmanentOfficeNumber= parmanent_office_number
+                        parmanentResidenceNumber = parmanent_residence_number
+                    }
+                    (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                }
+
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycSixFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycSixFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun initFields() {
+        val contactDetail=viewModel.getContactDetails()
+        contactDetail.apply {
+            binding.parmanentAddr.setText(parmanentAddress )
+            parmanent_address = parmanentAddress
+            binding.permanentCountry.dropdown.setText(parmanentCountry)
+            parmanent_country = parmanentCountry
+            binding.permanentProvince.dropdown.setText(parmanentProvince)
+            parmanent_province = parmanentProvince
+            binding.permanentCity.dropdown.setText(parmanentCity)
+            parmanent_city = parmanentCity
+            binding.phoneNumbers.textview_1.setText(parmanentOfficeNumber)
+            parmanent_office_number = parmanentOfficeNumber
+            binding.phoneNumbers.textview_2.setText(parmanentResidenceNumber)
+            parmanent_residence_number = parmanentResidenceNumber
+        }
     }
+
+    private fun populateDropdown() {
+        binding.apply {
+            permanentCountry.setEntries(AppConstants.COUNTRY.map { it.first }.toList())
+            permanentProvince.setEntries(AppConstants.PROVINCE.map { it.first }.toList())
+            permanentCity.setEntries(AppConstants.CITY.map { it.first }.toList())
+
+            permanentCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                parmanent_country=AppConstants.COUNTRY.get(i).first
+            }
+
+            permanentProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                parmanent_province=AppConstants.PROVINCE.get(i).first
+            }
+
+            permanentCity.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                parmanent_city=AppConstants.CITY.get(i).first
+            }
+        }
+    }
+
 }

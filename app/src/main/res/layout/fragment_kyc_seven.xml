@@ -37,6 +37,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:id="@+id/some_else_container"
         android:paddingVertical="10dp"
         android:layout_marginTop="20dp"
@@ -46,7 +48,7 @@
 
         <com.example.scstrade.views.widgets.LabelledSpinner
             android:id="@+id/labelledSpinner"
-            android:layout_width="92dp"
+            android:layout_width="95dp"
             android:layout_height="wrap_content"
             app:dropdownLabel="Mr."
             app:hintLabel=""
@@ -60,6 +62,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
+            android:inputType="text"
+            android:maxLength="50"
             app:hintText="@string/full_name"
             app:hintTextField="@string/enter_fname_nic"
             app:layout_constraintBottom_toBottomOf="@+id/labelledSpinner"
@@ -83,7 +87,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:inputType="number"
+            android:maxLength="20"
             app:hintText="@string/uin"
+            android:id="@+id/uin_number"
             app:hintTextField="@string/enter_your_uin_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -114,8 +114,13 @@ class KycThreeFragment : Fragment() {
         binding.apply {
             cardNic.toggleSelection(if(nicType.equals("y",true)) false else true)
             cardNic.editText.setText(nicExpiry)
-            placeBirth.autoCompleteTextView1.setText(country)
-            placeBirth.autoCompleteTextView2.setText(city)
+            if(country?.isNotEmpty()?:false) {
+                placeBirth.autoCompleteTextView1.setText(AppConstants.COUNTRY.filter { it.second.equals(country,true) }.map { it.first }.first())
+            }
+
+            if(city?.isNotEmpty()?:false){
+                placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.second.equals(city,true) }.map { it.first }.first())
+            }
             ivrService.toggleSelection(if(ivrStatus.equals("y",true)) false else true)
         }
     }

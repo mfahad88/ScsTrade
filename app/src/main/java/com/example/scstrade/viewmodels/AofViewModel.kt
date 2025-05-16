@@ -3,6 +3,7 @@ package com.example.scstrade.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.scstrade.model.data.AccountOpening
+import com.example.scstrade.model.data.AttorneyDetail
 import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.repository.AofRepository
@@ -11,6 +12,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     private val repository=AofRepository(application)
     val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    val attorneyDetail = AttorneyDetail(null,null,null,null,null,null,null,null,null,null,null)
     public fun saveSelfInfo(fname:String,email:String, residential:String,nicType: String,nicNumber:String){
         repository.saveSelfInfo(fname, email, residential, nicType, nicNumber)
     }
@@ -28,6 +30,14 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     fun saveBasicData(){
         repository.saveBasicData(basicData)
+    }
+
+    public fun saveContactDetails(){
+        repository.saveContactDetails(contactDetail)
+    }
+
+    fun saveAttorneyDetails(){
+        repository.saveAttorneyDetails(attorneyDetail)
     }
 
     public fun getSelfInfo(): AccountOpening {
@@ -48,5 +58,14 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     public fun getbasicData(): BasicData {
         return repository.getbasicData()
+    }
+
+    fun getContactDetails(): ContactDetail {
+        return repository.getContactDetails()!!
+    }
+
+    fun getAttorneyDetails(): AttorneyDetail {
+        return repository.getAttorneyDetails()!!
+
     }
 }

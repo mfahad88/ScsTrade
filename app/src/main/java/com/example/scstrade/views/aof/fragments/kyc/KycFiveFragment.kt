@@ -5,56 +5,91 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycFiveBinding
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KycFiveFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class KycFiveFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentKycFiveBinding
+    lateinit var viewModel: AofViewModel
+    var office_number:String?=null
+    var residence_number:String?=null
+    var isPermanentAddressSame:Boolean=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_five, container, false)
-    }
+        binding = FragmentKycFiveBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
+        binding.apply {
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycFourFragment())
+            }
+            btnContinue.setOnClickListener {
+                if(office_number!!.isNotEmpty() && residence_number!!.isNotEmpty()){
+                    viewModel.contactDetail.apply {
+                        officeNumber=office_number
+                        residenceNumber=residence_number
+                    }
+                    viewModel.saveContactDetails()
+                    if(isPermanentAddressSame){
+                        (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+                    }else{
+                        (requireActivity() as AofActivity).loadFragment(KycSixFragment())
+                    }
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycFiveFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycFiveFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            }
+
+            officeResidenceNumber.textview_1.addTextChangedListener {
+                office_number = it.toString()
+            }
+            officeResidenceNumber.textview_2.addTextChangedListener {
+                residence_number = it.toString()
+            }
+
+            parmanentAddr.apply {
+                setOnButtonOneClickListener {
+                    isPermanentAddressSame= false
+                }
+                setOnButtonTwoClickListener {
+                    isPermanentAddressSame=true
                 }
             }
+        }
+        return binding.root
     }
+
+    private fun initFields() {
+        val contactDetail = viewModel.getContactDetails()
+        contactDetail.apply {
+            if(officeNumber?.isNotEmpty()?:false){
+                binding.officeResidenceNumber.textview_1.setText(officeNumber)
+                office_number=officeNumber
+            }
+
+            if(residenceNumber?.isNotEmpty()?:false){
+                binding.officeResidenceNumber.textview_2.setText(residenceNumber)
+                residence_number=residenceNumber
+            }
+
+            if(parmanentAddress?.isNotEmpty()?:false){
+                binding.parmanentAddr.toggleSelection(false)
+            }else{
+                binding.parmanentAddr.toggleSelection(true)
+            }
+        }
+    }
+
+
 }

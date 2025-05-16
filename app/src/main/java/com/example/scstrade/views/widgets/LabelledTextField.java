@@ -40,6 +40,7 @@ public class LabelledTextField extends LinearLayout {
                 String infoText= a.getString(R.styleable.LabelledTextField_infoText);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
                 binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,20)) });
+                binding.textInputEditText.setMaxLines(a.getInt(R.styleable.LabelledTextField_android_maxLength,1));
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 binding.textInputEditText.setCompoundDrawablesWithIntrinsicBounds(null,null,a.getDrawable(R.styleable.LabelledTextField_android_drawableEnd),null);
                 if(hint!=null){

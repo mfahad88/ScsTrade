@@ -27,6 +27,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.announcement.AnnoucementActivity
+import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.contact.ContactActivity
 import com.example.scstrade.views.detailquote.DetailQuoteActivity
 import com.example.scstrade.views.fundamental.FundamentalActivity
@@ -74,7 +75,9 @@ class LandingFragment : Fragment() {
         loadFragment(HomeFragment())
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
-
+        binding.aof.setOnClickListener {
+            startActivity(Intent(requireContext(),AofActivity::class.java))
+        }
 
 
 

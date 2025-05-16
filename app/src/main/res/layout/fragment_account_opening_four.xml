@@ -112,6 +112,9 @@
                             android:layout_height="match_parent"
                             android:id="@+id/captcha_input"
                             android:paddingHorizontal="5dp"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
                             android:hint="Please Enter Recaptcha"
                             android:background="@android:color/transparent"
                             android:layout_centerInParent="true"/>

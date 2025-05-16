@@ -5,56 +5,136 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycSevenBinding
+import com.example.scstrade.databinding.FragmentKycSixBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KycSevenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class KycSevenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var viewModel: AofViewModel
+    lateinit var binding: FragmentKycSevenBinding
+    var attorney_type:String?=null
+    var attorney_saluation:String?=null
+    var attorney_FullName:String?=null
+    var attorney_Uin_Type:String?=null
+    var attorney_Uin_Number:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_seven, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycSevenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycSevenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding = FragmentKycSevenBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
+        populateDropdown()
+        binding.apply {
+            back.setOnClickListener {
+                if(viewModel.getContactDetails().parmanentAddress?.isNotEmpty()?:false){
+                    (requireActivity() as AofActivity).loadFragment(KycSixFragment())
+                }else{
+                    (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
                 }
             }
+
+            isTheAtto.apply {
+                setOnButtonOneClickListener {
+                    viewModel.attorneyDetail.attorneyType="self"
+                    attorney_type = "self"
+                    binding.someElseContainer.visibility= View.GONE
+                }
+
+                setOnButtonTwoClickListener {
+                    viewModel.attorneyDetail.attorneyType="someone else"
+                    attorney_type = "someone else"
+                    binding.someElseContainer.visibility= View.VISIBLE
+                }
+            }
+
+            fullName.textInputEditText.addTextChangedListener {
+                attorney_FullName = it.toString()
+            }
+
+            uinNumber.textInputEditText.addTextChangedListener {
+                attorney_Uin_Number = it.toString()
+            }
+
+            btnContinue.setOnClickListener {
+                viewModel.attorneyDetail.attorneyType=attorney_type
+                if(someElseContainer.visibility==View.VISIBLE){
+                    viewModel.attorneyDetail.apply {
+                        attorneySalutation = attorney_saluation
+                        attorneyFullName=attorney_FullName
+                        attorneyUinType = attorney_Uin_Type
+                        attorneyUinNumber = attorney_Uin_Number
+                    }
+                }
+                viewModel.saveAttorneyDetails()
+                (requireActivity() as AofActivity).loadFragment(KycEightFragment())
+            }
+        }
+        return binding.root
     }
+
+    private fun initFields() {
+        val attorneyDetail=viewModel.getAttorneyDetails()
+        attorney_type=attorneyDetail.attorneyType
+        attorney_saluation = attorneyDetail.attorneySalutation.toString()
+        attorney_FullName = attorneyDetail.attorneyFullName
+        attorney_Uin_Type = attorneyDetail.attorneyUinType
+        attorney_Uin_Number = attorneyDetail.attorneyUinNumber
+
+        binding.apply {
+            if(attorney_saluation!="") {
+                labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
+                    it.second.equals(
+                        attorney_saluation
+                    )
+                }.map { it.first }.first())
+            }
+            if(attorney_Uin_Type!="") {
+                uinType.dropdown.setText(AppConstants.IDTYPE.filter {
+                    it.second.equals(
+                        attorney_Uin_Type
+                    )
+                }.map { it.first }.first())
+            }
+            if(attorney_FullName!="") {
+                fullName.textInputEditText.setText(attorney_FullName)
+            }
+            if(attorney_Uin_Number!="") {
+                uinNumber.textInputEditText.setText(attorney_Uin_Number)
+            }
+            if(attorney_type!="") {
+                if (attorney_type.equals("someone else")) {
+                    isTheAtto.toggleSelection(false)
+                    someElseContainer.visibility = View.VISIBLE
+                } else {
+                    isTheAtto.toggleSelection(true)
+                    someElseContainer.visibility = View.GONE
+                }
+            }
+        }
+
+    }
+
+    private fun populateDropdown() {
+        binding.apply {
+            labelledSpinner.setEntries(AppConstants.SALUTATION.map { it.first })
+            uinType.setEntries(AppConstants.IDTYPE.map { it.first })
+
+            labelledSpinner.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                attorney_saluation=AppConstants.SALUTATION.get(i).second
+            }
+
+            uinType.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                attorney_Uin_Type=AppConstants.IDTYPE.get(i).second
+            }
+        }
+    }
+
+
 }

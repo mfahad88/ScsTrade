@@ -3,8 +3,12 @@ package com.example.scstrade.repository
 import android.content.Context
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.model.data.AccountOpening
+import com.example.scstrade.model.data.AttorneyDetail
 import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
+import kotlin.jvm.internal.Intrinsics.Kotlin
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 class AofRepository (val context: Context){
 
@@ -141,8 +145,8 @@ class AofRepository (val context: Context){
                 putString(AppConstants.BASIC_DATA_POB_COUNTRY,basicData.pobCountry)
             }
 
-            if(basicData.pobCountry?.isNotEmpty()?:false){
-                putString(AppConstants.BASIC_DATA_POB_CITY,basicData.pobCountry)
+            if(basicData.pobCity?.isNotEmpty()?:false){
+                putString(AppConstants.BASIC_DATA_POB_CITY,basicData.pobCity)
             }
 
             if(basicData.ivrService?.isNotEmpty()?:false){
@@ -171,11 +175,72 @@ class AofRepository (val context: Context){
         return basicData
     }
 
-    fun saveContactDetail(contactDetail: ContactDetail){
-        sharedPreferences.edit().apply{
-            if(contactDetail.mobileNumber?.isNotEmpty()?:false){
+    fun saveContactDetails(contactDetail: ContactDetail){
 
+        sharedPreferences.edit().apply{
+            val kClass = ContactDetail::class
+            val properties = kClass.members.filterIsInstance<kotlin.reflect.KProperty1<Any, *>>()
+            for (property in properties){
+                val value = property.get(contactDetail)
+                val name = property.name
+                if(value!=null) {
+                    if ((value as String).isNotEmpty()) {
+                        putString(name, value)
+                    }
+                }
             }
+            apply()
         }
     }
+
+    fun getContactDetails(): ContactDetail? {
+        val constructor = ContactDetail::class.primaryConstructor?:return null
+        val args = constructor.parameters.associateWith { param ->
+            val key = param.name ?: return@associateWith null
+            when (param.type.classifier) {
+                String::class -> sharedPreferences.getString(key, "")
+                Int::class -> sharedPreferences.getInt(key, 0)
+                Boolean::class -> sharedPreferences.getBoolean(key, false)
+                Float::class -> sharedPreferences.getFloat(key, 0f)
+                Long::class -> sharedPreferences.getLong(key, 0L)
+                else -> null
+            }
+        }
+        return constructor.callBy(args)
+    }
+
+    fun saveAttorneyDetails(attorneyDetail: AttorneyDetail) {
+        sharedPreferences.edit().apply{
+            val kClass = AttorneyDetail::class
+            val properties = kClass.members.filterIsInstance<kotlin.reflect.KProperty1<Any, *>>()
+            for (property in properties){
+                val value = property.get(attorneyDetail)
+                val name = property.name
+                if(value!=null) {
+                    if ((value as String).isNotEmpty()) {
+                        putString(name, value)
+                    }
+                }
+            }
+            apply()
+        }
+    }
+
+    fun getAttorneyDetails(): AttorneyDetail? {
+        val constructor = AttorneyDetail::class.primaryConstructor?:return null
+        val args = constructor.parameters.associateWith { param ->
+            val key = param.name ?: return@associateWith null
+            when (param.type.classifier) {
+                String::class -> sharedPreferences.getString(key, "")
+                Int::class -> sharedPreferences.getInt(key, 0)
+                Boolean::class -> sharedPreferences.getBoolean(key, false)
+                Float::class -> sharedPreferences.getFloat(key, 0f)
+                Long::class -> sharedPreferences.getLong(key, 0L)
+                else -> null
+            }
+        }
+        return constructor.callBy(args)
+    }
+
+
 }

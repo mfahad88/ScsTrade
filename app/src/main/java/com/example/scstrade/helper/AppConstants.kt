@@ -185,5 +185,16 @@ class AppConstants {
             "Karachi" to "0001",
             "Bazdar" to "0002"
         )
+
+        val PROVINCE = listOf(
+            "OTHER" to "0",
+            "FATA / FANA" to "01",
+            "SINDH" to "02",
+            "PUNJAB" to "03",
+            "KHYBER PAKHTUNKHWA" to "04",
+            "BALOCHISTAN" to "05",
+            "FEDERAL CAPITAL" to "06",
+            "A.J.K." to "07"
+        )
     }
 }
