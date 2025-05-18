@@ -196,5 +196,15 @@ class AppConstants {
             "FEDERAL CAPITAL" to "06",
             "A.J.K." to "07"
         )
+
+        val NomineeRelation = listOf(
+            "Spouse" to "1",
+            "Father" to "2",
+            "Mother" to "3",
+            "Brother" to "4",
+            "Sister" to "5",
+            "Daughter" to "6",
+            "Son" to "7",
+        )
     }
 }

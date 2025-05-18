@@ -23,22 +23,25 @@
 
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
+        android:id="@+id/nominee"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/nominee"
-        app:titleDualOption="@string/do_you_have_a_nominee"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tell_us_abo"
         app:titleButton1="No"
         app:titleButton2="Yes"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
+        app:titleDualOption="@string/do_you_have_a_nominee" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
+        tools:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/nominee_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

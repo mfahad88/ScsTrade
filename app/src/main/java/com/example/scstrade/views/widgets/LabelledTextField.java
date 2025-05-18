@@ -39,7 +39,7 @@ public class LabelledTextField extends LinearLayout {
                 String text = a.getString(R.styleable.LabelledTextField_android_text);
                 String infoText= a.getString(R.styleable.LabelledTextField_infoText);
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
-                binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,20)) });
+                binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100)) });
                 binding.textInputEditText.setMaxLines(a.getInt(R.styleable.LabelledTextField_android_maxLength,1));
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 binding.textInputEditText.setCompoundDrawablesWithIntrinsicBounds(null,null,a.getDrawable(R.styleable.LabelledTextField_android_drawableEnd),null);
@@ -66,6 +66,17 @@ public class LabelledTextField extends LinearLayout {
                     }
                 });
 
+                if(hint.toLowerCase().contains("mobile")){
+                    textInputEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+                }
+
+             /*   if(hintField!="" || hintField!=null) {
+                    if (hintField.toLowerCase().contains("uin") || hintField.toLowerCase().contains("nic")
+                            || hintField.toLowerCase().contains("cnic")) {
+                        textInputEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+                    }
+                }
+*/
             }finally {
                 a.recycle();
             }

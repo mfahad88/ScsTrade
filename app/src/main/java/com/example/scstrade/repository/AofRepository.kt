@@ -6,6 +6,7 @@ import com.example.scstrade.model.data.AccountOpening
 import com.example.scstrade.model.data.AttorneyDetail
 import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
+import com.example.scstrade.model.data.Nominee
 import kotlin.jvm.internal.Intrinsics.Kotlin
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
@@ -228,6 +229,39 @@ class AofRepository (val context: Context){
 
     fun getAttorneyDetails(): AttorneyDetail? {
         val constructor = AttorneyDetail::class.primaryConstructor?:return null
+        val args = constructor.parameters.associateWith { param ->
+            val key = param.name ?: return@associateWith null
+            when (param.type.classifier) {
+                String::class -> sharedPreferences.getString(key, "")
+                Int::class -> sharedPreferences.getInt(key, 0)
+                Boolean::class -> sharedPreferences.getBoolean(key, false)
+                Float::class -> sharedPreferences.getFloat(key, 0f)
+                Long::class -> sharedPreferences.getLong(key, 0L)
+                else -> null
+            }
+        }
+        return constructor.callBy(args)
+    }
+
+    fun saveNominee(nominee: Nominee) {
+        sharedPreferences.edit().apply{
+            val kClass = Nominee::class
+            val properties = kClass.members.filterIsInstance<kotlin.reflect.KProperty1<Any, *>>()
+            for (property in properties){
+                val value = property.get(nominee)
+                val name = property.name
+                if(value!=null) {
+                    if ((value as String).isNotEmpty()) {
+                        putString(name, value)
+                    }
+                }
+            }
+            apply()
+        }
+    }
+
+    fun getNominee(): Nominee? {
+        val constructor = Nominee::class.primaryConstructor?:return null
         val args = constructor.parameters.associateWith { param ->
             val key = param.name ?: return@associateWith null
             when (param.type.classifier) {

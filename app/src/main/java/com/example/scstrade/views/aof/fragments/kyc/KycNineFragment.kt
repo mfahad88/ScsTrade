@@ -5,56 +5,129 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycNineBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
+import okhttp3.internal.notify
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [KycNineFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class KycNineFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var binding:FragmentKycNineBinding
+    lateinit var viewModel: AofViewModel
+    var is_nominee:Boolean?=null
+    var nominee_relation:String? = null
+    var nominee_name:String? = null
+    var nominee_uin_type:String? = null
+    var nominee_uin_number:String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_nine, container, false)
-    }
+        binding = FragmentKycNineBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        populationDropdown()
+        initFields()
+        binding.apply {
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycEightFragment())
+            }
+            nominee.setOnButtonOneClickListener {
+                is_nominee=false
+                nomineeView.visibility=View.GONE
+                nominee_relation=null
+                nominee_name=null
+                nominee_uin_type=null
+                nominee_uin_number=null
+            }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycNineFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycNineFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            nominee.setOnButtonTwoClickListener {
+                is_nominee=true
+                nomineeView.visibility=View.VISIBLE
+            }
+
+            nomineeName.textInputEditText.addTextChangedListener {
+                nominee_name = it.toString()
+            }
+
+            uinNumber.textInputEditText.addTextChangedListener {
+                nominee_uin_number = it.toString()
+            }
+
+            btnContinue.setOnClickListener {
+                viewModel.nominee.isNominee = is_nominee
+                viewModel.saveNominee()
+                if(is_nominee==true){
+                    if(!nominee_name.isNullOrEmpty() && !nominee_relation.isNullOrEmpty()
+                        && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty()){
+
+                        viewModel.nominee.apply {
+                            nomineeRelation = nominee_relation
+                            nomineeName = nominee_name
+                            nomineeUinType = nominee_uin_type
+                            nomineeUinNumber = nominee_uin_number
+                        }
+                        viewModel.saveNominee()
+                    }else{
+                        Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                    }
                 }
             }
+
+        }
+
+        return binding.root
     }
+
+    private fun initFields() {
+        val nominee = viewModel.getNominee()
+
+        nominee.apply {
+            if(isNominee!=null){
+                is_nominee = isNominee
+            }
+
+            if(nomineeRelation!=""){
+                nominee_relation =nomineeRelation
+                binding.nomineeRelation.dropdown.setSelection(AppConstants.NomineeRelation.indexOfFirst { it.second.equals(nominee_relation) })
+            }
+
+            if(nomineeName!=""){
+                nominee_name =nomineeName
+            }
+
+            if(nomineeUinType!=""){
+                nominee_uin_type =nomineeUinType
+                binding.uinType.dropdown.setSelection(AppConstants.IDTYPE.indexOfFirst { it.second.equals(nominee_uin_type) })
+            }
+
+            if(nomineeUinNumber!=""){
+                nominee_uin_number =nomineeUinNumber
+            }
+
+
+        }
+
+
+    }
+
+    private fun populationDropdown() {
+        binding.apply {
+            nomineeRelation.setEntries(AppConstants.NomineeRelation.map { it.first }.toList())
+            uinType.setEntries(AppConstants.IDTYPE.map { it.first }.toList())
+
+            nomineeRelation.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                nominee_relation = AppConstants.NomineeRelation.get(i).second
+            }
+
+            uinType.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                nominee_uin_type = AppConstants.IDTYPE.get(i).second
+            }
+        }
+    }
+
+
 }
