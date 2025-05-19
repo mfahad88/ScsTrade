@@ -396,6 +396,7 @@
     <string name="married">Married</string>
     <string name="father">Father</string>
     <string name="husband">Husband</string>
+    <string name="please_provide_nic_expiry_date">Please provide Nic Expiry Date</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

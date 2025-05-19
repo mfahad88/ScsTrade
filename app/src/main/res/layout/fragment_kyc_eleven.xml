@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/md_theme_surfaceBright"
-            android:paddingHorizontal="15dp"
+            android:paddingHorizontal="10dp"
             android:paddingTop="8dp"
             android:paddingBottom="15dp">
 

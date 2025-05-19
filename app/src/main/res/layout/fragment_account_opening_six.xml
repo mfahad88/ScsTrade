@@ -162,16 +162,18 @@
             android:layout_height="50dp"
             android:layout_weight="0.8"
             android:text="Go to Dashboard"
+            android:textSize="12sp"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.1"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:textSize="12sp"
             android:layout_weight="0.8"
             android:text="Continue to KYC" />
     </LinearLayout>

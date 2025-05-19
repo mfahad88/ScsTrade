@@ -59,6 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:id="@+id/nominee_name"
+            android:maxLength="30"
+            android:inputType="textPersonName"
             app:hintText="@string/nominee_name"
             app:hintTextField="@string/enter_nominee_name"/>
 
@@ -75,6 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:id="@+id/uin_number"
+            android:maxLength="14"
+            android:inputType="number"
             app:hintText="@string/uin"
             app:hintTextField="@string/enter_uin_number"/>
     </LinearLayout>

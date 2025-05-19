@@ -5,56 +5,119 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycTenBinding
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KycTenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class KycTenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var binding:FragmentKycTenBinding
+    lateinit var viewModel: AofViewModel
+    var nominee_address:String? = null
+    var nominee_nic_type:String? = null
+    var nominee_nic_expiry:String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_ten, container, false)
-    }
+        binding =FragmentKycTenBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
+        toggleNicValidity(false)
+        binding.apply {
+            nomineeAddress.addTextChangedListener {
+                nominee_address = it.toString()
+                viewModel.nominee.nomineeAddress = nominee_address
+            }
+            nomineeNic.setOnButtonOneClickListener {
+                toggleNicValidity(false)
+                viewModel.nominee.nomineeNicType= nominee_nic_type
+            }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycTenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycTenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            nomineeNic.setOnButtonTwoClickListener(){
+                toggleNicValidity(true)
+                viewModel.nominee.nomineeNicType= nominee_nic_type
+            }
+            nomineeNic.editText.setOnFocusChangeListener { view, b ->
+                if(b){
+                    Utils.showDatePicker(requireContext()){ day, month, year ->
+                        val selectedDate = "$day-$month-$year"
+                        nomineeNic.editText.setText(selectedDate)
+                        nominee_nic_expiry=selectedDate
+                        viewModel.nominee.nomineeNicExpiry = nominee_nic_expiry
+                    }
                 }
             }
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycNineFragment())
+            }
+
+            btnContinue.setOnClickListener {
+                if(!nominee_address.isNullOrEmpty()){
+                    if(nominee_nic_type?.equals("Lifetime")?:false){
+                        viewModel.savenominee()
+                    }else{
+                        if(!nominee_nic_expiry.isNullOrEmpty()){
+                            viewModel.savenominee()
+                        }else{
+                            Utils.showError(requireView(),
+                                getString(R.string.please_provide_nic_expiry_date))
+                        }
+                    }
+                    (requireActivity() as AofActivity).loadFragment(KycElevenFragment())
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                }
+            }
+
+        }
+
+
+        return binding.root
+    }
+
+    private fun initFields() {
+        val nominee = viewModel.getnominee()
+
+        nominee.apply {
+            if(nomineeAddress!=""){
+                nominee_address = nomineeAddress
+                binding.nomineeAddress.setText(nominee_address)
+            }
+
+            if(nomineeNicType!=""){
+                if(nomineeNicType.equals("Lifetime")){
+                    toggleNicValidity(true)
+                }else{
+                    toggleNicValidity(false)
+                }
+            }
+
+            if(nomineeNicExpiry!=""){
+                nominee_nic_expiry = nomineeNicExpiry
+                binding.nomineeNic.editText.setText(nominee_nic_expiry)
+            }
+        }
+    }
+
+    private fun toggleNicValidity(isLifetime:Boolean){
+        if(isLifetime){
+            binding.nomineeNic.toggleSelection(false)
+            binding.nomineeNic.editText.apply {
+                setText("")
+                isEnabled=false
+            }
+            nominee_nic_type="Lifetime"
+        }else{
+            binding.nomineeNic.toggleSelection(true)
+            binding.nomineeNic.editText.apply {
+             //   setText("")
+                isEnabled=true
+            }
+            nominee_nic_type="Non-Lifetime"
+        }
     }
 }

@@ -206,5 +206,41 @@ class AppConstants {
             "Daughter" to "6",
             "Son" to "7",
         )
+
+       val AnnualIncomeSahulat = listOf(
+            "UP TO 100,000" to "J07",
+            "100,001 - 250,000" to "J08",
+            "250,001 - 500,000" to "J09",
+            "Above 500,000" to "J10",
+       )
+
+        val AnnualIncomeNormal = listOf(
+            "UP TO 100,000" to "J01",
+            "100,001 - 250,000" to "J02",
+            "250,001 - 500,000" to "J03",
+            "500,001 - 1,000,000" to "J04",
+            "1,000,001 - 2,500,000" to "J05",
+            "Above 2,500,000" to "J06"
+        )
+
+        val AccountType = listOf(
+            "Normal Account" to "NKA",
+            "Sahulat Account" to "SKA",
+        )
+
+        val Occupation = listOf(
+            "Agriculturist" to "P001",
+            "Business" to "P002",
+            "Business Executive" to "P003",
+            "House Hold" to "P005",
+            "House Wife" to "P006",
+            "Industrialist" to "P007",
+            "Professional" to "P012",
+            "Retired Person" to "P013",
+            "Service" to "P014",
+            "Student" to "P015",
+            "Govt. / Public Sector" to "P019",
+            "Others" to "P999",
+        )
     }
 }

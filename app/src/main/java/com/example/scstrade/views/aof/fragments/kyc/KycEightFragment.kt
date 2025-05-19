@@ -50,15 +50,14 @@ class KycEightFragment : Fragment() {
                 isAttorney.editText.isEnabled=false
             }
 
-            isAttorney.setOnFocusListener {
-                if(it){
+            isAttorney.editText.setOnFocusChangeListener { view, b ->
+                if(b){
                     Utils.showDatePicker(requireContext()){ day, month, year ->
                         val selectedDate = "$day-$month-$year"
                         isAttorney.editText.setText(selectedDate)
                         nic_valid=selectedDate
                     }
                 }
-
             }
 
             mobileNumber.textInputEditText.addTextChangedListener {
@@ -81,12 +80,14 @@ class KycEightFragment : Fragment() {
                     && mailing_address?.isNotEmpty()?:false && residence_number?.isNotEmpty()?:false){
                     viewModel.attorneyDetail.apply {
                         attorneyNicType = nic_type
-                        attorneyNicExpiry = mobile_number
+                        attorneyNicExpiry = nic_valid
+                        attorneyMobileNumber = mobile_number
                         attorneyEmailAdress = email_address
                         attorneyMailingAddress = mailing_address
                         attorneyResidenceAddress = residence_number
                     }
                     viewModel.saveAttorneyDetails()
+                    (requireActivity() as AofActivity).loadFragment(KycNineFragment())
                 }
             }
         }
@@ -95,9 +96,44 @@ class KycEightFragment : Fragment() {
 
     private fun initFields() {
         val attorneyDetail = viewModel.getAttorneyDetails()
-        if(attorneyDetail.attorneyType!=""){
+        attorneyDetail.apply {
+            if(attorneyNicType!=""){
+                if(attorneyNicType?.equals("Lifetime")?:false){
+                    binding.isAttorney.toggleSelection(false)
+                    nic_type = "Lifetime"
+                }else{
+                    binding.isAttorney.toggleSelection(true)
+                    nic_type = "No-lifetime"
+                }
+            }
 
+            if(attorneyNicExpiry!=""){
+                binding.isAttorney.editText.setText(attorneyNicExpiry)
+                nic_valid = attorneyNicExpiry
+            }
+
+            if(attorneyMobileNumber!=""){
+                binding.mobileNumber.textInputEditText.setText(attorneyMobileNumber)
+                mobile_number = attorneyMobileNumber
+            }
+
+            if(attorneyEmailAdress!=""){
+                binding.emailAddr.textInputEditText.setText(attorneyEmailAdress)
+                email_address = attorneyEmailAdress
+            }
+
+            if(attorneyMailingAddress!=""){
+                binding.mailingAddress.setText(attorneyMailingAddress)
+                mailing_address = attorneyMailingAddress
+            }
+
+            if(attorneyResidenceAddress!=""){
+                binding.residenceNumber.textInputEditText.setText(attorneyResidenceAddress)
+                residence_number = attorneyResidenceAddress
+            }
         }
+
+
     }
 
 

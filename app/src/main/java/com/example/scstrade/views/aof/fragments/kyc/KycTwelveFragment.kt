@@ -5,56 +5,132 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
+import com.example.scstrade.databinding.FragmentKycTwelveBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.viewmodels.AofViewModel
+import com.example.scstrade.views.aof.AofActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KycTwelveFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class KycTwelveFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    lateinit var  binding: FragmentKycTwelveBinding
+    lateinit var viewModel: AofViewModel
+    var account_type:String?=null
+    var income_slab:String?=null
+    var source_income:String?=null
+    var occup:String?=null
+    var other_ocupation:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kyc_twelve, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KycTwelveFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KycTwelveFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding = FragmentKycTwelveBinding.inflate(inflater,container,false)
+        viewModel = (requireActivity() as AofActivity).viewModel
+        initFields()
+        binding.apply {
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycElevenFragment())
+            }
+            accountType.setOnButtonOneClickListener {
+                accountType.toggleSelection(true)
+                account_type=AppConstants.AccountType.filter { it.first.contains("normal",true) }.map { it.second }.first()
+                grossAnnualIncomeslab.setEntries(AppConstants.AnnualIncomeNormal.map { it.first })
+                grossAnnualIncomeslab.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                    income_slab = AppConstants.AnnualIncomeNormal.get(i).second
+                    viewModel.otherDetail.otherDetailGrossIncomeSlab = income_slab
+                    viewModel.otherDetail.otherDetailAccountType = account_type
                 }
             }
+
+            accountType.setOnButtonTwoClickListener {
+                accountType.toggleSelection(false)
+                account_type=AppConstants.AccountType.filter { it.first.contains("Sahulat",true) }.map { it.second }.first()
+                grossAnnualIncomeslab.setEntries(AppConstants.AnnualIncomeSahulat.map { it.first })
+                grossAnnualIncomeslab.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+                    income_slab = AppConstants.AnnualIncomeSahulat.get(i).second
+                    viewModel.otherDetail.otherDetailGrossIncomeSlab = income_slab
+                    viewModel.otherDetail.otherDetailAccountType = account_type
+                }
+            }
+            sourceOfIncome.textInputEditText.addTextChangedListener {
+                source_income = it.toString()
+                viewModel.otherDetail.otherDetailSourceOfIncome = source_income
+            }
+            occupation.textview_2.addTextChangedListener {
+                other_ocupation = it.toString()
+                viewModel.otherDetail.otherDetailOtherOccupation = other_ocupation
+            }
+            occupation.autoCompleteTextView1.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.Occupation.map { it.first }))
+            occupation.autoCompleteTextView1.setOnItemClickListener { adapterView, view, i, l ->
+
+                if((adapterView.getItemAtPosition(i) as String).equals("others",true)){
+                    other_ocupation=occupation.textview_2.text.toString()
+                    viewModel.otherDetail.otherDetailOtherOccupation = other_ocupation
+                    binding.occupation.textview_2.visibility=View.VISIBLE
+                }else{
+                    other_ocupation=null
+                    occupation.textview_2.setText("")
+                    binding.occupation.textview_2.visibility=View.GONE
+                }
+
+                occup = AppConstants.Occupation.get(i).second
+                viewModel.otherDetail.otherDetailOccupation = occup
+            }
+
+            btnContinue.setOnClickListener {
+                if(!account_type.isNullOrEmpty() && !income_slab.isNullOrEmpty()
+                    && !source_income.isNullOrEmpty() && !occup.isNullOrEmpty()){
+                    viewModel.saveotherDetail()
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                }
+            }
+        }
+        return binding.root
     }
+
+    private fun initFields() {
+        val otherDetail = viewModel.getotherDetail()
+        otherDetail.apply {
+            if(otherDetailAccountType!=""){
+                account_type = otherDetailAccountType
+                if(account_type.equals("SKA")){
+                    binding.accountType.toggleSelection(false)
+                }else{
+                    binding.accountType.toggleSelection(true)
+                }
+            }
+
+            if(otherDetailGrossIncomeSlab!=""){
+                income_slab = otherDetailGrossIncomeSlab
+                if(AppConstants.AnnualIncomeSahulat.filter { it.second.equals(income_slab) }.isNotEmpty()){
+                    binding.grossAnnualIncomeslab.dropdown.setText(AppConstants.AnnualIncomeSahulat.filter { it.second.equals(income_slab)}.map { it.first }.first())
+                }else{
+                    binding.grossAnnualIncomeslab.dropdown.setText(AppConstants.AnnualIncomeNormal.filter { it.second.equals(income_slab)}.map { it.first }.first())
+                }
+
+            }
+
+            if(otherDetailSourceOfIncome!="") {
+                source_income = otherDetailSourceOfIncome
+                binding.sourceOfIncome.textInputEditText.setText(source_income)
+            }
+
+            if(otherDetailOccupation!=""){
+                occup = otherDetailOccupation
+                binding.occupation.autoCompleteTextView1.setText(AppConstants.Occupation.filter { it.second.equals(occup) }.map { it.first }.first())
+            }
+
+            if(otherDetailOtherOccupation!=""){
+                other_ocupation = otherDetailOtherOccupation
+                binding.occupation.textview_2.setText(other_ocupation)
+            }
+        }
+    }
+
+
 }

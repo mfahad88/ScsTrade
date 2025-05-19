@@ -17,7 +17,7 @@ import okhttp3.internal.notify
 class KycNineFragment : Fragment() {
     lateinit var binding:FragmentKycNineBinding
     lateinit var viewModel: AofViewModel
-    var is_nominee:Boolean?=null
+    var is_nominee:String?=null
     var nominee_relation:String? = null
     var nominee_name:String? = null
     var nominee_uin_type:String? = null
@@ -29,14 +29,15 @@ class KycNineFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycNineBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        populationDropdown()
         initFields()
+        populationDropdown()
+
         binding.apply {
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycEightFragment())
             }
             nominee.setOnButtonOneClickListener {
-                is_nominee=false
+                is_nominee="false"
                 nomineeView.visibility=View.GONE
                 nominee_relation=null
                 nominee_name=null
@@ -45,7 +46,7 @@ class KycNineFragment : Fragment() {
             }
 
             nominee.setOnButtonTwoClickListener {
-                is_nominee=true
+                is_nominee="true"
                 nomineeView.visibility=View.VISIBLE
             }
 
@@ -59,8 +60,8 @@ class KycNineFragment : Fragment() {
 
             btnContinue.setOnClickListener {
                 viewModel.nominee.isNominee = is_nominee
-                viewModel.saveNominee()
-                if(is_nominee==true){
+                viewModel.savenominee()
+                if(is_nominee=="true"){
                     if(!nominee_name.isNullOrEmpty() && !nominee_relation.isNullOrEmpty()
                         && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty()){
 
@@ -70,7 +71,8 @@ class KycNineFragment : Fragment() {
                             nomineeUinType = nominee_uin_type
                             nomineeUinNumber = nominee_uin_number
                         }
-                        viewModel.saveNominee()
+                        viewModel.savenominee()
+                        (requireActivity() as AofActivity).loadFragment(KycTenFragment())
                     }else{
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                     }
@@ -83,29 +85,38 @@ class KycNineFragment : Fragment() {
     }
 
     private fun initFields() {
-        val nominee = viewModel.getNominee()
+        val nominee = viewModel.getnominee()
 
         nominee.apply {
             if(isNominee!=null){
                 is_nominee = isNominee
+                if(is_nominee=="true"){
+                    binding.nominee.toggleSelection(false)
+                    binding.nomineeView.visibility = View.VISIBLE
+                }else{
+                    binding.nominee.toggleSelection(true)
+                    binding.nomineeView.visibility = View.GONE
+                }
             }
 
             if(nomineeRelation!=""){
                 nominee_relation =nomineeRelation
-                binding.nomineeRelation.dropdown.setSelection(AppConstants.NomineeRelation.indexOfFirst { it.second.equals(nominee_relation) })
+                binding.nomineeRelation.dropdown.setText(AppConstants.NomineeRelation.filter { it.second.equals(nominee_relation) }.map { it.first }.toString().replace("[","").replace("]",""))
             }
 
             if(nomineeName!=""){
                 nominee_name =nomineeName
+                binding.nomineeName.textInputEditText.setText(nominee_name)
             }
 
             if(nomineeUinType!=""){
                 nominee_uin_type =nomineeUinType
-                binding.uinType.dropdown.setSelection(AppConstants.IDTYPE.indexOfFirst { it.second.equals(nominee_uin_type) })
+                binding.uinType.dropdown.setText(AppConstants.IDTYPE.filter { it.second.equals(nominee_uin_type) }.map { it.first }.toString().replace("[","").replace("]",""))
             }
 
             if(nomineeUinNumber!=""){
                 nominee_uin_number =nomineeUinNumber
+                binding.uinNumber.textInputEditText.setText(nominee_uin_number)
             }
 
 

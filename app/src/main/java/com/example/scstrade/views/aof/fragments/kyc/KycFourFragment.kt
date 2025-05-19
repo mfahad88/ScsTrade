@@ -85,12 +85,40 @@ class KycFourFragment : Fragment() {
             mailing_City = mailingCity
 
             binding.apply {
-                mobileNumber.textInputEditText.setText(mobile_Number)
-                email.textInputEditText.setText(email_Address)
-                mailingAddress.setText(mailing_Address)
-                mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter { it.second.equals(mailing_Country,true) }.map { it.first }.first())
-                mailingCity.dropdown.setText(AppConstants.CITY.filter { it.second.equals(mailing_City,true) }.map { it.first }.first())
-                mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter { it.second.equals(mailing_Province,true) }.map { it.first }.first())
+                if(mobile_Number!="") {
+                    mobileNumber.textInputEditText.setText(mobile_Number)
+                }
+                if(email_Address!="") {
+                    email.textInputEditText.setText(email_Address)
+                }
+                if(mailing_Address!="") {
+                    mailingAddress.setText(mailing_Address)
+                }
+                if(mailing_Country!="") {
+                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter {
+                        it.second.equals(
+                            mailing_Country,
+                            true
+                        )
+                    }.map { it.first }.first())
+                }
+                if(mailing_City!="") {
+                    mailingCity.dropdown.setText(AppConstants.CITY.filter {
+                        it.second.equals(
+                            mailing_City,
+                            true
+                        )
+                    }.map { it.first }.first())
+                }
+
+                if(mailing_Province!="") {
+                    mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
+                        it.second.equals(
+                            mailing_Province,
+                            true
+                        )
+                    }.map { it.first }.first())
+                }
             }
         }
     }

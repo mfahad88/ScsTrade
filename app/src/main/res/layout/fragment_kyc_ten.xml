@@ -29,6 +29,7 @@
         app:titleDualOption="@string/is_nominee"
         app:titleButton1="No"
         app:titleButton2="Yes"
+        android:id="@+id/nominee_nic"
         app:hintDualOption="@string/select_nic_expiry_date"
         app:drawable="@drawable/baseline_calendar_today_24"
         app:layout_constraintEnd_toEndOf="parent"

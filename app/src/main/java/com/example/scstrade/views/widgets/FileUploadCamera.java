@@ -16,7 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 
 public class FileUploadCamera extends MaterialCardView {
     FileUploadCameraBinding binding;
-    private String fileName;
+    private String fileName=null;
     public CardView cardUpload;
     public String getFileName() {
         return fileName;
