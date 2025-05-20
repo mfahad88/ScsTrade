@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningTwoBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -23,6 +22,9 @@ import com.example.scstrade.views.aof.AofActivity
 class AccountOpeningTwoFragment : Fragment() {
     lateinit var binding: FragmentAccountOpeningTwoBinding
     lateinit var viewModel: AofViewModel
+    var relative_name:String?=null
+    var relative_uin_number:String?=null
+    var relationship_type:String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,8 +33,26 @@ class AccountOpeningTwoFragment : Fragment() {
         binding = FragmentAccountOpeningTwoBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
-        binding.textInputMobile.setEntries(AppConstants.RELATIVE_RELATION.map { it.keys.toString().replace("[","").replace("]","") })
-        binding.textInputBank.setEntries(AppConstants.BANK_SWIFT_CODES.map { it.keys.toString().replace("[","").replace("]","") })
+        binding.textInputMobile.setEntries(AppConstants.RELATIVE_RELATION.map {it.first})
+        binding.textInputBank.setEntries(AppConstants.BANK_SWIFT_CODES.map { it.first })
+
+        binding.textInputMobile.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+            if(i>0){
+                binding.cardRelationship.visibility = View.VISIBLE
+            }else{
+                binding.cardRelationship.visibility = View.GONE
+            }
+
+            relationship_type= AppConstants.RELATIVE_RELATION.get(i).second
+        }
+
+        binding.relative.text1.addTextChangedListener {
+            relative_name = it.toString()
+        }
+
+        binding.relative.text2.addTextChangedListener {
+            relative_uin_number = it.toString()
+        }
 
         binding.textInputBank.dropdown.setOnItemClickListener { adapterView, view, i, l ->
             binding.bankSwift.text = adapterView.getItemAtPosition(i) as String
@@ -66,7 +86,7 @@ class AccountOpeningTwoFragment : Fragment() {
 
             if(mobileNumber.isNotEmpty() && registerUnder.isNotEmpty() && countryCode.isNotEmpty() && bankCode.isNotEmpty() && bankSwift.isNotEmpty() && bankIban.isNotEmpty()){
                 val iban="${countryCode}|${bankCode}|${bankSwift}|${bankIban}"
-                viewModel.saveContactIban(mobileNumber,registerUnder,iban)
+                viewModel.saveContactIban(mobileNumber,registerUnder,iban,relative_name?:"",relative_uin_number?:"",relationship_type)
                 (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
             }else{
                 Utils.showError(requireView(),"Empty Fields not allowed...")
@@ -95,7 +115,26 @@ class AccountOpeningTwoFragment : Fragment() {
                 bankSwift.text = textInputBank.dropdown.text
                 ibanCode.text = iban.textInputEditText.text
             }
+            if(viewModel.getContactIban().relationshipType!=""){
+                relationship_type = viewModel.getContactIban().relationshipType
 
+                if(relationship_type!="" && relationship_type!=null){
+                    binding.textInputMobile.dropdown.setText(AppConstants.RELATIVE_RELATION.filter { it.second.equals(relationship_type) }.map { it.first }.first())
+                    if(relationship_type=="1"){
+                        binding.cardRelationship.visibility=View.GONE
+                    }else{
+                        relative_name = viewModel.getContactIban().relativeName
+                        relative_uin_number = viewModel.getContactIban().relativeUin
+                        binding.cardRelationship.visibility=View.VISIBLE
+                        if (relative_name!="" && relative_uin_number!=""){
+                            binding.relative.apply {
+                                text1.setText(relative_name)
+                                text2.setText(relative_uin_number)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

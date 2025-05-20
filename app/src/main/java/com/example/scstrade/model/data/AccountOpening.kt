@@ -6,6 +6,7 @@ data class AccountOpening(
     var residentialStatus:String?,
     var nicType:String?,
     var nicNumber:String?,
+    var nicIssueDate:String?,
     var mobileNumber:String?,
     var registerUnder:String?,
     var ibanNumber:String?,
@@ -15,5 +16,10 @@ data class AccountOpening(
     var nicFrontImage:String?,
     var nicBack:String?,
     var nicBackImage:String?,
-    var reference:String?
+    var reference:String?,
+    var relationshipType:String?,
+    var relativeName:String?,
+    var relativeUin:String?,
+    var proofRelative:String?,
+    var proofRelativeImage:String?,
 )

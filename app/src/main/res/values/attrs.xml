@@ -69,6 +69,7 @@
         <attr name="entries" format="string"/>-->
     </declare-styleable>
     <declare-styleable name="LabelledCardTextField">
+        <attr name="titleLabelledCardTextField" format="string"/>
         <attr name="hint1" format="string"/>
         <attr name="hint2" format="string"/>
     </declare-styleable>

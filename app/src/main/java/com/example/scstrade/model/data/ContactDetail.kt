@@ -5,6 +5,8 @@ data class ContactDetail(
     var emailAddress:String?,
     var mailingAddress:String?,
     var mailingCountry:String?,
+    var	mailingProvinceOther	:String?,
+    var	mailingCityOther	:String?,
     var mailingProvince:String?,
     var mailingCity:String?,
     var officeNumber:String?,
@@ -15,4 +17,6 @@ data class ContactDetail(
     var parmanentCity:String?,
     var parmanentOfficeNumber:String?,
     var parmanentResidenceNumber:String?,
+    var	permanentProvinceOther	:String?,
+    var	permanentCityOther	:String?,
 )

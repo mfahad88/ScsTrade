@@ -22,6 +22,9 @@ class WelcomeFragment : Fragment() {
         binding.signup.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
         }
+        binding.login.setOnClickListener {
+            (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
+        }
         return binding.root
     }
 

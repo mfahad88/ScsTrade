@@ -2,29 +2,47 @@ package com.example.scstrade.repository
 
 import android.content.Context
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.AccountOpening
 import com.example.scstrade.model.data.AttorneyDetail
 import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.model.data.Nominee
 import com.example.scstrade.model.data.OtherDetail
-import kotlin.jvm.internal.Intrinsics.Kotlin
-import kotlin.reflect.KClass
+import com.example.scstrade.model.request.LoginUser
+import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.response.ApiResponse
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.response.aof.city.CityDto
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.response.aof.country.CountryDto
+import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
+import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
+import com.example.scstrade.services.ApiService
 import kotlin.reflect.full.primaryConstructor
 
-class AofRepository (val context: Context){
+class AofRepository (val apiService: ApiService,val context: Context){
 
     private val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-    private val accountOpening = AccountOpening(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    private val accountOpening = AccountOpening(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     private val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    private val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    public fun saveSelfInfo(fname:String,email:String, residential:String,nicType: String,nicNumber:String){
+    private val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    public fun saveSelfInfo(
+        fname: String,
+        email: String,
+        residential: String,
+        nicType: String,
+        nicNumber: String,
+        issue_date: String
+    ){
         sharedPreferences.edit().apply {
             putString(AppConstants.ACCOUNT_OPENING_FULLNAME,fname)
             putString(AppConstants.ACCOUNT_OPENING_EMAIL,email)
             putString(AppConstants.ACCOUNT_OPENING_RESIDENTIAL,residential)
             putString(AppConstants.ACCOUNT_OPENING_NIC_TYPE,nicType)
             putString(AppConstants.ACCOUNT_OPENING_NIC_NUMBER,nicNumber)
+            putString(AppConstants.ACCOUNT_OPENING_NIC_ISSUE_DATE,issue_date)
             apply()
         }
     }
@@ -35,15 +53,27 @@ class AofRepository (val context: Context){
         accountOpening.residentialStatus = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_RESIDENTIAL,"")
         accountOpening.nicType = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_NIC_TYPE,"")
         accountOpening.nicNumber = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_NIC_NUMBER,"")
+        accountOpening.nicIssueDate = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_NIC_ISSUE_DATE,"")
+        accountOpening.reference = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REFERENCE,"")
         return accountOpening
 
     }
 
-    fun saveContactIban(mobileNumber: String, registerUnder: String, iban:String) {
+    fun saveContactIban(
+        mobileNumber: String,
+        registerUnder: String,
+        iban: String,
+        relativeName: String,
+        relativeUin: String,
+        relationship_type: String?
+    ) {
         sharedPreferences.edit().apply {
             putString(AppConstants.ACCOUNT_OPENING_MOBILE_NUMBER,mobileNumber)
             putString(AppConstants.ACCOUNT_OPENING_REGISTERED_UNDER,registerUnder)
             putString(AppConstants.ACCOUNT_OPENING_BANK_IBAN,iban)
+            putString(AppConstants.ACCOUNT_OPENING_RELATIVE_NAME,relativeName)
+            putString(AppConstants.ACCOUNT_OPENING_RELATIVE_UIN,relativeUin)
+            putString(AppConstants.ACCOUNT_OPENING_RELATIONSHIP_TYPE,relationship_type)
             apply()
         }
     }
@@ -52,10 +82,23 @@ class AofRepository (val context: Context){
         accountOpening.mobileNumber = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_MOBILE_NUMBER,"")
         accountOpening.registerUnder = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REGISTERED_UNDER,"")
         accountOpening.ibanNumber = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_BANK_IBAN,"")
+        accountOpening.relativeName = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_RELATIVE_NAME,"")
+        accountOpening.relativeUin = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_RELATIVE_UIN,"")
+        accountOpening.relationshipType = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_RELATIONSHIP_TYPE,"")
+
         return accountOpening
     }
 
-    fun saveDocuments(ibanFileName:String,iban:String,nicFrontFileName:String,nicFront:String,nicBackFileName:String,nicBack:String){
+    fun saveDocuments(
+        ibanFileName: String,
+        iban: String,
+        nicFrontFileName: String,
+        nicFront: String,
+        nicBackFileName: String,
+        nicBack: String,
+        proofRelationshipFileName: String,
+        proofRelationship: String
+    ){
         sharedPreferences.edit().apply{
             putString(AppConstants.DOCUMENT_IBAN_NAME,ibanFileName)
             putString(AppConstants.DOCUMENT_IBAN,iban)
@@ -63,6 +106,8 @@ class AofRepository (val context: Context){
             putString(AppConstants.DOCUMENT_NIC_FRONT,nicFront)
             putString(AppConstants.DOCUMENT_NIC_BACK_NAME,nicBackFileName)
             putString(AppConstants.DOCUMENT_NIC_BACK,nicBack)
+            putString(AppConstants.DOCUMENT_RELATIONSHIP_NAME,proofRelationshipFileName)
+            putString(AppConstants.DOCUMENT_RELATIONSHIP,proofRelationship)
             apply()
         }
     }
@@ -77,6 +122,8 @@ class AofRepository (val context: Context){
         accountOpening.nicBack=sharedPreferences.getString(AppConstants.DOCUMENT_NIC_BACK_NAME,"")
         accountOpening.nicBackImage=sharedPreferences.getString(AppConstants.DOCUMENT_NIC_BACK,"")
 
+        accountOpening.proofRelative=sharedPreferences.getString(AppConstants.DOCUMENT_RELATIONSHIP_NAME,"")
+        accountOpening.proofRelativeImage=sharedPreferences.getString(AppConstants.DOCUMENT_RELATIONSHIP,"")
         return accountOpening
     }
 
@@ -310,5 +357,70 @@ class AofRepository (val context: Context){
         return constructor.callBy(args)
     }
 
+    suspend fun registerUser(registerUser: RegisterUser): Resource<ResponseRegisterUser> {
+        try{
+            return  Resource.Success(apiService.registerAof(registerUser))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
 
+    suspend fun loginUser(loginUser: LoginUser): Resource<LoginResponse> {
+        try{
+            return  Resource.Success(apiService.loginAof(loginUser))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun protectedAppId(): Resource<ProtectedResponse> {
+        try{
+            return  Resource.Success(apiService.protected())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun basicData(basicDetailDto: BasicDetailDto): Resource<ApiResponse<Nothing>> {
+        try{
+            return  Resource.Success(apiService.basicData(basicDetailDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun createContactDetails(contactDetailDto: ContactDetailDto):Resource<ApiResponse<Nothing>>{
+        try{
+            return  Resource.Success(apiService.createContactDetails(contactDetailDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun country():Resource<ApiResponse<List<CountryDto>>>{
+        try{
+            return  Resource.Success(apiService.country())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun city():Resource<ApiResponse<List<CityDto>>>{
+        try{
+            return  Resource.Success(apiService.city())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    fun saveAccessToken(accessToken: String?) {
+        sharedPreferences.edit().apply{
+            putString(AppConstants.ACCESS_TOKEN,accessToken)
+            apply()
+        }
+    }
+
+    fun getaccessToken(): String? {
+        return sharedPreferences.getString(AppConstants.ACCESS_TOKEN,"")
+    }
 }

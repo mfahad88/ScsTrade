@@ -30,7 +30,7 @@ class KycTwelveFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycTwelveBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        initFields()
+
         binding.apply {
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycElevenFragment())
@@ -70,11 +70,11 @@ class KycTwelveFragment : Fragment() {
                 if((adapterView.getItemAtPosition(i) as String).equals("others",true)){
                     other_ocupation=occupation.textview_2.text.toString()
                     viewModel.otherDetail.otherDetailOtherOccupation = other_ocupation
-                    binding.occupation.textview_2.visibility=View.VISIBLE
+                    binding.occupation.textview_2.isEnabled=true
                 }else{
                     other_ocupation=null
                     occupation.textview_2.setText("")
-                    binding.occupation.textview_2.visibility=View.GONE
+                    binding.occupation.textview_2.isEnabled=false
                 }
 
                 occup = AppConstants.Occupation.get(i).second
@@ -85,11 +85,13 @@ class KycTwelveFragment : Fragment() {
                 if(!account_type.isNullOrEmpty() && !income_slab.isNullOrEmpty()
                     && !source_income.isNullOrEmpty() && !occup.isNullOrEmpty()){
                     viewModel.saveotherDetail()
+                    (requireActivity() as AofActivity).loadFragment(KycThirteenFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
             }
         }
+        initFields()
         return binding.root
     }
 
@@ -128,6 +130,7 @@ class KycTwelveFragment : Fragment() {
             if(otherDetailOtherOccupation!=""){
                 other_ocupation = otherDetailOtherOccupation
                 binding.occupation.textview_2.setText(other_ocupation)
+                binding.occupation.textview_2.isEnabled=true
             }
         }
     }

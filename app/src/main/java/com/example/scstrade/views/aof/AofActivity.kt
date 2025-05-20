@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAofBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.repository.AofRepository
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.MyApp
@@ -41,7 +45,38 @@ class AofActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        viewModel.country()
+        viewModel.city()
+        viewModel.mutableCounty.observe(this, Observer { result->
+            when(result){
+                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
+                is Resource.Loading -> {
 
+                }
+                is Resource.Success -> {
+                    if(result.data?.statusCode==200){
+                        val country= result.data?.data?.map { it.name to it.id }?.toList()
+                        AppConstants.COUNTRY = country?: emptyList()
+                    }
+                }
+            }
+        })
+
+        viewModel.mutableCity.observe(this, Observer { result->
+            when(result){
+                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    if(result.data?.statusCode==200){
+                        val city= result.data?.data?.map { it.name to it.id to it.provinceCode }?.toList()
+
+                        AppConstants.CITY = city?: emptyList()
+                    }
+                }
+            }
+        })
         loadFragment(WelcomeFragment())
     }
 

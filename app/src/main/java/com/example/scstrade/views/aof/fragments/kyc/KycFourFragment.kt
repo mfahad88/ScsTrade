@@ -27,7 +27,9 @@ class KycFourFragment : Fragment() {
     var mailing_Address:String?=null
     var mailing_Country:String?=null
     var mailing_Province:String?=null
+    var mailing_Province_Other:String?=null
     var mailing_City:String?=null
+    var mailing_City_Other:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +63,9 @@ class KycFourFragment : Fragment() {
                         mailingAddress = mailing_Address
                         mailingCountry = mailing_Country
                         mailingProvince = mailing_Province
+                        mailingProvinceOther = mailing_Province_Other
                         mailingCity = mailing_City
+                        mailingCityOther = mailing_City_Other
                     }
                     viewModel.saveContactDetails()
                     (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
@@ -82,7 +86,9 @@ class KycFourFragment : Fragment() {
             mailing_Address = mailingAddress
             mailing_Country = mailingCountry
             mailing_Province = mailingProvince
+            mailing_Province_Other = mailingProvinceOther
             mailing_City = mailingCity
+            mailing_City_Other = mailingCityOther
 
             binding.apply {
                 if(mobile_Number!="") {
@@ -104,11 +110,11 @@ class KycFourFragment : Fragment() {
                 }
                 if(mailing_City!="") {
                     mailingCity.dropdown.setText(AppConstants.CITY.filter {
-                        it.second.equals(
+                        it.first.second.equals(
                             mailing_City,
                             true
                         )
-                    }.map { it.first }.first())
+                    }.map { it.first.first }.first())
                 }
 
                 if(mailing_Province!="") {
@@ -126,7 +132,7 @@ class KycFourFragment : Fragment() {
     private fun populateDropdown() {
         binding.mailingCountry.setEntries(AppConstants.COUNTRY.map { it.first }.toList())
         binding.mailingProvince.setEntries(AppConstants.PROVINCE.map { it.first }.toList())
-        binding.mailingCity.setEntries(AppConstants.CITY.map { it.first }.toList())
+        binding.mailingCity.setEntries(AppConstants.CITY.map { it.first.first }.toList())
 
         binding.mailingCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
             mailing_Country=AppConstants.COUNTRY.get(i).second
@@ -134,10 +140,12 @@ class KycFourFragment : Fragment() {
 
         binding.mailingProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->
             mailing_Province=AppConstants.PROVINCE.get(i).second
+            mailing_Province_Other = AppConstants.PROVINCE.get(i).first
         }
 
         binding.mailingCity.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            mailing_City=AppConstants.CITY.get(i).second
+            mailing_City=AppConstants.CITY.get(i).first.second
+            mailing_City_Other = AppConstants.CITY.get(i).first.first
         }
     }
 

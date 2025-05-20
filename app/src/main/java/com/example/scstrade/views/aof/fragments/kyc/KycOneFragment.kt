@@ -13,6 +13,8 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +24,7 @@ import java.text.SimpleDateFormat
 class KycOneFragment : Fragment() {
     lateinit var binding: FragmentKycOneBinding
     lateinit var viewModel: AofViewModel
-
+    var nationalityId:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,16 +40,19 @@ class KycOneFragment : Fragment() {
             dobInputLayout.setOnFocusListener {
                 if(it){
                     Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val selectedDate = "$day-$month-$year"
-                        dobInputLayout.textInputEditText.setText(selectedDate)
+                        val customDate = LocalDate.of(year , month, day)
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        val formatted = customDate.format(formatter)
+                        dobInputLayout.textInputEditText.setText(formatted)
                     }
                 }
 
             }
+
             btnContinue.setOnClickListener {
                 if(uinType.text.isNotEmpty() && uinNumber.textInputEditText.text?.isNotEmpty()?:false && fullName.textInputEditText.text?.isNotEmpty()?:false
                     && dropdownTitle.text.isNotEmpty() && dobInputLayout.textInputEditText.text?.isNotEmpty()?:false
-                    && motherName.textInputEditText.text?.isNotEmpty()?:false && dropdownNationality.text.isNotEmpty()){
+                    && motherName.textInputEditText.text?.isNotEmpty()?:false && !nationalityId.isNullOrEmpty()){
 
                     viewModel.basicData.uinType= uinType.text.toString()
                     viewModel.basicData.uinNumber= uinNumber.text.toString()
@@ -55,7 +60,7 @@ class KycOneFragment : Fragment() {
                     viewModel.basicData.fullNicName= fullName.text.toString()
                     viewModel.basicData.dob= dobInputLayout.textInputEditText.text.toString()
                     viewModel.basicData.motherMaidenName= motherName.textInputEditText.text.toString()
-                    viewModel.basicData.nationality= dropdownNationality.text.toString()
+                    viewModel.basicData.nationality= nationalityId
                     viewModel.saveBasicData()
                     (requireActivity() as AofActivity).loadFragment(KycTwoFragment())
 
@@ -73,6 +78,9 @@ class KycOneFragment : Fragment() {
         binding.uinType.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.IDTYPE.map { it.first }))
         binding.dropdownTitle.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.SALUTATION.map { it.first }))
         binding.dropdownNationality.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.COUNTRY.map { it.first }))
+        binding.dropdownNationality.setOnItemClickListener { adapterView, view, i, l ->
+            nationalityId = AppConstants.COUNTRY.get(i).second
+        }
     }
 
     private fun initFields() {
@@ -84,7 +92,8 @@ class KycOneFragment : Fragment() {
             fullName.textInputEditText.setText(basicData.fullNicName)
             dobInputLayout.textInputEditText.setText(basicData.dob)
             motherName.textInputEditText.setText(basicData.motherMaidenName)
-            dropdownNationality.setText(basicData.nationality)
+
+            dropdownNationality.setText(AppConstants.COUNTRY.find { it.second.equals(basicData.nationality) }?.first)
         }
     }
 

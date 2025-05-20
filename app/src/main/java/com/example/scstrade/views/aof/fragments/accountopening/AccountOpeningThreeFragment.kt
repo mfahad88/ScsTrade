@@ -44,12 +44,15 @@ class AccountOpeningThreeFragment : Fragment() {
     private var proofIbanClicked=false
     private var nicFrontClicked=false
     private var nicBackClicked=false
+    private var proofRelationshipClicked=false
     private var uriIban:Uri?=null
     private var uriNicFront:Uri?=null
     private var uriNicBack:Uri?=null
+    private var uriRelationship:Uri?=null
     private var ibanBase64:String?=null
     private var nicFrontBase64:String?=null
     private var nicBackBase64:String?=null
+    private var relationshipBase64:String?=null
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
@@ -62,10 +65,14 @@ class AccountOpeningThreeFragment : Fragment() {
                     uriNicFront=it
                     binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
-                }else{
+                }else if(nicBackClicked){
                     uriNicBack=it
                     binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
+                }else if(proofRelationshipClicked){
+                    uriRelationship = it
+                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
+                    relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
                 }
             }
         }
@@ -89,6 +96,7 @@ class AccountOpeningThreeFragment : Fragment() {
             proofIbanClicked=true
             nicFrontClicked=false
             nicBackClicked=false
+            proofRelationshipClicked=false
             requestRuntimePermission()
 
         }
@@ -96,12 +104,23 @@ class AccountOpeningThreeFragment : Fragment() {
             proofIbanClicked=false
             nicFrontClicked=true
             nicBackClicked=false
+            proofRelationshipClicked=false
             requestRuntimePermission()
         }
         binding.nicBack.cardUpload.setOnClickListener{
             proofIbanClicked=false
             nicFrontClicked=false
             nicBackClicked=true
+            proofRelationshipClicked=false
+            requestRuntimePermission()
+        }
+
+        binding.proofOfRelative.cardUpload.setOnClickListener {
+
+            proofIbanClicked=false
+            nicFrontClicked=false
+            nicBackClicked=false
+            proofRelationshipClicked=true
             requestRuntimePermission()
         }
 
@@ -116,11 +135,13 @@ class AccountOpeningThreeFragment : Fragment() {
                     binding.nicFront.fileName,
                     nicFrontBase64.toString(),
                     binding.nicBack.fileName,
-                    nicBackBase64.toString()
+                    nicBackBase64.toString(),
+                    relationshipBase64.toString(),
+                    binding.proofOfRelative.fileName
                     )
-                binding.proofOfIb.fileName=null
-                binding.nicFront.fileName=null
-                binding.nicBack.fileName=null
+//                binding.proofOfIb.fileName=null
+//                binding.nicFront.fileName=null
+//                binding.nicBack.fileName=null
                 (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
             }else{
                 Utils.showError(requireView(),"Empty Fields not allowed")
@@ -137,6 +158,8 @@ class AccountOpeningThreeFragment : Fragment() {
             nicFrontBase64=viewModel.getDocuments().nicFrontImage
             nicBack.fileName=viewModel.getDocuments().nicBack
             nicBackBase64=viewModel.getDocuments().nicBackImage
+            proofOfRelative.fileName=viewModel.getDocuments().proofRelative
+            relationshipBase64=viewModel.getDocuments().proofRelativeImage
         }
     }
 

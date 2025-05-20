@@ -20,21 +20,23 @@
 
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
+        android:id="@+id/bank"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/bank"
-        app:hintDualDropdown1="UBL Bank"
         android:layout_marginTop="20dp"
+        app:hintDualDropdown1="UBL Bank"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/zakat_status"
         app:titleDualDropdown="@string/please_select_your_bank_from_the_list_below"
-        app:typeDualDropdown1="text" />
+        app:typeDualDropdown1="dropdown" />
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:id="@+id/resident_status"
         app:titleDualOption="@string/are_you_a_r"
         app:titleButton1="@string/resident_pakistani"
         app:titleButton2="@string/overseas_pakistani"

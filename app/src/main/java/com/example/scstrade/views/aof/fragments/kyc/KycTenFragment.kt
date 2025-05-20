@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycTenBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -34,11 +35,13 @@ class KycTenFragment : Fragment() {
             }
             nomineeNic.setOnButtonOneClickListener {
                 toggleNicValidity(false)
+                nominee_nic_type = AppConstants.LIFETIMECNICSTATUS[1].values.first()
                 viewModel.nominee.nomineeNicType= nominee_nic_type
             }
 
             nomineeNic.setOnButtonTwoClickListener(){
                 toggleNicValidity(true)
+                nominee_nic_type = AppConstants.LIFETIMECNICSTATUS[0].values.first()
                 viewModel.nominee.nomineeNicType= nominee_nic_type
             }
             nomineeNic.editText.setOnFocusChangeListener { view, b ->
@@ -57,7 +60,7 @@ class KycTenFragment : Fragment() {
 
             btnContinue.setOnClickListener {
                 if(!nominee_address.isNullOrEmpty()){
-                    if(nominee_nic_type?.equals("Lifetime")?:false){
+                    if(nominee_nic_type?.equals("Y")?:false){
                         viewModel.savenominee()
                     }else{
                         if(!nominee_nic_expiry.isNullOrEmpty()){
@@ -89,7 +92,7 @@ class KycTenFragment : Fragment() {
             }
 
             if(nomineeNicType!=""){
-                if(nomineeNicType.equals("Lifetime")){
+                if(nomineeNicType.equals("N")){
                     toggleNicValidity(true)
                 }else{
                     toggleNicValidity(false)

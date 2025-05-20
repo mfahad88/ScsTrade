@@ -9,13 +9,18 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycThreeBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.widgets.DualDropdownSelectorView
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,9 +63,11 @@ class KycThreeFragment : Fragment() {
            editText.setOnFocusChangeListener { view, b ->
                if(b){
                    Utils.showDatePicker(requireContext()){ day, month, year ->
-                       val selectedDate = "$day-$month-$year"
-                       editText.setText(selectedDate)
-                       nicExpiry = selectedDate
+                       val customDate = LocalDate.of(year , month, day)
+                       val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                       val formatted = customDate.format(formatter)
+                       editText.setText(formatted)
+                       nicExpiry = formatted
                    }
                }
            }
@@ -69,7 +76,7 @@ class KycThreeFragment : Fragment() {
             country=AppConstants.COUNTRY.get(i).second
         }
         binding.placeBirth.autoCompleteTextView2.setOnItemClickListener { adapterView, view, i, l ->
-            city=AppConstants.CITY.get(i).second
+            city=AppConstants.CITY.get(i).first.second
         }
 
 
@@ -90,7 +97,25 @@ class KycThreeFragment : Fragment() {
                     viewModel.basicData.nicType = nicType
                     viewModel.basicData.nicValid = nicExpiry
                     viewModel.saveBasicData()
-                    (requireActivity() as AofActivity).loadFragment(KycFourFragment())
+                    viewModel.basicData(
+                        BasicDetailDto(
+                            id = null,
+                            salutation = viewModel.basicData.salutation?:"",
+                            lifeTime = viewModel.basicData.nicType?:"",
+                            gender = if(viewModel.basicData.salutation.equals("MR")) "M" else "F",
+                            relationship = viewModel.basicData.relationShip?:"",
+                            fatherHusbandName = viewModel.basicData.relationshipName?:"",
+                            motherMaidenName = viewModel.basicData.motherMaidenName?:"",
+                            nationalityId = viewModel.basicData.nationality?:"",
+                            maritalStatus =  viewModel.basicData.maritalStatus?:"",
+                            placeOfBirth = viewModel.basicData.pobCountry?:"",
+                            placeOfBirthCity = viewModel.basicData.pobCity?:"",
+                            ivrstatus = viewModel.basicData.ivrService?:"",
+                            dateOfBirth = viewModel.basicData.dob?:"",
+                            uinExpiryDate = viewModel.basicData.nicValid
+                        )
+                    )
+
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
@@ -99,6 +124,23 @@ class KycThreeFragment : Fragment() {
                 (requireActivity() as AofActivity).loadFragment(KycTwoFragment())
             }
         }
+
+        viewModel.mutableBasicData.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    val response=result.data
+                    if(response?.isSuccess?:false && response?.statusCode==200){
+                        (requireActivity() as AofActivity).loadFragment(KycFourFragment())
+                    }else{
+                        Utils.showError(requireView(),response?.message?:"An error occurred...")
+                    }
+                }
+            }
+        })
         return binding.root
     }
 
@@ -119,7 +161,7 @@ class KycThreeFragment : Fragment() {
             }
 
             if(city?.isNotEmpty()?:false){
-                placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.second.equals(city,true) }.map { it.first }.first())
+                placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.first.second.equals(city,true) }.map { it.first.first }.first())
             }
             ivrService.toggleSelection(if(ivrStatus.equals("y",true)) false else true)
         }
@@ -127,7 +169,7 @@ class KycThreeFragment : Fragment() {
 
     private fun populateDropdown() {
         binding.placeBirth.autoCompleteTextView1.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.COUNTRY.map { it.first }))
-        binding.placeBirth.autoCompleteTextView2.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.CITY.map { it.first }))
+        binding.placeBirth.autoCompleteTextView2.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.CITY.map { it.first.first }))
 
     }
 

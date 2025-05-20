@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.services.RetrofitInstanceAof
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
 import java.security.MessageDigest
@@ -24,6 +25,7 @@ class MyApp : Application() {
         super<Application>.onCreate()
         getSha1Fingerprint()
         FirebaseApp.initializeApp(this)
+        RetrofitInstanceAof.init(this)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
         viewModel.apply {
             fetchIndices()

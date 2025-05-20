@@ -397,6 +397,11 @@
     <string name="father">Father</string>
     <string name="husband">Husband</string>
     <string name="please_provide_nic_expiry_date">Please provide Nic Expiry Date</string>
+    <string name="proof_of_relative">Proof of Relationship</string>
+    <string name="kindly_enter_your_relative_informations">Kindly enter your relative informations</string>
+    <string name="enter_your_relative_name">Enter your relative name</string>
+    <string name="nic_issue_date">NIC Issue Date</string>
+    <string name="enter_issue_date">Enter issue date</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

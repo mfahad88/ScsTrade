@@ -37,11 +37,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 class Utils {
     companion object{
@@ -211,6 +216,57 @@ class Utils {
             }
         }
 
+        fun decryptStatus(encryptedStatus: String, encryptionSecret: String = "my32characterlongencryptionsecret!"): String {
+            return try {
+                // Split the encrypted status into iv and encrypted data parts
+                val parts = encryptedStatus.split(":")
+                if (parts.size != 2) {
+                    throw IllegalArgumentException("Invalid encrypted data format")
+                }
+
+                val ivHex = parts[0]
+                val encryptedDataHex = parts[1]
+
+                // Convert hex strings to byte arrays
+                val iv = hexStringToByteArray(ivHex)
+                val encryptedData = hexStringToByteArray(encryptedDataHex)
+
+                // Generate the encryption key using SHA-256 (same as in JS)
+                val md = MessageDigest.getInstance("SHA-256")
+                val keyBytes = md.digest(encryptionSecret.toByteArray(StandardCharsets.UTF_8))
+                val secretKey = SecretKeySpec(keyBytes, "AES")
+
+                // Initialize the cipher for decryption
+                val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                val ivSpec = IvParameterSpec(iv)
+                cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec)
+
+                // Decrypt the data
+                val decryptedBytes = cipher.doFinal(encryptedData)
+
+                // Convert decrypted bytes to string
+                String(decryptedBytes, StandardCharsets.UTF_8)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "0" // Default to basicdata step on failure
+            }
+        }
+
+
+        fun hexStringToByteArray(hexString: String): ByteArray {
+            val len = hexString.length
+            val data = ByteArray(len / 2)
+
+            var i = 0
+            while (i < len) {
+                data[i / 2] = ((Character.digit(hexString[i], 16) shl 4) +
+                        Character.digit(hexString[i + 1], 16)).toByte()
+                i += 2
+            }
+
+            return data
+        }
+
         fun generateCaptchaText(length: Int = 6): String {
             val allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
             return (1..length)
@@ -223,10 +279,18 @@ class Utils {
             val byteArray = outputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
-
+        fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): String {
+            val ratio = Math.min(
+                maxWidth.toFloat() / bitmap.width,
+                maxHeight.toFloat() / bitmap.height
+            )
+            val width = (bitmap.width * ratio).toInt()
+            val height = (bitmap.height * ratio).toInt()
+            return bitmapToBase64(Bitmap.createScaledBitmap(bitmap, width, height, true))
+        }
         fun convertImageUriToBase64(context: Context, imageUri: Uri): String? {
             val bitmap = uriToBitmap(context, imageUri)
-            return bitmap?.let { bitmapToBase64(it) }
+            return bitmap?.let { resizeBitmap(it,240,240) }
         }
         fun saveSharedPreference(context: Context,key:String,value:List<Any>){
             val gson=Gson()

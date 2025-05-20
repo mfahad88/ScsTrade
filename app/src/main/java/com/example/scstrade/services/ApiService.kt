@@ -1,7 +1,17 @@
 package com.example.scstrade.services
 
+import com.example.scstrade.model.request.LoginUser
+import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.response.ApiResponse
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.response.aof.city.CityDto
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.response.aof.country.CountryDto
+import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
+import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -28,9 +38,10 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.google.gson.JsonElement
-import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
@@ -247,4 +258,25 @@ interface ApiService {
 
     @GET(value = "/Portfolio")
     suspend fun getPortfolioDetails(@Query("ActionType")actionType: String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID:Int):List<PortfolioDetails>
+
+    @POST(value="api/register")
+    suspend fun registerAof(@Body regiserUser: RegisterUser): ResponseRegisterUser
+
+    @POST(value = "api/login")
+    suspend fun loginAof(@Body loginUser: LoginUser): LoginResponse
+
+    @GET(value = "api/protected")
+    suspend fun protected(): ProtectedResponse
+
+    @POST(value = "api/basic-data")
+    suspend fun basicData(@Body basicDetailDto: BasicDetailDto):ApiResponse<Nothing>
+
+    @POST(value = "api/contact-details")
+    suspend fun createContactDetails(@Body contactDetailDto: ContactDetailDto):ApiResponse<Nothing>
+
+    @GET(value = "api/admin/country")
+    suspend fun country():ApiResponse<List<CountryDto>>
+
+    @GET(value = "api/admin/city")
+    suspend fun city():ApiResponse<List<CityDto>>
 }

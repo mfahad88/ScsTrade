@@ -98,4 +98,9 @@ dependencies {
     implementation ("com.facebook.android:facebook-login:[8,9)")
     implementation ("com.github.GoodieBag:Pinview:v1.4")
     implementation ("com.github.lorenzofelletti:permissions:0.4.2")
+
+    // Use debugImplementation to avoid shipping Chucker in production
+    debugImplementation ("com.github.chuckerteam.chucker:library:4.1.0")
+    releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.1.0")
+
 }

@@ -2,30 +2,71 @@ package com.example.scstrade.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.AccountOpening
 import com.example.scstrade.model.data.AttorneyDetail
 import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.model.data.Nominee
 import com.example.scstrade.model.data.OtherDetail
+import com.example.scstrade.model.request.LoginUser
+import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.response.ApiResponse
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.response.aof.city.CityDto
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.response.aof.country.CountryDto
+import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
+import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.repository.AofRepository
+import com.example.scstrade.services.ApiService
+import com.example.scstrade.services.RetrofitInstanceAof
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AofViewModel(application: Application): AndroidViewModel(application) {
-    private val repository=AofRepository(application)
+    val apiClient=RetrofitInstanceAof.create(ApiService::class.java)
+    private val repository = AofRepository(apiClient,application)
     val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val attorneyDetail = AttorneyDetail(null,null,null,null,null,null,null,null,null,null,null)
     val nominee = Nominee(null,null,null,null,null,null,null,null,null,null,null,null)
     val otherDetail = OtherDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    public fun saveSelfInfo(fname:String,email:String, residential:String,nicType: String,nicNumber:String){
-        repository.saveSelfInfo(fname, email, residential, nicType, nicNumber)
+    val mutableRegisterUser = MutableLiveData<Resource<ResponseRegisterUser>>()
+    val mutableLoginUser = MutableLiveData<Resource<LoginResponse>>()
+    val mutableProtected = MutableLiveData<Resource<ProtectedResponse>>()
+    val mutableBasicData = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    val mutableCreateContactDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    var applicationId = "-1"
+    val mutableCounty=MutableLiveData<Resource<ApiResponse<List<CountryDto>>>>()
+    val mutableCity=MutableLiveData<Resource<ApiResponse<List<CityDto>>>>()
+    public fun saveSelfInfo(
+        fname: String,
+        email: String,
+        residential: String,
+        nicType: String,
+        nicNumber: String,
+        issue_date: String
+    ){
+        repository.saveSelfInfo(fname, email, residential, nicType, nicNumber,issue_date)
     }
 
-    public fun saveContactIban(mobileNumber:String, registerUnder:String,iban:String){
-        repository.saveContactIban(mobileNumber, registerUnder,iban)
+    public fun saveContactIban(
+        mobileNumber: String,
+        registerUnder: String,
+        iban: String,
+        relativeName: String,
+        relativeUin: String,
+        relationship_type: String?
+    ){
+        repository.saveContactIban(mobileNumber, registerUnder,iban,relativeName,relativeUin,relationship_type)
     }
-    fun saveDocuments(ibanFileName:String,iban:String,nicFrontFileName:String,nicFront:String,nicBackFileName:String,nicBack:String){
-        repository.saveDocuments(ibanFileName, iban, nicFrontFileName, nicFront, nicBackFileName, nicBack)
+    fun saveDocuments(ibanFileName:String,iban:String,nicFrontFileName:String,nicFront:String,nicBackFileName:String,nicBack:String,proofRelationship:String,proofRelationshipFileName:String){
+        repository.saveDocuments(ibanFileName, iban, nicFrontFileName, nicFront, nicBackFileName, nicBack,proofRelationshipFileName,proofRelationship)
     }
 
     fun saveReference(name:String){
@@ -87,5 +128,85 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     fun getotherDetail():OtherDetail{
         return  repository.getotherDetail()!!
+    }
+
+    fun registerUser(registerUser: RegisterUser){
+        mutableRegisterUser.value =Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.registerUser(registerUser)
+            withContext(Dispatchers.Main){
+                mutableRegisterUser.value = result
+            }
+        }
+    }
+
+    fun loginUser(loginUser: LoginUser){
+        mutableLoginUser.value =Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.loginUser(loginUser)
+            withContext(Dispatchers.Main){
+                mutableLoginUser.value = result
+            }
+        }
+    }
+
+    fun protectedAppId(){
+        mutableProtected.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.protectedAppId()
+            withContext(Dispatchers.Main){
+                mutableProtected.value = result
+            }
+        }
+    }
+
+
+    fun basicData(basicDetailDto: BasicDetailDto){
+        mutableBasicData.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.basicData(basicDetailDto)
+            withContext(Dispatchers.Main){
+                mutableBasicData.value = result
+            }
+        }
+    }
+
+    fun createContactDetail(contactDetailDto: ContactDetailDto){
+        mutableCreateContactDetail.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.createContactDetails(contactDetailDto)
+            withContext(Dispatchers.Main){
+                mutableCreateContactDetail.value = result
+            }
+        }
+    }
+
+    fun country(){
+        mutableCounty.value =Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.country()
+            withContext(Dispatchers.Main){
+                mutableCounty.value =result
+            }
+        }
+    }
+
+    fun city(){
+        mutableCity.value =Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.city()
+            withContext(Dispatchers.Main){
+                mutableCity.value =result
+            }
+        }
+    }
+
+    fun saveAccessToken(accessToken: String?) {
+        repository.saveAccessToken(accessToken)
+    }
+
+
+    fun getaccessToken(): String? {
+        return repository.getaccessToken()
     }
 }

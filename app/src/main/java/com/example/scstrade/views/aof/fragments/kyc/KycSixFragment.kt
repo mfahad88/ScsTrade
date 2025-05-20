@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycFiveBinding
 import com.example.scstrade.databinding.FragmentKycSixBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
@@ -26,7 +29,9 @@ class KycSixFragment : Fragment() {
     var parmanent_address:String?=null
     var parmanent_country:String?=null
     var parmanent_province:String?=null
+    var parmanent_province_other:String?=null
     var parmanent_city:String?=null
+    var parmanent_city_other:String?=null
     var parmanent_office_number:String?=null
     var parmanent_residence_number:String?=null
     override fun onCreateView(
@@ -68,13 +73,57 @@ class KycSixFragment : Fragment() {
                         parmanentCity = parmanent_city
                         parmanentOfficeNumber= parmanent_office_number
                         parmanentResidenceNumber = parmanent_residence_number
+                        permanentCityOther= parmanent_city_other
+                        permanentProvinceOther = parmanent_province_other
+
+                        viewModel.createContactDetail(
+                            ContactDetailDto(
+                                id = null,
+                                mailingAddress1 = mailingAddress,
+                                mailingCountryId = mailingCountry,
+                                mailingProvinceId = mailingProvince,
+                                mailingProvinceOther = mailingProvinceOther,
+                                mailingCityId = mailingCity,
+                                mailingphoneNo = officeNumber,
+                                mailingResidence = residenceNumber,
+                                permanentAddress1 = parmanentAddress,
+                                permanentCountryId = parmanentCountry,
+                                permanentCityId = parmanentCity,
+                                permanentCityOther = permanentCityOther,
+                                permanentProvinceId = parmanentProvince,
+                                permanentProvinceOther = permanentProvinceOther,
+                                permanentphoneNo = parmanentOfficeNumber,
+                                permanentResidence = parmanentResidenceNumber,
+                                mailingCityOther = mailingCityOther,
+                                permanentAddress2 = "     ",
+                                permanentAddress3 = "     ",
+                                mailingAddress2 = "     ",
+                                mailingAddress3 = "     "
+                            )
+                        )
                     }
-                    (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
 
             }
+
+            viewModel.mutableCreateContactDetail.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred")
+                    is Resource.Loading ->{
+
+                    }
+                    is Resource.Success -> {
+                        if(result.data?.statusCode==200){
+                            (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+                        }else{
+                            Utils.showError(requireView(),result.data?.message?:"An error occurred")
+                        }
+                    }
+                }
+            })
         }
 
         return binding.root
@@ -102,18 +151,20 @@ class KycSixFragment : Fragment() {
         binding.apply {
             permanentCountry.setEntries(AppConstants.COUNTRY.map { it.first }.toList())
             permanentProvince.setEntries(AppConstants.PROVINCE.map { it.first }.toList())
-            permanentCity.setEntries(AppConstants.CITY.map { it.first }.toList())
+            permanentCity.setEntries(AppConstants.CITY.map { it.first.first }.toList())
 
             permanentCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-                parmanent_country=AppConstants.COUNTRY.get(i).first
+                parmanent_country=AppConstants.COUNTRY.get(i).second
             }
 
             permanentProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-                parmanent_province=AppConstants.PROVINCE.get(i).first
+                parmanent_province=AppConstants.PROVINCE.get(i).second
+                parmanent_province_other = AppConstants.PROVINCE.get(i).first
             }
 
             permanentCity.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-                parmanent_city=AppConstants.CITY.get(i).first
+                parmanent_city=AppConstants.CITY.get(i).first.second
+                parmanent_city_other=AppConstants.CITY.get(i).first.first
             }
         }
     }

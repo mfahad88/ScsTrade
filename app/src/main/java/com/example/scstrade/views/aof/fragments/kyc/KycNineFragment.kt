@@ -37,8 +37,9 @@ class KycNineFragment : Fragment() {
                 (requireActivity() as AofActivity).loadFragment(KycEightFragment())
             }
             nominee.setOnButtonOneClickListener {
-                is_nominee="false"
+                is_nominee=AppConstants.NomineeType.get(1).second
                 nomineeView.visibility=View.GONE
+                viewModel.nominee.isNominee = is_nominee
                 nominee_relation=null
                 nominee_name=null
                 nominee_uin_type=null
@@ -46,8 +47,9 @@ class KycNineFragment : Fragment() {
             }
 
             nominee.setOnButtonTwoClickListener {
-                is_nominee="true"
+                is_nominee=AppConstants.NomineeType.get(0).second
                 nomineeView.visibility=View.VISIBLE
+                viewModel.nominee.isNominee = is_nominee
             }
 
             nomineeName.textInputEditText.addTextChangedListener {
@@ -59,9 +61,9 @@ class KycNineFragment : Fragment() {
             }
 
             btnContinue.setOnClickListener {
-                viewModel.nominee.isNominee = is_nominee
+
                 viewModel.savenominee()
-                if(is_nominee=="true"){
+                if(is_nominee.equals("Y")){
                     if(!nominee_name.isNullOrEmpty() && !nominee_relation.isNullOrEmpty()
                         && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty()){
 
@@ -76,6 +78,8 @@ class KycNineFragment : Fragment() {
                     }else{
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                     }
+                }else{
+                    (requireActivity() as AofActivity).loadFragment(KycTwelveFragment())
                 }
             }
 
@@ -90,7 +94,7 @@ class KycNineFragment : Fragment() {
         nominee.apply {
             if(isNominee!=null){
                 is_nominee = isNominee
-                if(is_nominee=="true"){
+                if(is_nominee.equals("Y")){
                     binding.nominee.toggleSelection(false)
                     binding.nomineeView.visibility = View.VISIBLE
                 }else{

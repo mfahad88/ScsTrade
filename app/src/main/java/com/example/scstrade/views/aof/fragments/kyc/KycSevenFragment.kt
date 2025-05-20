@@ -42,14 +42,18 @@ class KycSevenFragment : Fragment() {
 
             isTheAtto.apply {
                 setOnButtonOneClickListener {
-                    viewModel.attorneyDetail.attorneyType="self"
-                    attorney_type = "self"
+                    attorney_type= AppConstants.ATTORNEYTYPE[0].second
+                    viewModel.attorneyDetail.attorneyType = attorney_type
+                   /* viewModel.attorneyDetail.attorneyType="self"
+                    attorney_type = "self"*/
                     binding.someElseContainer.visibility= View.GONE
                 }
 
                 setOnButtonTwoClickListener {
-                    viewModel.attorneyDetail.attorneyType="someone else"
-                    attorney_type = "someone else"
+                    attorney_type= AppConstants.ATTORNEYTYPE[1].second
+                    viewModel.attorneyDetail.attorneyType = attorney_type
+                    /*viewModel.attorneyDetail.attorneyType="someone else"
+                    attorney_type = "someone else"*/
                     binding.someElseContainer.visibility= View.VISIBLE
                 }
             }
@@ -109,7 +113,7 @@ class KycSevenFragment : Fragment() {
                 uinNumber.textInputEditText.setText(attorney_Uin_Number)
             }
             if(attorney_type!="") {
-                if (attorney_type.equals("someone else")) {
+                if (attorney_type.equals("o",true)) {
                     isTheAtto.toggleSelection(false)
                     someElseContainer.visibility = View.VISIBLE
                 } else {
