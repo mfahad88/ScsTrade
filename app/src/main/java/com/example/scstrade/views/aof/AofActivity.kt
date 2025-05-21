@@ -14,21 +14,9 @@ import com.example.scstrade.databinding.ActivityAofBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.repository.AofRepository
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.aof.fragments.WelcomeFragment
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFourFragment
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningThreeFragment
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningTwoFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycEightFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycElevenFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycFourFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycFourteenFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycSevenFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycThreeFragment
 
 class AofActivity : AppCompatActivity() {
     lateinit var binding:ActivityAofBinding

@@ -9,21 +9,20 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.example.scstrade.R
-import com.example.scstrade.databinding.FragmentKycFiveBinding
 import com.example.scstrade.databinding.FragmentKycSixBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
 /**
  * A simple [Fragment] subclass.
- * Use the [KycSixFragment.newInstance] factory method to
+ * Use the [KycContactDetailThreeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class KycSixFragment : Fragment() {
+class KycContactDetailThreeFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     lateinit var binding: FragmentKycSixBinding
     var parmanent_address:String?=null
@@ -60,7 +59,7 @@ class KycSixFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
+                (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
             }
 
             btnContinue.setOnClickListener {
@@ -117,7 +116,7 @@ class KycSixFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         if(result.data?.statusCode==200){
-                            (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+                            (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
                         }else{
                             Utils.showError(requireView(),result.data?.message?:"An error occurred")
                         }

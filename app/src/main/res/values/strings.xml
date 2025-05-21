@@ -402,6 +402,10 @@
     <string name="enter_your_relative_name">Enter your relative name</string>
     <string name="nic_issue_date">NIC Issue Date</string>
     <string name="enter_issue_date">Enter issue date</string>
+    <string name="attorney_country">Attorney Country</string>
+    <string name="attorney_province">Attorney Province</string>
+    <string name="attorney_city">Attorney City</string>
+    <string name="select_remittance_basis">Select Remittance Basis</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

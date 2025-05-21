@@ -1,5 +1,8 @@
 package com.example.scstrade.services
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -12,7 +15,35 @@ import java.util.Date
 object RetrofitInstance {
     val BASE_URL = "https://dataapi.scstrade.com"
 
-    val api: ApiService by lazy {
+    private lateinit var retrofit: Retrofit
+
+    fun init(context: Context) {
+        val chuckerInterceptor = ChuckerInterceptor.Builder(context)
+            .collector(ChuckerCollector(context))
+            .maxContentLength(250_000L)
+            .redactHeaders("Authorization")
+            .alwaysReadResponseBody(true)
+            .build()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(chuckerInterceptor)
+            .addInterceptor(AuthInterceptor(context))
+            .build()
+
+        retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    fun <T> create(service: Class<T>): T {
+        if (!::retrofit.isInitialized) {
+            throw IllegalStateException("ApiClient not initialized. Call ApiClient.init(context) first.")
+        }
+        return RetrofitInstance.retrofit.create(service)
+    }
+    /*val api: ApiService by lazy {
         val interceptor= HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val okHttpClient = OkHttpClient.Builder()
@@ -29,5 +60,5 @@ object RetrofitInstance {
             .build()
 
             .create(ApiService::class.java)
-    }
+    }*/
 }

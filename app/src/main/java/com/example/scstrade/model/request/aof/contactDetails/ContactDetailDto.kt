@@ -1,4 +1,4 @@
-package com.example.scstrade.model.response.aof.contactDetails
+package com.example.scstrade.model.request.aof.contactDetails
 
 data class ContactDetailDto(
     var	id	:Int?,

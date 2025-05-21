@@ -12,16 +12,15 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 /**
  * A simple [Fragment] subclass.
- * Use the [KycOneFragment.newInstance] factory method to
+ * Use the [KycBasicDataOneFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class KycOneFragment : Fragment() {
+class KycBasicDataOneFragment : Fragment() {
     lateinit var binding: FragmentKycOneBinding
     lateinit var viewModel: AofViewModel
     var nationalityId:String?=null
@@ -62,7 +61,7 @@ class KycOneFragment : Fragment() {
                     viewModel.basicData.motherMaidenName= motherName.textInputEditText.text.toString()
                     viewModel.basicData.nationality= nationalityId
                     viewModel.saveBasicData()
-                    (requireActivity() as AofActivity).loadFragment(KycTwoFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycBasicDataTwoFragment())
 
                 }else{
                     Utils.showError(requireView(), getString(R.string.empty_fields_not_allowed))

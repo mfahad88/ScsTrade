@@ -1,24 +1,20 @@
 package com.example.scstrade.views.aof.fragments.kyc
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycThreeBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.request.aof.basicDetails.BasicDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.widgets.DualDropdownSelectorView
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -29,10 +25,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [KycThreeFragment.newInstance] factory method to
+ * Use the [KycBasicDataThreeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class KycThreeFragment : Fragment() {
+class KycBasicDataThreeFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     lateinit var binding:FragmentKycThreeBinding
     var country:String?=null
@@ -121,7 +117,7 @@ class KycThreeFragment : Fragment() {
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycTwoFragment())
+                (requireActivity() as AofActivity).loadFragment(KycBasicDataTwoFragment())
             }
         }
 
@@ -134,7 +130,7 @@ class KycThreeFragment : Fragment() {
                 is Resource.Success -> {
                     val response=result.data
                     if(response?.isSuccess?:false && response?.statusCode==200){
-                        (requireActivity() as AofActivity).loadFragment(KycFourFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
                     }else{
                         Utils.showError(requireView(),response?.message?:"An error occurred...")
                     }

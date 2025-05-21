@@ -1,4 +1,4 @@
-package com.example.scstrade.model.request
+package com.example.scstrade.model.request.aof
 
 
 import com.google.gson.annotations.SerializedName

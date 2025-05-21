@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningFourBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.request.RegisterUser
-import com.example.scstrade.services.ApiService
+import com.example.scstrade.model.request.aof.RegisterUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.LoginAOFFragment
@@ -41,7 +39,7 @@ class AccountOpeningFourFragment : Fragment() {
                     if(captchaValue.text.toString().equals(captchaInput.text.toString())){
                         if(cardTermsOne.checked && cardTermsTwo.checked){
 
-                            val register=RegisterUser(
+                            val register= RegisterUser(
                                 applicationId = 0,
                                 lifecycleStatus = 0,
                                 id = 0,

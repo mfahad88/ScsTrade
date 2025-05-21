@@ -1,15 +1,19 @@
 package com.example.scstrade.services
 
-import com.example.scstrade.model.request.LoginUser
-import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.request.aof.LoginUser
+import com.example.scstrade.model.request.aof.RegisterUser
 import com.example.scstrade.model.response.ApiResponse
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
-import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
+import com.example.scstrade.model.request.aof.basicDetails.BasicDetailDto
 import com.example.scstrade.model.response.aof.city.CityDto
-import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
+import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
@@ -61,7 +65,8 @@ interface ApiService {
     @GET(value = "/Login")
     suspend fun fetchLogin(
         @Query("RegistrationEmail") email: String,
-        @Query("RegistrationPassword") password: String
+        @Query("RegistrationPassword") password: String,
+        @Query("FireBaseID")fireBaseID: String
     ): List<LoginDataItem>
 
     @GET(value = "/WatchList")
@@ -93,7 +98,8 @@ interface ApiService {
         @Query("RegistrationEmail") email: String,
         @Query("RegistrationName") fullName: String,
         @Query("RegistrationPhone") phone: String,
-        @Query("RegistrationPassword") password: String
+        @Query("RegistrationPassword") password: String,
+        @Query("FireBaseID")fireBaseID: String
     ): List<LoginDataItem>
 
     @GET(value = "/WatchList")
@@ -279,4 +285,16 @@ interface ApiService {
 
     @GET(value = "api/admin/city")
     suspend fun city():ApiResponse<List<CityDto>>
+
+    @POST(value = "api/attorney-details")
+    suspend fun attorneyDetails(@Body attorneyDetailDto: AttorneyDetailDto):ApiResponse<Nothing>
+
+    @POST(value = "api/nominee-details")
+    suspend fun nomineeDetails(@Body nomineeDetailDto: NomineeDetailDto):ApiResponse<Nothing>
+
+    @POST(value = "api/other-details")
+    suspend fun otherDetails(@Body otherDetailDto: OtherDetailDto):ApiResponse<Nothing>
+
+    @POST(value =  "api/documents")
+    suspend fun documents(@Body documentDto: DocumentDto):ApiResponse<Nothing>
 }

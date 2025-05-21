@@ -12,9 +12,11 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
-class KycTenFragment : Fragment() {
+class KycNomineeDetailTwoFragment : Fragment() {
     lateinit var binding:FragmentKycTenBinding
     lateinit var viewModel: AofViewModel
     var nominee_address:String? = null
@@ -47,15 +49,17 @@ class KycTenFragment : Fragment() {
             nomineeNic.editText.setOnFocusChangeListener { view, b ->
                 if(b){
                     Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val selectedDate = "$day-$month-$year"
-                        nomineeNic.editText.setText(selectedDate)
-                        nominee_nic_expiry=selectedDate
+                        val customDate = LocalDate.of(year , month, day)
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        val formatted = customDate.format(formatter)
+                        nomineeNic.editText.setText(formatted)
+                        nominee_nic_expiry=formatted
                         viewModel.nominee.nomineeNicExpiry = nominee_nic_expiry
                     }
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycNineFragment())
+                (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
             }
 
             btnContinue.setOnClickListener {
@@ -70,7 +74,7 @@ class KycTenFragment : Fragment() {
                                 getString(R.string.please_provide_nic_expiry_date))
                         }
                     }
-                    (requireActivity() as AofActivity).loadFragment(KycElevenFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycNomineeDetailThreeFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }

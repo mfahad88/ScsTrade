@@ -9,14 +9,18 @@ import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.model.data.Nominee
 import com.example.scstrade.model.data.OtherDetail
-import com.example.scstrade.model.request.LoginUser
-import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.request.aof.LoginUser
+import com.example.scstrade.model.request.aof.RegisterUser
 import com.example.scstrade.model.response.ApiResponse
-import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
+import com.example.scstrade.model.request.aof.basicDetails.BasicDetailDto
 import com.example.scstrade.model.response.aof.city.CityDto
-import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
+import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.services.ApiService
@@ -412,6 +416,39 @@ class AofRepository (val apiService: ApiService,val context: Context){
             return Resource.Error(e.message?:"An error occurred")
         }
     }
+
+    suspend fun attorneyDetails(attorneyDetailDto: AttorneyDetailDto):Resource<ApiResponse<Nothing>>{
+        try {
+            return Resource.Success(apiService.attorneyDetails(attorneyDetailDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun nomineeDetails(nomineeDetailDto: NomineeDetailDto):Resource<ApiResponse<Nothing>>{
+        try {
+            return Resource.Success(apiService.nomineeDetails(nomineeDetailDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun otherDetails(otherDetailDto: OtherDetailDto):Resource<ApiResponse<Nothing>>{
+        try {
+            return Resource.Success(apiService.otherDetails(otherDetailDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun documents(documentDto: DocumentDto):Resource<ApiResponse<Nothing>>{
+        try {
+            return Resource.Success(apiService.documents(documentDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
 
     fun saveAccessToken(accessToken: String?) {
         sharedPreferences.edit().apply{

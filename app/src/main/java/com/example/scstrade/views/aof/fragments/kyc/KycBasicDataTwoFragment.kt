@@ -15,7 +15,7 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
 
-class KycTwoFragment : Fragment() {
+class KycBasicDataTwoFragment : Fragment() {
     lateinit var binding: FragmentKycTwoBinding
     var martialStatus = ""
     var relationship = ""
@@ -44,7 +44,7 @@ class KycTwoFragment : Fragment() {
 
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycOneFragment())
+                (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
             }
             btnFather.setOnClickListener {
                 btnFather.isSelected=true
@@ -79,7 +79,7 @@ class KycTwoFragment : Fragment() {
                     viewModel.basicData.relationShip = relationship
                     viewModel.basicData.relationshipName = name.text.toString()
                     viewModel.saveBasicData()
-                    (requireActivity() as AofActivity).loadFragment(KycThreeFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }

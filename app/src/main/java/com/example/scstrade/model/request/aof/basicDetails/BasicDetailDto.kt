@@ -1,4 +1,4 @@
-package com.example.scstrade.model.response.aof.basicDetails
+package com.example.scstrade.model.request.aof.basicDetails
 
 data class BasicDetailDto(
     var id:Int?,

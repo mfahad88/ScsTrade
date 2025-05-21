@@ -15,22 +15,21 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import com.example.scstrade.R
-import com.example.scstrade.databinding.FragmentAccountOpeningThreeBinding
+import androidx.lifecycle.Observer
 import com.example.scstrade.databinding.FragmentKycElevenBinding
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFourFragment
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningTwoFragment
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [KycElevenFragment.newInstance] factory method to
+ * Use the [KycNomineeDetailThreeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class KycElevenFragment : Fragment() {
+class KycNomineeDetailThreeFragment : Fragment() {
     lateinit var binding: FragmentKycElevenBinding
     lateinit var viewModel: AofViewModel
     private var cameraImageUri: Uri? = null
@@ -88,7 +87,7 @@ class KycElevenFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycTenFragment())
+            (requireActivity() as AofActivity).loadFragment(KycNomineeDetailTwoFragment())
         }
 
         binding.btnContinue.setOnClickListener {
@@ -98,13 +97,47 @@ class KycElevenFragment : Fragment() {
                     nomineeNicFront = nicFrontBase64
                     nomineeNicBackFileName = binding.nicBack.fileName
                     nomineeNicBack = nicBackBase64
+                    viewModel.nomineeDetails(
+                        NomineeDetailDto(
+                            addressNmn = nomineeAddress?:"",
+                            cnicExpiryDateNmn = nomineeNicExpiry?:"",
+                            cnicLifeTimeNmn = nomineeNicType?:"",
+                            cnicNmn = nomineeUinNumber?:"",
+                            id = null,
+                            identificationNmn = nomineeUinType?:"",
+                            mobileNoNmn = nomineeMobileNumber?:"",
+                            nameNmn = nomineeName?:"",
+                            nicBackNmn = nicBackBase64?:"",
+                            nicFrontNmn = nicFrontBase64?:"",
+                            nomineeType = isNominee?:"",
+                            relationShipNmn = nomineeRelation?:""
+                        )
+                    )
                 }
                 viewModel.savenominee()
-                (requireActivity() as AofActivity).loadFragment(KycTwelveFragment())
+                (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+
             }else{
                 Utils.showError(requireView(),"Empty Fields not allowed")
             }
+
         }
+        viewModel.mutableNomineeDetail.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val response= result.data
+
+                    if(response?.statusCode==200 && response.isSuccess){
+//                        (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                    }else{
+                        Utils.showError(requireView(),response?.message?:"An error occurred...")
+                    }
+                }
+            }
+        })
+
         return binding.root
     }
 

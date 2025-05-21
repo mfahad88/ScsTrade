@@ -11,6 +11,7 @@ import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.repository.MainRepository
+import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
     val mutableAnnouncementItem= MutableLiveData<Resource<List<AnnouncementDataItem>>>()
     val mutableAnnouncementType= MutableLiveData<Resource<List<AnnouncementTypeDataItem>>>()
     val mutableInsider= MutableLiveData<Resource<List<InsiderDataItem>>>()
-    private val repository= MainRepository(RetrofitInstance.api,application)
+    private val repository= MainRepository(RetrofitInstance.create(ApiService::class.java),application)
     val isConnected = ConnectivityObserver(application)
     fun announcementType() {
         mutableAnnouncementType.value = Resource.Loading()

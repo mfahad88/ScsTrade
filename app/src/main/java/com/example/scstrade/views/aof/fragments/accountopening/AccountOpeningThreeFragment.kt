@@ -139,9 +139,7 @@ class AccountOpeningThreeFragment : Fragment() {
                     relationshipBase64.toString(),
                     binding.proofOfRelative.fileName
                     )
-//                binding.proofOfIb.fileName=null
-//                binding.nicFront.fileName=null
-//                binding.nicBack.fileName=null
+
                 (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
             }else{
                 Utils.showError(requireView(),"Empty Fields not allowed")

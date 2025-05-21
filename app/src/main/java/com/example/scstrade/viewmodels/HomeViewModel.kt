@@ -9,12 +9,13 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.chart.ChartItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
+import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application):AndroidViewModel(application) {
-    val repository: MainRepository= MainRepository(RetrofitInstance.api,application)
+    val repository: MainRepository= MainRepository(RetrofitInstance.create(ApiService::class.java),application)
     val isLineSelected=MutableLiveData<Boolean>(true)
     val isCandleSelected=MutableLiveData<Boolean>(false)
     val chartItem = MutableLiveData<Resource<List<ChartItem>>>()

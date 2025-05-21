@@ -37,8 +37,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import retrofit2.Response
-import retrofit2.http.Query
 
 
 class MainRepository(val apiService: ApiService,val context: Context) {
@@ -94,17 +92,23 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun fetchLogin(email:String,password:String): Resource<List<LoginDataItem>> {
+    suspend fun fetchLogin(email: String, password: String, fcm: String): Resource<List<LoginDataItem>> {
         try {
-            return Resource.Success(apiService.fetchLogin(email,password))
+            return Resource.Success(apiService.fetchLogin(email,password,fcm))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }
     }
 
-    suspend fun registerUser(fullName:String,email: String,mobile:String,password: String): Resource<List<LoginDataItem>> {
+    suspend fun registerUser(
+        fullName: String,
+        email: String,
+        mobile: String,
+        password: String,
+        fireBaseID: String
+    ): Resource<List<LoginDataItem>> {
         try{
-            return Resource.Success(apiService.registration(email,fullName,mobile,password))
+            return Resource.Success(apiService.registration(email,fullName,mobile,password,fireBaseID))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

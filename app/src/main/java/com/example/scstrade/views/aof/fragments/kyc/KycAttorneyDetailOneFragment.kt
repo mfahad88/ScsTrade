@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycSevenBinding
-import com.example.scstrade.databinding.FragmentKycSixBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
 
-class KycSevenFragment : Fragment() {
+class KycAttorneyDetailOneFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     lateinit var binding: FragmentKycSevenBinding
     var attorney_type:String?=null
@@ -34,9 +32,9 @@ class KycSevenFragment : Fragment() {
         binding.apply {
             back.setOnClickListener {
                 if(viewModel.getContactDetails().parmanentAddress?.isNotEmpty()?:false){
-                    (requireActivity() as AofActivity).loadFragment(KycSixFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycContactDetailThreeFragment())
                 }else{
-                    (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
                 }
             }
 
@@ -77,7 +75,7 @@ class KycSevenFragment : Fragment() {
                     }
                 }
                 viewModel.saveAttorneyDetails()
-                (requireActivity() as AofActivity).loadFragment(KycEightFragment())
+                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
             }
         }
         return binding.root

@@ -11,14 +11,18 @@ import com.example.scstrade.model.data.BasicData
 import com.example.scstrade.model.data.ContactDetail
 import com.example.scstrade.model.data.Nominee
 import com.example.scstrade.model.data.OtherDetail
-import com.example.scstrade.model.request.LoginUser
-import com.example.scstrade.model.request.RegisterUser
+import com.example.scstrade.model.request.aof.LoginUser
+import com.example.scstrade.model.request.aof.RegisterUser
 import com.example.scstrade.model.response.ApiResponse
-import com.example.scstrade.model.response.aof.basicDetails.BasicDetailDto
+import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
+import com.example.scstrade.model.request.aof.basicDetails.BasicDetailDto
 import com.example.scstrade.model.response.aof.city.CityDto
-import com.example.scstrade.model.response.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
+import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
+import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.repository.AofRepository
@@ -33,17 +37,21 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     private val repository = AofRepository(apiClient,application)
     val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    val attorneyDetail = AttorneyDetail(null,null,null,null,null,null,null,null,null,null,null)
-    val nominee = Nominee(null,null,null,null,null,null,null,null,null,null,null,null)
+    val attorneyDetail = AttorneyDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+    val nominee = Nominee(null,null,null,null,null,null,null,null,null,null,null,null,null)
     val otherDetail = OtherDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val mutableRegisterUser = MutableLiveData<Resource<ResponseRegisterUser>>()
     val mutableLoginUser = MutableLiveData<Resource<LoginResponse>>()
     val mutableProtected = MutableLiveData<Resource<ProtectedResponse>>()
     val mutableBasicData = MutableLiveData<Resource<ApiResponse<Nothing>>>()
     val mutableCreateContactDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    val mutableAttorneyDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    val mutableNomineeDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    val mutableOtherDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
     var applicationId = "-1"
     val mutableCounty=MutableLiveData<Resource<ApiResponse<List<CountryDto>>>>()
     val mutableCity=MutableLiveData<Resource<ApiResponse<List<CityDto>>>>()
+    val mutableDocument=MutableLiveData<Resource<ApiResponse<Nothing>>>()
     public fun saveSelfInfo(
         fname: String,
         email: String,
@@ -197,6 +205,46 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
             val result = repository.city()
             withContext(Dispatchers.Main){
                 mutableCity.value =result
+            }
+        }
+    }
+
+    fun attorneyDetails(attorneyDetailDto: AttorneyDetailDto){
+        mutableAttorneyDetail.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.attorneyDetails(attorneyDetailDto)
+            withContext(Dispatchers.Main){
+                mutableAttorneyDetail.value =result
+            }
+        }
+    }
+
+    fun nomineeDetails(nomineeDetailDto: NomineeDetailDto){
+        mutableNomineeDetail.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.nomineeDetails(nomineeDetailDto)
+            withContext(Dispatchers.Main){
+                mutableNomineeDetail.value =result
+            }
+        }
+    }
+
+    fun otherDetails(otherDetailDto: OtherDetailDto){
+        mutableOtherDetail.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.otherDetails(otherDetailDto)
+            withContext(Dispatchers.Main){
+                mutableOtherDetail.value =result
+            }
+        }
+    }
+
+    fun documents(documentDto: DocumentDto){
+        mutableDocument.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.documents(documentDto)
+            withContext(Dispatchers.Main){
+                mutableDocument.value =result
             }
         }
     }

@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginAOFBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.request.LoginUser
+import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycBasicDataOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycDocumentFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailThreeFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycOtherDetailOneFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +74,7 @@ class LoginAOFFragment : Fragment() {
                 is Resource.Success -> {
                     val response=result.data
                     val user=response?.user
-                        (requireActivity() as AofActivity).loadFragment(KycOneFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycDocumentFragment())
                     viewModel.applicationId = Utils.decryptStatus(user?.sub?:"")
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
                 }

@@ -13,7 +13,7 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
 
-class KycThirteenFragment : Fragment() {
+class KycOtherDetailTwoFragment : Fragment() {
     lateinit var binding:FragmentKycThirteenBinding
     lateinit var viewModel: AofViewModel
     var job_description:String?=null
@@ -30,7 +30,7 @@ class KycThirteenFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycTwelveFragment())
+                (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
             }
 
             jobDetails.apply {
@@ -63,7 +63,7 @@ class KycThirteenFragment : Fragment() {
                 if(!job_description.isNullOrEmpty() && !department.isNullOrEmpty()
                     && !employer_name.isNullOrEmpty() && !employer_address.isNullOrEmpty()){
                     viewModel.saveotherDetail()
-                    (requireActivity() as AofActivity).loadFragment(KycFourteenFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycOtherDetailThreeFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }

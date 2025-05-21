@@ -20,12 +20,13 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.widgets.VerticalDivider
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: SharedViewModel
-
+    var fcm:String?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +36,9 @@ class RegisterFragment : Fragment() {
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
         bindView()
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            fcm=it
+        }
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
             System.out.println(resource.data.toString())
             when (resource){
@@ -79,7 +83,8 @@ class RegisterFragment : Fragment() {
                         fullName = fullName.text,
                         email = email.text,
                         password = password.text,
-                        mobile = mobileNumber.text
+                        mobile = mobileNumber.text,
+                        fireBaseID = fcm?:""
                     )
                 }
             }else{

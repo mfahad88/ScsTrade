@@ -9,6 +9,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.repository.WatchListRepository
+import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 class WatchListViewModel(application: Application,private  val sharedViewModel: SharedViewModel):AndroidViewModel(application) {
 
-    val repository=WatchListRepository(RetrofitInstance.api,application)
+    val repository=WatchListRepository(RetrofitInstance.create(ApiService::class.java),application)
     val mutableCreate=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableDelete=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableSymDelete=MutableLiveData<Resource<List<WatchListDetailItem>>>()

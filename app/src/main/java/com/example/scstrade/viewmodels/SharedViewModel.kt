@@ -8,8 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.response.announcement.AnnouncementDataItem
-import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -21,7 +19,6 @@ import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
-import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.portfolio.DividendItem
@@ -35,6 +32,7 @@ import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
+import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,7 +40,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository=MainRepository(RetrofitInstance.api,application)
+    private val repository=MainRepository(RetrofitInstance.create(ApiService::class.java),application)
     val mutableAllData=MutableLiveData<Resource<List<StockItem>>>()
     val mutableFuture=MutableLiveData<Resource<List<StockItem>>>()
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
@@ -127,20 +125,20 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun fetchLogin(email:String,password:String){
+    fun fetchLogin(email: String, password: String, fcm: String){
         viewModelScope.launch {
             if(isConnected.value==true) {
                 mutableLogin.value = Resource.Loading()
-                mutableLogin.value = repository.fetchLogin(email, password)
+                mutableLogin.value = repository.fetchLogin(email, password,fcm)
             }
         }
     }
 
-    fun registerUser(fullName:String,email: String,mobile:String,password: String){
+    fun registerUser(fullName:String,email: String,mobile:String,password: String,fireBaseID:String){
         viewModelScope.launch {
             if(isConnected.value==true) {
                 mutableRegister.value = Resource.Loading()
-                mutableRegister.value = repository.registerUser(fullName, email, mobile, password)
+                mutableRegister.value = repository.registerUser(fullName, email, mobile, password,fireBaseID)
             }
         }
     }

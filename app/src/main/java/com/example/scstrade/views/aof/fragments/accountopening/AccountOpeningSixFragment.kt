@@ -5,10 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningSixBinding
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.aof.fragments.kyc.KycOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycBasicDataOneFragment
 
 
 class AccountOpeningSixFragment : Fragment() {
@@ -22,7 +21,7 @@ class AccountOpeningSixFragment : Fragment() {
         binding = FragmentAccountOpeningSixBinding.inflate(inflater,container,false)
         binding.apply {
             btnContinue.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycOneFragment())
+                (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
             }
         }
         return binding.root

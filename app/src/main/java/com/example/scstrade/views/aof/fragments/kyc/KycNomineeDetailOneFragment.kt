@@ -12,12 +12,12 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import okhttp3.internal.notify
 
-class KycNineFragment : Fragment() {
+class KycNomineeDetailOneFragment : Fragment() {
     lateinit var binding:FragmentKycNineBinding
     lateinit var viewModel: AofViewModel
     var is_nominee:String?=null
+    var nominee_mobile:String? = null
     var nominee_relation:String? = null
     var nominee_name:String? = null
     var nominee_uin_type:String? = null
@@ -34,7 +34,10 @@ class KycNineFragment : Fragment() {
 
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycEightFragment())
+                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
+            }
+            nomineeMobile.textInputEditText.addTextChangedListener {
+                nominee_mobile = it.toString()
             }
             nominee.setOnButtonOneClickListener {
                 is_nominee=AppConstants.NomineeType.get(1).second
@@ -65,21 +68,22 @@ class KycNineFragment : Fragment() {
                 viewModel.savenominee()
                 if(is_nominee.equals("Y")){
                     if(!nominee_name.isNullOrEmpty() && !nominee_relation.isNullOrEmpty()
-                        && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty()){
+                        && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty() && !nominee_mobile.isNullOrEmpty()){
 
                         viewModel.nominee.apply {
                             nomineeRelation = nominee_relation
+                            nomineeMobileNumber = nominee_mobile
                             nomineeName = nominee_name
                             nomineeUinType = nominee_uin_type
                             nomineeUinNumber = nominee_uin_number
                         }
                         viewModel.savenominee()
-                        (requireActivity() as AofActivity).loadFragment(KycTenFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycNomineeDetailTwoFragment())
                     }else{
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                     }
                 }else{
-                    (requireActivity() as AofActivity).loadFragment(KycTwelveFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
                 }
             }
 
@@ -102,7 +106,10 @@ class KycNineFragment : Fragment() {
                     binding.nomineeView.visibility = View.GONE
                 }
             }
-
+            if(nomineeMobileNumber!=""){
+                nominee_mobile = nomineeMobileNumber
+                binding.nomineeMobile.textInputEditText.setText(nominee_mobile)
+            }
             if(nomineeRelation!=""){
                 nominee_relation =nomineeRelation
                 binding.nomineeRelation.dropdown.setText(AppConstants.NomineeRelation.filter { it.second.equals(nominee_relation) }.map { it.first }.toString().replace("[","").replace("]",""))

@@ -14,7 +14,7 @@ import com.example.scstrade.views.aof.AofActivity
 
 
 
-class KycFiveFragment : Fragment() {
+class KycContactDetailTwoFragment : Fragment() {
     lateinit var binding: FragmentKycFiveBinding
     lateinit var viewModel: AofViewModel
     var office_number:String?=null
@@ -31,7 +31,7 @@ class KycFiveFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycFourFragment())
+                (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
             }
             btnContinue.setOnClickListener {
                 if(office_number!!.isNotEmpty() && residence_number!!.isNotEmpty()){
@@ -41,9 +41,9 @@ class KycFiveFragment : Fragment() {
                     }
                     viewModel.saveContactDetails()
                     if(isPermanentAddressSame){
-                        (requireActivity() as AofActivity).loadFragment(KycSevenFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
                     }else{
-                        (requireActivity() as AofActivity).loadFragment(KycSixFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycContactDetailThreeFragment())
                     }
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))

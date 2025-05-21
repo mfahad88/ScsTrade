@@ -6,6 +6,7 @@ data class Nominee(
     var nomineeName: String?,
     var nomineeUinType: String?,
     var nomineeUinNumber: String?,
+    var nomineeMobileNumber: String?,
     var nomineeAddress:String?,
     var nomineeNicType:String?,
     var nomineeNicExpiry:String?,

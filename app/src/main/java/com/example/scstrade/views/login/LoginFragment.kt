@@ -27,8 +27,6 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -38,6 +36,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 /**
@@ -51,6 +50,7 @@ class LoginFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var callbackManager: CallbackManager
+    var fcm:String?=null
     private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val data = result.data
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -71,6 +71,9 @@ class LoginFragment : Fragment() {
         viewModel=(requireActivity().application as MyApp).viewModel
 
         firebaseAuth = FirebaseAuth.getInstance()
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            fcm=it
+        }
         callbackManager = CallbackManager.Factory.create()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)) // from google-services.json
@@ -107,7 +110,7 @@ class LoginFragment : Fragment() {
             })
         binding.button.setOnClickListener {
             if(binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()){
-                viewModel.fetchLogin(binding.userName.text,binding.password.text)
+                viewModel.fetchLogin(binding.userName.text,binding.password.text,fcm?:"")
             }else{
                 Utils.showError(binding.root,"Please provide valid username and password")
             }

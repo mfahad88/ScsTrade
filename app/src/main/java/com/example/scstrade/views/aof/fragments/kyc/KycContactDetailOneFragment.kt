@@ -15,10 +15,9 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.google.gson.reflect.TypeToken
-import kotlin.math.log
 
 
-class KycFourFragment : Fragment() {
+class KycContactDetailOneFragment : Fragment() {
     lateinit var binding:FragmentKycFourBinding
     lateinit var login:LoginDataItem
     lateinit var viewModel: AofViewModel
@@ -39,7 +38,7 @@ class KycFourFragment : Fragment() {
         viewModel=(requireActivity() as AofActivity).viewModel
         initDetails()
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycThreeFragment())
+            (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
         }
         fetchUser()
 
@@ -68,7 +67,7 @@ class KycFourFragment : Fragment() {
                         mailingCityOther = mailing_City_Other
                     }
                     viewModel.saveContactDetails()
-                    (requireActivity() as AofActivity).loadFragment(KycFiveFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
 
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))

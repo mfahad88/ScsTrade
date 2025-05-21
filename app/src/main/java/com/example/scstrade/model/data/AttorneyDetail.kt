@@ -11,5 +11,8 @@ data class AttorneyDetail(
     var attorneyMobileNumber:String?,
     var attorneyEmailAdress:String?,
     var attorneyMailingAddress:String?,
-    var attorneyResidenceAddress:String?,
+    var attorneyResidenceNumber:String?,
+    var attorneyCountry:String?,
+    var attorneyCity:String?,
+    var attorneyProvince:String?,
 )

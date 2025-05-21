@@ -261,5 +261,15 @@ class AppConstants {
             "Yes" to "Y",
             "NO" to "N",
         )
+        
+        val RemittanceDescription = listOf(
+            "Non-Resident Pakistani (Repatriable)" to "1",
+            "Non-Resident Pakistani (Non-Repatriable)" to "2",
+            "Foreigner Resident (Repatriable)" to "3",
+            "Foreigner Resident (Non-Repatriable)" to "4",
+            "Foreigner Non-Resident (Repatriable)" to "5",
+            "Foreigner Non-Resident (Non-Repatriable)" to "6",
+            "Resident Pakistani" to "7"
+            )
     }
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.aof.fragments.kyc.KycTenFragment">
+    tools:context=".views.aof.fragments.kyc.KycNomineeDetailTwoFragment">
 
     <EditText
         android:id="@+id/nominee_address"
