@@ -406,6 +406,9 @@
     <string name="attorney_province">Attorney Province</string>
     <string name="attorney_city">Attorney City</string>
     <string name="select_remittance_basis">Select Remittance Basis</string>
+    <string name="hbl_price_t">HBL – Price Target Hit</string>
+    <string name="hbl_has_rea">HBL has reached your target price of <b>PKR 200.</b></string>
+    <string name="time">5 mins ago</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>
