@@ -21,6 +21,7 @@ import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.notification.NotificationDto
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
@@ -73,6 +74,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     val mutablePortfolioDetails = MutableLiveData<Resource<List<PortfolioDetails>>>()
+    val mutableNotificationList= MutableLiveData<Resource<List<NotificationDto>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
@@ -121,6 +123,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
                     delay(5000)
                 }
+            }
+        }
+    }
+
+    fun notification(){
+        mutableNotificationList.value = Resource.Loading()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isConnected.value == true) {
+                val result = repository.notification()
+                withContext(Dispatchers.Main) {
+                    mutableNotificationList.value = result
+                }
+
             }
         }
     }

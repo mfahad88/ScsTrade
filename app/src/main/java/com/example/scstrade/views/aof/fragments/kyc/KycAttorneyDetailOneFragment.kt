@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.example.scstrade.databinding.FragmentKycSevenBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
@@ -82,44 +85,77 @@ class KycAttorneyDetailOneFragment : Fragment() {
     }
 
     private fun initFields() {
-        val attorneyDetail=viewModel.getAttorneyDetails()
-        attorney_type=attorneyDetail.attorneyType
-        attorney_saluation = attorneyDetail.attorneySalutation.toString()
-        attorney_FullName = attorneyDetail.attorneyFullName
-        attorney_Uin_Type = attorneyDetail.attorneyUinType
-        attorney_Uin_Number = attorneyDetail.attorneyUinNumber
 
-        binding.apply {
-            if(attorney_saluation!="") {
-                labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
-                    it.second.equals(
-                        attorney_saluation
-                    )
-                }.map { it.first }.first())
-            }
-            if(attorney_Uin_Type!="") {
-                uinType.dropdown.setText(AppConstants.IDTYPE.filter {
-                    it.second.equals(
-                        attorney_Uin_Type
-                    )
-                }.map { it.first }.first())
-            }
-            if(attorney_FullName!="") {
-                fullName.textInputEditText.setText(attorney_FullName)
-            }
-            if(attorney_Uin_Number!="") {
-                uinNumber.textInputEditText.setText(attorney_Uin_Number)
-            }
-            if(attorney_type!="") {
-                if (attorney_type.equals("o",true)) {
-                    isTheAtto.toggleSelection(false)
-                    someElseContainer.visibility = View.VISIBLE
-                } else {
-                    isTheAtto.toggleSelection(true)
-                    someElseContainer.visibility = View.GONE
+        viewModel.mutableAttorneyDetailResponse.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val response = result.data?.data
+                    viewModel.attorneyDetail.apply {
+                        if(response!=null){
+                            attorneyType = response.attorneyType
+                            attorneySalutation = response.salutationAtr
+                            attorneyFullName = response.clientNameAtr
+                            attorneyUinType = response.identificationAtr
+                            attorneyNicType = response.cnicLifeTimeAtr
+                            attorneyNicExpiry = response.cnicExpiryDateAtr?.let {
+                                Utils.convertIsoToDate(
+                                    it
+                                )
+                            }
+                            attorneyMobileNumber = response.mobileAtr
+                            attorneyEmailAdress = response.emailAtr
+                            attorneyMailingAddress = response.mailingAddressAtr1
+                            attorneyResidenceNumber = response.landlineAtr
+                            attorneyCountry = response.mailingCountryAtr
+                            attorneyCity = response.mailingCityAtr
+                            attorneyProvince = response.mailingProvinceAtr
+                            viewModel.saveAttorneyDetails()
+                        }
+                        val attorneyDetail=viewModel.getAttorneyDetails()
+                        attorney_type=attorneyDetail.attorneyType
+                        attorney_saluation = attorneyDetail.attorneySalutation.toString()
+                        attorney_FullName = attorneyDetail.attorneyFullName
+                        attorney_Uin_Type = attorneyDetail.attorneyUinType
+                        attorney_Uin_Number = attorneyDetail.attorneyUinNumber
+
+                        binding.apply {
+                            if(attorney_saluation!="") {
+                                labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
+                                    it.second.equals(
+                                        attorney_saluation
+                                    )
+                                }.map { it.first }.first())
+                            }
+                            if(attorney_Uin_Type!="") {
+                                uinType.dropdown.setText(AppConstants.IDTYPE.filter {
+                                    it.second.equals(
+                                        attorney_Uin_Type
+                                    )
+                                }.map { it.first }.first())
+                            }
+                            if(attorney_FullName!="") {
+                                fullName.textInputEditText.setText(attorney_FullName)
+                            }
+                            if(attorney_Uin_Number!="") {
+                                uinNumber.textInputEditText.setText(attorney_Uin_Number)
+                            }
+                            if(attorney_type!="") {
+                                if (attorney_type.equals("o",true)) {
+                                    isTheAtto.toggleSelection(false)
+                                    someElseContainer.visibility = View.VISIBLE
+                                } else {
+                                    isTheAtto.toggleSelection(true)
+                                    someElseContainer.visibility = View.GONE
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
+        })
+
 
     }
 

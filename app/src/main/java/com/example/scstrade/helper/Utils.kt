@@ -16,6 +16,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.provider.MediaStore
+import android.text.format.DateUtils
 import android.util.Base64
 import android.view.View
 import android.view.WindowInsetsController
@@ -41,6 +42,8 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -147,6 +150,24 @@ class Utils {
 
             return sdf.format(date)
          }
+
+        fun convertIsoToDate(input: String): String {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val odt = OffsetDateTime.parse(input)
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                return odt.format(formatter)
+            }else{
+                val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                isoFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+                val date = isoFormat.parse(input)
+
+                val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                outputFormat.timeZone = TimeZone.getDefault()
+
+                return outputFormat.format(date!!)
+            }
+        }
         fun hideKeyboard(context: Context, editText: EditText) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
@@ -309,6 +330,24 @@ class Utils {
                return gson.fromJson(json,typeToken.type)
             }else{
                 return defaultValue
+            }
+        }
+
+        fun convertDotNetDateToTimeAgo(dotNetDate: String): String {
+            val timestamp = dotNetDate
+                .replace("/Date(", "")
+                .replace(")/", "")
+                .toLongOrNull()
+
+            return if (timestamp != null) {
+                DateUtils.getRelativeTimeSpanString(
+                    timestamp,
+                    System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS,
+                    DateUtils.FORMAT_ABBREV_RELATIVE
+                ).toString()
+            } else {
+                "Invalid date"
             }
         }
         fun showDatePicker(context: Context, onDateSelected: (day: Int, month: Int, year: Int) -> Unit) {

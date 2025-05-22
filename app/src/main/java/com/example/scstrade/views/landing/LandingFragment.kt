@@ -36,6 +36,7 @@ import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
+import com.example.scstrade.views.notification.NotificationActivity
 import com.example.scstrade.views.portfolio.activities.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
@@ -58,6 +59,7 @@ class LandingFragment : Fragment() {
             toolbarWithLogo.visibility = View.VISIBLE
             toolbarWithBack.visibility = View.GONE
         }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.setPadding(0,insets.top,0,insets.bottom)

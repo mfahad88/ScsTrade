@@ -14,6 +14,11 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
+import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
@@ -29,6 +34,7 @@ import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
+import com.example.scstrade.model.response.notification.NotificationDto
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
@@ -46,6 +52,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -265,6 +272,10 @@ interface ApiService {
     @GET(value = "/Portfolio")
     suspend fun getPortfolioDetails(@Query("ActionType")actionType: String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID:Int):List<PortfolioDetails>
 
+    @GET(value="/Notification")
+    suspend fun notification():List<NotificationDto>
+
+    /////////////////////////////////AOF///////////////////////////////////////
     @POST(value="api/register")
     suspend fun registerAof(@Body regiserUser: RegisterUser): ResponseRegisterUser
 
@@ -297,4 +308,19 @@ interface ApiService {
 
     @POST(value =  "api/documents")
     suspend fun documents(@Body documentDto: DocumentDto):ApiResponse<Nothing>
+
+    @GET(value = "api/basic-data/application/{applicationId}")
+    suspend fun getBasicData(@Path("applicationId")applicationId:String):ApiResponse<BasicDetailResponse>
+
+    @GET(value = "api/contact-details/application/{applicationId}")
+    suspend fun getContactDetails(@Path("applicationId")applicationId:String):ApiResponse<ContactDetailResponse>
+
+    @GET(value = "api/attorney-details/application/{applicationId}")
+    suspend fun getAttorneyDetails(@Path("applicationId")applicationId:String):ApiResponse<AttorneyDetailResponse>
+
+    @GET(value = "api/nominee-details/application/{applicationId}")
+    suspend fun getNomineeDetails(@Path("applicationId")applicationId:String):ApiResponse<NomineeDetailResponse>
+
+    @GET(value = "api/other-details/application/{applicationId}")
+    suspend fun getOtherDetails(@Path("applicationId")applicationId:String):ApiResponse<OtherDetailResponse>
 }

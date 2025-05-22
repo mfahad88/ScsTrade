@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycFourBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -78,54 +80,87 @@ class KycContactDetailOneFragment : Fragment() {
     }
 
     private fun initDetails() {
-        val contactDetail = viewModel.getContactDetails()
-        contactDetail.apply {
-            mobile_Number = mobileNumber
-            email_Address = emailAddress
-            mailing_Address = mailingAddress
-            mailing_Country = mailingCountry
-            mailing_Province = mailingProvince
-            mailing_Province_Other = mailingProvinceOther
-            mailing_City = mailingCity
-            mailing_City_Other = mailingCityOther
 
-            binding.apply {
-                if(mobile_Number!="") {
-                    mobileNumber.textInputEditText.setText(mobile_Number)
-                }
-                if(email_Address!="") {
-                    email.textInputEditText.setText(email_Address)
-                }
-                if(mailing_Address!="") {
-                    mailingAddress.setText(mailing_Address)
-                }
-                if(mailing_Country!="") {
-                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter {
-                        it.second.equals(
-                            mailing_Country,
-                            true
-                        )
-                    }.map { it.first }.first())
-                }
-                if(mailing_City!="") {
-                    mailingCity.dropdown.setText(AppConstants.CITY.filter {
-                        it.first.second.equals(
-                            mailing_City,
-                            true
-                        )
-                    }.map { it.first.first }.first())
-                }
+        viewModel.mutableContactDetailResponse.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val response = result.data?.data
+                    viewModel.contactDetail.apply {
+                        if(response!=null){
+                            mailingAddress = response.mailingAddress1
+                            mailingCountry = response.mailingCountryId
+                            mailingProvince = response.mailingProvinceId
+                            mailingProvinceOther = response.mailingProvinceOther
+                            mailingCity = response.mailingCityId
+                            officeNumber = response.mailingphoneNo
+                            residenceNumber= response.mailingResidence
+                            parmanentAddress= response.permanentAddress1
+                            parmanentCountry = response.permanentCountryId
+                            parmanentCity = response.permanentCityId
+                            permanentCityOther = response.permanentCityOther
+                            parmanentProvince = response.permanentProvinceId
+                            permanentProvinceOther = response.permanentProvinceOther
+                            parmanentOfficeNumber = response.permanentphoneNo
+                            parmanentResidenceNumber = response.permanentResidence
+                            mailingCityOther = response.mailingCityOther
+                            viewModel.saveContactDetails()
+                        }
+                        val contactDetail = viewModel.getContactDetails()
+                        contactDetail.apply {
+                            mobile_Number = mobileNumber
+                            email_Address = emailAddress
+                            mailing_Address = mailingAddress
+                            mailing_Country = mailingCountry
+                            mailing_Province = mailingProvince
+                            mailing_Province_Other = mailingProvinceOther
+                            mailing_City = mailingCity
+                            mailing_City_Other = mailingCityOther
 
-                if(mailing_Province!="") {
-                    mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
-                        it.second.equals(
-                            mailing_Province,
-                            true
-                        )
-                    }.map { it.first }.first())
+                            binding.apply {
+                                if(mobile_Number!="") {
+                                    mobileNumber.textInputEditText.setText(mobile_Number)
+                                }
+                                if(email_Address!="") {
+                                    email.textInputEditText.setText(email_Address)
+                                }
+                                if(mailing_Address!="") {
+                                    mailingAddress.setText(mailing_Address)
+                                }
+                                if(mailing_Country!="") {
+                                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter {
+                                        it.second.equals(
+                                            mailing_Country,
+                                            true
+                                        )
+                                    }.map { it.first }.first())
+                                }
+                                if(mailing_City!="") {
+                                    mailingCity.dropdown.setText(AppConstants.CITY.filter {
+                                        it.first.second.equals(
+                                            mailing_City,
+                                            true
+                                        )
+                                    }.map { it.first.first }.first())
+                                }
+
+                                if(mailing_Province!="") {
+                                    mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
+                                        it.second.equals(
+                                            mailing_Province,
+                                            true
+                                        )
+                                    }.map { it.first }.first())
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
+        })
+
+
     }
 
     private fun populateDropdown() {

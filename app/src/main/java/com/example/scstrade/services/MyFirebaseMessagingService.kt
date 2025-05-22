@@ -1,9 +1,9 @@
 package com.example.scstrade.services
 
+import android.R
 import android.util.Log
-import android.widget.Toast
-import com.example.scstrade.helper.Utils
-import com.example.scstrade.views.MyApp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -15,12 +15,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // TODO: Send token to your backend server
     }
+    private fun showNotification(title: String?, message: String?) {
+        val builder = NotificationCompat.Builder(this, "firebase_channel")
+            .setSmallIcon(R.drawable.ic_media_play) // Add this icon in your drawable folder
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
 
+        val manager = NotificationManagerCompat.from(this)
+        manager.notify(101, builder.build())
+    }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        remoteMessage.notification?.let {
-            // Show the toast message for foreground notification
-            Toast.makeText(applicationContext, "Message Received: ${it.body}", Toast.LENGTH_LONG).show()
+        if (remoteMessage.notification != null) {
+            showNotification(
+                remoteMessage.notification!!.title,
+                remoteMessage.notification!!.body
+            )
         }
 
         // Handle other data payload if necessary

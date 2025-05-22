@@ -20,6 +20,7 @@ import com.example.scstrade.databinding.CustomToolbarBinding;
 import com.example.scstrade.databinding.MmarketBinding;
 import com.example.scstrade.viewmodels.SharedViewModel;
 import com.example.scstrade.views.MyApp;
+import com.example.scstrade.views.notification.NotificationActivity;
 import com.example.scstrade.views.search.SearchActivity;
 
 import java.text.SimpleDateFormat;
@@ -67,6 +68,7 @@ public class mMarket extends LinearLayout {
                         binding.dateTime.setText(sdf.format(new Date()));
                     }
                 });
+               binding.notificationIcon.setOnClickListener(view ->context.startActivity(new Intent(context, NotificationActivity.class)));
                 binding.searchIcon.setOnClickListener(view -> {
                    context.startActivity(new Intent(context, SearchActivity.class));
                 });

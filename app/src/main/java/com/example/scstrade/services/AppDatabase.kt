@@ -4,13 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.scstrade.model.dao.NotificationDao
 import com.example.scstrade.model.dao.StockDao
+import com.example.scstrade.model.data.NotificationEntity
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 
-@Database(entities = [StockItem::class,KSEIndices::class], version = 1, exportSchema = false)
+@Database(entities = [StockItem::class,KSEIndices::class, NotificationEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun marketDao(): StockDao
+    abstract fun notificationDao(): NotificationDao
 
     companion object {
         @Volatile

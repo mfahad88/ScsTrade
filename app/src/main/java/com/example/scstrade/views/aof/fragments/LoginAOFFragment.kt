@@ -13,7 +13,9 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycBasicDataOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.KycContactDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycDocumentFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailThreeFragment
@@ -74,13 +76,38 @@ class LoginAOFFragment : Fragment() {
                 is Resource.Success -> {
                     val response=result.data
                     val user=response?.user
-                        (requireActivity() as AofActivity).loadFragment(KycDocumentFragment())
+
                     viewModel.applicationId = Utils.decryptStatus(user?.sub?:"")
+                    viewModel.basicData.uinType = user?.identificationType
+                    viewModel.basicData.fullNicName = user?.name
+                    viewModel.basicData.uinNumber = user?.uin
+//                    viewModel.basicData.nicValid = user?.expiresAt?.let { Utils.convertIsoToDate(it) }
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
+                    viewModel.getattorneyDetails()
+                    viewModel.getBasicData()
+
+                    
+                    
+                    
+                    viewModel.getcontactDetails()
+                    viewModel.getNomineeDetails()
+                    viewModel.getotherDetails()
+
+                    (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
                 }
             }
 
         })
+
+
+
+
+
+
+
+
+
+
 
         return binding.root
     }

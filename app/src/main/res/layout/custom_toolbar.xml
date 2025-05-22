@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="15dp"
@@ -66,11 +67,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/toolbarWithBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/toolbarWithBack"
+                android:layout_toStartOf="@id/searchIcon"
                 android:visibility="gone"
-                android:layout_toStartOf="@id/searchIcon">
+                android:layout_marginTop="0dp"
+                tools:visibility="visible">
 
                 <RelativeLayout
                     android:id="@+id/backButton"
@@ -105,11 +108,10 @@
                     android:id="@+id/title_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/automobile_"
-                    android:textAppearance="@style/automobile_"
-                    android:layout_alignStart="@id/backButton"
                     android:layout_below="@id/backButton"
-                    />
+                    android:layout_alignStart="@id/backButton"
+                    android:text="@string/automobile_"
+                    android:textAppearance="@style/automobile_" />
             </RelativeLayout>
 
 

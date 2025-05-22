@@ -21,6 +21,11 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
+import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.services.ApiService
@@ -448,6 +453,48 @@ class AofRepository (val apiService: ApiService,val context: Context){
             return Resource.Error(e.message?:"An error occurred")
         }
     }
+
+    suspend fun getBasicData(applicationId:String):Resource<ApiResponse<BasicDetailResponse>>{
+        try {
+            return Resource.Success(apiService.getBasicData(applicationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun getContactDetails(applicationId:String):Resource<ApiResponse<ContactDetailResponse>>{
+        try {
+            return Resource.Success(apiService.getContactDetails(applicationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun getAttorneyDetails(applicationId:String):Resource<ApiResponse<AttorneyDetailResponse>>{
+        try {
+            return Resource.Success(apiService.getAttorneyDetails(applicationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun getNomineeDetails(applicationId:String):Resource<ApiResponse<NomineeDetailResponse>>{
+        try {
+            return Resource.Success(apiService.getNomineeDetails(applicationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun getOtherDetails(applicationId:String):Resource<ApiResponse<OtherDetailResponse>>{
+        try {
+            return Resource.Success(apiService.getOtherDetails(applicationId))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+
 
 
     fun saveAccessToken(accessToken: String?) {

@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycOneBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import java.time.LocalDate
@@ -24,6 +26,11 @@ class KycBasicDataOneFragment : Fragment() {
     lateinit var binding: FragmentKycOneBinding
     lateinit var viewModel: AofViewModel
     var nationalityId:String?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,9 +38,9 @@ class KycBasicDataOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycOneBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        initFields()
-        populateDropdown()
 
+        populateDropdown()
+        initFields()
         binding.apply {
 
             dobInputLayout.setOnFocusListener {
@@ -83,17 +90,47 @@ class KycBasicDataOneFragment : Fragment() {
     }
 
     private fun initFields() {
-        val basicData =viewModel.getbasicData()
-        binding.apply {
-            uinType.setText(basicData.uinType)
-            uinNumber.textInputEditText.setText(basicData.uinNumber)
-            dropdownTitle.setText(basicData.salutation)
-            fullName.textInputEditText.setText(basicData.fullNicName)
-            dobInputLayout.textInputEditText.setText(basicData.dob)
-            motherName.textInputEditText.setText(basicData.motherMaidenName)
 
-            dropdownNationality.setText(AppConstants.COUNTRY.find { it.second.equals(basicData.nationality) }?.first)
-        }
+        viewModel.mutableBasicDataResponse.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val response = result.data?.data
+                    viewModel.basicData.apply {
+                        if(response!=null){
+                            salutation = response.salutation
+                            nicType = response.lifeTime
+                            relationShip = response.relationship
+                            relationshipName = response.fatherHusbandName
+                            motherMaidenName = response.motherMaidenName
+                            nationality = response.nationalityId
+                            maritalStatus = response.maritalStatus
+                            pobCountry = response.placeOfBirth
+                            pobCity  = response.placeOfBirthCity
+                            ivrService = response.ivrstatus
+                            dob = Utils.convertIsoToDate(response.dateOfBirth)
+                            nicValid = Utils.convertIsoToDate(response.uinExpiryDate)
+                            viewModel.saveBasicData()
+                        }
+                        val basicData =viewModel.getbasicData()
+                        binding.apply {
+                            uinType.setText(basicData.uinType)
+                            uinNumber.textInputEditText.setText(basicData.uinNumber)
+                            dropdownTitle.setText(basicData.salutation)
+                            fullName.textInputEditText.setText(basicData.fullNicName)
+                            dobInputLayout.textInputEditText.setText(basicData.dob)
+                            motherName.textInputEditText.setText(basicData.motherMaidenName)
+
+
+                            nationalityId = AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData.nationality)}).second
+                            dropdownNationality.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData.nationality)}).first,false)
+                        }
+                    }
+                }
+            }
+        })
+
     }
 
 

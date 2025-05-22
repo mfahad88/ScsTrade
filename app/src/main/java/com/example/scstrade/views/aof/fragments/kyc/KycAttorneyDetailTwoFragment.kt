@@ -60,12 +60,12 @@ class KycAttorneyDetailTwoFragment : Fragment() {
                 (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
             }
             isAttorney.setOnButtonOneClickListener {
-                nic_type = "Y"
+                nic_type = "N"
                 isAttorney.editText.setText("")
                 isAttorney.editText.isEnabled=true
             }
             isAttorney.setOnButtonTwoClickListener {
-                nic_type = "N"
+                nic_type = "Y"
                 isAttorney.editText.setText("")
                 isAttorney.editText.isEnabled=false
             }
@@ -133,7 +133,6 @@ class KycAttorneyDetailTwoFragment : Fragment() {
                                 otherMailingCityAtr = AppConstants.CITY.filter { it.first.second.equals(attorneyCity) }.map { it.first.first }.first(),
                                 otherMailingProvAtr = AppConstants.PROVINCE.filter { it.second.equals(attorneyProvince) }.map { it.first}.first(),
                                 landlineAtr = attorneyResidenceNumber
-
                             )
                         )
                     }
@@ -154,6 +153,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
                         val response=result.data
                         if(response?.statusCode==200){
                             (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+
                         }else{
                             Utils.showError(requireView(),response?.message?:"An error occurred...")
                         }
@@ -180,20 +180,20 @@ class KycAttorneyDetailTwoFragment : Fragment() {
             if(attorneyCity!=""){
 
                 binding.attorneyCity.dropdown.setText(AppConstants.CITY.filter { it.first.second.equals(attorneyCity) }.map { it.first.first }.first())
-                attorneyCity = city
+                city = attorneyCity
             }
 
 
             if(attorneyCountry!=""){
 
                 binding.attorneyCountry.dropdown.setText(AppConstants.COUNTRY.filter { it.second.equals(attorneyCountry) }.map { it.first }.first())
-                attorneyCountry = country
+                country= attorneyCountry
             }
 
             if(attorneyProvince!=""){
 
                 binding.attorneyProvince.dropdown.setText(AppConstants.PROVINCE.filter { it.second.equals(attorneyProvince) }.map { it.first }.first())
-                attorneyProvince = province
+                province=attorneyProvince
             }
 
             if(attorneyNicExpiry!=""){

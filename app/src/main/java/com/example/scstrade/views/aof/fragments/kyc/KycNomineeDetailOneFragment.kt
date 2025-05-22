@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycNineBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
@@ -93,45 +95,74 @@ class KycNomineeDetailOneFragment : Fragment() {
     }
 
     private fun initFields() {
-        val nominee = viewModel.getnominee()
 
-        nominee.apply {
-            if(isNominee!=null){
-                is_nominee = isNominee
-                if(is_nominee.equals("Y")){
-                    binding.nominee.toggleSelection(false)
-                    binding.nomineeView.visibility = View.VISIBLE
-                }else{
-                    binding.nominee.toggleSelection(true)
-                    binding.nomineeView.visibility = View.GONE
+        viewModel.mutableNomineeDetailResponse.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val response = result.data?.data
+                    viewModel.nominee.apply {
+                        if(response!=null){
+                            response.apply {
+                                nomineeAddress=	addressNmn
+                                nomineeNicExpiry=	Utils.convertIsoToDate(cnicExpiryDateNmn)
+                                nomineeNicType=	cnicLifeTimeNmn
+                                nomineeUinNumber=	cnicNmn
+                                nomineeUinType=	identificationNmn
+                                nomineeMobileNumber=	mobileNoNmn
+                                nomineeName=	nameNmn
+                                nomineeNicBack=	nicBackNmn
+                                nomineeNicFront=	nicFrontNmn
+                                isNominee=	nomineeType
+                                nomineeRelation=	relationShipNmn
+                                viewModel.savenominee()
+                            }
+                        }
+                        val nominee = viewModel.getnominee()
+
+                        nominee.apply {
+                            if(isNominee!=null){
+                                is_nominee = isNominee
+                                if(is_nominee.equals("Y")){
+                                    binding.nominee.toggleSelection(false)
+                                    binding.nomineeView.visibility = View.VISIBLE
+                                }else{
+                                    binding.nominee.toggleSelection(true)
+                                    binding.nomineeView.visibility = View.GONE
+                                }
+                            }
+                            if(nomineeMobileNumber!=""){
+                                nominee_mobile = nomineeMobileNumber
+                                binding.nomineeMobile.textInputEditText.setText(nominee_mobile)
+                            }
+                            if(nomineeRelation!=""){
+                                nominee_relation =nomineeRelation
+                                binding.nomineeRelation.dropdown.setText(AppConstants.NomineeRelation.filter { it.second.equals(nominee_relation) }.map { it.first }.toString().replace("[","").replace("]",""))
+                            }
+
+                            if(nomineeName!=""){
+                                nominee_name =nomineeName
+                                binding.nomineeName.textInputEditText.setText(nominee_name)
+                            }
+
+                            if(nomineeUinType!=""){
+                                nominee_uin_type =nomineeUinType
+                                binding.uinType.dropdown.setText(AppConstants.IDTYPE.filter { it.second.equals(nominee_uin_type) }.map { it.first }.toString().replace("[","").replace("]",""))
+                            }
+
+                            if(nomineeUinNumber!=""){
+                                nominee_uin_number =nomineeUinNumber
+                                binding.uinNumber.textInputEditText.setText(nominee_uin_number)
+                            }
+
+
+                        }
+                    }
                 }
             }
-            if(nomineeMobileNumber!=""){
-                nominee_mobile = nomineeMobileNumber
-                binding.nomineeMobile.textInputEditText.setText(nominee_mobile)
-            }
-            if(nomineeRelation!=""){
-                nominee_relation =nomineeRelation
-                binding.nomineeRelation.dropdown.setText(AppConstants.NomineeRelation.filter { it.second.equals(nominee_relation) }.map { it.first }.toString().replace("[","").replace("]",""))
-            }
+        })
 
-            if(nomineeName!=""){
-                nominee_name =nomineeName
-                binding.nomineeName.textInputEditText.setText(nominee_name)
-            }
-
-            if(nomineeUinType!=""){
-                nominee_uin_type =nomineeUinType
-                binding.uinType.dropdown.setText(AppConstants.IDTYPE.filter { it.second.equals(nominee_uin_type) }.map { it.first }.toString().replace("[","").replace("]",""))
-            }
-
-            if(nomineeUinNumber!=""){
-                nominee_uin_number =nomineeUinNumber
-                binding.uinNumber.textInputEditText.setText(nominee_uin_number)
-            }
-
-
-        }
 
 
     }

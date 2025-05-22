@@ -15,8 +15,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import com.example.scstrade.databinding.FragmentKycFifteenBinding
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -24,7 +26,7 @@ import com.example.scstrade.views.aof.AofActivity
 
 class KycDocumentFragment : Fragment() {
     lateinit var viewModel: AofViewModel
-    lateinit var  binding: FragmentKycFifteenBinding
+    lateinit var binding: FragmentKycFifteenBinding
     private var cameraImageUri: Uri? = null
     private val PERMISSION_CAMERA = Manifest.permission.CAMERA
     private val PERMISSION_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
@@ -66,6 +68,8 @@ class KycDocumentFragment : Fragment() {
             }
         }
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

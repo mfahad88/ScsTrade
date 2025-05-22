@@ -19,6 +19,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.notification.NotificationDto
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
@@ -48,10 +49,10 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return Resource.Error(e.message?:"An error occurred")
         }
     }
-    suspend fun getWithChartIndices(): Resource<List<KSEIndices>> {
+  /*  suspend fun getWithChartIndices(): Resource<List<KSEIndices>> {
 
         try {
-          /*  val list=apiService.getIndices().map {
+          *//*  val list=apiService.getIndices().map {
                 if(it.iNDEXCODE.lowercase().contains("kse all")){
                     it.charts=apiService.getChart("kseall",1)
                 }else if(it.iNDEXCODE.lowercase().contains("kse 30")){
@@ -62,7 +63,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
                     it.charts=apiService.getChart("kmi30",1)
                 }
                 it
-            }*/
+            }*//*
 
            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getIndices())
 //            return  Resource.Success(apiService.getIndices())
@@ -70,7 +71,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
             return  Resource.Error(e.message?:"An error occurred",null)
         }
-    }
+    }*/
 
     suspend fun fetchAllData(que: String): Resource<List<StockItem>>{
         try {
@@ -518,4 +519,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return  Resource.Error(e.message?:"An error occurred",null)
         }
     }
+
+
+    suspend fun notification():Resource<List<NotificationDto>>{
+        try{
+            return  Resource.Success(apiService.notification())
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
 }

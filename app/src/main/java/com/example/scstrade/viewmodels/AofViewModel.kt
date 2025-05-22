@@ -23,6 +23,11 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
+import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
+import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.repository.AofRepository
@@ -52,6 +57,15 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val mutableCounty=MutableLiveData<Resource<ApiResponse<List<CountryDto>>>>()
     val mutableCity=MutableLiveData<Resource<ApiResponse<List<CityDto>>>>()
     val mutableDocument=MutableLiveData<Resource<ApiResponse<Nothing>>>()
+
+    val mutableBasicDataResponse = MutableLiveData<Resource<ApiResponse<BasicDetailResponse>>>()
+    val mutableContactDetailResponse = MutableLiveData<Resource<ApiResponse<ContactDetailResponse>>>()
+    val mutableAttorneyDetailResponse = MutableLiveData<Resource<ApiResponse<AttorneyDetailResponse>>>()
+    val mutableNomineeDetailResponse = MutableLiveData<Resource<ApiResponse<NomineeDetailResponse>>>()
+    val mutableOtherDetailResponse = MutableLiveData<Resource<ApiResponse<OtherDetailResponse>>>()
+
+
+
     public fun saveSelfInfo(
         fname: String,
         email: String,
@@ -189,6 +203,25 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun getcontactDetails(){
+        mutableContactDetailResponse.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.getContactDetails(applicationId)
+            withContext(Dispatchers.Main){
+                mutableContactDetailResponse.value = result
+            }
+        }
+    }
+    fun getBasicData(){
+        mutableBasicDataResponse.value = Resource.Loading()
+        viewModelScope.launch{
+            val result = repository.getBasicData(applicationId)
+            mutableBasicDataResponse.value = result
+
+        }
+    }
+
+
     fun country(){
         mutableCounty.value =Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
@@ -219,6 +252,17 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+
+    fun getattorneyDetails(){
+        mutableAttorneyDetailResponse.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.getAttorneyDetails(applicationId)
+            withContext(Dispatchers.Main){
+                mutableAttorneyDetailResponse.value =result
+            }
+        }
+    }
+
     fun nomineeDetails(nomineeDetailDto: NomineeDetailDto){
         mutableNomineeDetail.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
@@ -229,12 +273,32 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun getNomineeDetails(){
+        mutableNomineeDetailResponse.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.getNomineeDetails(applicationId)
+            withContext(Dispatchers.Main){
+                mutableNomineeDetailResponse.value =result
+            }
+        }
+    }
+
     fun otherDetails(otherDetailDto: OtherDetailDto){
         mutableOtherDetail.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.otherDetails(otherDetailDto)
             withContext(Dispatchers.Main){
                 mutableOtherDetail.value =result
+            }
+        }
+    }
+
+    fun getotherDetails(){
+        mutableOtherDetailResponse.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.getOtherDetails(applicationId)
+            withContext(Dispatchers.Main){
+                mutableOtherDetailResponse.value =result
             }
         }
     }

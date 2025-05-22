@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+<com.google.android.material.textfield.TextInputLayout
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:id="@+id/textInput"
     tools:hint="@string/mobile_number_is_registered_under"
     app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
@@ -15,7 +16,7 @@
     <AutoCompleteTextView
         android:id="@+id/dropdown"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:hint="Select Registered Person"
         android:inputType="none" />
 
