@@ -55,33 +55,42 @@ class AccountOpeningThreeFragment : Fragment() {
     private var relationshipBase64:String?=null
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) {
-            cameraImageUri?.let {
-                if(proofIbanClicked) {
-                    uriIban=it
-                    binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
-                }else if(nicFrontClicked){
-                    uriNicFront=it
-                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
-                }else if(nicBackClicked){
-                    uriNicBack=it
-                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
-                }else if(proofRelationshipClicked){
-                    uriRelationship = it
-                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
-                    relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
+        try {
+            if (success) {
+                cameraImageUri?.let {
+                    if(proofIbanClicked) {
+                        uriIban=it
+                        binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                        ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
+                    }else if(nicFrontClicked){
+                        uriNicFront=it
+                        binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                        nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
+                    }else if(nicBackClicked){
+                        uriNicBack=it
+                        binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                        nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
+                    }else if(proofRelationshipClicked){
+                        uriRelationship = it
+                        binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
+                        relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
+                    }
                 }
             }
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
         }
     }
 
 
     private fun proceedWithCameraOrStorage() {
-        cameraImageUri = createImageUri()
-        cameraImageUri?.let { takePictureLauncher.launch(it) }
+        try {
+            cameraImageUri = createImageUri()
+            cameraImageUri?.let { takePictureLauncher.launch(it) }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateView(
@@ -130,7 +139,17 @@ class AccountOpeningThreeFragment : Fragment() {
 
         binding.btnContinue.setOnClickListener {
             if(binding.proofOfIb.fileName.isNotEmpty() && binding.nicBack.fileName.isNotEmpty() && binding.nicFront.fileName.isNotEmpty()){
-                viewModel.saveDocuments(binding.proofOfIb.fileName,
+                viewModel.accountOpening.apply {
+                    accountopeningproofIban = binding.proofOfIb.fileName
+                    accountopeningproofIbanImage = ibanBase64.toString()
+                    accountopeningnicFront = binding.nicFront.fileName
+                    accountopeningnicFrontImage = nicFrontBase64.toString()
+                    accountopeningnicBack = binding.nicBack.fileName
+                    accountopeningnicBackImage = nicBackBase64.toString()
+                    accountopeningproofRelative = binding.proofOfRelative.fileName
+                    accountopeningproofRelativeImage = relationshipBase64.toString()
+                }
+                /*viewModel.saveDocuments(binding.proofOfIb.fileName,
                     ibanBase64.toString(),
                     binding.nicFront.fileName,
                     nicFrontBase64.toString(),
@@ -138,7 +157,9 @@ class AccountOpeningThreeFragment : Fragment() {
                     nicBackBase64.toString(),
                     relationshipBase64.toString(),
                     binding.proofOfRelative.fileName
-                    )
+                    )*/
+
+                viewModel.saveaccountOpening()
 
                 (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
             }else{
@@ -150,14 +171,14 @@ class AccountOpeningThreeFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            proofOfIb.fileName=viewModel.getDocuments().proofIban
-            ibanBase64=viewModel.getDocuments().proofIbanImage
-            nicFront.fileName=viewModel.getDocuments().nicFront
-            nicFrontBase64=viewModel.getDocuments().nicFrontImage
-            nicBack.fileName=viewModel.getDocuments().nicBack
-            nicBackBase64=viewModel.getDocuments().nicBackImage
-            proofOfRelative.fileName=viewModel.getDocuments().proofRelative
-            relationshipBase64=viewModel.getDocuments().proofRelativeImage
+            proofOfIb.fileName=viewModel.getaccountOpening().accountopeningproofIban
+            ibanBase64=viewModel.getaccountOpening().accountopeningproofIbanImage
+            nicFront.fileName=viewModel.getaccountOpening().accountopeningnicFront
+            nicFrontBase64=viewModel.getaccountOpening().accountopeningnicFrontImage
+            nicBack.fileName=viewModel.getaccountOpening().accountopeningnicBack
+            nicBackBase64=viewModel.getaccountOpening().accountopeningnicBackImage
+            proofOfRelative.fileName=viewModel.getaccountOpening().accountopeningproofRelative
+            relationshipBase64=viewModel.getaccountOpening().accountopeningproofRelativeImage
         }
     }
 

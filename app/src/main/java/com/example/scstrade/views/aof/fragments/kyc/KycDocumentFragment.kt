@@ -111,7 +111,7 @@ class KycDocumentFragment : Fragment() {
 
             btnContinue.setOnClickListener {
                 if(uriproofPermanentEmployerAddress!=null && uriproofPermanentAddress!=null && uriproofSignature!=null && uriproofZakat!=null){
-                    viewModel.documents(
+                    /*viewModel.documents(
                         DocumentDto(
                             accountType = viewModel.getotherDetail().otherDetailAccountType?:"",
                             identificationType =  viewModel.getSelfInfo().nicType?:"",
@@ -123,7 +123,7 @@ class KycDocumentFragment : Fragment() {
                             termsAndCondition = "Y",
                             id = null
                         )
-                    )
+                    )*/
                 }
             }
         }

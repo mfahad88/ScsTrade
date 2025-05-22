@@ -66,23 +66,24 @@
         app:layout_constraintTop_toBottomOf="@+id/mobileNumber"/>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_relationship"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:cardElevation="0dp"
-        android:id="@+id/card_relationship"
         android:visibility="gone"
+        tools:visibility="visible"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="@+id/textInputMobile"
         app:layout_constraintStart_toStartOf="@+id/textInputMobile"
         app:layout_constraintTop_toBottomOf="@+id/textInputMobile">
 
         <com.example.scstrade.views.widgets.LabelledCardTextField
+            android:id="@+id/relative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relative"
-            app:titleLabelledCardTextField="@string/kindly_enter_your_relative_informations"
             app:hint1="@string/enter_your_relative_name"
-            app:hint2="@string/enter_uin_number">
+            app:hint2="@string/enter_uin_number"
+            app:titleLabelledCardTextField="@string/kindly_enter_your_relative_informations">
 
         </com.example.scstrade.views.widgets.LabelledCardTextField>
 
