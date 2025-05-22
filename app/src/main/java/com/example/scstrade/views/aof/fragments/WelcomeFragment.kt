@@ -9,6 +9,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentWelcomeBinding
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
+import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningThreeFragment
 
 
 class WelcomeFragment : Fragment() {
@@ -20,7 +21,7 @@ class WelcomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentWelcomeBinding.inflate(inflater,container,false)
         binding.signup.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
         }
         binding.login.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())

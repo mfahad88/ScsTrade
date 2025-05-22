@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="@+id/nominee_nic" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView8"
+            android:id="@+id/materialSelect"
             android:layout_width="0dp"
             android:layout_height="34dp"
             android:layout_marginTop="8dp"
@@ -86,7 +86,7 @@
             app:cardBackgroundColor="@color/colorDarkerr"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="@+id/required"
-            app:layout_constraintTop_toTopOf="@+id/materialCardView8">
+            app:layout_constraintTop_toTopOf="@+id/materialSelect">
 
             <ImageView
                 android:id="@+id/upload_icon"
@@ -103,9 +103,9 @@
             android:visibility="gone"
             android:id="@+id/file_name"
             android:layout_marginEnd="96dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView8"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView8"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView8" />
+            app:layout_constraintEnd_toEndOf="@+id/materialSelect"
+            app:layout_constraintStart_toStartOf="@+id/materialSelect"
+            app:layout_constraintTop_toBottomOf="@+id/materialSelect" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

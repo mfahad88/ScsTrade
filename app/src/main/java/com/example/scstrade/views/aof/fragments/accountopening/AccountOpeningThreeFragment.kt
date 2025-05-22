@@ -38,9 +38,11 @@ class AccountOpeningThreeFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     private var cameraImageUri: Uri? = null
     private val PERMISSION_CAMERA = Manifest.permission.CAMERA
+
     private val PERMISSION_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
     private val PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val PERMISSION_REQ_CODE = 100
+    private val PERMISSION_REQ_CODE_GALLERY = 101
     private var proofIbanClicked=false
     private var nicFrontClicked=false
     private var nicBackClicked=false
@@ -83,6 +85,33 @@ class AccountOpeningThreeFragment : Fragment() {
         }
     }
 
+    private val pickImageLauncher  = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        try {
+            uri?.let {
+                if(proofIbanClicked) {
+                    uriIban=it
+                    binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                    ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
+                }else if(nicFrontClicked){
+                    uriNicFront=it
+                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                    nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
+                }else if(nicBackClicked){
+                    uriNicBack=it
+                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                    nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
+                }else if(proofRelationshipClicked){
+                    uriRelationship = it
+                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
+                    relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
+                }
+            }
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun proceedWithCameraOrStorage() {
         try {
@@ -101,6 +130,13 @@ class AccountOpeningThreeFragment : Fragment() {
         binding = FragmentAccountOpeningThreeBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
+        binding.proofOfIb.materialSelect.setOnClickListener {
+            proofIbanClicked=true
+            nicFrontClicked=false
+            nicBackClicked=false
+            proofRelationshipClicked=false
+            pickImageLauncher.launch("image/*")
+        }
         binding.proofOfIb.cardUpload.setOnClickListener {
             proofIbanClicked=true
             nicFrontClicked=false
@@ -116,12 +152,28 @@ class AccountOpeningThreeFragment : Fragment() {
             proofRelationshipClicked=false
             requestRuntimePermission()
         }
+
+        binding.nicFront.materialSelect.setOnClickListener {
+            proofIbanClicked=false
+            nicFrontClicked=true
+            nicBackClicked=false
+            proofRelationshipClicked=false
+            pickImageLauncher.launch("image/*")
+        }
         binding.nicBack.cardUpload.setOnClickListener{
             proofIbanClicked=false
             nicFrontClicked=false
             nicBackClicked=true
             proofRelationshipClicked=false
             requestRuntimePermission()
+        }
+
+        binding.nicBack.materialSelect.setOnClickListener {
+            proofIbanClicked=false
+            nicFrontClicked=false
+            nicBackClicked=true
+            proofRelationshipClicked=false
+            pickImageLauncher.launch("image/*")
         }
 
         binding.proofOfRelative.cardUpload.setOnClickListener {
@@ -132,7 +184,13 @@ class AccountOpeningThreeFragment : Fragment() {
             proofRelationshipClicked=true
             requestRuntimePermission()
         }
-
+        binding.proofOfRelative.materialSelect.setOnClickListener {
+            proofIbanClicked=false
+            nicFrontClicked=false
+            nicBackClicked=false
+            proofRelationshipClicked=true
+            pickImageLauncher.launch("image/*")
+        }
         binding.back.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningTwoFragment())
         }
@@ -149,15 +207,7 @@ class AccountOpeningThreeFragment : Fragment() {
                     accountopeningproofRelative = binding.proofOfRelative.fileName
                     accountopeningproofRelativeImage = relationshipBase64.toString()
                 }
-                /*viewModel.saveDocuments(binding.proofOfIb.fileName,
-                    ibanBase64.toString(),
-                    binding.nicFront.fileName,
-                    nicFrontBase64.toString(),
-                    binding.nicBack.fileName,
-                    nicBackBase64.toString(),
-                    relationshipBase64.toString(),
-                    binding.proofOfRelative.fileName
-                    )*/
+
 
                 viewModel.saveaccountOpening()
 
@@ -205,9 +255,11 @@ class AccountOpeningThreeFragment : Fragment() {
 
                 }).show()
         }else{
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(PERMISSION_CAMERA,PERMISSION_READ_EXTERNAL_STORAGE,PERMISSION_WRITE_EXTERNAL_STORAGE),PERMISSION_REQ_CODE)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(PERMISSION_CAMERA,PERMISSION_WRITE_EXTERNAL_STORAGE),PERMISSION_REQ_CODE)
         }
     }
+
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -224,7 +276,11 @@ class AccountOpeningThreeFragment : Fragment() {
                 requestRuntimePermission()
             }
         }
+
+
     }
+
+
 
 
     private fun createImageUri(): Uri? {

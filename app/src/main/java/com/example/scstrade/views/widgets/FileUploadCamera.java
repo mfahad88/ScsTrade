@@ -18,6 +18,7 @@ public class FileUploadCamera extends MaterialCardView {
     FileUploadCameraBinding binding;
     private String fileName=null;
     public CardView cardUpload;
+    public MaterialCardView materialSelect;
     public String getFileName() {
         return fileName;
     }
@@ -28,12 +29,12 @@ public class FileUploadCamera extends MaterialCardView {
             binding.fileName.setText(fileName);
             binding.fileName.setVisibility(View.VISIBLE);
             binding.uploadIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.baseline_delete_24));
-            binding.materialCardView8.setCardBackgroundColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+            binding.materialSelect.setCardBackgroundColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
         }else{
              binding.fileName.setText(null);
             binding.fileName.setVisibility(View.GONE);
             binding.uploadIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.icon_camera));
-            binding.materialCardView8.setCardBackgroundColor(Color.parseColor("#1A73E8"));
+            binding.materialSelect.setCardBackgroundColor(Color.parseColor("#1A73E8"));
         }
     }
 
@@ -54,8 +55,9 @@ public class FileUploadCamera extends MaterialCardView {
                 String title=a.getString(R.styleable.FileUploadCamera_titleFileUpload);
                 int color=a.getColor(R.styleable.FileUploadCamera_colorFileUpload, Color.parseColor("#000000"));
                 binding.nomineeNic.setText(title);
-                binding.materialCardView8.setCardBackgroundColor(color);
+                binding.materialSelect.setCardBackgroundColor(color);
                 cardUpload = binding.cardUpload;
+                materialSelect= binding.materialSelect;
             }finally {
                 a.recycle();
             }
