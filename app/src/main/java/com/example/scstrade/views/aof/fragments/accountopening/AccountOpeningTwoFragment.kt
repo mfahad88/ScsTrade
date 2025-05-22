@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.scstrade.databinding.FragmentAccountOpeningTwoBinding
@@ -22,9 +23,13 @@ import com.example.scstrade.views.aof.AofActivity
 class AccountOpeningTwoFragment : Fragment() {
     lateinit var binding: FragmentAccountOpeningTwoBinding
     lateinit var viewModel: AofViewModel
-    var relative_name:String?=null
-    var relative_uin_number:String?=null
-    var relationship_type:String? = null
+    var mobile_number = ""
+    var mobile_register = ""
+    var relative_name = ""
+    var uin_number = ""
+    var bank_code = ""
+    var bank_name = ""
+    var iban_number = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,63 +38,45 @@ class AccountOpeningTwoFragment : Fragment() {
         binding = FragmentAccountOpeningTwoBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
-        binding.textInputMobile.setEntries(AppConstants.RELATIVE_RELATION.map {it.first})
-        binding.textInputBank.setEntries(AppConstants.BANK_SWIFT_CODES.map { it.first })
-
-        binding.textInputMobile.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            if(i>0){
-                binding.cardRelationship.visibility = View.VISIBLE
-            }else{
-                binding.cardRelationship.visibility = View.GONE
+        populateDropdown()
+        binding.apply {
+            mobileNumber.textInputEditText.addTextChangedListener {
+                mobile_number = it.toString()
+                viewModel.accountOpening.accountopeningmobileNumber = mobile_number
             }
 
-            relationship_type= AppConstants.RELATIVE_RELATION.get(i).second
-        }
+            relative.apply {
+                text1.addTextChangedListener {
+                    relative_name=it.toString()
+                    viewModel.accountOpening.accountopeningrelativeName=relative_name
 
-        binding.relative.text1.addTextChangedListener {
-            relative_name = it.toString()
-        }
+                }
 
-        binding.relative.text2.addTextChangedListener {
-            relative_uin_number = it.toString()
-        }
-
-        binding.textInputBank.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            binding.bankSwift.text = adapterView.getItemAtPosition(i) as String
-        }
-        binding.cCode.text = binding.countryCode.text
-        binding.code.addTextChangedListener {
-            binding.bankCode.text = it
-        }
-        binding.iban.textInputEditText.addTextChangedListener(object:TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+                text2.addTextChangedListener {
+                    uin_number = it.toString()
+                    viewModel.accountOpening.accountopeningrelativeUin=uin_number
+                }
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                binding.ibanCode.text = p0
+            cCode.text= countryCode.text
+            code.addTextChangedListener {
+                bank_code=it.toString()
+                bankCode.text=bank_code
+            }
+            iban.textInputEditText.addTextChangedListener {
+                iban_number= it.toString()
+                ibanCode.text=iban_number
             }
 
-            override fun afterTextChanged(p0: Editable?) {
+            btnContinue.setOnClickListener {
+                if(mobile_number!="" && mobile_register!=""
+                    && bank_code!="" && bank_name!=""
+                    && iban_number!=""){
+                    viewModel.accountOpening.accountopeningibanNumber = "${countryCode.text}|${bank_code}|${bank_name}|${iban_number}"
+                    viewModel.saveaccountOpening()
+                    (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
 
-            }
-
-        })
-        binding.btnContinue.setOnClickListener {
-            val mobileNumber = binding.mobileNumber.text
-            val registerUnder= binding.textInputMobile.dropdown.text.toString()
-            val countryCode = binding.countryCode.text
-            val bankCode = binding.bankCode.text
-            val bankSwift=binding.bankSwift.text
-            val bankIban=binding.ibanCode.text
-
-            if(mobileNumber.isNotEmpty() && registerUnder.isNotEmpty() && countryCode.isNotEmpty() && bankCode.isNotEmpty() && bankSwift.isNotEmpty() && bankIban.isNotEmpty()){
-                val iban="${countryCode}|${bankCode}|${bankSwift}|${bankIban}"
-                viewModel.saveContactIban(mobileNumber,registerUnder,iban,relative_name?:"",relative_uin_number?:"",relationship_type)
-                (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
-            }else{
-                Utils.showError(requireView(),"Empty Fields not allowed...")
+                }
             }
 
         }
@@ -100,43 +87,80 @@ class AccountOpeningTwoFragment : Fragment() {
         return binding.root
     }
 
-    private fun initFields() {
+    private fun populateDropdown() {
         binding.apply {
-            mobileNumber.text = viewModel.getContactIban().mobileNumber
-            textInputMobile.dropdown.setText(viewModel.getContactIban().registerUnder)
-            if(viewModel.getContactIban().ibanNumber?.isNotEmpty()?:false) {
-                val ibanC = viewModel.getContactIban().ibanNumber?.split("|")
-                countryCode.text = ibanC?.get(0) ?: ""
-                code.setText(ibanC?.get(1) ?: "")
-                textInputBank.dropdown.setText(ibanC?.get(2))
-                iban.textInputEditText.setText(ibanC?.get(3))
-                cCode.text=countryCode.text
-                bankCode.text = code.text
-                bankSwift.text = textInputBank.dropdown.text
-                ibanCode.text = iban.textInputEditText.text
-            }
-            if(viewModel.getContactIban().relationshipType!=""){
-                relationship_type = viewModel.getContactIban().relationshipType
-
-                if(relationship_type!="" && relationship_type!=null){
-                    binding.textInputMobile.dropdown.setText(AppConstants.RELATIVE_RELATION.filter { it.second.equals(relationship_type) }.map { it.first }.first())
-                    if(relationship_type=="1"){
-                        binding.cardRelationship.visibility=View.GONE
+            textInputMobile.dropdown.apply {
+                setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.RELATIVE_RELATION.map { it.first }))
+                setOnItemClickListener { adapterView, view, i, l ->
+                    if(i>0){
+                        binding.cardRelationship.visibility = View.VISIBLE
                     }else{
-                        relative_name = viewModel.getContactIban().relativeName
-                        relative_uin_number = viewModel.getContactIban().relativeUin
-                        binding.cardRelationship.visibility=View.VISIBLE
-                        if (relative_name!="" && relative_uin_number!=""){
-                            binding.relative.apply {
-                                text1.setText(relative_name)
-                                text2.setText(relative_uin_number)
-                            }
-                        }
+                        binding.cardRelationship.visibility = View.GONE
                     }
+                   mobile_register = AppConstants.RELATIVE_RELATION.get(i).second
+                    viewModel.accountOpening.accountopeningrelationshipType = mobile_register
                 }
             }
+
+            textInputBank.dropdown.apply {
+                setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.BANK_SWIFT_CODES.map { it.first }))
+                setOnItemClickListener { adapterView, view, i, l ->
+
+                    bank_name = AppConstants.BANK_SWIFT_CODES.get(i).second
+                    bankSwift.text = bank_name
+                }
+            }
+
+
         }
     }
 
+    private fun initFields(){
+        val accountOpening=viewModel.getaccountOpening()
+        accountOpening.apply {
+            if(accountopeningmobileNumber!="" && accountopeningmobileNumber!=null){
+                mobile_number = accountopeningmobileNumber!!
+                binding.mobileNumber.textInputEditText.setText(mobile_number)
+            }
+
+            if(accountopeningibanNumber!="" && accountopeningibanNumber!=null){
+                val iban = accountopeningibanNumber!!.split("|")
+                bank_code=iban[1]
+                bank_name = iban[2]
+                iban_number = iban[3]
+                binding.apply {
+                    code.setText(bank_code)
+                    bankCode.setText(bank_code)
+                    bankSwift.setText(bank_name)
+                    ibanCode.setText(iban_number)
+                    binding.iban.textInputEditText.setText(iban_number)
+
+                    textInputBank.dropdown.setText(AppConstants.BANK_SWIFT_CODES.get(AppConstants.BANK_SWIFT_CODES.indexOfFirst { it.second.equals(bank_name) }).first,false)
+                }
+            }
+
+            if(accountopeningrelationshipType!="" && accountopeningrelationshipType!=null){
+                mobile_register = accountopeningrelationshipType!!
+                binding.textInputMobile.dropdown.setText(AppConstants.RELATIVE_RELATION.get(AppConstants.RELATIVE_RELATION.indexOfFirst { it.second.equals(mobile_register) }).first)
+                if(AppConstants.RELATIVE_RELATION.indexOfFirst { it.second.equals(mobile_register) }>0){
+                    binding.cardRelationship.visibility = View.VISIBLE
+                }else{
+                    binding.cardRelationship.visibility = View.GONE
+                }
+            }
+
+            if(accountopeningrelativeName!="" && accountopeningrelativeName!=null){
+                relative_name=accountopeningrelativeName!!
+                binding.relative.text1.setText(relative_name)
+                binding.relative.visibility = View.VISIBLE
+            }
+
+            if(accountopeningrelativeUin!="" && accountopeningrelativeUin!=null){
+                uin_number=accountopeningrelativeUin!!
+                binding.relative.text2.setText(uin_number)
+                binding.relative.visibility = View.VISIBLE
+            }
+        }
+    }
 
 }

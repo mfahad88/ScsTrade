@@ -33,7 +33,9 @@ class AccountOpeningFourFragment : Fragment() {
             captchaValue.text = Utils.generateCaptchaText()
             btnContinue.setOnClickListener {
                 if(reference.text.toString()!="" && reference.text.toString()!=null){
-                    viewModel.saveReference(reference.text)
+                    /*viewModel.saveReference(reference.text)*/
+                    viewModel.accountOpening.accountopeningreference =reference.textInputEditText.text.toString()
+                    viewModel.saveaccountOpening()
                 }
                 if(captchaInput.text.toString().isNotEmpty()){
                     if(captchaValue.text.toString().equals(captchaInput.text.toString())){
@@ -43,23 +45,23 @@ class AccountOpeningFourFragment : Fragment() {
                                 applicationId = 0,
                                 lifecycleStatus = 0,
                                 id = 0,
-                                name = viewModel.getSelfInfo().fullName?:"",
-                                uin = viewModel.getSelfInfo().nicNumber?:"",
-                                mobileNo = viewModel.getSelfInfo().mobileNumber?:"",
-                                nicBack = viewModel.getSelfInfo().nicBackImage?:"",
-                                nicFront = viewModel.getSelfInfo().nicFrontImage?:"",
-                                proofofIBAN = viewModel.getSelfInfo().proofIbanImage?:"",
-                                identificationType = viewModel.getSelfInfo().nicType?:"",
-                                residentialStatus = viewModel.getSelfInfo().residentialStatus?:"",
-                                email = viewModel.getSelfInfo().emailAddress?:"",
-                                ibanNo = viewModel.getSelfInfo().ibanNumber?.replace("|","")?:"",
-                                reference = viewModel.getSelfInfo().reference?:"",
-                                proofofRelationships = viewModel.getSelfInfo().proofRelativeImage?:"",
-                                relationship = viewModel.getSelfInfo().relationshipType?:"",
-                                relativeName = viewModel.getSelfInfo().relativeName?:"",
-                                relativeUIN = viewModel.getSelfInfo().relativeUin?:"",
+                                name = viewModel.getaccountOpening().accountopeningfullName?:"",
+                                uin = viewModel.getaccountOpening().accountopeningnicNumber?:"",
+                                mobileNo = viewModel.getaccountOpening().accountopeningmobileNumber?:"",
+                                nicBack = viewModel.getaccountOpening().accountopeningnicBackImage?:"",
+                                nicFront = viewModel.getaccountOpening().accountopeningnicFrontImage?:"",
+                                proofofIBAN = viewModel.getaccountOpening().accountopeningproofIbanImage?:"",
+                                identificationType = viewModel.getaccountOpening().accountopeningnicType?:"",
+                                residentialStatus = viewModel.getaccountOpening().accountopeningresidentialStatus?:"",
+                                email = viewModel.getaccountOpening().accountopeningemailAddress?:"",
+                                ibanNo = viewModel.getaccountOpening().accountopeningibanNumber?.replace("|","")?:"",
+                                reference = viewModel.getaccountOpening().accountopeningreference?:"",
+                                proofofRelationships = viewModel.getaccountOpening().accountopeningproofRelativeImage?:"",
+                                relationship = viewModel.getaccountOpening().accountopeningrelationshipType?:"",
+                                relativeName = viewModel.getaccountOpening().accountopeningrelativeName?:"",
+                                relativeUIN = viewModel.getaccountOpening().accountopeningrelativeUin?:"",
                                 isApp = "1",
-                                issueDate = viewModel.getSelfInfo().nicIssueDate?:""
+                                issueDate = viewModel.getaccountOpening().accountopeningnicIssueDate?:""
 
                             )
                             viewModel.registerUser(register)
@@ -98,7 +100,7 @@ class AccountOpeningFourFragment : Fragment() {
     }
 
     private fun initFields() {
-        binding.reference.text = viewModel.getDocuments().reference
+        binding.reference.text = viewModel.getaccountOpening().accountopeningreference
     }
 
 }

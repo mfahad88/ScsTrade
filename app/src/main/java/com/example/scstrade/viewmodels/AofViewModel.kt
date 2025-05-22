@@ -40,6 +40,7 @@ import kotlinx.coroutines.withContext
 class AofViewModel(application: Application): AndroidViewModel(application) {
     val apiClient=RetrofitInstanceAof.create(ApiService::class.java)
     private val repository = AofRepository(apiClient,application)
+    val accountOpening = AccountOpening(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val attorneyDetail = AttorneyDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
@@ -66,16 +67,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
 
 
-    public fun saveSelfInfo(
-        fname: String,
-        email: String,
-        residential: String,
-        nicType: String,
-        nicNumber: String,
-        issue_date: String
-    ){
-        repository.saveSelfInfo(fname, email, residential, nicType, nicNumber,issue_date)
-    }
+
 
     public fun saveContactIban(
         mobileNumber: String,
@@ -93,6 +85,10 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     fun saveReference(name:String){
         repository.saveReference(name)
+    }
+
+    fun saveaccountOpening(){
+        repository.saveaccountOpening(accountOpening)
     }
 
     fun saveBasicData(){
@@ -115,7 +111,10 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         repository.saveotherDetail(otherDetail)
     }
 
-    public fun getSelfInfo(): AccountOpening {
+    fun getaccountOpening(): AccountOpening {
+        return repository.getaccountOpening()!!
+    }
+   /* public fun getSelfInfo(): AccountOpening {
         return repository.getSelfInfo()
     }
 
@@ -129,7 +128,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     public fun getReference(): AccountOpening {
         return repository.getReference()
-    }
+    }*/
 
     public fun getbasicData(): BasicData {
         return repository.getbasicData()

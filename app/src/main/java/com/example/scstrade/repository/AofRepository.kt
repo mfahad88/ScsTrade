@@ -37,7 +37,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
     private val accountOpening = AccountOpening(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     private val basicData = BasicData(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     private val contactDetail = ContactDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-    public fun saveSelfInfo(
+    /*public fun saveSelfInfo(
         fname: String,
         email: String,
         residential: String,
@@ -66,7 +66,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         accountOpening.reference = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REFERENCE,"")
         return accountOpening
 
-    }
+    }*/
 
     fun saveContactIban(
         mobileNumber: String,
@@ -87,7 +87,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    fun getContactIban(): AccountOpening {
+  /*  fun getContactIban(): AccountOpening {
         accountOpening.mobileNumber = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_MOBILE_NUMBER,"")
         accountOpening.registerUnder = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REGISTERED_UNDER,"")
         accountOpening.ibanNumber = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_BANK_IBAN,"")
@@ -97,7 +97,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
         return accountOpening
     }
-
+*/
     fun saveDocuments(
         ibanFileName: String,
         iban: String,
@@ -121,7 +121,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    fun getDocuments(): AccountOpening {
+    /*fun getDocuments(): AccountOpening {
         accountOpening.proofIban=sharedPreferences.getString(AppConstants.DOCUMENT_IBAN_NAME,"")
         accountOpening.proofIbanImage=sharedPreferences.getString(AppConstants.DOCUMENT_IBAN,"")
 
@@ -134,7 +134,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         accountOpening.proofRelative=sharedPreferences.getString(AppConstants.DOCUMENT_RELATIONSHIP_NAME,"")
         accountOpening.proofRelativeImage=sharedPreferences.getString(AppConstants.DOCUMENT_RELATIONSHIP,"")
         return accountOpening
-    }
+    }*/
 
     fun saveReference(name: String) {
         sharedPreferences.edit().apply{
@@ -143,10 +143,10 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    fun getReference(): AccountOpening {
+ /*   fun getReference(): AccountOpening {
         accountOpening.reference = sharedPreferences.getString(AppConstants.ACCOUNT_OPENING_REFERENCE,"")
         return accountOpening
-    }
+    }*/
 
 
     fun saveBasicData(basicData: BasicData){
@@ -233,6 +233,23 @@ class AofRepository (val apiService: ApiService,val context: Context){
         return basicData
     }
 
+    fun saveaccountOpening(accountOpening: AccountOpening){
+        sharedPreferences.edit().apply{
+            val kClass = AccountOpening::class
+            val properties = kClass.members.filterIsInstance<kotlin.reflect.KProperty1<Any, *>>()
+            for (property in properties){
+                val value = property.get(accountOpening)
+                val name = property.name
+                if(value!=null) {
+                    if ((value as String).isNotEmpty()) {
+                        putString(name, value)
+                    }
+                }
+            }
+            apply()
+        }
+    }
+
     fun saveContactDetails(contactDetail: ContactDetail){
 
         sharedPreferences.edit().apply{
@@ -249,6 +266,22 @@ class AofRepository (val apiService: ApiService,val context: Context){
             }
             apply()
         }
+    }
+
+    fun getaccountOpening():AccountOpening?{
+        val constructor = AccountOpening::class.primaryConstructor?:return null
+        val args = constructor.parameters.associateWith { param ->
+            val key = param.name ?: return@associateWith null
+            when (param.type.classifier) {
+                String::class -> sharedPreferences.getString(key, "")
+                Int::class -> sharedPreferences.getInt(key, 0)
+                Boolean::class -> sharedPreferences.getBoolean(key, false)
+                Float::class -> sharedPreferences.getFloat(key, 0f)
+                Long::class -> sharedPreferences.getLong(key, 0L)
+                else -> null
+            }
+        }
+        return constructor.callBy(args)
     }
 
     fun getContactDetails(): ContactDetail? {

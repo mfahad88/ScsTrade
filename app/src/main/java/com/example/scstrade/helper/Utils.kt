@@ -296,7 +296,7 @@ class Utils {
         }
         fun bitmapToBase64(bitmap: Bitmap): String {
             val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
             val byteArray = outputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
@@ -311,7 +311,7 @@ class Utils {
         }
         fun convertImageUriToBase64(context: Context, imageUri: Uri): String? {
             val bitmap = uriToBitmap(context, imageUri)
-            return bitmap?.let { resizeBitmap(it,240,240) }
+            return bitmap?.let { resizeBitmap(it,200,200) }
         }
         fun saveSharedPreference(context: Context,key:String,value:List<Any>){
             val gson=Gson()
