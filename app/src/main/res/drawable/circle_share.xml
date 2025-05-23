@@ -3,7 +3,7 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="#ffffff"/>
+            <solid android:color="@color/md_theme_onPrimary"/>
         </shape>
     </item>
     <item android:drawable="@drawable/baseline_share_24"

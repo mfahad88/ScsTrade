@@ -75,7 +75,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:rotation="180"
                 android:src="@drawable/arrow_back"
-                app:tint="#ffffff" />
+                app:tint="@color/md_theme_onPrimary" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:tint="#ffffff"
+                app:tint="@color/md_theme_onPrimary"
                 android:src="@drawable/icon_camera" />
         </androidx.cardview.widget.CardView>
 

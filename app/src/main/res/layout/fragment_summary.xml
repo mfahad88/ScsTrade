@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:id="@+id/mainContainer"
         android:visibility="gone"
-        android:background="#FFFFFF"
+        android:background="@color/md_theme_onPrimary"
         tools:context=".views.portfolio.fragments.SummaryFragment">
 
 
@@ -181,7 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
-                android:background="#E5E2E1"/>
+                android:background="@color/md_theme_surfaceContainerHighest"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -231,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
-                android:background="#E5E2E1"/>
+                android:background="@color/md_theme_surfaceContainerHighest"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -281,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="10dp"
-                android:background="#E5E2E1"/>
+                android:background="@color/md_theme_surfaceContainerHighest"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_card"
-        app:strokeColor="#E5E2E1"
+        app:strokeColor="@color/md_theme_surfaceContainerHighest"
         app:strokeWidth="2dp">
 
         <LinearLayout
@@ -131,7 +131,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff">
+                android:background="@color/md_theme_onPrimary">
             
                <FrameLayout
                    android:layout_width="match_parent"

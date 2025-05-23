@@ -131,7 +131,7 @@
                     android:layout_height="59dp"
                     android:layout_gravity="end"
                     android:layout_weight="0.975"
-                    app:cardBackgroundColor="#FCF8F8"
+                    app:cardBackgroundColor="@color/md_theme_surface"
                     app:strokeColor="@color/md_theme_onSurfaceVariant">
 
                     <LinearLayout

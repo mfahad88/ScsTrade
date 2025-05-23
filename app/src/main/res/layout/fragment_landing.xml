@@ -176,7 +176,7 @@
                         android:background="@drawable/building_bl"
                         android:id="@+id/roundedAvatar"
                         android:text="S"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/md_theme_onPrimary"
                         android:textSize="18sp"
                         android:textFontWeight="700"
                         android:gravity="center"
