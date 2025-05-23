@@ -10,7 +10,7 @@ import com.example.scstrade.model.data.NotificationEntity
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 
-@Database(entities = [StockItem::class,KSEIndices::class, NotificationEntity::class], version = 1, exportSchema = false)
+@Database(entities = [NotificationEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
 

@@ -30,7 +30,7 @@ class AccountOpeningFiveFragment : Fragment() {
             btnContinue.setOnClickListener {
                 if(binding.pinview.value.isNotEmpty() && uin?.isNotEmpty()?:false){
 
-                    aofViewModel.verifyOtp(VerifyOtpDto(pinview.value.toString(), uin.toString(),"v"))
+                    aofViewModel.verifyOtp(VerifyOtpDto(pinview.value.toString(), "v",uin.toString()))
 
                 }
             }

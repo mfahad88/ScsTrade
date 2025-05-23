@@ -1,5 +1,6 @@
 package com.example.scstrade.views.notification
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNotificaionBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.NotificationViewModel
@@ -24,10 +26,18 @@ class NotificationActivity : AppCompatActivity() {
     lateinit var binding: ActivityNotificaionBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var notificationViewModel: NotificationViewModel
+
+    override fun onResume() {
+
+        super.onResume()
+        sharedViewModel.notification()
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityNotificaionBinding.inflate(LayoutInflater.from(this))
+        sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
 
         binding.toolbar.binding.apply {
@@ -38,14 +48,13 @@ class NotificationActivity : AppCompatActivity() {
             searchIcon.visibility = View.VISIBLE
             notificationIcon.visibility = View.INVISIBLE
         }
-        sharedViewModel = (this.application as MyApp).viewModel
         notificationViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application as MyApp).create(NotificationViewModel::class.java)
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        sharedViewModel.notification()
+
 
         binding.apply {
 
@@ -86,10 +95,17 @@ class NotificationActivity : AppCompatActivity() {
         })
 
         notificationViewModel.mutableNotification.observe(this, Observer {
-            binding.notificationList.adapter=NotificationAdapter(it){notificationEntity,index ->
+            binding.notificationList.adapter=NotificationAdapter(it,{
+                val intent= Intent(this,NotificationDetailActivity::class.java)
+                intent.putExtra(AppConstants.ID_REF,it.MainAnnIDRef)
+                intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.AnnouncementTypeName)
+                startActivity(intent)
+
+            },{ notificationEntity,index ->
+
                 notificationViewModel.markAsRead(notificationEntity.id)
                 notificationViewModel.getNotification()
-            }
+            })
 
 
         })

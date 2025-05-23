@@ -276,6 +276,9 @@ interface ApiService {
     @GET(value="/Notification")
     suspend fun notification():List<NotificationDto>
 
+    @GET(value="/NotificationDetails")
+    suspend fun notificationDetails(@Query("Type")type:String, @Query("id")id:Int):JsonElement
+
     /////////////////////////////////AOF///////////////////////////////////////
     @POST(value="api/register")
     suspend fun registerAof(@Body regiserUser: RegisterUser): ResponseRegisterUser

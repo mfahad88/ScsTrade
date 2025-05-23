@@ -9,5 +9,7 @@ data class NotificationEntity(
     val title: String,
     val message: String,
     val timestamp: String,
+    val MainAnnIDRef:Int,
+    val AnnouncementTypeName:String,
     val isRead: Boolean = false
 )

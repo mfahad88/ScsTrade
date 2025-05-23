@@ -409,6 +409,10 @@
     <string name="hbl_price_t">HBL – Price Target Hit</string>
     <string name="hbl_has_rea">HBL has reached your target price of <b>PKR 200.</b></string>
     <string name="time">5 mins ago</string>
+    <string name="mcbim_funds">MCBIM-FUNDS</string>
+    <string name="crescent_st"><![CDATA[Crescent Steel & Allied Products Limited]]></string>
+    <string name="notice_for_">Notice for Unclaimed Dividend Under Section 244 of the Companies Act, 2017 Prior to Publication.</string>
+    <string name="mar_2025_12">19 Mar 2025 | 12:45 PM</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

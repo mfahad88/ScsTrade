@@ -11,11 +11,11 @@ import com.example.scstrade.model.data.NotificationEntity
 import com.example.scstrade.model.response.notification.NotificationDto
 import java.util.Collections
 
-class NotificationAdapter(private val itemList: List<NotificationEntity>, private val onItemClick: (NotificationEntity,Int) -> Unit) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter(private val itemList: List<NotificationEntity>,private val onRowItemClick: (NotificationEntity)-> Unit, private val onItemClick: (NotificationEntity,Int) -> Unit) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     class NotificationViewHolder(private val binding: NotificationItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NotificationEntity,index:Int, onItemClick: (NotificationEntity,Int) -> Unit) {
+        fun bind(item: NotificationEntity,index:Int,onRowItemClick: (NotificationEntity)-> Unit, onItemClick: (NotificationEntity,Int) -> Unit) {
             binding.apply {
                 heading.setText(item.title)
                 details.setText(item.message)
@@ -32,7 +32,7 @@ class NotificationAdapter(private val itemList: List<NotificationEntity>, privat
                     }
                 }
             }
-//            binding.root.setOnClickListener { onItemClick(item) }
+            binding.root.setOnClickListener {      onRowItemClick(item) }
         }
     }
 
@@ -42,7 +42,7 @@ class NotificationAdapter(private val itemList: List<NotificationEntity>, privat
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        holder.bind(itemList[position],position, onItemClick)
+        holder.bind(itemList[position],position,onRowItemClick, onItemClick)
     }
 
     override fun getItemCount(): Int {

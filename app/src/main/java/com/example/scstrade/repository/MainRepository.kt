@@ -35,9 +35,11 @@ import com.example.scstrade.services.AppDatabase
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import retrofit2.http.Query
 
 
 class MainRepository(val apiService: ApiService,val context: Context) {
@@ -529,4 +531,11 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
+    suspend fun notificationDetails(type:String, id:Int): Resource<JsonElement> {
+        try{
+            return  Resource.Success(apiService.notificationDetails(type, id))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
 }

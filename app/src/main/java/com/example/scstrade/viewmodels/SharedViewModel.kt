@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -35,6 +36,7 @@ import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
+import com.google.gson.JsonElement
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -75,6 +77,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     val mutablePortfolioDetails = MutableLiveData<Resource<List<PortfolioDetails>>>()
     val mutableNotificationList= MutableLiveData<Resource<List<NotificationDto>>>()
+    val mutableNotificationDetailList= MutableLiveData<Resource<JsonElement>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
@@ -134,6 +137,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.notification()
                 withContext(Dispatchers.Main) {
                     mutableNotificationList.value = result
+                }
+
+            }
+        }
+    }
+
+    fun notificationDetals(type:String, id:Int){
+        mutableNotificationDetailList.value = Resource.Loading()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isConnected.value == true) {
+                val result = repository.notificationDetails(type, id)
+                withContext(Dispatchers.Main) {
+                    mutableNotificationDetailList.value = result
                 }
 
             }
