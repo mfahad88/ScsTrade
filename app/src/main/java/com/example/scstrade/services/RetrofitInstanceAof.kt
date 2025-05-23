@@ -29,7 +29,7 @@ object RetrofitInstanceAof {
             .build()
 
         retrofit = Retrofit.Builder()
-            .baseUrl("http://109.236.90.87:3000/")
+            .baseUrl("https://aof.scstrade.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

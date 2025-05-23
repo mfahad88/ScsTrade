@@ -17,6 +17,10 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.aof.fragments.WelcomeFragment
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFiveFragment
 
 class AofActivity : AppCompatActivity() {
     lateinit var binding:ActivityAofBinding
@@ -66,6 +70,17 @@ class AofActivity : AppCompatActivity() {
             }
         })
         loadFragment(WelcomeFragment())
+
+        val data: Uri? = intent?.data
+        val token = data?.getQueryParameter("token")
+
+        if (token != null) {
+
+            Log.d("VerifyEmail", "Token: $token")
+            loadFragment(AccountOpeningFiveFragment())
+        } else {
+            Log.e("VerifyEmail", "No token found")
+        }
     }
 
 

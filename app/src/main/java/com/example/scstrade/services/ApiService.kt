@@ -14,6 +14,7 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
@@ -323,4 +324,7 @@ interface ApiService {
 
     @GET(value = "api/other-details/application/{applicationId}")
     suspend fun getOtherDetails(@Path("applicationId")applicationId:String):ApiResponse<OtherDetailResponse>
+
+    @POST(value = "api/verify-otp")
+    suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):ApiResponse<Nothing>
 }

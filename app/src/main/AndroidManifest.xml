@@ -26,6 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".views.notification.NotificationDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.notification.NotificationActivity"
             android:exported="false" />
 
@@ -40,7 +43,19 @@
         <activity
             android:name=".views.aof.AofActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="aof.scstrade.com" />
+                <data android:pathPattern="/api/verify-email" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".views.portfolio.activities.EditBuySellActivity"
             android:exported="false" />

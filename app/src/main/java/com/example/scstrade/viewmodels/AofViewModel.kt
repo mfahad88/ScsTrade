@@ -23,6 +23,7 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
@@ -54,6 +55,8 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val mutableAttorneyDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
     val mutableNomineeDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
     val mutableOtherDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+    val mutableVerifyOtp = MutableLiveData<Resource<ApiResponse<Nothing>>>()
+
     var applicationId = "-1"
     val mutableCounty=MutableLiveData<Resource<ApiResponse<List<CountryDto>>>>()
     val mutableCity=MutableLiveData<Resource<ApiResponse<List<CityDto>>>>()
@@ -298,6 +301,15 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
             val result = repository.getOtherDetails(applicationId)
             withContext(Dispatchers.Main){
                 mutableOtherDetailResponse.value =result
+            }
+        }
+    }
+    fun verifyOtp(verifyOtpDto: VerifyOtpDto){
+        mutableVerifyOtp.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.verifyOtp(verifyOtpDto)
+            withContext(Dispatchers.Main){
+                mutableVerifyOtp.value =result
             }
         }
     }

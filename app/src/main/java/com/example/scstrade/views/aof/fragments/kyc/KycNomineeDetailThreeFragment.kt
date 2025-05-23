@@ -60,6 +60,25 @@ class KycNomineeDetailThreeFragment : Fragment() {
         }
     }
 
+    private val pickImageLauncher  = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        try {
+            uri?.let {
+                if(nicFrontClicked){
+                    uriNicFront=it
+                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                    nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
+                }else{
+                    uriNicBack=it
+                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+                    nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
+                }
+            }
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun proceedWithCameraOrStorage() {
         cameraImageUri = createImageUri()
@@ -80,10 +99,22 @@ class KycNomineeDetailThreeFragment : Fragment() {
             nicBackClicked=false
             requestRuntimePermission()
         }
+        binding.nicFront.materialSelect.setOnClickListener {
+            nicFrontClicked=true
+            nicBackClicked=false
+            pickImageLauncher.launch("image/*")
+        }
+
         binding.nicBack.cardUpload.setOnClickListener{
             nicFrontClicked=false
             nicBackClicked=true
             requestRuntimePermission()
+        }
+
+        binding.nicBack.materialSelect.setOnClickListener {
+            nicFrontClicked=true
+            nicBackClicked=false
+            pickImageLauncher.launch("image/*")
         }
 
         binding.back.setOnClickListener {

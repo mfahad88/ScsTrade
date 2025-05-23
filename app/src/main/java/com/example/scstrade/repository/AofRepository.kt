@@ -21,6 +21,7 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
+import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
@@ -526,8 +527,13 @@ class AofRepository (val apiService: ApiService,val context: Context){
             return Resource.Error(e.message?:"An error occurred")
         }
     }
-
-
+    suspend fun verifyOtp(verifyOtpDto: VerifyOtpDto):Resource<ApiResponse<Nothing>>{
+        try {
+            return Resource.Success(apiService.verifyOtp(verifyOtpDto))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
 
 
     fun saveAccessToken(accessToken: String?) {
