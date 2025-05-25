@@ -45,6 +45,11 @@ class NotificationDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.detail.listView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(0,  systemBars.top, 0, systemBars.bottom)
+            insets
+        }
         enableEdgeToEdge()
         sharedViewModel = (application as MyApp).viewModel
         setContentView(binding.root)
@@ -69,16 +74,25 @@ class NotificationDetailActivity : AppCompatActivity() {
                         loader.visibility = View.GONE
 
                         val response=result.data
+
                         if(response?.isJsonArray?:false) {
                             val array = response?.asJsonArray
                             val jsonObject=array!![0].asJsonObject
 
-
-                            detail.listView.adapter = InformationAdapter(this@NotificationDetailActivity,jsonObject.asMap().entries.map { KeyDescValue(it.key,it.value.asString,null) })
+                            val list=ArrayList<KeyDescValue>()
+                            jsonObject.asMap().entries.forEach {
+                                if(!it.value.isJsonNull && !it.value.asString.isNullOrEmpty() && !it.key.equals("company_code")
+                                    && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals("Board_Meeting_Date")
+                                    && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")){
+                                    list.add(KeyDescValue(it.key,it.value.asString,null))
+                                }
+                            }
+                            detail.listView.adapter = InformationAdapter(this@NotificationDetailActivity,list)
 
                             detail.symbol.text=jsonObject.get("company_code").asString
                             detail.companyName.text=jsonObject.get("company_name").asString
                             detail.description.text=jsonObject.get("Heading").asString
+                            detail.datetime.text = Utils.convertDateString(jsonObject.get("Board_Meeting_Date").asString,"dd-MMM-yyyy")
                             if(! jsonObject.get("PDFLink").isJsonNull) {
                                 detail.imageViewDownload.visibility=View.VISIBLE
                                 detail.imageViewDownload.setOnClickListener {

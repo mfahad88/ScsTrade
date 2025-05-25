@@ -1408,4 +1408,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/md_theme_scrim</item>
     </style>
+
+    <style name="text1">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorDarkerr</item>
+    </style>
 </resources>

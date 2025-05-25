@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemInformationBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.data.KeyDescValue
 
-class InformationAdapter(private val context: Context, private val list: List<KeyDescValue>): BaseAdapter() {
+class InformationAdapter(private val context: Context, private val list: List<KeyDescValue?>): BaseAdapter() {
     override fun getCount(): Int {
         return list.size
     }
 
-    override fun getItem(position: Int): KeyDescValue {
+    override fun getItem(position: Int): KeyDescValue? {
         return list.get(position)
     }
 
@@ -28,11 +29,20 @@ class InformationAdapter(private val context: Context, private val list: List<Ke
         } else {
             ItemInformationBinding.bind(convertView)
         }
-        val  keyDescValue = getItem(position)
-        binding.apply {
-            text1.text = keyDescValue.key
-            text2.text = keyDescValue.desc
-        }
+       try{
+           val  keyDescValue = getItem(position)
+           binding.apply {
+               text1.text = keyDescValue?.key?.replace("_"," ")
+               if(keyDescValue?.key?.contains("date",true)?:false){
+                   text2.text = keyDescValue?.desc?.trim()
+                       ?.let { Utils.convertDateString(it,"dd-MMM-yyyy") }
+               }else {
+                   text2.text = keyDescValue?.desc?.trim()
+               }
+           }
+       }catch (e:Exception){
+           e.printStackTrace()
+       }
         return binding.root
     }
 
