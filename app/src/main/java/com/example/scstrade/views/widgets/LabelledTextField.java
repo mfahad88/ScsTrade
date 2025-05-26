@@ -2,9 +2,15 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
+import android.text.method.KeyListener;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,6 +25,7 @@ public class LabelledTextField extends LinearLayout {
     LabelledTextfieldBinding binding;
     public TextInputEditText textInputEditText;
     private OnFocus listener;
+    private InputFilter[] filters;
     public LabelledTextField(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -38,8 +45,13 @@ public class LabelledTextField extends LinearLayout {
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
                 String text = a.getString(R.styleable.LabelledTextField_android_text);
                 String infoText= a.getString(R.styleable.LabelledTextField_infoText);
+
+
+
+                filters= new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100)) };
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
-                binding.textInputEditText.setFilters( new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100)) });
+//                binding.textInputEditText.setFilters(filters);
+                binding.textInputEditText.setFilters( filters);
                 binding.textInputEditText.setMaxLines(a.getInt(R.styleable.LabelledTextField_android_maxLength,1));
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 binding.textInputEditText.setCompoundDrawablesWithIntrinsicBounds(null,null,a.getDrawable(R.styleable.LabelledTextField_android_drawableEnd),null);
@@ -97,7 +109,10 @@ public class LabelledTextField extends LinearLayout {
     public String getText(){
         return  binding.textInputEditText.getText() !=null ? binding.textInputEditText.getText().toString() : "";
     }
-
+    // Optional: Allow setting allowed digits from code
+    public void setAllowedDigits(String digits) {
+        binding.textInputEditText.setKeyListener(DigitsKeyListener.getInstance(digits));
+    }
     public void setText(String text){
         binding.textInputEditText.setText(text);
     }

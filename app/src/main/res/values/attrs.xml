@@ -12,7 +12,7 @@
         <attr name="hintTextField" format="string"/>
         <attr name="infoText" format="string"/>
         <attr name="android:text" format="string"/>
-        <attr name="android:drawableEnd" format="reference"/>
+        <attr name="android:drawableEnd" string="reference"/>
         <attr name="android:inputType" format="reference"/>
         <attr name="android:maxLines" format="reference" />
         <attr name="android:maxLength" format="integer"/>

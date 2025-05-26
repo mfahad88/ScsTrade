@@ -210,6 +210,7 @@ class Utils {
                 (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
             }
         }
+
         fun getFileNameFromUri(context: Context,uri: Uri): String? {
             var name: String? = null
             val projection = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)

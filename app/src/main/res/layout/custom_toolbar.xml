@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="15dp"
-    android:background="@color/md_theme_onPrimary"
+    android:background="@color/md_theme_toolbar"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolbar"

@@ -28,6 +28,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
+        Log.d("FCM", "Data payload: ${remoteMessage.data}")
         if (remoteMessage.notification != null) {
             showNotification(
                 remoteMessage.notification!!.title,

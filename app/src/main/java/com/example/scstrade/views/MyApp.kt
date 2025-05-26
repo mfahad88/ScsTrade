@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import com.example.scstrade.helper.CertificateHelper
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.services.RetrofitInstanceAof
@@ -34,7 +35,7 @@ class MyApp : Application() {
             fetchAllData()
         }
 
-
+        CertificateHelper.printSHA1Fingerprint(this)
         registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
             override fun onActivityCreated(p0: Activity, p1: Bundle?) {
 

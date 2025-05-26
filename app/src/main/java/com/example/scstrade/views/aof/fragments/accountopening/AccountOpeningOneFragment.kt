@@ -3,6 +3,9 @@ package com.example.scstrade.views.aof.fragments.accountopening
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
+import android.text.method.DigitsKeyListener
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,11 +53,15 @@ class AccountOpeningOneFragment : Fragment() {
         binding = FragmentAccountOpeningOneBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
 
-
         binding.apply {
-            fullName.textInputEditText.addTextChangedListener {
-                full_name= it.toString()
-                viewModel.accountOpening.accountopeningfullName = full_name
+
+            fullName.apply {
+//                textInputEditText.keyListener = DigitsKeyListener.getInstance(getString(R.string.alphabets))
+                textInputEditText.inputType = InputType.TYPE_CLASS_TEXT
+                textInputEditText.addTextChangedListener {
+                    full_name= it.toString()
+                    viewModel.accountOpening.accountopeningfullName = full_name
+                }
             }
 
             emailAddress.textInputEditText.addTextChangedListener {

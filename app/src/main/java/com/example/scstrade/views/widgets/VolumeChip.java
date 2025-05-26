@@ -14,7 +14,7 @@ import com.example.scstrade.R;
 import com.example.scstrade.databinding.VolumeChipBinding;
 
 public class VolumeChip extends RelativeLayout {
-    private VolumeChipBinding binding;
+    public VolumeChipBinding binding;
     public VolumeChip(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);

@@ -12,6 +12,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.TimeChipBinding;
+import com.example.scstrade.helper.Utils;
 
 public class TimeChip extends RelativeLayout {
     private TimeChipBinding binding;
@@ -44,6 +45,7 @@ public class TimeChip extends RelativeLayout {
             }finally {
                 a.recycle();
             }
+
         }
     }
 
@@ -57,11 +59,22 @@ public class TimeChip extends RelativeLayout {
 
     public void setChipSelected(Boolean isSelected){
        if(isSelected){
-           binding.chip.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.time_chip_selected));
-           binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
+           if(Utils.Companion.isDarkMode(getContext())){
+               binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_selected));
+               binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
+           }else {
+               binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_selected));
+               binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
+           }
        }else{
-           binding.chip.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.time_chip_unselected));
-           binding.tv.setTextColor(Color.parseColor("#49454F"));
+           if(Utils.Companion.isDarkMode(getContext())){
+               binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_unselected));
+               binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
+           }else {
+               binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_unselected));
+               binding.tv.setTextColor(Color.parseColor("#49454F"));
+           }
+
        }
     }
 
