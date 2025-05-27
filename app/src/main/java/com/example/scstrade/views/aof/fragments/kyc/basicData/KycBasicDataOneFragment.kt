@@ -1,11 +1,13 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.basicData
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.InputFilter
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycOneBinding
@@ -36,17 +38,18 @@ class KycBasicDataOneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentKycOneBinding.inflate(inflater,container,false)
+        binding = FragmentKycOneBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
 
         populateDropdown()
         initFields()
         binding.apply {
-
+            Utils.filterTextField(fullName.textInputEditText,Regex("[^A-Za-z ]"))
+            Utils.filterTextField(uinNumber.textInputEditText,Regex("[^\\d]"))
             dobInputLayout.setOnFocusListener {
                 if(it){
-                    Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val customDate = LocalDate.of(year , month, day)
+                    Utils.showDatePicker(requireContext()) { day, month, year ->
+                        val customDate = LocalDate.of(year, month, day)
                         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                         val formatted = customDate.format(formatter)
                         dobInputLayout.textInputEditText.setText(formatted)
@@ -81,9 +84,24 @@ class KycBasicDataOneFragment : Fragment() {
 
     private fun populateDropdown() {
 
-        binding.uinType.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.IDTYPE.map { it.first }))
-        binding.dropdownTitle.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.SALUTATION.map { it.first }))
-        binding.dropdownNationality.setAdapter(ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,AppConstants.COUNTRY.map { it.first }))
+        binding.uinType.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                AppConstants.IDTYPE.map { it.first })
+        )
+        binding.dropdownTitle.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                AppConstants.SALUTATION.map { it.first })
+        )
+        binding.dropdownNationality.setAdapter(
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_list_item_1,
+                AppConstants.COUNTRY.map { it.first })
+        )
         binding.dropdownNationality.setOnItemClickListener { adapterView, view, i, l ->
             nationalityId = AppConstants.COUNTRY.get(i).second
         }
@@ -115,16 +133,19 @@ class KycBasicDataOneFragment : Fragment() {
                         }
                         val basicData =viewModel.getbasicData()
                         binding.apply {
-                            uinType.setText(basicData.uinType)
-                            uinNumber.textInputEditText.setText(basicData.uinNumber)
-                            dropdownTitle.setText(basicData.salutation)
-                            fullName.textInputEditText.setText(basicData.fullNicName)
-                            dobInputLayout.textInputEditText.setText(basicData.dob)
-                            motherName.textInputEditText.setText(basicData.motherMaidenName)
+                            uinType.setText(basicData?.uinType)
+                            uinNumber.textInputEditText.setText(basicData?.uinNumber)
+                            dropdownTitle.setText(basicData?.salutation)
+                            fullName.textInputEditText.setText(basicData?.fullNicName)
+                            dobInputLayout.textInputEditText.setText(basicData?.dob)
+                            motherName.textInputEditText.setText(basicData?.motherMaidenName)
+
+                            if(basicData?.nationality?.isNotEmpty() == true){
+                                nationalityId = AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData?.nationality)}).second
+                                dropdownNationality.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData?.nationality)}).first,false)
+                            }
 
 
-                            nationalityId = AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData.nationality)}).second
-                            dropdownNationality.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst {  it.second.equals(basicData.nationality)}).first,false)
                         }
                     }
                 }

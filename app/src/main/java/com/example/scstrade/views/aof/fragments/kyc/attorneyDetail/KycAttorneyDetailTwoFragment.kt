@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.attorneyDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +14,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -152,7 +153,9 @@ class KycAttorneyDetailTwoFragment : Fragment() {
                     is Resource.Success -> {
                         val response=result.data
                         if(response?.statusCode==200){
-                            (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                            (requireActivity() as AofActivity).loadFragment(
+                                KycNomineeDetailOneFragment()
+                            )
 
                         }else{
                             Utils.showError(requireView(),response?.message?:"An error occurred...")

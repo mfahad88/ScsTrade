@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.contactDetail
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,9 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment
 import com.google.gson.reflect.TypeToken
+import kotlin.math.log
 
 
 class KycContactDetailOneFragment : Fragment() {
@@ -46,17 +48,18 @@ class KycContactDetailOneFragment : Fragment() {
 
         populateDropdown()
         binding.apply {
-            mobileNumber.textInputEditText.setText(login.registrationPhone)
-            mobileNumber.textInputEditText.isEnabled=false
             mobile_Number = login.registrationPhone
-            email.textInputEditText.setText(login.registrationEmail)
-            email.textInputEditText.isEnabled=false
+            mobileNumber.textInputEditText.setText(mobile_Number)
+            mobileNumber.textInputEditText.isEnabled=false
             email_Address = login.registrationEmail
+            email.textInputEditText.setText(email_Address)
+            email.textInputEditText.isEnabled=false
+
             mailingAddress.addTextChangedListener {
                 mailing_Address=it.toString()
             }
             btnContinue.setOnClickListener {
-                if(mobile_Number!!.isNotEmpty() && email_Address!!.isNotEmpty() && mailing_Address!!.isNotEmpty() &&
+                if(mobileNumber.textInputEditText.text!!.isNotEmpty() && email.textInputEditText.text!!.isNotEmpty() && mailing_Address!!.isNotEmpty() &&
                     mailing_Country!!.isNotEmpty() && mailing_Province!!.isNotEmpty() && mailing_City!!.isNotEmpty()){
                     viewModel.contactDetail.apply {
                         mobileNumber = mobile_Number
@@ -143,6 +146,8 @@ class KycContactDetailOneFragment : Fragment() {
                                             true
                                         )
                                     }.map { it.first.first }.first())
+                                    mailingProvince.visibility = View.VISIBLE
+                                    mailingOtherProvince.visibility = View.INVISIBLE
                                 }
 
                                 if(mailing_Province!="") {
@@ -152,6 +157,21 @@ class KycContactDetailOneFragment : Fragment() {
                                             true
                                         )
                                     }.map { it.first }.first())
+                                    mailingProvince.visibility = View.VISIBLE
+                                    mailingOtherProvince.visibility = View.INVISIBLE
+                                }
+
+                                if(mailing_Province_Other!=""){
+                                    mailingOtherProvince.textInputEditText.setText(mailing_Province_Other)
+                                    mailingProvince.visibility = View.INVISIBLE
+                                    mailingOtherProvince.visibility = View.VISIBLE
+                                }
+
+
+                                if(mailing_City_Other!=""){
+                                    mailingOtherCity.textInputEditText.setText(mailing_City_Other)
+                                    mailingCity.visibility = View.INVISIBLE
+                                    mailingOtherCity.visibility = View.VISIBLE
                                 }
                             }
                         }
@@ -169,17 +189,46 @@ class KycContactDetailOneFragment : Fragment() {
         binding.mailingCity.setEntries(AppConstants.CITY.map { it.first.first }.toList())
 
         binding.mailingCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
+            if(AppConstants.COUNTRY.get(i).first.contains("pakistan",true)){ //pakistan
+                binding.apply {
+                    mailingProvince.visibility = View.VISIBLE
+                    mailingCity.visibility = View.VISIBLE
+                    mailingOtherProvince.visibility = View.INVISIBLE
+                    mailingOtherCity.visibility = View.INVISIBLE
+                }
+            }else{          //other country
+                binding.apply {
+                    mailingProvince.visibility = View.INVISIBLE
+                    mailingCity.visibility = View.INVISIBLE
+                    mailingOtherProvince.visibility = View.VISIBLE
+                    mailingOtherCity.visibility = View.VISIBLE
+                }
+            }
             mailing_Country=AppConstants.COUNTRY.get(i).second
         }
 
         binding.mailingProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->
             mailing_Province=AppConstants.PROVINCE.get(i).second
-            mailing_Province_Other = AppConstants.PROVINCE.get(i).first
+            binding.mailingCity.setEntries(AppConstants.CITY.filter { it.second.equals(mailing_Province) }.map { it.first.first }.toList())
+
+        }
+
+        binding.mailingOtherProvince.textInputEditText.addTextChangedListener {
+            if(binding.mailingOtherProvince.visibility == View.VISIBLE){
+                mailing_Province_Other = it.toString()
+                viewModel.contactDetail.mailingProvinceOther = mailing_Province_Other
+            }
         }
 
         binding.mailingCity.dropdown.setOnItemClickListener { adapterView, view, i, l ->
             mailing_City=AppConstants.CITY.get(i).first.second
-            mailing_City_Other = AppConstants.CITY.get(i).first.first
+        }
+
+        binding.mailingOtherCity.textInputEditText.addTextChangedListener {
+            if(binding.mailingOtherCity.visibility == View.VISIBLE){
+                mailing_City_Other = it.toString()
+                viewModel.contactDetail.mailingCityOther = mailing_City_Other
+            }
         }
     }
 

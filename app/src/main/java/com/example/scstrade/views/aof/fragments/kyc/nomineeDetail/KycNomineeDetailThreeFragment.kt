@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.nomineeDetail
 
 import android.Manifest
 import android.content.ContentValues
@@ -22,6 +22,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailOneFragment
 
 
 /**

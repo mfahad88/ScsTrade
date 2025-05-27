@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.aof.fragments.kyc.KycOtherDetailThreeFragment">
+    tools:context=".views.aof.fragments.kyc.otherDetail.KycOtherDetailThreeFragment">
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
         android:layout_width="0dp"

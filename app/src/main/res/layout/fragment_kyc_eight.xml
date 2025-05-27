@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="15dp"
-        tools:context=".views.aof.fragments.kyc.KycAttorneyDetailTwoFragment">
+        tools:context=".views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailTwoFragment">
 
         <com.example.scstrade.views.widgets.DualOptionToggleView
             android:layout_width="0dp"

@@ -13,13 +13,8 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.aof.fragments.kyc.KycAttorneyDetailOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycBasicDataOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycContactDetailOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycDocumentFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycNomineeDetailThreeFragment
-import com.example.scstrade.views.aof.fragments.kyc.KycOtherDetailOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +46,7 @@ class LoginAOFFragment : Fragment() {
             }
         }
 
+
         viewModel.mutableLoginUser.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
@@ -58,13 +54,8 @@ class LoginAOFFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    if(result.data?.statusCode==200  && result.data?.isSuccess==true){
-                        viewModel.saveAccessToken(result.data?.data?.accessToken)
-                        viewModel.protectedAppId()
-
-                    }else{
-                        Utils.showError(requireView(),result.data?.message?:"An error occurred...")
-                    }
+                    viewModel.saveAccessToken(result.data?.data?.accessToken)
+                    viewModel.protectedAppId()
                 }
             }
         })
@@ -89,7 +80,7 @@ class LoginAOFFragment : Fragment() {
                     viewModel.getNomineeDetails()
                     viewModel.getotherDetails()
 
-                    (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
                 }
             }
 

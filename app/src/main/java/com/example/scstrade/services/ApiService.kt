@@ -11,13 +11,13 @@ import com.example.scstrade.model.response.aof.city.CityDto
 import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
-import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.login.Data
 import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
 import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
@@ -284,50 +284,50 @@ interface ApiService {
     suspend fun registerAof(@Body regiserUser: RegisterUser): ResponseRegisterUser
 
     @POST(value = "api/login")
-    suspend fun loginAof(@Body loginUser: LoginUser): LoginResponse
+    suspend fun loginAof(@Body loginUser: LoginUser): Response<ApiResponse<Data>>
 
     @GET(value = "api/protected")
     suspend fun protected(): ProtectedResponse
 
     @POST(value = "api/basic-data")
-    suspend fun basicData(@Body basicDetailDto: BasicDetailDto):ApiResponse<Nothing>
+    suspend fun basicData(@Body basicDetailDto: BasicDetailDto):Response<ApiResponse<Nothing>>
 
     @POST(value = "api/contact-details")
-    suspend fun createContactDetails(@Body contactDetailDto: ContactDetailDto):ApiResponse<Nothing>
+    suspend fun createContactDetails(@Body contactDetailDto: ContactDetailDto):Response<ApiResponse<Nothing>>
 
     @GET(value = "api/admin/country")
-    suspend fun country():ApiResponse<List<CountryDto>>
+    suspend fun country():Response<ApiResponse<List<CountryDto>>>
 
     @GET(value = "api/admin/city")
-    suspend fun city():ApiResponse<List<CityDto>>
+    suspend fun city():Response<ApiResponse<List<CityDto>>>
 
     @POST(value = "api/attorney-details")
-    suspend fun attorneyDetails(@Body attorneyDetailDto: AttorneyDetailDto):ApiResponse<Nothing>
+    suspend fun attorneyDetails(@Body attorneyDetailDto: AttorneyDetailDto):Response<ApiResponse<Nothing>>
 
     @POST(value = "api/nominee-details")
-    suspend fun nomineeDetails(@Body nomineeDetailDto: NomineeDetailDto):ApiResponse<Nothing>
+    suspend fun nomineeDetails(@Body nomineeDetailDto: NomineeDetailDto):Response<ApiResponse<Nothing>>
 
     @POST(value = "api/other-details")
-    suspend fun otherDetails(@Body otherDetailDto: OtherDetailDto):ApiResponse<Nothing>
+    suspend fun otherDetails(@Body otherDetailDto: OtherDetailDto):Response<ApiResponse<Nothing>>
 
     @POST(value =  "api/documents")
-    suspend fun documents(@Body documentDto: DocumentDto):ApiResponse<Nothing>
+    suspend fun documents(@Body documentDto: DocumentDto):Response<ApiResponse<Nothing>>
 
     @GET(value = "api/basic-data/application/{applicationId}")
-    suspend fun getBasicData(@Path("applicationId")applicationId:String):ApiResponse<BasicDetailResponse>
+    suspend fun getBasicData(@Path("applicationId")applicationId:String):Response<ApiResponse<BasicDetailResponse>>
 
     @GET(value = "api/contact-details/application/{applicationId}")
-    suspend fun getContactDetails(@Path("applicationId")applicationId:String):ApiResponse<ContactDetailResponse>
+    suspend fun getContactDetails(@Path("applicationId")applicationId:String):Response<ApiResponse<ContactDetailResponse>>
 
     @GET(value = "api/attorney-details/application/{applicationId}")
-    suspend fun getAttorneyDetails(@Path("applicationId")applicationId:String):ApiResponse<AttorneyDetailResponse>
+    suspend fun getAttorneyDetails(@Path("applicationId")applicationId:String):Response<ApiResponse<AttorneyDetailResponse>>
 
     @GET(value = "api/nominee-details/application/{applicationId}")
-    suspend fun getNomineeDetails(@Path("applicationId")applicationId:String):ApiResponse<NomineeDetailResponse>
+    suspend fun getNomineeDetails(@Path("applicationId")applicationId:String):Response<ApiResponse<NomineeDetailResponse>>
 
     @GET(value = "api/other-details/application/{applicationId}")
-    suspend fun getOtherDetails(@Path("applicationId")applicationId:String):ApiResponse<OtherDetailResponse>
+    suspend fun getOtherDetails(@Path("applicationId")applicationId:String):Response<ApiResponse<OtherDetailResponse>>
 
     @POST(value = "api/verify-otp")
-    suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):ApiResponse<Nothing>
+    suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):Response<ApiResponse<Nothing>>
 }

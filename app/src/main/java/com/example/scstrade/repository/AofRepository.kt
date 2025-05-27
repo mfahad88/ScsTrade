@@ -18,18 +18,19 @@ import com.example.scstrade.model.response.aof.city.CityDto
 import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
-import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.login.Data
 import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
 import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.services.ApiService
+import org.json.JSONObject
 import kotlin.reflect.full.primaryConstructor
 
 class AofRepository (val apiService: ApiService,val context: Context){
@@ -215,7 +216,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    fun getbasicData(): BasicData {
+    fun getbasicData(): BasicData? {
         basicData.uinType = sharedPreferences.getString(AppConstants.BASIC_DATA_UIN_TYPE,"")
         basicData.uinNumber = sharedPreferences.getString(AppConstants.BASIC_DATA_UIN_NUMBER,"")
         basicData.salutation = sharedPreferences.getString(AppConstants.BASIC_DATA_SALUTATION,"")
@@ -408,11 +409,20 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    suspend fun loginUser(loginUser: LoginUser): Resource<LoginResponse> {
+    suspend fun loginUser(loginUser: LoginUser):Resource<ApiResponse<Data>> {
+
+
         try{
-            return  Resource.Success(apiService.loginAof(loginUser))
+            val response = apiService.loginAof(loginUser)
+            if(response.isSuccessful) {
+                return Resource.Success(response.body()!!)
+            }else{
+                    val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
-            return Resource.Error(e.message?:"An error occurred")
+            return Resource.Error(e.localizedMessage ?: "An error occurred")
         }
     }
 
@@ -426,7 +436,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun basicData(basicDetailDto: BasicDetailDto): Resource<ApiResponse<Nothing>> {
         try{
-            return  Resource.Success(apiService.basicData(basicDetailDto))
+            val response = apiService.basicData(basicDetailDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -434,7 +451,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun createContactDetails(contactDetailDto: ContactDetailDto):Resource<ApiResponse<Nothing>>{
         try{
-            return  Resource.Success(apiService.createContactDetails(contactDetailDto))
+            val response = apiService.createContactDetails(contactDetailDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -442,7 +466,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun country():Resource<ApiResponse<List<CountryDto>>>{
         try{
-            return  Resource.Success(apiService.country())
+            val response = apiService.country()
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -450,7 +481,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun city():Resource<ApiResponse<List<CityDto>>>{
         try{
-            return  Resource.Success(apiService.city())
+            val response = apiService.city()
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -458,7 +496,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun attorneyDetails(attorneyDetailDto: AttorneyDetailDto):Resource<ApiResponse<Nothing>>{
         try {
-            return Resource.Success(apiService.attorneyDetails(attorneyDetailDto))
+            val response = apiService.attorneyDetails(attorneyDetailDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -466,7 +511,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun nomineeDetails(nomineeDetailDto: NomineeDetailDto):Resource<ApiResponse<Nothing>>{
         try {
-            return Resource.Success(apiService.nomineeDetails(nomineeDetailDto))
+            val response = apiService.nomineeDetails(nomineeDetailDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -474,7 +526,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun otherDetails(otherDetailDto: OtherDetailDto):Resource<ApiResponse<Nothing>>{
         try {
-            return Resource.Success(apiService.otherDetails(otherDetailDto))
+            val response = apiService.otherDetails(otherDetailDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -482,7 +541,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun documents(documentDto: DocumentDto):Resource<ApiResponse<Nothing>>{
         try {
-            return Resource.Success(apiService.documents(documentDto))
+            val response = apiService.documents(documentDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -490,7 +556,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun getBasicData(applicationId:String):Resource<ApiResponse<BasicDetailResponse>>{
         try {
-            return Resource.Success(apiService.getBasicData(applicationId))
+            val response = apiService.getBasicData(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -498,7 +571,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun getContactDetails(applicationId:String):Resource<ApiResponse<ContactDetailResponse>>{
         try {
-            return Resource.Success(apiService.getContactDetails(applicationId))
+            val response = apiService.getContactDetails(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -506,7 +586,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun getAttorneyDetails(applicationId:String):Resource<ApiResponse<AttorneyDetailResponse>>{
         try {
-            return Resource.Success(apiService.getAttorneyDetails(applicationId))
+            val response = apiService.getAttorneyDetails(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -514,7 +601,14 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun getNomineeDetails(applicationId:String):Resource<ApiResponse<NomineeDetailResponse>>{
         try {
-            return Resource.Success(apiService.getNomineeDetails(applicationId))
+            val response = apiService.getNomineeDetails(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
@@ -522,14 +616,28 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun getOtherDetails(applicationId:String):Resource<ApiResponse<OtherDetailResponse>>{
         try {
-            return Resource.Success(apiService.getOtherDetails(applicationId))
+            val response = apiService.getOtherDetails(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }
     }
     suspend fun verifyOtp(verifyOtpDto: VerifyOtpDto):Resource<ApiResponse<Nothing>>{
         try {
-            return Resource.Success(apiService.verifyOtp(verifyOtpDto))
+            val response = apiService.verifyOtp(verifyOtpDto)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred")
         }

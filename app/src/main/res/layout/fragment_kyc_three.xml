@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
-    tools:context=".views.aof.fragments.kyc.KycBasicDataThreeFragment">
+    tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment">
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
         android:id="@+id/cardNic"

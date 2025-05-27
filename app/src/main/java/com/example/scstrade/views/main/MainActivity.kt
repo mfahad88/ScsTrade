@@ -87,7 +87,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
         loadFragment(SplashFragment())
+        subscribeToTopic("all")
+    }
 
+
+    private fun subscribeToTopic(topic: String) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    Log.d("FCM", "Subscribed to topic: $topic")
+                } else {
+                    Log.e("FCM", "Subscription failed", task.exception)
+                }
+            }
     }
     public fun loadFragment(fragment: Fragment,isBackStack:Boolean = false) {
         if(isBackStack){

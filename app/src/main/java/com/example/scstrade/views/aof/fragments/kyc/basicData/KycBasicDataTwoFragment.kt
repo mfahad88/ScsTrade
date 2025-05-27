@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.basicData
 
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 
-
 class KycBasicDataTwoFragment : Fragment() {
     lateinit var binding: FragmentKycTwoBinding
     var martialStatus = ""
@@ -27,16 +26,16 @@ class KycBasicDataTwoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentKycTwoBinding.inflate(inflater,container,false)
+        binding = FragmentKycTwoBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
 
         binding.maritalStatus.apply {
             setOnButtonOneClickListener {
-                martialStatus=AppConstants.MARITAL_STATUS.get(0).values.first()
+                martialStatus= AppConstants.MARITAL_STATUS.get(0).values.first()
             }
             setOnButtonTwoClickListener{
-                martialStatus=AppConstants.MARITAL_STATUS.get(1).values.first()
+                martialStatus= AppConstants.MARITAL_STATUS.get(1).values.first()
             }
         }
 
@@ -56,7 +55,7 @@ class KycBasicDataTwoFragment : Fragment() {
                         R.color.md_theme_primary
                     )
                 )
-                relationship=AppConstants.RELATIONSHIP.get(0).values.first()
+                relationship= AppConstants.RELATIONSHIP.get(0).values.first()
 
             }
 
@@ -70,7 +69,7 @@ class KycBasicDataTwoFragment : Fragment() {
                         R.color.md_theme_primary
                     )
                 )
-                relationship=AppConstants.RELATIONSHIP.get(1).values.first()
+                relationship= AppConstants.RELATIONSHIP.get(1).values.first()
             }
 
             btnContinue.setOnClickListener {
@@ -81,7 +80,7 @@ class KycBasicDataTwoFragment : Fragment() {
                     viewModel.saveBasicData()
                     (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
                 }else{
-                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                    Utils.showError(requireView(), getString(R.string.empty_fields_not_allowed))
                 }
             }
         }
@@ -90,37 +89,39 @@ class KycBasicDataTwoFragment : Fragment() {
 
     private fun initFields() {
        val basicData = viewModel.getbasicData()
-        binding.name.setText(basicData.relationshipName)
-        if(basicData.maritalStatus.equals("s",true)){
-            martialStatus=AppConstants.MARITAL_STATUS.get(0).values.first()
-            binding.maritalStatus.toggleSelection(true)
-        }else if(basicData.maritalStatus.equals("m",true)){
-            martialStatus=AppConstants.MARITAL_STATUS.get(1).values.first()
-            binding.maritalStatus.toggleSelection(false)
-        }
+        if(basicData!=null){
+            binding.name.setText(basicData.relationshipName)
+            if(basicData.maritalStatus.equals("s",true)){
+                martialStatus= AppConstants.MARITAL_STATUS.get(0).values.first()
+                binding.maritalStatus.toggleSelection(true)
+            }else if(basicData.maritalStatus.equals("m",true)){
+                martialStatus= AppConstants.MARITAL_STATUS.get(1).values.first()
+                binding.maritalStatus.toggleSelection(false)
+            }
 
-        if(basicData.relationShip.equals("f",true)){
-            binding.btnFather.isSelected = true
-            binding.btnHusband.isSelected = false
-            relationship=AppConstants.RELATIONSHIP.get(0).values.first()
-            binding.textFather.setTextColor(Color.parseColor("#ffffff"))
-            binding.textHusband.setTextColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.md_theme_primary
+            if(basicData.relationShip.equals("f",true)){
+                binding.btnFather.isSelected = true
+                binding.btnHusband.isSelected = false
+                relationship= AppConstants.RELATIONSHIP.get(0).values.first()
+                binding.textFather.setTextColor(Color.parseColor("#ffffff"))
+                binding.textHusband.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.md_theme_primary
+                    )
                 )
-            )
-        }else if(basicData.relationShip.equals("h",true)){
-            binding.btnFather.isSelected = false
-            binding.btnHusband.isSelected = true
-            relationship=AppConstants.RELATIONSHIP.get(1).values.first()
-            binding.textHusband.setTextColor(Color.parseColor("#ffffff"))
-            binding.textFather.setTextColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.md_theme_primary
+            }else if(basicData.relationShip.equals("h",true)){
+                binding.btnFather.isSelected = false
+                binding.btnHusband.isSelected = true
+                relationship= AppConstants.RELATIONSHIP.get(1).values.first()
+                binding.textHusband.setTextColor(Color.parseColor("#ffffff"))
+                binding.textFather.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.md_theme_primary
+                    )
                 )
-            )
+            }
         }
 
 

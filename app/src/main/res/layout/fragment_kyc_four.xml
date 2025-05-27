@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.aof.fragments.kyc.KycContactDetailOneFragment">
+    tools:context=".views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment">
 
     <TextView
         android:id="@+id/tell_us_abo"
@@ -86,6 +86,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mailing_country"/>
 
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/mailing_other_province"
+        android:visibility="invisible"
+        app:hintText="@string/mailing_province"
+        app:hintTextField="@string/select_your_province"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mailing_country"/>
 
     <com.example.scstrade.views.widgets.LabelledSpinner
         android:layout_width="0dp"
@@ -94,6 +106,20 @@
         android:id="@+id/mailing_city"
         app:hintLabel="@string/mailing_city"
         app:dropdownLabel="@string/select_your_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mailing_province"/>
+
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        android:id="@+id/mailing_other_city"
+        app:hintText="@string/mailing_city"
+        app:hintTextField="@string/select_your_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

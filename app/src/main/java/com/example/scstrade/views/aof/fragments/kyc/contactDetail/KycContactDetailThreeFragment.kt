@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.contactDetail
 
 import android.os.Bundle
 import android.text.InputType
@@ -16,6 +16,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -56,6 +57,14 @@ class KycContactDetailThreeFragment : Fragment() {
 
             phoneNumbers.textview_2.addTextChangedListener {
                 parmanent_residence_number=it.toString()
+            }
+
+            permanentOtherProvince.textInputEditText.addTextChangedListener {
+                parmanent_province_other = it.toString()
+            }
+
+            permanentOtherCity.textInputEditText.addTextChangedListener {
+                parmanent_city_other = it.toString()
             }
 
             back.setOnClickListener {
@@ -116,7 +125,9 @@ class KycContactDetailThreeFragment : Fragment() {
                     }
                     is Resource.Success -> {
                         if(result.data?.statusCode==200){
-                            (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+                            (requireActivity() as AofActivity).loadFragment(
+                                KycAttorneyDetailOneFragment()
+                            )
                         }else{
                             Utils.showError(requireView(),result.data?.message?:"An error occurred")
                         }
@@ -133,16 +144,18 @@ class KycContactDetailThreeFragment : Fragment() {
         contactDetail.apply {
             binding.parmanentAddr.setText(parmanentAddress )
             parmanent_address = parmanentAddress
-            binding.permanentCountry.dropdown.setText(parmanentCountry)
+            binding.permanentCountry.dropdown.setText(parmanentCountry,false)
             parmanent_country = parmanentCountry
-            binding.permanentProvince.dropdown.setText(parmanentProvince)
+            binding.permanentProvince.dropdown.setText(parmanentProvince,false)
             parmanent_province = parmanentProvince
-            binding.permanentCity.dropdown.setText(parmanentCity)
+            binding.permanentCity.dropdown.setText(parmanentCity,false)
             parmanent_city = parmanentCity
             binding.phoneNumbers.textview_1.setText(parmanentOfficeNumber)
             parmanent_office_number = parmanentOfficeNumber
             binding.phoneNumbers.textview_2.setText(parmanentResidenceNumber)
             parmanent_residence_number = parmanentResidenceNumber
+            binding.permanentOtherCity.textInputEditText.setText(permanentCityOther)
+            binding.permanentOtherProvince.textInputEditText.setText(permanentProvinceOther)
         }
     }
 
@@ -154,6 +167,22 @@ class KycContactDetailThreeFragment : Fragment() {
 
             permanentCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
                 parmanent_country=AppConstants.COUNTRY.get(i).second
+
+                if(parmanent_country.equals("pak",true)){
+                    binding.apply {
+                        permanentProvince.visibility = View.VISIBLE
+                        permanentCity.visibility = View.VISIBLE
+
+                        permanentOtherProvince.visibility = View.INVISIBLE
+                        permanentOtherCity.visibility = View.INVISIBLE
+                    }
+                }else{
+                    permanentProvince.visibility = View.INVISIBLE
+                    permanentCity.visibility = View.INVISIBLE
+
+                    permanentOtherProvince.visibility = View.VISIBLE
+                    permanentOtherCity.visibility = View.VISIBLE
+                }
             }
 
             permanentProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->

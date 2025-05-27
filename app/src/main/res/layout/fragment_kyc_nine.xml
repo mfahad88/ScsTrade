@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="15dp"
-        tools:context=".views.aof.fragments.kyc.KycNomineeDetailOneFragment">
+        tools:context=".views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment">
 
         <TextView
             android:id="@+id/tell_us_abo"

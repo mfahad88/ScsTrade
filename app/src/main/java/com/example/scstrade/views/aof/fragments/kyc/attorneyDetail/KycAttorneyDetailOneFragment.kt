@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.attorneyDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +13,8 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailThreeFragment
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment
 
 
 class KycAttorneyDetailOneFragment : Fragment() {

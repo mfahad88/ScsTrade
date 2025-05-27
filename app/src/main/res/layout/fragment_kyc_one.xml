@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.aof.fragments.kyc.KycBasicDataOneFragment">
+    tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataOneFragment">
 
     <TextView
         android:id="@+id/tell_us_abo"
@@ -52,6 +52,7 @@
         android:layout_marginTop="20dp"
         android:inputType="text"
         android:maxLength="50"
+        android:maxLines="1"
         app:hintText="@string/uin"
         app:hintTextField="@string/enter_your_uin_number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +87,7 @@
         android:layout_marginTop="20dp"
         android:inputType="text"
         android:maxLength="50"
+        android:maxLines="1"
         android:layout_marginStart="10dp"
         app:hintText="@string/full_name"
         app:hintTextField="@string/enter_fname_nic"
@@ -99,6 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/dobInputLayout"
+        android:maxLines="1"
         app:hintText="@string/dob"
         app:hintTextField="@string/enter_your_dob"
         android:drawableEnd="@drawable/baseline_calendar_today_24"
@@ -114,6 +117,7 @@
         android:layout_marginTop="20dp"
         android:inputType="text"
         android:maxLength="50"
+        android:maxLines="1"
         app:hintText="@string/mother_name"
         app:hintTextField="@string/enter_your_mother_maiden_name"
         app:layout_constraintEnd_toEndOf="parent"

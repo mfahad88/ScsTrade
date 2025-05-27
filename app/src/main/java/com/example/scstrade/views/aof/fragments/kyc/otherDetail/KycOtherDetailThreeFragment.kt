@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.otherDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +14,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.KycDocumentFragment
 
 
 class KycOtherDetailThreeFragment : Fragment() {

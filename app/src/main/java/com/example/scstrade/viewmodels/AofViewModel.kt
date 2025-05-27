@@ -20,13 +20,13 @@ import com.example.scstrade.model.response.aof.city.CityDto
 import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.model.response.aof.country.CountryDto
-import com.example.scstrade.model.response.aof.login.LoginResponse
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
+import com.example.scstrade.model.response.aof.login.Data
 import com.example.scstrade.model.response.aof.nomineeDetail.NomineeDetailResponse
 import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
@@ -48,7 +48,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val nominee = Nominee(null,null,null,null,null,null,null,null,null,null,null,null,null)
     val otherDetail = OtherDetail(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
     val mutableRegisterUser = MutableLiveData<Resource<ResponseRegisterUser>>()
-    val mutableLoginUser = MutableLiveData<Resource<LoginResponse>>()
+    val mutableLoginUser = MutableLiveData<Resource<ApiResponse<Data>>>()
     val mutableProtected = MutableLiveData<Resource<ProtectedResponse>>()
     val mutableBasicData = MutableLiveData<Resource<ApiResponse<Nothing>>>()
     val mutableCreateContactDetail = MutableLiveData<Resource<ApiResponse<Nothing>>>()
@@ -133,7 +133,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         return repository.getReference()
     }*/
 
-    public fun getbasicData(): BasicData {
+    public fun getbasicData(): BasicData? {
         return repository.getbasicData()
     }
 
@@ -165,7 +165,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loginUser(loginUser: LoginUser){
-        mutableLoginUser.value =Resource.Loading()
+//        mutableLoginUser.value =Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.loginUser(loginUser)
             withContext(Dispatchers.Main){

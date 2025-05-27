@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.scstrade.databinding.FragmentAccountOpeningSixBinding
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.aof.fragments.kyc.KycBasicDataOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 
 
 class AccountOpeningSixFragment : Fragment() {

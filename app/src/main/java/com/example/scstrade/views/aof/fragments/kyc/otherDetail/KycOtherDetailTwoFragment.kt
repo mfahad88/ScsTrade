@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.otherDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

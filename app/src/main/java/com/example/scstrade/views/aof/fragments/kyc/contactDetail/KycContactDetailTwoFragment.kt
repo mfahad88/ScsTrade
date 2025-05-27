@@ -1,4 +1,4 @@
-package com.example.scstrade.views.aof.fragments.kyc
+package com.example.scstrade.views.aof.fragments.kyc.contactDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import com.example.scstrade.databinding.FragmentKycFiveBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
-
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 
 
 class KycContactDetailTwoFragment : Fragment() {
@@ -43,7 +43,9 @@ class KycContactDetailTwoFragment : Fragment() {
                     if(isPermanentAddressSame){
                         (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
                     }else{
-                        (requireActivity() as AofActivity).loadFragment(KycContactDetailThreeFragment())
+                        (requireActivity() as AofActivity).loadFragment(
+                            KycContactDetailThreeFragment()
+                        )
                     }
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))

@@ -16,6 +16,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.provider.MediaStore
+import android.text.InputFilter
+import android.text.Spanned
 import android.text.format.DateUtils
 import android.util.Base64
 import android.view.View
@@ -436,6 +438,22 @@ class Utils {
             }
             snackbar.show()
             return snackbar
+        }
+
+        fun filterTextField(editText: EditText,regex:Regex){
+            editText.filters = arrayOf(object : InputFilter {
+                override fun filter(
+                    source: CharSequence?,
+                    start: Int,
+                    end: Int,
+                    dest: Spanned?,
+                    dstart: Int,
+                    dend: Int
+                ): CharSequence? {
+                    return source?.subSequence(start, end)
+                        ?.replace(regex, "")
+                }
+            })
         }
 
         fun showSuccess(view: View,message:String){

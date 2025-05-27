@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningThreeBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -130,6 +131,11 @@ class AccountOpeningThreeFragment : Fragment() {
         binding = FragmentAccountOpeningThreeBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
+        if(viewModel.accountOpening.accountopeningrelationshipType.equals("1")){
+            binding.proofOfRelative.visibility = View.GONE
+        }else{
+            binding.proofOfRelative.visibility = View.VISIBLE
+        }
         binding.proofOfIb.materialSelect.setOnClickListener {
             proofIbanClicked=true
             nicFrontClicked=false
