@@ -1,6 +1,7 @@
 package com.example.scstrade.views.aof.fragments.kyc.otherDetail
 
 import android.os.Bundle
+import android.text.InputFilter
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,8 @@ class KycOtherDetailTwoFragment : Fragment() {
             }
 
             jobDetails.apply {
+                textview_1.filters = arrayOf(InputFilter.LengthFilter(20))
+                textview_2.filters = arrayOf(InputFilter.LengthFilter(20))
                 textview_1.addTextChangedListener {
                     job_description=it.toString()
                     viewModel.otherDetail.otherDetailJobDesignation=job_description
@@ -48,6 +51,8 @@ class KycOtherDetailTwoFragment : Fragment() {
 
 
             employerDetails.apply {
+                textview_1.filters = arrayOf(InputFilter.LengthFilter(20))
+                textview_2.filters = arrayOf(InputFilter.LengthFilter(20))
                 textview_1.addTextChangedListener {
                     employer_name=it.toString()
                     viewModel.otherDetail.otherDetailEmployerName=employer_name
