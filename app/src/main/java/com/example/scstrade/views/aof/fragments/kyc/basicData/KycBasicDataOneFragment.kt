@@ -2,7 +2,9 @@ package com.example.scstrade.views.aof.fragments.kyc.basicData
 
 import android.os.Bundle
 import android.text.InputFilter
+import android.text.InputType
 import android.text.Spanned
+import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 /**
  * A simple [Fragment] subclass.
@@ -45,6 +48,7 @@ class KycBasicDataOneFragment : Fragment() {
         initFields()
         binding.apply {
             Utils.filterTextField(fullName.textInputEditText,Regex("[^A-Za-z ]"))
+            Utils.filterTextField(motherName.textInputEditText,Regex("[^A-Za-z ]"))
             Utils.filterTextField(uinNumber.textInputEditText,Regex("[^\\d]"))
             dobInputLayout.setOnFocusListener {
                 if(it){

@@ -42,6 +42,7 @@ class KycBasicDataTwoFragment : Fragment() {
 
 
         binding.apply {
+            Utils.filterTextField(name, Regex("[^A-Za-z ]"))
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
             }

@@ -1,6 +1,8 @@
 package com.example.scstrade.views.aof.fragments.kyc.contactDetail
 
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,14 @@ class KycContactDetailTwoFragment : Fragment() {
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
         binding.apply {
+            Utils.filterTextField(officeResidenceNumber.textview_1, Regex("[^0-9]"))
+            Utils.filterTextField(officeResidenceNumber.textview_2, Regex("[^0-9]"))
+            officeResidenceNumber.apply {
+                textview_1.filters= arrayOf(InputFilter.LengthFilter(13))
+                textview_2.filters= arrayOf(InputFilter.LengthFilter(13))
+                textview_1.inputType = InputType.TYPE_CLASS_PHONE
+                textview_2.inputType = InputType.TYPE_CLASS_PHONE
+            }
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
             }

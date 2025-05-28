@@ -160,12 +160,13 @@
                 app:strokeColor="@color/md_theme_outline">
 
                 <EditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:maxLines="1"
                     android:hint="@string/please_enter_name"
-                    android:id="@+id/name"
-                    android:paddingHorizontal="16dp"
-                    android:background="@android:color/transparent"/>
+                    android:paddingHorizontal="16dp" />
 
             </com.google.android.material.card.MaterialCardView>
 

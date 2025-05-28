@@ -59,6 +59,10 @@ class KycContactDetailThreeFragment : Fragment() {
                 parmanent_residence_number=it.toString()
             }
 
+            Utils.filterTextField(permanentOtherProvince.textInputEditText,Regex("[^A-Za-z ]"))
+            Utils.filterTextField(permanentOtherCity.textInputEditText,Regex("[^A-Za-z ]"))
+
+
             permanentOtherProvince.textInputEditText.addTextChangedListener {
                 parmanent_province_other = it.toString()
             }

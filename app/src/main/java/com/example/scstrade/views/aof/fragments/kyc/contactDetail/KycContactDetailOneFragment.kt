@@ -48,6 +48,8 @@ class KycContactDetailOneFragment : Fragment() {
 
         populateDropdown()
         binding.apply {
+            Utils.filterTextField(mailingOtherProvince.textInputEditText,Regex("[^A-Za-z ]"))
+            Utils.filterTextField(mailingOtherCity.textInputEditText,Regex("[^A-Za-z ]"))
             mobile_Number = login.registrationPhone
             mobileNumber.textInputEditText.setText(mobile_Number)
             mobileNumber.textInputEditText.isEnabled=false

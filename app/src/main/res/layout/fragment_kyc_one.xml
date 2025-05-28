@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:inputType="text"
-        android:maxLength="50"
+        android:maxLength="13"
         android:maxLines="1"
         app:hintText="@string/uin"
         app:hintTextField="@string/enter_your_uin_number"

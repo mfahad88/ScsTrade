@@ -40,6 +40,10 @@ class KycNomineeDetailOneFragment : Fragment() {
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
             }
+            Utils.filterTextField(nomineeName.textInputEditText, Regex("^[A-Za-z] "))
+            Utils.filterTextField(nomineeMobile.textInputEditText, Regex("^[0-9]"))
+            Utils.filterTextField(uinNumber.textInputEditText, Regex("^[0-9]"))
+            nomineeName.textInputEditText
             nomineeMobile.textInputEditText.addTextChangedListener {
                 nominee_mobile = it.toString()
             }
