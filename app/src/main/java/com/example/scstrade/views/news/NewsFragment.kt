@@ -160,7 +160,7 @@ class NewsFragment : Fragment() {
                                     fontSize = 12.sp,
                                     fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
                                     fontWeight = FontWeight(500),
-                                    color = colorResource(id = R.color.colorDarkerr),
+                                    color = colorResource(id = R.color.black),
                                     maxLines = 1,
                                     overflow = TextOverflow.Clip,
 
@@ -300,7 +300,7 @@ class NewsFragment : Fragment() {
 
     @Composable
     private fun newsListTribune(data: List<Any>,onItemClick:(Any)->Unit) {
-        Box(modifier = Modifier.padding(horizontal = 20.dp)) {
+        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
             LazyColumn {
                 items(data.size) { index ->
                     Row (modifier = Modifier.clickable {
@@ -329,6 +329,7 @@ class NewsFragment : Fragment() {
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
                                         fontWeight = FontWeight(600),
+                                        color = colorResource(id = R.color.black),
                                         overflow = TextOverflow.Ellipsis,
                                         modifier = Modifier.align(Alignment.Start)
                                     )
@@ -400,7 +401,7 @@ class NewsFragment : Fragment() {
     @Composable
     fun newList(data: List<NewsData>,onItemClick:(NewsData)->Unit){
 
-        Box(modifier = Modifier.padding(horizontal = 20.dp)) {
+        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
 
             LazyColumn {
                 items(data.size) { index ->
@@ -418,6 +419,7 @@ class NewsFragment : Fragment() {
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
                                         fontWeight = FontWeight(600),
+                                        color = colorResource(id = R.color.black),
                                         overflow = TextOverflow.Ellipsis,
                                         modifier = Modifier.fillMaxWidth()
                                     )

@@ -325,7 +325,7 @@
         <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="android:textColor">@color/colorOnDarkerr</item>
     </style>
 
     <style name="line">

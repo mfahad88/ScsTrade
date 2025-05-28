@@ -52,7 +52,7 @@
     <style name="kse100">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.04</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="index_value_22sp">
@@ -168,7 +168,7 @@
     <style name="valueTradeIndices">
         <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="continue_wi">
@@ -325,7 +325,7 @@
         <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="line">
@@ -364,7 +364,7 @@
         <item name="android:fontFamily">@font/inter_28pt_medium_500</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="companies">
@@ -390,7 +390,7 @@
     <style name="index_value_24sp">
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="more_detail">
@@ -431,7 +431,7 @@
     <style name="create_a_ne">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="create_watch">
@@ -443,8 +443,8 @@
     <style name="CustomEditText">
         <item name="android:background">@drawable/custom_edittext_border</item>
         <item name="android:padding">10dp</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
-        <item name="android:textColorHint">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
+        <item name="android:textColorHint">@color/md_theme_onPrimary</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -581,7 +581,7 @@
     <style name="are_you_sur">
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
 
     </style>
@@ -668,21 +668,21 @@
     <style name="rs_218_76">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.04</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
     <style name="day_s_range">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.04</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
     <style name="performance">
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
@@ -696,7 +696,7 @@
     <style name="one_month">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.04</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 

@@ -126,7 +126,7 @@ class DetailQuoteActivity : AppCompatActivity() {
                                     lineHeight = 25.61.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(400),
-                                    color = Color(0xFF1C1B1B),
+                                    color = colorResource(R.color.black),
                                 )
                             )
                         }

@@ -15,7 +15,7 @@ import com.example.scstrade.databinding.NetChangeChipBinding;
 import com.example.scstrade.databinding.VolumeChipBinding;
 
 public class NetChangeChip extends RelativeLayout {
-    NetChangeChipBinding binding;
+    public NetChangeChipBinding binding;
     public NetChangeChip(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
@@ -52,11 +52,11 @@ public class NetChangeChip extends RelativeLayout {
 
     public void setText(String text){
         if(text.contains("-")){
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.line_red_chip));
-            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.rounded_gray_red));
+//            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
         }else{
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.light_green_chip));
-            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.rounded_gray_green));
+//            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
         }
         binding.tv.setText(text);
     }

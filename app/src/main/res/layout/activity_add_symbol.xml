@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/white"
     tools:context=".views.watchlist.AddSymbolActivity">
 
     <com.example.scstrade.views.widgets.mMarket
@@ -42,6 +42,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        tools:listitem="@layout/item_symbol"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/symbol"
         app:layout_constraintStart_toStartOf="@id/symbol"

@@ -157,7 +157,7 @@ class HomeFragment : Fragment() {
                         if(kseIndices?.nETCHANGE?.contains("-")?:false) {
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
-
+                            volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_red)
                         }else{
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)

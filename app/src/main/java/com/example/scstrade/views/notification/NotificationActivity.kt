@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -64,7 +65,7 @@ class NotificationActivity : AppCompatActivity() {
                     context,
                     LinearLayoutManager.VERTICAL
                 )
-                ContextCompat.getDrawable(context, R.drawable.custom_divider)?.let {
+                AppCompatResources.getDrawable(context, R.drawable.custom_divider)?.let {
                     divider.setDrawable(it)
                 }
                 addItemDecoration(divider)

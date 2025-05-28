@@ -223,7 +223,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="68dp"
                 android:background="@drawable/vertical_separator_neu_60"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/button"

@@ -168,4 +168,6 @@
     <color name="item_side_menu">#FFFFFF</color>
     <color name="surfaceTint">#011500</color>
     <color name="special_headlines">#FFFFFF</color>
+    <color name="white">#000000</color>
+    <color name="black">#FFFFFF</color>
 </resources>

@@ -11,6 +11,7 @@ import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningOneFragment
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningThreeFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment
 
 
 class WelcomeFragment : Fragment() {
@@ -25,7 +26,7 @@ class WelcomeFragment : Fragment() {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
         }
         binding.login.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
+            (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
         }
         return binding.root
     }
