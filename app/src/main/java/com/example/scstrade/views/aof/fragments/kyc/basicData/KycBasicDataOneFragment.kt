@@ -18,6 +18,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.LoginAOFFragment
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -50,6 +51,20 @@ class KycBasicDataOneFragment : Fragment() {
             Utils.filterTextField(fullName.textInputEditText,Regex("[^A-Za-z ]"))
             Utils.filterTextField(motherName.textInputEditText,Regex("[^A-Za-z ]"))
             Utils.filterTextField(uinNumber.textInputEditText,Regex("[^\\d]"))
+            uinNumber.textInputEditText.apply {
+                inputType = InputType.TYPE_CLASS_NUMBER
+                filters = arrayOf(InputFilter.LengthFilter(13))
+            }
+            fullName.textInputEditText.apply {
+                inputType = InputType.TYPE_CLASS_TEXT
+                filters = arrayOf(InputFilter.LengthFilter(30))
+            }
+
+            motherName.textInputEditText.apply {
+                inputType = InputType.TYPE_CLASS_TEXT
+                filters = arrayOf(InputFilter.LengthFilter(30))
+            }
+
             dobInputLayout.setOnFocusListener {
                 if(it){
                     Utils.showDatePicker(requireContext()) { day, month, year ->
@@ -60,6 +75,10 @@ class KycBasicDataOneFragment : Fragment() {
                     }
                 }
 
+            }
+
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
             }
 
             btnContinue.setOnClickListener {
