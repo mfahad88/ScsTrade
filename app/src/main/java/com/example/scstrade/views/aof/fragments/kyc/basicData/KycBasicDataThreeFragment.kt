@@ -125,6 +125,7 @@ class KycBasicDataThreeFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     val response=result.data
+                    viewModel.mutableBasicData.value = null
                     if(response?.isSuccess?:false && response?.statusCode==200){
                         (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
                     }else{
@@ -150,11 +151,11 @@ class KycBasicDataThreeFragment : Fragment() {
                cardNic.toggleSelection(if(nicType.equals("y",true)) false else true)
                cardNic.editText.setText(nicExpiry)
                if(country?.isNotEmpty()?:false) {
-                   placeBirth.autoCompleteTextView1.setText(AppConstants.COUNTRY.filter { it.second.equals(country,true) }.map { it.first }.first())
+                   placeBirth.autoCompleteTextView1.setText(AppConstants.COUNTRY.filter { it.second.equals(country,true) }.map { it.first }.first(),false)
                }
 
                if(city?.isNotEmpty()?:false){
-                   placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.first.second.equals(city,true) }.map { it.first.first }.first())
+                   placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.first.second.equals(city,true) }.map { it.first.first }.first(),false)
                }
                ivrService.toggleSelection(if(ivrStatus.equals("y",true)) false else true)
            }

@@ -377,7 +377,7 @@
     <style name="save_compan">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="headline">

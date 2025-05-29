@@ -62,6 +62,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val mutableCity=MutableLiveData<Resource<ApiResponse<List<CityDto>>>>()
     val mutableDocument=MutableLiveData<Resource<ApiResponse<Nothing>>>()
 
+    val mutableDocumentDataResponse = MutableLiveData<Resource<ApiResponse<DocumentDto>>>()
     val mutableBasicDataResponse = MutableLiveData<Resource<ApiResponse<BasicDetailResponse>>>()
     val mutableContactDetailResponse = MutableLiveData<Resource<ApiResponse<ContactDetailResponse>>>()
     val mutableAttorneyDetailResponse = MutableLiveData<Resource<ApiResponse<AttorneyDetailResponse>>>()
@@ -219,6 +220,15 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch{
             val result = repository.getBasicData(applicationId)
             mutableBasicDataResponse.value = result
+
+        }
+    }
+
+    fun getDocuments(){
+        mutableDocumentDataResponse.value = Resource.Loading()
+        viewModelScope.launch{
+            val result = repository.getDocuments(applicationId)
+            mutableDocumentDataResponse.value = result
 
         }
     }

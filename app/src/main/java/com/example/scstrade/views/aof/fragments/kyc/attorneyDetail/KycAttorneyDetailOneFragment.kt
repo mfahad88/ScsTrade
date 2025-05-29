@@ -12,10 +12,12 @@ import com.example.scstrade.databinding.FragmentKycSevenBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailThreeFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment
+import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
 
 
 class KycAttorneyDetailOneFragment : Fragment() {
@@ -73,18 +75,61 @@ class KycAttorneyDetailOneFragment : Fragment() {
 
             btnContinue.setOnClickListener {
                 viewModel.attorneyDetail.attorneyType=attorney_type
-                if(someElseContainer.visibility==View.VISIBLE){
-                    viewModel.attorneyDetail.apply {
-                        attorneySalutation = attorney_saluation
-                        attorneyFullName=attorney_FullName
-                        attorneyUinType = attorney_Uin_Type
-                        attorneyUinNumber = attorney_Uin_Number
+                if(attorney_type?.equals("o",false)?:false) {
+                    if (someElseContainer.visibility == View.VISIBLE) {
+                        viewModel.attorneyDetail.apply {
+                            attorneySalutation = attorney_saluation
+                            attorneyFullName = attorney_FullName
+                            attorneyUinType = attorney_Uin_Type
+                            attorneyUinNumber = attorney_Uin_Number
+                        }
                     }
+                    viewModel.saveAttorneyDetails()
+                    (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
+                }else{
+                    viewModel.attorneyDetails(
+                        AttorneyDetailDto(
+                            id = null,
+                            landlineAtr = null,
+                            mailingCityAtr = null,
+                            mailingCountryAtr = null,
+                            otherMailingProvAtr = null,
+                            otherMailingCityAtr = null,
+                            clientNameAtr = null,
+                            salutationAtr = null,
+                            mobileAtr = null,
+                            identificationAtr = null,
+                            cnicExpiryDateAtr = null,
+                            mailingProvinceAtr = null,
+                            mailingAddressAtr2 = null,
+                            mailingAddressAtr1 = null,
+                            cnicAtr = null,
+                            emailAtr = null,
+                            cnicLifeTimeAtr = null,
+                            mailingAddressAtr3 = null,
+                            attorneyType = attorney_type,
+                        )
+                    )
                 }
-                viewModel.saveAttorneyDetails()
-                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
             }
         }
+
+        viewModel.mutableAttorneyDetail.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    val response=result.data
+                    if(response?.isSuccess?:false){
+                        (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                    }else{
+                        Utils.showError(requireView(),response?.message?:"An error occurred...")
+                    }
+                }
+            }
+        })
         return binding.root
     }
 

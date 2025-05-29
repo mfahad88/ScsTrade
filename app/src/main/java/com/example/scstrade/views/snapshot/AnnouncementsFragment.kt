@@ -289,11 +289,11 @@ class AnnouncementsFragment : Fragment() {
                                     .height(20.dp)
                                     .background(
                                         color = when (list?.get(index)?.announcementType) {
-                                            "Board Meetings" -> Color(0x1A187376)
-                                            "Shareholder Meetings" -> Color(0x1AA44FA9)
-                                            "Financial Result" -> Color(0x1AA44FA9)
-                                            "Material Information" -> Color(0x1A1A73E8)
-                                            else -> Color(0x1A625B71)
+                                            "Board Meetings" -> colorResource(id = R.color.board_meeting)
+                                            "Shareholder Meetings" -> colorResource(id = R.color.shareholder_meeting)
+                                            "Financial Result" -> colorResource(id = R.color.financial_result)
+                                            "Material Information" -> colorResource(id = R.color.material_information)
+                                            else -> Color(0x66625B71)
                                         },
                                         shape = RoundedCornerShape(size = 6.dp)
                                     ),
@@ -330,7 +330,7 @@ class AnnouncementsFragment : Fragment() {
                                     lineHeight = 19.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
-                                    color = Color(0xFF000000),
+                                    color = colorResource(id = R.color.black),
                                 )
                             )
                             Spacer(modifier = Modifier.width(8.dp))
@@ -376,7 +376,7 @@ class AnnouncementsFragment : Fragment() {
                                     lineHeight = 20.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000),
+                                    color = colorResource(id = R.color.black),
                                 )
                             )
                         }
@@ -515,7 +515,7 @@ class AnnouncementsFragment : Fragment() {
                                                 lineHeight = 34.67.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(500),
-                                                color = Color(0xFF000000),
+                                                color = colorResource(id = R.color.black),
                                                 textAlign = TextAlign.Right,
                                             )
                                         )
@@ -524,7 +524,7 @@ class AnnouncementsFragment : Fragment() {
                                             painter = painterResource(id = if (isExpanded[index]) R.drawable.drop_up_icon else R.drawable.drop_down_icon),
                                             contentDescription = "Expanded",
                                             modifier = Modifier.size(20.dp),
-                                            colorFilter = ColorFilter.tint(Color(0xFF000000))
+                                            colorFilter = ColorFilter.tint(colorResource(id = R.color.black))
                                         )
                                     }
                                 }
@@ -543,7 +543,7 @@ class AnnouncementsFragment : Fragment() {
                                             lineHeight = 20.sp,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(500),
-                                            color = Color(0xFF000000),
+                                            color = colorResource(id = R.color.black),
                                         )
                                     )
                                     Spacer(modifier = Modifier.width(5.dp))
@@ -554,7 +554,7 @@ class AnnouncementsFragment : Fragment() {
                                             lineHeight = 20.sp,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(500),
-                                            color = Color(0xFF000000),
+                                            color = colorResource(id = R.color.black),
                                         )
                                     )
 
@@ -575,7 +575,9 @@ class AnnouncementsFragment : Fragment() {
                 }
             }
         }else{
-            Column(modifier = Modifier.fillMaxSize().padding(top = 50.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Image(painter = painterResource(id = R.drawable.no_data), contentDescription = "No data", modifier = Modifier.size(300.dp))
                 Text(
                     text = "No records available",
@@ -584,7 +586,7 @@ class AnnouncementsFragment : Fragment() {
                         lineHeight = 19.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(600),
-                        color = Color(0xFF000000),
+                        color = colorResource(id = R.color.black),
                     )
                 )
             }
@@ -596,7 +598,7 @@ class AnnouncementsFragment : Fragment() {
         if(map!=null && map.size>0){
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .height(if (map.size==1) 20.dp else if (map.size / 2 == 3) 80.dp else 50.dp)) {
+                .height(if (map.size == 1) 20.dp else if (map.size / 2 == 3) 80.dp else 50.dp)) {
                 LazyHorizontalGrid(
                     rows = GridCells.Fixed(if (map.size==1) 1 else map.size/2),
                     modifier = Modifier
@@ -615,7 +617,7 @@ class AnnouncementsFragment : Fragment() {
                                     lineHeight = 20.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000),
+                                    color = colorResource(id = R.color.black),
                                 )
                             )
                             Text(
@@ -625,7 +627,7 @@ class AnnouncementsFragment : Fragment() {
                                     lineHeight = 20.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(500),
-                                    color = Color(0xFF000000),
+                                    color = colorResource(id = R.color.black),
                                 )
                             )
                         }

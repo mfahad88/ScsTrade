@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.scstrade.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -38,17 +41,20 @@ public class MultiLineChartView extends LineChart {
 
         // X-Axis Configuration
         XAxis xAxis = this.getXAxis();
+        xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
 
         // Y-Axis Configuration
         YAxis leftAxis = this.getAxisLeft();
+        leftAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         leftAxis.setDrawLabels(false);
         leftAxis.setTextSize(12f);
         this.getAxisRight().setEnabled(false);
 
         // Legend
         Legend legend = this.getLegend();
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         legend.setTextSize(12f);
     }
 
@@ -59,6 +65,7 @@ public class MultiLineChartView extends LineChart {
             LineDataSet greenLineDataSet = new LineDataSet(greenLineEntries, legends.get(0));
             greenLineDataSet.setColor(colors.get(0));
             greenLineDataSet.setCircleColor(colors.get(0));
+            greenLineDataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
             greenLineDataSet.setValueTextSize(12f);
             greenLineDataSet.setLineWidth(2f);
             lineData.addDataSet(greenLineDataSet);
@@ -69,6 +76,7 @@ public class MultiLineChartView extends LineChart {
             LineDataSet blueLineDataSet = new LineDataSet(blueLineEntries, legends.get(1));
             blueLineDataSet.setColor(colors.get(1));
             blueLineDataSet.setCircleColor(colors.get(1));
+            blueLineDataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
             blueLineDataSet.setValueTextSize(12f);
             blueLineDataSet.setLineWidth(2f);
             lineData.addDataSet(blueLineDataSet);
@@ -79,6 +87,7 @@ public class MultiLineChartView extends LineChart {
             LineDataSet blackLineDataSet = new LineDataSet(blackLineEntries, legends.get(2));
             blackLineDataSet.setColor(colors.get(2));
             blackLineDataSet.setCircleColor(colors.get(2));
+            blackLineDataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
             blackLineDataSet.setValueTextSize(12f);
             blackLineDataSet.setLineWidth(2f);
             lineData.addDataSet(blackLineDataSet);

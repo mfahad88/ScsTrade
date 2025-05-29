@@ -111,7 +111,9 @@ class KycContactDetailThreeFragment : Fragment() {
                                 permanentAddress2 = "     ",
                                 permanentAddress3 = "     ",
                                 mailingAddress2 = "     ",
-                                mailingAddress3 = "     "
+                                mailingAddress3 = "     ",
+                                mailingProof = mailingAddress,
+                                permanentProof  = mailingAddress,
                             )
                         )
                     }

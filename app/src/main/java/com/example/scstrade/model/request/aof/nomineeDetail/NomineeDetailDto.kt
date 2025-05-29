@@ -5,27 +5,27 @@ import com.google.gson.annotations.SerializedName
 
 data class NomineeDetailDto(
     @SerializedName("addressNmn")
-    val addressNmn: String,
+    val addressNmn: String?,
     @SerializedName("cnicExpiryDateNmn")
-    val cnicExpiryDateNmn: String,
+    val cnicExpiryDateNmn: String?,
     @SerializedName("cnicLifeTimeNmn")
-    val cnicLifeTimeNmn: String,
+    val cnicLifeTimeNmn: String?,
     @SerializedName("cnicNmn")
-    val cnicNmn: String,
+    val cnicNmn: String?,
     @SerializedName("id")
     val id: Int?,
     @SerializedName("identificationNmn")
-    val identificationNmn: String,
+    val identificationNmn: String?,
     @SerializedName("mobileNoNmn")
-    val mobileNoNmn: String,
+    val mobileNoNmn: String?,
     @SerializedName("nameNmn")
-    val nameNmn: String,
+    val nameNmn: String?,
     @SerializedName("nicBackNmn")
-    val nicBackNmn: String,
+    val nicBackNmn: String?,
     @SerializedName("nicFrontNmn")
-    val nicFrontNmn: String,
+    val nicFrontNmn: String?,
     @SerializedName("nomineeType")
-    val nomineeType: String,
+    val nomineeType: String?,
     @SerializedName("relationShipNmn")
-    val relationShipNmn: String
+    val relationShipNmn: String?
 )

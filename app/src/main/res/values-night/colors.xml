@@ -170,4 +170,9 @@
     <color name="special_headlines">#FFFFFF</color>
     <color name="white">#000000</color>
     <color name="black">#FFFFFF</color>
+    <color name="snapshot_value">@color/md_theme_secondaryFixedDim</color>
+    <color name="board_meeting">#66187376</color>
+    <color name="shareholder_meeting">#66A44FA9</color>
+    <color name="financial_result">#66A44FA9</color>
+    <color name="material_information">#661A73E8</color>
 </resources>

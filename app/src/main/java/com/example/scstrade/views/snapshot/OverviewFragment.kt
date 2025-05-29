@@ -133,10 +133,11 @@ class OverviewFragment : Fragment() {
         Column {
             Card(
                 modifier = Modifier
-                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+//                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                 elevation = 0.dp,
                 shape = RoundedCornerShape(10.dp),
             ) {
@@ -240,11 +241,13 @@ class OverviewFragment : Fragment() {
 
             Card(
                 modifier = Modifier
-                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+
                 elevation = 0.dp,
+                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
@@ -255,7 +258,7 @@ class OverviewFragment : Fragment() {
                             lineHeight = 27.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(700),
-                            color = colorResource(id = R.color.colorDarkerr),
+                            color = colorResource(id = R.color.black),
                         )
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -279,11 +282,11 @@ class OverviewFragment : Fragment() {
 
             Card(
                 modifier = Modifier
-                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
                 elevation = 0.dp,
+                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
@@ -294,7 +297,7 @@ class OverviewFragment : Fragment() {
                             lineHeight = 27.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(700),
-                            color = colorResource(id = R.color.colorDarkerr),
+                            color = colorResource(id = R.color.black),
                         )
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -329,6 +332,7 @@ class OverviewFragment : Fragment() {
                     AndroidView(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .height(250.dp),
                         factory = { context -> CustomBarChart(context) },
                         update = { populateBarChart(it,charting.data?.ePSYear) }
@@ -340,6 +344,7 @@ class OverviewFragment : Fragment() {
             AndroidView(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                     .height(250.dp),
                 factory = { context -> GroupedBarChart(context) },
                 update = { populateGroupBarChart(it,charting.data?.ePS) }
@@ -411,11 +416,12 @@ class OverviewFragment : Fragment() {
 
             Card(
                 modifier = Modifier
-                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
                 elevation = 0.dp,
+                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                 shape = RoundedCornerShape(10.dp),
             ){
                 Column (
@@ -439,7 +445,7 @@ class OverviewFragment : Fragment() {
                             lineHeight = 30.08.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(500),
-                            color = Color(0xFF000000),
+                            color = colorResource(id = R.color.black),
                         )
                     )
 
@@ -481,7 +487,7 @@ class OverviewFragment : Fragment() {
                     lineHeight = 30.08.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(600),
-                    color = colorResource(id = R.color.colorDarkerr),
+                    color = colorResource(id = R.color.black),
                 )
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -491,7 +497,7 @@ class OverviewFragment : Fragment() {
                 modifier = Modifier
                     .size(30.dp)
                     .padding(end = 15.dp),
-                colorFilter = ColorFilter.tint(color = colorResource(id = R.color.colorDarkerr)))
+                colorFilter = ColorFilter.tint(color = colorResource(id = R.color.black)))
 
         }
         if(expand){
@@ -507,7 +513,7 @@ class OverviewFragment : Fragment() {
                                 lineHeight = 30.08.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(500),
-                                color = colorResource(id = R.color.colorDarkerr),
+                                color = colorResource(id = R.color.black),
                             )
                         )
                         Spacer(modifier = Modifier.width(3.dp))
@@ -529,7 +535,7 @@ class OverviewFragment : Fragment() {
                                 lineHeight = 30.08.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(700),
-                                color = colorResource(id = R.color.colorDarkerr),
+                                color = colorResource(id = R.color.snapshot_value),
                                 textAlign = TextAlign.Right,
                             )
                         )
@@ -550,6 +556,7 @@ class OverviewFragment : Fragment() {
                 Column {
                     AndroidView(
                         modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .fillMaxWidth()
                             .height(250.dp),
                         factory = { context -> CustomCombinedChart(context) },
@@ -567,6 +574,7 @@ class OverviewFragment : Fragment() {
                     Spacer(modifier = Modifier.height(5.dp))
                     AndroidView(
                         modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .fillMaxWidth()
                             .height(250.dp),
                         factory = { context -> MultiLineChartView(context) },
@@ -585,6 +593,7 @@ class OverviewFragment : Fragment() {
             if(title.equals("Dividend",true)){
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> CustomCombinedChart(context) },
@@ -596,6 +605,7 @@ class OverviewFragment : Fragment() {
 
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> MultiLineChartView(context) },
@@ -612,6 +622,7 @@ class OverviewFragment : Fragment() {
 
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> MultiLineChartView(context) },
@@ -627,6 +638,7 @@ class OverviewFragment : Fragment() {
             if(title.equals("Advances And Deposits",true)){
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> MultiLineChartView(context) },
@@ -642,6 +654,7 @@ class OverviewFragment : Fragment() {
             if(title.equals("Profitablility",true)){
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> MultiLineChartView(context) },
@@ -656,6 +669,7 @@ class OverviewFragment : Fragment() {
             if(title.equals("Insurance",true)){
                 AndroidView(
                     modifier = Modifier
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                         .fillMaxWidth()
                         .height(250.dp),
                     factory = { context -> MultiLineChartView(context) },
@@ -682,7 +696,7 @@ class OverviewFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
-                        color = colorResource(id = R.color.colorDarkerr),
+                        color = colorResource(id = R.color.black),
                     )
                 )
                 if(desc!=null){
@@ -707,7 +721,7 @@ class OverviewFragment : Fragment() {
                     lineHeight = 30.08.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(700),
-                    color = colorResource(id = R.color.colorDarkerr),
+                    color = colorResource(id = R.color.snapshot_value),
                     textAlign = TextAlign.Right,
                 )
             )

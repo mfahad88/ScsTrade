@@ -313,6 +313,9 @@ interface ApiService {
     @POST(value =  "api/documents")
     suspend fun documents(@Body documentDto: DocumentDto):Response<ApiResponse<Nothing>>
 
+    @GET(value = "/api/documents/application/{applicationId}")
+    suspend fun getDocuments(@Path("applicationId")applicationId:String):Response<ApiResponse<DocumentDto>>
+
     @GET(value = "api/basic-data/application/{applicationId}")
     suspend fun getBasicData(@Path("applicationId")applicationId:String):Response<ApiResponse<BasicDetailResponse>>
 

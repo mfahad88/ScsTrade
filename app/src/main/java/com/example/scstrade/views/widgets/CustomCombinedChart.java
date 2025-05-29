@@ -4,6 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+
+import com.example.scstrade.R;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -49,12 +53,14 @@ public class CustomCombinedChart extends CombinedChart {
         // Configure X-Axis
         XAxis xAxis = this.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
 
         // Configure Left Y-Axis
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(true);
+        leftAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
 
         // Disable Right Y-Axis
         this.getAxisRight().setEnabled(false);
@@ -76,6 +82,7 @@ public class CustomCombinedChart extends CombinedChart {
 
         // Set Data to Chart
         this.setData(data);
+
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.invalidate();
     }
@@ -89,7 +96,7 @@ public class CustomCombinedChart extends CombinedChart {
         BarDataSet dataSet = new BarDataSet(entries, "Book Value");
 
         dataSet.setColor(barColor);
-        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(10f);
 
 
@@ -107,8 +114,8 @@ public class CustomCombinedChart extends CombinedChart {
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "Price To Book Value");
-        dataSet.setColor(Color.BLACK);
-        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setColor(ContextCompat.getColor(getContext(),R.color.black));
+        dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(10f);
         dataSet.setCircleColor(Color.BLACK);
         dataSet.setCircleRadius(4f);

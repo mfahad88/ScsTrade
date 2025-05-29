@@ -156,9 +156,9 @@ class KycBasicDataOneFragment : Fragment() {
                         }
                         val basicData =viewModel.getbasicData()
                         binding.apply {
-                            uinType.setText(basicData?.uinType)
+                            uinType.setText(basicData?.uinType,false)
                             uinNumber.textInputEditText.setText(basicData?.uinNumber)
-                            dropdownTitle.setText(basicData?.salutation)
+                            dropdownTitle.setText(basicData?.salutation,false)
                             fullName.textInputEditText.setText(basicData?.fullNicName)
                             dobInputLayout.textInputEditText.setText(basicData?.dob)
                             motherName.textInputEditText.setText(basicData?.motherMaidenName)

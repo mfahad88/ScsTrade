@@ -74,6 +74,7 @@ class LoginAOFFragment : Fragment() {
                     viewModel.basicData.uinNumber = user?.uin
 //                    viewModel.basicData.nicValid = user?.expiresAt?.let { Utils.convertIsoToDate(it) }
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
+                    viewModel.getDocuments()
                     viewModel.getattorneyDetails()
                     viewModel.getBasicData()
                     viewModel.getcontactDetails()

@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycFiveBinding
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
@@ -52,6 +53,36 @@ class KycContactDetailTwoFragment : Fragment() {
                     }
                     viewModel.saveContactDetails()
                     if(isPermanentAddressSame){
+                        viewModel.getContactDetails().apply {
+                            viewModel.createContactDetail(
+                                ContactDetailDto(
+                                    id = null,
+                                    mailingAddress1 = mailingAddress,
+                                    mailingCountryId = mailingCountry,
+                                    mailingProvinceId = mailingProvince,
+                                    mailingProvinceOther = mailingProvinceOther,
+                                    mailingCityId = mailingCity,
+                                    mailingphoneNo = officeNumber,
+                                    mailingResidence = residenceNumber,
+                                    permanentAddress1 = mailingAddress,
+                                    permanentCountryId = mailingCountry,
+                                    permanentCityId = mailingCity,
+                                    permanentCityOther = mailingCityOther,
+                                    permanentProvinceId = mailingProvince,
+                                    permanentProvinceOther = mailingProvinceOther,
+                                    permanentphoneNo = officeNumber,
+                                    permanentResidence = residenceNumber,
+                                    mailingCityOther = mailingCityOther,
+                                    permanentAddress2 = "     ",
+                                    permanentAddress3 = "     ",
+                                    mailingAddress2 = "     ",
+                                    mailingAddress3 = "     ",
+                                    mailingProof = mailingAddress,
+                                    permanentProof  = mailingAddress,
+                                )
+                            )
+                        }
+
                         (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
                     }else{
                         (requireActivity() as AofActivity).loadFragment(
@@ -98,8 +129,10 @@ class KycContactDetailTwoFragment : Fragment() {
 
             if(parmanentAddress?.isNotEmpty()?:false){
                 binding.parmanentAddr.toggleSelection(false)
+                isPermanentAddressSame=true
             }else{
                 binding.parmanentAddr.toggleSelection(true)
+                isPermanentAddressSame=false
             }
         }
     }

@@ -12,6 +12,8 @@ data class ContactDetailDto(
     var	mailingCityId	:String?,
     var	mailingphoneNo	:String?,
     var	mailingResidence	:String?,
+    var mailingProof:String?,
+    var permanentProof:String?,
     var	permanentAddress1	:String?,
     var	permanentAddress2	:String?,
     var	permanentAddress3	:String?,

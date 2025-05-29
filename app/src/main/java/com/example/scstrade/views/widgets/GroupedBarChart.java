@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.scstrade.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -43,16 +46,19 @@ public class GroupedBarChart extends BarChart {
         this.setDrawValueAboveBar(true);
 
         XAxis xAxis = this.getXAxis();
+        xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
         xAxis.setCenterAxisLabels(true);
         
         YAxis leftAxis = this.getAxisLeft();
+        leftAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         leftAxis.setDrawGridLines(false);
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawZeroLine(true);
         Legend legend = this.getLegend();
+        legend.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);

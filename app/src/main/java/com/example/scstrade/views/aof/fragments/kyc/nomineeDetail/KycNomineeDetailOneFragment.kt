@@ -12,6 +12,7 @@ import com.example.scstrade.databinding.FragmentKycNineBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailOneFragment
@@ -56,6 +57,8 @@ class KycNomineeDetailOneFragment : Fragment() {
                 nominee_name=null
                 nominee_uin_type=null
                 nominee_uin_number=null
+
+
             }
 
             nominee.setOnButtonTwoClickListener {
@@ -92,9 +95,44 @@ class KycNomineeDetailOneFragment : Fragment() {
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                     }
                 }else{
-                    (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                    viewModel.nomineeDetails(
+                        NomineeDetailDto(
+                            id = null,
+                            cnicNmn = null,
+                            addressNmn = null,
+                            mobileNoNmn = null,
+                            nicBackNmn = null,
+                            nicFrontNmn = null,
+                            nameNmn = null,
+                            relationShipNmn = null,
+                            cnicLifeTimeNmn = null,
+                            cnicExpiryDateNmn = null,
+                            identificationNmn = null,
+                            nomineeType = is_nominee
+                        )
+                    )
                 }
             }
+
+            viewModel.mutableNomineeDetail.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        val response=result.data
+
+
+                        if(response?.isSuccess?:false){
+                            (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                        }else{
+                            Utils.showError(requireView(),response?.message?:"An error occurred...")
+                        }
+                        viewModel.mutableNomineeDetail.value = null
+                    }
+                }
+            })
 
         }
 

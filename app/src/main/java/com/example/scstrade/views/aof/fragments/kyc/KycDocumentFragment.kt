@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.databinding.FragmentKycFifteenBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
@@ -44,6 +45,7 @@ class KycDocumentFragment : Fragment() {
     private var proofPermanentEmployerAddressBase64:String?=null
     private var proofSignatureBase64:String?=null
     private var proofZakatBase64:String?=null
+    private var identificationType:String?=null
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
@@ -78,6 +80,29 @@ class KycDocumentFragment : Fragment() {
         binding = FragmentKycFifteenBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
+        viewModel.getotherDetail().apply {
+            if(otherDetailAccountType?.equals("NKA")?:false){
+                binding.incomeProo.visibility = View.VISIBLE
+                binding.proofOfPe.visibility = View.VISIBLE
+                binding.specimenSi.visibility = View.VISIBLE
+                if(otherDetailZakatStatus.equals("6")){
+                    binding.zakatDecla.visibility = View.VISIBLE
+                }else{
+                    binding.zakatDecla.visibility = View.GONE
+                }
+            }else{
+                binding.specimenSi.visibility = View.VISIBLE
+                if(otherDetailZakatStatus.equals("6")){
+                    binding.zakatDecla.visibility = View.VISIBLE
+                }else{
+                    binding.zakatDecla.visibility = View.GONE
+                }
+            }
+        }
+
+        val response=viewModel.mutableDocumentDataResponse.value?.data
+        identificationType=response?.data?.zakatStatus
+
         binding.apply {
             proofOfPe.cardUpload.setOnClickListener {
                 proofPermanentAddressClicked = true
@@ -115,10 +140,10 @@ class KycDocumentFragment : Fragment() {
 
             btnContinue.setOnClickListener {
                 if(uriproofPermanentEmployerAddress!=null && uriproofPermanentAddress!=null && uriproofSignature!=null && uriproofZakat!=null){
-                    /*viewModel.documents(
+                    viewModel.documents(
                         DocumentDto(
                             accountType = viewModel.getotherDetail().otherDetailAccountType?:"",
-                            identificationType =  viewModel.getSelfInfo().nicType?:"",
+                            identificationType =  identificationType?:"",
                             zakatStatus =  viewModel.getotherDetail().otherDetailZakatStatus?:"",
                             signatureProof = proofSignatureBase64?:"",
                             zakaatDeclaration = proofZakatBase64?:"",
@@ -127,10 +152,29 @@ class KycDocumentFragment : Fragment() {
                             termsAndCondition = "Y",
                             id = null
                         )
-                    )*/
+                    )
                 }
             }
         }
+
+        viewModel.mutableDocument.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    Utils.showError(requireView(),result.message?:"An error occurred...")
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success ->{
+                    val response =result.data
+                    if(response?.isSuccess?:false){
+                        (requireActivity() as AofActivity).loadFragment(UndertakingFragment())
+                    }else{
+                        Utils.showError(requireView(),response?.message?:"An error occurred...")
+                    }
+                }
+            }
+        })
 
 
         return binding.root

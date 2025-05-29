@@ -41,13 +41,11 @@ class KycContactDetailOneFragment : Fragment() {
         binding = FragmentKycFourBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
-        initDetails()
-        binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
-        }
         fetchUser()
 
         populateDropdown()
+        initDetails()
+
         binding.apply {
             Utils.filterTextField(mailingOtherProvince.textInputEditText,Regex("[^A-Za-z ]"))
             Utils.filterTextField(mailingOtherCity.textInputEditText,Regex("[^A-Za-z ]"))
@@ -57,7 +55,9 @@ class KycContactDetailOneFragment : Fragment() {
             email_Address = login.registrationEmail
             email.textInputEditText.setText(email_Address)
             email.textInputEditText.isEnabled=false
-
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
+            }
             mailingAddress.addTextChangedListener {
                 mailing_Address=it.toString()
             }
@@ -84,6 +84,7 @@ class KycContactDetailOneFragment : Fragment() {
         }
         return binding.root
     }
+
 
     private fun initDetails() {
 
@@ -135,12 +136,8 @@ class KycContactDetailOneFragment : Fragment() {
                                     mailingAddress.setText(mailing_Address)
                                 }
                                 if(mailing_Country!="") {
-                                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter {
-                                        it.second.equals(
-                                            mailing_Country,
-                                            true
-                                        )
-                                    }.map { it.first }.first())
+
+                                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst { it.second.equals(mailing_Country,true) }).first,false)
                                 }
                                 if(mailing_City!="") {
                                     mailingCity.dropdown.setText(AppConstants.CITY.filter {
@@ -148,7 +145,7 @@ class KycContactDetailOneFragment : Fragment() {
                                             mailing_City,
                                             true
                                         )
-                                    }.map { it.first.first }.first())
+                                    }.map { it.first.first }.first(),false)
                                     mailingProvince.visibility = View.VISIBLE
                                     mailingOtherProvince.visibility = View.INVISIBLE
                                 }
@@ -159,7 +156,7 @@ class KycContactDetailOneFragment : Fragment() {
                                             mailing_Province,
                                             true
                                         )
-                                    }.map { it.first }.first())
+                                    }.map { it.first }.first(),false)
                                     mailingProvince.visibility = View.VISIBLE
                                     mailingOtherProvince.visibility = View.INVISIBLE
                                 }

@@ -159,7 +159,7 @@ class SnapshotActivity : AppCompatActivity() {
                                             lineHeight = 36.sp,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(400),
-                                            color = colorResource(id = R.color.colorDarkerr),
+                                            color = colorResource(id = R.color.black),
                                         )
                                     )
                                 }

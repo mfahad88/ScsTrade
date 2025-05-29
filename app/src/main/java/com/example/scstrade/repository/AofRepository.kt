@@ -554,6 +554,21 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
+    suspend fun getDocuments(applicationId:String):Resource<ApiResponse<DocumentDto>>{
+        try {
+            val response = apiService.getDocuments(applicationId)
+            if(response.isSuccessful){
+                return Resource.Success(response.body()!!)
+            }else{
+                val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }
+
+                return Resource.Error(jsonObject?.getString("message")?:"An error occurred...")
+            }
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
     suspend fun getBasicData(applicationId:String):Resource<ApiResponse<BasicDetailResponse>>{
         try {
             val response = apiService.getBasicData(applicationId)
@@ -572,7 +587,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
     suspend fun getContactDetails(applicationId:String):Resource<ApiResponse<ContactDetailResponse>>{
         try {
             val response = apiService.getContactDetails(applicationId)
-            if(response.isSuccessful){
+            if(response.isSuccessful){apiService.getContactDetails(applicationId)
                 return Resource.Success(response.body()!!)
             }else{
                 val jsonObject = response.errorBody()?.string()?.let { JSONObject(it) }

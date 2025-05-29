@@ -85,7 +85,7 @@ public class CustomBarChart extends BarChart {
             }
         }
         dataSet.setColors(colors);
-        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(12f);
 
 
