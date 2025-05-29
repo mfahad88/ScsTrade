@@ -26,7 +26,7 @@ class WelcomeFragment : Fragment() {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
         }
         binding.login.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
+            (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
         }
         return binding.root
     }

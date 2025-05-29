@@ -28,6 +28,7 @@ class KycNomineeDetailTwoFragment : Fragment() {
     ): View? {
         binding =FragmentKycTenBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.nominee_details)
         initFields()
         toggleNicValidity(false)
         binding.apply {

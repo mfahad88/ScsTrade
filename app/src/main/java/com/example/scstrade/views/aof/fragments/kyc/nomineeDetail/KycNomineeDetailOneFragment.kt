@@ -33,6 +33,7 @@ class KycNomineeDetailOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycNineBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.nominee_details)
         initFields()
         populationDropdown()
 

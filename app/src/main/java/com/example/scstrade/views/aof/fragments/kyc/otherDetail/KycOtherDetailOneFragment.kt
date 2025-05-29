@@ -33,6 +33,7 @@ class KycOtherDetailOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycTwelveBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.other_details)
 
         binding.apply {
             back.setOnClickListener {

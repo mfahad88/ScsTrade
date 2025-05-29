@@ -40,6 +40,7 @@ class KycContactDetailThreeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
         binding = FragmentKycSixBinding.inflate(inflater,container,false)
         initFields()
         populateDropdown()

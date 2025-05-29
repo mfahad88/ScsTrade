@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycElevenBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
@@ -93,6 +94,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycElevenBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.nominee_details)
         initFields()
 
         binding.nicFront.cardUpload.setOnClickListener {

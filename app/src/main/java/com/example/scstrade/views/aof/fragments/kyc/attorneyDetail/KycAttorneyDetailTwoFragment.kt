@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycEightBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -39,6 +40,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentKycEightBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.attorney_details)
         initFields()
         binding.apply {
             attorneyCountry.setEntries(AppConstants.COUNTRY.map { it.first }.toList())

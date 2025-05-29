@@ -44,7 +44,7 @@ class KycBasicDataOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycOneBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
-
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.basic_data)
         populateDropdown()
         initFields()
         binding.apply {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycSevenBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -31,6 +32,7 @@ class KycAttorneyDetailOneFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentKycSevenBinding.inflate(inflater,container,false)
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.attorney_details)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
         populateDropdown()

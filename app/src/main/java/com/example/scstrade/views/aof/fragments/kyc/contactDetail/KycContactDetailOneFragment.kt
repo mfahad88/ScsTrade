@@ -40,6 +40,7 @@ class KycContactDetailOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycFourBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
         initDetails()
         binding.back.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
