@@ -88,7 +88,7 @@ class KycOtherDetailOneFragment : Fragment() {
             btnContinue.setOnClickListener {
                 if(!account_type.isNullOrEmpty() && !income_slab.isNullOrEmpty()
                     && !source_income.isNullOrEmpty() && !occup.isNullOrEmpty()){
-                    viewModel.saveotherDetail()
+//                    viewModel.saveotherDetail()
                     (requireActivity() as AofActivity).loadFragment(KycOtherDetailTwoFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
@@ -120,10 +120,10 @@ class KycOtherDetailOneFragment : Fragment() {
                             otherDetailSourceOfIncome=	response.sourceOfIncome
                             otherDetailZakatStatus =	response.zakatStatus
                             otherDetailRemittance =	response.remittanceBasis
-                            viewModel.saveotherDetail()
+//                            viewModel.saveotherDetail()
                         }
 
-                        val otherDetail = viewModel.getotherDetail()
+                        val otherDetail = viewModel.otherDetail
                         otherDetail.apply {
                             if(otherDetailAccountType!=""){
                                 account_type = otherDetailAccountType

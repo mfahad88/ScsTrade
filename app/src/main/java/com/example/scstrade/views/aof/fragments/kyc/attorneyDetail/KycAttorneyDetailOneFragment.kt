@@ -84,7 +84,7 @@ class KycAttorneyDetailOneFragment : Fragment() {
                             attorneyUinNumber = attorney_Uin_Number
                         }
                     }
-                    viewModel.saveAttorneyDetails()
+//                    viewModel.saveAttorneyDetails()
                     (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
                 }else{
                     viewModel.attorneyDetails(
@@ -160,9 +160,9 @@ class KycAttorneyDetailOneFragment : Fragment() {
                             attorneyCountry = response.mailingCountryAtr
                             attorneyCity = response.mailingCityAtr
                             attorneyProvince = response.mailingProvinceAtr
-                            viewModel.saveAttorneyDetails()
+//                            viewModel.saveAttorneyDetails()
                         }
-                        val attorneyDetail=viewModel.getAttorneyDetails()
+                        val attorneyDetail= viewModel.attorneyDetail
                         attorney_type=attorneyDetail.attorneyType
                         attorney_saluation = attorneyDetail.attorneySalutation.toString()
                         attorney_FullName = attorneyDetail.attorneyFullName

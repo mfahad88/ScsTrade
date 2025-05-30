@@ -51,7 +51,7 @@ class KycContactDetailTwoFragment : Fragment() {
                         officeNumber=office_number
                         residenceNumber=residence_number
                     }
-                    viewModel.saveContactDetails()
+//                    viewModel.saveContactDetails()
                     if(isPermanentAddressSame){
                         viewModel.getContactDetails().apply {
                             viewModel.createContactDetail(

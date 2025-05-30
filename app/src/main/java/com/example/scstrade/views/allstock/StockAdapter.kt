@@ -17,12 +17,13 @@ import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.util.Collections
 
 class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
-
+    var previousStockItem:StockItem?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
             binding.root.setOnClickListener {
                 val intent= Intent(binding.root.context,SnapshotActivity::class.java)
                 intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
+
                 binding.root.context.startActivity(intent)
             }
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
@@ -33,18 +34,30 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
             }
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
-            binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
+            if(previousStockItem?.bV?.compareTo(stockItem.bV)!=0){
+//                Utils.animatedValueChange(binding.volume,"Vol:",previousStockItem?.bV?.toDouble()?:0.0,stockItem.bV.toDouble())
+                Utils.animatedValueChange(previousStockItem?.bV?.toDouble()?:0.0,stockItem.bV.toDouble(), onUpdate = {
+                    binding.volume.text = "Vol: ${Utils.convertToMillions(it)}"
+                })
+            }
+
+//            binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
             binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
             binding.bid.text = "Bid: ${stockItem.bP}"
             binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
             binding.ask.text = "Ask: ${stockItem.aP}"
-            binding.valueTrade.text = String.format("%.2f",stockItem.cL)
+            if(previousStockItem?.cL?.compareTo(stockItem?.cL?:0.0)!=0){
+                Utils.animatedValueChange(previousStockItem?.cL?:0.0,stockItem.cL, onUpdate = {
+                    binding.valueTrade.text = String.format("%.2f",stockItem.cL)
+                })
+            }
+//            binding.valueTrade.text = String.format("%.2f",stockItem.cL)
             binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
             binding.high.text = "H: ${stockItem.hP.toString()}"
             binding.low.text = "L: ${stockItem.lP.toString()}"
             binding.high52.text = stockItem.high52
             binding.low52.text = stockItem.low52
-
+            previousStockItem=stockItem
 
         }
 

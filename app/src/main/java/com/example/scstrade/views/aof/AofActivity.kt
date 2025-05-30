@@ -88,12 +88,14 @@ class AofActivity : AppCompatActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(binding.fragmentContainer.id, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
         }

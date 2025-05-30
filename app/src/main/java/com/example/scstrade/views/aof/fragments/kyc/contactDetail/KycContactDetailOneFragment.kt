@@ -74,7 +74,7 @@ class KycContactDetailOneFragment : Fragment() {
                         mailingCity = mailing_City
                         mailingCityOther = mailing_City_Other
                     }
-                    viewModel.saveContactDetails()
+//                    viewModel.saveContactDetails()
                     (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
 
                 }else{
@@ -112,9 +112,9 @@ class KycContactDetailOneFragment : Fragment() {
                             parmanentOfficeNumber = response.permanentphoneNo
                             parmanentResidenceNumber = response.permanentResidence
                             mailingCityOther = response.mailingCityOther
-                            viewModel.saveContactDetails()
+//                            viewModel.saveContactDetails()
                         }
-                        val contactDetail = viewModel.getContactDetails()
+                        val contactDetail = viewModel.contactDetail
                         contactDetail.apply {
                             mobile_Number = mobileNumber
                             email_Address = emailAddress

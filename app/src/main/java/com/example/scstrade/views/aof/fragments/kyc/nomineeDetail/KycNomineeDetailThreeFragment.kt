@@ -148,8 +148,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
                         )
                     )
                 }
-                viewModel.savenominee()
-                (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+//                viewModel.savenominee()
 
             }else{
                 Utils.showError(requireView(),"Empty Fields not allowed")
@@ -164,7 +163,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
                     val response= result.data
 
                     if(response?.statusCode==200 && response.isSuccess){
-//                        (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                        (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
                     }else{
                         Utils.showError(requireView(),response?.message?:"An error occurred...")
                     }

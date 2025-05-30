@@ -79,7 +79,7 @@ class KycBasicDataTwoFragment : Fragment() {
                     viewModel.basicData.maritalStatus = martialStatus
                     viewModel.basicData.relationShip = relationship
                     viewModel.basicData.relationshipName = name.text.toString()
-                    viewModel.saveBasicData()
+//                    viewModel.saveBasicData()
                     (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
                 }else{
                     Utils.showError(requireView(), getString(R.string.empty_fields_not_allowed))

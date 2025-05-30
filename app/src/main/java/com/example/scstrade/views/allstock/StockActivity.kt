@@ -72,12 +72,14 @@ class StockActivity : AppCompatActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }

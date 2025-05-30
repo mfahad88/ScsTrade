@@ -7,12 +7,10 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-
+        style="@style/MyTextInputLayoutStyle"
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
-        app:hintTextColor="@color/md_theme_onSurfaceVariant"
         app:expandedHintEnabled="false"
         app:boxBackgroundMode="outline"
         android:hint="@string/full_name">

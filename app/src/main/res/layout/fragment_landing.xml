@@ -102,7 +102,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/white"
                 android:id="@+id/contact"
                 android:layout_below="@id/aof"
                 android:layout_alignStart="@id/aof"
@@ -160,7 +160,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/white"
                 android:id="@+id/profile"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/contact"

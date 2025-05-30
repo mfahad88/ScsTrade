@@ -24,7 +24,7 @@ class AccountOpeningFourFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningFourBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        initFields()
+//        initFields()
         binding.back.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
         }
@@ -35,7 +35,7 @@ class AccountOpeningFourFragment : Fragment() {
                 if(reference.text.toString()!="" && reference.text.toString()!=null){
                     /*viewModel.saveReference(reference.text)*/
                     viewModel.accountOpening.accountopeningreference =reference.textInputEditText.text.toString()
-                    viewModel.saveaccountOpening()
+//                    viewModel.saveaccountOpening()
                 }
                 if(captchaInput.text.toString().isNotEmpty()){
                     if(captchaValue.text.toString().equals(captchaInput.text.toString())){

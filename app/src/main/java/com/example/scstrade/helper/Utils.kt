@@ -102,7 +102,7 @@ class Utils {
 
         }
 
-        fun animatedValueChange(tv: TextView,from: Double,to:Double,duration: Long = 4000){
+        fun animatedValueChange(/*tv: TextView, prefix: String,*/from: Double,to:Double, onUpdate: ((Double) -> Unit)? = null ,duration: Long = 250L){
             val animator = ValueAnimator.ofFloat(from.toFloat(), to.toFloat()).apply {
                 this.duration = duration
                 this.setEvaluator { fraction, startValue, endValue ->
@@ -110,8 +110,10 @@ class Utils {
                 }
                 addUpdateListener { animation ->
                     val current = (animation.animatedValue as Float).toDouble()
-                    tv.setText(roundTwoDecimal(current))
+                    onUpdate?.invoke(current)
+//                    tv.setText("${prefix} ${convertToMillions(current)}")
                 }
+
             }
             animator.start()
         }

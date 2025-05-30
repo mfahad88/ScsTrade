@@ -85,7 +85,7 @@ class KycBasicDataThreeFragment : Fragment() {
                     viewModel.basicData.ivrService=ivrStatus
                     viewModel.basicData.nicType = nicType
                     viewModel.basicData.nicValid = nicExpiry
-                    viewModel.saveBasicData()
+//                    viewModel.saveBasicData()
                     viewModel.basicData(
                         BasicDetailDto(
                             id = null,

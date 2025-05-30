@@ -139,7 +139,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
                             )
                         )
                     }
-                    viewModel.saveAttorneyDetails()
+//                    viewModel.saveAttorneyDetails()
 
 
                 }

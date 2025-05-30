@@ -93,7 +93,7 @@ class KycBasicDataOneFragment : Fragment() {
                     viewModel.basicData.dob= dobInputLayout.textInputEditText.text.toString()
                     viewModel.basicData.motherMaidenName= motherName.textInputEditText.text.toString()
                     viewModel.basicData.nationality= nationalityId
-                    viewModel.saveBasicData()
+//                    viewModel.saveBasicData()
                     (requireActivity() as AofActivity).loadFragment(KycBasicDataTwoFragment())
 
                 }else{
@@ -152,9 +152,9 @@ class KycBasicDataOneFragment : Fragment() {
                             ivrService = response.ivrstatus
                             dob = Utils.convertIsoToDate(response.dateOfBirth)
                             nicValid = Utils.convertIsoToDate(response.uinExpiryDate)
-                            viewModel.saveBasicData()
+//                            viewModel.saveBasicData()
                         }
-                        val basicData =viewModel.getbasicData()
+                        val basicData =viewModel.basicData
                         binding.apply {
                             uinType.setText(basicData?.uinType,false)
                             uinNumber.textInputEditText.setText(basicData?.uinNumber)

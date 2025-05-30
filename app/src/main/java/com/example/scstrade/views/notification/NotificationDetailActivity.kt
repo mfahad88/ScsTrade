@@ -92,7 +92,16 @@ class NotificationDetailActivity : AppCompatActivity() {
                             detail.symbol.text=jsonObject.get("company_code").asString
                             detail.companyName.text=jsonObject.get("company_name").asString
                             detail.description.text=jsonObject.get("Heading").asString
-                            detail.datetime.text = Utils.convertDateString(jsonObject.get("Board_Meeting_Date").asString,"dd-MMM-yyyy")
+
+                            if(jsonObject.has("Board_Meeting_Date")) {
+                                detail.datetime.text = Utils.convertDateString(
+                                    jsonObject.get("Board_Meeting_Date").asString,
+                                    "dd-MMM-yyyy"
+                                )
+                                detail.datetime.visibility = View.VISIBLE
+                            }else{
+                                detail.datetime.visibility = View.GONE
+                            }
                             if(! jsonObject.get("PDFLink").isJsonNull) {
                                 detail.imageViewDownload.visibility=View.VISIBLE
                                 detail.imageViewDownload.setOnClickListener {

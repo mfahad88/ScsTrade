@@ -77,8 +77,8 @@ class KycOtherDetailThreeFragment : Fragment() {
 
                         )
                     )
-                    viewModel.saveotherDetail()
-//
+//                    viewModel.saveotherDetail()
+
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }

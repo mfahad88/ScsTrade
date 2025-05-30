@@ -77,7 +77,7 @@ class KycNomineeDetailOneFragment : Fragment() {
 
             btnContinue.setOnClickListener {
 
-                viewModel.savenominee()
+//                viewModel.savenominee()
                 if(is_nominee.equals("Y")){
                     if(!nominee_name.isNullOrEmpty() && !nominee_relation.isNullOrEmpty()
                         && !nominee_uin_type.isNullOrEmpty() && !nominee_uin_number.isNullOrEmpty() && !nominee_mobile.isNullOrEmpty()){
@@ -89,7 +89,7 @@ class KycNomineeDetailOneFragment : Fragment() {
                             nomineeUinType = nominee_uin_type
                             nomineeUinNumber = nominee_uin_number
                         }
-                        viewModel.savenominee()
+//                        viewModel.savenominee()
                         (requireActivity() as AofActivity).loadFragment(KycNomineeDetailTwoFragment())
                     }else{
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
@@ -164,7 +164,7 @@ class KycNomineeDetailOneFragment : Fragment() {
                                 viewModel.savenominee()
                             }
                         }
-                        val nominee = viewModel.getnominee()
+                        val nominee =  viewModel.nominee
 
                         nominee.apply {
                             if(isNominee!=null){

@@ -130,7 +130,7 @@ class AccountOpeningThreeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningThreeBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        initFields()
+//        initFields()
         if(viewModel.accountOpening.accountopeningrelationshipType.equals("1")){
             binding.proofOfRelative.visibility = View.GONE
         }else{

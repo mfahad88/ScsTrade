@@ -8,7 +8,7 @@
     android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.example.scstrade.views.widgets.mMarket
             android:id="@+id/toolbar"
@@ -35,15 +35,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
+            android:layout_height="0dp"
             android:background="@color/md_theme_surface"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:context=".views.portfolio.activities.PortfolioDetailActivity">
+            tools:context=".views.portfolio.activities.PortfolioDetailActivity"
+            tools:visibility="visible">
 
 
             <com.google.android.material.card.MaterialCardView

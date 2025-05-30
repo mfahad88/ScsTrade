@@ -121,7 +121,7 @@ class AccountOpeningOneFragment : Fragment() {
             }
         }
 
-        initFields()
+//        initFields()
 
 
 

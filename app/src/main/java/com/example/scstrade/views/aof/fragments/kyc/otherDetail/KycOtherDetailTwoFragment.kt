@@ -68,7 +68,7 @@ class KycOtherDetailTwoFragment : Fragment() {
             btnContinue.setOnClickListener {
                 if(!job_description.isNullOrEmpty() && !department.isNullOrEmpty()
                     && !employer_name.isNullOrEmpty() && !employer_address.isNullOrEmpty()){
-                    viewModel.saveotherDetail()
+//                    viewModel.saveotherDetail()
                     (requireActivity() as AofActivity).loadFragment(KycOtherDetailThreeFragment())
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))

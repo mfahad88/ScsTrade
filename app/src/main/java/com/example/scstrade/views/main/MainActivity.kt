@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             supportFragmentManager
                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commitAllowingStateLoss()
 //                .commit()

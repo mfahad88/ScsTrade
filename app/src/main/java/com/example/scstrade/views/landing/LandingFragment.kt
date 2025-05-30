@@ -187,12 +187,14 @@ class LandingFragment : Fragment() {
         if(isBackStack){
             childFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             childFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
@@ -207,7 +209,7 @@ class LandingFragment : Fragment() {
             KeyDescValue("Detailed Quote",null,R.drawable.detail_quote),
             KeyDescValue("Fundamental",null,R.drawable.fundamental),
             KeyDescValue("Technical",null,R.drawable.technicals),
-            KeyDescValue("SCS Portfolio",null,R.drawable.scs_portfolio),
+//            KeyDescValue("SCS Portfolio",null,R.drawable.scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.my_portfolio),
             KeyDescValue("Announcements",null,R.drawable.announcements),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
@@ -239,18 +241,24 @@ class LandingFragment : Fragment() {
                 }else if(keyDescValue.key?.equals("technical",true)?:false){
                     val intent = Intent(requireContext(),TechnicalsActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+
                 }else if(keyDescValue.key?.equals("fundamental",true)?:false){
                     val intent = Intent(requireContext(),FundamentalActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("detailed quote",true)?:false){
                     val intent = Intent(requireContext(),DetailQuoteActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("announcements",true)?:false){
                     val intent = Intent(requireContext(),AnnoucementActivity::class.java)
                     startActivity(intent)
-                }else if(keyDescValue.key?.equals("SCS Portfolio",true)?:false){
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+                }else if(keyDescValue.key?.equals("My Portfolio",true)?:false){
                     val intent = Intent(requireContext(), PortfolioActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }
                 binding.drawerLayout.closeDrawers()
             }
