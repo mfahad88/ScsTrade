@@ -270,6 +270,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
+
     fun getaccountOpening():AccountOpening?{
         val constructor = AccountOpening::class.primaryConstructor?:return null
         val args = constructor.parameters.associateWith { param ->
@@ -385,6 +386,8 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
+
+
     fun getotherDetail(): OtherDetail? {
         val constructor = OtherDetail::class.primaryConstructor?:return null
         val args = constructor.parameters.associateWith { param ->
@@ -399,6 +402,68 @@ class AofRepository (val apiService: ApiService,val context: Context){
             }
         }
         return constructor.callBy(args)
+    }
+
+
+    fun clearBasicData() {
+        sharedPreferences.edit().apply {
+            remove(AppConstants.BASIC_DATA_UIN_TYPE)
+            remove(AppConstants.BASIC_DATA_UIN_NUMBER)
+            remove(AppConstants.BASIC_DATA_FULL_NIC_NAME)
+            remove(AppConstants.BASIC_DATA_SALUTATION)
+            remove(AppConstants.BASIC_DATA_DOB)
+            remove(AppConstants.BASIC_DATA_MOTHER_MAIDEN_NAME)
+            remove(AppConstants.BASIC_DATA_NATIONALITY)
+            remove(AppConstants.BASIC_DATA_MARITAL_STATUS)
+            remove(AppConstants.BASIC_DATA_RELATIONSHIP)
+            remove(AppConstants.BASIC_DATA_RELATIONSHIP_NAME)
+            remove(AppConstants.BASIC_DATA_NIC_TYPE)
+            remove(AppConstants.BASIC_DATA_NIC_EXPIRY)
+            remove(AppConstants.BASIC_DATA_POB_COUNTRY)
+            remove(AppConstants.BASIC_DATA_POB_CITY)
+            remove(AppConstants.BASIC_DATA_IVR_SERVICE)
+            apply()
+        }
+    }
+
+    fun clearAccountOpeningData() {
+        sharedPreferences.edit().apply {
+            val properties = AccountOpening::class.members
+                .filterIsInstance<kotlin.reflect.KProperty1<AccountOpening, *>>()
+
+            for (property in properties) {
+                val name = property.name
+                remove(name)
+            }
+            apply()
+        }
+    }
+
+
+    fun clearAttorneyDetails() {
+        sharedPreferences.edit().apply {
+            val properties = AttorneyDetail::class.members
+                .filterIsInstance<kotlin.reflect.KProperty1<AttorneyDetail, *>>()
+
+            for (property in properties) {
+                val name = property.name
+                remove(name)
+            }
+            apply()
+        }
+    }
+
+    fun clearNominee() {
+        sharedPreferences.edit().apply {
+            val properties = Nominee::class.members
+                .filterIsInstance<kotlin.reflect.KProperty1<Nominee, *>>()
+
+            for (property in properties) {
+                val name = property.name
+                remove(name)
+            }
+            apply()
+        }
     }
 
     suspend fun registerUser(registerUser: RegisterUser): Resource<ResponseRegisterUser> {

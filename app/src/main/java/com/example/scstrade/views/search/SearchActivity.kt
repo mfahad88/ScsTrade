@@ -133,12 +133,14 @@ class SearchActivity : AppCompatActivity() {
         LazyColumn (modifier = Modifier.padding(horizontal = 15.dp)){
             items(allData?.size?:0){index->
                 Column{
-                    Row(modifier = Modifier.padding(vertical = 15.dp).clickable {
-                        val intent= Intent(binding.root.context, SnapshotActivity::class.java)
-                        intent.putExtra(AppConstants.SYMBOL, allData?.get(index)?.sYM)
-                        startActivity(intent)
-                        finish()
-                    }) {
+                    Row(modifier = Modifier
+                        .padding(vertical = 15.dp)
+                        .clickable {
+                            val intent = Intent(binding.root.context, SnapshotActivity::class.java)
+                            intent.putExtra(AppConstants.SYMBOL, allData?.get(index)?.sYM)
+                            startActivity(intent)
+                            finish()
+                        }) {
                         Box (modifier = Modifier.weight(1f)){
                             Text(
                                 text = allData?.get(index)?.sYM?:"",
@@ -160,7 +162,7 @@ class SearchActivity : AppCompatActivity() {
                                     lineHeight = 25.61.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(400),
-                                    color = Color(0xFF1C1B1B),
+                                    color = colorResource(id = R.color.black),
                                 )
                             )
                         }

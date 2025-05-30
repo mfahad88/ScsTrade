@@ -160,7 +160,7 @@ interface ApiService {
     suspend fun snapshotChart(@Query("symbolin")symbol:String) : Charting
 
     @GET(value = "/YearsDetails")
-    suspend fun yearsDetails(@Query("symbolin")symbol:String): List<YearDetailsItem>
+    suspend fun yearsDetails(@Query("symbol")symbol:String): List<YearDetailsItem>
 
     @GET(value = "/IncomeStatement")
     suspend fun incomeStatement1(@Query("symbol")symbol:String,@Query("year")year:String,@Query("quarter1")q:String?):List<IncomeStatementDataItem>

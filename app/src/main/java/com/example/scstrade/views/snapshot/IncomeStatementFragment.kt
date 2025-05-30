@@ -134,7 +134,8 @@ class IncomeStatementFragment : Fragment() {
                                     }
                                 }
 
-                                Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
+                                Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),
+                                    backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
                                     val incomeStatement =
                                         sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
                                             initial = Resource.Loading()
@@ -219,7 +220,7 @@ class IncomeStatementFragment : Fragment() {
                                                         lineHeight = 30.08.sp,
                                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                                         fontWeight = FontWeight(500),
-                                                        color = colorResource(id = R.color.colorDarkerr),
+                                                        color = colorResource(id = R.color.black),
                                                     )
                                                 )
                                             }
@@ -228,6 +229,8 @@ class IncomeStatementFragment : Fragment() {
                                 }
                             }
                         }
+                    }else{
+                        Utils.showError(requireView(), getString(R.string.no_record_found))
                     }
                 }
             }
@@ -238,7 +241,9 @@ class IncomeStatementFragment : Fragment() {
     @Composable
     private fun cardItem(key: String, value: String) {
         Row {
-            Box(modifier = Modifier.weight(1f).padding(vertical = 10.dp)) {
+            Box(modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 10.dp)) {
 
                 Text(
                     text = key,
@@ -247,12 +252,14 @@ class IncomeStatementFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
-                        color = colorResource(id = R.color.colorDarkerr),
+                        color = colorResource(id = R.color.black),
                     )
                 )
             }
 
-            Box(modifier = Modifier.weight(1f).padding(vertical = 10.dp)) {
+            Box(modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 10.dp)) {
 
                 Text(
                     text = value,
@@ -261,7 +268,7 @@ class IncomeStatementFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
-                        color = colorResource(id = R.color.colorDarkerr),
+                        color = colorResource(id = R.color.black),
                     )
                 )
             }
@@ -290,13 +297,13 @@ class IncomeStatementFragment : Fragment() {
                     lineHeight = 24.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(400),
-                    color = colorResource(id = R.color.colorDarkerr),
+                    color = colorResource(id = R.color.black),
                 ),
                     modifier = Modifier.padding(horizontal = 10.dp)
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.colorDarkerr), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }
@@ -317,7 +324,7 @@ class IncomeStatementFragment : Fragment() {
                                 lineHeight = 24.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(400),
-                                color = colorResource(id = R.color.colorDarkerr),
+                                color = colorResource(id = R.color.white),
                             )
                         )
                     }

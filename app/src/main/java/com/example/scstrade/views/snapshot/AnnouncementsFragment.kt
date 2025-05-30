@@ -132,9 +132,14 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Loading -> binding.loader.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                    binding.main.setContent {
-                        AnnouncementItems(list = result.data?: emptyList())
+                    if(result.data?.isNotEmpty()?:false){
+                        binding.main.setContent {
+                            AnnouncementItems(list = result.data?: emptyList())
+                        }
+                    }else{
+                        Utils.showError(requireView(), getString(R.string.no_record_found))
                     }
+
                 }
             }
         })
@@ -235,7 +240,7 @@ class AnnouncementsFragment : Fragment() {
         /*var isExpanded by remember {
             mutableStateOf(MutableList(list.size){false})
         }*/
-       val stockItem= sharedViewModel.mutableAllData.value?.data?.filter {
+        val stockItem= sharedViewModel.mutableAllData.value?.data?.filter {
             it.sYM.equals(
                 list.map { it.companyCode }.first(),
                 true

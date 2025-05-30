@@ -419,6 +419,7 @@
     <string name="attorney_details">Attorney Details</string>
     <string name="nominee_details">Nominee Details</string>
     <string name="other_details">Other Details</string>
+    <string name="no_record_found">No Record Found...</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

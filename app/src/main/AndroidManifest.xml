@@ -29,12 +29,15 @@
         tools:targetApi="31">
         <activity
             android:name=".views.aof.fragments.IndexActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.notification.NotificationDetailActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.notification.NotificationActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
 
         <service
@@ -49,6 +52,7 @@
             android:name=".views.aof.AofActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:configChanges="screenSize|orientation"
             android:windowSoftInputMode="adjustPan">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -63,9 +67,11 @@
         </activity>
         <activity
             android:name=".views.portfolio.activities.EditBuySellActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.portfolio.activities.StockDetailActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
 
         <meta-data
@@ -93,21 +99,27 @@
         </activity>
         <activity
             android:name=".views.portfolio.activities.BuySellActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.portfolio.activities.PortfolioDetailActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.announcement.AnnoucementActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.detailquote.DetailQuoteActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.profile.ProfileActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.search.SearchActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
@@ -127,63 +139,65 @@
 
         <activity
             android:name=".views.snapshot.SnapshotActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.contact.ContactActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false" />
         <activity
             android:name=".views.ChartActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
             android:name=".views.news.NewsDetailActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.portfolio.activities.PortfolioActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.fundamental.FundamentalDetailActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.fundamental.FundamentalActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.technicals.TechnicalsDetailActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.technicals.TechnicalsActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.watchlist.AddSymbolActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.watchlist.WatchListDetailActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.allstock.StockActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.main.MainActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize|orientation"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

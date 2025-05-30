@@ -435,6 +435,9 @@ class BalanceSheetFragment : Fragment() {
                             }
                         }
                     }
+                    else{
+                        Utils.showError(requireView(), getString(R.string.no_record_found))
+                    }
                 }
             }
         })
@@ -455,7 +458,7 @@ class BalanceSheetFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
-                        color = colorResource(id = R.color.colorDarkerr),
+                        color = colorResource(id = R.color.black),
                     )
                 )
             }
@@ -471,7 +474,7 @@ class BalanceSheetFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
-                        color = colorResource(id = R.color.colorDarkerr),
+                        color = colorResource(id = R.color.black),
                     )
                 )
             }
@@ -500,13 +503,13 @@ class BalanceSheetFragment : Fragment() {
                     lineHeight = 24.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(400),
-                    color = colorResource(id = R.color.colorDarkerr),
+                    color = colorResource(id = R.color.black),
                 ),
                     modifier = Modifier.padding(horizontal = 10.dp)
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.colorDarkerr), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -119,16 +121,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK){
+            Configuration.UI_MODE_NIGHT_YES -> {
+                // System switched to Dark Mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                Log.d("Theme", "Switched to Dark Mode")
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                // System switched to Light Mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                Log.d("Theme", "Switched to Light Mode")
+            }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        viewModel.stopIndices()
-    }
+        }
+    }*/
 
 
 

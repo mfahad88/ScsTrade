@@ -422,7 +422,7 @@ class Utils {
                     .setTextColor(
                         ContextCompat.getColor(
                             view.context,
-                            R.color.md_theme_surfaceContainerLowest
+                            R.color.black
                         )
                     )
 
