@@ -103,8 +103,12 @@ class KycOtherDetailOneFragment : Fragment() {
 
         viewModel.mutableOtherDetailResponse.observe(viewLifecycleOwner, Observer { result ->
             when(result){
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.loader.visibility =View.VISIBLE
+                }
                 is Resource.Success -> {
                     val response = result.data?.data
                     viewModel.otherDetail.apply {
@@ -161,6 +165,7 @@ class KycOtherDetailOneFragment : Fragment() {
                             }
                         }
                     }
+                    binding.loader.visibility = View.GONE
                 }
             }
         })

@@ -80,9 +80,10 @@ class AccountOpeningFourFragment : Fragment() {
             when(result){
                 is Resource.Error -> {
                     Utils.showError(requireView(),result.message?:"An error occurred...")
+                    binding.loader.visibility = View.GONE
                 }
                 is Resource.Loading -> {
-
+                    binding.loader.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
                     val data = result.data
@@ -92,6 +93,7 @@ class AccountOpeningFourFragment : Fragment() {
                     }else{
                         Utils.showError(requireView(),data?.message?:"An error occurred...")
                     }
+                    binding.loader.visibility = View.GONE
                 }
             }
 

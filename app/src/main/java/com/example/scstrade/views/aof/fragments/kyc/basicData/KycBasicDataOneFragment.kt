@@ -134,8 +134,12 @@ class KycBasicDataOneFragment : Fragment() {
 
         viewModel.mutableBasicDataResponse.observe(viewLifecycleOwner, Observer { result->
             when(result){
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
                 is Resource.Success -> {
                     val response = result.data?.data
                     viewModel.basicData.apply {
@@ -171,6 +175,7 @@ class KycBasicDataOneFragment : Fragment() {
 
                         }
                     }
+                    binding.loader.visibility = View.GONE
                 }
             }
         })

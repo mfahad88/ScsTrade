@@ -90,8 +90,12 @@ class KycContactDetailOneFragment : Fragment() {
 
         viewModel.mutableContactDetailResponse.observe(viewLifecycleOwner, Observer { result ->
             when(result){
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
                 is Resource.Success -> {
                     val response = result.data?.data
                     viewModel.contactDetail.apply {
@@ -176,6 +180,7 @@ class KycContactDetailOneFragment : Fragment() {
                             }
                         }
                     }
+                    binding.loader.visibility = View.GONE
                 }
             }
         })

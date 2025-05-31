@@ -74,8 +74,19 @@ class BuySellActivity : AppCompatActivity() {
 
                 symbol.setAdapter(adapter)
                 symbol.setOnDismissListener {
-                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
-                    buyPrice.setText(symbol?.oC.toString())
+                   try{
+                       if(sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()!=null) {
+                           val symbol = sharedViewModel.mutableAllData.value?.data?.filter {
+                               "${it.sYM}-${it.nM}".contains(
+                                   symbol.text.toString(),
+                                   true
+                               )
+                           }?.first()
+                           buyPrice.setText(symbol?.oC.toString())
+                       }
+                   }catch (e:Exception){
+                       e.printStackTrace()
+                   }
                     val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
 
@@ -253,7 +264,6 @@ class BuySellActivity : AppCompatActivity() {
                             dividendQuantity = shares.text.toString(),
                             dividendPerShare = dividendShare.text.toString()
                         )
-                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
                         finish()
                     }else{
                         Utils.showError(root,"Empty fields not allowed...")

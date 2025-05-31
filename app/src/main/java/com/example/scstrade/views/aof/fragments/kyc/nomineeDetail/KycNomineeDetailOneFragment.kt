@@ -116,9 +116,12 @@ class KycNomineeDetailOneFragment : Fragment() {
 
             viewModel.mutableNomineeDetail.observe(viewLifecycleOwner, Observer { result->
                 when(result){
-                    is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred...")
+                    is Resource.Error -> {
+                        Utils.showError(requireView(),result.message?:"An error occurred...")
+                        binding.loader.visibility = View.GONE
+                    }
                     is Resource.Loading -> {
-
+                        binding.loader.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
                         val response=result.data
@@ -129,6 +132,7 @@ class KycNomineeDetailOneFragment : Fragment() {
                         }else{
                             Utils.showError(requireView(),response?.message?:"An error occurred...")
                         }
+                        binding.loader.visibility = View.GONE
                         viewModel.mutableNomineeDetail.value = null
                     }
                 }

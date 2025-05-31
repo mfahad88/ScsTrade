@@ -126,9 +126,12 @@ class KycContactDetailThreeFragment : Fragment() {
 
             viewModel.mutableCreateContactDetail.observe(viewLifecycleOwner, Observer { result->
                 when(result){
-                    is Resource.Error -> Utils.showError(requireView(),result.message?:"An error occurred")
+                    is Resource.Error -> {
+                        Utils.showError(requireView(),result.message?:"An error occurred")
+                        binding.loader.visibility = View.GONE
+                    }
                     is Resource.Loading ->{
-
+                        binding.loader.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
                         if(result.data?.statusCode==200){
@@ -138,6 +141,8 @@ class KycContactDetailThreeFragment : Fragment() {
                         }else{
                             Utils.showError(requireView(),result.data?.message?:"An error occurred")
                         }
+
+                        binding.loader.visibility = View.GONE
                     }
                 }
             })
