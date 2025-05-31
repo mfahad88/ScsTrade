@@ -17,6 +17,7 @@
     <include
         android:id="@+id/buy_container"
         layout="@layout/layout_buy_stock"
+        tools:visibility="visible"
         android:visibility="gone" />
 
     <include

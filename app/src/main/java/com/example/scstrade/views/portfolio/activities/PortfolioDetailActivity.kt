@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -54,7 +55,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         }
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
-
+//        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.apply {
             linearLayoutHistory.visibility = View.GONE
             viewDetail.setOnClickListener {
@@ -107,6 +108,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
 
                 adapter = ShareInHandAdapter(
+                    emptyList(),
+                    emptyList(),
                     onItemClick = { res->
                         val intent = Intent(this.context, BuySellActivity::class.java)
                         intent.putExtra(AppConstants.IS_Sell, true)
@@ -140,23 +143,38 @@ class PortfolioDetailActivity : AppCompatActivity() {
                     var currentMarketValue=0.0
                     var daysPL=0.0
                     var totalCost=0.0
-                    result.data?.fifoPortfolio?.forEach {res->
-                        val shares=res.quantity.toInt()
-                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
-                        val ch = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cH }?.first()
-
-                        totalCost = totalCost.plus(res.price.toDouble().times(res.quantity.toInt()))
-                        daysPL+=ch?.times(shares)?:0.0
-                        currentMarketValue+=currentPrice?.times(shares)?:0.0
+                    var history = 0.0
+                    var holdingPL = 0.0
+                    if(result.data?.closeTrades?.isNotEmpty()?:false) {
+                        result.data?.closeTrades?.forEach {
+                            history += it.salAmount.toDouble()
+                        }
                     }
-                    binding.currentMarValue.text = Utils.commaSeparated(currentMarketValue.roundToInt())
-                    binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
-                    binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
-                    (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
+                    if(result.data?.fifoPortfolio?.isNotEmpty()?:false){
+                        result.data?.fifoPortfolio?.forEach {res->
+                            val shares=res.quantity.toInt()
+                            val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
+                            val ch = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cH }?.first()
+                            val cl = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
+                            val marketValue = cl?.times(res.quantity.toInt())
+                            totalCost = totalCost.plus(res.price.toDouble().times(res.quantity.toInt()))
+                            daysPL+=ch?.times(shares)?:0.0
+                            currentMarketValue+=currentPrice?.times(shares)?:0.0
+                            holdingPL+=marketValue?.minus(totalCost)?:0.0
+                        }
+                        binding.historyCost.text = Utils.commaSeparated(history.roundToInt())
+                        binding.holdingCost.text = Utils.commaSeparated(totalCost.roundToInt())
+                        binding.holdingPL.text =Utils.commaSeparated(holdingPL.roundToInt())
+                        binding.totalCost.text = Utils.commaSeparated(history.plus(totalCost).roundToInt())
+                        binding.currentMarValue.text = Utils.commaSeparated(currentMarketValue.roundToInt())
+                        binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
+                        binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
+                        (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
 
 
-                    binding.apply {
-                        totalCompaValue.text = "${binding.recyclerView.adapter?.itemCount}"
+                        binding.apply {
+                            totalCompaValue.text = "${binding.recyclerView.adapter?.itemCount}"
+                        }
                     }
 
                     binding.apply {
@@ -180,13 +198,17 @@ class PortfolioDetailActivity : AppCompatActivity() {
         Log.e("User: ",user.toString())
     }
 
-    override fun onStop() {
+   /* override fun onStop() {
         sharedViewModel.stopPortfolioFinal()
+        Toast.makeText(this,"OnStopped",Toast.LENGTH_SHORT).show()
+
         super.onStop()
     }
-
+*/
     override fun onDestroy() {
         sharedViewModel.stopPortfolioFinal()
         super.onDestroy()
     }
+
+
 }

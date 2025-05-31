@@ -79,7 +79,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableNotificationList= MutableLiveData<Resource<List<NotificationDto>>>()
     val mutableNotificationDetailList= MutableLiveData<Resource<JsonElement>>()
     var isFetchAllData=true
-    var isFetchIndices=true
+    var isFetchIndices=false
     var isFetchPortfolioFinal=false
     val isConnected = ConnectivityObserver(application)
     fun fetchAllData(){

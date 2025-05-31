@@ -17,7 +17,7 @@ class PortFolioAdapter(private val itemList: List<PortfolioItem>, private val on
             binding.apply {
                 defaultWat.text = item.portfolioMainName
                 imageViewThree.setOnClickListener {
-                    Utils.showPopup(binding.root.context,binding.imageViewThree, null, listOf("Edit Name","Delete Porfolio")){
+                    Utils.showPopup(binding.root.context,binding.imageViewThree, null, listOf("Delete Porfolio")){
                         onItemPopupClick(it,item)
                     }
                 }

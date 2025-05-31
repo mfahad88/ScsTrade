@@ -1,7 +1,9 @@
 package com.example.scstrade.views.portfolio.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +28,35 @@ class StockDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
+        binding.newBuyTrade.text="Buy ${symbol}"
+        binding.sellTrade.text="Sell ${symbol}"
+        binding.addDividend.text="Add ${symbol} Dividend"
+
+        binding.newBuyTrade.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_BUY,true)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
+
+        binding.sellTrade.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_Sell, true)
+            intent.putExtra(AppConstants.SYMBOL,symbol)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
+
+        binding.addDividend.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_Dividend, true)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -36,6 +67,14 @@ class StockDetailActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        binding.floatingActionButton.setOnClickListener {
+            if(binding.floatingMenu.visibility== View.GONE){
+                binding.floatingMenu.visibility=View.VISIBLE
+            }else{
+                binding.floatingMenu.visibility=View.GONE
+            }
         }
 
         binding.tabLayout.getTabAt(0)?.select()

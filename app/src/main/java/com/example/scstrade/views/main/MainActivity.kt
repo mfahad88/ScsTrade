@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+    /*    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO){
+            setTheme(R.style.AppTheme)
+        }else{
+            setTheme(R.style.DarkTheme)
+        }*/
         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
         FacebookSdk.sdkInitialize(this)
         FirebaseMessaging.getInstance().token
@@ -122,23 +127,6 @@ class MainActivity : AppCompatActivity() {
 //                .commit()
         }
     }
-
-    /*override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK){
-            Configuration.UI_MODE_NIGHT_YES -> {
-                // System switched to Dark Mode
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                Log.d("Theme", "Switched to Dark Mode")
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                // System switched to Light Mode
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                Log.d("Theme", "Switched to Light Mode")
-            }
-
-        }
-    }*/
 
 
 

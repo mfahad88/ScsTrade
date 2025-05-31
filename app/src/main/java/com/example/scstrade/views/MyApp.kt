@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.helper.CertificateHelper
 import com.example.scstrade.model.response.login.LoginDataItem
@@ -26,6 +27,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super<Application>.onCreate()
         getSha1Fingerprint()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         FirebaseApp.initializeApp(this)
         RetrofitInstanceAof.init(this)
         RetrofitInstance.init(this)
