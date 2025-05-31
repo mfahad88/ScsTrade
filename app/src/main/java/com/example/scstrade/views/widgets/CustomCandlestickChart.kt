@@ -43,6 +43,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
 
         // X Axis Customization
         this.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        this.xAxis.textColor = ContextCompat.getColor(context,R.color.black)
         this.xAxis.setDrawGridLines(false)
         this.xAxis.setAvoidFirstLastClipping(true)
         this.xAxis.setDrawLabels(false)
@@ -55,7 +56,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.axisRight.setDrawGridLines(true)
         this.axisRight.setDrawAxisLine(true)
         this.axisRight.isEnabled = true
-
+        this.axisRight.textColor = ContextCompat.getColor(context,R.color.black)
         // Disable Legend
         this.legend.isEnabled = false
     }

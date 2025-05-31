@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.snapshot.AnnouncementsFragment">
 
     <RelativeLayout
         android:id="@+id/relativeLayoutAnnouncement"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/gray_container"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayoutDate"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
+            android:id="@+id/spinnerAnnouncement"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/spinnerAnnouncement"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDate"
         android:layout_width="150dp"
         android:layout_height="45dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/gray_container"
         android:paddingHorizontal="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/relativeLayoutAnnouncement"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -38,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:scaleType="fitXY"
             android:layout_centerVertical="true"
+            android:scaleType="fitXY"
             android:src="@drawable/calendar_icon" />
 
         <EditText
@@ -47,11 +52,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/imageView"
-            android:inputType="date"
+            android:background="@null"
             android:digits="0123456789/"
             android:gravity="center_vertical"
-            android:background="@null"
-            android:hint="DD/MM/YY" />
+            android:hint="DD/MM/YY"
+            android:inputType="date" />
 
     </RelativeLayout>
 

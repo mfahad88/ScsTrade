@@ -61,42 +61,65 @@ class Utils {
         }
 
         fun commaFormat(value:Double?): String {
-            return  NumberFormat.getInstance(Locale.US).format(String.format("%.2f",value).toDouble())
+            try {
+                return NumberFormat.getInstance(Locale.US)
+                    .format(String.format("%.2f", value).toDouble())
+            }catch (e:Exception){
+
+                e.printStackTrace()
+                return ""
+            }
         }
         fun roundTwoDecimal(value:Double?):String{
-            if(value!=null) {
-                val decimal=value.toString().substringAfter(".","")
-                if(decimal.length>2) {
-                    return String.format("%,.2f", value)
-                }else{
-                    if(value>=1000){
-                    return String.format("%,.2f", value)
-                    }else{
-                        return value.toString()
-                    }
-                }
-            }else{
-                return (value?:"0.00").toString()
-            }
+          try{
+              if(value!=null) {
+                  val decimal=value.toString().substringAfter(".","")
+                  if(decimal.length>2) {
+                      return String.format("%,.2f", value)
+                  }else{
+                      if(value>=1000){
+                          return String.format("%,.2f", value)
+                      }else{
+                          return value.toString()
+                      }
+                  }
+              }else{
+                  return (value?:"0.00").toString()
+              }
+          }catch (e:Exception){
+
+              e.printStackTrace()
+              return value.toString()
+          }
         }
 
         fun commaSeparated(value:Int):String{
-            if(value>=1000) {
-                return String.format("%,d", value)
-            }else{
-                return value.toString()
-            }
+          try{
+              if(value>=1000) {
+                  return String.format("%,d", value)
+              }else{
+                  return value.toString()
+              }
+          }catch (e:Exception){
+              e.printStackTrace()
+              return value.toString()
+          }
         }
         fun convertToMillions(value: Double?): String {
-            val df: DecimalFormat = DecimalFormat("#,###.##")
-            if(value!=null){
-                if (value >= 1_000_000) {
-                    // Convert to millions and append "M"
-                    return df.format(value / 1_000_000) + "M"
-                } else {
-                    return df.format(value)
+            try {
+                val df: DecimalFormat = DecimalFormat("#,###.##")
+                if(value!=null){
+                    if (value >= 1_000_000) {
+                        // Convert to millions and append "M"
+                        return df.format(value / 1_000_000) + "M"
+                    } else {
+                        return df.format(value)
+                    }
+                }else{
+                    return "0.0"
                 }
-            }else{
+            }catch (e:Exception){
+                e.printStackTrace()
                 return "0.0"
             }
 
@@ -324,6 +347,18 @@ class Utils {
             val editor = sharedPreferences.edit()
             editor.putString(key,gson.toJson(value))
             editor.apply()
+        }
+
+        fun saveSharedPreference(context: Context,key:String,value:Boolean){
+            val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean(key,value)
+            editor.apply()
+        }
+
+        fun  getSharedPreference(context: Context, key:String): Boolean {
+            val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
+            return  sharedPreferences.getBoolean(key,true)
         }
 
         fun <T> getSharedPreference(context: Context, defaultValue: T,key:String,typeToken: TypeToken<T>?=null):T{

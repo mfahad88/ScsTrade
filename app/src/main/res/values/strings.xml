@@ -420,6 +420,9 @@
     <string name="nominee_details">Nominee Details</string>
     <string name="other_details">Other Details</string>
     <string name="no_record_found">No Record Found...</string>
+    <string name="preferences">Preferences</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="app_settings">App Settings</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

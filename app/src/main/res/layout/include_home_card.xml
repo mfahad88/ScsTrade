@@ -100,6 +100,7 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="250dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
@@ -131,85 +132,93 @@
             android:src="@drawable/zoom_out"/>
     </FrameLayout>
 
-
-    <LinearLayout
+    <HorizontalScrollView
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none"
         android:layout_marginTop="8dp"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider">
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/line"
-            android:layout_width="55dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Line"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            android:orientation="horizontal">
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/candle"
-            android:layout_width="55dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="Candle"
-            app:setSelected="true" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/line"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Line"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/min1"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="1min"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/candle"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Candle"
+                app:setSelected="true" />
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/min5"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="5mins"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/min1"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="1min"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/min15"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="15mins"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/min5"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="5mins"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/min30"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="30mins"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/min15"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="15mins"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
 
-        <com.example.scstrade.views.widgets.TimeChip
-            android:id="@+id/hr1"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="1hr"
-            app:layout_constraintStart_toStartOf="@+id/highView"
-            app:layout_constraintTop_toBottomOf="@+id/highView"
-            app:setSelected="false" />
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/min30"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="30mins"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
 
-    </LinearLayout>
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/hr1"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="1hr"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

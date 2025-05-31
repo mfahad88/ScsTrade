@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.CertificateHelper
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.services.RetrofitInstanceAof
@@ -27,7 +29,11 @@ class MyApp : Application() {
     override fun onCreate() {
         super<Application>.onCreate()
         getSha1Fingerprint()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        if(!Utils.getSharedPreference(this, AppConstants.LIGHT_MODE)){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
         FirebaseApp.initializeApp(this)
         RetrofitInstanceAof.init(this)
         RetrofitInstance.init(this)

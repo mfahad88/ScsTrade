@@ -39,6 +39,7 @@ import com.example.scstrade.views.news.NewsFragment
 import com.example.scstrade.views.notification.NotificationActivity
 import com.example.scstrade.views.portfolio.activities.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
+import com.example.scstrade.views.settings.SettingsActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.google.gson.reflect.TypeToken
@@ -219,6 +220,10 @@ class LandingFragment : Fragment() {
             binding.drawerLayout.closeDrawer(GravityCompat.END)
         }
 
+        binding.appSettings.setOnClickListener {
+            startActivity(Intent(requireContext(),SettingsActivity::class.java))
+            binding.drawerLayout.closeDrawer(GravityCompat.END)
+        }
         binding.sideMenu.apply {
             adapter= SideMenuAdapter(list){ keyDescValue ->
                 System.out.println("Clicked: ${keyDescValue.toString()}")

@@ -154,7 +154,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Authorized Capital:", data?.authorizedCapital ?: "0", null)
+                    ItemValue("Authorized Capital:", Utils.commaFormat(data?.authorizedCapital?.toDouble()) ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -174,7 +174,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Free_Float:", data?.freeFloat ?: "0", null)
+                    ItemValue("Free_Float:", Utils.commaFormat(data?.freeFloat?.toDouble()), null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -182,7 +182,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Beta:", data?.beta ?: "0", null)
+                    ItemValue("Beta:", Utils.roundTwoDecimal(data?.beta?.toDouble()) ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -202,8 +202,7 @@ class OverviewFragment : Fragment() {
 
                     ItemValue(
                         "Beta:",
-                        String.format("%.2f", data?.beta?.toDouble() ?: "0".toDouble()),
-                        null
+                        Utils.roundTwoDecimal(data?.beta?.toDouble()),null
                     )
                     Row {
                         Divider(
@@ -212,7 +211,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Free Float:", "${data?.freeFloatPer ?: "0"}%", null)
+                    ItemValue("Free Float:", "${Utils.roundTwoDecimal(data?.freeFloatPer?.toDouble()) ?: "0"}%", null)
                     Row {
                         Divider(
                             thickness = 1.dp,

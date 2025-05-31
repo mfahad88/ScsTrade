@@ -120,15 +120,19 @@ public class mLineChart extends LineChart {
 
         this.setData(lineData);
         this.getDescription().setEnabled(false);
+        this.getLegend().setEnabled(false);
         XAxis xAxis = this.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
         xAxis.setDrawGridLines(false);
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(false);
         leftAxis.setEnabled(false);
+        leftAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
 
         YAxis rightAxis = this.getAxisRight();
         rightAxis.setTextSize(5f);
+        rightAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
         rightAxis.setDrawLabels(true);
         rightAxis.setDrawGridLines(false);
         rightAxis.setEnabled(true);

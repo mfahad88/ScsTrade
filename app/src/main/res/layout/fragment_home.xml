@@ -53,28 +53,9 @@
                 android:layout_height="match_parent"
                 android:background="@color/surfaceTint"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="4dp">
+                android:paddingTop="4dp"
+                android:paddingBottom="15dp">
 
-                <!-- <include
-                    android:id="@+id/mMarket"
-                    layout="@layout/mmarket"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/vertical_separator"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/mMarket" />-->
 
                 <include
                     android:id="@+id/cardHome"

@@ -12,516 +12,525 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main"
-        android:visibility="gone"
-        tools:visibility="visible"
-        tools:context=".views.snapshot.OverviewFragment">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:strokeWidth="0dp">
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:context=".views.snapshot.OverviewFragment"
+            tools:visibility="visible">
 
-            <FrameLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="240dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/snapshot_card" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/snapshot_card" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imageView16"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/snapshot_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/companyName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/fauji_foods"
+                            android:textAppearance="@style/fauji_foods"
+                            android:textFontWeight="600"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewShare"
+                            app:layout_constraintStart_toEndOf="@+id/imageView16"
+                            app:layout_constraintTop_toTopOf="@+id/imageView16" />
+
+                        <TextView
+                            android:id="@+id/sector"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/food_person"
+                            android:textAppearance="@style/food_person"
+                            android:textFontWeight="400"
+                            app:layout_constraintEnd_toEndOf="@+id/companyName"
+                            app:layout_constraintStart_toStartOf="@+id/companyName"
+                            app:layout_constraintTop_toBottomOf="@+id/companyName" />
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayoutReg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/drawable_reg"
+                            android:backgroundTint="#9EEFFD"
+                            app:layout_constraintStart_toStartOf="@+id/sector"
+                            app:layout_constraintTop_toBottomOf="@+id/sector">
+
+                            <TextView
+                                android:id="@+id/label_text_reg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:lineSpacingExtra="3sp"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:text="@string/label_text_reg"
+                                android:textAppearance="@style/label_text_reg"
+                                android:textFontWeight="500" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/relativeLayoutIndex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/drawable_reg"
+                            android:backgroundTint="@color/colorDarkerr"
+                            app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutReg"
+                            app:layout_constraintStart_toEndOf="@+id/relativeLayoutReg"
+                            app:layout_constraintTop_toTopOf="@+id/relativeLayoutReg">
+
+                            <TextView
+                                android:id="@+id/label_text_index"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:lineSpacingExtra="3sp"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:text="@string/label_text_index"
+                                android:textAppearance="@style/label_text_index"
+                                android:textFontWeight="500" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout5"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/md_theme_surfaceContainerHighest"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/relativeLayoutReg" />
+
+                        <TextView
+                            android:id="@+id/rs_"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/rs_"
+                            android:textAppearance="@style/rs_"
+                            android:textFontWeight="300"
+                            app:layout_constraintStart_toStartOf="@+id/imageView16"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+                        <TextView
+                            android:id="@+id/valueTrade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="20dp"
+                            android:gravity="top"
+                            android:lineSpacingExtra="-18sp"
+                            android:text="@string/valueTrade_snapshot"
+                            android:textAppearance="@style/valueTrade_snapshot"
+                            android:textFontWeight="600"
+                            app:layout_constraintBottom_toBottomOf="@+id/rs_"
+                            app:layout_constraintStart_toEndOf="@+id/rs_"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+
+                        <TextView
+                            android:id="@+id/netChange"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/netChange_snapshot"
+                            android:textAppearance="@style/netChange_snapshot"
+                            app:layout_constraintBottom_toBottomOf="@+id/rs_"
+                            app:layout_constraintStart_toEndOf="@+id/valueTrade" />
+
+                        <ImageView
+                            android:id="@+id/imageViewShare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/circle_share"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageView16" />
+
+
+                        <TextView
+                            android:id="@+id/volume_"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/volume_"
+                            android:textAppearance="@style/volume_"
+                            android:textFontWeight="500"
+                            app:layout_constraintStart_toStartOf="@+id/rs_"
+                            app:layout_constraintTop_toBottomOf="@+id/rs_" />
+
+
+                        <TextView
+                            android:id="@+id/volume_value"
+                            android:layout_width="70dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="6dp"
+                            android:text="@string/volume_value"
+                            android:textAppearance="@style/volume_value"
+                            android:textFontWeight="700"
+                            app:layout_constraintBottom_toBottomOf="@+id/volume_"
+                            app:layout_constraintStart_toEndOf="@+id/volume_"
+                            app:layout_constraintTop_toTopOf="@+id/volume_" />
+
+
+                        <TextView
+                            android:id="@+id/avg_volume_"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/avg_volume_"
+                            android:textAppearance="@style/volume_"
+                            app:layout_constraintStart_toStartOf="@+id/volume_"
+                            app:layout_constraintTop_toBottomOf="@+id/volume_" />
+
+
+                        <TextView
+                            android:id="@+id/avg_volume_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="6dp"
+                            android:text="@string/volume_value"
+                            android:textAppearance="@style/volume_value"
+                            android:textFontWeight="700"
+                            app:layout_constraintBottom_toBottomOf="@+id/avg_volume_"
+                            app:layout_constraintStart_toEndOf="@+id/avg_volume_"
+                            app:layout_constraintTop_toTopOf="@+id/avg_volume_" />
+
+
+                        <TextView
+                            android:id="@+id/market_cap_"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@string/market_cap_"
+                            android:textAppearance="@style/volume_"
+                            android:textFontWeight="500"
+                            app:layout_constraintBottom_toBottomOf="@+id/volume_"
+                            app:layout_constraintStart_toEndOf="@+id/volume_value"
+                            app:layout_constraintTop_toTopOf="@+id/volume_" />
+
+                        <TextView
+                            android:id="@+id/market_cap_value"
+                            android:layout_width="70dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/volume_value"
+                            android:textAppearance="@style/volume_value"
+                            android:textFontWeight="700"
+                            app:layout_constraintBottom_toBottomOf="@+id/volume_"
+                            app:layout_constraintStart_toEndOf="@+id/market_cap_"
+                            app:layout_constraintTop_toTopOf="@+id/volume_"
+                            app:layout_constraintVertical_bias="1.0" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/day_s_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/day_s_range"
+                android:textAppearance="@style/day_s_range"
+                android:textFontWeight="500"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+
+
+            <com.example.scstrade.views.widgets.DayRange
+                android:id="@+id/dayRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/dayRange52"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
+
+            <TextView
+                android:id="@+id/range_52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/range_52"
+                android:textAppearance="@style/day_s_range"
+                android:textFontWeight="500"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+
+
+            <com.example.scstrade.views.widgets.DayRange
+                android:id="@+id/dayRange52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/dayRange"
+                app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceBright"
+                app:contentPaddingBottom="20dp"
+                app:contentPaddingLeft="15dp"
+                app:contentPaddingRight="15dp"
+                app:contentPaddingTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/dayRange52">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/imageView16"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/snapshot_icon"
+                    <TextView
+                        android:id="@+id/performance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/performance"
+                        android:textAppearance="@style/performance"
+                        android:textFontWeight="700"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                     <TextView
-                        android:id="@+id/companyName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/fauji_foods"
-                        android:textAppearance="@style/fauji_foods"
-                        android:textFontWeight="600"
-                        app:layout_constraintEnd_toStartOf="@+id/imageViewShare"
-                        app:layout_constraintStart_toEndOf="@+id/imageView16"
-                        app:layout_constraintTop_toTopOf="@+id/imageView16" />
-
-                    <TextView
-                        android:id="@+id/sector"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/food_person"
-                        android:textAppearance="@style/food_person"
-                        android:textFontWeight="400"
-                        app:layout_constraintStart_toStartOf="@+id/companyName"
-                        app:layout_constraintTop_toBottomOf="@+id/companyName" />
-
-                    <RelativeLayout
-                        android:id="@+id/relativeLayoutReg"
+                        android:id="@+id/one_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:background="@drawable/drawable_reg"
-                        android:backgroundTint="#9EEFFD"
-                        app:layout_constraintStart_toStartOf="@+id/sector"
-                        app:layout_constraintTop_toBottomOf="@+id/sector">
+                        android:text="@string/one_month"
+                        android:textAppearance="@style/one_month"
+                        android:textFontWeight="500"
+                        app:layout_constraintBottom_toTopOf="@+id/one_performance"
+                        app:layout_constraintStart_toStartOf="@+id/one_performance"
+                        app:layout_constraintTop_toBottomOf="@+id/performance" />
+
+                    <RelativeLayout
+                        android:id="@+id/one_performance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/performance_container"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/three_performance"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent">
 
                         <TextView
-                            android:id="@+id/label_text_reg"
+                            android:id="@+id/one_pecent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:lineSpacingExtra="3sp"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="@string/label_text_reg"
-                            android:textAppearance="@style/label_text_reg"
+                            android:layout_centerInParent="true"
+                            android:text="@string/one_pecent"
+                            android:textAppearance="@style/one_pecent"
                             android:textFontWeight="500" />
+                    </RelativeLayout>
 
+                    <TextView
+                        android:id="@+id/three_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/three_month"
+                        android:textAppearance="@style/one_month"
+                        android:textFontWeight="500"
+                        app:layout_constraintBottom_toTopOf="@+id/one_performance"
+                        app:layout_constraintStart_toStartOf="@+id/three_performance" />
+
+                    <TextView
+                        android:id="@+id/six_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/six_month"
+                        android:textAppearance="@style/one_month"
+                        android:textFontWeight="500"
+                        app:layout_constraintBottom_toTopOf="@+id/one_performance"
+                        app:layout_constraintStart_toStartOf="@+id/six_performance" />
+
+                    <RelativeLayout
+                        android:id="@+id/three_performance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/performance_container"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/six_performance"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/one_performance">
+
+                        <TextView
+                            android:id="@+id/three_pecent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/one_pecent"
+                            android:textAppearance="@style/one_pecent"
+                            android:textFontWeight="500" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/one_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/one_year"
+                        android:textAppearance="@style/one_month"
+                        android:textFontWeight="500"
+                        app:layout_constraintBottom_toTopOf="@+id/one_performance"
+                        app:layout_constraintStart_toStartOf="@+id/one_year_performance" />
+
+                    <RelativeLayout
+                        android:id="@+id/six_performance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/performance_container"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/one_year_performance"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/three_performance">
+
+                        <TextView
+                            android:id="@+id/six_pecent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/one_pecent"
+                            android:textAppearance="@style/one_pecent"
+                            android:textFontWeight="500" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/relativeLayoutIndex"
+                        android:id="@+id/one_year_performance"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/drawable_reg"
-                        android:backgroundTint="@color/colorDarkerr"
-                        app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutReg"
-                        app:layout_constraintStart_toEndOf="@+id/relativeLayoutReg"
-                        app:layout_constraintTop_toTopOf="@+id/relativeLayoutReg">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/performance_container"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/six_performance">
 
                         <TextView
-                            android:id="@+id/label_text_index"
+                            android:id="@+id/one_yr_pecent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:lineSpacingExtra="3sp"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="@string/label_text_index"
-                            android:textAppearance="@style/label_text_index"
+                            android:layout_centerInParent="true"
+                            android:text="@string/one_pecent"
+                            android:textAppearance="@style/one_pecent"
                             android:textFontWeight="500" />
-
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout5"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/md_theme_surfaceContainerHighest"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/relativeLayoutReg" />
-
-                    <TextView
-                        android:id="@+id/rs_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/rs_"
-                        android:textAppearance="@style/rs_"
-                        android:textFontWeight="300"
-                        app:layout_constraintStart_toStartOf="@+id/imageView16"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
-                    <TextView
-                        android:id="@+id/valueTrade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginTop="20dp"
-                        android:gravity="top"
-                        android:lineSpacingExtra="-18sp"
-                        android:text="@string/valueTrade_snapshot"
-                        android:textAppearance="@style/valueTrade_snapshot"
-                        android:textFontWeight="600"
-                        app:layout_constraintBottom_toBottomOf="@+id/rs_"
-                        app:layout_constraintStart_toEndOf="@+id/rs_"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
-
-                    <TextView
-                        android:id="@+id/netChange"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/netChange_snapshot"
-                        android:textAppearance="@style/netChange_snapshot"
-                        app:layout_constraintBottom_toBottomOf="@+id/rs_"
-                        app:layout_constraintStart_toEndOf="@+id/valueTrade" />
-
-                    <ImageView
-                        android:id="@+id/imageViewShare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/circle_share"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView16"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/imageView16" />
-
-
-                    <TextView
-                        android:id="@+id/volume_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/volume_"
-                        android:textAppearance="@style/volume_"
-                        android:textFontWeight="500"
-                        app:layout_constraintStart_toStartOf="@+id/rs_"
-                        app:layout_constraintTop_toBottomOf="@+id/rs_" />
-
-
-                    <TextView
-                        android:id="@+id/volume_value"
-                        android:layout_width="70dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="6dp"
-                        android:text="@string/volume_value"
-                        android:textAppearance="@style/volume_value"
-                        android:textFontWeight="700"
-                        app:layout_constraintBottom_toBottomOf="@+id/volume_"
-                        app:layout_constraintStart_toEndOf="@+id/volume_"
-                        app:layout_constraintTop_toTopOf="@+id/volume_" />
-
-
-                    <TextView
-                        android:id="@+id/avg_volume_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/avg_volume_"
-                        android:textAppearance="@style/volume_"
-                        app:layout_constraintStart_toStartOf="@+id/volume_"
-                        app:layout_constraintTop_toBottomOf="@+id/volume_" />
-
-
-                    <TextView
-                        android:id="@+id/avg_volume_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="6dp"
-                        android:text="@string/volume_value"
-                        android:textAppearance="@style/volume_value"
-                        android:textFontWeight="700"
-                        app:layout_constraintBottom_toBottomOf="@+id/avg_volume_"
-                        app:layout_constraintStart_toEndOf="@+id/avg_volume_"
-                        app:layout_constraintTop_toTopOf="@+id/avg_volume_" />
-
-
-                    <TextView
-                        android:id="@+id/market_cap_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@string/market_cap_"
-                        android:textAppearance="@style/volume_"
-                        android:textFontWeight="500"
-                        app:layout_constraintBottom_toBottomOf="@+id/volume_"
-                        app:layout_constraintStart_toEndOf="@+id/volume_value"
-                        app:layout_constraintTop_toTopOf="@+id/volume_" />
-
-                    <TextView
-                        android:id="@+id/market_cap_value"
-                        android:layout_width="70dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/volume_value"
-                        android:textAppearance="@style/volume_value"
-                        android:textFontWeight="700"
-                        app:layout_constraintBottom_toBottomOf="@+id/volume_"
-                        app:layout_constraintStart_toEndOf="@+id/market_cap_"
-                        app:layout_constraintTop_toTopOf="@+id/volume_"
-                        app:layout_constraintVertical_bias="1.0" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/day_s_range"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textFontWeight="500"
-            android:text="@string/day_s_range"
-            android:textAppearance="@style/day_s_range"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/ratios"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView4"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView4"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView4" />
 
-        <com.example.scstrade.views.widgets.DayRange
-            android:id="@+id/dayRange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/day_s_range"
-            app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
+            <com.example.scstrade.views.widgets.CustomBarChart
+                android:id="@+id/customBarChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/dayRange" />
 
+            <com.example.scstrade.views.widgets.GroupedBarChart
+                android:id="@+id/groupBarChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/customBarChart" />
 
-        <TextView
-            android:id="@+id/range_52"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/range_52"
-            android:textAppearance="@style/day_s_range"
-            android:textFontWeight="500"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
-
-
-        <com.example.scstrade.views.widgets.DayRange
-            android:id="@+id/dayRange52"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:cardBackgroundColor="@color/md_theme_surfaceBright"
-            app:contentPaddingBottom="20dp"
-            app:contentPaddingLeft="15dp"
-            app:contentPaddingRight="15dp"
-            app:contentPaddingTop="12dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/dayRange52">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/performance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/performance"
-                    android:textAppearance="@style/performance"
-                    android:textFontWeight="700"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/one_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/one_month"
-                    android:textAppearance="@style/one_month"
-                    android:textFontWeight="500"
-                    app:layout_constraintBottom_toTopOf="@+id/one_performance"
-                    app:layout_constraintStart_toStartOf="@+id/one_performance"
-                    app:layout_constraintTop_toBottomOf="@+id/performance" />
-
-                <RelativeLayout
-                    android:id="@+id/one_performance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/performance_container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/three_performance"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <TextView
-                        android:id="@+id/one_pecent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/one_pecent"
-                        android:textAppearance="@style/one_pecent"
-                        android:textFontWeight="500" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/three_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/three_month"
-                    android:textAppearance="@style/one_month"
-                    android:textFontWeight="500"
-                    app:layout_constraintBottom_toTopOf="@+id/one_performance"
-                    app:layout_constraintStart_toStartOf="@+id/three_performance" />
-
-                <TextView
-                    android:id="@+id/six_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/six_month"
-                    android:textAppearance="@style/one_month"
-                    android:textFontWeight="500"
-                    app:layout_constraintBottom_toTopOf="@+id/one_performance"
-                    app:layout_constraintStart_toStartOf="@+id/six_performance" />
-
-                <RelativeLayout
-                    android:id="@+id/three_performance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/performance_container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/six_performance"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/one_performance">
-
-                    <TextView
-                        android:id="@+id/three_pecent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/one_pecent"
-                        android:textAppearance="@style/one_pecent"
-                        android:textFontWeight="500" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/one_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/one_year"
-                    android:textAppearance="@style/one_month"
-                    android:textFontWeight="500"
-                    app:layout_constraintBottom_toTopOf="@+id/one_performance"
-                    app:layout_constraintStart_toStartOf="@+id/one_year_performance" />
-
-                <RelativeLayout
-                    android:id="@+id/six_performance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/performance_container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/one_year_performance"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/three_performance">
-
-                    <TextView
-                        android:id="@+id/six_pecent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/one_pecent"
-                        android:textAppearance="@style/one_pecent"
-                        android:textFontWeight="500" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/one_year_performance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/performance_container"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/six_performance">
-
-                    <TextView
-                        android:id="@+id/one_yr_pecent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/one_pecent"
-                        android:textAppearance="@style/one_pecent"
-                        android:textFontWeight="500" />
-                </RelativeLayout>
+            <com.example.scstrade.views.widgets.CustomCombinedChart
+                android:id="@+id/combineChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/groupBarChart" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.compose.ui.platform.ComposeView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/ratios"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView4"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView4"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView4" />
-
-        <com.example.scstrade.views.widgets.CustomBarChart
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:id="@+id/customBarChart"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/dayRange" />
-
-        <com.example.scstrade.views.widgets.GroupedBarChart
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/groupBarChart"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/customBarChart" />
-
-        <com.example.scstrade.views.widgets.CustomCombinedChart
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:id="@+id/combineChart"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/groupBarChart" />
-
-
-        <com.example.scstrade.views.widgets.MultiLineChartView
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:id="@+id/multilineChart"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView2"
-            app:layout_constraintTop_toBottomOf="@+id/combineChart" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.example.scstrade.views.widgets.MultiLineChartView
+                android:id="@+id/multilineChart"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintTop_toBottomOf="@+id/combineChart" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loader"
             android:layout_width="wrap_content"
