@@ -205,13 +205,14 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
-
+                    Log.e("fcm","${user?.email}\t${user?.displayName}\t${user?.phoneNumber}")
                     Toast.makeText(requireContext(), "Welcome ${user?.displayName}", Toast.LENGTH_SHORT).show()
                     // Navigate or update UI here
                 } else {
                     Toast.makeText(requireContext(), "Authentication Failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {

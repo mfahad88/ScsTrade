@@ -423,6 +423,8 @@
     <string name="preferences">Preferences</string>
     <string name="light_mode">Light Mode</string>
     <string name="app_settings">App Settings</string>
+    <string name="_0_9">0123456789</string>
+    <string name="_0_9_decimal">0123456789.</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>
