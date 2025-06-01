@@ -34,15 +34,15 @@ class IndexAdapter(
            try{
                var interval = 0
                 if(data.contains("kse all",true)){
-                    viewModel.fetchChart("kseall")
+                    viewModel.fetchOnceChart("kseall")
                 }else if(data.contains("kse 100",true)){
-                    viewModel.fetchChart("kse")
+                    viewModel.fetchOnceChart("kse")
                 }else if(data.contains("kse 30",true)){
-                    viewModel.fetchChart("kse")
+                    viewModel.fetchOnceChart("kse")
                 }else if(data.contains("kmi 30",true)){
-                    viewModel.fetchChart("kmi30")
+                    viewModel.fetchOnceChart("kmi30")
                 }
-                viewModel.mutableChart.observe(viewLifecycleOwner, Observer { result->
+                viewModel.mutableOnceChart.observe(viewLifecycleOwner, Observer { result->
 
                     val entries = result.data?.map {
                         interval+=1
@@ -78,8 +78,10 @@ class IndexAdapter(
     }
 
     fun addItems(list:List<KSEIndices>){
-        this.list=list
-        notifyDataSetChanged()
+        if(this.list.size==0) {
+            this.list = list
+            notifyDataSetChanged()
+        }
     }
 
 }

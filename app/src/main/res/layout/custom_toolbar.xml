@@ -12,7 +12,7 @@
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-
+        android:minHeight="?attr/actionBarSize"
         android:background="@drawable/toolbar"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp">

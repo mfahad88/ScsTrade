@@ -141,6 +141,11 @@ class Utils {
             animator.start()
         }
 
+        fun isPasswordValid(password: String): Boolean { //At least one letter (uppercase or lowercase),At least one digit,At least 6 characters long
+            val passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d).{6,}\$"
+            return password.matches(passwordRegex.toRegex())
+        }
+
         fun compareDates(date1:String,date2:String): Boolean {
             val timestamp1 = date1.replace(Regex("[^0-9]"), "").toLong()
             val sdf=SimpleDateFormat("dd/MM/yy",Locale.getDefault())

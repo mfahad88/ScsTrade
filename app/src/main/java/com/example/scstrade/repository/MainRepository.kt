@@ -109,7 +109,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         mobile: String,
         password: String,
         fireBaseID: String
-    ): Resource<List<LoginDataItem>> {
+    ): Resource<JsonElement> {
         try{
             return Resource.Success(apiService.registration(email,fullName,mobile,password,fireBaseID))
         }catch (e:Exception){

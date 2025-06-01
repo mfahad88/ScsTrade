@@ -48,8 +48,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableFuture=MutableLiveData<Resource<List<StockItem>>>()
     val mutableIndices=MutableLiveData<Resource<List<KSEIndices>>>()
     val mutableLogin=MutableLiveData<Resource<List<LoginDataItem>>>()
-    val mutableRegister=MutableLiveData<Resource<List<LoginDataItem>>>()
+    val mutableRegister=MutableLiveData<Resource<JsonElement>>()
     val mutableChart=MutableLiveData<Resource<List<ChartItem>>>()
+    val mutableOnceChart=MutableLiveData<Resource<List<ChartItem>>>()
     val mutableTechnical=MutableLiveData<Resource<List<TechnicalData>>>()
     val mutableTechnicalDetail=MutableLiveData<Resource<List<TechnicalDetailData>>>()
 
@@ -113,6 +114,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun fetchOnceChart(symbol:String){
+        viewModelScope.launch (Dispatchers.IO){
+            if(isConnected.value==true) {
+                val result = repository.getIndexChart(symbol, 1)
+                withContext(Dispatchers.Main) {
+                    mutableOnceChart.value = result
+                }
+            }
+        }
+    }
+
     fun fetchIndices(){
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -169,6 +181,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             if(isConnected.value==true) {
                 mutableRegister.value = Resource.Loading()
+
                 mutableRegister.value = repository.registerUser(fullName, email, mobile, password,fireBaseID)
             }
         }
@@ -178,11 +191,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         mutableTechnical.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             if(isConnected.value==true){
-            val result=repository.getTechnicals()
-            withContext(Dispatchers.Main){
-                mutableTechnical.value = result
-            }
+                val result=repository.getTechnicals()
+                withContext(Dispatchers.Main){
+                    mutableTechnical.value = result
                 }
+            }
         }
     }
 

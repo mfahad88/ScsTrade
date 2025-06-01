@@ -108,7 +108,7 @@ interface ApiService {
         @Query("RegistrationPhone") phone: String,
         @Query("RegistrationPassword") password: String,
         @Query("FireBaseID")fireBaseID: String
-    ): List<LoginDataItem>
+    ): JsonElement
 
     @GET(value = "/WatchList")
     suspend fun deleteSymbol(

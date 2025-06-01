@@ -1,10 +1,15 @@
 package com.example.scstrade.views.register
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isNotEmpty
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -13,20 +18,51 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentRegisterBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.GoogleSignInUtils
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.widgets.VerticalDivider
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.messaging.FirebaseMessaging
 
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: SharedViewModel
+
+    private lateinit var googleSignInClient: GoogleSignInClient
     var fcm:String?=null
+    private val googleSignInLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                GoogleSignInUtils.handleSignInResult(
+                    data = data,
+                    activity = requireActivity(),
+                    onSuccess = { username ->
+
+                        viewModel.registerUser(
+                            fullName = username?.displayName?:"",
+                            email = username?.email?:"",
+                            password = "scs@123",
+                            mobile = username?.phoneNumber?:"",
+                            fireBaseID = fcm?:""
+                        )
+                    },
+                    onFailure = { error ->
+                        Utils.showError(requireView(),"Sign-in failed: ${error?.message}")
+
+                    }
+                )
+            } else {
+                Utils.showError(requireView(),"Sign-in cancelled")
+            }
+        }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +71,18 @@ class RegisterFragment : Fragment() {
         binding=FragmentRegisterBinding.inflate(inflater,container,false)
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
+        googleSignInClient = GoogleSignInUtils.initGoogleSignInClient(requireContext())
         bindView()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        binding.google.setOnClickListener {
+            GoogleSignInUtils.signOut(requireContext())
+            val signInIntent = googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             fcm=it
         }
@@ -65,27 +112,51 @@ class RegisterFragment : Fragment() {
                 is Resource.Loading -> binding.loader.visibility=View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
-                    if(resource.data?.isNotEmpty() == true){
-                        Utils.showSuccess(binding.root,"Successfully Register")
-                        Utils.saveSharedPreference(requireContext(),AppConstants.USER,resource.data?: emptyList())
-                        loadFragment(LandingFragment(),false)
+                    val json = resource.data
+                    if(json?.isJsonNull?:false){
+                        if(json?.isJsonArray?:false){
+                            val jObject=json?.asJsonArray?.first()?.asJsonObject
+
+                            val data= mutableListOf<LoginDataItem>()
+                            data.add(
+                                LoginDataItem(
+                                    jObject?.get("RegistrationDate")?.asString,
+                                    jObject?.get("RegistrationEmail")?.asString,
+                                    jObject?.get("RegistrationID")?.asInt,
+                                    jObject?.get("RegistrationName")?.asString,
+                                    jObject?.get("RegistrationPassword")?.asString,
+                                    jObject?.get("RegistrationPhone")?.asString,
+                                    jObject?.get("RegistrationStatus")?.asBoolean
+
+                                )
+                            )
+                            Utils.showSuccess(binding.root,"Successfully Register")
+                            Utils.saveSharedPreference(requireContext(),AppConstants.USER,data?: emptyList())
+                            loadFragment(LandingFragment(),false)
+                        }
                     }else{
-                        Utils.showError(binding.root,"Unable to Register")
+                        Utils.showError(binding.root,json?.asString?:"An error occurred...")
+
                     }
+
                 }
             }
         })
 
         binding.button.setOnClickListener {
             if(binding.fullName.text.isNotEmpty() && binding.email.text.isNotEmpty() && binding.mobileNumber.text.isNotEmpty() && binding.password.text.isNotEmpty()){
-                binding.apply {
-                    viewModel.registerUser(
-                        fullName = fullName.text,
-                        email = email.text,
-                        password = password.text,
-                        mobile = mobileNumber.text,
-                        fireBaseID = fcm?:""
-                    )
+                if(Utils.isPasswordValid(binding.password.text)) {
+                    binding.apply {
+                        viewModel.registerUser(
+                            fullName = fullName.text,
+                            email = email.text,
+                            password = password.text,
+                            mobile = mobileNumber.text,
+                            fireBaseID = fcm ?: ""
+                        )
+                    }
+                }else{
+                    Utils.showError(requireView(),"Invalid Password it should be of 6 characters with  At least one letter and  At least one digit")
                 }
             }else{
                 Utils.showError(binding.root,"Provide data for all fields")
