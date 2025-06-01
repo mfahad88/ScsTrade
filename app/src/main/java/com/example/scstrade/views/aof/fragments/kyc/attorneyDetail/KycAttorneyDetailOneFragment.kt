@@ -168,42 +168,42 @@ class KycAttorneyDetailOneFragment : Fragment() {
                             attorneyCity = response.mailingCityAtr
                             attorneyProvince = response.mailingProvinceAtr
 //                            viewModel.saveAttorneyDetails()
-                        }
-                        val attorneyDetail= viewModel.attorneyDetail
-                        attorney_type=attorneyDetail.attorneyType
-                        attorney_saluation = attorneyDetail.attorneySalutation.toString()
-                        attorney_FullName = attorneyDetail.attorneyFullName
-                        attorney_Uin_Type = attorneyDetail.attorneyUinType
-                        attorney_Uin_Number = attorneyDetail.attorneyUinNumber
+                            val attorneyDetail= viewModel.attorneyDetail
+                            attorney_type=attorneyDetail.attorneyType
+                            attorney_saluation = attorneyDetail.attorneySalutation.toString()
+                            attorney_FullName = attorneyDetail.attorneyFullName
+                            attorney_Uin_Type = attorneyDetail.attorneyUinType
+                            attorney_Uin_Number = attorneyDetail.attorneyUinNumber
 
-                        binding.apply {
-                            if(attorney_saluation!="") {
-                                labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
-                                    it.second.equals(
-                                        attorney_saluation
-                                    )
-                                }.map { it.first }.first())
-                            }
-                            if(attorney_Uin_Type!="") {
-                                uinType.dropdown.setText(AppConstants.IDTYPE.filter {
-                                    it.second.equals(
-                                        attorney_Uin_Type
-                                    )
-                                }.map { it.first }.first())
-                            }
-                            if(attorney_FullName!="") {
-                                fullName.textInputEditText.setText(attorney_FullName)
-                            }
-                            if(attorney_Uin_Number!="") {
-                                uinNumber.textInputEditText.setText(attorney_Uin_Number)
-                            }
-                            if(attorney_type!="") {
-                                if (attorney_type.equals("o",true)) {
-                                    isTheAtto.toggleSelection(false)
-                                    someElseContainer.visibility = View.VISIBLE
-                                } else {
-                                    isTheAtto.toggleSelection(true)
-                                    someElseContainer.visibility = View.GONE
+                            binding.apply {
+                                if(attorney_saluation!="") {
+                                    labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
+                                        it.second.equals(
+                                            attorney_saluation
+                                        )
+                                    }.map { it.first }.first())
+                                }
+                                if(attorney_Uin_Type!="") {
+                                    uinType.dropdown.setText(AppConstants.IDTYPE.filter {
+                                        it.second.equals(
+                                            attorney_Uin_Type
+                                        )
+                                    }.map { it.first }.first())
+                                }
+                                if(attorney_FullName!="") {
+                                    fullName.textInputEditText.setText(attorney_FullName)
+                                }
+                                if(attorney_Uin_Number!="") {
+                                    uinNumber.textInputEditText.setText(attorney_Uin_Number)
+                                }
+                                if(attorney_type!="") {
+                                    if (attorney_type.equals("o",true)) {
+                                        isTheAtto.toggleSelection(false)
+                                        someElseContainer.visibility = View.VISIBLE
+                                    } else {
+                                        isTheAtto.toggleSelection(true)
+                                        someElseContainer.visibility = View.GONE
+                                    }
                                 }
                             }
                         }

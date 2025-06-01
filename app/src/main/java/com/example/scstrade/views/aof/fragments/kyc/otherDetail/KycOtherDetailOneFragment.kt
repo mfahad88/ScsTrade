@@ -15,6 +15,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailThreeFragment
 
 
@@ -37,7 +38,11 @@ class KycOtherDetailOneFragment : Fragment() {
 
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycNomineeDetailThreeFragment())
+                if(viewModel.nominee.isNominee.equals("y")) {
+                    (requireActivity() as AofActivity).loadFragment(KycNomineeDetailThreeFragment())
+                }else{
+                    (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                }
             }
             accountType.setOnButtonOneClickListener {
                 accountType.toggleSelection(true)

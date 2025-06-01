@@ -98,6 +98,14 @@ class KycContactDetailOneFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     val response = result.data?.data
+                    binding.apply {
+                        if(mobile_Number!="") {
+                            mobileNumber.textInputEditText.setText(mobile_Number)
+                        }
+                        if(email_Address!="") {
+                            email.textInputEditText.setText(email_Address)
+                        }
+                    }
                     viewModel.contactDetail.apply {
                         if(response!=null){
                             mailingAddress = response.mailingAddress1
@@ -129,12 +137,7 @@ class KycContactDetailOneFragment : Fragment() {
                                 mailing_City_Other = mailingCityOther
 
                                 binding.apply {
-                                    if(mobile_Number!="") {
-                                        mobileNumber.textInputEditText.setText(mobile_Number)
-                                    }
-                                    if(email_Address!="") {
-                                        email.textInputEditText.setText(email_Address)
-                                    }
+
                                     if(mailing_Address!="") {
                                         mailingAddress.setText(mailing_Address)
                                     }

@@ -15,6 +15,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailTwoFragment
 
@@ -40,7 +41,11 @@ class KycNomineeDetailOneFragment : Fragment() {
 
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
+                if(viewModel.attorneyDetail.attorneyType.equals("s",true)){
+                    (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+                }else {
+                    (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
+                }
             }
             Utils.filterTextField(nomineeName.textInputEditText, Regex("^[A-Za-z] "))
             Utils.filterTextField(nomineeMobile.textInputEditText, Regex("^[0-9]"))

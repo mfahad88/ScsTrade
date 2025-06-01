@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentKycFiveBinding
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.contactDetails.ContactDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -45,15 +47,30 @@ class KycContactDetailTwoFragment : Fragment() {
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
             }
+
+            viewModel.mutableCreateContactDetail.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> Utils.showError(requireView(),result.message?: getString(R.string.an_error_occurred))
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        if(result.data?.isSuccess?:false){
+                            (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+
+                        }
+                    }
+                }
+            })
             btnContinue.setOnClickListener {
-                if(office_number!!.isNotEmpty() && residence_number!!.isNotEmpty()){
+                if(office_number?.isNotEmpty()?:false && residence_number?.isNotEmpty()?:false){
                     viewModel.contactDetail.apply {
                         officeNumber=office_number
                         residenceNumber=residence_number
                     }
 //                    viewModel.saveContactDetails()
                     if(isPermanentAddressSame){
-                        viewModel.getContactDetails().apply {
+                        viewModel.contactDetail.apply {
                             viewModel.createContactDetail(
                                 ContactDetailDto(
                                     id = null,
@@ -83,7 +100,6 @@ class KycContactDetailTwoFragment : Fragment() {
                             )
                         }
 
-                        (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
                     }else{
                         (requireActivity() as AofActivity).loadFragment(
                             KycContactDetailThreeFragment()
