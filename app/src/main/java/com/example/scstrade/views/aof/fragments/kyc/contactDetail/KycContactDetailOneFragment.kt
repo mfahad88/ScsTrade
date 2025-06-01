@@ -117,68 +117,69 @@ class KycContactDetailOneFragment : Fragment() {
                             parmanentResidenceNumber = response.permanentResidence
                             mailingCityOther = response.mailingCityOther
 //                            viewModel.saveContactDetails()
-                        }
-                        val contactDetail = viewModel.contactDetail
-                        contactDetail.apply {
-                            mobile_Number = mobileNumber
-                            email_Address = emailAddress
-                            mailing_Address = mailingAddress
-                            mailing_Country = mailingCountry
-                            mailing_Province = mailingProvince
-                            mailing_Province_Other = mailingProvinceOther
-                            mailing_City = mailingCity
-                            mailing_City_Other = mailingCityOther
+                            val contactDetail = viewModel.contactDetail
+                            contactDetail.apply {
+                                mobile_Number = mobileNumber
+                                email_Address = emailAddress
+                                mailing_Address = mailingAddress
+                                mailing_Country = mailingCountry
+                                mailing_Province = mailingProvince
+                                mailing_Province_Other = mailingProvinceOther
+                                mailing_City = mailingCity
+                                mailing_City_Other = mailingCityOther
 
-                            binding.apply {
-                                if(mobile_Number!="") {
-                                    mobileNumber.textInputEditText.setText(mobile_Number)
-                                }
-                                if(email_Address!="") {
-                                    email.textInputEditText.setText(email_Address)
-                                }
-                                if(mailing_Address!="") {
-                                    mailingAddress.setText(mailing_Address)
-                                }
-                                if(mailing_Country!="") {
+                                binding.apply {
+                                    if(mobile_Number!="") {
+                                        mobileNumber.textInputEditText.setText(mobile_Number)
+                                    }
+                                    if(email_Address!="") {
+                                        email.textInputEditText.setText(email_Address)
+                                    }
+                                    if(mailing_Address!="") {
+                                        mailingAddress.setText(mailing_Address)
+                                    }
+                                    if(mailing_Country!="") {
 
-                                    mailingCountry.dropdown.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst { it.second.equals(mailing_Country,true) }).first,false)
-                                }
-                                if(mailing_City!="") {
-                                    mailingCity.dropdown.setText(AppConstants.CITY.filter {
-                                        it.first.second.equals(
-                                            mailing_City,
-                                            true
-                                        )
-                                    }.map { it.first.first }.first(),false)
-                                    mailingProvince.visibility = View.VISIBLE
-                                    mailingOtherProvince.visibility = View.INVISIBLE
-                                }
+                                        mailingCountry.dropdown.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst { it.second.equals(mailing_Country,true) }).first,false)
+                                    }
+                                    if(mailing_City!="") {
+                                        mailingCity.dropdown.setText(AppConstants.CITY.filter {
+                                            it.first.second.equals(
+                                                mailing_City,
+                                                true
+                                            )
+                                        }.map { it.first.first }.first(),false)
+                                        mailingProvince.visibility = View.VISIBLE
+                                        mailingOtherProvince.visibility = View.INVISIBLE
+                                    }
 
-                                if(mailing_Province!="") {
-                                    mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
-                                        it.second.equals(
-                                            mailing_Province,
-                                            true
-                                        )
-                                    }.map { it.first }.first(),false)
-                                    mailingProvince.visibility = View.VISIBLE
-                                    mailingOtherProvince.visibility = View.INVISIBLE
-                                }
+                                    if(mailing_Province!="") {
+                                        mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
+                                            it.second.equals(
+                                                mailing_Province,
+                                                true
+                                            )
+                                        }.map { it.first }.first(),false)
+                                        mailingProvince.visibility = View.VISIBLE
+                                        mailingOtherProvince.visibility = View.INVISIBLE
+                                    }
 
-                                if(mailing_Province_Other!=""){
-                                    mailingOtherProvince.textInputEditText.setText(mailing_Province_Other)
-                                    mailingProvince.visibility = View.INVISIBLE
-                                    mailingOtherProvince.visibility = View.VISIBLE
-                                }
+                                    if(mailing_Province_Other!=""){
+                                        mailingOtherProvince.textInputEditText.setText(mailing_Province_Other)
+                                        mailingProvince.visibility = View.INVISIBLE
+                                        mailingOtherProvince.visibility = View.VISIBLE
+                                    }
 
 
-                                if(mailing_City_Other!=""){
-                                    mailingOtherCity.textInputEditText.setText(mailing_City_Other)
-                                    mailingCity.visibility = View.INVISIBLE
-                                    mailingOtherCity.visibility = View.VISIBLE
+                                    if(mailing_City_Other!=""){
+                                        mailingOtherCity.textInputEditText.setText(mailing_City_Other)
+                                        mailingCity.visibility = View.INVISIBLE
+                                        mailingOtherCity.visibility = View.VISIBLE
+                                    }
                                 }
                             }
                         }
+
                     }
                     binding.loader.visibility = View.GONE
                 }

@@ -76,7 +76,8 @@ class LoginAOFFragment : Fragment() {
                     viewModel.getcontactDetails()
                     viewModel.getNomineeDetails()
                     viewModel.getotherDetails()
-
+                    viewModel.mutableProtected.value=null
+                    viewModel.mutableLoginUser.value=null
                     (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
                 }
             }

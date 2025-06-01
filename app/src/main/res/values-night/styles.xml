@@ -26,19 +26,19 @@
     <style name="kse_100">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_scrim_mediumContrast</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="m_vol_721_9">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_scrim_mediumContrast</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="index_value">
         <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/md_theme_scrim_mediumContrast</item>
+        <item name="android:textColor">@color/black</item>
 
     </style>
 
@@ -200,14 +200,14 @@
     <style name="register_an">
         <item name="android:textSize">28sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/md_theme_inverseOnSurface_highContrast</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/inter_28pt_semibold_600</item>
     </style>
 
     <style name="create_weal">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/md_theme_inverseOnSurface_highContrast</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/inter_28pt_regular_400</item>
     </style>
 
@@ -601,7 +601,7 @@
     <style name="your_portfo">
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="fauji_foods">
@@ -710,7 +710,7 @@
     <style name="company_add">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="custom_gray_outlined" parent="Widget.MaterialComponents.Button">
@@ -763,18 +763,18 @@
     <style name="current_mar">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="current_mar_value">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="p_l_summary">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="days_p_l_ho">
@@ -797,7 +797,7 @@
     <style name="total">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="new_buy_trade">
@@ -809,7 +809,7 @@
     <style name="buy_stocks_">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="invest_in_s">
@@ -833,7 +833,7 @@
     <style name="ffl">
         <item name="android:textSize">26sp</item>
         <item name="android:letterSpacing">0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="fauji_foods_summary">
@@ -868,18 +868,18 @@
 
     <style name="current_mar_value_holding">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="purchase_co">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="purchase_co_value">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="buy_transac">
@@ -896,7 +896,7 @@
     <style name="feb_25">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="net_price">
@@ -908,13 +908,13 @@
     <style name="net_price_value">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="current_p_l_value">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="historical_value">
@@ -947,13 +947,13 @@
     <style name="view_det">
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="holding_sha">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="share_in">
@@ -965,7 +965,7 @@
     <style name="price">
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="total_cost_">
@@ -1013,27 +1013,27 @@
     <style name="progress_10">
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="steps">
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="welcome">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="open_your">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">27.09sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="scstrade_di">
@@ -1047,35 +1047,35 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">27.09sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="trade_anywh">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="by_filling_">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="manage_your">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="log_in_your">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="login_now">
@@ -1103,7 +1103,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="country_code">
@@ -1131,7 +1131,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="resident">
@@ -1152,7 +1152,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="select_file">
@@ -1173,7 +1173,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="ax">
@@ -1187,7 +1187,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="download_pdf">
@@ -1222,42 +1222,42 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="account_ver">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="congratulat">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="next_steps_">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="you_can_now">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="ensure_all_">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="select_your">
@@ -1278,28 +1278,28 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="cdc_ivr_ser">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="do_you_wish">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="kindly_ente">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="single_btn">
@@ -1312,14 +1312,14 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="please_tap_">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="nominee_nic">
@@ -1333,21 +1333,21 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="whatever_in">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="i_don_t_accept">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:textColor">@color/colorDarkerr</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="i_accept">
@@ -1409,7 +1409,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="MyTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/black</item>
+        <item name="boxStrokeColor">@color/text_input_stroke_color</item>
         <item name="boxStrokeWidth">1dp</item>
         <item name="boxStrokeWidthFocused">2dp</item>
         <item name="hintTextColor">@color/black</item>

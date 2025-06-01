@@ -328,26 +328,30 @@ class OverviewFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    AndroidView(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                            .height(250.dp),
-                        factory = { context -> CustomBarChart(context) },
-                        update = { populateBarChart(it,charting.data?.ePSYear) }
-                    )
+                    if(charting.data?.ePSYear!=null) {
+                        AndroidView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .height(250.dp),
+                            factory = { context -> CustomBarChart(context) },
+                            update = { populateBarChart(it, charting.data?.ePSYear) }
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(15.dp))
-            AndroidView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                    .height(250.dp),
-                factory = { context -> GroupedBarChart(context) },
-                update = { populateGroupBarChart(it,charting.data?.ePS) }
-            )
+            if(charting.data?.ePS!=null) {
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                        .height(250.dp),
+                    factory = { context -> GroupedBarChart(context) },
+                    update = { populateGroupBarChart(it, charting.data?.ePS) }
+                )
+            }
 
             Spacer(modifier = Modifier.height(15.dp))
             if(detail?.snapShot?.equity!=null) {
@@ -753,9 +757,15 @@ class OverviewFragment : Fragment() {
     }
 
     private fun populateBarChart(customBarChart: CustomBarChart, ePS: EPSYear?) {
-
-        customBarChart.setChartData(ePS?.year,ePS?.earningPerShare?.map { it.toFloat() }?.toList(),0.5f)
-
+        try {
+            customBarChart.setChartData(
+                ePS?.year,
+                ePS?.earningPerShare?.map { it.toFloat() }?.toList(),
+                0.5f
+            )
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
 
