@@ -34,6 +34,7 @@ class AccountOpeningFiveFragment : Fragment() {
 
                 }
             }
+
         }
         aofViewModel.mutableVerifyOtp.observe(viewLifecycleOwner, Observer { result->
             when(result){

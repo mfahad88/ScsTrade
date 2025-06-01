@@ -82,7 +82,7 @@ class AccountOpeningTwoFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
+            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
         }
         return binding.root
     }

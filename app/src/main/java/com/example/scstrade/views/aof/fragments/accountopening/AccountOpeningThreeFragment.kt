@@ -198,7 +198,7 @@ class AccountOpeningThreeFragment : Fragment() {
             pickImageLauncher.launch("image/*")
         }
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningTwoFragment())
+            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
         }
 
         binding.btnContinue.setOnClickListener {

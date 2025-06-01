@@ -60,7 +60,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
             isAttorney.setOnButtonOneClickListener {
                 nic_type = "N"

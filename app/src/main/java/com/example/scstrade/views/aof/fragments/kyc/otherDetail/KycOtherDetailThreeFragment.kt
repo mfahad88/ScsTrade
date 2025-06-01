@@ -34,7 +34,7 @@ class KycOtherDetailThreeFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycOtherDetailTwoFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
 
             zakatStatus.setList1(AppConstants.ZakatType.map { it.first })

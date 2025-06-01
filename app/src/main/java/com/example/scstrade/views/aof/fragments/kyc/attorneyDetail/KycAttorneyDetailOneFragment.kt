@@ -40,12 +40,15 @@ class KycAttorneyDetailOneFragment : Fragment() {
         populateDropdown()
         binding.apply {
             back.setOnClickListener {
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+            }
+           /* back.setOnClickListener {
                 if(viewModel.getContactDetails().parmanentAddress?.isNotEmpty()?:false){
                     (requireActivity() as AofActivity).loadFragment(KycContactDetailThreeFragment())
                 }else{
                     (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
                 }
-            }
+            }*/
 
             isTheAtto.apply {
                 setOnButtonOneClickListener {

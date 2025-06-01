@@ -121,7 +121,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(KycNomineeDetailTwoFragment())
+            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
         }
 
         binding.btnContinue.setOnClickListener {

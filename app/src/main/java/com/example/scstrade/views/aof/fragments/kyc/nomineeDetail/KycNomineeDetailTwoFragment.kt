@@ -60,7 +60,7 @@ class KycNomineeDetailTwoFragment : Fragment() {
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
 
             btnContinue.setOnClickListener {

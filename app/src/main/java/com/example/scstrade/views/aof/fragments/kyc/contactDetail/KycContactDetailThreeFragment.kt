@@ -73,7 +73,7 @@ class KycContactDetailThreeFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
 
             btnContinue.setOnClickListener {

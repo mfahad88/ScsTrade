@@ -85,7 +85,13 @@ class AofActivity : AppCompatActivity() {
 
 
     public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
-        if(isBackStack){
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+            .replace(binding.fragmentContainer.id, fragment)
+            .addToBackStack(null)
+            .commit()
+        /*if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
@@ -98,6 +104,6 @@ class AofActivity : AppCompatActivity() {
                 .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
-        }
+        }*/
     }
 }

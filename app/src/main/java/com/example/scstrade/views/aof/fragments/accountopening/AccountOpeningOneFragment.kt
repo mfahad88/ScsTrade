@@ -117,7 +117,7 @@ class AccountOpeningOneFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(WelcomeFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
         }
 

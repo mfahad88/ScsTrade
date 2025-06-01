@@ -56,7 +56,7 @@ class KycContactDetailOneFragment : Fragment() {
             email.textInputEditText.setText(email_Address)
             email.textInputEditText.isEnabled=false
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
             mailingAddress.addTextChangedListener {
                 mailing_Address=it.toString()

@@ -110,7 +110,7 @@ class KycBasicDataThreeFragment : Fragment() {
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycBasicDataTwoFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
         }
 

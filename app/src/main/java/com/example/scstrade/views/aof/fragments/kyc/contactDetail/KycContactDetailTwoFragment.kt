@@ -43,7 +43,7 @@ class KycContactDetailTwoFragment : Fragment() {
                 textview_2.inputType = InputType.TYPE_CLASS_PHONE
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
             btnContinue.setOnClickListener {
                 if(office_number!!.isNotEmpty() && residence_number!!.isNotEmpty()){

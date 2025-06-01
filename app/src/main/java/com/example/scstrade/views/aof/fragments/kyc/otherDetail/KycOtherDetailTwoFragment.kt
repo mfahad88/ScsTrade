@@ -32,7 +32,7 @@ class KycOtherDetailTwoFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
             }
 
             jobDetails.apply {
