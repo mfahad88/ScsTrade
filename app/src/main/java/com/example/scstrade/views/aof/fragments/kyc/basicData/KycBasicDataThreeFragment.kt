@@ -110,7 +110,7 @@ class KycBasicDataThreeFragment : Fragment() {
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycBasicDataTwoFragment())
             }
         }
 
@@ -143,7 +143,7 @@ class KycBasicDataThreeFragment : Fragment() {
     }
 
     private fun initFields() {
-        val basicData = viewModel.getbasicData()
+        val basicData = viewModel.basicData
 
        if(basicData!=null){
            nicExpiry=basicData.nicValid

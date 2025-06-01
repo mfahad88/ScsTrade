@@ -73,7 +73,7 @@ class KycContactDetailThreeFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
             }
 
             btnContinue.setOnClickListener {
@@ -152,7 +152,7 @@ class KycContactDetailThreeFragment : Fragment() {
     }
 
     private fun initFields() {
-        val contactDetail=viewModel.getContactDetails()
+        val contactDetail=viewModel.contactDetail
         contactDetail.apply {
             binding.parmanentAddr.setText(parmanentAddress )
             parmanent_address = parmanentAddress

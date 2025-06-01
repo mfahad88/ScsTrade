@@ -60,7 +60,7 @@ class KycNomineeDetailTwoFragment : Fragment() {
                 }
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
             }
 
             btnContinue.setOnClickListener {
@@ -88,7 +88,7 @@ class KycNomineeDetailTwoFragment : Fragment() {
     }
 
     private fun initFields() {
-        val nominee = viewModel.getnominee()
+        val nominee = viewModel.nominee
 
         nominee.apply {
             if(nomineeAddress!=""){

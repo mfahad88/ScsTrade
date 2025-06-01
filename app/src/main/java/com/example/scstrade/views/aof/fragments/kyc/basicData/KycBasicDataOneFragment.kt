@@ -78,7 +78,7 @@ class KycBasicDataOneFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
             }
 
             btnContinue.setOnClickListener {

@@ -32,7 +32,7 @@ class KycOtherDetailTwoFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
             }
 
             jobDetails.apply {
@@ -80,7 +80,7 @@ class KycOtherDetailTwoFragment : Fragment() {
     }
 
     private fun initFields() {
-        val otherDetail = viewModel.getotherDetail()
+        val otherDetail = viewModel.otherDetail
 
         otherDetail.apply {
             if(otherDetailJobDesignation!=""){

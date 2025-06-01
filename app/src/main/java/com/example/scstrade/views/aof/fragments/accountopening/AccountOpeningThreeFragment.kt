@@ -198,7 +198,7 @@ class AccountOpeningThreeFragment : Fragment() {
             pickImageLauncher.launch("image/*")
         }
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
         }
 
         binding.btnContinue.setOnClickListener {
@@ -227,14 +227,14 @@ class AccountOpeningThreeFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            proofOfIb.fileName=viewModel.getaccountOpening().accountopeningproofIban
-            ibanBase64=viewModel.getaccountOpening().accountopeningproofIbanImage
-            nicFront.fileName=viewModel.getaccountOpening().accountopeningnicFront
-            nicFrontBase64=viewModel.getaccountOpening().accountopeningnicFrontImage
-            nicBack.fileName=viewModel.getaccountOpening().accountopeningnicBack
-            nicBackBase64=viewModel.getaccountOpening().accountopeningnicBackImage
-            proofOfRelative.fileName=viewModel.getaccountOpening().accountopeningproofRelative
-            relationshipBase64=viewModel.getaccountOpening().accountopeningproofRelativeImage
+            proofOfIb.fileName=viewModel.accountOpening.accountopeningproofIban
+            ibanBase64=viewModel.accountOpening.accountopeningproofIbanImage
+            nicFront.fileName=viewModel.accountOpening.accountopeningnicFront
+            nicFrontBase64=viewModel.accountOpening.accountopeningnicFrontImage
+            nicBack.fileName=viewModel.accountOpening.accountopeningnicBack
+            nicBackBase64=viewModel.accountOpening.accountopeningnicBackImage
+            proofOfRelative.fileName=viewModel.accountOpening.accountopeningproofRelative
+            relationshipBase64=viewModel.accountOpening.accountopeningproofRelativeImage
         }
     }
 

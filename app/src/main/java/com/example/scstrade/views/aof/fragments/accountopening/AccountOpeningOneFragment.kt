@@ -12,9 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningOneBinding
+import com.example.scstrade.databinding.LabelledTextfieldBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.AofViewModel
@@ -41,7 +43,7 @@ class AccountOpeningOneFragment : Fragment() {
     var issue_date=""
     var nic_type=""
     var nic_number=""
-    @RequiresApi(Build.VERSION_CODES.N)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +51,6 @@ class AccountOpeningOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningOneBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
-
         binding.apply {
 
             fullName.apply {
@@ -117,11 +118,11 @@ class AccountOpeningOneFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(WelcomeFragment())
             }
         }
 
-//        initFields()
+        initFields()
 
 
 
@@ -129,8 +130,11 @@ class AccountOpeningOneFragment : Fragment() {
         return binding.root
     }
 
+
+
+
     private fun initFields() {
-        val accountOpening= viewModel.getaccountOpening()
+        val accountOpening= viewModel.accountOpening
         accountOpening.apply {
 
             if(accountopeningfullName!="" && accountopeningfullName!=null){
@@ -170,6 +174,7 @@ class AccountOpeningOneFragment : Fragment() {
             }
         }
     }
+
 
 
 }

@@ -43,7 +43,7 @@ class KycContactDetailTwoFragment : Fragment() {
                 textview_2.inputType = InputType.TYPE_CLASS_PHONE
             }
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
             }
             btnContinue.setOnClickListener {
                 if(office_number!!.isNotEmpty() && residence_number!!.isNotEmpty()){
@@ -115,7 +115,7 @@ class KycContactDetailTwoFragment : Fragment() {
     }
 
     private fun initFields() {
-        val contactDetail = viewModel.getContactDetails()
+        val contactDetail = viewModel.contactDetail
         contactDetail.apply {
             if(officeNumber?.isNotEmpty()?:false){
                 binding.officeResidenceNumber.textview_1.setText(officeNumber)

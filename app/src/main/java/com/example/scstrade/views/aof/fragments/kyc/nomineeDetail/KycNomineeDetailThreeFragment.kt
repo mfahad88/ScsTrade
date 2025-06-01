@@ -121,7 +121,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+            (requireActivity() as AofActivity).loadFragment(KycNomineeDetailTwoFragment())
         }
 
         binding.btnContinue.setOnClickListener {
@@ -182,10 +182,10 @@ class KycNomineeDetailThreeFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            nicFront.fileName=viewModel.getnominee().nomineeNicFrontFileName
-            nicFrontBase64=viewModel.getnominee().nomineeNicFront
-            nicBack.fileName=viewModel.getnominee().nomineeNicBackFileName
-            nicBackBase64=viewModel.getnominee().nomineeNicBack
+            nicFront.fileName=viewModel.nominee.nomineeNicFrontFileName
+            nicFrontBase64=viewModel.nominee.nomineeNicFront
+            nicBack.fileName=viewModel.nominee.nomineeNicBackFileName
+            nicBackBase64=viewModel.nominee.nomineeNicBack
         }
     }
 

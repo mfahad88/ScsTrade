@@ -37,7 +37,7 @@ class AccountOpeningTwoFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningTwoBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
-//        initFields()
+        initFields()
         populateDropdown()
         binding.apply {
             mobileNumber.textInputEditText.addTextChangedListener {
@@ -82,7 +82,7 @@ class AccountOpeningTwoFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
         }
         return binding.root
     }
@@ -116,7 +116,7 @@ class AccountOpeningTwoFragment : Fragment() {
     }
 
     private fun initFields(){
-        val accountOpening=viewModel.getaccountOpening()
+        val accountOpening=viewModel.accountOpening
         accountOpening.apply {
             if(accountopeningmobileNumber!="" && accountopeningmobileNumber!=null){
                 mobile_number = accountopeningmobileNumber!!

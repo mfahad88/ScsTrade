@@ -37,7 +37,7 @@ class KycOtherDetailOneFragment : Fragment() {
 
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycNomineeDetailThreeFragment())
             }
             accountType.setOnButtonOneClickListener {
                 accountType.toggleSelection(true)

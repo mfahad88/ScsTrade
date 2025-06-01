@@ -34,7 +34,7 @@ class KycOtherDetailThreeFragment : Fragment() {
         initFields()
         binding.apply {
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycOtherDetailTwoFragment())
             }
 
             zakatStatus.setList1(AppConstants.ZakatType.map { it.first })
@@ -110,7 +110,7 @@ class KycOtherDetailThreeFragment : Fragment() {
     }
 
     private fun initFields() {
-        val otherDetail = viewModel.getotherDetail()
+        val otherDetail = viewModel.otherDetail
         otherDetail.apply {
             zakat_status = otherDetailZakatStatus
             bank_name = otherDetailBank

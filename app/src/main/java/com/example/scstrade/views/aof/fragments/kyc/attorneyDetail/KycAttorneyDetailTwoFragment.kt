@@ -60,7 +60,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
             }
 
             back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
             }
             isAttorney.setOnButtonOneClickListener {
                 nic_type = "N"
@@ -174,7 +174,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
     }
 
     private fun initFields() {
-        val attorneyDetail = viewModel.getAttorneyDetails()
+        val attorneyDetail = viewModel.attorneyDetail
         attorneyDetail.apply {
             if(attorneyNicType!=""){
                 if(attorneyNicType?.equals("Y")?:false){

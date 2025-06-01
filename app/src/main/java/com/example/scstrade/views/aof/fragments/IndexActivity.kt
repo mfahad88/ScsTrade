@@ -8,6 +8,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.scstrade.R
 
 class IndexActivity : AppCompatActivity() {
+    val list= listOf("Welcome","Account Opening Details","Email Verification Process",
+        "Basic Data","Contact Details","Attorney Details","Nominee Details","Other Details","")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

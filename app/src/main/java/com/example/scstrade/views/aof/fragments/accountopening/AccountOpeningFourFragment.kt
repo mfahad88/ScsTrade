@@ -26,7 +26,7 @@ class AccountOpeningFourFragment : Fragment() {
         viewModel = (requireActivity() as AofActivity).viewModel
 //        initFields()
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
         }
 
         binding.apply {
