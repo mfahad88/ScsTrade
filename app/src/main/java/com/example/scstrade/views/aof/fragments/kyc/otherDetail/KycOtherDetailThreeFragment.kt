@@ -42,7 +42,7 @@ class KycOtherDetailThreeFragment : Fragment() {
 
             zakatStatus.autoCompleteTextView1.setOnItemClickListener { adapterView, view, i, l ->
                 zakat_status=AppConstants.ZakatType.get(i).second
-                viewModel.getotherDetail().otherDetailZakatStatus=zakat_status
+                viewModel.otherDetail.otherDetailZakatStatus=zakat_status
             }
 
 //            bank.setList1(AppConstants.BANK_SWIFT_CODES.map { it.first }.toList())
@@ -55,7 +55,7 @@ class KycOtherDetailThreeFragment : Fragment() {
 
             remittanceBasis.autoCompleteTextView1.setOnItemClickListener { adapterView, view, i, l ->
                 remittance = AppConstants.RemittanceDescription.get(i).second
-                viewModel.getotherDetail().otherDetailRemittance = remittance
+                viewModel.otherDetail.otherDetailRemittance = remittance
             }
 
             btnContinue.setOnClickListener {
@@ -63,16 +63,16 @@ class KycOtherDetailThreeFragment : Fragment() {
                     && !remittance.isNullOrEmpty()){
                     viewModel.otherDetails(
                         OtherDetailDto(
-                            accountType = viewModel.getotherDetail().otherDetailAccountType?:"",
-                            annualIncomeNormal = viewModel.getotherDetail().otherDetailGrossIncomeSlab?:"",
-                            department = viewModel.getotherDetail().otherDetailDepartment?:"",
-                            employeeAddress = viewModel.getotherDetail().otherDetailEmployerAddress?:"",
-                            employeeName = viewModel.getotherDetail().otherDetailEmployerName?:"",
+                            accountType = viewModel.otherDetail.otherDetailAccountType?:"",
+                            annualIncomeNormal = viewModel.otherDetail.otherDetailGrossIncomeSlab?:"",
+                            department = viewModel.otherDetail.otherDetailDepartment?:"",
+                            employeeAddress = viewModel.otherDetail.otherDetailEmployerAddress?:"",
+                            employeeName = viewModel.otherDetail.otherDetailEmployerName?:"",
                             id=null,
-                            jobTitle = viewModel.getotherDetail().otherDetailJobDesignation?:"",
-                            occupation = viewModel.getotherDetail().otherDetailOccupation?:"",
-                            otherOccupation = viewModel.getotherDetail().otherDetailOtherOccupation?:"",
-                            sourceOfIncome = viewModel.getotherDetail().otherDetailSourceOfIncome?:"",
+                            jobTitle = viewModel.otherDetail.otherDetailJobDesignation?:"",
+                            occupation = viewModel.otherDetail.otherDetailOccupation?:"",
+                            otherOccupation = viewModel.otherDetail.otherDetailOtherOccupation?:"",
+                            sourceOfIncome = viewModel.otherDetail.otherDetailSourceOfIncome?:"",
                             zakatStatus = zakat_status?:"",
                             remittanceBasis = remittance?:""
 
@@ -117,18 +117,18 @@ class KycOtherDetailThreeFragment : Fragment() {
             bank_name = otherDetailBank
             remittance = otherDetailRemittance
             binding.apply {
-                if(zakat_status!=""){
+                if(zakat_status!="" && zakat_status!=null){
 
                     zakatStatus.autoCompleteTextView1.setText(AppConstants.ZakatType.filter { it.second.equals(zakat_status) }.map { it.first }.first())
                 }
 
-                if(bank_name!=""){
+                if(bank_name!="" && bank_name!=null){
 
 
                     bank.autoCompleteTextView1.setText(AppConstants.BANK_SWIFT_CODES.filter { it.second.equals(bank_name) }.map { it.first }.first())
                 }
 
-                if(remittance!=""){
+                if(remittance!="" && remittance!=null){
                     remittanceBasis.autoCompleteTextView1.setText(AppConstants.RemittanceDescription.filter { it.second.equals(remittance) }.map { it.first }.first())
                 }
 

@@ -23,6 +23,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.document.DocumentDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailThreeFragment
 
 
 class KycDocumentFragment : Fragment() {
@@ -53,19 +54,24 @@ class KycDocumentFragment : Fragment() {
                 if(proofPermanentAddressClicked) {
                     uriproofPermanentAddress=it
                     binding.proofOfPe.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    proofPermanentAddressBase64 = Utils.convertImageUriToBase64(requireContext(), uriproofPermanentAddress!!)
+                    proofPermanentAddressBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofPermanentAddress!!)}"
                 }else if(proofPermanentEmployerAddressClicked){
                     uriproofPermanentEmployerAddress=it
                     binding.incomeProo.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    proofPermanentEmployerAddressBase64 = Utils.convertImageUriToBase64(requireContext(), uriproofPermanentEmployerAddress!!)
+                    proofPermanentEmployerAddressBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofPermanentEmployerAddress!!)}"
                 }else if(proofSignatureClicked){
                     uriproofSignature=it
                     binding.specimenSi.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    proofSignatureBase64 = Utils.convertImageUriToBase64(requireContext(), uriproofSignature!!)
+                    proofSignatureBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofSignature!!)}"
+                /*    binding.imageView26.setImageBitmap(proofSignatureBase64?.let { it1 ->
+                        Utils.base64ToBitmap(
+                            it1
+                        )
+                    })*/
                 }else if(proofZakatClicked){
                     uriproofZakat = it
                     binding.zakatDecla.fileName = Utils.getFileNameFromUri(requireContext(),it)
-                    proofZakatBase64 = Utils.convertImageUriToBase64(requireContext(), uriproofZakat!!)
+                    proofZakatBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofZakat!!)}"
                 }
             }
         }
@@ -80,7 +86,7 @@ class KycDocumentFragment : Fragment() {
         binding = FragmentKycFifteenBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
         initFields()
-        viewModel.getotherDetail().apply {
+        viewModel.otherDetail.apply {
             if(otherDetailAccountType?.equals("NKA")?:false){
                 binding.incomeProo.visibility = View.VISIBLE
                 binding.proofOfPe.visibility = View.VISIBLE
@@ -129,31 +135,38 @@ class KycDocumentFragment : Fragment() {
             }
 
             zakatDecla.cardUpload.setOnClickListener {
-                incomeProo.setOnClickListener {
-                    proofPermanentAddressClicked = false
-                    proofPermanentEmployerAddressClicked = false
-                    proofSignatureClicked = false
-                    proofZakatClicked = true
-                    requestRuntimePermission()
-                }
+                proofPermanentAddressClicked = false
+                proofPermanentEmployerAddressClicked = false
+                proofSignatureClicked = false
+                proofZakatClicked = true
+                requestRuntimePermission()
             }
-
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycOtherDetailThreeFragment())
+            }
             btnContinue.setOnClickListener {
-                if(uriproofPermanentEmployerAddress!=null && uriproofPermanentAddress!=null && uriproofSignature!=null && uriproofZakat!=null){
-                    viewModel.documents(
-                        DocumentDto(
-                            accountType = viewModel.getotherDetail().otherDetailAccountType?:"",
-                            identificationType =  identificationType?:"",
-                            zakatStatus =  viewModel.getotherDetail().otherDetailZakatStatus?:"",
-                            signatureProof = proofSignatureBase64?:"",
-                            zakaatDeclaration = proofZakatBase64?:"",
-                            addProof = proofPermanentEmployerAddressBase64?:"",
-                            empAddProof = proofPermanentEmployerAddressBase64?:"",
-                            termsAndCondition = "Y",
-                            id = null
-                        )
-                    )
-                }
+                viewModel.documents(
+                    viewModel.otherDetail.otherDetailZakatStatus?:"",
+                    viewModel.otherDetail.otherDetailAccountType?:"",
+                    "Y",
+                    viewModel.basicData.uinType?:"",
+                    proofSignatureBase64!!,
+                    proofPermanentEmployerAddressBase64!!,
+                    proofPermanentAddressBase64!!,
+                    proofZakatBase64!!,
+                    requireContext()
+                   /* DocumentDto(
+                        accountType = viewModel.otherDetail.otherDetailAccountType?:"",
+                        identificationType =  viewModel.basicData.uinType?:"",
+                        zakatStatus =  viewModel.otherDetail.otherDetailZakatStatus?:"",
+                        signatureProof = proofSignatureBase64?:"",
+                        zakaatDeclaration = proofZakatBase64?:"",
+                        addProof = proofPermanentEmployerAddressBase64?:"",
+                        empAddProof = proofPermanentEmployerAddressBase64?:"",
+                        termsAndCondition = "Y",
+                        id = null
+                    )*/
+                )
             }
         }
 
@@ -167,6 +180,7 @@ class KycDocumentFragment : Fragment() {
                 }
                 is Resource.Success ->{
                     val response =result.data
+
                     if(response?.isSuccess?:false){
                         (requireActivity() as AofActivity).loadFragment(CongratulationsFragment())
                     }else{
@@ -188,14 +202,14 @@ class KycDocumentFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            proofOfPe.fileName=viewModel.getotherDetail().otherDetailProofParmanentAddressFilename
-            proofPermanentAddressBase64=viewModel.getotherDetail().otherDetailProofParmanentAddress
-            incomeProo.fileName=viewModel.getotherDetail().otherDetailProofEmployerAddressFilename
-            proofPermanentEmployerAddressBase64=viewModel.getotherDetail().otherDetailProofEmployerAddress
-            specimenSi.fileName=viewModel.getotherDetail().otherDetailSpecimenSignatureFilename
-            proofSignatureBase64=viewModel.getotherDetail().otherDetailSpecimenSignature
-            zakatDecla.fileName=viewModel.getotherDetail().otherDetailZakatDeclarationFilename
-            proofZakatBase64=viewModel.getotherDetail().otherDetailZakatDeclaration
+            proofOfPe.fileName=viewModel.otherDetail.otherDetailProofParmanentAddressFilename
+            proofPermanentAddressBase64=viewModel.otherDetail.otherDetailProofParmanentAddress
+            incomeProo.fileName=viewModel.otherDetail.otherDetailProofEmployerAddressFilename
+            proofPermanentEmployerAddressBase64=viewModel.otherDetail.otherDetailProofEmployerAddress
+            specimenSi.fileName=viewModel.otherDetail.otherDetailSpecimenSignatureFilename
+            proofSignatureBase64=viewModel.otherDetail.otherDetailSpecimenSignature
+            zakatDecla.fileName=viewModel.otherDetail.otherDetailZakatDeclarationFilename
+            proofZakatBase64=viewModel.otherDetail.otherDetailZakatDeclaration
         }
     }
 

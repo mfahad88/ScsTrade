@@ -105,4 +105,15 @@
                 android:layout_weight="0.8"
                 android:text="Save &amp; Next" />
         </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView26"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        android:src="@drawable/all_stocks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zakat_decla" />
 </androidx.constraintlayout.widget.ConstraintLayout>

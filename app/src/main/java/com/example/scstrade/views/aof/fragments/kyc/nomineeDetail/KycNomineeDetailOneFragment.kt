@@ -160,7 +160,7 @@ class KycNomineeDetailOneFragment : Fragment() {
                         if(response!=null){
                             response.apply {
                                 nomineeAddress=	addressNmn
-                                nomineeNicExpiry=	Utils.convertIsoToDate(cnicExpiryDateNmn)
+                                nomineeNicExpiry=	cnicExpiryDateNmn
                                 nomineeNicType=	cnicLifeTimeNmn
                                 nomineeUinNumber=	cnicNmn
                                 nomineeUinType=	identificationNmn
@@ -186,26 +186,26 @@ class KycNomineeDetailOneFragment : Fragment() {
                                     binding.nomineeView.visibility = View.GONE
                                 }
                             }
-                            if(nomineeMobileNumber!=""){
+                            if(nomineeMobileNumber!="" && nomineeMobileNumber!=null){
                                 nominee_mobile = nomineeMobileNumber
                                 binding.nomineeMobile.textInputEditText.setText(nominee_mobile)
                             }
-                            if(nomineeRelation!=""){
+                            if(nomineeRelation!="" && nomineeRelation!=null){
                                 nominee_relation =nomineeRelation
                                 binding.nomineeRelation.dropdown.setText(AppConstants.NomineeRelation.filter { it.second.equals(nominee_relation) }.map { it.first }.toString().replace("[","").replace("]",""))
                             }
 
-                            if(nomineeName!=""){
+                            if(nomineeName!="" && nomineeName!=null){
                                 nominee_name =nomineeName
                                 binding.nomineeName.textInputEditText.setText(nominee_name)
                             }
 
-                            if(nomineeUinType!=""){
+                            if(nomineeUinType!="" && nomineeUinType!=null){
                                 nominee_uin_type =nomineeUinType
                                 binding.uinType.dropdown.setText(AppConstants.IDTYPE.filter { it.second.equals(nominee_uin_type) }.map { it.first }.toString().replace("[","").replace("]",""))
                             }
 
-                            if(nomineeUinNumber!=""){
+                            if(nomineeUinNumber!="" && nomineeUinNumber!=null){
                                 nominee_uin_number =nomineeUinNumber
                                 binding.uinNumber.textInputEditText.setText(nominee_uin_number)
                             }

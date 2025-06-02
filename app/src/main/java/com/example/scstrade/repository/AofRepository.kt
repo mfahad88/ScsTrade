@@ -1,6 +1,7 @@
 package com.example.scstrade.repository
 
 import android.content.Context
+import android.net.Uri
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.AccountOpening
@@ -30,7 +31,14 @@ import com.example.scstrade.model.response.aof.otherDetails.OtherDetailResponse
 import com.example.scstrade.model.response.aof.protectedApplication.ProtectedResponse
 import com.example.scstrade.model.response.aof.register.ResponseRegisterUser
 import com.example.scstrade.services.ApiService
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
 import kotlin.reflect.full.primaryConstructor
 
 class AofRepository (val apiService: ApiService,val context: Context){
@@ -604,9 +612,26 @@ class AofRepository (val apiService: ApiService,val context: Context){
         }
     }
 
-    suspend fun documents(documentDto: DocumentDto):Resource<ApiResponse<Nothing>>{
+    suspend fun documents(/*documentDto: DocumentDto*/
+                          zakatStatus: RequestBody,
+                          accountType: RequestBody,
+                          termsAndCondition: RequestBody,
+                          identificationType: RequestBody,
+                          signatureProof: RequestBody,
+                          empAddProof: RequestBody,
+                          addProof: RequestBody,
+                          zakaatDeclaration: RequestBody):Resource<ApiResponse<Nothing>>{
         try {
-            val response = apiService.documents(documentDto)
+
+//            val response = apiService.documents(documentDto)
+            val response = apiService.documents(     zakatStatus,
+                accountType,
+                termsAndCondition,
+                identificationType,
+                signatureProof,
+                empAddProof,
+                addProof,
+                zakaatDeclaration)
             if(response.isSuccessful){
                 return Resource.Success(response.body()!!)
             }else{

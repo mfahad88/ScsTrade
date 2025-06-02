@@ -49,10 +49,14 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.google.gson.JsonElement
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -309,9 +313,18 @@ interface ApiService {
 
     @POST(value = "api/other-details")
     suspend fun otherDetails(@Body otherDetailDto: OtherDetailDto):Response<ApiResponse<Nothing>>
-
+    @Multipart
     @POST(value =  "api/documents")
-    suspend fun documents(@Body documentDto: DocumentDto):Response<ApiResponse<Nothing>>
+    /*suspend fun documents(@Body documentDto: DocumentDto):Response<ApiResponse<Nothing>>*/
+    suspend fun documents(@Part("zakatStatus") zakatStatus: RequestBody,
+                          @Part("accountType") accountType: RequestBody,
+                          @Part("termsAndCondition") termsAndCondition: RequestBody,
+                          @Part("identificationType") identificationType: RequestBody,
+
+                          @Part("signatureProof") signatureProof: RequestBody,
+                          @Part("empAddProof") empAddProof: RequestBody,
+                          @Part("addProof") addProof: RequestBody,
+                          @Part("zakaatDeclaration") zakaatDeclaration: RequestBody):Response<ApiResponse<Nothing>>
 
     @GET(value = "/api/documents/application/{applicationId}")
     suspend fun getDocuments(@Path("applicationId")applicationId:String):Response<ApiResponse<DocumentDto>>

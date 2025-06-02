@@ -13,6 +13,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
 

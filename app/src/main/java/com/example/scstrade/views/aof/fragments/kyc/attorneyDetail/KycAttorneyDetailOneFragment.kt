@@ -170,33 +170,33 @@ class KycAttorneyDetailOneFragment : Fragment() {
 //                            viewModel.saveAttorneyDetails()
                             val attorneyDetail= viewModel.attorneyDetail
                             attorney_type=attorneyDetail.attorneyType
-                            attorney_saluation = attorneyDetail.attorneySalutation.toString()
+                            attorney_saluation = attorneyDetail.attorneySalutation
                             attorney_FullName = attorneyDetail.attorneyFullName
                             attorney_Uin_Type = attorneyDetail.attorneyUinType
                             attorney_Uin_Number = attorneyDetail.attorneyUinNumber
 
                             binding.apply {
-                                if(attorney_saluation!="") {
+                                if(attorney_saluation!=null) {
                                     labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
                                         it.second.equals(
                                             attorney_saluation
                                         )
                                     }.map { it.first }.first())
                                 }
-                                if(attorney_Uin_Type!="") {
+                                if(attorney_Uin_Type!=null) {
                                     uinType.dropdown.setText(AppConstants.IDTYPE.filter {
                                         it.second.equals(
                                             attorney_Uin_Type
                                         )
                                     }.map { it.first }.first())
                                 }
-                                if(attorney_FullName!="") {
+                                if(attorney_FullName!=null) {
                                     fullName.textInputEditText.setText(attorney_FullName)
                                 }
-                                if(attorney_Uin_Number!="") {
+                                if(attorney_Uin_Number!=null) {
                                     uinNumber.textInputEditText.setText(attorney_Uin_Number)
                                 }
-                                if(attorney_type!="") {
+                                if(attorney_type!=null) {
                                     if (attorney_type.equals("o",true)) {
                                         isTheAtto.toggleSelection(false)
                                         someElseContainer.visibility = View.VISIBLE

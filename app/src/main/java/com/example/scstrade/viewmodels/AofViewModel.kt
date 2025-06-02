@@ -1,9 +1,12 @@
 package com.example.scstrade.viewmodels
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.AccountOpening
 import com.example.scstrade.model.data.AttorneyDetail
@@ -37,6 +40,12 @@ import com.example.scstrade.services.RetrofitInstanceAof
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
+import java.io.FileOutputStream
 
 class AofViewModel(application: Application): AndroidViewModel(application) {
     val apiClient=RetrofitInstanceAof.create(ApiService::class.java)
@@ -167,9 +176,9 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         return  repository.getNominee()!!
     }
 
-    fun getotherDetail():OtherDetail{
+  /*  fun getotherDetail():OtherDetail{
         return  repository.getotherDetail()!!
-    }
+    }*/
 
     fun registerUser(registerUser: RegisterUser){
         mutableRegisterUser.value =Resource.Loading()
@@ -340,10 +349,31 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun documents(documentDto: DocumentDto){
+    fun documents(/*documentDto: DocumentDto*/
+                  zakatStatus: String,
+                  accountType: String,
+                  terms: String,
+                  idType: String,
+                  sigUri: String,
+                  empUri: String,
+                  addUri: String,
+                  zakaatUri: String,
+                  context: Context){
         mutableDocument.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
-            val result = repository.documents(documentDto)
+            val zakat = zakatStatus.toRequestBody("text/plain".toMediaTypeOrNull())
+            val account = accountType.toRequestBody("text/plain".toMediaTypeOrNull())
+            val termsBody = terms.toRequestBody("text/plain".toMediaTypeOrNull())
+            val id = idType.toRequestBody("text/plain".toMediaTypeOrNull())
+            val signatureProof = sigUri.toRequestBody("text/plain".toMediaTypeOrNull())
+            val empAddProof = empUri.toRequestBody("text/plain".toMediaTypeOrNull())
+            val addProof = addUri.toRequestBody("text/plain".toMediaTypeOrNull())
+            val zakaatDeclaration = zakaatUri.toRequestBody("text/plain".toMediaTypeOrNull())
+            /*val signature = uriToPart(context, sigUri, "signatureProof")
+            val emp = uriToPart(context, empUri, "empAddProof")
+            val add = uriToPart(context, addUri, "addProof")
+            val zakaat = uriToPart(context, zakaatUri, "zakaatDeclaration")*/
+            val result = repository.documents(zakat, account, termsBody, id, signatureProof, empAddProof, addProof, zakaatDeclaration)
             withContext(Dispatchers.Main){
                 mutableDocument.value =result
             }

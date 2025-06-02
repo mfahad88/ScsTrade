@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.icu.text.DecimalFormat
 import android.icu.util.Calendar
@@ -183,7 +184,11 @@ class Utils {
             return sdf.format(date)
          }
 
-        fun convertIsoToDate(input: String): String {
+        fun base64ToBitmap(base64Str: String): Bitmap {
+            val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+            return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        }
+        fun convertIsoToDate(input: String?): String {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val odt = OffsetDateTime.parse(input)
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -331,7 +336,7 @@ class Utils {
             val outputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
             val byteArray = outputStream.toByteArray()
-            return Base64.encodeToString(byteArray, Base64.DEFAULT)
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP)
         }
         fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): String {
             val ratio = Math.min(
