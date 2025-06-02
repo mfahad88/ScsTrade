@@ -50,7 +50,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:progress="20"
+                android:progress="1"
+                android:max="6"
                 app:layout_constraintEnd_toStartOf="@+id/imageView21"
                 app:layout_constraintStart_toEndOf="@+id/imageView22"
                 app:layout_constraintTop_toTopOf="parent" />

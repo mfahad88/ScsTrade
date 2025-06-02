@@ -94,6 +94,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycElevenBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.progressBar.progress=5
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.nominee_details)
         initFields()
 

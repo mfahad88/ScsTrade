@@ -22,13 +22,20 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     lateinit var login: LoginDataItem
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate() {
-        super<Application>.onCreate()
+        super.onCreate()
         getSha1Fingerprint()
+        FirebaseApp.initializeApp(this)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+
         if(!Utils.getSharedPreference(this, AppConstants.LIGHT_MODE)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }else {

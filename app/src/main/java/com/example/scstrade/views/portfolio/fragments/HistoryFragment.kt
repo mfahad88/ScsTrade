@@ -59,9 +59,8 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity = (requireActivity() as StockDetailActivity)
-        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
-//        sharedViewModel.stopPortfolioFinal()
-        sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
+        sharedViewModel.getHistory(stockDetailActivity.portfolioMainID.toString())
+
         binding.apply {
             buyTransac.text = getString(R.string.sell_trades,stockDetailActivity.symbol)
             dividends.text = getString(R.string.dividend_trades,stockDetailActivity.symbol)
@@ -71,13 +70,32 @@ class HistoryFragment : Fragment() {
             }
         }
 
-        sharedViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer {result->
-            when(result){
-                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
+        sharedViewModel.mutableHistory.observe(viewLifecycleOwner, Observer { res->
+            when(res.dividendItem){
+                is Resource.Error -> Utils.showError(binding.root,res.dividendItem.message?:"An error occurred")
                 is Resource.Loading -> {
-
                 }
+                is Resource.Success ->{
+                    val result=res.dividendItem
+                    binding.dividendEaValue.text = Utils.roundTwoDecimal(result.data!!.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }.sumOf {
+                        it.dividendPerShare
+                    }.toDouble())
+                    binding.mainContent.setContent {
+                        populateDividend(result.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?: emptyList())
+                        if(result.data?.isNotEmpty()?:false){
+                            binding.materialCardViewDividend.visibility = View.VISIBLE
+                        }else{
+                            binding.materialCardViewDividend.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+
+            when(res.portfolioDetails){
+                is Resource.Error -> Utils.showError(binding.root,res.portfolioDetails.message?:"An error occurred")
+                is Resource.Loading -> {}
                 is Resource.Success -> {
+                    val result=res.portfolioDetails
                     try {
                         binding.loader.visibility = View.GONE
                         binding.mainContainer.visibility = View.VISIBLE
@@ -124,29 +142,9 @@ class HistoryFragment : Fragment() {
                     }
                 }
             }
+
         })
 
-        sharedViewModel.mutableDividend.observe(viewLifecycleOwner, Observer { result->
-            when(result){
-                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    binding.dividendEaValue.text = Utils.roundTwoDecimal(result.data!!.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }.sumOf {
-                        it.dividendPerShare
-                    }.toDouble())
-                    binding.mainContent.setContent {
-                        populateDividend(result.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?: emptyList())
-                        if(result.data?.isNotEmpty()?:false){
-                            binding.materialCardViewDividend.visibility = View.VISIBLE
-                        }else{
-                            binding.materialCardViewDividend.visibility = View.GONE
-                        }
-                    }
-                }
-            }
-        })
         return binding.root
     }
     @Composable

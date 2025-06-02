@@ -2,12 +2,10 @@ package com.example.scstrade.views.portfolio.activities
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,13 +16,13 @@ import com.example.scstrade.databinding.ActivityPortfolioDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.data.ShareInHand
+import com.example.scstrade.model.data.SymbolProfit
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.adapter.HistoryHoldingAdapter
 import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
-import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
 import com.google.gson.reflect.TypeToken
 import kotlin.math.roundToInt
 
@@ -57,7 +55,6 @@ class PortfolioDetailActivity : AppCompatActivity() {
         sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
 //        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.apply {
-            linearLayoutHistory.visibility = View.GONE
             viewDetail.setOnClickListener {
                 if(summaryCard.visibility == View.VISIBLE){
                     summaryCard.visibility = View.GONE
@@ -132,6 +129,12 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
             }
 
+            recyclerHistory.apply {
+                layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
+
+            }
+
+
         }
 
 
@@ -145,10 +148,47 @@ class PortfolioDetailActivity : AppCompatActivity() {
                     var totalCost=0.0
                     var history = 0.0
                     var holdingPL = 0.0
+                    val list= mutableListOf<SymbolProfit>()
                     if(result.data?.closeTrades?.isNotEmpty()?:false) {
                         result.data?.closeTrades?.forEach {
                             history += it.salAmount.toDouble()
                         }
+
+                      val profitSummary  =  result.data?.closeTrades?.groupBy { it.symbol }?.map  { (symbol, trades)  ->
+                          val totalPurchase = trades.sumOf { it.purAmount.toDouble() }
+                          val totalSale = trades.sumOf { it.salAmount.toDouble() }
+                          val profit = totalSale - totalPurchase
+                          val profitPercent = if (totalPurchase != 0.0) (profit / totalPurchase) * 100 else 0.0
+                          SymbolProfit(symbol, profit, profitPercent)
+                        }
+                        if (profitSummary != null) {
+                            for (entry in profitSummary ){
+                                list.add(entry)
+                            }
+                        }
+
+                       /*val profit=result.data?.closeTrades?.groupBy { it.symbol }?.map {(symbol,trades)->{
+                           val totalSale = trades.sumOf { it.salAmount.toDouble() }
+                           val totalPurchase = trades.sumOf { it.purAmount.toDouble() }
+                           val profit = totalSale - totalPurchase
+                           val profitPercent = if (totalPurchase != 0.0) (profit / totalPurchase) * 100 else 0.0
+
+                           val it=SymbolProfit(
+                               symbol = symbol,
+                               profit = "%.2f".format(profit).toDouble(),
+                               profitPercent = "%.2f".format(profitPercent).toDouble()
+                           )
+                           println(it)
+
+                        }
+                       }*/
+                        if(list.size!=0){
+                            binding.linearLayoutHistory.visibility = View.GONE
+                        }
+                        binding.recyclerHistory.adapter= HistoryHoldingAdapter(list){
+
+                        }
+
                     }
                     if(result.data?.fifoPortfolio?.isNotEmpty()?:false){
                         result.data?.fifoPortfolio?.forEach {res->
@@ -169,6 +209,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         binding.currentMarValue.text = Utils.commaSeparated(currentMarketValue.roundToInt())
                         binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
                         binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
+
                         (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
 
 

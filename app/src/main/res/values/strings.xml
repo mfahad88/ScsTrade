@@ -39,7 +39,7 @@
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="remember_me">Remember Me</string>
     <string name="register">Register</string>
-    <string name="continue_wi">Continue with Google/Facebook</string>
+    <string name="continue_wi">Continue with Google</string>
     <string name="scs_trade_p_logo">SCS Trade Pro</string>
     <string name="committed_t">Committed to intelligent investing</string>
     <string name="version_1_0">Version 1.0</string>
@@ -55,7 +55,7 @@
     <string name="forgot_pass">Forgot Password</string>
     <string name="don_t_have_">Don\'t have an account?</string>
     <string name="sign_up">Sign up</string>
-    <string name="sign_in_wit">Sign in with Google/Facebook</string>
+    <string name="sign_in_wit">Sign in with Google</string>
     <string name="indices">Indices</string>
     <string name="back">Back</string>
     <string name="market_stat">Market Status:</string>
@@ -234,7 +234,7 @@
     <string name="days_percent_p_l">(-0.07%)</string>
     <string name="total_p_l_title"><![CDATA[Total P&L]]></string>
     <string name="history_1_y"><![CDATA[(1 year sold & dividend)]]></string>
-    <string name="you_made_a_">You made a total <b>Profit</b> of <b>Rs. 5</b> with an increase of <b>+0.12%</b></string>
+    <string name="you_made_a_">You made a total <b>Profit</b> of Rs. %1$s with an increase of %2$s</string>
     <string name="edit_name">Edit Name</string>
     <string name="dividend_trades">Dividends (%s 1 year history)</string>
     <string name="progress_10">Progress (10%)</string>
@@ -425,6 +425,7 @@
     <string name="app_settings">App Settings</string>
     <string name="_0_9">0123456789</string>
     <string name="_0_9_decimal">0123456789.</string>
+    <string name="an_error_occurred">An error occurred...</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

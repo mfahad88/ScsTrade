@@ -42,6 +42,7 @@ import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.settings.SettingsActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 
 
@@ -56,6 +57,7 @@ class LandingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
+
         binding.toolbar.binding.apply {
             toolbarWithLogo.visibility = View.VISIBLE
             toolbarWithBack.visibility = View.GONE

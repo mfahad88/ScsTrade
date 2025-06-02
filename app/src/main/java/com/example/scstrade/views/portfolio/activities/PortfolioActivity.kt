@@ -32,6 +32,10 @@ class PortfolioActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityPortfolioBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.main)
+        binding.toolbar.apply {
+            binding.titleItem.text= "Portfolio"
+            binding.toolbarWithBack.visibility = View.VISIBLE
+        }
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

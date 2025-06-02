@@ -54,7 +54,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/go_to_dashboard"
+        android:text="@string/continueB"
         android:id="@+id/btnDashboard"
         android:layout_marginBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"

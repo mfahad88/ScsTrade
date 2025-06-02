@@ -8,7 +8,8 @@
     android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
 
         <com.example.scstrade.views.widgets.mMarket
@@ -36,7 +37,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/md_theme_surface"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -157,6 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
+                        android:visibility="gone"
                         android:background="@drawable/circular_drop_down">
 
                         <TextView
@@ -165,6 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:text="@string/view_det"
+
                             android:textAppearance="@style/view_det" />
 
                         <ImageView
@@ -271,7 +274,7 @@
                         android:layout_below="@id/holdings"
                         android:layout_marginTop="10dp"
                         android:visibility="gone"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -464,6 +467,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="0dp"
+                android:visibility="visible"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:nestedScrollingEnabled="false"
@@ -471,7 +475,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
                 tools:itemCount="3"
-
                 tools:listitem="@layout/item_share_in_hand" />
 
 
@@ -508,10 +511,11 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="10dp"
                 android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayoutHistory"
-                tools:itemCount="1"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_1_year_history" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

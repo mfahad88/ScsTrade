@@ -4,6 +4,7 @@ plugins {
     id ("kotlin-parcelize")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -81,7 +82,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-
+    implementation("com.google.firebase:firebase-analytics:21.6.1")
+    implementation ("com.google.firebase:firebase-crashlytics:18.6.1")
     implementation ("androidx.compose.ui:ui:1.7.7")
     implementation ("androidx.compose.material:material:1.7.7")
 //    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")

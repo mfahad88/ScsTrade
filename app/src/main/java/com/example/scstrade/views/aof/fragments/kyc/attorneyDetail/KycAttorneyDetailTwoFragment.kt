@@ -40,6 +40,7 @@ class KycAttorneyDetailTwoFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentKycEightBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        (requireActivity() as AofActivity).binding.progressBar.progress=4
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.attorney_details)
         initFields()
         binding.apply {

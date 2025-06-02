@@ -241,10 +241,19 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/green_stroke">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_settings_24"
+                        android:layout_centerInParent="true"
+                        android:layout_toStartOf="@id/settings"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_settings"
+                        android:id="@+id/settings"
+                        android:layout_marginStart="10dp"
                         android:textAppearance="@style/app_settings"
                         android:lineSpacingExtra="3sp"
                         android:layout_centerInParent="true"

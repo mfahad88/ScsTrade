@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.response.announcement.AnnouncementDataItem
+import com.example.scstrade.model.data.ResultData
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -38,6 +38,7 @@ import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import com.google.gson.JsonElement
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -53,7 +54,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableOnceChart=MutableLiveData<Resource<List<ChartItem>>>()
     val mutableTechnical=MutableLiveData<Resource<List<TechnicalData>>>()
     val mutableTechnicalDetail=MutableLiveData<Resource<List<TechnicalDetailData>>>()
-
+    val mutableHistory=MutableLiveData<ResultData>()
     val mutableFundamental=MutableLiveData<Resource<List<FundamentalData>>>()
     val mutableFundamentalDetail=MutableLiveData<Resource<List<FundamentalDetailData>>>()
     val mutableNews=MutableLiveData<Resource<List<NewsData>>>()
@@ -572,7 +573,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+    fun getHistory(portfolioMainID:String){
+        viewModelScope.launch {
+            val portfolioDetailsDeffered= async { repository.getPortfolioDetail(portfolioMainID.toInt()) }
+            val dividendDeffered= async { repository.getDividend(portfolioMainID) }
+            val portfolioDetails=portfolioDetailsDeffered.await()
+            val dividend = dividendDeffered.await()
+            mutableHistory.value= ResultData(portfolioDetails,dividend)
 
+        }
+
+    }
     fun getDividend(portfolioMainID:String){
         mutableDividend.value=Resource.Loading()
         if(isConnected.value == true){

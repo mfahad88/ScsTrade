@@ -168,7 +168,7 @@ class KycDocumentFragment : Fragment() {
                 is Resource.Success ->{
                     val response =result.data
                     if(response?.isSuccess?:false){
-                        (requireActivity() as AofActivity).loadFragment(UndertakingFragment())
+                        (requireActivity() as AofActivity).loadFragment(CongratulationsFragment())
                     }else{
                         Utils.showError(requireView(),response?.message?:"An error occurred...")
                     }
