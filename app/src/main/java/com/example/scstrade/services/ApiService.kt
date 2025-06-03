@@ -285,7 +285,7 @@ interface ApiService {
 
     /////////////////////////////////AOF///////////////////////////////////////
     @POST(value="api/register")
-    suspend fun registerAof(@Body regiserUser: RegisterUser): ResponseRegisterUser
+    suspend fun registerAof(@Body regiserUser: RegisterUser): Response<ResponseRegisterUser>
 
     @POST(value = "api/login")
     suspend fun loginAof(@Body loginUser: LoginUser): Response<ApiResponse<Data>>

@@ -87,16 +87,12 @@ class LoginAOFFragment : Fragment() {
 
 
 
-
-
-
-
-
-
-
-
         return binding.root
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.mutableLoginUser.value=null
+        viewModel.mutableProtected.value=null
+    }
 }

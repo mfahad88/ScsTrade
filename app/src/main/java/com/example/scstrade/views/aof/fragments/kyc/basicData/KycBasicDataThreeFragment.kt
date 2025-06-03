@@ -43,10 +43,12 @@ class KycBasicDataThreeFragment : Fragment() {
         binding.cardNic.apply {
             setOnButtonOneClickListener {
                 nicType= AppConstants.LIFETIMECNICSTATUS.get(1).values.first()
+                viewModel.basicData.nicType=nicType
                 editText.isEnabled=true
             }
             setOnButtonTwoClickListener {
                 nicType= AppConstants.LIFETIMECNICSTATUS.get(0).values.first()
+                viewModel.basicData.nicType=nicType
                 editText.setText("")
                 editText.isEnabled=false
             }

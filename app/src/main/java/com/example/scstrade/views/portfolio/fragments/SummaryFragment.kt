@@ -82,7 +82,7 @@ class SummaryFragment : Fragment() {
                         val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
                         val dividendShare=sharedViewModel.mutableDividend.value?.data?.map { it.dividendPerShare }?.sumOf { it }
                         val stockItem = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
-                        val historPL=(soldValue.plus(dividendShare?:0)).minus(totalPurchase)
+                        val historPL=(soldValue.plus(dividendShare?:0.0)).minus(totalPurchase)
 
                         val res=sharedViewModel.mutablePortfolioItemDetail.value!!
                         val shares=res.data?.map { it.quantity.toDouble() }?.sumOf { it }
@@ -92,13 +92,13 @@ class SummaryFragment : Fragment() {
                         val holdingsPL=currentMarketValue?.minus(purchaseCost?:0.0)
                         binding.apply {
                             historyCost.text = Utils.commaSeparated(totalPurchase.roundToInt())
-                            historyValue.text = Utils.commaSeparated((soldValue.plus(dividendShare?:0)).roundToInt())
+                            historyValue.text = Utils.commaSeparated((soldValue.plus(dividendShare?:0.0)).roundToInt())
                             ffl.text = stockItem?.sYM
                             faujiFoods.text = stockItem?.nM
                             historyPL.text = "${Utils.commaSeparated(historPL.roundToInt())} (${Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))}%)"
 
                             totalCost.text = Utils.commaSeparated(totalPurchase.plus(purchaseCost?:0.0).roundToInt())
-                            totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue.plus(dividendShare?:0))?.roundToInt()?:0)
+                            totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue.plus(dividendShare?:0.0))?.roundToInt()?:0)
                             totalPL.text= "${Utils.commaSeparated(holdingsPL?.plus(historPL)?.roundToInt()?:0)} (${Utils.roundTwoDecimal(((holdingsPL?.plus(historPL))?.div(totalPurchase.plus(purchaseCost?:0.0)))?.times(100))}%)"
 
                             totalPL.setTextColor(if(totalPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))

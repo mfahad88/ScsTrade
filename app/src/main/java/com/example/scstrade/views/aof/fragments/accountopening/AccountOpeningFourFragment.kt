@@ -101,6 +101,11 @@ class AccountOpeningFourFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.mutableRegisterUser.value=null
+    }
+
     private fun initFields() {
         binding.reference.text = viewModel.getaccountOpening().accountopeningreference
     }

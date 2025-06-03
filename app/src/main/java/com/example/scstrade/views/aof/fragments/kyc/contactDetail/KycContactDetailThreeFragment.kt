@@ -210,4 +210,8 @@ class KycContactDetailThreeFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.mutableCreateContactDetail.value = null
+    }
 }

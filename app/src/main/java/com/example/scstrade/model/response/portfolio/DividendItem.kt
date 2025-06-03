@@ -9,7 +9,7 @@ data class DividendItem(
     @SerializedName("DividendID")
     val dividendID: Int,
     @SerializedName("DividendPerShare")
-    val dividendPerShare: Int,
+    val dividendPerShare: Double,
     @SerializedName("DividendQuantity")
     val dividendQuantity: Int,
     @SerializedName("DividendSymbol")
