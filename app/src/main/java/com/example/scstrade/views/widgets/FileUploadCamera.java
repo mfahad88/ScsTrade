@@ -30,11 +30,13 @@ public class FileUploadCamera extends MaterialCardView {
             binding.fileName.setVisibility(View.VISIBLE);
             binding.uploadIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.baseline_delete_24));
             binding.materialSelect.setCardBackgroundColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+            binding.selectFile.setText("File Added");
         }else{
              binding.fileName.setText(null);
             binding.fileName.setVisibility(View.GONE);
             binding.uploadIcon.setImageDrawable(ContextCompat.getDrawable(getContext(),R.drawable.icon_camera));
             binding.materialSelect.setCardBackgroundColor(Color.parseColor("#1A73E8"));
+            binding.selectFile.setText("Select File");
         }
     }
 

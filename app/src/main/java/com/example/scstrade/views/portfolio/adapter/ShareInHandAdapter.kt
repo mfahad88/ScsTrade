@@ -25,9 +25,9 @@ class ShareInHandAdapter(private var itemList:List<FifoPortfolio>,private var li
             val marketValue = stockItem.cL.times(item.quantity.toInt())
             val avgCost = item.price.toDouble()
             val dayPL = stockItem.cH.times(item.quantity.toInt())
-            val percentDayPL = (dayPL.div(totalCost-dayPL)).times(100)
-            val totalPL = marketValue - totalCost
-            val percentTotalPL = (totalPL.div(totalCost)).times(100)
+            val percentDayPL = stockItem.cH.div(stockItem.cL).times(100)
+            val totalPL = stockItem.oC.minus(item.price.toDouble()).times(item.quantity.toDouble())
+            val percentTotalPL = stockItem.oC.minus(item.price.toDouble()).div(item.price.toDouble()).times(100)
             binding.symbol.text = item.symbol
             binding.price2133.text = Utils.roundTwoDecimal(stockItem.cL)
 //            Utils.animatedValueChange(binding.totalCostValue,0.00,totalCost)

@@ -171,7 +171,7 @@ class BuySellActivity : AppCompatActivity() {
                         )
                     }?.map { it.aP }?.first()
                     val totalCost = v?.price?.toDouble()
-                    val avgBuy = totalCost?.div(v.quantity.toInt())
+                    val avgBuy = /*totalCost?.div(v.quantity.toInt())*/v?.price?.toDouble()
                     availableShareValue.text = "${qty}"
                     symbol.setText(sym)
                     buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))

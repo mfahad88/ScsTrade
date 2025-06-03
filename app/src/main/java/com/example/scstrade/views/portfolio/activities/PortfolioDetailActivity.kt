@@ -155,11 +155,19 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         }
 
                       val profitSummary  =  result.data?.closeTrades?.groupBy { it.symbol }?.map  { (symbol, trades)  ->
-                          val totalPurchase = trades.sumOf { it.purAmount.toDouble() }
-                          val totalSale = trades.sumOf { it.salAmount.toDouble() }
-                          val profit = totalSale - totalPurchase
-                          val profitPercent = if (totalPurchase != 0.0) (profit / totalPurchase) * 100 else 0.0
-                          SymbolProfit(symbol, profit, profitPercent)
+
+
+                          val totalPurchaseAmount = trades.sumOf { it.purAmount.toDouble() }
+                          val totalPurchaseQty = trades.sumOf { it.purQuantity.toInt() }
+                          val avgBuyPrice = totalPurchaseAmount.div(totalPurchaseQty)
+
+                          val totalSaleAmount = trades.sumOf { it.salAmount.toDouble() }
+                          val totalSaleQty = trades.sumOf { it.salQuantity.toInt() }
+                          val avgSellPrice = totalSaleAmount.div(totalSaleQty)
+
+                          val totalProfit=avgSellPrice.minus(avgBuyPrice).times(totalSaleQty)
+                          val totalProfitPercent=avgSellPrice.minus(avgBuyPrice).div(avgBuyPrice).times(100)
+                          SymbolProfit(symbol, totalProfit, totalProfitPercent)
                         }
                         if (profitSummary != null) {
                             for (entry in profitSummary ){
@@ -231,6 +239,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun fetchUser(context: Context) {
         val listType = object : TypeToken<List<LoginDataItem>>() {}
         val user= Utils.getSharedPreference(context, emptyList<LoginDataItem>(),
@@ -238,6 +248,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         login=user.first()
         Log.e("User: ",user.toString())
     }
+
 
    /* override fun onStop() {
         sharedViewModel.stopPortfolioFinal()
@@ -247,6 +258,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
     }
 */
     override fun onDestroy() {
+       sharedViewModel.mutablePortfolioFinalDetail.value=null
         sharedViewModel.stopPortfolioFinal()
         super.onDestroy()
     }
