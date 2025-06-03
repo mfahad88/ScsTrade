@@ -87,7 +87,7 @@ class RegisterFragment : Fragment() {
             fcm=it
         }
         viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
-            System.out.println(resource.data.toString())
+
             when (resource){
                 is Resource.Loading ->{
                     binding.loader.visibility=View.VISIBLE
@@ -113,9 +113,9 @@ class RegisterFragment : Fragment() {
                 is Resource.Success -> {
                     binding.loader.visibility=View.GONE
                     val json = resource.data
-                    if(json?.isJsonNull?:false){
-                        if(json?.isJsonArray?:false){
-                            val jObject=json?.asJsonArray?.first()?.asJsonObject
+                    if(!json?.isJsonNull!!){
+                        if(json.isJsonArray){
+                            val jObject= json.asJsonArray?.first()?.asJsonObject
 
                             val data= mutableListOf<LoginDataItem>()
                             data.add(
@@ -133,10 +133,10 @@ class RegisterFragment : Fragment() {
                             Utils.showSuccess(binding.root,"Successfully Register")
                             Utils.saveSharedPreference(requireContext(),AppConstants.USER,data?: emptyList())
                             loadFragment(LandingFragment(),false)
-                        }
-                    }else{
-                        Utils.showError(binding.root,json?.asString?:"An error occurred...")
+                        }else{
+                            Utils.showError(binding.root,json.asString?:"An error occurred...")
 
+                        }
                     }
 
                 }
@@ -164,6 +164,11 @@ class RegisterFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.mutableRegister.value = null
     }
 
     private fun loadFragment(fragment: Fragment, isBackStack: Boolean=false) {

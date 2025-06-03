@@ -16,7 +16,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.util.Collections
 
-class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
     var previousStockItem:StockItem?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
@@ -66,12 +66,12 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
 
-       val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return  StockViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-       return list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -97,11 +97,26 @@ class StockAdapter(private var list:List<StockItem>,var isMore:Boolean=false):Re
     }
 
     public fun addItems(list:List<StockItem>){
-//        val diffCallback=WatchListDetailDiffCallback(this.list,list)
-//        val diffResult=DiffUtil.calculateDiff(diffCallback)
-        this.list=list
+        this.list=list.toMutableList()
         notifyDataSetChanged()
-//        diffResult.dispatchUpdatesTo(this)
+       /*try{
+           if(this.list.isEmpty()){
+               this.list=list.toMutableList()
+               notifyDataSetChanged()
+           }else{
+               this.list.forEachIndexed { index, stockItem ->
+                   val currentStockItem=list.filter { it.sYM.equals(stockItem.sYM) }.first()
+                   if(stockItem.bV.compareTo(currentStockItem.bV)!=0 || stockItem.cL.compareTo(currentStockItem.cL)!=0){
+
+                       this.list.removeAt(index)
+                       this.list.add(index,currentStockItem)
+                       notifyItemChanged(index)
+                   }
+               }
+           }
+       }catch(e:Exception){
+           e.printStackTrace()
+       }*/
     }
     fun swapItems(fromPosition: Int, toPosition: Int) {
         Collections.swap(list, fromPosition, toPosition)

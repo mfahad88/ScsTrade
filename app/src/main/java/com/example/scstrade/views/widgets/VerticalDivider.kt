@@ -15,7 +15,7 @@ class VerticalDivider: RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         if(parent.getChildAdapterPosition(view)==0){
-            outRect.left = 80
+            outRect.left = 30
         }
         outRect.right = 30
     }

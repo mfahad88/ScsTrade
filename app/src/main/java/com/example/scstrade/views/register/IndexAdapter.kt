@@ -24,7 +24,7 @@ class IndexAdapter(
                 kse100.text = kseIndices.iNDEXCODE
                 tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
                 netChange.text = kseIndices.nETCHANGE
-                volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble()) else 0.0.toString()}"
+                volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble()) else 0.0.toString()}"
                 populateChart(kseIndices.iNDEXCODE)
 
             }

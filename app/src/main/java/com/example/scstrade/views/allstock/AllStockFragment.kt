@@ -54,7 +54,7 @@ class AllStockFragment : Fragment() {
             backButton.visibility = View.VISIBLE
         }*/
         binding.recyclerIndices.apply {
-            adapter= StockAdapter(emptyList(),true)
+            adapter= StockAdapter(ArrayList(),true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
         }

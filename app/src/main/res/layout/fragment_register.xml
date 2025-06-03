@@ -102,6 +102,7 @@
                 android:clipChildren="false"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
+                tools:itemCount="3"
                 android:requiresFadingEdge="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
