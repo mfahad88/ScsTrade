@@ -52,9 +52,9 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
                 })
             }
 //            binding.valueTrade.text = String.format("%.2f",stockItem.cL)
-            binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
-            binding.high.text = "H: ${stockItem.hP.toString()}"
-            binding.low.text = "L: ${stockItem.lP.toString()}"
+            binding.netChange.text = "${Utils.formatDouble(stockItem.cH)} (${Utils.formatDouble(stockItem.cHP)}%)"
+            binding.high.text = "H: ${Utils.formatDouble(stockItem.hP)}"
+            binding.low.text = "L: ${Utils.formatDouble(stockItem.lP)}"
             binding.high52.text = stockItem.high52
             binding.low52.text = stockItem.low52
             previousStockItem=stockItem

@@ -280,7 +280,7 @@
                     android:layout_below="@id/ask"
                     android:layout_toEndOf="@id/bid_vol"
                     android:layout_marginStart="20dp"
-                    android:gravity="end"
+                    android:gravity="start"
                     android:text="@string/ask_vol_2_2"
                     android:textAppearance="@style/ask_vol"
                     android:textFontWeight="500" />
@@ -292,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/bid"
                     android:layout_alignStart="@id/ask_vol"
-                    android:gravity="end"
+                    android:gravity="start"
                     android:text="@string/ask_0_78"
                     android:textAppearance="@style/ask_vol"
                     android:textFontWeight="500" />

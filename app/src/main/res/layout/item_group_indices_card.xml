@@ -9,8 +9,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardElevation="5dp"
+        app:cardElevation="0dp"
         app:strokeWidth="0dp"
+
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="20dp"
         android:clipToPadding="false"

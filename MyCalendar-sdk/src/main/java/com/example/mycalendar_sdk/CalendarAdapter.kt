@@ -26,7 +26,7 @@ class CalendarAdapter(
         public fun bind(date:Date){
             isAvailable.visibility = View.INVISIBLE
             if(available.contains(SimpleDateFormat("dd MMM yyyy").format(date))){
-                Log.e("Dates","Matched: "+SimpleDateFormat("dd/MM/yyyy").format(date))
+//                Log.e("Dates","Matched: "+SimpleDateFormat("dd/MM/yyyy").format(date))
                 isAvailable.visibility = View.VISIBLE
             }
             /*available.forEach {

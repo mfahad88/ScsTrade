@@ -57,14 +57,12 @@ class IndicesFragment : Fragment() {
         binding.recyclerView.apply {
             visibility= View.VISIBLE
             val typeToken = object:TypeToken<List<KSEIndices>>(){}
-            adapter=IndicesAdapter(emptyList()){ kseIndices ->
+            adapter=IndicesAdapter(emptyList()){kseIndices ->
                 var bundle=Bundle()
                 bundle.putString("index",kseIndices.iNDEXCODE)
-                val fragment =AllStockFragment()
-                fragment.arguments=bundle
-
-                (parentFragment as MarketFragment).loadFragment(fragment)
-
+                val intent= Intent(requireContext(),StockActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
             }
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
@@ -84,15 +82,7 @@ class IndicesFragment : Fragment() {
 
                     binding.recyclerView.apply {
                         visibility= View.VISIBLE
-                        adapter=IndicesAdapter(result.data?: emptyList()){kseIndices ->
-                            var bundle=Bundle()
-                            bundle.putString("index",kseIndices.iNDEXCODE)
-                            val intent= Intent(requireContext(),StockActivity::class.java)
-                            intent.putExtras(bundle)
-                            startActivity(intent)
-//                            findNavController().navigate(R.id.stockFragment,bundle)
-                        }
-                        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                        (adapter as IndicesAdapter).addItem(result.data?: emptyList())
                     }
                 }
             }

@@ -103,6 +103,13 @@ class AnnouncementsFragment : Fragment() {
         binding = FragmentAnnouncementsBinding.inflate(inflater,container,false)
         init()
 
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         snapshotViewModel.mutableAnnouncementType.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {
@@ -114,7 +121,8 @@ class AnnouncementsFragment : Fragment() {
                     binding.loader.visibility = View.GONE
                     binding.main.visibility=View.VISIBLE
                     binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
-                    if(!binding.spinnerAnnouncement.adapter.isEmpty){
+
+                    if(binding.spinnerAnnouncement.adapter!=null && binding.spinnerAnnouncement.adapter.count>0){
                         binding.spinnerAnnouncement.setSelection(0)
                         snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())
                     }
@@ -134,6 +142,7 @@ class AnnouncementsFragment : Fragment() {
                     binding.loader.visibility = View.GONE
                     if(result.data?.isNotEmpty()?:false){
                         binding.main.setContent {
+
                             AnnouncementItems(list = result.data?: emptyList())
                         }
                     }else{
@@ -143,11 +152,6 @@ class AnnouncementsFragment : Fragment() {
                 }
             }
         })
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.textDate.addTextChangedListener(object : TextWatcher {
             private var isFormatting = false
             private var deletingHyphen = false
@@ -235,21 +239,32 @@ class AnnouncementsFragment : Fragment() {
         }
         dialog.show(requireActivity().supportFragmentManager, "CUSTOM_DATE_PICKER")
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        snapshotViewModel.apply {
+            mutableAnnouncementItem.value=null
+            mutableInsider.value=null
+            mutableAnnouncementType.value = null
+            mutableInsider.value=null
+        }
+    }
     @Composable
     private fun AnnouncementItems(list: List<AnnouncementDataItem>) {
         /*var isExpanded by remember {
             mutableStateOf(MutableList(list.size){false})
         }*/
-        val stockItem= sharedViewModel.mutableAllData.value?.data?.filter {
+
+        val stockItem = sharedViewModel.mutableAllData.value?.data?.filter {
             it.sYM.equals(
-                list.map { it.companyCode }.first(),
+                list.filter { it.companyCode!=null }.map { it.companyCode }.first(),
                 true
             )
         }?.first()
         val isExpanded = remember { mutableStateListOf(*Array(list.size) { false }) }
         if(list.size>0) {
             LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {
-                items(list?.size ?: 0) { index ->
+                items(list.size) { index ->
                     val announcementItem = list?.get(index)
                     var map = mutableMapOf<String, String>()
                     if (!announcementItem?.bmPlace.isNullOrBlank()) {
@@ -286,47 +301,51 @@ class AnnouncementsFragment : Fragment() {
                         map["End Date"] = announcementItem?.bmBcEndd ?: ""
                     }
                     Column {
-                        if(binding.spinnerAnnouncement.selectedItem.toString().equals("all",true)){
-                            Row(
-                                modifier = Modifier
-                                    .padding(0.dp)
-                                    .width(126.dp)
-                                    .height(20.dp)
-                                    .background(
-                                        color = when (list?.get(index)?.announcementType) {
-                                            "Board Meetings" -> colorResource(id = R.color.board_meeting)
-                                            "Shareholder Meetings" -> colorResource(id = R.color.shareholder_meeting)
-                                            "Financial Result" -> colorResource(id = R.color.financial_result)
-                                            "Material Information" -> colorResource(id = R.color.material_information)
-                                            else -> Color(0x66625B71)
-                                        },
-                                        shape = RoundedCornerShape(size = 6.dp)
-                                    ),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    list?.get(index)?.announcementType ?: "",
-                                    style = TextStyle(
-                                        fontSize = 12.sp,
-                                        lineHeight = 20.sp,
-                                        fontFamily = FontFamily(Font(R.font.custom_font)),
-                                        fontWeight = FontWeight(500),
-                                        color = when (list?.get(index)?.announcementType) {
-                                            "Board Meetings" -> Color(0xFF187376)
-                                            "Shareholder Meetings" -> Color(0xFF187376)
-                                            "Financial Result" -> Color(0xFFA44FA9)
-                                            "Material Information" -> Color(0xFF1A73E8)
-                                            else -> Color(0xFF625B71)
-                                        },
-                                        textAlign = TextAlign.Center,
-                                        letterSpacing = 0.1.sp,
-                                    ),
 
-                                    )
+                        if(binding.spinnerAnnouncement.selectedItem!=null){
+                            if(binding.spinnerAnnouncement.selectedItem.toString().equals("all",true)){
+                                Row(
+                                    modifier = Modifier
+                                        .padding(0.dp)
+                                        .width(126.dp)
+                                        .height(20.dp)
+                                        .background(
+                                            color = when (list?.get(index)?.announcementType) {
+                                                "Board Meetings" -> colorResource(id = R.color.board_meeting)
+                                                "Shareholder Meetings" -> colorResource(id = R.color.shareholder_meeting)
+                                                "Financial Result" -> colorResource(id = R.color.financial_result)
+                                                "Material Information" -> colorResource(id = R.color.material_information)
+                                                else -> Color(0x66625B71)
+                                            },
+                                            shape = RoundedCornerShape(size = 6.dp)
+                                        ),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        list?.get(index)?.announcementType ?: "",
+                                        style = TextStyle(
+                                            fontSize = 12.sp,
+                                            lineHeight = 20.sp,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(500),
+                                            color = when (list?.get(index)?.announcementType) {
+                                                "Board Meetings" -> Color(0xFF187376)
+                                                "Shareholder Meetings" -> Color(0xFF187376)
+                                                "Financial Result" -> Color(0xFFA44FA9)
+                                                "Material Information" -> Color(0xFF1A73E8)
+                                                else -> Color(0xFF625B71)
+                                            },
+                                            textAlign = TextAlign.Center,
+                                            letterSpacing = 0.1.sp,
+                                        ),
+
+                                        )
+                                }
+                                Spacer(modifier = Modifier.height(7.dp))
                             }
-                            Spacer(modifier = Modifier.height(7.dp))
                         }
+
                         Row {
                             Text(
                                 text = stockItem?.sYM ?: "",

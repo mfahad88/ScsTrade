@@ -11,20 +11,22 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.summary.KSEIndices
 import java.util.Collections
 
-class IndicesAdapter(private val itemList: List<KSEIndices>,
+class IndicesAdapter(private var itemList: List<KSEIndices>,
                      private val onItemClick: (KSEIndices) -> Unit) : RecyclerView.Adapter<IndicesAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
-            binding.indexValue.text = Utils.commaFormat(kseIndices.cURRENTINDEX.toDouble())
+            binding.indexValue.text = Utils.formatDouble(kseIndices.cURRENTINDEX.toDouble())
             binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
 //            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
-            binding.labelText.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
+            binding.labelText.text = "${Utils.formatDouble(kseIndices?.nETCHANGE?.toDouble()?:0.0)} (${Utils.formatDouble((kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100)?:0.0)}%)"
             binding.volume.text = "Volume: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
             binding.valueTrade.text = "Value: ${Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())}"
-            binding.high.text = "H: ${kseIndices.hIGHINDEX}"
-            binding.l1167000.text = "L: ${kseIndices.lOWINDEX}"
+            binding.high.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                    "(${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
+            binding.l1167000.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                    "(${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
             binding.root.setOnClickListener {
                 onItemClick(kseIndices)
             }
@@ -40,7 +42,10 @@ class IndicesAdapter(private val itemList: List<KSEIndices>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemList[position])
     }
-
+    public fun addItem(itemList: List<KSEIndices>){
+        this.itemList = itemList
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int = itemList.size
 
     fun swapItems(context: Context, fromPosition: Int, toPosition: Int) {

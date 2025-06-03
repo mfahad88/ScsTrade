@@ -23,6 +23,8 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
     val mutableInsider= MutableLiveData<Resource<List<InsiderDataItem>>>()
     private val repository= MainRepository(RetrofitInstance.create(ApiService::class.java),application)
     val isConnected = ConnectivityObserver(application)
+
+
     fun announcementType() {
         mutableAnnouncementType.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO){

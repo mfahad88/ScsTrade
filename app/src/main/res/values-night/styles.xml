@@ -104,13 +104,13 @@
     </style>
 
     <style name="weeks">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
 
     <style name="high_52">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
@@ -148,13 +148,13 @@
     </style>
 
     <style name="bid_vol_100">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#A1F0F3</item>
     </style>
 
     <style name="ask_vol">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#F87FFF</item>
     </style>

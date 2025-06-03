@@ -444,6 +444,10 @@ class BalanceSheetFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sharedViewModel.mutableYears.value=null
+    }
     @Composable
     private fun cardItem(key: String, value: String) {
         Row {

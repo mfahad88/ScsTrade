@@ -61,6 +61,21 @@ class Utils {
             print("Hello World!")
         }
 
+        fun formatDouble(value: Double): String {
+            try {
+                return if (value >= 1000) {
+                    // Format with commas and 2 decimal places
+                    String.format("%,.2f", value)
+                } else {
+                    // Round to 2 decimal places, no commas
+                    String.format("%.2f", value)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return value.toString()
+            }
+        }
+
         fun commaFormat(value:Double?): String {
             try {
                 return NumberFormat.getInstance(Locale.US)

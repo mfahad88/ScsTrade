@@ -359,7 +359,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
     suspend fun announcementType(): Resource<List<AnnouncementTypeDataItem>> {
         return try {
-            Resource.Success(apiService.announcementType("List")+AnnouncementTypeDataItem(type = "Insider"))
+            Resource.Success(apiService.announcementType("List")/*+AnnouncementTypeDataItem(type = "Insider")*/)
         }catch (e:Exception){
             Resource.Error(e.message?:"An error occurred",null)
         }
