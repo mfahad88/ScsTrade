@@ -1,10 +1,13 @@
 package com.example.scstrade.views.register
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemIndicesCardBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.summary.KSEIndices
@@ -21,10 +24,21 @@ class IndexAdapter(
 
         fun bind(kseIndices: KSEIndices){
             binding.apply {
+                val percentChange=Utils.formatDouble(kseIndices.nETCHANGE.toDouble().div(kseIndices.preClose.toDouble()).times(100))
+                val net_Change = "${(if(kseIndices.nETCHANGE.toDouble()<0.0) "-" else "+")} ${Utils.formatDouble(kseIndices.nETCHANGE.toDouble())}"
                 kse100.text = kseIndices.iNDEXCODE
                 tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
-                netChange.text = kseIndices.nETCHANGE
+                netChange.text = "${percentChange} % ${net_Change}"
                 volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble()) else 0.0.toString()}"
+                if(kseIndices.nETCHANGE.toDouble()<0.0){
+                    binding.marketDown.visibility = View.VISIBLE
+                    binding.marketUp.visibility = View.GONE
+                    binding.relativeLayout.setBackgroundResource(R.drawable.red_chip)
+                }else{
+                    binding.marketDown.visibility = View.GONE
+                    binding.marketUp.visibility = View.VISIBLE
+                    binding.relativeLayout.setBackgroundResource(R.drawable.green_chip)
+                }
                 populateChart(kseIndices.iNDEXCODE)
 
             }
@@ -48,7 +62,7 @@ class IndexAdapter(
                         interval+=1
                         Entry(interval.toFloat(),it.tradingHigh.toFloat())
                     }
-                    binding.lineChart.setEntries(entries)
+                    binding.lineChart.setEntries(entries,false)
 
                     binding.lineChart.moveViewToX(interval.toFloat())
                     binding.lineChart.xAxis.apply {

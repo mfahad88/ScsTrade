@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -31,17 +32,23 @@ import androidx.lifecycle.lifecycleScope
 
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityMainBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.AppDatabase
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.home.HomeFragment
+import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.splash.SplashFragment
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {
@@ -90,7 +97,19 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
             }
         }
-        loadFragment(SplashFragment())
+        if(viewModel.isHome){
+            val listType = object : TypeToken<List<LoginDataItem>>() {}
+            val user= Utils.getSharedPreference(this, emptyList<LoginDataItem>(),AppConstants.USER,listType)
+           val isRemember= Utils.getSharedPreference(this, listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()
+            if(user.isEmpty() && !isRemember){
+                loadFragment(LoginFragment())
+            }else {
+                loadFragment(LandingFragment())
+            }
+        }else {
+            loadFragment(SplashFragment())
+        }
+
         subscribeToTopic("all")
     }
 

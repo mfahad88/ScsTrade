@@ -57,6 +57,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.axisRight.setDrawAxisLine(true)
         this.axisRight.isEnabled = true
         this.axisRight.textColor = ContextCompat.getColor(context,R.color.black)
+        this.axisRight.textSize=8F
         // Disable Legend
         this.legend.isEnabled = false
     }
@@ -69,9 +70,9 @@ class CustomCandlestickChart @JvmOverloads constructor(
             valueTextColor = if(isDark) Color.WHITE else Color.BLACK
             shadowColor = Color.DKGRAY
             shadowWidth = 0.7f
-            decreasingColor = Color.RED
+            decreasingColor = ContextCompat.getColor(context,R.color.md_theme_error)
             decreasingPaintStyle = Paint.Style.FILL
-            increasingColor = Color.GREEN
+            increasingColor = ContextCompat.getColor(context,R.color.md_theme_primary)
             increasingPaintStyle = Paint.Style.FILL
             neutralColor = Color.BLUE
             setDrawValues(false)

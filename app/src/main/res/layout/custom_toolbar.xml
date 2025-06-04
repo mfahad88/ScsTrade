@@ -5,102 +5,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="15dp"
-    android:background="@color/md_theme_toolbar"
+    android:paddingBottom="3dp"
+    android:background="@color/md_theme_surface"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         android:minHeight="?attr/actionBarSize"
-        android:background="@drawable/toolbar"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp">
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/mainItem"
+            android:id="@+id/mainItem">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/toolbar_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/toolbar"
+                app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
-            >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:id="@+id/toolbarWithLogo">
-
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/frame"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:contentDescription="Logo" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_toRightOf="@id/logo"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SCS Trade Pro"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/subTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Connect to intelligent investing"
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/toolbarWithBack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/searchIcon"
-                android:visibility="gone"
-                android:layout_marginTop="0dp"
-                tools:visibility="visible">
+                android:id="@+id/content"
+                android:layout_marginHorizontal="20dp">
 
                 <RelativeLayout
-                    android:id="@+id/backButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp"
-                    android:visibility="visible">
-
-                    <TextView
-                        android:id="@+id/back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/imageBack"
-                        android:text="@string/back"
-                        android:textAppearance="@style/back" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/toolbarWithLogo">
 
                     <ImageView
-                        android:id="@+id/imageBack"
+                        android:id="@+id/logo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/frame"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:contentDescription="Logo" />
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/back"
-                        android:layout_alignBottom="@id/back"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:paddingEnd="5dp"
-                        android:src="@drawable/arrow_back"
-                        app:tint="@android:color/white" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toRightOf="@id/logo"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SCS Trade Pro"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/subTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/connect_to_intelligent_investing"
+
+                            android:textColor="@android:color/white"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/notificationIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/notifications_none"
+                        android:padding="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:contentDescription="Notifications" />
+
+                    <!-- Search Icon -->
+                    <ImageView
+                        android:id="@+id/searchIcon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="fitXY"
+                        android:padding="10dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/search_24"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="end"
+                        android:layout_toLeftOf="@id/notificationIcon"
+                        android:contentDescription="Search" />
 
                 </RelativeLayout>
 
@@ -108,40 +110,17 @@
                     android:id="@+id/title_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/backButton"
-                    android:layout_alignStart="@id/backButton"
                     android:text="@string/automobile_"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
                     android:textAppearance="@style/automobile_" />
+
+
+                <!-- Notification Icon -->
+
             </RelativeLayout>
 
-
-            <!-- Notification Icon -->
-            <ImageView
-                android:id="@+id/notificationIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/notifications_none"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
-                android:contentDescription="Notifications" />
-
-            <!-- Search Icon -->
-            <ImageView
-                android:id="@+id/searchIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:layout_centerVertical="true"
-                android:src="@drawable/search_24"
-                android:layout_gravity="end"
-                android:padding="10dp"
-                android:layout_toLeftOf="@id/notificationIcon"
-                android:contentDescription="Search" />
-
-        </RelativeLayout>
+        </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
@@ -149,7 +128,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+
         android:weightSum="1"
+        android:layout_marginTop="3dp"
         android:paddingVertical="5dp"
         android:paddingHorizontal="20dp"
         >
@@ -159,8 +140,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/market_stat"
+            android:textFontWeight="500"
             android:textAppearance="@style/market_stat"
-            android:layout_weight="0.3"
+            android:layout_weight="0.24"
             />
 
         <LinearLayout
@@ -170,20 +152,21 @@
             android:id="@+id/open"
             android:gravity="start"
             android:visibility="gone"
-            android:layout_marginStart="10dp"
-            android:layout_weight="0.2">
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_repeatMode="restart"
-                app:lottie_rawRes="@raw/animate_open" />
+            tools:visibility="visible"
+            android:layout_marginStart="5dp"
+            android:layout_weight="0.15">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/green_circle"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="@string/open"
+                android:textFontWeight="700"
                 android:textAppearance="@style/open"
 
                 />
@@ -196,23 +179,22 @@
             android:id="@+id/close"
             android:layout_weight="0.2"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_marginStart="10dp"
+            tools:visibility="gone"
+            android:layout_marginStart="5dp"
             app:layout_constraintStart_toEndOf="@+id/market_stat"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_gravity="center_vertical"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/animate_closed"
-                app:lottie_repeatMode="restart" />
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/green_red"
+                android:layout_gravity="center_vertical"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textFontWeight="700"
+                android:textAllCaps="true"
                 android:text="@string/closed"
                 android:textAppearance="@style/closed"
 
@@ -224,7 +206,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="end|center_vertical"
-            android:layout_weight="0.5"
+            android:layout_weight="0.61"
+            android:textFontWeight="500"
+            android:layout_gravity="end"
             android:text="@string/dec_2024_04"
             android:textAppearance="@style/dec_2024_04"
             app:layout_constraintEnd_toEndOf="parent"
@@ -236,7 +220,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginHorizontal="20dp"
         android:background="@color/md_theme_surfaceContainerHighest"/>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -22,6 +23,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.main.MainActivity
 import java.io.File
 
 class NotificationDetailActivity : AppCompatActivity() {
@@ -33,13 +35,27 @@ class NotificationDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
         binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
             toolbarWithLogo.visibility = View.GONE
-            backButton.visibility = View.GONE
+            
             titleItem.text = "Notification"
             searchIcon.visibility = View.VISIBLE
             notificationIcon.visibility = View.INVISIBLE
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Your custom back press logic here
+                if(sharedViewModel.isHome){
+                    finish()
+                    val intent= Intent(this@NotificationDetailActivity,MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+                    startActivity(intent)
+                }
+            }
+        })
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
@@ -205,5 +221,7 @@ class NotificationDetailActivity : AppCompatActivity() {
             Log.e("PDFOpen", "Error opening PDF: ${e.message}")
         }
     }
+
+
 
 }

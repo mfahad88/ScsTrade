@@ -29,19 +29,16 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
                 binding.shariah.visibility= View.VISIBLE
+                binding.separator.visibility = View.VISIBLE
             }else{
                 binding.shariah.visibility= View.GONE
+                binding.separator.visibility = View.GONE
             }
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
-            if(previousStockItem?.bV?.compareTo(stockItem.bV)!=0){
-//                Utils.animatedValueChange(binding.volume,"Vol:",previousStockItem?.bV?.toDouble()?:0.0,stockItem.bV.toDouble())
-                Utils.animatedValueChange(previousStockItem?.bV?.toDouble()?:0.0,stockItem.bV.toDouble(), onUpdate = {
-                    binding.volume.text = "Vol: ${Utils.convertToMillions(it)}"
-                })
-            }
+            binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
 
-//            binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
+
             binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
             binding.bid.text = "Bid: ${stockItem.bP}"
             binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
@@ -51,8 +48,13 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
                     binding.valueTrade.text = String.format("%.2f",stockItem.cL)
                 })
             }
-//            binding.valueTrade.text = String.format("%.2f",stockItem.cL)
-            binding.netChange.text = "${Utils.formatDouble(stockItem.cH)} (${Utils.formatDouble(stockItem.cHP)}%)"
+            binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} (${if(stockItem.cH<0.0) "" else "+"} ${Utils.formatDouble(stockItem.cHP)}%)"
+            if(stockItem.cH<0.0){
+                binding.netChange.setTextColor(ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
+            }else{
+                binding.netChange.setTextColor(ContextCompat.getColor(binding.root.context,R.color.md_theme_primary))
+            }
+
             binding.high.text = "H: ${Utils.formatDouble(stockItem.hP)}"
             binding.low.text = "L: ${Utils.formatDouble(stockItem.lP)}"
             binding.high52.text = stockItem.high52

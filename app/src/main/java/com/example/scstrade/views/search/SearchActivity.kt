@@ -66,9 +66,10 @@ class SearchActivity : AppCompatActivity() {
             insets
         }
         binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
             toolbarWithLogo.visibility = View.GONE
-            backButton.visibility = View.GONE
+            
             titleItem.text = "Search"
             searchIcon.visibility = View.INVISIBLE
         }

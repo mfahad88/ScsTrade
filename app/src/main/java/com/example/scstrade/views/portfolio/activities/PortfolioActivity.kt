@@ -34,7 +34,8 @@ class PortfolioActivity : AppCompatActivity() {
         setContentView(binding.main)
         binding.toolbar.apply {
             binding.titleItem.text= "Portfolio"
-            binding.toolbarWithBack.visibility = View.VISIBLE
+            binding.titleItem.visibility = View.VISIBLE
+
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

@@ -94,8 +94,8 @@ class MarketFragment : Fragment() {
         (parentFragment as LandingFragment).binding.toolbar.apply {
             binding.titleItem.text = "Market"
             binding.toolbarWithLogo.visibility = View.GONE
-            binding.toolbarWithBack.visibility = View.VISIBLE
-            binding.backButton.visibility = View.GONE
+            binding.titleItem.visibility = View.VISIBLE
+
         }
         super.onResume()
     }

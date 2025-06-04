@@ -86,7 +86,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/kse100" />
 
-            <com.example.scstrade.views.widgets.VolumeChip
+            <com.example.scstrade.views.widgets.ValueChip
                 android:id="@+id/valueTrade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

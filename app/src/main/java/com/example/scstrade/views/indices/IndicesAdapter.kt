@@ -17,12 +17,12 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
-            binding.indexValue.text = Utils.formatDouble(kseIndices.cURRENTINDEX.toDouble())
+            binding.indexValue.text = Utils.formatDouble(kseIndices.vALUETRADED.toDouble())
             binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
 //            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
-            binding.labelText.text = "${Utils.formatDouble(kseIndices?.nETCHANGE?.toDouble()?:0.0)} (${Utils.formatDouble((kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100)?:0.0)}%)"
-            binding.volume.text = "Volume: ${Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())}"
-            binding.valueTrade.text = "Value: ${Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())}"
+            binding.labelText.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
+            binding.volume.text = kseIndices.vOLUMETRADED
+            binding.valueTrade.text = kseIndices.vALUETRADED
             binding.high.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
                     "(${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
             binding.l1167000.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +

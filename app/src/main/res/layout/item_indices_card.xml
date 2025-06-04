@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/stock_card">
+        android:background="@color/neutral_90">
 
         <TextView
             android:id="@+id/kse_100"
@@ -35,12 +35,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="16dp"
             android:gravity="right|top"
-            android:textFontWeight="600"
             android:text="@string/m_vol_721_9"
             android:textAppearance="@style/m_vol_721_9"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textFontWeight="600"
+            app:layout_constraintEnd_toEndOf="@+id/frameLayout4"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -65,41 +65,59 @@
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toBottomOf="@+id/kse_100" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/green_chip"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:id="@+id/marketUp"
+                android:src="@drawable/baseline_arrow_upward"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/marketDown"
+                android:rotation="180"
+                android:visibility="gone"
+                app:tint="@color/marketDown"
+                android:src="@drawable/baseline_arrow_upward"/>
             <TextView
                 android:id="@+id/net_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawableStart="@drawable/baseline_arrow_upward"
                 android:textFontWeight="500"
                 android:drawablePadding="4dp"
                 android:text="0.47% +409.06"
                 android:textAppearance="@style/net_change" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/frameLayout4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/relativeLayout"
             app:layout_constraintTop_toTopOf="@+id/tradingValue">
+
             <com.example.scstrade.views.widgets.mLineChart
+                android:id="@+id/lineChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/lineChart" />
+                android:layout_gravity="end"/>
 
             <!--<com.airbnb.lottie.LottieAnimationView
                 android:layout_width="wrap_content"

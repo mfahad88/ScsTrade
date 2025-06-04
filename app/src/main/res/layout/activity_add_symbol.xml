@@ -10,11 +10,11 @@
 
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="90dp"/>
+        android:layout_height="wrap_content"/>
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/symbol"
         android:layout_width="0dp"

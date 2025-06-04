@@ -38,8 +38,8 @@ class  NewsDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbar.binding.apply {
             toolbarWithLogo.visibility = View.GONE
-            toolbarWithBack.visibility = View.VISIBLE
-            backButton.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+            
             titleItem.text = "News"
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->

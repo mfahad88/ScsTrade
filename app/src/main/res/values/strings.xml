@@ -426,6 +426,8 @@
     <string name="_0_9">0123456789</string>
     <string name="_0_9_decimal">0123456789.</string>
     <string name="an_error_occurred">An error occurred...</string>
+    <string name="connect_to_intelligent_investing">Connect to intelligent investing</string>
+    <string name="add_to_stock">Add to Stock</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

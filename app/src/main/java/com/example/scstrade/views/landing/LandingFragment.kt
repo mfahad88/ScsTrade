@@ -60,14 +60,14 @@ class LandingFragment : Fragment() {
 
         binding.toolbar.binding.apply {
             toolbarWithLogo.visibility = View.VISIBLE
-            toolbarWithBack.visibility = View.GONE
+            titleItem.visibility = View.GONE
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { view, windowInsets ->
+    /*    ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.content) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.setPadding(0,insets.top,0,insets.bottom)
             windowInsets
-        }
+        }*/
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
             val insets= windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.updateLayoutParams<MarginLayoutParams> {

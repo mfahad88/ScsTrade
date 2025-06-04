@@ -34,9 +34,8 @@ class AnnoucementActivity : AppCompatActivity() {
         }
 
         binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
             toolbarWithLogo.visibility = View.GONE
-            backButton.visibility = View.GONE
             titleItem.text = "Announcements"
             searchIcon.visibility = View.INVISIBLE
         }

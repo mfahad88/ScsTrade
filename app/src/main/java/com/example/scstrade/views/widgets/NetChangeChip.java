@@ -13,9 +13,11 @@ import androidx.core.content.ContextCompat;
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.NetChangeChipBinding;
 import com.example.scstrade.databinding.VolumeChipBinding;
+import com.example.scstrade.helper.Utils;
 
 public class NetChangeChip extends RelativeLayout {
     public NetChangeChipBinding binding;
+    public String previousText="0.0";
     public NetChangeChip(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
@@ -50,15 +52,30 @@ public class NetChangeChip extends RelativeLayout {
         }
     }
 
-    public void setText(String text){
-        if(text.contains("-")){
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.rounded_gray_red));
-//            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
-        }else{
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(),R.drawable.rounded_gray_green));
-//            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+    public void setText(String nChange,String pClose){
+        double netChange = Double.parseDouble(nChange);
+        double preClose = Double.parseDouble(pClose);
+
+        String changeSign = netChange > 0.0 ? "+" : "-";
+        String changeValue = Utils.Companion.formatDouble(netChange);
+        double changePercent = (netChange / preClose) * 100;
+        String percentValue = Utils.Companion.formatDouble(changePercent);
+
+        String result = changeSign + changeValue + " " + changeSign + "(" + percentValue + "%)";
+        if(previousText.equals(nChange)){
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_blue));
+            binding.tv.setTextColor(Color.parseColor("#1A73E8"));
+        }else {
+            if (changeSign.contains("-")) {
+                binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
+                binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
+            } else {
+                binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
+                binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+            }
         }
-        binding.tv.setText(text);
+        binding.tv.setText(result);
+        previousText=nChange;
     }
 
     public String getText(){

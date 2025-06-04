@@ -72,8 +72,9 @@ class SnapshotActivity : AppCompatActivity() {
         })
         binding.toolbar.binding.apply {
             toolbarWithLogo.visibility = View.GONE
-            toolbarWithBack.visibility = View.VISIBLE
-            backButton.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
+            
             titleItem.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
         }
         enableEdgeToEdge()

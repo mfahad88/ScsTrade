@@ -64,13 +64,14 @@ public class mLineChart extends LineChart {
         return entries;
     }
 
-    public void setEntries(List<Entry> entries) {
+    public void setEntries(List<Entry> entries,boolean isRightEnabled) {
         this.entries = entries;
-
+        this.isRightEnabled = isRightEnabled;
         init(context,attrs);
     }
 
     private List<Entry> entries;
+    private boolean isRightEnabled=true;
    /* public mLineChart(Context context) {
         super(context);
         this.context=context;
@@ -135,7 +136,7 @@ public class mLineChart extends LineChart {
         rightAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
         rightAxis.setDrawLabels(true);
         rightAxis.setDrawGridLines(false);
-        rightAxis.setEnabled(true);
+        rightAxis.setEnabled(isRightEnabled);
 
         this.notifyDataSetChanged();
 //        this.animateXY(5000,5000);

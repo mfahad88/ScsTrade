@@ -43,6 +43,11 @@ class AddSymbolActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         fetchUser()
+        binding.toolbar.binding.apply {
+            content.visibility = View.GONE
+            titleItem.visibility = View.VISIBLE
+            titleItem.text = "Watchlist"
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)

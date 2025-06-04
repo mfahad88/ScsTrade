@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -93,7 +94,19 @@ class LoginFragment : Fragment() {
         }
         callbackManager = CallbackManager.Factory.create()
         googleSignInClient = GoogleSignInUtils.initGoogleSignInClient(requireContext())
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val fragmentManager = requireActivity().supportFragmentManager
+                if (fragmentManager.backStackEntryCount > 0) {
+                    // 🔙 Pop fragment from back stack
+                    fragmentManager.popBackStack()
+                } else {
+                    // 🚪 Close the app
+                    (requireActivity() as MainActivity).finish()
+                }
+            }
 
+        })
         binding.facebook.setOnClickListener {
             LoginManager.getInstance().logInWithReadPermissions(
                 this,

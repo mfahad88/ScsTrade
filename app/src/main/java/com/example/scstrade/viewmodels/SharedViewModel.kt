@@ -84,6 +84,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
     val isConnected = ConnectivityObserver(application)
+    var isHome=false
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {

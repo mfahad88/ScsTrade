@@ -83,8 +83,9 @@ class ContactActivity : AppCompatActivity() {
         Utils.setSystemBarIcons(this,false)
         binding.toolbar.binding.apply {
             toolbarWithLogo.visibility = View.GONE
-            toolbarWithBack.visibility = View.VISIBLE
-            backButton.visibility = View.GONE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
+            
             titleItem.text = "Contact & Support"
         }
         sharedViewModel.contactUs()

@@ -55,8 +55,8 @@ class HomeFragment : Fragment() {
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            toolbarWithLogo.visibility = View.VISIBLE
-            toolbarWithBack.visibility = View.GONE
+
+
         }
 
 //        viewModel.fetchAllData()
@@ -153,7 +153,7 @@ class HomeFragment : Fragment() {
                 binding.cardHome.apply {
                     kmiallshr.text=kseIndices?.iNDEXCODE?.replace("Index","")
                     if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                        tradeValueView.text=Utils.convertToMillions(kseIndices?.cURRENTINDEX?.toDouble()?:0.0)
+                        tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
                         if(kseIndices?.nETCHANGE?.contains("-")?:false) {
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
@@ -163,8 +163,9 @@ class HomeFragment : Fragment() {
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
                             volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_green)
                         }
-                        netChangeChip.text = "${kseIndices?.nETCHANGE} (${String.format("%.2f",(kseIndices?.nETCHANGE?.toDouble()?.div(kseIndices?.preClose?:0.0))?.times(100))}%)"
-                        volumeChip.text="Volume: ${Utils.convertToMillions(kseIndices?.vOLUMETRADED?.toDouble()?:0.0)}"
+
+                        netChangeChip.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
+                        volumeChip.text=kseIndices.vOLUMETRADED
 
                         highView.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
                                 "(${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
@@ -253,10 +254,10 @@ class HomeFragment : Fragment() {
                                }?: emptyList()
                            )*/
                        }else{
-                           binding.cardHome.lineChart.entries = result.data?.map {
+                           binding.cardHome.lineChart.setEntries(result.data?.map {
                                interval+=1
                                Entry(interval.toFloat(),it.tradingHigh.toFloat())
-                           }
+                           },true)
 
                        }
                    }

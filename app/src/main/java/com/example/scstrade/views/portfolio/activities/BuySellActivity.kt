@@ -47,22 +47,38 @@ class BuySellActivity : AppCompatActivity() {
         val portfolioDetails=intent.getParcelableExtra<PortfolioDetails>(AppConstants.PORTFOLIO_DETAIL)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
+            binding.toolbar.binding.apply {
+                titleItem.visibility = View.VISIBLE
+                titleItem.text = "Sell Stock"
+                toolbarWithLogo.visibility = View.GONE
+            }
 //            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
 //            (binding.sellContainer as View).visibility = View.VISIBLE
         }
         if(intent.getBooleanExtra(AppConstants.IS_BUY,false)){
             findViewById<View>(R.id.buy_container).visibility = View.VISIBLE
+            binding.toolbar.binding.apply {
+                titleItem.visibility = View.VISIBLE
+                titleItem.text = "Buy Stock"
+                toolbarWithLogo.visibility = View.GONE
+            }
 //            (binding.buyContainer as View).visibility = View.VISIBLE
         }
         if(intent.getBooleanExtra(AppConstants.IS_Dividend,false)){
             findViewById<View>(R.id.dividend_container).visibility = View.VISIBLE
+            binding.toolbar.binding.apply {
+                titleItem.visibility = View.VISIBLE
+                titleItem.text = "Dividend"
+                toolbarWithLogo.visibility = View.GONE
+            }
+//
 //            (binding.dividendContainer as View).visibility = View.VISIBLE
         }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+       /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
 
 
         if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){

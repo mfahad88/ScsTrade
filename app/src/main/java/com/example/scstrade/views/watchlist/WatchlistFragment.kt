@@ -43,7 +43,8 @@ class WatchlistFragment : Fragment() {
             WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
             toolbarWithLogo.visibility = View.GONE
             titleItem.text = "Watchlist"
         }

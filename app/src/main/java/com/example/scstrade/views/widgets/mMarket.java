@@ -9,9 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
 
@@ -30,6 +36,7 @@ import java.util.Objects;
 
 public class mMarket extends LinearLayout {
    public CustomToolbarBinding binding;
+   public RelativeLayout content;
     private OnBackClickListener backClickListener;
     public mMarket(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -72,8 +79,17 @@ public class mMarket extends LinearLayout {
                 binding.searchIcon.setOnClickListener(view -> {
                    context.startActivity(new Intent(context, SearchActivity.class));
                 });
+                ViewCompat.setOnApplyWindowInsetsListener(binding.content, new androidx.core.view.OnApplyWindowInsetsListener() {
+                    @NonNull
+                    @Override
+                    public WindowInsetsCompat onApplyWindowInsets(@NonNull View view, @NonNull WindowInsetsCompat windowInsets) {
+                        Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                        view.setPadding(0,insets.top,0,insets.bottom);
 
-                binding.backButton.setOnClickListener(new OnClickListener() {
+                        return windowInsets;
+                    }
+                }) ;
+           /*     binding.backButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (backClickListener != null) {
@@ -82,7 +98,8 @@ public class mMarket extends LinearLayout {
                             ((Activity) context).onBackPressed();
                         }
                     }
-                });
+                });*/
+                content=binding.content;
             }catch (Exception e){
                 Log.e("LifecycleOwner",e.getMessage());
             }

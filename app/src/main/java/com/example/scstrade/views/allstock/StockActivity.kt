@@ -46,9 +46,9 @@ class StockActivity : AppCompatActivity() {
         }
 
        binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+           titleItem.visibility = View.VISIBLE
             toolbarWithLogo.visibility = View.GONE
-            backButton.visibility = View.VISIBLE
+
 //            titleItem.text = kseIndices.iNDEXCODE
         }
         sharedViewModel=(application as MyApp).viewModel

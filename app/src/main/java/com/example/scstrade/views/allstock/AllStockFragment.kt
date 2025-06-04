@@ -49,9 +49,10 @@ class AllStockFragment : Fragment() {
         index = arguments?.getString("index")?:null
         future = arguments?.getString("future")?:null
      /*   ((parentFragment as MarketFragment).parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
             toolbarWithLogo.visibility = View.GONE
-            backButton.visibility = View.VISIBLE
+            
         }*/
         binding.recyclerIndices.apply {
             adapter= StockAdapter(ArrayList(),true)

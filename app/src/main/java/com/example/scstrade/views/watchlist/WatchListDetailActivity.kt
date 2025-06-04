@@ -47,8 +47,9 @@ class WatchListDetailActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         binding.toolbar.binding.apply {
-            toolbarWithBack.visibility = View.VISIBLE
-            backButton.visibility = View.VISIBLE
+            titleItem.visibility = View.VISIBLE
+           toolbarWithLogo.visibility = View.GONE
+            
             toolbarWithLogo.visibility = View.GONE
             titleItem.text = "Watchlist"
         }

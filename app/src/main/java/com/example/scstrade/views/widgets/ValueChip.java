@@ -17,15 +17,15 @@ import com.example.scstrade.R;
 import com.example.scstrade.databinding.VolumeChipBinding;
 import com.example.scstrade.helper.Utils;
 
-public class VolumeChip extends RelativeLayout {
+public class ValueChip extends RelativeLayout {
     public VolumeChipBinding binding;
     public String previousText="0.0";
-    public VolumeChip(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public ValueChip(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public VolumeChip(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ValueChip(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -40,19 +40,19 @@ public class VolumeChip extends RelativeLayout {
                     R.styleable.VolumeChip,
                     0,0
             );
-           try{
+            try{
 
-               String text=a.getString(R.styleable.VolumeChip_android_text);
-               int color=a.getColor(R.styleable.VolumeChip_android_background, Color.TRANSPARENT);
-               if(text!=null){
-                   binding.tv.setText(text);
-               }
+                String text=a.getString(R.styleable.VolumeChip_android_text);
+                int color=a.getColor(R.styleable.VolumeChip_android_background, Color.TRANSPARENT);
+                if(text!=null){
+                    binding.tv.setText(text);
+                }
                 if(color!=Color.TRANSPARENT) {
                     binding.relativeLayout.setBackgroundColor(color);
                 }
-           }finally {
-               a.recycle();
-           }
+            }finally {
+                a.recycle();
+            }
         }
 
     }
@@ -72,7 +72,7 @@ public class VolumeChip extends RelativeLayout {
                     binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
                 }
             }
-            binding.tv.setText("Volume: "+ Utils.Companion.convertToMillions(vol));
+            binding.tv.setText("Value: "+ Utils.Companion.convertToMillions(vol));
             previousText=text;
         }
 
