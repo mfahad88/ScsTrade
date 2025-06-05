@@ -134,12 +134,24 @@ class Utils {
                 }else{
                     return "0.0"
                 }
+              /*  if (value != null) {
+                    return when {
+                        value >= 1_000_000_000 -> String.format("%.1fB", value / 1_000_000_000)
+                        value >= 1_000_000     -> String.format("%.1fM", value / 1_000_000)
+//                        value >= 1_000         -> String.format("%.1fK", value / 1_000)
+                        else -> value.toString()
+                    }
+                }else{
+                    return "0.0"
+                }*/
             }catch (e:Exception){
                 e.printStackTrace()
                 return "0.0"
             }
 
         }
+
+
 
         fun animatedValueChange(/*tv: TextView, prefix: String,*/from: Double,to:Double, onUpdate: ((Double) -> Unit)? = null ,duration: Long = 250L){
             val animator = ValueAnimator.ofFloat(from.toFloat(), to.toFloat()).apply {

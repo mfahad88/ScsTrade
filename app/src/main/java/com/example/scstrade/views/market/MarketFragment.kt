@@ -93,7 +93,7 @@ class MarketFragment : Fragment() {
     override fun onResume() {
         (parentFragment as LandingFragment).binding.toolbar.apply {
             binding.titleItem.text = "Market"
-            binding.toolbarWithLogo.visibility = View.GONE
+            binding.group.visibility = View.GONE
             binding.titleItem.visibility = View.VISIBLE
 
         }

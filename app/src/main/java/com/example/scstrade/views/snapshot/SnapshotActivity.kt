@@ -71,19 +71,14 @@ class SnapshotActivity : AppCompatActivity() {
             }
         })
         binding.toolbar.binding.apply {
-            toolbarWithLogo.visibility = View.GONE
+            group.visibility = View.GONE
             titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            
+
             titleItem.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
         }
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

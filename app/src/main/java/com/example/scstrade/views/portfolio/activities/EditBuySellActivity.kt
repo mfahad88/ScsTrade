@@ -31,11 +31,7 @@ class EditBuySellActivity : AppCompatActivity() {
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
         sharedViewModel.getPortfolioDetails(portfolioMainID)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         binding.tabLayout.getTabAt(0)?.select()
         loadFragment(BuyFragment())
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{

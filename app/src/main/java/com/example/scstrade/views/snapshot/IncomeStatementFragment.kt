@@ -303,7 +303,7 @@ class IncomeStatementFragment : Fragment() {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(14.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }
@@ -324,7 +324,7 @@ class IncomeStatementFragment : Fragment() {
                                 lineHeight = 24.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(400),
-                                color = colorResource(id = R.color.white),
+                                color = colorResource(id = R.color.black),
                             )
                         )
                     }

@@ -34,15 +34,7 @@ class NotificationDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            toolbarWithLogo.visibility = View.GONE
-            
-            titleItem.text = "Notification"
-            searchIcon.visibility = View.VISIBLE
-            notificationIcon.visibility = View.INVISIBLE
-        }
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -53,14 +45,12 @@ class NotificationDetailActivity : AppCompatActivity() {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                     startActivity(intent)
+                }else{
+                    finish()
                 }
             }
         })
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.detail.listView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(0,  systemBars.top, 0, systemBars.bottom)
@@ -93,87 +83,89 @@ class NotificationDetailActivity : AppCompatActivity() {
 
                         if(response?.isJsonArray?:false) {
                             val array = response?.asJsonArray
-                            val jsonObject=array!![0].asJsonObject
+                            if(!array!!.isJsonNull){
+                                val jsonObject=array!![0].asJsonObject
 
-                            val list=ArrayList<KeyDescValue>()
-                            jsonObject.asMap().entries.forEach {
-                                if(!it.value.isJsonNull && !it.value.asString.isNullOrEmpty() && !it.key.equals("company_code")
-                                    && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals("Board_Meeting_Date")
-                                    && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")){
-                                    list.add(KeyDescValue(it.key,it.value.asString,null))
+                                val list=ArrayList<KeyDescValue>()
+                                jsonObject.asMap().entries.forEach {
+                                    if(!it.value.isJsonNull && !it.value.asString.isNullOrEmpty() && !it.key.equals("company_code")
+                                        && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals("Board_Meeting_Date")
+                                        && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")){
+                                        list.add(KeyDescValue(it.key,it.value.asString,null))
+                                    }
                                 }
-                            }
-                            detail.listView.adapter = InformationAdapter(this@NotificationDetailActivity,list)
+                                detail.listView.adapter = InformationAdapter(this@NotificationDetailActivity,list)
 
-                            detail.symbol.text=jsonObject.get("company_code").asString
-                            detail.companyName.text=jsonObject.get("company_name").asString
-                            detail.description.text=jsonObject.get("Heading").asString
+                                detail.symbol.text=jsonObject.get("company_code").asString
+                                detail.companyName.text=jsonObject.get("company_name").asString
+                                detail.description.text=jsonObject.get("Heading").asString
 
-                            if(jsonObject.has("Board_Meeting_Date")) {
-                                detail.datetime.text = Utils.convertDateString(
-                                    jsonObject.get("Board_Meeting_Date").asString,
-                                    "dd-MMM-yyyy"
-                                )
-                                detail.datetime.visibility = View.VISIBLE
-                            }else{
-                                detail.datetime.visibility = View.GONE
-                            }
-                            if(! jsonObject.get("PDFLink").isJsonNull) {
-                                detail.imageViewDownload.visibility=View.VISIBLE
-                                detail.imageViewDownload.setOnClickListener {
-                                    binding.loader.visibility = View.VISIBLE
-                                    downloadPdf(
-                                        this@NotificationDetailActivity,
-                                        jsonObject.get("PDFLink").asString
-                                    ) { file ->
-                                        this@NotificationDetailActivity.runOnUiThread {
-                                            if (file != null) {
-                                                openPdf(this@NotificationDetailActivity, file)
-                                                binding.loader.visibility = View.GONE
+                                if(jsonObject.has("Board_Meeting_Date")) {
+                                    detail.datetime.text = Utils.convertDateString(
+                                        jsonObject.get("Board_Meeting_Date").asString,
+                                        "dd-MMM-yyyy"
+                                    )
+                                    detail.datetime.visibility = View.VISIBLE
+                                }else{
+                                    detail.datetime.visibility = View.GONE
+                                }
+                                if(! jsonObject.get("PDFLink").isJsonNull) {
+                                    detail.imageViewDownload.visibility=View.VISIBLE
+                                    detail.imageViewDownload.setOnClickListener {
+                                        binding.loader.visibility = View.VISIBLE
+                                        downloadPdf(
+                                            this@NotificationDetailActivity,
+                                            jsonObject.get("PDFLink").asString
+                                        ) { file ->
+                                            this@NotificationDetailActivity.runOnUiThread {
+                                                if (file != null) {
+                                                    openPdf(this@NotificationDetailActivity, file)
+                                                    binding.loader.visibility = View.GONE
+                                                }
                                             }
                                         }
                                     }
+                                }else{
+                                    detail.imageViewDownload.visibility=View.GONE
                                 }
-                            }else{
-                                detail.imageViewDownload.visibility=View.GONE
-                            }
 
-                            if(!jsonObject.get("ImageLink").isJsonNull) {
-                                detail.imageViewView.visibility = View.VISIBLE
-                                detail.imageViewView.setOnClickListener {
-                                    binding.loader.visibility = View.VISIBLE
-                                    downloadPdf(
-                                        this@NotificationDetailActivity,
-                                        jsonObject.get("ImageLink").asString
-                                    ) { file ->
-                                        this@NotificationDetailActivity.runOnUiThread {
-                                            if (file != null) {
-                                                openPdf(this@NotificationDetailActivity, file)
-                                                binding.loader.visibility = View.GONE
+                                if(!jsonObject.get("ImageLink").isJsonNull) {
+                                    detail.imageViewView.visibility = View.VISIBLE
+                                    detail.imageViewView.setOnClickListener {
+                                        binding.loader.visibility = View.VISIBLE
+                                        downloadPdf(
+                                            this@NotificationDetailActivity,
+                                            jsonObject.get("ImageLink").asString
+                                        ) { file ->
+                                            this@NotificationDetailActivity.runOnUiThread {
+                                                if (file != null) {
+                                                    openPdf(this@NotificationDetailActivity, file)
+                                                    binding.loader.visibility = View.GONE
+                                                }
                                             }
                                         }
                                     }
+                                }else{
+                                    detail.imageViewView.visibility = View.GONE
                                 }
-                            }else{
-                                detail.imageViewView.visibility = View.GONE
-                            }
-                            if(! jsonObject.get("PDFLink").isJsonNull) {
-                                detail.imageViewView.visibility = View.VISIBLE
-                                detail.imageViewShare.setOnClickListener {
-                                    binding.loader.visibility = View.VISIBLE
-                                    downloadPdf(
-                                        this@NotificationDetailActivity,
-                                        jsonObject.get("PDFLink").asString
-                                    ) { file ->
-                                        this@NotificationDetailActivity.runOnUiThread {
-                                            if (file != null) {
-                                                sharePdf(file)
+                                if(! jsonObject.get("PDFLink").isJsonNull) {
+                                    detail.imageViewView.visibility = View.VISIBLE
+                                    detail.imageViewShare.setOnClickListener {
+                                        binding.loader.visibility = View.VISIBLE
+                                        downloadPdf(
+                                            this@NotificationDetailActivity,
+                                            jsonObject.get("PDFLink").asString
+                                        ) { file ->
+                                            this@NotificationDetailActivity.runOnUiThread {
+                                                if (file != null) {
+                                                    sharePdf(file)
+                                                }
                                             }
                                         }
                                     }
+                                }else{
+                                    detail.imageViewView.visibility = View.GONE
                                 }
-                            }else{
-                                detail.imageViewView.visibility = View.GONE
                             }
                         }
 

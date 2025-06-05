@@ -81,10 +81,9 @@ class NewsFragment : Fragment() {
         sharedViewModel=(requireActivity().application as MyApp).viewModel
         sharedViewModel.news()
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            toolbarWithLogo.visibility = View.GONE
+            group.visibility = View.GONE
             titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            
+
             titleItem.text = "News"
         }
 

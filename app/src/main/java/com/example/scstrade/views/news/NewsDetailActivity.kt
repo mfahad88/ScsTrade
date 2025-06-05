@@ -36,17 +36,8 @@ class  NewsDetailActivity : AppCompatActivity() {
         sharedViewModel=(this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
-        binding.toolbar.binding.apply {
-            toolbarWithLogo.visibility = View.GONE
-            titleItem.visibility = View.VISIBLE
-            
-            titleItem.text = "News"
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+
 
 
         newsType= intent.extras?.getString(AppConstants.NEWS_TYPE).toString()

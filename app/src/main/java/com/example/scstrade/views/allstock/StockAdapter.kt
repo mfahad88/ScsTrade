@@ -23,7 +23,6 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
             binding.root.setOnClickListener {
                 val intent= Intent(binding.root.context,SnapshotActivity::class.java)
                 intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
-
                 binding.root.context.startActivity(intent)
             }
 //            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)

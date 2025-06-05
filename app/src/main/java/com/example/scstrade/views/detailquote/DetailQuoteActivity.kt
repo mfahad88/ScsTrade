@@ -51,19 +51,7 @@ class DetailQuoteActivity : AppCompatActivity() {
         binding=ActivityDetailQuoteBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            toolbarWithLogo.visibility = View.GONE
-            
-            titleItem.text = "Detailed Quote"
-            searchIcon.visibility = View.INVISIBLE
-        }
+
 
         binding.searchText.addTextChangedListener {
             val search=it.toString()

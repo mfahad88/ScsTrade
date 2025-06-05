@@ -44,6 +44,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
@@ -94,6 +96,73 @@ class OverviewFragment : Fragment() {
                        binding.threePecent.text = "${result.data?.twoMonthReturn}%"
                        binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
                        binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
+                       binding.apply {
+                               onePerformance.background?.let {
+                               val wrappedDrawable = DrawableCompat.wrap(it)
+                               if(result.data?.oneMonthReturn?.contains("-")?:false) {
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_error)
+                                   )
+                               }else{
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
+                                   )
+                               }
+                               onePerformance.background = wrappedDrawable
+                           }
+
+                           threePerformance.background?.let {
+                               val wrappedDrawable = DrawableCompat.wrap(it)
+                               if(result.data?.twoMonthReturn?.contains("-")?:false) {
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_error)
+                                   )
+                               }else{
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
+                                   )
+                               }
+                               onePerformance.background = wrappedDrawable
+                           }
+
+                           sixPerformance.background?.let {
+                               val wrappedDrawable = DrawableCompat.wrap(it)
+                               if(result.data?.sixMonthReturn?.contains("-")?:false) {
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_error)
+                                   )
+                               }else{
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
+                                   )
+                               }
+                               onePerformance.background = wrappedDrawable
+                           }
+
+                           oneYearPerformance.background?.let {
+                               val wrappedDrawable = DrawableCompat.wrap(it)
+                               if(result.data?.twelveMonthReturn?.contains("-")?:false) {
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_error)
+                                   )
+                               }else{
+                                   DrawableCompat.setTint(
+                                       wrappedDrawable,
+                                       ContextCompat.getColor(requireContext(), R.color.md_theme_primary)
+                                   )
+                               }
+                               onePerformance.background = wrappedDrawable
+                           }
+                       }
+
+
                        val res=sharedViewModel.mutableAllData.value
                        val item=res?.data?.filter { it.sYM.equals(requireActivity().intent.extras?.getString(AppConstants.SYMBOL),true) }?.first()
                        binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
@@ -237,74 +306,33 @@ class OverviewFragment : Fragment() {
             }
 
             Spacer(modifier = Modifier.height(15.dp))
+            if(detail?.snapShot?.earnings!=null){
+                Card(
+                    modifier = Modifier
 
-            Card(
-                modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
 
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
-
-                elevation = 0.dp,
-                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
-                    Text(
-                        text = "Earnings",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            lineHeight = 27.sp,
-                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                            fontWeight = FontWeight(700),
-                            color = colorResource(id = R.color.black),
+                    elevation = 0.dp,
+                    backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
+                    shape = RoundedCornerShape(10.dp),
+                ) {
+                    Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
+                        Text(
+                            text = "Earnings",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                lineHeight = 27.sp,
+                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                fontWeight = FontWeight(700),
+                                color = colorResource(id = R.color.black),
+                            )
                         )
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    detail?.snapShot?.earnings?.forEachIndexed{index, descNameValue ->
-                        ItemValue(descNameValue.name?:"",descNameValue.value?:"",descNameValue.desc)
-                        if(index<detail.snapShot.earnings.size-1) {
-                            Row {
-                                Divider(
-                                    thickness = 1.dp,
-                                    color = Color(0xFFE5E2E1),
-                                    modifier = Modifier.padding(vertical = 4.dp)
-                                )
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
-                elevation = 0.dp,
-                backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
-                    Text(
-                        text = "Important Ratios",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            lineHeight = 27.sp,
-                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                            fontWeight = FontWeight(700),
-                            color = colorResource(id = R.color.black),
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    detail?.snapShot?.importantRatios?.forEachIndexed{index, descNameValue ->
-                        if(descNameValue!=null){
-
+                        Spacer(modifier = Modifier.height(10.dp))
+                        detail?.snapShot?.earnings?.forEachIndexed{index, descNameValue ->
                             ItemValue(descNameValue.name?:"",descNameValue.value?:"",descNameValue.desc)
-                            if(index<detail.snapShot.importantRatios.size-1) {
+                            if(index<detail.snapShot.earnings.size-1) {
                                 Row {
                                     Divider(
                                         thickness = 1.dp,
@@ -314,11 +342,56 @@ class OverviewFragment : Fragment() {
                                 }
                             }
                         }
+
                     }
                 }
+
+                Spacer(modifier = Modifier.height(15.dp))
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+            if(detail?.snapShot?.importantRatios!=null){
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+                    elevation = 0.dp,
+                    backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
+                    shape = RoundedCornerShape(10.dp),
+                ) {
+                    Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
+                        Text(
+                            text = "Important Ratios",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                lineHeight = 27.sp,
+                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                fontWeight = FontWeight(700),
+                                color = colorResource(id = R.color.black),
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        detail?.snapShot?.importantRatios?.forEachIndexed{index, descNameValue ->
+                            if(descNameValue!=null){
+
+                                ItemValue(descNameValue.name?:"",descNameValue.value?:"",descNameValue.desc)
+                                if(index<detail.snapShot.importantRatios.size-1) {
+                                    Row {
+                                        Divider(
+                                            thickness = 1.dp,
+                                            color = Color(0xFFE5E2E1),
+                                            modifier = Modifier.padding(vertical = 4.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+            }
+
             when(charting){
                 is Resource.Error -> {
                     Utils.showError(binding.root, charting.message ?: "An error occurred")
@@ -337,11 +410,12 @@ class OverviewFragment : Fragment() {
                             factory = { context -> CustomBarChart(context) },
                             update = { populateBarChart(it, charting.data?.ePSYear) }
                         )
+                        Spacer(modifier = Modifier.height(15.dp))
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+
             if(charting.data?.ePS!=null) {
                 AndroidView(
                     modifier = Modifier
@@ -351,9 +425,10 @@ class OverviewFragment : Fragment() {
                     factory = { context -> GroupedBarChart(context) },
                     update = { populateGroupBarChart(it, charting.data?.ePS) }
                 )
+                Spacer(modifier = Modifier.height(15.dp))
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+
             if(detail?.snapShot?.equity!=null) {
                 ExpandableList("Equity Ratios", detail.snapShot.equity,charting.data)
                 Spacer(modifier = Modifier.height(5.dp))
@@ -383,7 +458,7 @@ class OverviewFragment : Fragment() {
                 Spacer(modifier = Modifier.height(5.dp))
             }
             if(detail?.snapShot?.solvency!=null) {
-                ExpandableList("solvency", detail.snapShot.solvency, charting.data)
+                ExpandableList("Solvency", detail.snapShot.solvency, charting.data)
                 Spacer(modifier = Modifier.height(5.dp))
             }
             if(detail?.snapShot?.advancesAndDeposits!=null) {
@@ -508,7 +583,7 @@ class OverviewFragment : Fragment() {
             list.forEachIndexed { index, descNameValue ->
 
                 Column {
-                    Row {
+                    Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp)){
                         Text(
                             text = descNameValue.name?:"",
                             style = TextStyle(

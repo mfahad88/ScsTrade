@@ -50,7 +50,7 @@ class BuySellActivity : AppCompatActivity() {
             binding.toolbar.binding.apply {
                 titleItem.visibility = View.VISIBLE
                 titleItem.text = "Sell Stock"
-                toolbarWithLogo.visibility = View.GONE
+                group.visibility = View.GONE
             }
 //            stockList = intent.getParcelableArrayListExtra<PortfolioDetailItem>(AppConstants.STOCK_INFO)!!
 //            (binding.sellContainer as View).visibility = View.VISIBLE
@@ -60,7 +60,7 @@ class BuySellActivity : AppCompatActivity() {
             binding.toolbar.binding.apply {
                 titleItem.visibility = View.VISIBLE
                 titleItem.text = "Buy Stock"
-                toolbarWithLogo.visibility = View.GONE
+                group.visibility = View.GONE
             }
 //            (binding.buyContainer as View).visibility = View.VISIBLE
         }
@@ -69,7 +69,7 @@ class BuySellActivity : AppCompatActivity() {
             binding.toolbar.binding.apply {
                 titleItem.visibility = View.VISIBLE
                 titleItem.text = "Dividend"
-                toolbarWithLogo.visibility = View.GONE
+                group.visibility = View.GONE
             }
 //
 //            (binding.dividendContainer as View).visibility = View.VISIBLE

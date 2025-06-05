@@ -23,102 +23,102 @@
             android:layout_height="match_parent"
             android:id="@+id/mainItem">
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/toolbar_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/toolbar"
                 app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/content"
-                android:layout_marginHorizontal="20dp">
+                android:id="@+id/content">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/toolbarWithLogo">
-
-                    <ImageView
-                        android:id="@+id/logo"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/frame"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true"
-                        android:contentDescription="Logo" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_toRightOf="@id/logo"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="SCS Trade Pro"
-                            android:textColor="@android:color/white"
-                            android:textStyle="bold"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/subTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/connect_to_intelligent_investing"
-
-                            android:textColor="@android:color/white"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/notificationIcon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/notifications_none"
-                        android:padding="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="end"
-                        android:contentDescription="Notifications" />
-
-                    <!-- Search Icon -->
-                    <ImageView
-                        android:id="@+id/searchIcon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:scaleType="fitXY"
-                        android:padding="10dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/search_24"
-                        android:layout_marginEnd="5dp"
-                        android:layout_gravity="end"
-                        android:layout_toLeftOf="@id/notificationIcon"
-                        android:contentDescription="Search" />
-
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="Logo"
+                    android:src="@drawable/frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/title_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:text="@string/automobile_"
+                    android:textAppearance="@style/automobile_"
                     android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="SCS Trade Pro"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/logo" />
+
+                <TextView
+                    android:id="@+id/subTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/connect_to_intelligent_investing"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toEndOf="@+id/logo"
+                    app:layout_constraintStart_toStartOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <ImageView
+                    android:id="@+id/notificationIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:textAppearance="@style/automobile_" />
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Notifications"
+                    android:padding="10dp"
+                    android:src="@drawable/notifications_none"
+                    app:layout_constraintBottom_toBottomOf="@+id/logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/logo" />
+
+                <ImageView
+                    android:id="@+id/searchIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toLeftOf="@id/notificationIcon"
+                    android:contentDescription="Search"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/search_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/notificationIcon"
+                    app:layout_constraintEnd_toStartOf="@+id/notificationIcon"
+                    app:layout_constraintTop_toTopOf="@+id/notificationIcon" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="subTitle,logo,title,notificationIcon" />
 
 
-                <!-- Notification Icon -->
-
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -128,12 +128,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:weightSum="1"
         android:layout_marginTop="3dp"
         android:paddingVertical="5dp"
-        android:paddingHorizontal="20dp"
-        >
+        android:paddingHorizontal="20dp">
 
         <TextView
             android:id="@+id/market_stat"

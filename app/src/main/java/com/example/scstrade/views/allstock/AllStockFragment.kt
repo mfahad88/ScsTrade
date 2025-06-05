@@ -48,12 +48,7 @@ class AllStockFragment : Fragment() {
         kmi=arguments?.getString("kmi")?:null
         index = arguments?.getString("index")?:null
         future = arguments?.getString("future")?:null
-     /*   ((parentFragment as MarketFragment).parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            toolbarWithLogo.visibility = View.GONE
-            
-        }*/
+
         binding.recyclerIndices.apply {
             adapter= StockAdapter(ArrayList(),true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

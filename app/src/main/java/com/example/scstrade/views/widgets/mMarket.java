@@ -2,6 +2,7 @@ package com.example.scstrade.views.widgets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
@@ -36,7 +38,7 @@ import java.util.Objects;
 
 public class mMarket extends LinearLayout {
    public CustomToolbarBinding binding;
-   public RelativeLayout content;
+   public ConstraintLayout content;
     private OnBackClickListener backClickListener;
     public mMarket(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -51,6 +53,7 @@ public class mMarket extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
         binding= CustomToolbarBinding.inflate(LayoutInflater.from(context),this,true);
         Log.e("LifecycleOwner", "Context class: " + context.getClass().getName()+" "+(context instanceof AppCompatActivity));
+
         if(attrs!=null){
             TypedArray a=getContext().getTheme().obtainStyledAttributes(
                     attrs,
@@ -61,6 +64,21 @@ public class mMarket extends LinearLayout {
 
                 SharedViewModel sharedViewModel=((MyApp) context.getApplicationContext()).viewModel;
                 LifecycleOwner lifecycleOwner =  (LifecycleOwner) context;
+                if(getActivity(context)!=null){
+                    Log.e("Activity",((Activity)context).getClass().getSimpleName());
+                    if(((Activity)context).getClass().getSimpleName().equals("MainActivity")){
+                        binding.group.setVisibility(View.VISIBLE);
+
+                        binding.titleItem.setVisibility(View.GONE);
+
+                    }else{
+                        binding.titleItem.setVisibility(View.VISIBLE);
+                        binding.group.setVisibility(View.GONE);
+                        binding.titleItem.setText(((Activity)context).getClass().getSimpleName().replace("Activity","").replace("Detail",""));
+
+                    }
+
+                }
 
                 sharedViewModel.getMutableIndices().observe(lifecycleOwner, listResource -> {
                     if(listResource.getData()!=null){
@@ -117,5 +135,27 @@ public class mMarket extends LinearLayout {
 
     public interface OnBackClickListener {
         void onBackClicked();
+    }
+
+
+    public Activity getActivity(Context context)
+    {
+        if (context == null)
+        {
+            return null;
+        }
+        else if (context instanceof ContextWrapper)
+        {
+            if (context instanceof Activity)
+            {
+                return (Activity) context;
+            }
+            else
+            {
+                return getActivity(((ContextWrapper) context).getBaseContext());
+            }
+        }
+
+        return null;
     }
 }

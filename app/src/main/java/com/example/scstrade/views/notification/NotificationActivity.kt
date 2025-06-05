@@ -41,21 +41,8 @@ class NotificationActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
 
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            toolbarWithLogo.visibility = View.GONE
-            
-            titleItem.text = "Notification"
-            searchIcon.visibility = View.VISIBLE
-            notificationIcon.visibility = View.INVISIBLE
-        }
+
         notificationViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application as MyApp).create(NotificationViewModel::class.java)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
 
         binding.apply {

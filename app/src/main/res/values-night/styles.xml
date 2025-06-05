@@ -1380,7 +1380,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_onPrimary</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="hbl_has_rea">

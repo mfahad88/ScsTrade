@@ -32,11 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         binding=ActivityProfileBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         sharedViewModel = (this.application as MyApp).viewModel
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)

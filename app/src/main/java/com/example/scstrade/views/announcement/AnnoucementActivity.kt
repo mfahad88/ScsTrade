@@ -27,18 +27,12 @@ class AnnoucementActivity : AppCompatActivity() {
         snapshotViewModel = ViewModelProvider(this,
             SnapshotViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(SnapshotViewModel::class.java)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
+      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-            toolbarWithLogo.visibility = View.GONE
-            titleItem.text = "Announcements"
-            searchIcon.visibility = View.INVISIBLE
-        }
+*/
 
         loadFragment(fragment = AnnouncementsFragment())
     }

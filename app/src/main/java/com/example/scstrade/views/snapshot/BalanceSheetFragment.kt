@@ -159,8 +159,9 @@ class BalanceSheetFragment : Fragment() {
                                 ) {
                                     Text(
                                         modifier = Modifier.padding(
-                                            horizontal = 15.dp,
-                                            vertical = 15.dp
+                                            start = 15.dp,
+                                            end = 15.dp,
+                                            bottom = 10.dp
                                         ),
                                         text = "Income Statement",
                                         style = TextStyle(
@@ -513,7 +514,7 @@ class BalanceSheetFragment : Fragment() {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(18.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(14.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }

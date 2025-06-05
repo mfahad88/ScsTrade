@@ -55,8 +55,9 @@ class HomeFragment : Fragment() {
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-
-
+            titleItem.visibility = View.GONE
+            group.visibility = View.VISIBLE
+            titleItem.text = "Home"
         }
 
 //        viewModel.fetchAllData()

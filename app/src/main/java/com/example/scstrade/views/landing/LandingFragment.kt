@@ -58,10 +58,7 @@ class LandingFragment : Fragment() {
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
 
-        binding.toolbar.binding.apply {
-            toolbarWithLogo.visibility = View.VISIBLE
-            titleItem.visibility = View.GONE
-        }
+
 
     /*    ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.content) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())

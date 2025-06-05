@@ -119,9 +119,16 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                    binding.main.visibility=View.VISIBLE
-                    binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
+                            binding.main.visibility=View.VISIBLE
+                    /*if(result.data?.any { it.type.contains("insider",true) }?:false){
 
+                        binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
+                    }else{
+                        val list =result.data?.map {it.type }?.toList() as MutableList
+                        list.add("Insider")
+                        binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,list)
+                    }*/
+                    binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
                     if(binding.spinnerAnnouncement.adapter!=null && binding.spinnerAnnouncement.adapter.count>0){
                         binding.spinnerAnnouncement.setSelection(0)
                         snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())

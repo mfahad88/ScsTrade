@@ -56,7 +56,7 @@ public class NetChangeChip extends RelativeLayout {
         double netChange = Double.parseDouble(nChange);
         double preClose = Double.parseDouble(pClose);
 
-        String changeSign = netChange > 0.0 ? "+" : "-";
+        String changeSign = netChange > 0.0 ? "+" : "";
         String changeValue = Utils.Companion.formatDouble(netChange);
         double changePercent = (netChange / preClose) * 100;
         String percentValue = Utils.Companion.formatDouble(changePercent);
@@ -66,7 +66,7 @@ public class NetChangeChip extends RelativeLayout {
             binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_blue));
             binding.tv.setTextColor(Color.parseColor("#1A73E8"));
         }else {
-            if (changeSign.contains("-")) {
+            if (nChange.contains("-")) {
                 binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
                 binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
             } else {

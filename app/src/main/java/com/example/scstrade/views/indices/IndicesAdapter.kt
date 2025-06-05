@@ -17,7 +17,7 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
-            binding.indexValue.text = Utils.formatDouble(kseIndices.vALUETRADED.toDouble())
+            binding.indexValue.text = Utils.convertToMillions(kseIndices.vALUETRADED.toDouble())
             binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
 //            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
             binding.labelText.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())

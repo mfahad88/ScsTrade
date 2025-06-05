@@ -1,5 +1,6 @@
 package com.example.scstrade.views.technicals
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.snapshot.SnapshotActivity
 import com.example.scstrade.views.technicals.adapter.TechnicalDetailAdapter
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -48,7 +50,9 @@ class TechnicalsDetailActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
                     binding.recyclerView.adapter = TechnicalDetailAdapter(it.data?: emptyList()){
-
+                        val intent= Intent(this@TechnicalsDetailActivity, SnapshotActivity::class.java)
+                        intent.putExtra(AppConstants.SYMBOL, it.symbol)
+                        startActivity(intent)
                     }
                 }
             }

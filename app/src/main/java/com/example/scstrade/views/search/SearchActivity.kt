@@ -60,19 +60,7 @@ class SearchActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
 
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left,  systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            toolbarWithLogo.visibility = View.GONE
-            
-            titleItem.text = "Search"
-            searchIcon.visibility = View.INVISIBLE
-        }
+
         adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1)
         binding.spinnerSector.adapter=adapter
         adapter.add("All Sector")

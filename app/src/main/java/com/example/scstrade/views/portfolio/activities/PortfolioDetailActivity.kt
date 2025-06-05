@@ -40,11 +40,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel
         sharedViewModel.startPortfolioFinal()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())

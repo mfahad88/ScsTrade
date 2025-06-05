@@ -1,5 +1,6 @@
 package com.example.scstrade.views.fundamental
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.fundamental.adapter.FundamentalDetailAdapter
+import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,6 +52,9 @@ class FundamentalDetailActivity : AppCompatActivity() {
                     binding.recyclerView.apply {
                         adapter = FundamentalDetailAdapter(it.data?: emptyList()){
 
+                            val intent= Intent(this@FundamentalDetailActivity, SnapshotActivity::class.java)
+                            intent.putExtra(AppConstants.SYMBOL, it.symbol)
+                            startActivity(intent)
                         }
                         layoutManager= LinearLayoutManager(this@FundamentalDetailActivity,
                             LinearLayoutManager.VERTICAL,false)

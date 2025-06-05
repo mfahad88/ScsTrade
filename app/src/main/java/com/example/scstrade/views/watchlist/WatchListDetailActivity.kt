@@ -46,13 +46,7 @@ class WatchListDetailActivity : AppCompatActivity() {
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         setContentView(binding.root)
-        binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           toolbarWithLogo.visibility = View.GONE
-            
-            toolbarWithLogo.visibility = View.GONE
-            titleItem.text = "Watchlist"
-        }
+
         binding.toolbar.setOnBackClickListener {
             finish()
         }

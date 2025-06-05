@@ -32,11 +32,12 @@ class FundamentalActivity : AppCompatActivity() {
         viewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+       /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
         viewModel.getFundamental()
         viewModel.mutableFundamental.observe(this, Observer { result ->
             when(result){
