@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
@@ -29,6 +30,7 @@ class StockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding=ActivityStockBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 

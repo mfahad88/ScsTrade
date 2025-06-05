@@ -55,6 +55,11 @@ class AllStockFragment : Fragment() {
             addItemDecoration(HorizontalDivider(30))
         }
 
+        binding.recyclerIndices.post {
+            binding.recyclerIndices.setPadding(0,0,0,350)
+            binding.recyclerIndices.clipToPadding=false
+        }
+
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(binding.tabLayout.selectedTabPosition){

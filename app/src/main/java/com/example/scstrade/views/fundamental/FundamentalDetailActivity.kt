@@ -32,6 +32,7 @@ class FundamentalDetailActivity : AppCompatActivity() {
         viewModel = (this.application as MyApp).viewModel
         binding = ActivityFundamentalDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

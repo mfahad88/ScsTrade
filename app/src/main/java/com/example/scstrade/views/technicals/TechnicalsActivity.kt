@@ -31,6 +31,7 @@ class TechnicalsActivity : AppCompatActivity() {
         binding=ActivityTechnicalsBinding.inflate(LayoutInflater.from(this))
         viewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
         viewModel.getTechnicals()

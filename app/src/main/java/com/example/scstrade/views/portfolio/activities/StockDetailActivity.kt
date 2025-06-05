@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockDetailBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.views.portfolio.fragments.HistoryFragment
 import com.example.scstrade.views.portfolio.fragments.HoldingFragment
 import com.example.scstrade.views.portfolio.fragments.SummaryFragment
@@ -25,6 +26,7 @@ class StockDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()

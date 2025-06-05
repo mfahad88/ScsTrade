@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.AppConstants
@@ -25,7 +26,7 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
                 intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
                 binding.root.context.startActivity(intent)
             }
-//            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
+            Glide.with(binding.root.context).load(stockItem.companyLogo).circleCrop().into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
                 binding.shariah.visibility= View.VISIBLE
                 binding.separator.visibility = View.VISIBLE
@@ -100,24 +101,24 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
     public fun addItems(list:List<StockItem>){
         this.list=list.toMutableList()
         notifyDataSetChanged()
-       /*try{
-           if(this.list.isEmpty()){
-               this.list=list.toMutableList()
-               notifyDataSetChanged()
-           }else{
-               this.list.forEachIndexed { index, stockItem ->
-                   val currentStockItem=list.filter { it.sYM.equals(stockItem.sYM) }.first()
-                   if(stockItem.bV.compareTo(currentStockItem.bV)!=0 || stockItem.cL.compareTo(currentStockItem.cL)!=0){
+        /*try{
+            if(this.list.isEmpty()){
+                this.list=list.toMutableList()
+                notifyDataSetChanged()
+            }else{
+                this.list.forEachIndexed { index, stockItem ->
+                    val currentStockItem=list.filter { it.sYM.equals(stockItem.sYM) }.first()
+                    if(stockItem.bV.compareTo(currentStockItem.bV)!=0 || stockItem.cL.compareTo(currentStockItem.cL)!=0){
 
-                       this.list.removeAt(index)
-                       this.list.add(index,currentStockItem)
-                       notifyItemChanged(index)
-                   }
-               }
-           }
-       }catch(e:Exception){
-           e.printStackTrace()
-       }*/
+                        this.list.removeAt(index)
+                        this.list.add(index,currentStockItem)
+                        notifyItemChanged(index)
+                    }
+                }
+            }
+        }catch(e:Exception){
+            e.printStackTrace()
+        }*/
     }
     fun swapItems(fromPosition: Int, toPosition: Int) {
         Collections.swap(list, fromPosition, toPosition)

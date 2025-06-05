@@ -35,6 +35,7 @@ class  NewsDetailActivity : AppCompatActivity() {
         binding=ActivityNewsDetailBinding.inflate(LayoutInflater.from(this))
         sharedViewModel=(this.application as MyApp).viewModel
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
 

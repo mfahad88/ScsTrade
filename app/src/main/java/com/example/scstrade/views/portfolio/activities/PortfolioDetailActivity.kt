@@ -36,6 +36,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityPortfolioDetailBinding.inflate(LayoutInflater.from(this))
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel

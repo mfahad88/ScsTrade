@@ -69,6 +69,7 @@ class ContactActivity : AppCompatActivity() {
         binding=ActivityContactBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { v, insets ->

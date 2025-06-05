@@ -39,6 +39,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivitySearchBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -56,6 +57,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding=ActivitySearchBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
 

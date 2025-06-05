@@ -30,6 +30,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding=ActivityProfileBinding.inflate(LayoutInflater.from(this))
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         sharedViewModel = (this.application as MyApp).viewModel
 

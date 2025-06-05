@@ -96,6 +96,7 @@ class NewsFragment : Fragment() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(top = 10.dp)
             ) {
                 newsChannels(
                     listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),

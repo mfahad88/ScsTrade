@@ -31,6 +31,7 @@ class AofActivity : AppCompatActivity() {
         viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
             AofViewModel::class.java)
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
         viewModel.country()

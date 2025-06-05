@@ -1,9 +1,11 @@
 package com.example.scstrade.views.detailquote
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,14 +27,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityDetailQuoteBinding
 import com.example.scstrade.databinding.ActivitySearchBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
@@ -52,7 +58,7 @@ class DetailQuoteActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
 
-
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding.searchText.addTextChangedListener {
             val search=it.toString()
             lifecycleScope.launch {
@@ -82,6 +88,8 @@ class DetailQuoteActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
     @Composable
     public fun companyList(allData:List<StockItem>?){

@@ -42,6 +42,7 @@ class BuySellActivity : AppCompatActivity() {
         binding = ActivityBuySellBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         list = sharedViewModel.mutableAllData.value?.data?.map { "${it.sYM}-${it.nM}" }?.toList()?: emptyList()
         val porfolioMainId=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         val portfolioDetails=intent.getParcelableExtra<PortfolioDetails>(AppConstants.PORTFOLIO_DETAIL)

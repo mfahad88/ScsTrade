@@ -1,9 +1,12 @@
 package com.example.scstrade.views.sector
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemSectorBinding
 import java.util.Collections
 
@@ -24,6 +27,11 @@ class SectorAdapter(private var itemList: List<String>, private val onItemClick:
 
     override fun onBindViewHolder(holder: SectorViewHolder, position: Int) {
         holder.bind(itemList[position], onItemClick)
+        if(itemList.size==position){
+            holder.itemView.findViewById<LinearLayout>(R.id.divider).visibility = View.GONE
+        }else{
+            holder.itemView.findViewById<LinearLayout>(R.id.divider).visibility = View.VISIBLE
+        }
     }
 
     override fun getItemCount(): Int {

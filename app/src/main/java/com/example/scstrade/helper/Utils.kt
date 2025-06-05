@@ -8,8 +8,10 @@ import android.app.UiModeManager
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.icu.text.DecimalFormat
 import android.icu.util.Calendar
@@ -31,6 +33,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -150,8 +154,29 @@ class Utils {
             }
 
         }
+        fun dpToPx(dp: Int): Int {
+            return (dp * Resources.getSystem().displayMetrics.density).toInt()
+        }
+        fun convertToBillions(str:String?):String{
 
-
+            return try {
+                val value=str?.toDoubleOrNull()
+                val df = DecimalFormat("#,###.##")
+                if (value != null) {
+                    if (value >= 1_000_000_000) {
+                        // Convert to billions and append "B"
+                        df.format(value / 1_000_000_000) + "B"
+                    } else {
+                        df.format(value)
+                    }
+                } else {
+                    "0.0"
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "0.0"
+            }
+        }
 
         fun animatedValueChange(/*tv: TextView, prefix: String,*/from: Double,to:Double, onUpdate: ((Double) -> Unit)? = null ,duration: Long = 250L){
             val animator = ValueAnimator.ofFloat(from.toFloat(), to.toFloat()).apply {
@@ -251,6 +276,23 @@ class Utils {
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility =
                     if (darkIcons) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+            }
+        }
+
+        fun setEdgeToEdgeWithWhiteIcons(activity: Activity) {
+            val window = activity.window
+
+            // Let app draw behind system bars
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            // Make system bars transparent
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+
+            // Ensure system bar icons are white
+            WindowInsetsControllerCompat(window, window.decorView).apply {
+                isAppearanceLightStatusBars = false
+                isAppearanceLightNavigationBars = false
             }
         }
         fun convertDateBrFormat(inputDate: String): String {

@@ -80,37 +80,42 @@ class NotificationDetailActivity : AppCompatActivity() {
                         loader.visibility = View.GONE
 
                         val response=result.data
+                        if(response!=null) {
+                            if (response?.isJsonArray ?: false) {
+                                val array = response?.asJsonArray
+                                val jsonObject = array!![0].asJsonObject
 
-                        if(response?.isJsonArray?:false) {
-                            val array = response?.asJsonArray
-                            if(!array!!.isJsonNull){
-                                val jsonObject=array!![0].asJsonObject
-
-                                val list=ArrayList<KeyDescValue>()
+                                val list = ArrayList<KeyDescValue>()
                                 jsonObject.asMap().entries.forEach {
-                                    if(!it.value.isJsonNull && !it.value.asString.isNullOrEmpty() && !it.key.equals("company_code")
-                                        && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals("Board_Meeting_Date")
-                                        && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")){
-                                        list.add(KeyDescValue(it.key,it.value.asString,null))
+                                    if (!it.value.isJsonNull && !it.value.asString.isNullOrEmpty() && !it.key.equals(
+                                            "company_code"
+                                        )
+                                        && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals(
+                                            "Board_Meeting_Date"
+                                        )
+                                        && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")
+                                    ) {
+                                        list.add(KeyDescValue(it.key, it.value.asString, null))
                                     }
                                 }
-                                detail.listView.adapter = InformationAdapter(this@NotificationDetailActivity,list)
+                                detail.listView.adapter =
+                                    InformationAdapter(this@NotificationDetailActivity, list)
 
-                                detail.symbol.text=jsonObject.get("company_code").asString
-                                detail.companyName.text=jsonObject.get("company_name").asString
-                                detail.description.text=jsonObject.get("Heading").asString
+                                detail.symbol.text = jsonObject.get("company_code").asString
+                                detail.companyName.text = jsonObject.get("company_name").asString
+                                detail.description.text = jsonObject.get("Heading").asString
 
-                                if(jsonObject.has("Board_Meeting_Date")) {
+                                if (jsonObject.has("Board_Meeting_Date")) {
                                     detail.datetime.text = Utils.convertDateString(
                                         jsonObject.get("Board_Meeting_Date").asString,
                                         "dd-MMM-yyyy"
                                     )
                                     detail.datetime.visibility = View.VISIBLE
-                                }else{
+                                } else {
                                     detail.datetime.visibility = View.GONE
                                 }
-                                if(! jsonObject.get("PDFLink").isJsonNull) {
-                                    detail.imageViewDownload.visibility=View.VISIBLE
+                                if (!jsonObject.get("PDFLink").isJsonNull) {
+                                    detail.imageViewDownload.visibility = View.VISIBLE
                                     detail.imageViewDownload.setOnClickListener {
                                         binding.loader.visibility = View.VISIBLE
                                         downloadPdf(
@@ -125,11 +130,11 @@ class NotificationDetailActivity : AppCompatActivity() {
                                             }
                                         }
                                     }
-                                }else{
-                                    detail.imageViewDownload.visibility=View.GONE
+                                } else {
+                                    detail.imageViewDownload.visibility = View.GONE
                                 }
 
-                                if(!jsonObject.get("ImageLink").isJsonNull) {
+                                if (!jsonObject.get("ImageLink").isJsonNull) {
                                     detail.imageViewView.visibility = View.VISIBLE
                                     detail.imageViewView.setOnClickListener {
                                         binding.loader.visibility = View.VISIBLE
@@ -145,10 +150,10 @@ class NotificationDetailActivity : AppCompatActivity() {
                                             }
                                         }
                                     }
-                                }else{
+                                } else {
                                     detail.imageViewView.visibility = View.GONE
                                 }
-                                if(! jsonObject.get("PDFLink").isJsonNull) {
+                                if (!jsonObject.get("PDFLink").isJsonNull) {
                                     detail.imageViewView.visibility = View.VISIBLE
                                     detail.imageViewShare.setOnClickListener {
                                         binding.loader.visibility = View.VISIBLE
@@ -163,10 +168,12 @@ class NotificationDetailActivity : AppCompatActivity() {
                                             }
                                         }
                                     }
-                                }else{
+                                } else {
                                     detail.imageViewView.visibility = View.GONE
                                 }
                             }
+                        }else{
+                            Utils.showError(binding.root,"An error occurred...")
                         }
 
                     }

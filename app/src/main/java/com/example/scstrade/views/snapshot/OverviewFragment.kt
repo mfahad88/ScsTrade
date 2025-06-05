@@ -49,6 +49,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
+import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentOverviewBinding
 import com.example.scstrade.helper.AppConstants
@@ -73,7 +74,7 @@ import com.github.mikephil.charting.data.Entry
 class OverviewFragment : Fragment() {
     lateinit var binding: FragmentOverviewBinding
     lateinit var sharedViewModel: SharedViewModel
-
+    lateinit var symbol:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,8 +82,12 @@ class OverviewFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater,container,false)
-
+        symbol=(requireActivity() as SnapshotActivity).symbol
         sharedViewModel= (requireActivity().application as MyApp).viewModel
+        if(!sharedViewModel.mutableAllData.value?.data.isNullOrEmpty()) {
+            val icon = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol) }?.map { it.companyLogo }?.first()
+            Glide.with(binding.root.context).load(icon).circleCrop().into(binding.imageView16)
+        }
 
         sharedViewModel.mutableOverview.observe(viewLifecycleOwner, Observer { result->
             when(result){
@@ -96,6 +101,7 @@ class OverviewFragment : Fragment() {
                        binding.threePecent.text = "${result.data?.twoMonthReturn}%"
                        binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
                        binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
+
                        binding.apply {
                                onePerformance.background?.let {
                                val wrappedDrawable = DrawableCompat.wrap(it)
@@ -177,6 +183,18 @@ class OverviewFragment : Fragment() {
                        binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())
                        binding.marketCapValue.text = Utils.commaFormat(result.data?.marketCap?.toDouble())
                        binding.companyName.text = item?.nM
+
+
+
+                       binding.companyName.post {
+
+                           if(binding.sector.lineCount>1 || binding.companyName.lineCount>1){
+                               val layoutParams=binding.materialCardView2.layoutParams
+                               layoutParams.height=Utils.dpToPx(240)
+                               binding.materialCardView2.layoutParams=layoutParams
+                           }
+                       }
+
                        binding.sector.text = item?.sN
                        binding.ratios.setContent {
 
@@ -581,7 +599,8 @@ class OverviewFragment : Fragment() {
         if(expand){
             Spacer(modifier = Modifier.height(7.dp))
             list.forEachIndexed { index, descNameValue ->
-
+                val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
+                val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
                 Column {
                     Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp)){
                         Text(
@@ -607,7 +626,8 @@ class OverviewFragment : Fragment() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text = descNameValue.value?:"",
+                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
+//                            text =descNameValue.value?:"",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 lineHeight = 30.08.sp,

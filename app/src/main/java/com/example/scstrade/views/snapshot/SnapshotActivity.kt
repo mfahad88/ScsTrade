@@ -52,7 +52,7 @@ class SnapshotActivity : AppCompatActivity() {
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var snapshotViewModel: SnapshotViewModel
     lateinit var watchListViewModel: WatchListViewModel
-
+    lateinit var symbol:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySnapshotBinding.inflate(LayoutInflater.from(this))
@@ -63,11 +63,12 @@ class SnapshotActivity : AppCompatActivity() {
         watchListViewModel = ViewModelProvider(this,
             WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
-        sharedViewModel.snapshotOverview(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+        symbol = intent.extras?.getString(AppConstants.SYMBOL)?:""
+        sharedViewModel.snapshotOverview(symbol)
         sharedViewModel.mutableOverview.observe(this, Observer { result->
             if(result.data!=null){
-                sharedViewModel.snapshotChart(intent.extras?.getString(AppConstants.SYMBOL)?:"")
-                sharedViewModel.snapshotDetail(intent.extras?.getString(AppConstants.SYMBOL)?:"")
+                sharedViewModel.snapshotChart(symbol)
+                sharedViewModel.snapshotDetail(symbol)
             }
         })
         binding.toolbar.binding.apply {

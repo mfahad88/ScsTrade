@@ -31,6 +31,7 @@ class PortfolioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityPortfolioBinding.inflate(LayoutInflater.from(this))
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.main)
 
 

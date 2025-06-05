@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAnnoucementBinding
 import com.example.scstrade.factories.SnapshotViewModelFactory
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SnapshotViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.snapshot.AnnouncementsFragment
@@ -22,6 +23,7 @@ class AnnoucementActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityAnnoucementBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         snapshotViewModel = ViewModelProvider(this,

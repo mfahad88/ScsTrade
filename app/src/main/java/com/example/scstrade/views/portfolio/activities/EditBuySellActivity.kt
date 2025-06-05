@@ -11,6 +11,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.databinding.ActivityEditBuySellBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.fragments.BuyFragment
@@ -25,6 +26,7 @@ class EditBuySellActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityEditBuySellBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID, -1)

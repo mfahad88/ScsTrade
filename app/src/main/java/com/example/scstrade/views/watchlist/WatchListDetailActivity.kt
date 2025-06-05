@@ -45,18 +45,11 @@ class WatchListDetailActivity : AppCompatActivity() {
         ).get(WatchListViewModel::class.java)
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
-        binding.toolbar.setOnBackClickListener {
-            finish()
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { view, windowInsets ->
 
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            Log.e("Padding: ", insets.top.toString())
-            view.setPadding(0,insets.top,0,insets.bottom)
-            windowInsets
-        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())

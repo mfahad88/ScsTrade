@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_surface"
     android:fillViewport="true"
+    android:fadingEdge="horizontal|vertical"
+    android:fadingEdgeLength="50dp"
+    android:requiresFadingEdge="horizontal|vertical"
     tools:context=".views.home.HomeFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

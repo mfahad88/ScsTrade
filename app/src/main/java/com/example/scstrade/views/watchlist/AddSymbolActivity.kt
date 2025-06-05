@@ -41,6 +41,7 @@ class AddSymbolActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddSymbolBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         fetchUser()
 

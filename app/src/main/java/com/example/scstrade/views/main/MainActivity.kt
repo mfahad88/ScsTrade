@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel
         setContentView(binding.root)
-        Utils.setSystemBarIcons(this,darkIcons = false)
+//        Utils.setSystemBarIcons(this,darkIcons = fa)
         val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
         viewModel.isConnected.observe(this, Observer {
 
