@@ -41,6 +41,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SnapshotViewModel
 import com.example.scstrade.views.MyApp
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -79,10 +80,10 @@ class SnapshotActivity : AppCompatActivity() {
         }
         enableEdgeToEdge()
         setContentView(binding.root)
-
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }

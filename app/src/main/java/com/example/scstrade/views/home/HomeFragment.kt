@@ -128,20 +128,20 @@ class HomeFragment : Fragment() {
         }
 
         binding.recyclerLeaders.apply {
-            adapter= StockAdapter(ArrayList())
+            adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
 
         binding.recyclerGainers.apply {
-            adapter= StockAdapter(ArrayList())
+            adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(15))
             isNestedScrollingEnabled=true
         }
         binding.recyclerLosers.apply {
-            adapter= StockAdapter(ArrayList())
+            adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
             isNestedScrollingEnabled=true
@@ -214,9 +214,9 @@ class HomeFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-                    (binding.recyclerLeaders.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.v }?.take(10)?: emptyList())
-                    (binding.recyclerGainers.adapter as StockAdapter).addItems(result.data?.sortedByDescending { it.cHP }?.take(10)?: emptyList())
-                    (binding.recyclerLosers.adapter as StockAdapter).addItems(result.data?.sortedBy { it.cHP }?.take(10)?: emptyList())
+                    (binding.recyclerLeaders.adapter as StockAdapter).submitList(result.data?.sortedByDescending { it.v }?.take(10)?: emptyList())
+                    (binding.recyclerGainers.adapter as StockAdapter).submitList(result.data?.sortedByDescending { it.cHP }?.take(10)?: emptyList())
+                    (binding.recyclerLosers.adapter as StockAdapter).submitList(result.data?.sortedBy { it.cHP }?.take(10)?: emptyList())
                     if(binding.main.visibility==View.GONE){
                         binding.loader.visibility=View.GONE
                         binding.main.visibility=View.VISIBLE

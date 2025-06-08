@@ -39,7 +39,7 @@ import java.util.Objects;
 public class mMarket extends LinearLayout {
    public CustomToolbarBinding binding;
    public ConstraintLayout content;
-    private OnBackClickListener backClickListener;
+
     public mMarket(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -107,16 +107,7 @@ public class mMarket extends LinearLayout {
                         return windowInsets;
                     }
                 }) ;
-           /*     binding.backButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (backClickListener != null) {
-                            backClickListener.onBackClicked();
-                        } else if (context instanceof Activity) {
-                            ((Activity) context).onBackPressed();
-                        }
-                    }
-                });*/
+
                 content=binding.content;
             }catch (Exception e){
                 Log.e("LifecycleOwner",e.getMessage());
@@ -129,13 +120,6 @@ public class mMarket extends LinearLayout {
 
     }
 
-    public void setOnBackClickListener(OnBackClickListener listener) {
-        this.backClickListener = listener;
-    }
-
-    public interface OnBackClickListener {
-        void onBackClicked();
-    }
 
 
     public Activity getActivity(Context context)

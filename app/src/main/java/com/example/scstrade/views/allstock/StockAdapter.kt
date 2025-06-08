@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
@@ -17,7 +18,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.util.Collections
 
-class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false):ListAdapter<StockItem,StockAdapter.StockViewHolder>(StockDiffCallback()) {
     var previousStockItem:StockItem?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem) {
@@ -66,18 +67,25 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
 
     }
 
+    private class StockDiffCallback :  DiffUtil.ItemCallback<StockItem>(){
+        override fun areItemsTheSame(oldItem: StockItem, newItem: StockItem): Boolean {
+            return oldItem.sYM.equals(newItem.sYM)
+        }
+
+        override fun areContentsTheSame(oldItem: StockItem, newItem: StockItem): Boolean {
+            return oldItem==newItem
+        }
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
 
         val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return  StockViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(getItem(position))
 
 
 
@@ -98,46 +106,6 @@ class StockAdapter(private var list:MutableList<StockItem>,var isMore:Boolean=fa
         }
     }
 
-    public fun addItems(list:List<StockItem>){
-        this.list=list.toMutableList()
-        notifyDataSetChanged()
-        /*try{
-            if(this.list.isEmpty()){
-                this.list=list.toMutableList()
-                notifyDataSetChanged()
-            }else{
-                this.list.forEachIndexed { index, stockItem ->
-                    val currentStockItem=list.filter { it.sYM.equals(stockItem.sYM) }.first()
-                    if(stockItem.bV.compareTo(currentStockItem.bV)!=0 || stockItem.cL.compareTo(currentStockItem.cL)!=0){
 
-                        this.list.removeAt(index)
-                        this.list.add(index,currentStockItem)
-                        notifyItemChanged(index)
-                    }
-                }
-            }
-        }catch(e:Exception){
-            e.printStackTrace()
-        }*/
-    }
-    fun swapItems(fromPosition: Int, toPosition: Int) {
-        Collections.swap(list, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    fun getItemTouchHelper(): ItemTouchHelper {
-        return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                swapItems(fromPosition, toPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // No swipe action needed
-            }
-        })
-    }
 
 }

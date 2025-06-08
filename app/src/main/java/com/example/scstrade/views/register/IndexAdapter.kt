@@ -25,7 +25,7 @@ class IndexAdapter(
         fun bind(kseIndices: KSEIndices){
             binding.apply {
                 val percentChange=Utils.formatDouble(kseIndices.nETCHANGE.toDouble().div(kseIndices.preClose.toDouble()).times(100))
-                val net_Change = "${(if(kseIndices.nETCHANGE.toDouble()<0.0) "-" else "+")} ${Utils.formatDouble(kseIndices.nETCHANGE.toDouble())}"
+                val net_Change = "${(if(kseIndices.nETCHANGE.toDouble()<0.0) "" else "+")} ${Utils.formatDouble(kseIndices.nETCHANGE.toDouble())}"
                 kse100.text = kseIndices.iNDEXCODE
                 tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
                 netChange.text = "${percentChange} % ${net_Change}"

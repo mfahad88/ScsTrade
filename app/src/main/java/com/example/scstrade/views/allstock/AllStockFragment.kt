@@ -50,7 +50,7 @@ class AllStockFragment : Fragment() {
         future = arguments?.getString("future")?:null
 
         binding.recyclerIndices.apply {
-            adapter= StockAdapter(ArrayList(),true)
+            adapter= StockAdapter(true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30))
         }
@@ -64,10 +64,10 @@ class AllStockFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(binding.tabLayout.selectedTabPosition){
 
-                    0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
-                    1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
-                    2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
-                    3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
+                    0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+                    1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                    2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                    3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                 }
             }
 
@@ -90,10 +90,10 @@ class AllStockFragment : Fragment() {
 
                         when(binding.tabLayout.selectedTabPosition){
 
-                            0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
-                            1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
-                            2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
-                            3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
+                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                         }
 //                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
                         binding.loader.visibility=View.GONE
@@ -134,10 +134,10 @@ class AllStockFragment : Fragment() {
                         }
                         when(binding.tabLayout.selectedTabPosition){
 
-                            0-> (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
-                            1 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.v }?: emptyList())
-                            2 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedByDescending { it.cHP }?: emptyList())
-                            3 -> (binding.recyclerIndices.adapter as StockAdapter).addItems(list.sortedBy { it.cHP }?: emptyList())
+                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                         }
 //                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
                         binding.loader.visibility=View.GONE

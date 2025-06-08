@@ -13,12 +13,12 @@ class SymbolAdapter(private val itemList: List<StockItem>, private val onItemCli
     private var filterList=ArrayList<StockItem>()
     class SymbolViewHolder(private val binding: ItemSymbolBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: StockItem, onItemClick: (StockItem) -> Unit) {
+        fun bind(item: StockItem, onItemClick: (StockItem) -> Unit ) {
             binding.symbol.text=item.sYM
             binding.companyName.text = item.nM
 //            Glide.with(binding.root.context).load(item.companyLogo).into(binding.imageView6)
             binding.root.setOnClickListener {
-                binding.imageViewSelected.visibility= View.VISIBLE
+                binding.imageViewSelected.visibility = View.VISIBLE
                 onItemClick(item)
             }
         }
