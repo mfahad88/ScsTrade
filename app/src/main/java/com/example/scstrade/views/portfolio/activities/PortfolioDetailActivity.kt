@@ -31,7 +31,6 @@ class PortfolioDetailActivity : AppCompatActivity() {
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var login: LoginDataItem
     var portfolioMainID:Int?=-1
-    var portfolioDetailItem: PortfolioDetailItem?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -187,9 +186,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
                         }
                        }*/
-                        if(list.size!=0){
-                            binding.linearLayoutHistory.visibility = View.GONE
-                        }
+
                         binding.recyclerHistory.adapter= HistoryHoldingAdapter(list){
 
                         }
@@ -211,16 +208,31 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         binding.holdingCost.text = Utils.commaSeparated(totalCost.roundToInt())
                         binding.holdingPL.text =Utils.commaSeparated(holdingPL.roundToInt())
                         binding.totalCost.text = Utils.commaSeparated(history.plus(totalCost).roundToInt())
-                        binding.currentMarValue.text = Utils.commaSeparated(currentMarketValue.roundToInt())
+                        binding.cardMar.setText(Utils.commaSeparated(currentMarketValue.roundToInt()))
                         binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
                         binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
 
                         (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
+                        binding.groupEmptyHolding.visibility = View.GONE
+                        if(!result.data?.fifoPortfolio.isNullOrEmpty()){
+                            binding.groupHolding.visibility = View.VISIBLE
+                        }else{
+                            binding.groupHolding.visibility = View.GONE
+                        }
+
+
+                        if(!list.isNullOrEmpty()){
+                            binding.groupHistory.visibility = View.VISIBLE
+                        }else{
+                            binding.groupHistory.visibility = View.GONE
+                        }
 
 
                         binding.apply {
-                            totalCompaValue.text = "${binding.recyclerView.adapter?.itemCount}"
+                            cardCompan.setText("${binding.recyclerView.adapter?.itemCount}")
                         }
+                    }else{
+                        binding.groupEmptyHolding.visibility = View.VISIBLE
                     }
 
                     binding.apply {

@@ -48,22 +48,7 @@ class KycBasicDataOneFragment : Fragment() {
         populateDropdown()
         initFields()
         binding.apply {
-            Utils.filterTextField(fullName.textInputEditText,Regex("[^A-Za-z ]"))
-            Utils.filterTextField(motherName.textInputEditText,Regex("[^A-Za-z ]"))
-            Utils.filterTextField(uinNumber.textInputEditText,Regex("[^\\d]"))
-            uinNumber.textInputEditText.apply {
-                inputType = InputType.TYPE_CLASS_NUMBER
-                filters = arrayOf(InputFilter.LengthFilter(13))
-            }
-            fullName.textInputEditText.apply {
-                inputType = InputType.TYPE_CLASS_TEXT
-                filters = arrayOf(InputFilter.LengthFilter(30))
-            }
 
-            motherName.textInputEditText.apply {
-                inputType = InputType.TYPE_CLASS_TEXT
-                filters = arrayOf(InputFilter.LengthFilter(30))
-            }
 
             dobInputLayout.setOnFocusListener {
                 if(it){

@@ -85,6 +85,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     var isFetchPortfolioFinal=false
     val isConnected = ConnectivityObserver(application)
     var isHome=false
+    private var counter=0;
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
@@ -92,7 +93,34 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     val result = repository.fetchAllData("AllData")
                     val result1 = repository.fetchAllData("FutureData")
                     withContext(Dispatchers.Main) {
-                        mutableAllData.value = result
+                        var list= mutableListOf<StockItem>()
+                        counter++
+                        result.data?.forEach {
+                            list.add(
+                                StockItem(
+                                    v = it.v*counter,
+                                    aP = it.aP,
+                                    aV = it.aV,
+                                    avgP = it.avgP,
+                                    bP = it.bP,
+                                    bV = it.bV,
+                                    cH = it.cH,
+                                    cL = it.cL,
+                                    hP = it.hP,
+                                    iN = it.iN,
+                                    lP = it.lP,
+                                    nM = it.nM,
+                                    oC = it.oC,
+                                    sN = it.sN,
+                                    cHP = it.cHP,
+                                    sYM = it.sYM,
+                                    low52 = it.low52,
+                                    companyLogo = it.companyLogo,
+                                    high52 = it.high52
+                                )
+                            )
+                        }
+                        mutableAllData.value = Resource.Success(list)
                         mutableFuture.value = result1
                     }
                     delay(5000)

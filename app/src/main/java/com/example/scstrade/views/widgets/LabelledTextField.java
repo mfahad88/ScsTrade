@@ -26,7 +26,6 @@ public class LabelledTextField extends LinearLayout {
     LabelledTextfieldBinding binding;
     public TextInputEditText textInputEditText;
     private OnFocus listener;
-    private InputFilter[] filters;
     public LabelledTextField(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -46,13 +45,28 @@ public class LabelledTextField extends LinearLayout {
                 String hintField = a.getString(R.styleable.LabelledTextField_hintTextField);
                 String text = a.getString(R.styleable.LabelledTextField_android_text);
                 String infoText= a.getString(R.styleable.LabelledTextField_infoText);
+                String digits=a.getString(R.styleable.LabelledTextField_android_digits);
 
 
-
-                filters= new InputFilter[]{ new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100)) };
+                InputFilter lengthFilter= new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100));
+                if(!TextUtils.isEmpty(digits)) {
+                    binding.textInputEditText.setKeyListener(DigitsKeyListener.getInstance(digits));
+                }
+               InputFilter letterFilter = new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence source, int start, int end,
+                                               Spanned dest, int dstart, int dend) {
+                        for (int i = start; i < end; i++) {
+                            if (!digits.contains(String.valueOf(source.charAt(i)))) {
+                                return ""; // Reject the input
+                            }
+                        }
+                        return null; // Accept the input
+                    }
+                };
                 binding.textInputEditText.setInputType(a.getInt(R.styleable.LabelledTextField_android_inputType,0));
 //                binding.textInputEditText.setFilters(filters);
-                binding.textInputEditText.setFilters( filters);
+                binding.textInputEditText.setFilters(new InputFilter[]{lengthFilter,letterFilter});
                 binding.textInputEditText.setMaxLines(a.getInt(R.styleable.LabelledTextField_android_maxLength,1));
                 binding.textInputLayout.setPasswordVisibilityToggleEnabled(a.getBoolean(R.styleable.LabelledTextField_passwordToggleEnabled,false));
                 binding.textInputEditText.setCompoundDrawablesWithIntrinsicBounds(null,null,a.getDrawable(R.styleable.LabelledTextField_android_drawableEnd),null);

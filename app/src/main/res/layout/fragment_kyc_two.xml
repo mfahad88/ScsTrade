@@ -165,6 +165,8 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:maxLines="1"
+                    android:digits="@string/alphabets"
+                    android:inputType="textPersonName"
                     android:hint="@string/please_enter_name"
                     android:paddingHorizontal="16dp" />
 
