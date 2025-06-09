@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.ActivityPortfolioBinding
@@ -40,7 +39,7 @@ class PortfolioActivity : AppCompatActivity() {
         sharedViewModel.getPortfolio(login.registrationID)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PortfolioActivity,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(30.dp))
         }
         sharedViewModel.mutablePortfolio.observe(this, Observer { result ->
 

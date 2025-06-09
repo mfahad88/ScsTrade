@@ -55,13 +55,14 @@
             <com.example.scstrade.views.widgets.GrayCardView
                 android:id="@+id/card_mar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/current_mar_value"
                 app:cardElevation="2dp"
                 app:layout_constraintEnd_toStartOf="@+id/card_compan"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeWidth="0dp"
@@ -69,17 +70,18 @@
 
             <com.example.scstrade.views.widgets.GrayCardView
                 android:id="@+id/card_compan"
-                android:layout_width="170dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:text="@string/current_mar_value"
                 app:cardElevation="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/card_mar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/card_mar"
                 app:layout_constraintTop_toTopOf="@+id/card_mar"
-                app:strokeWidth="0dp"
 
+                app:strokeWidth="0dp"
                 app:titleGrayView="@string/total_compa" />
 
             <com.google.android.material.card.MaterialCardView

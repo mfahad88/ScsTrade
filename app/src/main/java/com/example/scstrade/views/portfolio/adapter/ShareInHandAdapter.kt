@@ -3,16 +3,32 @@ package com.example.scstrade.views.portfolio.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.databinding.ItemShareInHandBinding
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.data.ShareInHand
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.viewmodels.SharedViewModel
 
-class ShareInHandAdapter(private var itemList:List<FifoPortfolio>,private var list:List<StockItem>, private val onItemClick: (FifoPortfolio) -> Unit,private val onItemEditClick: (FifoPortfolio) -> Unit,private val onItemClickSnapshot: (FifoPortfolio) -> Unit) : RecyclerView.Adapter<ShareInHandAdapter.ShareInHandViewHolder>() {
+class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
+                         private val sharedViewModel: SharedViewModel,
+                         private val onItemClick: (FifoPortfolio) -> Unit,
+                         private val onItemEditClick: (FifoPortfolio) -> Unit,
+                         private val onItemClickSnapshot: (FifoPortfolio) -> Unit
+) : ListAdapter<FifoPortfolio,ShareInHandAdapter.ShareInHandViewHolder>(ShareInHandDiffCallback()) {
 
+    class ShareInHandDiffCallback:DiffUtil.ItemCallback<FifoPortfolio>(){
+        override fun areItemsTheSame(oldItem: FifoPortfolio, newItem: FifoPortfolio): Boolean {
+            return oldItem.portfolioMainID.equals(newItem.portfolioMainID)
+        }
 
+        override fun areContentsTheSame(oldItem: FifoPortfolio, newItem: FifoPortfolio): Boolean {
+           return oldItem==newItem
+        }
+
+    }
     class ShareInHandViewHolder(private val binding: ItemShareInHandBinding) : RecyclerView.ViewHolder(binding.root) {
         var previousFifoPortfolio:FifoPortfolio? = null
         var previousStockItem:StockItem? = null
@@ -71,22 +87,22 @@ class ShareInHandAdapter(private var itemList:List<FifoPortfolio>,private var li
 
     override fun onBindViewHolder(holder: ShareInHandViewHolder, position: Int) {
 
-
-        holder.bind(itemList[position],list.filter { it.sYM.equals(itemList[position].symbol,true) }.first(), onItemClick,onItemEditClick,onItemClickSnapshot)
+        val list=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(getItem(position).symbol,true) }?.first()
+        if (list != null) {
+            holder.bind(getItem(position),list, onItemClick,onItemEditClick,onItemClickSnapshot)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
 
-    fun submitList(itemList:List<FifoPortfolio>, list:List<StockItem>){
+
+    /*fun submitList(itemList:List<FifoPortfolio>, list:List<StockItem>){
         this.itemList=itemList
         this.list = list
-    /*    this.itemList.clear()
+    *//*    this.itemList.clear()
         this.itemList.addAll(itemList)
         this.list.clear()
-        this.list.addAll(list)*/
+        this.list.addAll(list)*//*
         notifyDataSetChanged()
-    }
+    }*/
 
 }

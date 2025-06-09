@@ -1,26 +1,18 @@
 package com.example.scstrade.views.allstock
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.FragmentAllStockBinding
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.indices.IndicesFragment
-import com.example.scstrade.views.landing.LandingFragment
-import com.example.scstrade.views.market.MarketFragment
-import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -52,7 +44,7 @@ class AllStockFragment : Fragment() {
         binding.recyclerIndices.apply {
             adapter= StockAdapter(true)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(30.dp))
         }
 
         binding.recyclerIndices.post {

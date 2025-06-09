@@ -3,9 +3,10 @@ package com.example.scstrade.views.widgets
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.View
+import androidx.compose.ui.unit.Dp
 import androidx.recyclerview.widget.RecyclerView
 
-class HorizontalDivider(private val bottom:Int): RecyclerView.ItemDecoration() {
+class HorizontalDivider(private val verticalSpaceHeight: Dp): RecyclerView.ItemDecoration() {
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
@@ -19,6 +20,8 @@ class HorizontalDivider(private val bottom:Int): RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        outRect.bottom = bottom
+        if (parent.getChildAdapterPosition(view) != parent.adapter?.itemCount?.minus(1)) {
+            outRect.bottom = verticalSpaceHeight.value.toInt()
+        }
     }
 }

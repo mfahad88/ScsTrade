@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -18,11 +19,11 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.SymbolProfit
 import com.example.scstrade.model.response.login.LoginDataItem
-import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.adapter.HistoryHoldingAdapter
 import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
+import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 import kotlin.math.roundToInt
 
@@ -30,7 +31,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPortfolioDetailBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var login: LoginDataItem
-    var portfolioMainID:Int?=-1
+//    var portfolioMainID:Int?=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,7 +48,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+       val portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
 //        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.apply {
@@ -65,7 +66,10 @@ class PortfolioDetailActivity : AppCompatActivity() {
                     floatingMenu.visibility = View.VISIBLE
                 }
             }
+            recyclerHistory.adapter=HistoryHoldingAdapter(){
 
+            }
+            recyclerHistory.addItemDecoration(HorizontalDivider(20.dp))
 //            recyclerView.addItemDecoration(VerticalSpaceItemDecoration(10, color = Color.parseColor("#ffffff")))
             newBuyTrade.setOnClickListener {
                 val intent = Intent(this.root.context, BuySellActivity::class.java)
@@ -101,8 +105,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
 
                 adapter = ShareInHandAdapter(
-                    emptyList(),
-                    emptyList(),
+                    sharedViewModel,
                     onItemClick = { res->
                         val intent = Intent(this.context, BuySellActivity::class.java)
                         intent.putExtra(AppConstants.IS_Sell, true)
@@ -171,25 +174,9 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             }
                         }
 
-                       /*val profit=result.data?.closeTrades?.groupBy { it.symbol }?.map {(symbol,trades)->{
-                           val totalSale = trades.sumOf { it.salAmount.toDouble() }
-                           val totalPurchase = trades.sumOf { it.purAmount.toDouble() }
-                           val profit = totalSale - totalPurchase
-                           val profitPercent = if (totalPurchase != 0.0) (profit / totalPurchase) * 100 else 0.0
 
-                           val it=SymbolProfit(
-                               symbol = symbol,
-                               profit = "%.2f".format(profit).toDouble(),
-                               profitPercent = "%.2f".format(profitPercent).toDouble()
-                           )
-                           println(it)
 
-                        }
-                       }*/
 
-                        binding.recyclerHistory.adapter= HistoryHoldingAdapter(list){
-
-                        }
 
                     }
                     if(result.data?.fifoPortfolio?.isNotEmpty()?:false){
@@ -212,7 +199,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
                         binding.daysPLHoValue.text = "${Utils.commaSeparated(daysPL.roundToInt())} (${Utils.roundTwoDecimal((daysPL.div(currentMarketValue)).times(100))}%)"
                         binding.totalPLHValue.text = "${Utils.commaSeparated(currentMarketValue.minus(totalCost).roundToInt())} (${Utils.roundTwoDecimal(((currentMarketValue.minus(totalCost)).div(totalCost)).times(100))}%)"
 
-                        (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList(),sharedViewModel.mutableAllData.value?.data?.filter { it.sYM in result.data!!.fifoPortfolio.map { it.symbol } }?.toList()?: emptyList())
+                        (binding.recyclerView.adapter as ShareInHandAdapter).submitList(result.data?.fifoPortfolio?: emptyList())
+
                         binding.groupEmptyHolding.visibility = View.GONE
                         if(!result.data?.fifoPortfolio.isNullOrEmpty()){
                             binding.groupHolding.visibility = View.VISIBLE
@@ -222,6 +210,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
 
                         if(!list.isNullOrEmpty()){
+                            (binding.recyclerHistory.adapter as HistoryHoldingAdapter).submitList(list)
                             binding.groupHistory.visibility = View.VISIBLE
                         }else{
                             binding.groupHistory.visibility = View.GONE
@@ -268,6 +257,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
 */
     override fun onDestroy() {
        sharedViewModel.mutablePortfolioFinalDetail.value=null
+       sharedViewModel.mutablePortfolioFinalDetail.removeObservers(this)
         sharedViewModel.stopPortfolioFinal()
         super.onDestroy()
     }

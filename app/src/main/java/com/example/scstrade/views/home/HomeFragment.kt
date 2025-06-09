@@ -1,15 +1,13 @@
 package com.example.scstrade.views.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.Observer
@@ -20,16 +18,12 @@ import com.example.scstrade.databinding.FragmentHomeBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.summary.KSEIndices
-import com.example.scstrade.repository.MainRepository
-import com.example.scstrade.services.AppDatabase
-import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.ChartActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.landing.LandingFragment
-import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
@@ -130,20 +124,20 @@ class HomeFragment : Fragment() {
         binding.recyclerLeaders.apply {
             adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(15))
+            addItemDecoration(HorizontalDivider(15.dp))
             isNestedScrollingEnabled=true
         }
 
         binding.recyclerGainers.apply {
             adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(15))
+            addItemDecoration(HorizontalDivider(15.dp))
             isNestedScrollingEnabled=true
         }
         binding.recyclerLosers.apply {
             adapter= StockAdapter()
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(30.dp))
             isNestedScrollingEnabled=true
 
         }

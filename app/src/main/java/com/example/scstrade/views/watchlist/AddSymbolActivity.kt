@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -103,7 +104,7 @@ class AddSymbolActivity : AppCompatActivity() {
 
         binding.recyclerView.apply {
             layoutManager=LinearLayoutManager(this@AddSymbolActivity,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(20))
+            addItemDecoration(HorizontalDivider(20.dp))
         }
 
 

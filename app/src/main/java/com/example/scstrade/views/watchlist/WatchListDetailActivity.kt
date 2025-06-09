@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -23,7 +23,6 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
-import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListDetailAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
@@ -113,7 +112,7 @@ class WatchListDetailActivity : AppCompatActivity() {
 
         binding.recyclerView.apply {
             layoutManager= LinearLayoutManager(this@WatchListDetailActivity, LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(20))
+            addItemDecoration(HorizontalDivider(20.dp))
             adapter= WatchListDetailAdapter( emptyList()){ str, item->
                 if(str.contains("delete",true)){
                     Utils.showConfirmationDialog(this.context,null,null,"Are you sure you want to delete this symbol?"){

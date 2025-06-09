@@ -473,14 +473,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun getPortfolioFinalDetail(portfolioMainID: Int?){
+    fun getPortfolioFinalDetail(portfolioMainID: Int){
         mutablePortfolioFinalDetail.value = Resource.Loading()
         if(isConnected.value == true){
             viewModelScope.launch (Dispatchers.IO){
 
 
                 while (isFetchPortfolioFinal) {
-                    val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+                    val result = repository.getPortfolioDetail(portfolioMainID)
 
                     withContext(Dispatchers.Main) {
                         mutablePortfolioFinalDetail.value = result

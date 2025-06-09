@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -22,7 +23,6 @@ import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
-import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.watchlist.adapter.WatchListAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.Gson
@@ -64,7 +64,7 @@ class WatchlistFragment : Fragment() {
         }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30))
+            addItemDecoration(HorizontalDivider(30.dp))
         }
        fetchUser()
 
