@@ -350,7 +350,7 @@
                             android:layout_height="match_parent"
                             android:nestedScrollingEnabled="false"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="110"
+                            tools:itemCount="2"
                             tools:listitem="@layout/item_history" />
                     </LinearLayout>
                 </LinearLayout>

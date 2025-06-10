@@ -38,6 +38,7 @@ import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
 import com.google.gson.JsonElement
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -73,7 +74,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
     val mutableUpdateProfile=MutableLiveData<Resource<List<LoginDataItem>>>()
     val mutablePortfolio=MutableLiveData<Resource<List<PortfolioItem>>>()
-    val mutablePortfolioFinalDetail=MutableLiveData<Resource<PortfolioDetailItem>>()
+    val mutablePortfolioFinalDetail=MutableLiveData<Resource<PortfolioDetailItem?>?>()
     val mutablePortfolioFinalDetailOnce=MutableLiveData<Resource<PortfolioDetailItem>>()
     val mutableDividend=MutableLiveData<Resource<List<DividendItem>>>()
     val mutablePortfolioItemDetail=MutableLiveData<Resource<List<PortfolioItemDetail>>>()
@@ -85,7 +86,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     var isFetchPortfolioFinal=false
     val isConnected = ConnectivityObserver(application)
     var isHome=false
-    private var counter=0;
+    var portfolioJob: Job? = null
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
@@ -93,34 +94,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     val result = repository.fetchAllData("AllData")
                     val result1 = repository.fetchAllData("FutureData")
                     withContext(Dispatchers.Main) {
-                        var list= mutableListOf<StockItem>()
-                        counter++
-                        result.data?.forEach {
-                            list.add(
-                                StockItem(
-                                    v = it.v*counter,
-                                    aP = it.aP,
-                                    aV = it.aV,
-                                    avgP = it.avgP,
-                                    bP = it.bP,
-                                    bV = it.bV,
-                                    cH = it.cH,
-                                    cL = it.cL,
-                                    hP = it.hP,
-                                    iN = it.iN,
-                                    lP = it.lP,
-                                    nM = it.nM,
-                                    oC = it.oC,
-                                    sN = it.sN,
-                                    cHP = it.cHP,
-                                    sYM = it.sYM,
-                                    low52 = it.low52,
-                                    companyLogo = it.companyLogo,
-                                    high52 = it.high52
-                                )
-                            )
-                        }
-                        mutableAllData.value = Resource.Success(list)
+                        mutableAllData.value = result
                         mutableFuture.value = result1
                     }
                     delay(5000)
@@ -473,18 +447,22 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun getPortfolioFinalDetail(portfolioMainID: Int){
+    fun getPortfolioFinalDetail(portfolioMainID: Int?){
         mutablePortfolioFinalDetail.value = Resource.Loading()
-        if(isConnected.value == true){
-            viewModelScope.launch (Dispatchers.IO){
 
+        if(isConnected.value == true){
+            portfolioJob?.cancel()
+            portfolioJob= viewModelScope.launch (Dispatchers.IO){
 
                 while (isFetchPortfolioFinal) {
-                    val result = repository.getPortfolioDetail(portfolioMainID)
+
+                    Log.e("PortfolioDetail",portfolioMainID.toString())
+                    val result = repository.getPortfolioDetail(portfolioMainID?:0)
 
                     withContext(Dispatchers.Main) {
-                        mutablePortfolioFinalDetail.value = result
+                        mutablePortfolioFinalDetail.value = Resource.Success(result.data)
                     }
+
                     delay(5000)
                 }
             }
@@ -638,6 +616,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
     fun stopPortfolioFinal(){
         isFetchPortfolioFinal = false
+        mutablePortfolioFinalDetail.value=null
     }
 
     fun deletePortfolio(portfolioMainID: Int, registrationID: Int) {

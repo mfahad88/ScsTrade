@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSummaryBinding
 import com.example.scstrade.helper.Utils
@@ -42,6 +43,8 @@ class SummaryFragment : Fragment() {
         sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
         sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
         sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
+        val stockData= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
+        Glide.with(this).load(stockData?.companyLogo).into(binding.imageView20)
         sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer { res->
             when (res){
                 is Resource.Error -> Utils.showError(binding.root,res.message?:"An error occurred...")

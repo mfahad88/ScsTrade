@@ -99,43 +99,47 @@ class HistoryFragment : Fragment() {
                     try {
                         binding.loader.visibility = View.GONE
                         binding.mainContainer.visibility = View.VISIBLE
-                        val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
-                        val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
-                        val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
-                        val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
-                        val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
-                        val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
-                        binding.profitBookValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                            if((it.salAmount.toDouble() - it.purAmount.toDouble())>0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                        )
-                        binding.lossBookedValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                            if((it.salAmount.toDouble() - it.purAmount.toDouble())<0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                        )
-                        binding.purchasedCValue.text = Utils.roundTwoDecimal(totalPurchase)
+                        if(!result.data?.closeTrades.isNullOrEmpty()){
 
-                        binding.soldValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                            it.salAmount.toDouble()})
+                            val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
+                            val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
+                            val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
+                            val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
+                            val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
+                            val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
+                            binding.profitBookValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                                if((it.salAmount.toDouble() - it.purAmount.toDouble())>0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
+                            )
+                            binding.lossBookedValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                                if((it.salAmount.toDouble() - it.purAmount.toDouble())<0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
+                            )
+                            binding.purchasedCValue.text = Utils.roundTwoDecimal(totalPurchase)
 
-                        val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
+                            binding.soldValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                                it.salAmount.toDouble()})
 
-                        binding.historicalValue.text = "${Utils.roundTwoDecimal(historicalGain)} (${(historicalGain.div(totalPurchase)).times(100)}%)"
-                        if(binding.historicalValue.text.contains("-")){
-                            binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
-                        }else{
-                            binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-                        }
-                        binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
-                                "(${Utils.roundTwoDecimal(percentPL)}%)"
+                            val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
 
-                        binding.recyclerView.apply {
-                            adapter = HistoryAdapter(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
-                            }
-                            if(result.data?.closeTrades?.isNotEmpty()?:false){
-                                binding.materialCardViewSell.visibility = View.VISIBLE
+                            binding.historicalValue.text = "${Utils.roundTwoDecimal(historicalGain)} (${(historicalGain.div(totalPurchase)).times(100)}%)"
+                            if(binding.historicalValue.text.contains("-")){
+                                binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
                             }else{
-                                binding.materialCardViewSell.visibility = View.GONE
+                                binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+                            }
+                            binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
+                                    "(${Utils.roundTwoDecimal(percentPL)}%)"
+
+                            binding.recyclerView.apply {
+                                adapter = HistoryAdapter(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
+                                }
+                                if(result.data?.closeTrades?.isNotEmpty()?:false){
+                                    binding.materialCardViewSell.visibility = View.VISIBLE
+                                }else{
+                                    binding.materialCardViewSell.visibility = View.GONE
+                                }
                             }
                         }
+
 
                     }catch (e:Exception){
                         e.printStackTrace()

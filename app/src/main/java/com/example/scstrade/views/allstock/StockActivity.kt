@@ -35,12 +35,6 @@ class StockActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        /*ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.mainItem) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-*/
         ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer){v,insets->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -49,8 +43,7 @@ class StockActivity : AppCompatActivity() {
 
 
         sharedViewModel=(application as MyApp).viewModel
-//        sharedViewModel.fetchAllData()
-//        sharedViewModel.fetchIndices()
+
         val b= intent.extras
         if(b!=null) {
             val fragment = AllStockFragment()

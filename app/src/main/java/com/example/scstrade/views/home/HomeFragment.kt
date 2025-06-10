@@ -148,7 +148,7 @@ class HomeFragment : Fragment() {
                 binding.cardHome.apply {
                     kmiallshr.text=kseIndices?.iNDEXCODE?.replace("Index","")
                     if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                        tradeValueView.text=Utils.convertToMillions(kseIndices?.vALUETRADED?.toDouble()?:0.0)
+                        tradeValueView.text=Utils.convertToMillions(kseIndices?.cURRENTINDEX?.toDouble()?:0.0)
                         if(kseIndices?.nETCHANGE?.contains("-")?:false) {
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)

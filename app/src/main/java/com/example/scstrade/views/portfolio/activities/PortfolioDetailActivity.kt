@@ -31,6 +31,8 @@ class PortfolioDetailActivity : AppCompatActivity() {
     private lateinit var binding:ActivityPortfolioDetailBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var login: LoginDataItem
+    var portfolioMainID:Int?=null
+
 //    var portfolioMainID:Int?=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-       val portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+       portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
 //        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.apply {
@@ -139,9 +141,16 @@ class PortfolioDetailActivity : AppCompatActivity() {
 
         sharedViewModel.mutablePortfolioFinalDetail.observe(this, Observer { result->
             when(result){
-                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                    Utils.showError(binding.root,result.message?:"An error occurred")
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
                 is Resource.Success -> {
+//                    sharedViewModel.mutablePortfolioFinalDetail.value=null
+                    binding.loader.visibility = View.GONE
                     var currentMarketValue=0.0
                     var daysPL=0.0
                     var totalCost=0.0
@@ -185,6 +194,7 @@ class PortfolioDetailActivity : AppCompatActivity() {
                             val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
                             val ch = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cH }?.first()
                             val cl = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(res.symbol,true)  }?.map { it.cL }?.first()
+
                             val marketValue = cl?.times(res.quantity.toInt())
                             totalCost = totalCost.plus(res.price.toDouble().times(res.quantity.toInt()))
                             daysPL+=ch?.times(shares)?:0.0
@@ -256,10 +266,11 @@ class PortfolioDetailActivity : AppCompatActivity() {
     }
 */
     override fun onDestroy() {
-       sharedViewModel.mutablePortfolioFinalDetail.value=null
-       sharedViewModel.mutablePortfolioFinalDetail.removeObservers(this)
-        sharedViewModel.stopPortfolioFinal()
+
         super.onDestroy()
+       sharedViewModel.portfolioJob?.cancel()
+       sharedViewModel.mutablePortfolioFinalDetail.value=null
+       sharedViewModel.stopPortfolioFinal()
     }
 
 

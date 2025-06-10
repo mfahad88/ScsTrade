@@ -3,6 +3,7 @@ package com.example.scstrade.views.portfolio.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,7 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.adapter.PortFolioAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.reflect.TypeToken
 
 class PortfolioActivity : AppCompatActivity() {
     lateinit var binding: ActivityPortfolioBinding
@@ -33,8 +35,8 @@ class PortfolioActivity : AppCompatActivity() {
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.main)
 
-
-        login=(this.application as MyApp).login
+        fetchUser(this)
+//        login=(this.application as MyApp).login
         sharedViewModel = (this.application as MyApp).viewModel
         sharedViewModel.getPortfolio(login.registrationID)
         binding.recyclerView.apply {
@@ -103,6 +105,12 @@ class PortfolioActivity : AppCompatActivity() {
         }
 
     }
-
+    private fun fetchUser(context: Context) {
+        val listType = object : TypeToken<List<LoginDataItem>>() {}
+        val user= Utils.getSharedPreference(context, emptyList<LoginDataItem>(),
+            AppConstants.USER,listType)
+        login=user.first()
+        Log.e("User: ",user.toString())
+    }
 
 }

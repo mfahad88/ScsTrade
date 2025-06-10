@@ -59,11 +59,7 @@ class StockDetailActivity : AppCompatActivity() {
             binding.floatingMenu.visibility = View.GONE
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.customToolbar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())

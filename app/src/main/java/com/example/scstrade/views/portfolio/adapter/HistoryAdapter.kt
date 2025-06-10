@@ -22,12 +22,19 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
     class HistoryViewHolder(private val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CloseTrade, onItemClick: (CloseTrade) -> Unit) {
-             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                 val formatter=  DateTimeFormatter.ofPattern("M/dd/yyyy")
-                 val date = LocalDate.parse(item.salDate, formatter)
-                 binding.sellDateValue.text = "${date.dayOfMonth}-${date.month.name.substring(0,3)}-${date.year.toString().substring(2,4)}"
-            } else {
+            if(!item.salDate.isNullOrEmpty()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val formatter = DateTimeFormatter.ofPattern("M/dd/yyyy")
+                    val date = LocalDate.parse(item.salDate, formatter)
+                    binding.sellDateValue.text = "${date.dayOfMonth}-${
+                        date.month.name.substring(
+                            0,
+                            3
+                        )
+                    }-${date.year.toString().substring(2, 4)}"
+                } else {
 
+                }
             }
             binding.sellPriceValue.text = Utils.roundTwoDecimal(item.salPrice.toDouble())
             binding.purchasePrValue.text = Utils.roundTwoDecimal(item.purPrice.toDouble())
