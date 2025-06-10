@@ -18,11 +18,14 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.aof.fragments.WelcomeFragment
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
 import android.util.Log
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFiveFragment
 
-class AofActivity : AppCompatActivity() {
+class AofActivity : BaseActivity() {
     lateinit var binding:ActivityAofBinding
     lateinit var viewModel: AofViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +36,11 @@ class AofActivity : AppCompatActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
         viewModel.country()
         viewModel.city()
         viewModel.mutableCounty.observe(this, Observer { result->
@@ -96,5 +103,22 @@ class AofActivity : AppCompatActivity() {
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
         }
+    }
+
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

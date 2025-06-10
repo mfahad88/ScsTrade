@@ -2,6 +2,8 @@ package com.example.scstrade.views.portfolio.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.SymbolProfit
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.adapter.HistoryHoldingAdapter
 import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
@@ -27,7 +30,7 @@ import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 import kotlin.math.roundToInt
 
-class PortfolioDetailActivity : AppCompatActivity() {
+class PortfolioDetailActivity : BaseActivity() {
     private lateinit var binding:ActivityPortfolioDetailBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var login: LoginDataItem
@@ -257,6 +260,14 @@ class PortfolioDetailActivity : AppCompatActivity() {
         Log.e("User: ",user.toString())
     }
 
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
+
 
    /* override fun onStop() {
         sharedViewModel.stopPortfolioFinal()
@@ -272,6 +283,12 @@ class PortfolioDetailActivity : AppCompatActivity() {
        sharedViewModel.mutablePortfolioFinalDetail.value=null
        sharedViewModel.stopPortfolioFinal()
     }
-
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
 
 }

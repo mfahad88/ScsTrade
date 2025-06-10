@@ -1,99 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
-    tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment">
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/load_anim" />
-    <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:id="@+id/cardNic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="0dp"
-        app:titleButton1="No"
-        app:titleButton2="Yes"
-        app:hintDualOption="@string/select_nic_expiry_date"
-        app:drawable="@drawable/baseline_calendar_today_24"
-        app:titleDualOption="@string/is_your_nic" />
-
-
-    <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/placeBirth"
-        app:typeDualDropdown1="dropdown"
-        app:typeDualDropdown2="dropdown"
-        app:titleDualDropdown="@string/place_of_bi"
-        app:hintDualDropdown1="@string/select_your_country"
-        app:hintDualDropdown2="@string/select_your_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardNic"/>
-
-
-
-    <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/ivr_service"
-        app:layout_constraintTop_toBottomOf="@+id/placeBirth"
-        app:strokeWidth="0dp"
-        app:titleDualOption="@string/cdc_ivr_ser"
-        app:subTitleDualOption="@string/do_you_wish"
-        app:titleButton1="No"
-        app:titleButton2="Yes"/>
-
-    <LinearLayout
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        android:background="@color/md_theme_surface"
+        tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/load_anim" />
+        <com.example.scstrade.views.widgets.DualOptionToggleView
+            android:id="@+id/cardNic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp"
+            app:titleButton1="No"
+            app:titleButton2="Yes"
+            app:hintDualOption="@string/select_nic_expiry_date"
+            app:drawable="@drawable/baseline_calendar_today_24"
+            app:titleDualOption="@string/is_your_nic" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.8"
-            android:text="Back"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnContinue"
+        <com.example.scstrade.views.widgets.DualDropdownSelectorView
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.8"
-            android:text="@string/save_next" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:id="@+id/placeBirth"
+            app:typeDualDropdown1="dropdown"
+            app:typeDualDropdown2="dropdown"
+            app:titleDualDropdown="@string/place_of_bi"
+            app:hintDualDropdown1="@string/select_your_country"
+            app:hintDualDropdown2="@string/select_your_city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardNic"/>
+
+
+        <com.example.scstrade.views.widgets.DualOptionToggleView
+            android:id="@+id/ivr_service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/placeBirth"
+            app:layout_constraintVertical_bias="0.0"
+            app:strokeWidth="0dp"
+            app:subTitleDualOption="@string/do_you_wish"
+            app:titleButton1="No"
+            app:titleButton2="Yes"
+            app:titleDualOption="@string/cdc_ivr_ser" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="Back" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="@string/save_next" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,5 +1,7 @@
 package com.example.scstrade.views.snapshot
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,12 +45,13 @@ import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SnapshotViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 
-class SnapshotActivity : AppCompatActivity() {
+class SnapshotActivity : BaseActivity() {
     private lateinit var binding: ActivitySnapshotBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var snapshotViewModel: SnapshotViewModel
@@ -65,6 +68,9 @@ class SnapshotActivity : AppCompatActivity() {
             WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
         symbol = intent.extras?.getString(AppConstants.SYMBOL)?:""
+        if(symbol.contains("-")) {
+            symbol = symbol.substring(0, symbol.indexOf("-") )
+        }
         sharedViewModel.snapshotOverview(symbol)
         sharedViewModel.mutableOverview.observe(this, Observer { result->
             if(result.data!=null){
@@ -236,5 +242,22 @@ class SnapshotActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

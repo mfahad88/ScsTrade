@@ -1,46 +1,27 @@
 package com.example.scstrade.views.main
 
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
-import android.view.WindowManager
-import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityMainBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.login.LoginDataItem
-import com.example.scstrade.repository.MainRepository
-import com.example.scstrade.services.AppDatabase
-import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.splash.SplashFragment
@@ -51,7 +32,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.reflect.TypeToken
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var viewModel: SharedViewModel
     lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,6 +125,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
 
 
 }

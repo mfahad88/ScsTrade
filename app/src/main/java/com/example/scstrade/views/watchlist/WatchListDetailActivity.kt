@@ -2,6 +2,8 @@ package com.example.scstrade.views.watchlist
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,12 +25,13 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListDetailAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 
-class WatchListDetailActivity : AppCompatActivity() {
+class WatchListDetailActivity : BaseActivity() {
     lateinit var viewModel: WatchListViewModel
     lateinit var login: LoginDataItem
     lateinit var sharedViewModel: SharedViewModel
@@ -139,5 +142,21 @@ class WatchListDetailActivity : AppCompatActivity() {
         super.onResume()
         viewModel.getWatchListDetail(WatchListMainID?:0)
 
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

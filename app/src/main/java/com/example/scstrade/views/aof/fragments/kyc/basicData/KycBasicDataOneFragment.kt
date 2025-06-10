@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,7 @@ class KycBasicDataOneFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,7 @@ class KycBasicDataOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycOneBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        viewModel.getBasicData()
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.basic_data)
         populateDropdown()
         initFields()
@@ -139,8 +142,12 @@ class KycBasicDataOneFragment : Fragment() {
                             pobCountry = response.placeOfBirth
                             pobCity  = response.placeOfBirthCity
                             ivrService = response.ivrstatus
-                            dob = Utils.convertIsoToDate(response.dateOfBirth)
-                            nicValid = Utils.convertIsoToDate(response.uinExpiryDate)
+                            if(!TextUtils.isEmpty(response.dateOfBirth)) {
+                                dob = Utils.convertIsoToDate(response.dateOfBirth)
+                            }
+                            if(!TextUtils.isEmpty(response.uinExpiryDate)) {
+                                nicValid = Utils.convertIsoToDate(response.uinExpiryDate)
+                            }
 //                            viewModel.saveBasicData()
                         }
                         val basicData =viewModel.basicData

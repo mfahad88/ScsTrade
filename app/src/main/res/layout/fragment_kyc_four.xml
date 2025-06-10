@@ -37,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:id="@+id/mobile_number"
+        android:inputType="number"
+        android:digits="@string/_0_9"
         app:hintText="Mobile Number"
         android:text="03143966681"
         android:background="@color/md_theme_surfaceBright"
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@color/md_theme_surfaceBright"
+        android:inputType="textEmailAddress"
         android:text="Test@mailinator.com"
         app:hintText="Email"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,40 +129,44 @@
 
 
     <com.example.scstrade.views.widgets.LabelledTextField
+        android:id="@+id/mailing_other_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:visibility="invisible"
         android:maxLines="1"
-        android:id="@+id/mailing_other_city"
+        android:visibility="invisible"
         app:hintText="@string/mailing_city"
         app:hintTextField="@string/select_your_city"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_province"/>
+        app:layout_constraintTop_toBottomOf="@+id/mailing_province"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
+        android:id="@+id/linearLayout9"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.8"
-            android:text="Back"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
+            android:text="Back" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"

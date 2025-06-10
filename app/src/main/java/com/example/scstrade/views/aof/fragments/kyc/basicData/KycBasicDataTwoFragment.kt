@@ -43,7 +43,6 @@ class KycBasicDataTwoFragment : Fragment() {
 
 
         binding.apply {
-            Utils.filterTextField(name, Regex("[^A-Za-z ]"))
             back.setOnClickListener {
                 (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
             }
@@ -90,7 +89,8 @@ class KycBasicDataTwoFragment : Fragment() {
     }
 
     private fun initFields() {
-       val basicData = viewModel.getbasicData()
+       val basicData = viewModel.basicData
+
         if(basicData!=null){
             binding.name.setText(basicData.relationshipName)
             if(basicData.maritalStatus.equals("s",true)){

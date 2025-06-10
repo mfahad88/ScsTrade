@@ -1,6 +1,8 @@
 package com.example.scstrade.views
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +18,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.google.gson.reflect.TypeToken
 
-class ChartActivity : AppCompatActivity() {
+class ChartActivity : BaseActivity() {
     lateinit var binding: ActivityChartBinding
     lateinit var login: LoginDataItem
     lateinit var indices:String
@@ -57,5 +59,19 @@ class ChartActivity : AppCompatActivity() {
         login=user.first()
         Log.e("User: ",user.toString())
     }
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
 
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
 }

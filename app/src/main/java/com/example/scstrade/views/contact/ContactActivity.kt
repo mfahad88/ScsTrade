@@ -2,6 +2,8 @@ package com.example.scstrade.views.contact
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -59,9 +61,10 @@ import com.example.scstrade.databinding.ActivityContactBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 
-class ContactActivity : AppCompatActivity() {
+class ContactActivity : BaseActivity() {
     lateinit var binding: ActivityContactBinding
     lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -294,6 +297,19 @@ class ContactActivity : AppCompatActivity() {
         )
     }
 
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
 
-
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
 }

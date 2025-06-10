@@ -5,33 +5,33 @@ import com.google.gson.annotations.SerializedName
 
 data class BasicDetailResponse(
     @SerializedName("applicationId")
-    val applicationId: String,
+    val applicationId: String?,
     @SerializedName("dateOfBirth")
-    val dateOfBirth: String,
+    val dateOfBirth: String?,
     @SerializedName("fatherHusbandName")
-    val fatherHusbandName: String,
+    val fatherHusbandName: String?,
     @SerializedName("gender")
-    val gender: String,
+    val gender: String?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("ivrstatus")
-    val ivrstatus: String,
+    val ivrstatus: String?,
     @SerializedName("lifeTime")
-    val lifeTime: String,
+    val lifeTime: String?,
     @SerializedName("maritalStatus")
-    val maritalStatus: String,
+    val maritalStatus: String?,
     @SerializedName("motherMaidenName")
-    val motherMaidenName: String,
+    val motherMaidenName: String?,
     @SerializedName("nationalityId")
-    val nationalityId: String,
+    val nationalityId: String?,
     @SerializedName("placeOfBirth")
-    val placeOfBirth: String,
+    val placeOfBirth: String?,
     @SerializedName("placeOfBirthCity")
-    val placeOfBirthCity: String,
+    val placeOfBirthCity: String?,
     @SerializedName("relationship")
-    val relationship: String,
+    val relationship: String?,
     @SerializedName("salutation")
-    val salutation: String,
+    val salutation: String?,
     @SerializedName("uinExpiryDate")
-    val uinExpiryDate: String
+    val uinExpiryDate: String?
 )

@@ -62,7 +62,14 @@ public class NetChangeChip extends RelativeLayout {
         String percentValue = Utils.Companion.formatDouble(changePercent);
 
         String result = changeSign + changeValue + " " + changeSign + "(" + percentValue + "%)";
-        if(previousText.equals(nChange)){
+        if (nChange.contains("-")) {
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
+            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
+        } else {
+            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
+            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+        }
+        /*if(nChange.equals("0") || nChange.equals("0.0")){
             binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_blue));
             binding.tv.setTextColor(Color.parseColor("#1A73E8"));
         }else {
@@ -73,7 +80,7 @@ public class NetChangeChip extends RelativeLayout {
                 binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
                 binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
             }
-        }
+        }*/
         binding.tv.setText(result);
         previousText=nChange;
     }

@@ -1,6 +1,8 @@
 package com.example.scstrade.views.portfolio.activities
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +15,13 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.portfolio.fragments.HistoryFragment
 import com.example.scstrade.views.portfolio.fragments.HoldingFragment
 import com.example.scstrade.views.portfolio.fragments.SummaryFragment
 import com.google.android.material.tabs.TabLayout
 
-class StockDetailActivity : AppCompatActivity() {
+class StockDetailActivity : BaseActivity() {
     var portfolioMainID: Int=-1
     lateinit var binding:ActivityStockDetailBinding
     var symbol:String = ""
@@ -111,5 +114,21 @@ class StockDetailActivity : AppCompatActivity() {
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
         }
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

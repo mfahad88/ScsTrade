@@ -73,8 +73,8 @@ class LoginAOFFragment : Fragment() {
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
                     viewModel.getDocuments()
                     viewModel.getattorneyDetails()
-                    viewModel.getBasicData()
-                    viewModel.getcontactDetails()
+
+
                     viewModel.getNomineeDetails()
                     viewModel.getotherDetails()
                     viewModel.mutableProtected.value=null

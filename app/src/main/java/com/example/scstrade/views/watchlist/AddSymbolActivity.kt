@@ -1,5 +1,7 @@
 package com.example.scstrade.views.watchlist
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -27,12 +29,13 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.WatchListViewModel
 import com.example.scstrade.factories.WatchListViewModelFactory
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.SymbolAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 
-class AddSymbolActivity : AppCompatActivity() {
+class AddSymbolActivity : BaseActivity() {
     lateinit var binding:ActivityAddSymbolBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var viewModel: WatchListViewModel
@@ -118,6 +121,19 @@ class AddSymbolActivity : AppCompatActivity() {
         login=user.first()
         Log.e("User: ",user.toString())
     }
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
 
-
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
 }

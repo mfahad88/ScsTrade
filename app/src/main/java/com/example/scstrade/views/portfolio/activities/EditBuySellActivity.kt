@@ -1,5 +1,7 @@
 package com.example.scstrade.views.portfolio.activities
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
@@ -13,12 +15,13 @@ import com.example.scstrade.databinding.ActivityEditBuySellBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.fragments.BuyFragment
 import com.example.scstrade.views.portfolio.fragments.SellFragment
 import com.google.android.material.tabs.TabLayout
 
-class EditBuySellActivity : AppCompatActivity() {
+class EditBuySellActivity : BaseActivity() {
     lateinit var binding: ActivityEditBuySellBinding
     lateinit var sharedViewModel: SharedViewModel
     var portfolioMainID=-1
@@ -67,5 +70,22 @@ class EditBuySellActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
+    }
+
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

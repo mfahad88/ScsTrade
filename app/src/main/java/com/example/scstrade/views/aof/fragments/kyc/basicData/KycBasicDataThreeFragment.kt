@@ -1,6 +1,7 @@
 package com.example.scstrade.views.aof.fragments.kyc.basicData
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,17 +53,17 @@ class KycBasicDataThreeFragment : Fragment() {
                 editText.setText("")
                 editText.isEnabled=false
             }
-           editText.setOnFocusChangeListener { view, b ->
-               if(b){
-                   Utils.showDatePicker(requireContext()) { day, month, year ->
-                       val customDate = LocalDate.of(year, month, day)
-                       val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                       val formatted = customDate.format(formatter)
-                       editText.setText(formatted)
-                       nicExpiry = formatted
-                   }
-               }
-           }
+            editText.setOnFocusChangeListener { view, b ->
+                if(b){
+                    Utils.showDatePicker(requireContext()) { day, month, year ->
+                        val customDate = LocalDate.of(year, month, day)
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                        val formatted = customDate.format(formatter)
+                        editText.setText(formatted)
+                        nicExpiry = formatted
+                    }
+                }
+            }
         }
         binding.placeBirth.autoCompleteTextView1.setOnItemClickListener { adapterView, view, i, l ->
             country= AppConstants.COUNTRY.get(i).second
@@ -148,27 +149,37 @@ class KycBasicDataThreeFragment : Fragment() {
     private fun initFields() {
         val basicData = viewModel.basicData
 
-       if(basicData!=null){
-           nicExpiry=basicData.nicValid
-           nicType=basicData.nicType
-           country=basicData.pobCountry
-           city=basicData.pobCity
-           ivrStatus = basicData.ivrService
+        if(basicData!=null){
+            if(!TextUtils.isEmpty(basicData.nicValid)) {
+                nicExpiry = basicData.nicValid
+            }
+            if(!TextUtils.isEmpty(basicData.nicType)) {
+                nicType = basicData.nicType
+            }
+            if(!TextUtils.isEmpty(basicData.pobCountry)) {
+                country = basicData.pobCountry
+            }
+            if(!TextUtils.isEmpty(basicData.pobCity)){
+                city=basicData.pobCity
+            }
+            if(!TextUtils.isEmpty(basicData.ivrService)) {
+                ivrStatus = basicData.ivrService
+            }
 
-           binding.apply {
-               cardNic.toggleSelection(if(nicType.equals("y",true)) false else true)
-               cardNic.editText.setText(nicExpiry)
-               if(country?.isNotEmpty()?:false) {
-                   placeBirth.autoCompleteTextView1.setText(AppConstants.COUNTRY.filter { it.second.equals(country,true) }.map { it.first }.first(),false)
-               }
+            binding.apply {
+                cardNic.toggleSelection(if(nicType.equals("y",true)) false else true)
+                cardNic.editText.setText(nicExpiry)
+                if(country?.isNotEmpty()?:false) {
+                    placeBirth.autoCompleteTextView1.setText(AppConstants.COUNTRY.filter { it.second.equals(country,true) }.map { it.first }.first(),false)
+                }
 
-               if(city?.isNotEmpty()?:false){
-                   placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.first.second.equals(city,true) }.map { it.first.first }.first(),false)
-               }
-               ivrService.toggleSelection(if(ivrStatus.equals("y",true)) false else true)
-           }
-       }
-       }
+                if(city?.isNotEmpty()?:false){
+                    placeBirth.autoCompleteTextView2.setText(AppConstants.CITY.filter { it.first.second.equals(city,true) }.map { it.first.first }.first(),false)
+                }
+                ivrService.toggleSelection(if(ivrStatus.equals("y",true)) false else true)
+            }
+        }
+    }
 
     private fun populateDropdown() {
         binding.placeBirth.autoCompleteTextView1.setAdapter(

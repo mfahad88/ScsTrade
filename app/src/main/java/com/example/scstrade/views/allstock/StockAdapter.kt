@@ -1,6 +1,7 @@
 package com.example.scstrade.views.allstock
 
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,11 +50,15 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     binding.valueTrade.text = String.format("%.2f",stockItem.cL)
                 })
             }
+
+
             binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} (${if(stockItem.cH<0.0) "" else "+"} ${Utils.formatDouble(stockItem.cHP)}%)"
             if(stockItem.cH<0.0){
                 binding.netChange.setTextColor(ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
-            }else{
+            }else if(stockItem.cH>0.0){
                 binding.netChange.setTextColor(ContextCompat.getColor(binding.root.context,R.color.md_theme_primary))
+            }else{
+                binding.netChange.setTextColor(Color.parseColor("#1A73E8"))
             }
 
             binding.high.text = "H: ${Utils.formatDouble(stockItem.hP)}"

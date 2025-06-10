@@ -38,9 +38,9 @@ class SplashFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomItem){ v, windowInsets->
-            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {
-                bottomMargin=insets.bottom+31
+                bottomMargin=insets.bottom
             }
             windowInsets
         }

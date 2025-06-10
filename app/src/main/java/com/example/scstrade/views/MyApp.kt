@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -100,4 +102,12 @@ class MyApp : Application() {
             e.printStackTrace()
         }
     }
+
+
+   /* override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val config = Configuration(newConfig)
+        config.fontScale = 0.5f
+        resources.updateConfiguration(config, Resources.getSystem().getDisplayMetrics())
+    }*/
 }

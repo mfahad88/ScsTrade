@@ -1,6 +1,8 @@
 package com.example.scstrade.views.news
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -23,9 +25,10 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 
-class  NewsDetailActivity : AppCompatActivity() {
+class  NewsDetailActivity : BaseActivity() {
     lateinit var binding: ActivityNewsDetailBinding
     lateinit var newsType:String
     lateinit var title:String
@@ -227,5 +230,21 @@ class  NewsDetailActivity : AppCompatActivity() {
     fun extractSource(input:String): String? {
         val regex = Regex("(?<=Source:)\\s*(https?://\\S+)")
         return regex.find(input)?.value
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

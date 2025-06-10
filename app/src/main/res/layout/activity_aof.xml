@@ -5,19 +5,27 @@
     android:background="@color/md_theme_surface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     tools:context=".views.aof.AofActivity">
+
+    <com.example.scstrade.views.widgets.mMarket
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/progress_card"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="21dp"
         android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -50,8 +58,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:progress="1"
                 android:max="6"
+                android:progress="1"
                 app:layout_constraintEnd_toStartOf="@+id/imageView21"
                 app:layout_constraintStart_toEndOf="@+id/imageView22"
                 app:layout_constraintTop_toTopOf="parent" />

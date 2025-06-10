@@ -159,9 +159,9 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         return repository.getReference()
     }*/
 
-    public fun getbasicData(): BasicData? {
+  /*  public fun getbasicData(): BasicData? {
         return repository.getbasicData()
-    }
+    }*/
 
     fun getContactDetails(): ContactDetail {
         return repository.getContactDetails()!!

@@ -25,8 +25,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:configChanges="density|fontScale|screenSize|smallestScreenSize|screenLayout"
         android:usesCleartextTraffic="true"
+        android:resizeableActivity="false"
         tools:targetApi="31">
+        <activity android:name=".views.BaseActivity"
+            android:exported="false"/>
         <activity
             android:name=".views.settings.SettingsActivity"
             android:exported="false" />

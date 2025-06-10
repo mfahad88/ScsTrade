@@ -56,10 +56,21 @@ class AllStockFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(binding.tabLayout.selectedTabPosition){
 
-                    0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
-                    1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
-                    2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
-                    3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                    0-> {
+
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+
+                    }
+                    1 -> {
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                    }
+                    2 -> {
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                    }
+                    3 -> {
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                    }
+
                 }
             }
 

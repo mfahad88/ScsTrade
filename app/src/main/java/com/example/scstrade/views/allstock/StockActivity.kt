@@ -1,5 +1,7 @@
 package com.example.scstrade.views.allstock
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.market.MarketFragment
@@ -24,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class StockActivity : AppCompatActivity() {
+class StockActivity : BaseActivity() {
     lateinit var binding: ActivityStockBinding
     private lateinit var sharedViewModel:SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,4 +78,20 @@ class StockActivity : AppCompatActivity() {
         }
     }
 
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
 }

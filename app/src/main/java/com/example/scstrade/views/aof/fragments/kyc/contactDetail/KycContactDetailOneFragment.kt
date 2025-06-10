@@ -42,13 +42,11 @@ class KycContactDetailOneFragment : Fragment() {
         viewModel=(requireActivity() as AofActivity).viewModel
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
         fetchUser()
-
+        viewModel.getcontactDetails()
         populateDropdown()
         initDetails()
 
         binding.apply {
-            Utils.filterTextField(mailingOtherProvince.textInputEditText,Regex("[^A-Za-z ]"))
-            Utils.filterTextField(mailingOtherCity.textInputEditText,Regex("[^A-Za-z ]"))
             mobile_Number = login.registrationPhone
             mobileNumber.textInputEditText.setText(mobile_Number)
             mobileNumber.textInputEditText.isEnabled=false

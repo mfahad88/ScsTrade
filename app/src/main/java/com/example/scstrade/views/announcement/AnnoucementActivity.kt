@@ -1,5 +1,7 @@
 package com.example.scstrade.views.announcement
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +16,11 @@ import com.example.scstrade.databinding.ActivityAnnoucementBinding
 import com.example.scstrade.factories.SnapshotViewModelFactory
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SnapshotViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.snapshot.AnnouncementsFragment
 
-class AnnoucementActivity : AppCompatActivity() {
+class AnnoucementActivity : BaseActivity() {
     lateinit var binding: ActivityAnnoucementBinding
     lateinit var snapshotViewModel: SnapshotViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,5 +56,21 @@ class AnnoucementActivity : AppCompatActivity() {
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
         }
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        config.fontScale = 1.0f // Set font scale to default (no scaling)
+        res.updateConfiguration(config, res.displayMetrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            // Override any incoming configuration changes
+            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 }

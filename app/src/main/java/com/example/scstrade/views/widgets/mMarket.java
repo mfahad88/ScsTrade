@@ -102,7 +102,7 @@ public class mMarket extends LinearLayout {
                     @Override
                     public WindowInsetsCompat onApplyWindowInsets(@NonNull View view, @NonNull WindowInsetsCompat windowInsets) {
                         Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
-                        view.setPadding(0,insets.top,0,insets.bottom);
+                        view.setPadding(15,insets.top,50,insets.bottom);
 
                         return windowInsets;
                     }
