@@ -63,7 +63,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
             android:layout_below="@id/company_icon"
-            android:background="@color/material_dynamic_neutral90"/>
+            android:background="#E2E2E9"/>
 
         <TextView
             android:id="@+id/total_cost_"
@@ -157,7 +157,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
             android:layout_below="@id/total_cost_value"
-            android:background="@color/material_dynamic_neutral90"/>
+            android:background="#E2E2E9"/>
 
         <TextView
             android:id="@+id/days"

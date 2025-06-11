@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,82 +8,71 @@
     tools:context=".views.splash.SplashFragment">
 
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@drawable/splash"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/splash" />-->
+
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="143dp"
-        android:src="@drawable/frame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <TextView
-        android:id="@+id/scs_trade_p"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:gravity="center_horizontal|top"
-        android:lineSpacingExtra="1sp"
-        android:text="@string/scs_trade_p"
-        android:textAppearance="@style/scs_trade_p"
-        android:translationY="-0.75sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/this_next_g"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="96dp"
-        android:gravity="top"
-        android:textFontWeight="400"
-        android:lineSpacingExtra="-5sp"
-        android:text="@string/this_next_g"
-        android:textAppearance="@style/this_next_g"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="219dp"
+        android:layout_height="208dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:id="@+id/imageViewLogo"
+        android:alpha="0"
+        android:src="@drawable/logo_splash"/>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/bottomItem"
-        app:layout_constraintEnd_toEndOf="@+id/this_next_g"
-        app:layout_constraintStart_toStartOf="@+id/this_next_g"
-        app:layout_constraintTop_toBottomOf="@+id/this_next_g">
+        android:orientation="vertical"
+        android:id="@+id/bottomProgess"
+        android:layout_marginBottom="-200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
+        <!-- Auto layout, grids, variables, and unit scale are not yet supported -->
+        <TextView
+            android:id="@+id/empowering_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateDrawable="@drawable/image_for_rotation" />
+            android:textFontWeight="700"
+            android:text="@string/empowering_"
+            android:textAlignment="center"
+            android:textAppearance="@style/empowering_"
+            />
+
 
         <TextView
             android:id="@+id/connecting_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:lineSpacingExtra="0sp"
             android:text="@string/connecting_"
-            android:textAppearance="@style/connecting_" />
+            android:textAppearance="@style/connecting_"
+            android:layout_marginTop="7dp"
+            android:gravity="center_horizontal|top" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:max="100"
+            android:progress="70"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:progressDrawable="@drawable/gradient_progress" />
+
+
+
 
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</RelativeLayout>

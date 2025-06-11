@@ -110,4 +110,5 @@ class MyApp : Application() {
         config.fontScale = 0.5f
         resources.updateConfiguration(config, Resources.getSystem().getDisplayMetrics())
     }*/
+
 }

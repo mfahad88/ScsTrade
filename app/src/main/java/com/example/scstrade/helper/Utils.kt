@@ -23,8 +23,11 @@ import android.text.InputFilter
 import android.text.Spanned
 import android.text.format.DateUtils
 import android.util.Base64
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.EditText
@@ -37,6 +40,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.scstrade.R
+import com.example.scstrade.helper.AppConstants.Companion.LIGHT_MODE
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -308,15 +312,61 @@ class Utils {
         }
 
         fun isDarkMode(context: Context): Boolean {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val uiModeManager = context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
                 uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
             } else {
                 // For devices below Android 10, check the configuration directly
                 (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            }*/getSharedPreference(context, LIGHT_MODE)
+        }
+
+        fun getSmallestWidthDp(context: Context): Int {
+            val metrics = context.resources.displayMetrics
+            val config = context.resources.configuration
+
+            // Fallback if smallestScreenWidthDp is 0
+            return if (config.smallestScreenWidthDp > 0) {
+                config.smallestScreenWidthDp
+            } else {
+                val widthDp = metrics.widthPixels / metrics.density
+                val heightDp = metrics.heightPixels / metrics.density
+                minOf(widthDp, heightDp).toInt()
+            }
+        }
+        fun getScreenWidthInPx(context: Context): Int {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // API 30+: Use WindowMetrics
+                val windowMetrics = context.getSystemService(WindowManager::class.java).currentWindowMetrics
+                val insets = windowMetrics.windowInsets
+                    .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+                val bounds = windowMetrics.bounds
+                bounds.width() - insets.left - insets.right
+            } else {
+                // Below API 30: Use DisplayMetrics
+                val displayMetrics = DisplayMetrics()
+                @Suppress("DEPRECATION")
+                (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
+                    .defaultDisplay.getRealMetrics(displayMetrics)
+                displayMetrics.widthPixels
             }
         }
 
+        fun getScreenSizeInInches(context: Context): Double {
+            val metrics = context.resources.displayMetrics
+
+            val widthPixels = metrics.widthPixels
+            val heightPixels = metrics.heightPixels
+            val xdpi = metrics.xdpi
+            val ydpi = metrics.ydpi
+
+            // Calculate width and height in inches
+            val widthInches = widthPixels / xdpi
+            val heightInches = heightPixels / ydpi
+
+            // Use Pythagoras to get diagonal screen size in inches
+            return Math.sqrt(widthInches * widthInches + heightInches * heightInches.toDouble())
+        }
         fun getFileNameFromUri(context: Context,uri: Uri): String? {
             var name: String? = null
             val projection = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)

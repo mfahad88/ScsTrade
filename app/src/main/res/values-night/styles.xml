@@ -30,7 +30,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.04</item>
         <item name="android:textColor">@color/black</item>
-        <item name="fontFamily">@font/inter_18pt_medium</item>
+        <item name="fontFamily">@font/custom_font</item>
     </style>
 
     <style name="kse_100">
@@ -1457,5 +1457,12 @@
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">#787776</item>
+    </style>
+
+    <style name="empowering_">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">29.54sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

@@ -8,16 +8,20 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityMainBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.helper.Utils.Companion.getScreenWidthInPx
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
@@ -35,6 +39,7 @@ import com.google.gson.reflect.TypeToken
 class MainActivity : BaseActivity() {
     private lateinit var viewModel: SharedViewModel
     lateinit var binding:ActivityMainBinding
+    var screenSize:Double?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -61,6 +66,11 @@ class MainActivity : BaseActivity() {
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this))
         viewModel = (application as MyApp).viewModel
         setContentView(binding.root)
+        screenSize = Utils.getScreenSizeInInches(this)
+        Log.d("ScreenSize", "Screen size in inches: $screenSize")
+        Log.e("Screen Pixel", Utils.getScreenWidthInPx(this).toString())
+        Log.e("Screen Smallest Width", Utils.getSmallestWidthDp(this).toString())
+
 //        Utils.setSystemBarIcons(this,darkIcons = fa)
         val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
         viewModel.isConnected.observe(this, Observer {
@@ -92,6 +102,12 @@ class MainActivity : BaseActivity() {
         }
 
         subscribeToTopic("all")
+
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView.rootView) { _, insets ->
+            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+            val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            insets
+        }
     }
 
 
@@ -133,10 +149,31 @@ class MainActivity : BaseActivity() {
         super.applyOverrideConfiguration(overrideConfiguration)
     }
     override fun getResources(): Resources {
+
         val res = super.getResources()
         val config = Configuration(res.configuration)
-        config.fontScale = 1.0f // Set font scale to default (no scaling)
-        res.updateConfiguration(config, res.displayMetrics)
+
+        val metrics = res.displayMetrics
+
+        // Calculate screen width and height in inches
+        val widthInches = metrics.widthPixels / metrics.xdpi
+        val heightInches = metrics.heightPixels / metrics.ydpi
+        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+
+        // Set fontScale based on diagonal screen size
+        if(diagonalInches>3.9 && diagonalInches<4.9){
+            config.fontScale = 0.85f  // Small phones
+        }else if (diagonalInches>4.9 && diagonalInches<6.9){
+            config.fontScale = 1.0f
+        }else{
+            config.fontScale = 1.2f
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            config.fontWeightAdjustment = 0
+
+        }
+        res.updateConfiguration(config, metrics)
         return res
     }
 

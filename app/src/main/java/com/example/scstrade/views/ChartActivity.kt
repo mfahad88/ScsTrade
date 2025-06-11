@@ -8,13 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityChartBinding
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.AppConstants.Companion.LIGHT_MODE
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.helper.Utils.Companion.getSharedPreference
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.google.gson.reflect.TypeToken
 
@@ -36,7 +37,7 @@ class ChartActivity : BaseActivity() {
         binding.chart.settings.javaScriptEnabled = true
         binding.chart.webViewClient = WebViewClient()
         fetchUser(this)
-        if(Utils.isDarkMode(this)){
+        if(!Utils.getSharedPreference(this, LIGHT_MODE)){
             when(indices){
                 "KSE All Share Index" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE All"}")
                 else -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${indices}")

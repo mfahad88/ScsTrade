@@ -2,6 +2,7 @@
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
@@ -58,8 +59,8 @@
         <item name="colorSpecialHeadingColorContainer">@color/colorSpecialHeadingColorContainer</item>
         <item name="colorOnSpecialHeadingColorContainer">@color/colorOnSpecialHeadingColorContainer</item>
         <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
-        <item name="colorControlNormal">@color/black</item>
-        <item name="backgroundColor">@color/white</item>
+        <!--<item name="colorControlNormal">@color/black</item>
+        <item name="backgroundColor">@color/white</item>-->
 
     </style>
 

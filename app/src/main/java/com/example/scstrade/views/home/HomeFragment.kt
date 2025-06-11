@@ -2,6 +2,7 @@ package com.example.scstrade.views.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -148,7 +149,8 @@ class HomeFragment : Fragment() {
                 binding.cardHome.apply {
                     kmiallshr.text=kseIndices?.iNDEXCODE?.replace("Index","")
                     if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                        tradeValueView.text=Utils.convertToMillions(kseIndices?.cURRENTINDEX?.toDouble()?:0.0)
+                        tradeValueView.text=Utils.convertToMillions(
+                            kseIndices.cURRENTINDEX.toDouble() ?:0.0)
                         if(kseIndices?.nETCHANGE?.contains("-")?:false) {
                             tradeValueView.drawable =
                                 AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
@@ -169,6 +171,14 @@ class HomeFragment : Fragment() {
 
 
 
+                    }else{
+                        binding.cardHome.apply {
+                            tradeValueView.text = "0.0"
+                            volumeChip.text="0.0"
+                            netChangeChip.setText("0.0 (0.0%)","0.0")
+                            highView.text = "H: 0.0 0.0(0.0%)"
+                            lowView.text = "L: 0.0 0.0(0.0%)"
+                        }
                     }
 
                 }

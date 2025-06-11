@@ -32,7 +32,6 @@ public class BaseActivity extends AppCompatActivity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         metrics.densityDpi = DisplayMetrics.DENSITY_DEVICE_STABLE;
         getResources().updateConfiguration(getResources().getConfiguration(), metrics);
-        
         super.onCreate(savedInstanceState);
     }
 }

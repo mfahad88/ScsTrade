@@ -144,7 +144,7 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/country_code"
-                    android:background="@color/material_dynamic_neutral80"
+                    android:background="#C6C6CD"
                     android:orientation="vertical" />
 
                 <EditText

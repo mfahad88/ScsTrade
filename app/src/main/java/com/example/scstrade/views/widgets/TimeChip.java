@@ -9,9 +9,11 @@ import android.widget.RelativeLayout;
 
 
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.TimeChipBinding;
+import com.example.scstrade.helper.AppConstants;
 import com.example.scstrade.helper.Utils;
 
 public class TimeChip extends RelativeLayout {
@@ -41,6 +43,11 @@ public class TimeChip extends RelativeLayout {
                 if(text!=null){
                     binding.tv.setText(text);
                 }
+         /*       if(Utils.Companion.getSharedPreference(context, AppConstants.Companion.getLIGHT_MODE())){
+                    binding.tv.setTextColor(Color.parseColor("#49454F"));
+                }else{
+                    binding.tv.setTextColor(ContextCompat.getColor(context,R.color.md_theme_onPrimary));
+                }*/
                 setSelected(selected);
             }finally {
                 a.recycle();
@@ -59,7 +66,7 @@ public class TimeChip extends RelativeLayout {
 
     public void setChipSelected(Boolean isSelected){
        if(isSelected){
-           if(Utils.Companion.isDarkMode(getContext())){
+           if(!Utils.Companion.getSharedPreference(getContext(), AppConstants.Companion.getLIGHT_MODE())){
                binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_selected));
                binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
            }else {
@@ -67,7 +74,7 @@ public class TimeChip extends RelativeLayout {
                binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
            }
        }else{
-           if(Utils.Companion.isDarkMode(getContext())){
+           if(!Utils.Companion.getSharedPreference(getContext(), AppConstants.Companion.getLIGHT_MODE())){
                binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_unselected));
                binding.tv.setTextColor(Color.parseColor("#FFFFFF"));
            }else {

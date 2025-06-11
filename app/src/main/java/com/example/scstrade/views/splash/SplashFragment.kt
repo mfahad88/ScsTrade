@@ -1,5 +1,8 @@
 package com.example.scstrade.views.splash
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -7,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -37,14 +41,55 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding=FragmentSplashBinding.inflate(inflater,container,false)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomItem){ v, windowInsets->
+      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.bottomItem){ v, windowInsets->
             val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updateLayoutParams<MarginLayoutParams> {
                 bottomMargin=insets.bottom
             }
             windowInsets
+        }*/
+        binding.main.post {
+            val centerX = (binding.main.width - binding.imageViewLogo.width) / 2f
+            val centerY = (binding.main.height - binding.imageViewLogo.height) / 3f
+
+            // Get current absolute position of imageView relative to rootLayout
+            val currentX = binding.imageViewLogo.x
+            val currentY = binding.imageViewLogo.y
+
+
+
+            val deltaX = centerX - currentX
+            val deltaY = centerY - currentY
+
+            val rootHeight = binding.root.height
+            val targetY = rootHeight - binding.bottomProgess.height.toFloat() // bottom of root layout
+            val startY = rootHeight.toFloat() + binding.bottomProgess.height
+
+            binding.imageViewLogo.apply {
+                alpha = 0f // start from invisible
+            }
+
+            binding.bottomProgess.apply {
+                alpha = 0f
+                translationY = startY
+                visibility = View.VISIBLE
+            }
+
+            AnimatorSet().apply {
+                playTogether(
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -650f),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
+                )
+                this.duration = 1000L
+                interpolator = AccelerateDecelerateInterpolator()
+                start()
+            }
         }
-        lifecycleScope.launch {
+       /* lifecycleScope.launch {
             delay(5000)
 
             if(Utils.getSharedPreference(requireContext(), listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()){
@@ -53,7 +98,7 @@ class SplashFragment : Fragment() {
                 (requireActivity() as MainActivity).loadFragment(LoginFragment())
             }
 
-        }
+        }*/
 
         return  binding.root
     }

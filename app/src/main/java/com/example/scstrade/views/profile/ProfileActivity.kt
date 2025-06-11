@@ -2,6 +2,7 @@ package com.example.scstrade.views.profile
 
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -107,10 +108,31 @@ class ProfileActivity : BaseActivity() {
 
 
     override fun getResources(): Resources {
+
         val res = super.getResources()
         val config = Configuration(res.configuration)
-        config.fontScale = 1.0f // Set font scale to default (no scaling)
-        res.updateConfiguration(config, res.displayMetrics)
+
+        val metrics = res.displayMetrics
+
+        // Calculate screen width and height in inches
+        val widthInches = metrics.widthPixels / metrics.xdpi
+        val heightInches = metrics.heightPixels / metrics.ydpi
+        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+
+        // Set fontScale based on diagonal screen size
+        if(diagonalInches>3.9 && diagonalInches<4.9){
+            config.fontScale = 0.85f  // Small phones
+        }else if (diagonalInches>4.9 && diagonalInches<6.9){
+            config.fontScale = 1.0f
+        }else{
+            config.fontScale = 1.2f
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            config.fontWeightAdjustment = 0
+
+        }
+        res.updateConfiguration(config, metrics)
         return res
     }
 

@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scs_trade_p">SCS Trade Pro</string>
     <string name="this_next_g">This next gen\nof your investments</string>
-    <string name="connecting_">Connecting to 100+\nexchange worldwide ...</string>
+    <string name="connecting_">Connecting to 100+exchange worldwide ...</string>
     <string name="kse_100">KSE 100</string>
     <string name="m_vol_721_9">M.Vol: 721.934m</string>
     <string name="some_id">91,458.58</string>
@@ -32,7 +32,7 @@
     <string name="ask_0_78">Ask: 0.78</string>
     <string name="label_text">+4,411.27 (+4.03%)</string>
     <string name="valueTradeIndices">Value: 16,757.17m</string>
-    <string name="volumeIndices">Volume: 288.29m</string>
+    <string name="volumeIndices">Volume: 0.0</string>
     <string name="enter_your_name">Enter your Name</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="mobile_number">Mobile Number</string>
@@ -430,6 +430,7 @@
     <string name="add_to_stock">Add to Stock</string>
     <string name="holding_are">Holding are Empty</string>
     <string name="add_share_t">Add share to your portfolio</string>
+    <string name="empowering_">Empowering Your Trades\nwith Insights</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>
