@@ -48,6 +48,7 @@ class AddSymbolActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
+        binding.toolbar.binding.titleItem.text = "Add Symbol"
         fetchUser()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -137,7 +138,9 @@ class AddSymbolActivity : BaseActivity() {
         // Set fontScale based on diagonal screen size
         if(diagonalInches>3.9 && diagonalInches<4.9){
             config.fontScale = 0.85f  // Small phones
-        }else if (diagonalInches>4.9 && diagonalInches<6.9){
+        }else if (diagonalInches>4.9 && diagonalInches<5.4){
+            config.fontScale = 0.95f
+        }else if (diagonalInches>5.5 && diagonalInches<6.9){
             config.fontScale = 1.0f
         }else{
             config.fontScale = 1.2f

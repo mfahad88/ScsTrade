@@ -1,6 +1,7 @@
 package com.example.scstrade.views.portfolio.fragments
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +62,18 @@ class SummaryFragment : Fragment() {
                     binding.apply {
                         holdingCost.text = "${Utils.commaSeparated(purchaseCost?.roundToInt()?:0)}"
                         holdingValue.text = "${Utils.commaSeparated(currentMarketValue?.roundToInt()?:0)}"
-                        holdingPL.text = "${Utils.commaSeparated(holdingsPL?.roundToInt()?:0)} (${Utils.roundTwoDecimal((holdingsPL?.div(purchaseCost?:0.0))?.times(100))}%)"
+                        if(holdingsPL!=null) {
+                            holdingPL.text =
+                                "${Utils.commaSeparated(holdingsPL?.roundToInt() ?: 0)} (${
+                                    Utils.roundTwoDecimal(
+                                        (holdingsPL?.div(purchaseCost ?: 0.0))?.times(
+                                            100
+                                        )
+                                    )
+                                }%)"
+                        }else{
+                            holdingPL.text = "0 (0.0%)"
+                        }
                     }
 
                 }
@@ -98,11 +110,31 @@ class SummaryFragment : Fragment() {
                             historyValue.text = Utils.commaSeparated((soldValue.plus(dividendShare?:0.0)).roundToInt())
                             ffl.text = stockItem?.sYM
                             faujiFoods.text = stockItem?.nM
-                            historyPL.text = "${Utils.commaSeparated(historPL.roundToInt())} (${Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))}%)"
+                            if(totalPurchase!=0.0) {
+                                historyPL.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
+                                    Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
+                                }%)"
+                            }else{
+                                historyPL.text = "0 (0.0%)"
+                            }
 
                             totalCost.text = Utils.commaSeparated(totalPurchase.plus(purchaseCost?:0.0).roundToInt())
                             totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue.plus(dividendShare?:0.0))?.roundToInt()?:0)
-                            totalPL.text= "${Utils.commaSeparated(holdingsPL?.plus(historPL)?.roundToInt()?:0)} (${Utils.roundTwoDecimal(((holdingsPL?.plus(historPL))?.div(totalPurchase.plus(purchaseCost?:0.0)))?.times(100))}%)"
+                            if(totalPurchase!=0.0) {
+                                totalPL.text = "${
+                                    Utils.commaSeparated(
+                                        holdingsPL?.plus(historPL)?.roundToInt() ?: 0
+                                    )
+                                } (${
+                                    Utils.roundTwoDecimal(
+                                        ((holdingsPL?.plus(historPL))?.div(
+                                            totalPurchase.plus(purchaseCost ?: 0.0)
+                                        ))?.times(100)
+                                    )
+                                }%)"
+                            }else{
+                                totalPL.text = "0 (0.0%)"
+                            }
 
                             totalPL.setTextColor(if(totalPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
                             historyPL.setTextColor(if(historyPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))

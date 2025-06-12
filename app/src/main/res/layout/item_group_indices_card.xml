@@ -56,8 +56,8 @@
                 android:id="@+id/high"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:gravity="center|start"
+                android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="12sp"
                 android:text="@string/h_116_700_0"
                 android:textAppearance="@style/h_116_700_0"
@@ -71,11 +71,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
+                android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="12sp"
                 android:text="@string/l_116_700_0"
                 android:textAppearance="@style/l_116_700_0"
-                app:layout_constraintEnd_toEndOf="@+id/high"
-                app:layout_constraintStart_toStartOf="@+id/high"
+                app:layout_constraintEnd_toStartOf="@+id/volume"
+                app:layout_constraintStart_toStartOf="@+id/index_value"
                 app:layout_constraintTop_toBottomOf="@+id/high" />
 
             <com.example.scstrade.views.widgets.NetChangeChip

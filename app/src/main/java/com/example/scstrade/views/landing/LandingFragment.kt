@@ -68,10 +68,12 @@ class LandingFragment : Fragment() {
             windowInsets
         }*/
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
-            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
             v.updateLayoutParams<MarginLayoutParams> {
                 bottomMargin=insets.bottom+31
             }
+
             windowInsets
         }
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)

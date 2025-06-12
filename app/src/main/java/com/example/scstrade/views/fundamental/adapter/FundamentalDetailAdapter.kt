@@ -2,9 +2,11 @@ package com.example.scstrade.views.fundamental.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemTechnicalDetailBinding
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -23,7 +25,7 @@ class FundamentalDetailAdapter(private val itemList: List<FundamentalDetailData>
 //                avgVol.text = item.avgVol
                 companyName.text = item.companyName
                 val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item.symbol) }?.map { it.companyLogo }?.first()
-                Glide.with(binding.root.context).load(logo).circleCrop().into(binding.imageViewLogo)
+                Glide.with(binding.root.context).load(logo).placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building)).circleCrop().into(binding.imageViewLogo)
             }
             binding.root.setOnClickListener { onItemClick(item) }
         }

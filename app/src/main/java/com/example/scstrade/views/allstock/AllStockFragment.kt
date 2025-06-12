@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.FragmentAllStockBinding
@@ -46,11 +48,15 @@ class AllStockFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))
         }
-
-        binding.recyclerIndices.post {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root){ v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom)
+            insets
+        }
+        /*binding.recyclerIndices.post {
             binding.recyclerIndices.setPadding(0,0,0,350)
             binding.recyclerIndices.clipToPadding=false
-        }
+        }*/
 
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

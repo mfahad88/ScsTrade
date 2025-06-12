@@ -97,6 +97,8 @@ public class mMarket extends LinearLayout {
                 binding.searchIcon.setOnClickListener(view -> {
                    context.startActivity(new Intent(context, SearchActivity.class));
                 });
+
+                binding.textView7.setOnClickListener(view -> context.startActivity(new Intent(context, SearchActivity.class)));
                 ViewCompat.setOnApplyWindowInsetsListener(binding.content, new androidx.core.view.OnApplyWindowInsetsListener() {
                     @NonNull
                     @Override

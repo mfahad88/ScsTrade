@@ -3,8 +3,11 @@ package com.example.scstrade.views.watchlist.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemSymbolBinding
 import com.example.scstrade.model.response.stock.StockItem
 import java.util.Collections
@@ -16,7 +19,9 @@ class SymbolAdapter(private val itemList: List<StockItem>, private val onItemCli
         fun bind(item: StockItem, onItemClick: (StockItem) -> Unit ) {
             binding.symbol.text=item.sYM
             binding.companyName.text = item.nM
-//            Glide.with(binding.root.context).load(item.companyLogo).into(binding.imageView6)
+            Glide.with(binding.root.context).load(item.companyLogo).circleCrop()
+                .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
+                .into(binding.imageView6)
             binding.root.setOnClickListener {
                 binding.imageViewSelected.visibility = View.VISIBLE
                 onItemClick(item)

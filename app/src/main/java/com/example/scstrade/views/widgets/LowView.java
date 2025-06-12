@@ -3,12 +3,14 @@ package com.example.scstrade.views.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.HighBinding;
 import com.example.scstrade.databinding.LowViewBinding;
+import com.example.scstrade.helper.Utils;
 
 public class LowView extends RelativeLayout {
     private LowViewBinding binding;
@@ -27,7 +29,7 @@ public class LowView extends RelativeLayout {
         if(attrs!=null){
             TypedArray a=getContext().getTheme().obtainStyledAttributes(
                     attrs,
-                    R.styleable.HighView,
+                    R.styleable.LowView,
                     0,0
             );
             try{
@@ -35,6 +37,11 @@ public class LowView extends RelativeLayout {
                 String text=a.getString(R.styleable.LowView_android_text);
                 if(text!=null){
                     binding.tv.setText(text);
+                }
+                if(Utils.Companion.getSmallestWidthDp(getContext())<400) {
+                    binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                }else{
+                    binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 }
 
             }finally {

@@ -47,13 +47,17 @@
 
                 <TextView
                     android:id="@+id/title_item"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@string/automobile_"
                     android:textAppearance="@style/automobile_"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/searchIcon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +87,7 @@
                 <ImageView
                     android:id="@+id/notificationIcon"
                     android:layout_width="28dp"
-                    android:layout_height="0dp"
+                    android:layout_height="28dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="end"
@@ -98,7 +102,7 @@
                 <ImageView
                     android:id="@+id/searchIcon"
                     android:layout_width="28dp"
-                    android:layout_height="0dp"
+                    android:layout_height="28dp"
                     android:layout_centerVertical="true"
                     android:layout_gravity="end"
                     android:layout_marginEnd="8dp"
@@ -123,9 +127,9 @@
                     android:layout_height="wrap_content"
                     android:text="Quotes"
                     android:textAppearance="@style/quotes"
-                    app:layout_constraintBottom_toBottomOf="@+id/subTitle"
                     app:layout_constraintEnd_toEndOf="@+id/searchIcon"
-                    app:layout_constraintTop_toTopOf="@+id/subTitle" />
+                    app:layout_constraintStart_toStartOf="@+id/searchIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/searchIcon" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

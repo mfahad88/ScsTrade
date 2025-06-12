@@ -67,7 +67,7 @@
         android:id="@+id/current_p_l_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.3"
         android:textFontWeight="500"
         android:text="@string/current_p_l_value"
         android:textAppearance="@style/current_p_l_value" />

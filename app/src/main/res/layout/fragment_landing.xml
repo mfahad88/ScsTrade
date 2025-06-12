@@ -91,7 +91,7 @@
                     android:id="@+id/sideMenu"
                     tools:listitem="@layout/item_side_menu"
                     android:layout_below="@id/imageViewClose"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginStart="30dp"/>
 
                 <ImageView

@@ -71,14 +71,12 @@
     </style>
 
     <style name="h_116_700_0">
-        <item name="android:textSize">14sp</item>
-
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
 
     <style name="l_116_700_0">
-        <item name="android:textSize">14sp</item>
-
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/md_theme_errorContainer</item>
     </style>
 
@@ -126,7 +124,7 @@
     </style>
 
     <style name="low_52">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_error</item>
     </style>
@@ -514,7 +512,7 @@
     </style>
 
     <style name="e_p_e">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorDarkerr</item>
     </style>
 
@@ -648,14 +646,14 @@
     </style>
 
     <style name="rs_">
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:letterSpacing">-0.08</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
     <style name="valueTrade_snapshot">
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">-0.06</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
@@ -889,13 +887,12 @@
     </style>
 
     <style name="purchase_co">
-        <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorDarkerr</item>
     </style>
 
     <style name="purchase_co_value">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorDarkerr</item>
     </style>
 
@@ -1477,7 +1474,7 @@
 
     <style name="empowering_">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:textSize">29.54sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/black</item>
     </style>

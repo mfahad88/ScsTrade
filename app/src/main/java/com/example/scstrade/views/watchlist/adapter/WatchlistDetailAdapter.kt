@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.bumptech.glide.Glide
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemWatchlistDetailBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
@@ -21,7 +24,10 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
             onItemClick: (String, StockItem) -> Unit
         ) {
 
-//            Glide.with(binding.root.context).load(stockItem.companyLogo).into(binding.imageView6)
+            Glide.with(binding.root.context).load(stockItem.companyLogo)
+                .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
+                .circleCrop()
+                .into(binding.imageView6)
             if(stockItem.iN.lowercase().contains("kmi")){
                 binding.shariah.visibility= View.VISIBLE
             }else{

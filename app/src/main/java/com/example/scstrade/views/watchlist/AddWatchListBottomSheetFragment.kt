@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAddWatchListBottomSheetBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -40,6 +41,8 @@ class AddWatchListBottomSheetFragment() : BottomSheetDialogFragment() {
             Log.e("Argus--->", arguments?.getString(AppConstants.WATCHLIST_ID).toString())
             watchListItem= Gson().fromJson(arguments?.getString(AppConstants.WATCHLIST_ID),WatchListItem::class.java)
             binding.editTextName.setText(watchListItem.WatchListMainName)
+            binding.createANe.setText(getString(R.string.update_a_wat))
+            binding.createWatch.setText(getString(R.string.update_a_wa))
         }
         return binding.root
     }

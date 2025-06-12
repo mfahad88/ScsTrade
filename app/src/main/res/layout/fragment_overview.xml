@@ -177,12 +177,14 @@
 
                         <TextView
                             android:id="@+id/netChange"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/netChange_snapshot"
                             android:textAppearance="@style/netChange_snapshot"
                             app:layout_constraintBottom_toBottomOf="@+id/rs_"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/valueTrade" />
 
                         <ImageView

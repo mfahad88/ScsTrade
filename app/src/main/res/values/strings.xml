@@ -79,6 +79,8 @@
     <string name="market">Market</string>
     <string name="automobile_">Automobile assembler</string>
     <string name="create_a_ne">Create a New Watch list Group</string>
+    <string name="update_a_wat">Update a Watch list Group</string>
+    <string name="update_a_wa">Update a watch list group name to organize and track your selected companies for easier management of your investments.</string>
     <string name="create_watch">Create a new watch list group to organize and track your selected companies for easier management of your investments.</string>
     <string name="enter_watch_list_name">Enter Watch List Name</string>
     <string name="enter_symbol">Enter Symbol</string>
@@ -430,7 +432,7 @@
     <string name="add_to_stock">Add to Stock</string>
     <string name="holding_are">Holding are Empty</string>
     <string name="add_share_t">Add share to your portfolio</string>
-    <string name="empowering_">Empowering Your Trades\nwith Insights</string>
+    <string name="empowering_">Empowering Your Trades with Insights</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

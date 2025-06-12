@@ -625,7 +625,7 @@ class Utils {
         fun showSuccess(view: View,message:String){
             if(isDarkMode(view.context)){
                 Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_secondaryFixedDim))
+                    .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_primary))
                     .setTextColor(
                         ContextCompat.getColor(
                             view.context,

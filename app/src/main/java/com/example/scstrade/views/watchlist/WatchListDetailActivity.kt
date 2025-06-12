@@ -55,8 +55,8 @@ class WatchListDetailActivity : BaseActivity() {
 
 
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
 
             view.setPadding(0,0,0,insets.bottom)
             windowInsets
@@ -160,7 +160,9 @@ class WatchListDetailActivity : BaseActivity() {
         // Set fontScale based on diagonal screen size
         if(diagonalInches>3.9 && diagonalInches<4.9){
             config.fontScale = 0.85f  // Small phones
-        }else if (diagonalInches>4.9 && diagonalInches<6.9){
+        }else if (diagonalInches>4.9 && diagonalInches<5.4){
+            config.fontScale = 0.95f
+        }else if (diagonalInches>5.5 && diagonalInches<6.9){
             config.fontScale = 1.0f
         }else{
             config.fontScale = 1.2f

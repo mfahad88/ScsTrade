@@ -1,7 +1,7 @@
 <resources>
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="colorPrimary">@color/md_theme_primary</item>

@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.HighBinding;
 import com.example.scstrade.databinding.VolumeChipBinding;
+import com.example.scstrade.helper.Utils;
 
-public class HighView extends RelativeLayout {
+public class
+HighView extends RelativeLayout {
     HighBinding binding;
     public HighView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,7 +40,14 @@ public class HighView extends RelativeLayout {
                 if(text!=null){
                     binding.tv.setText(text);
                 }
-
+              /*  if(Utils.Companion.getSmallestWidthDp(getContext())>340 && Utils.Companion.getSmallestWidthDp(getContext())<390){
+                    binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+                }*/
+                if(Utils.Companion.getSmallestWidthDp(getContext())<400) {
+                    binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                }else{
+                    binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                }
             }finally {
                 a.recycle();
             }

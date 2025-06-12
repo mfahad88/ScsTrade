@@ -49,7 +49,7 @@ class IndicesFragment : Fragment() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView){v,insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom+220)
             insets
         }
 

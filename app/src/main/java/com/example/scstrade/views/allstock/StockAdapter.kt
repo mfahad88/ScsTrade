@@ -2,6 +2,7 @@ package com.example.scstrade.views.allstock
 
 import android.content.Intent
 import android.graphics.Color
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,10 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
                     binding.root.context.startActivity(intent)
                 }
-                Glide.with(binding.root.context).load(stockItem.companyLogo).circleCrop().into(binding.imageView6)
+                Glide.with(binding.root.context).load(stockItem.companyLogo)
+                    .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
+                    .circleCrop()
+                    .into(binding.imageView6)
                 if(stockItem.iN.lowercase().contains("kmi")){
                     binding.shariah.visibility= View.VISIBLE
                     binding.separator.visibility = View.VISIBLE
@@ -65,8 +69,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
                 binding.high.text = "H: ${Utils.formatDouble(stockItem.hP)}"
                 binding.low.text = "L: ${Utils.formatDouble(stockItem.lP)}"
-                binding.high52.text = stockItem.high52
-                binding.low52.text = stockItem.low52
+                binding.high52.text = if(!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"
+                binding.low52.text = if(!TextUtils.isEmpty(stockItem.low52)) stockItem.high52 else "0.0"
+
                 previousStockItem=stockItem
             }
 
