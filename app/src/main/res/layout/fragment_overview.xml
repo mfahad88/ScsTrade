@@ -284,19 +284,18 @@
                 android:text="@string/day_s_range"
                 android:textAppearance="@style/day_s_range"
                 android:textFontWeight="500"
-                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
+                app:layout_constraintStart_toStartOf="@+id/dayRange"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
 
             <com.example.scstrade.views.widgets.DayRange
                 android:id="@+id/dayRange"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/dayRange52"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView2"
                 app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
 
             <TextView
@@ -307,18 +306,17 @@
                 android:text="@string/range_52"
                 android:textAppearance="@style/day_s_range"
                 android:textFontWeight="500"
-                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+                app:layout_constraintEnd_toEndOf="@+id/dayRange52"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
 
             <com.example.scstrade.views.widgets.DayRange
                 android:id="@+id/dayRange52"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/dayRange"
                 app:layout_constraintTop_toBottomOf="@+id/day_s_range" />
@@ -365,7 +363,7 @@
 
                     <RelativeLayout
                         android:id="@+id/one_performance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:background="@drawable/performance_container"
@@ -373,7 +371,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/three_performance"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="@+id/performance">
 
                         <TextView
                             android:id="@+id/one_pecent"
@@ -407,7 +405,7 @@
 
                     <RelativeLayout
                         android:id="@+id/three_performance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:layout_marginBottom="4dp"
@@ -439,7 +437,7 @@
 
                     <RelativeLayout
                         android:id="@+id/six_performance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:layout_marginBottom="4dp"
@@ -461,7 +459,7 @@
 
                     <RelativeLayout
                         android:id="@+id/one_year_performance"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:layout_marginBottom="4dp"

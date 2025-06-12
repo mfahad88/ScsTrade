@@ -1,363 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:background="@color/md_theme_surface"
-    tools:context=".views.login.LoginFragment">
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/md_theme_surface"
+tools:context=".views.login.LoginFragment">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:paddingBottom="10dp"
-        app:contentInsetStart="0dp"
-        app:contentInsetStartWithNavigation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-          <com.google.android.material.imageview.ShapeableImageView
-              android:id="@+id/toolbar_image"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:scaleType="fitXY"
-              android:src="@drawable/toolbar"
-              app:shapeAppearanceOverlay="@style/RoundedImageView" />
-
-          <androidx.constraintlayout.widget.ConstraintLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginBottom="24dp"
-              android:id="@+id/main">
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:paddingBottom="10dp"
+    app:contentInsetStart="0dp"
+    app:contentInsetStartWithNavigation="0dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
 
 
-              <TextView
-                  android:id="@+id/register_an"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentTop="true"
-                  android:layout_centerHorizontal="true"
-                  android:layout_marginTop="28dp"
-                  android:gravity="center_horizontal|top"
-                  android:text="@string/hi_there_we"
-                  android:textAppearance="@style/register_an"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
-
-
-              <TextView
-                  android:id="@+id/create_weal"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentTop="true"
-                  android:layout_centerHorizontal="true"
-                  android:layout_marginTop="4dp"
-                  android:gravity="center_horizontal|top"
-                  android:text="@string/let_s_sign_"
-                  android:textAppearance="@style/create_weal"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@+id/register_an" />
-
-          </androidx.constraintlayout.widget.ConstraintLayout>
-      </FrameLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loader"
-        android:layout_marginTop="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/load_anim" />
-
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toolbar_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/toolbar"
+            app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp"
+            android:id="@+id/main">
 
-            app:layout_constraintBottom_toBottomOf="parent"
+
+
+            <TextView
+                android:id="@+id/register_an"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="28dp"
+                android:gravity="center_horizontal|top"
+                android:text="@string/hi_there_we"
+                android:textAppearance="@style/register_an"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/create_weal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal|top"
+                android:text="@string/let_s_sign_"
+                android:textAppearance="@style/create_weal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register_an" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</androidx.appcompat.widget.Toolbar>
+
+<com.airbnb.lottie.LottieAnimationView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/loader"
+    android:layout_marginTop="22dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+    app:lottie_autoPlay="true"
+    app:lottie_loop="true"
+    app:lottie_rawRes="@raw/load_anim" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerIndices"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:outlineProvider="bounds"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:requiresFadingEdge="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_indices_card" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerIndices"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:outlineProvider="bounds"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:requiresFadingEdge="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_indices_card" />
+        <TextView
+            android:id="@+id/sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/sign_in"
+            android:textAppearance="@style/sign_in"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerIndices" />
 
-            <TextView
-                android:id="@+id/sign_in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textFontWeight="600"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
-                android:lineSpacingExtra="0sp"
-                android:text="@string/sign_in"
-                android:textAppearance="@style/sign_in"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerIndices" />
+        <com.example.scstrade.views.widgets.LabelledTextField
+            android:id="@+id/userName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLength="50"
+            app:hintText="@string/user_name"
+            app:hintTextField="@string/enter_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in" />
 
-            <com.example.scstrade.views.widgets.LabelledTextField
-                android:id="@+id/userName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="30dp"
-                android:inputType="text"
-                android:maxLength="50"
-                app:hintText="@string/user_name"
-                app:hintTextField="@string/enter_user_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sign_in" />
-
-            <com.example.scstrade.views.widgets.LabelledTextField
-                android:id="@+id/password"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="30dp"
-                android:inputType="textPassword"
-                app:hintText="@string/password"
-                app:hintTextField="@string/enter_your_password"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userName"
-                app:passwordToggleEnabled="true" />
+        <com.example.scstrade.views.widgets.LabelledTextField
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            app:hintText="@string/password"
+            app:hintTextField="@string/enter_your_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userName"
+            app:passwordToggleEnabled="true" />
 
 
-            <TextView
-                android:id="@+id/forgot_pass"
-                android:layout_width="125dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="16dp"
-                android:gravity="right|top"
-                android:visibility="gone"
-                android:lineSpacingExtra="5sp"
-                android:text="@string/forgot_pass"
-                android:textAppearance="@style/forgot_pass"
-                android:translationY="-2.32sp"
-                app:layout_constraintEnd_toEndOf="@+id/password"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+        <TextView
+            android:id="@+id/forgot_pass"
+            android:layout_width="125dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:gravity="right|top"
+            android:visibility="gone"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/forgot_pass"
+            android:textAppearance="@style/forgot_pass"
+            android:translationY="-2.32sp"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:text="@string/sign_in"
-                app:layout_constraintEnd_toEndOf="@+id/userName"
-                app:layout_constraintStart_toStartOf="@+id/rememberMe"
-                app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
-
-
-            <TextView
-                android:id="@+id/don_t_have_"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textFontWeight="500"
-                android:layout_marginTop="14dp"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/don_t_have_"
-                android:textAppearance="@style/don_t_have_"
-                app:layout_constraintEnd_toStartOf="@+id/sign_up"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@+id/button"
-                app:layout_constraintTop_toBottomOf="@id/button" />
-
-            <TextView
-                android:id="@+id/sign_up"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/sign_up"
-                android:textFontWeight="700"
-                android:textAppearance="@style/sign_up"
-                app:layout_constraintBottom_toBottomOf="@id/don_t_have_"
-                app:layout_constraintEnd_toEndOf="@+id/button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/don_t_have_"
-                app:layout_constraintTop_toTopOf="@id/don_t_have_" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@string/sign_in"
+            app:layout_constraintEnd_toEndOf="@+id/userName"
+            app:layout_constraintStart_toStartOf="@+id/rememberMe"
+            app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
 
 
-            <CheckBox
-                android:id="@+id/rememberMe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:text="@string/remember_me"
-                app:layout_constraintStart_toStartOf="@+id/password"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+        <TextView
+            android:id="@+id/don_t_have_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="500"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/don_t_have_"
+            android:textAppearance="@style/don_t_have_"
+            app:layout_constraintEnd_toStartOf="@+id/sign_up"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@id/button" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="55dp"
-                android:background="@drawable/vertical_separator_neu_60"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/button"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/button"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
-
-            <TextView
-                android:id="@+id/continue_wi"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal|top"
-                android:lineSpacingExtra="5sp"
-                android:text="@string/sign_in_wit"
-                android:textAppearance="@style/continue_wi"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        <TextView
+            android:id="@+id/sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:lineSpacingExtra="2sp"
+            android:text="@string/sign_up"
+            android:textFontWeight="700"
+            android:textAppearance="@style/sign_up"
+            app:layout_constraintBottom_toBottomOf="@id/don_t_have_"
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/don_t_have_"
+            app:layout_constraintTop_toTopOf="@id/don_t_have_" />
 
 
-            <RelativeLayout
-                android:id="@+id/google"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/gray_stroke"
-                app:layout_constraintEnd_toEndOf="@+id/button"
-                app:layout_constraintStart_toStartOf="@+id/button"
-                app:layout_constraintTop_toBottomOf="@+id/continue_wi">
+        <CheckBox
+            android:id="@+id/rememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/remember_me"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/google_logo" />
-            </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="55dp"
+            android:background="@drawable/vertical_separator_neu_60"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <TextView
+            android:id="@+id/continue_wi"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal|top"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/sign_in_wit"
+            android:textAppearance="@style/continue_wi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
-            <RelativeLayout
-                android:id="@+id/facebook"
-                android:layout_width="169dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="30dp"
-                android:visibility="gone"
-                android:background="@drawable/gray_stroke"
-                app:layout_constraintBottom_toBottomOf="@+id/google"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/google">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/facebook_logo" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/google"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/gray_stroke"
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/continue_wi">
 
             <ImageView
-                android:id="@+id/imageView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="gone"
-                android:src="@drawable/logo"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/google" />
+                android:layout_centerInParent="true"
+                android:src="@drawable/google_logo" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/scs_trade_p"
+
+        <RelativeLayout
+            android:id="@+id/facebook"
+            android:layout_width="169dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="30dp"
+            android:visibility="gone"
+            android:background="@drawable/gray_stroke"
+            app:layout_constraintBottom_toBottomOf="@+id/google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/google">
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:text="@string/scs_trade_p_logo"
-                android:visibility="gone"
-                android:textAppearance="@style/scs_trade_p_logo"
-                app:layout_constraintStart_toEndOf="@+id/imageView13"
-                app:layout_constraintTop_toTopOf="@+id/imageView13" />
+                android:layout_centerInParent="true"
+                android:src="@drawable/facebook_logo" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/committed_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="@string/committed_t"
-                android:textAppearance="@style/committed_t"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                app:layout_constraintStart_toStartOf="@+id/scs_trade_p"
-                app:layout_constraintTop_toBottomOf="@+id/scs_trade_p" />
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/google" />
+
+        <TextView
+            android:id="@+id/scs_trade_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:text="@string/scs_trade_p_logo"
+            android:visibility="gone"
+            android:textAppearance="@style/scs_trade_p_logo"
+            app:layout_constraintStart_toEndOf="@+id/imageView13"
+            app:layout_constraintTop_toTopOf="@+id/imageView13" />
+
+        <TextView
+            android:id="@+id/committed_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/committed_t"
+            android:textAppearance="@style/committed_t"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+            app:layout_constraintStart_toStartOf="@+id/scs_trade_p"
+            app:layout_constraintTop_toBottomOf="@+id/scs_trade_p" />
 
 
-            <TextView
-                android:id="@+id/version_1_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:lineSpacingExtra="7sp"
-                android:text="@string/version_1_0"
-                android:visibility="gone"
-                android:textAppearance="@style/version_1_0"
-                app:layout_constraintBottom_toBottomOf="@+id/committed_t"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/scs_trade_p" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/version_1_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/version_1_0"
+            android:visibility="gone"
+            android:textAppearance="@style/version_1_0"
+            app:layout_constraintBottom_toBottomOf="@+id/committed_t"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/scs_trade_p" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>

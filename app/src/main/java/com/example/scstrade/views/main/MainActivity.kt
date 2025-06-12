@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
         Log.d("ScreenSize", "Screen size in inches: $screenSize")
         Log.e("Screen Pixel", Utils.getScreenWidthInPx(this).toString())
         Log.e("Screen Smallest Width", Utils.getSmallestWidthDp(this).toString())
-
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
 //        Utils.setSystemBarIcons(this,darkIcons = fa)
         val snackbar =  Utils.showInternetError(binding.main,"You are offline. Please check your internet connection.",Snackbar.LENGTH_INDEFINITE)
         viewModel.isConnected.observe(this, Observer {
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
@@ -134,7 +134,7 @@ class MainActivity : BaseActivity() {
         }else{
             supportFragmentManager
                .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
                 .replace(R.id.fragment_container, fragment)
                 .commitAllowingStateLoss()
 //                .commit()
@@ -159,11 +159,13 @@ class MainActivity : BaseActivity() {
         val widthInches = metrics.widthPixels / metrics.xdpi
         val heightInches = metrics.heightPixels / metrics.ydpi
         val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
-
+//        Log.e("Screen Size in Inches: ",diagonalInches.toString())
         // Set fontScale based on diagonal screen size
         if(diagonalInches>3.9 && diagonalInches<4.9){
             config.fontScale = 0.85f  // Small phones
-        }else if (diagonalInches>4.9 && diagonalInches<6.9){
+        }else if (diagonalInches>4.9 && diagonalInches<5.4){
+            config.fontScale = 0.95f
+        }else if (diagonalInches>5.5 && diagonalInches<6.9){
             config.fontScale = 1.0f
         }else{
             config.fontScale = 1.2f

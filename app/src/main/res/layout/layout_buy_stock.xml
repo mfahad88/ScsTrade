@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="10dp"
     android:layout_marginStart="15dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="15dp"
+    android:paddingBottom="10dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -51,9 +50,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:completionThreshold="1"
             android:drawableEnd="@drawable/search_gray"
             android:hint="Enter symbol"
-            android:completionThreshold="1"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
@@ -63,7 +62,7 @@
 
     <RelativeLayout
         android:id="@+id/relative_share"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
@@ -73,14 +72,15 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/relative_symbol">
+
         <EditText
             android:id="@+id/shares"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:digits="@string/_0_9"
             android:hint="Enter shares"
             android:inputType="number"
-            android:digits="@string/_0_9"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
@@ -90,7 +90,7 @@
 
     <RelativeLayout
         android:id="@+id/relative_buy_price"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
@@ -99,17 +99,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/relative_share"
         app:layout_constraintTop_toBottomOf="@id/relative_symbol">
+
         <EditText
             android:id="@+id/buy_price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:digits="@string/_0_9_decimal"
             android:hint="Enter Buy Price"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
-            android:inputType="numberDecimal"
-            android:digits="@string/_0_9_decimal"
             android:paddingHorizontal="10dp"
             android:singleLine="true" />
     </RelativeLayout>
@@ -117,11 +118,12 @@
 
     <RelativeLayout
         android:id="@+id/relative_comission"
-        android:layout_width="187dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/gray_container"
-        app:layout_constraintStart_toStartOf="@+id/relative_share"
+        app:layout_constraintEnd_toEndOf="@+id/relative_share"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relative_share">
 
         <EditText
@@ -129,12 +131,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:digits="@string/_0_9_decimal"
             android:hint="Commission Per Share"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
-            android:inputType="numberDecimal"
-            android:digits="@string/_0_9_decimal"
             android:paddingHorizontal="10dp"
             android:singleLine="true" />
     </RelativeLayout>
@@ -146,39 +148,38 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
+        android:textFontWeight="500"
         android:lineSpacingExtra="7sp"
         android:text="@string/input_text"
         android:textAppearance="@style/input_text"
-        app:layout_constraintStart_toEndOf="@+id/relative_comission"
+        app:layout_constraintStart_toStartOf="@+id/relative_buy_price"
         app:layout_constraintTop_toTopOf="@+id/relative_comission" />
 
     <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
         android:id="@+id/radio_commission_type"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/relative_comission"
+        app:layout_constraintBottom_toBottomOf="@+id/relative_comission"
+        app:layout_constraintStart_toStartOf="@+id/input_text"
         app:layout_constraintTop_toBottomOf="@+id/input_text">
 
         <RadioButton
             android:id="@+id/radioShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
             android:checked="true"
-            android:text="Rs/Share" />
+            android:text="Rs/Share"
+            android:textSize="12sp" />
 
         <RadioButton
             android:id="@+id/radioVar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="12sp"
-            android:text="Var %" />
+            android:text="Var %"
+            android:textSize="12sp" />
     </RadioGroup>
 
 
@@ -204,6 +205,7 @@
             android:paddingHorizontal="10dp"
             android:singleLine="true" />
     </RelativeLayout>
+
     <Button
         android:id="@+id/button2"
         android:layout_width="0dp"

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -28,11 +29,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SplashFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SplashFragment : Fragment() {
 
     override fun onCreateView(
@@ -76,15 +73,54 @@ class SplashFragment : Fragment() {
             }
 
             AnimatorSet().apply {
+                addListener(object:Animator.AnimatorListener{
+                    override fun onAnimationStart(p0: Animator) {
+                    }
+
+                    override fun onAnimationEnd(p0: Animator) {
+                        ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100)
+                            .apply {
+                                addListener(object : Animator.AnimatorListener{
+                                override fun onAnimationStart(p0: Animator) {
+                                }
+
+                                override fun onAnimationEnd(p0: Animator) {
+                                    if(Utils.getSharedPreference(requireContext(), listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()){
+                                        (requireActivity() as MainActivity).loadFragment(LandingFragment())
+                                    }else{
+                                        (requireActivity() as MainActivity).loadFragment(LoginFragment())
+                                    }
+
+                                }
+
+                                override fun onAnimationCancel(p0: Animator) {
+                                }
+
+                                override fun onAnimationRepeat(p0: Animator) {
+                                }
+
+                            })
+                            duration = 2000 // 2 seconds
+                            interpolator = android.view.animation.DecelerateInterpolator()
+                            start()
+                        }
+                    }
+
+                    override fun onAnimationCancel(p0: Animator) {}
+
+                    override fun onAnimationRepeat(p0: Animator) {
+                    }
+
+                })
                 playTogether(
                     ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
                     ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
                     ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
                     ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
-                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -650f),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -800f),
                     ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
                 )
-                this.duration = 1000L
+                this.duration = 2000L
                 interpolator = AccelerateDecelerateInterpolator()
                 start()
             }

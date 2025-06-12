@@ -47,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginStart="12dp"
             android:background="@drawable/drawable_reg"
             android:backgroundTint="@color/md_theme_primary"
             android:gravity="center"
@@ -54,9 +55,9 @@
             android:paddingVertical="2dp"
             android:text="@string/sariah"
             android:textAppearance="@style/reg"
-            app:layout_constraintBottom_toBottomOf="@+id/volume"
-            app:layout_constraintStart_toStartOf="@+id/companyName"
-            app:layout_constraintTop_toTopOf="@+id/volume" />
+            app:layout_constraintBottom_toBottomOf="@+id/symbol"
+            app:layout_constraintStart_toEndOf="@+id/symbol"
+            app:layout_constraintTop_toTopOf="@+id/symbol" />
 
         <TextView
             android:id="@+id/symbol"
@@ -104,7 +105,7 @@
             android:textAppearance="@style/volume"
             android:textFontWeight="600"
             app:layout_constraintEnd_toStartOf="@+id/low"
-            app:layout_constraintStart_toEndOf="@+id/separator"
+            app:layout_constraintStart_toStartOf="@+id/companyName"
             app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
         <TextView

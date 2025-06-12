@@ -206,7 +206,8 @@
             android:name=".views.main.MainActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
+            android:resizeableActivity="false"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

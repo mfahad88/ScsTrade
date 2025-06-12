@@ -88,6 +88,13 @@ class LoginFragment : Fragment() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            view.setPadding(0, 0, 0, imeInsets.bottom)
+            insets
+        }
+
         firebaseAuth = FirebaseAuth.getInstance()
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             fcm=it

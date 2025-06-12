@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -46,8 +47,8 @@ public class LabelledTextField extends LinearLayout {
                 String text = a.getString(R.styleable.LabelledTextField_android_text);
                 String infoText= a.getString(R.styleable.LabelledTextField_infoText);
                 String digits=a.getString(R.styleable.LabelledTextField_android_digits);
-
-
+                int imeOptions = a.getInt(R.styleable.LabelledTextField_android_imeOptions, EditorInfo.IME_ACTION_UNSPECIFIED);
+                binding.textInputEditText.setImeOptions(imeOptions);
                 InputFilter lengthFilter= new InputFilter.LengthFilter(a.getInt(R.styleable.LabelledTextField_android_maxLength,100));
                 if(!TextUtils.isEmpty(digits)) {
                     binding.textInputEditText.setKeyListener(DigitsKeyListener.getInstance(digits));

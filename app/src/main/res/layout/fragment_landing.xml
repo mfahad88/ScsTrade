@@ -81,7 +81,6 @@
                     android:id="@+id/imageViewClose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:layout_alignStart="@id/sideMenu"
                     android:layout_marginTop="40dp"
                     app:srcCompat="@drawable/close_btn" />
@@ -99,10 +98,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitXY"
                     android:id="@+id/aof"
+                    android:layout_marginEnd="10dp"
                     android:layout_alignStart="@id/sideMenu"
                     app:srcCompat="@drawable/open_account"
                     android:layout_below="@id/sideMenu"/>
@@ -113,6 +111,7 @@
                     android:layout_height="60dp"
                     app:cardBackgroundColor="@color/white"
                     android:id="@+id/contact"
+                    android:layout_marginEnd="7dp"
                     android:layout_below="@id/aof"
                     android:layout_alignStart="@id/aof"
                     android:layout_alignEnd="@id/aof">
@@ -172,6 +171,7 @@
                     app:cardBackgroundColor="@color/white"
                     android:id="@+id/profile"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="7dp"
                     android:layout_below="@id/contact"
                     android:layout_alignStart="@id/aof"
                     android:layout_alignEnd="@id/aof">

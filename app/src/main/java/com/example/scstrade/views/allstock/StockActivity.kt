@@ -39,11 +39,11 @@ class StockActivity : BaseActivity() {
         setContentView(binding.root)
 
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer){v,insets->
+     /*   ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer){v,insets->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
 
 
         sharedViewModel=(application as MyApp).viewModel

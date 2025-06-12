@@ -62,7 +62,7 @@
 
     <RelativeLayout
         android:id="@+id/relative_share"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
@@ -78,9 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:digits="@string/_0_9"
             android:hint="Enter shares"
             android:inputType="number"
-            android:digits="@string/_0_9"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"
@@ -90,7 +90,7 @@
 
     <RelativeLayout
         android:id="@+id/relative_dividend"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
@@ -105,9 +105,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:inputType="numberDecimal"
             android:digits="@string/_0_9_decimal"
             android:hint="Dividend Per Share"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLines="1"
             android:minLines="1"

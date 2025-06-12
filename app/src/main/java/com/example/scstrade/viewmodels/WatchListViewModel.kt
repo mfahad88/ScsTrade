@@ -43,8 +43,9 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
     }
 
     fun deleteSymbol(watchListDetailId:Int, watchListID:Int){
+        mutableSymDelete.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
-            mutableSymDelete.value = Resource.Loading()
+
             val result = repository.deleteSymbol(watchListDetailId, watchListID)
             withContext(Dispatchers.Main){
                 mutableSymDelete.value = result

@@ -18,6 +18,16 @@
         <attr name="android:maxLines" format="reference" />
         <attr name="android:maxLength" format="integer"/>
         <attr name="passwordToggleEnabled" format="boolean"/>
+        <attr name="android:imeOptions" format="enum">
+            <enum name="actionUnspecified" value="0" />
+            <enum name="actionNone" value="1" />
+            <enum name="actionGo" value="2" />
+            <enum name="actionSearch" value="3" />
+            <enum name="actionSend" value="4" />
+            <enum name="actionNext" value="5" />
+            <enum name="actionDone" value="6" />
+            <enum name="actionPrevious" value="7" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="TermsConditionView">
         <attr name="buttonTitle" format="string"/>

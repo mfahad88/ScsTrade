@@ -2,6 +2,7 @@ package com.example.scstrade.views.landing
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,6 +43,7 @@ import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.settings.SettingsActivity
 import com.example.scstrade.views.technicals.TechnicalsActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
+import com.example.scstrade.views.widgets.SideBarDivider
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 
@@ -187,14 +189,26 @@ class LandingFragment : Fragment() {
         if(isBackStack){
             childFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
+               /* .setCustomAnimations(
+                    R.anim.slide_in_right,    // enter
+                    R.anim.slide_out_left,    // exit
+                    R.anim.slide_in_left,     // popEnter (when back pressed)
+                    R.anim.slide_out_right    // popExit (when back pressed)
+                )*/
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             childFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
+                /*.setCustomAnimations(
+                    R.anim.slide_in_right,    // enter
+                    R.anim.slide_out_left,    // exit
+                    R.anim.slide_in_left,     // popEnter (when back pressed)
+                    R.anim.slide_out_right    // popExit (when back pressed)
+                )*/
                 .replace(R.id.fragment_container, fragment)
                 .commit()
         }
@@ -268,8 +282,12 @@ class LandingFragment : Fragment() {
             }
             layoutManager=
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL,false)
-            val divider= DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
-            divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
+//            val divider= DividerItemDecoration(binding.root.context, DividerItemDecoration.VERTICAL)
+//            divider.setDrawable(AppCompatResources.getDrawable(requireContext(),R.drawable.custom_divider)!!)
+            val divider = SideBarDivider(
+                dividerColor = Color.parseColor("#B3C6C6CD"),
+                marginEnd = 80
+            )
             addItemDecoration(divider)
 
         }

@@ -8,12 +8,12 @@
     tools:context=".views.splash.SplashFragment">
 
 
-<!--    <ImageView
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@drawable/splash" />-->
+        android:src="@drawable/bg_splash" />
 
 
     <ImageView
@@ -31,6 +31,7 @@
         android:orientation="vertical"
         android:id="@+id/bottomProgess"
         android:layout_marginBottom="-200dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true">
 
@@ -61,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:max="100"
-            android:progress="70"
+            android:progress="0"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
             android:progressDrawable="@drawable/gradient_progress" />

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemShareInHandBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
@@ -47,7 +48,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.symbol.text = item.symbol
             binding.price2133.text = Utils.roundTwoDecimal(stockItem.cL)
 //            Utils.animatedValueChange(binding.totalCostValue,0.00,totalCost)
-
+            Glide.with(binding.root.context).load(stockItem.companyLogo).circleCrop().into(binding.companyIcon)
             binding.totalCostValue.text = Utils.roundTwoDecimal(totalCost)
             binding.avgBuyValue.text = Utils.roundTwoDecimal(avgCost)
             binding.marketValue.text = "${Utils.roundTwoDecimal(marketValue)}"

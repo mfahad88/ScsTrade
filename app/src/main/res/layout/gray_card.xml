@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView android:id="@+id/card_mar"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="2dp"
     app:strokeColor="@null"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             tools:text="@string/current_mar_value"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             android:textAppearance="@style/current_mar_value"
             android:textFontWeight="600" />
     </LinearLayout>

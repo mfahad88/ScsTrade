@@ -3,7 +3,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
@@ -42,65 +42,76 @@
         android:orientation="horizontal"
         android:layout_below="@id/dayRange"
         android:layout_marginTop="4dp"
+        android:weightSum="10"
         android:id="@+id/progress"
         android:layout_height="10dp">
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:backgroundTint="#A50026"
             android:background="@drawable/rounded_rectangle" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#D73027" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#F46D43" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#FDAE61" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#FEE08B" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#D9EF8B" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#A6D96A" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#66BD63" />
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:layout_marginStart="2dp"
             android:background="#1A9850" />
 
         <View
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="10dp"
+            android:layout_weight="1"
             android:rotation="180"
             android:layout_marginStart="2dp"
             android:backgroundTint="#006837"
