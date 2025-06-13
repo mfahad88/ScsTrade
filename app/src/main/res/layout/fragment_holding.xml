@@ -27,7 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/md_theme_onPrimary"
+            android:background="@color/white"
             android:id="@+id/mainContainer"
             android:visibility="gone"
             tools:visibility="visible"
@@ -89,7 +89,7 @@
                     android:layout_height="59dp"
                     android:layout_gravity="start"
                     android:layout_weight="0.975"
-                    app:cardBackgroundColor="#EDFFE0"
+                    app:cardBackgroundColor="@color/portfolio_green"
                     app:strokeColor="@color/md_theme_primary">
 
                     <LinearLayout
@@ -129,7 +129,7 @@
                     android:layout_height="59dp"
                     android:layout_gravity="end"
                     android:layout_weight="0.975"
-                    app:cardBackgroundColor="#EDFFE0"
+                    app:cardBackgroundColor="@color/portfolio_green"
                     app:strokeColor="@color/md_theme_primary">
 
                     <LinearLayout

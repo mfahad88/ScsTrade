@@ -63,9 +63,9 @@
 
                     <TextView
                         android:id="@+id/historical_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="15dp"
+                        android:textAlignment="center"
                         android:text="@string/historical_value"
                         android:textAppearance="@style/historical_value"
                         android:textFontWeight="700" />
@@ -92,8 +92,8 @@
                     android:layout_height="59dp"
                     android:layout_gravity="start"
                     android:layout_weight="0.975"
-                    app:cardBackgroundColor="#EDFFE0"
-                    app:strokeColor="@color/md_theme_primary">
+                    app:cardBackgroundColor="@color/portfolio_green"
+                    app:strokeColor="@color/portfolio_green">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -426,7 +426,8 @@
                 <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/mainContent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

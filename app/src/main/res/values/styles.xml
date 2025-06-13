@@ -119,13 +119,11 @@
 
     <style name="high_52">
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
 
     <style name="low_52">
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_error</item>
     </style>
 
@@ -162,7 +160,7 @@
     </style>
 
     <style name="ask_vol">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#A44FA9</item>
     </style>
@@ -220,7 +218,7 @@
     </style>
 
     <style name="sign_in">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">@color/md_theme_onSurface_mediumContrast</item>
     </style>
@@ -1477,5 +1475,18 @@
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="NavigationViewStyle" parent="Widget.MaterialComponents.NavigationView">
+        <item name="android:paddingVertical">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="itemVerticalPadding">0dp</item>
+    </style>
+
+
+
+    <style name="snapshot_logo">
+        <item name="tint">@color/md_theme_outline</item>
     </style>
 </resources>

@@ -67,7 +67,7 @@ class LandingFragment : Fragment() {
             view.setPadding(0,insets.top,0,insets.bottom)
             windowInsets
         }*/
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
+      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
             val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updateLayoutParams<MarginLayoutParams> {
@@ -75,7 +75,7 @@ class LandingFragment : Fragment() {
             }
 
             windowInsets
-        }
+        }*/
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())

@@ -520,6 +520,7 @@ class BalanceSheetFragment : Fragment() {
             }
             DropdownMenu(
                 expanded = expanded,
+                modifier = Modifier.background(color = colorResource(id = R.color.dropdown)),
                 onDismissRequest = { expanded = false }
             ) {
                 list.forEach {
@@ -535,7 +536,7 @@ class BalanceSheetFragment : Fragment() {
                                 lineHeight = 24.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(400),
-                                color = colorResource(id = R.color.colorDarkerr),
+                                color = colorResource(id = R.color.black),
                             )
                         )
                     }

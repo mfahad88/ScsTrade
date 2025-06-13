@@ -92,7 +92,7 @@
                     android:layout_height="59dp"
                     android:layout_gravity="start"
                     android:layout_weight="0.975"
-                    app:cardBackgroundColor="#EDFFE0"
+                    app:cardBackgroundColor="@color/portfolio_green"
                     app:strokeColor="@color/md_theme_primary">
 
                     <LinearLayout

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -119,15 +120,26 @@ class HistoryFragment : Fragment() {
                                 it.salAmount.toDouble()})
 
                             val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
-
-                            binding.historicalValue.text = "${Utils.roundTwoDecimal(historicalGain)} (${(historicalGain.div(totalPurchase)).times(100)}%)"
+                            if(totalPurchase!=null && totalPurchase>0.0) {
+                                binding.historicalValue.text =
+                                    "${Utils.roundTwoDecimal(historicalGain)} (${
+                                        (historicalGain.div(totalPurchase)).times(100)
+                                    }%)"
+                            }else{
+                                binding.historicalValue.text = "0.0 (0.0%)"
+                            }
                             if(binding.historicalValue.text.contains("-")){
                                 binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
                             }else{
                                 binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
                             }
-                            binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
-                                    "(${Utils.roundTwoDecimal(percentPL)}%)"
+                            if(percentPL!=null && percentPL>0.0){
+                                binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
+                                        "(${Utils.roundTwoDecimal(percentPL)}%)"
+
+                            }else {
+                                binding.netPLOnValue.text = "0.0 (0.0%)"
+                            }
 
                             binding.recyclerView.apply {
                                 adapter = HistoryAdapter(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
@@ -153,10 +165,12 @@ class HistoryFragment : Fragment() {
     }
     @Composable
     private fun populateDividend(data: List<DividendItem>) {
-        Column (modifier = Modifier.fillMaxSize()){
+        Column (modifier = Modifier
+            .fillMaxSize()){
             data.forEach {item->
                Card (elevation = 5.dp, content = {
-                   Row {
+                   Row(modifier = Modifier.background(color = colorResource(id = R.color.md_theme_background))
+                   ){
                        Box(modifier = Modifier
                            .weight(1f)
                            .height(50.dp)){
@@ -166,7 +180,7 @@ class HistoryFragment : Fragment() {
                                    fontSize = 16.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
-                                   color = colorResource(R.color.colorDarkerr),
+                                   color = colorResource(R.color.black),
                                )
                            )
                        }
@@ -180,7 +194,7 @@ class HistoryFragment : Fragment() {
                                    fontSize = 16.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
-                                   color = colorResource(R.color.colorDarkerr),
+                                   color = colorResource(R.color.black),
                                )
                            )
                        }
@@ -194,7 +208,7 @@ class HistoryFragment : Fragment() {
                                    fontSize = 16.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
-                                   color = colorResource(R.color.colorDarkerr),
+                                   color = colorResource(R.color.black),
                                )
                            )
                        }
@@ -208,7 +222,7 @@ class HistoryFragment : Fragment() {
                                    fontSize = 16.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
-                                   color = colorResource(R.color.colorDarkerr),
+                                   color = colorResource(R.color.black),
                                )
                            )
                        }

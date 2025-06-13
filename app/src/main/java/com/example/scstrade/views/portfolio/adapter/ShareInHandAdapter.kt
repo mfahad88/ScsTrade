@@ -54,9 +54,17 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.marketValue.text = "${Utils.roundTwoDecimal(marketValue)}"
             binding.shareValue.text = item.quantity
             binding.daysPL.text = Utils.roundTwoDecimal(dayPL)
-            binding.daysPercentPL.text = "(${Utils.roundTwoDecimal(percentDayPL)}%)"
+            if(percentDayPL!=null && percentDayPL>0.0) {
+                binding.daysPercentPL.text = "(${Utils.roundTwoDecimal(percentDayPL)}%)"
+            }else{
+                binding.daysPercentPL.text = "(0.0%)"
+            }
             binding.totalPL.text = Utils.roundTwoDecimal(totalPL)
-            binding.totalPercentPL.text = "(${Utils.roundTwoDecimal(percentTotalPL)}%)"
+            if(percentTotalPL!=null && percentTotalPL>0.0) {
+                binding.totalPercentPL.text = "(${Utils.roundTwoDecimal(percentTotalPL)}%)"
+            }else{
+                binding.totalPercentPL.text = "(0.0%)"
+            }
             binding.btnSell.setOnClickListener {
                 onItemClick(item)
             }
@@ -66,7 +74,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
                     binding.root.context,
                     binding.threeDots,
                     null,
-                    listOf("Edit Company", "Delete Company")
+                    listOf("Edit Company")
                 ) {
                     if (it.contains("Edit", true)) {
                         onItemEditClick(item)

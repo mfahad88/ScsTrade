@@ -231,7 +231,7 @@ class OverviewFragment : Fragment() {
                 Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
                     ItemValue(
                         "Paid Up Capital:",
-                        Utils.commaFormat(data?.paidUpCapital?.toDouble()),
+                        Utils.convertToMillions(data?.paidUpCapital?.toDouble()),
                         null
                     )
                     Row {
@@ -241,7 +241,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Authorized Capital:", Utils.commaFormat(data?.authorizedCapital?.toDouble()) ?: "0", null)
+                    ItemValue("Authorized Capital:", Utils.convertToMillions(data?.authorizedCapital?.toDouble()) ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -261,7 +261,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Free_Float:", Utils.commaFormat(data?.freeFloat?.toDouble()), null)
+                    ItemValue("Free_Float:", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -317,7 +317,7 @@ class OverviewFragment : Fragment() {
 
                     ItemValue(
                         "Market Cap:",
-                        Utils.convertToMillions(data?.marketCap?.toDouble() ?: "0".toDouble()),
+                        Utils.convertToBillions(data?.marketCap ?: "0"),
                         null
                     )
                 }
@@ -626,8 +626,8 @@ class OverviewFragment : Fragment() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         Text(
-                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
-//                            text =descNameValue.value?:"",
+//                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
+                            text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 lineHeight = 30.08.sp,
@@ -805,7 +805,7 @@ class OverviewFragment : Fragment() {
                             lineHeight = 30.08.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(500),
-                            color =  Color(0xFF625B71),
+                            color =  colorResource(R.color.md_theme_outline),
                         )
                     )
                 }

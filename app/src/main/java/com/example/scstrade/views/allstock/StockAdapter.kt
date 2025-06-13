@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
@@ -18,16 +16,17 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
-import java.util.Collections
 
-class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false):RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
-    var previousStockItem:StockItem?=null
+
+class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false):
+    RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+    var previousStockItem: StockItem?=null
     private var list:List<StockItem>?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem?) {
             if (stockItem!=null){
                 binding.root.setOnClickListener {
-                    val intent= Intent(binding.root.context,SnapshotActivity::class.java)
+                    val intent= Intent(binding.root.context, SnapshotActivity::class.java)
                     intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
                     binding.root.context.startActivity(intent)
                 }

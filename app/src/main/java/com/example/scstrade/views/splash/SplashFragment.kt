@@ -112,15 +112,27 @@ class SplashFragment : Fragment() {
                     }
 
                 })
-                playTogether(
-                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
-                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
-                    ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
-                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
-                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -800f),
-                    ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
-                )
-                this.duration = 2000L
+                val smallestWidth = Utils.getSmallestWidthDp(requireContext())
+                if(smallestWidth>320 && smallestWidth<400) {
+                    playTogether(
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -700f),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
+                    )
+                }else{
+                    playTogether(
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
+                        ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -600f),
+                        ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
+                    )
+                }
+                this.duration = 1000L
                 interpolator = AccelerateDecelerateInterpolator()
                 start()
             }

@@ -50,6 +50,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.asFlow
 import coil.compose.rememberAsyncImagePainter
 import com.example.scstrade.R
@@ -80,6 +83,11 @@ class NewsFragment : Fragment() {
         binding=FragmentNewsBinding.inflate(inflater,container,false)
         sharedViewModel=(requireActivity().application as MyApp).viewModel
         sharedViewModel.news()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
+            view.setPadding(0,insets.top,0,insets.bottom)
+            windowInsets
+        }
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
             group.visibility = View.GONE
             titleItem.visibility = View.VISIBLE
@@ -96,7 +104,7 @@ class NewsFragment : Fragment() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 10.dp)
+                    .padding(top = 20.dp)
             ) {
                 newsChannels(
                     listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),

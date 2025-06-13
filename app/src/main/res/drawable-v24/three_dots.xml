@@ -2,18 +2,18 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:width="3dp" android:height="3dp">
         <shape android:shape="oval">
-            <solid android:color="@color/md_theme_primary"/>
+            <solid android:color="@color/md_theme_onSurfaceVariant_mediumContrast"/>
         </shape>
     </item>
 
     <item android:top="4dp" android:width="3dp" android:height="3dp">
         <shape android:shape="oval">
-            <solid android:color="@color/md_theme_primary"/>
+            <solid android:color="@color/md_theme_onSurfaceVariant_mediumContrast"/>
         </shape>
     </item>
     <item android:top="8dp" android:width="3dp" android:height="3dp">
         <shape android:shape="oval">
-            <solid android:color="@color/md_theme_primary"/>
+            <solid android:color="@color/md_theme_onSurfaceVariant_mediumContrast"/>
         </shape>
     </item>
 </layer-list>

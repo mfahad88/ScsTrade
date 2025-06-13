@@ -125,5 +125,5 @@
         android:layout_height="12dp"
         android:layout_marginTop="5dp"
         app:srcCompat="@drawable/drop_up"
-        app:tint="#000000" />
+        app:tint="@color/black" />
 </RelativeLayout>

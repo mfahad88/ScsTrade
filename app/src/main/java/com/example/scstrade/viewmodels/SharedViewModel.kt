@@ -173,10 +173,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun fetchLogin(email: String, password: String, fcm: String){
-        viewModelScope.launch {
+        mutableLogin.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
             if(isConnected.value==true) {
-                mutableLogin.value = Resource.Loading()
-                mutableLogin.value = repository.fetchLogin(email, password,fcm)
+                val result =repository.fetchLogin(email, password,fcm)
+                withContext(Dispatchers.Main){
+                    mutableLogin.postValue(result)
+                }
             }
         }
     }

@@ -90,8 +90,8 @@ class LoginFragment : Fragment() {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, insets ->
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
-            view.setPadding(0, 0, 0, imeInsets.bottom)
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, 0, 0, imeInsets.bottom+31)
             insets
         }
 
@@ -167,7 +167,7 @@ class LoginFragment : Fragment() {
                 }
                 is Resource.Loading -> binding.loader.visibility=View.VISIBLE
                 is Resource.Success -> {
-                    binding.loader.visibility=View.GONE
+
                     if(!resource.data.isNullOrEmpty()){
                         if(binding.rememberMe.isChecked) {
                            Utils.saveSharedPreference(requireContext(),AppConstants.IS_REMEMBER,
@@ -182,11 +182,12 @@ class LoginFragment : Fragment() {
                             resource.data?: emptyList()
                         )
                         Utils.showSuccess(requireView(),"Success")
-                        viewModel.mutableLogin.removeObservers(this)
+
+                        (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
                         viewModel.mutableLogin.value=null
                         binding.userName.text=null
                         binding.password.text= null
-                        (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
+                        binding.loader.visibility=View.GONE
                     }
                 }
             }

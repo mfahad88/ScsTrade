@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="330dp"
+    android:layout_width="300dp"
     android:layout_height="140dp"
     app:cardElevation="5dp"
     android:clipToPadding="false"
@@ -54,13 +54,15 @@
 
         <TextView
             android:id="@+id/tradingValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:gravity="top"
+            android:textSize="26sp"
             android:text="@string/index_value"
             android:textAppearance="@style/index_value"
             android:textFontWeight="600"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayout4"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
             app:layout_constraintTop_toBottomOf="@+id/kse_100" />
 

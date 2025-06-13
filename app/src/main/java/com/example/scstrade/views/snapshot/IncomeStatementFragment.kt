@@ -290,7 +290,7 @@ class IncomeStatementFragment : Fragment() {
         ) {
             Row (
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ){
                 Text(text = selectedOption?:"", style = TextStyle(
                     fontSize = 16.sp,
@@ -309,7 +309,8 @@ class IncomeStatementFragment : Fragment() {
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                modifier = Modifier.background(color = colorResource(id = R.color.dropdown)),
+                        onDismissRequest = { expanded = false }
             ) {
                 list.forEach {
                     DropdownMenuItem(onClick = {

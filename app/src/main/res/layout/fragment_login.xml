@@ -120,8 +120,8 @@ tools:context=".views.login.LoginFragment">
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:outlineProvider="bounds"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:requiresFadingEdge="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +136,7 @@ tools:context=".views.login.LoginFragment">
             android:layout_height="wrap_content"
             android:textFontWeight="600"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:lineSpacingExtra="0sp"
             android:text="@string/sign_in"
             android:textAppearance="@style/sign_in"
@@ -148,7 +148,7 @@ tools:context=".views.login.LoginFragment">
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
             android:inputType="text"
             android:imeOptions="actionNext"
@@ -164,7 +164,7 @@ tools:context=".views.login.LoginFragment">
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="30dp"
             android:inputType="textPassword"
             android:imeOptions="actionDone"
@@ -194,7 +194,7 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="12dp"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toEndOf="@+id/userName"
             app:layout_constraintStart_toStartOf="@+id/rememberMe"
@@ -206,7 +206,7 @@ tools:context=".views.login.LoginFragment">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textFontWeight="500"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:lineSpacingExtra="2sp"
             android:text="@string/don_t_have_"
             android:textAppearance="@style/don_t_have_"
@@ -248,7 +248,7 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/vertical_separator_neu_60"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/button"
@@ -256,37 +256,40 @@ tools:context=".views.login.LoginFragment">
             app:layout_constraintStart_toStartOf="@+id/button"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
-        <TextView
-            android:id="@+id/continue_wi"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal|top"
-            android:lineSpacingExtra="5sp"
-            android:text="@string/sign_in_wit"
-            android:textAppearance="@style/continue_wi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
 
         <RelativeLayout
             android:id="@+id/google"
             android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="13dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/gray_stroke"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@+id/button"
             app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/continue_wi">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/image_google"
+
+                android:layout_below="@id/continue_wi"
                 android:src="@drawable/google_logo" />
+
+            <TextView
+                android:id="@+id/continue_wi"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/image_google"
+                android:layout_centerVertical="true"
+                android:text="@string/sign_in_wit"
+                android:textAppearance="@style/continue_wi"
+                />
         </RelativeLayout>
 
 
