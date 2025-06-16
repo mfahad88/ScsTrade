@@ -79,11 +79,11 @@ class SnapshotActivity : BaseActivity() {
                 sharedViewModel.snapshotDetail(symbol)
             }
         })
+        binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.apply {
-            group.visibility = View.GONE
-            titleItem.visibility = View.VISIBLE
+            market.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
 
-            titleItem.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
+//            subTitle.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
         }
         enableEdgeToEdge()
         setContentView(binding.root)

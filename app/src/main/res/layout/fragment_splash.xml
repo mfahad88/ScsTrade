@@ -17,13 +17,26 @@
 
 
     <ImageView
-        android:layout_width="219dp"
-        android:layout_height="208dp"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="400dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
         android:id="@+id/imageViewLogo"
         android:alpha="0"
         android:src="@drawable/logo_splash"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scs_trade_p"
+        android:text="@string/scs_trade_p"
+        android:textFontWeight="700"
+        android:alpha="0"
+        android:textAppearance="@style/scs_trade_p"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_centerHorizontal="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -41,9 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textFontWeight="700"
-            android:text="@string/empowering_"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/committed_t"
             android:textAlignment="center"
-            android:textAppearance="@style/empowering_"
+            android:textAppearance="@style/committed_t_splash"
             />
 
 
@@ -51,8 +65,8 @@
             android:id="@+id/connecting_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="@string/connecting_"
+            android:visibility="visible"
+            android:text="@string/empowering_"
             android:textAppearance="@style/connecting_"
             android:layout_marginTop="7dp"
             android:gravity="center_horizontal|top" />

@@ -61,7 +61,8 @@ class DetailQuoteActivity : BaseActivity() {
         binding=ActivityDetailQuoteBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
-
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Detail Quote"
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding.searchText.addTextChangedListener {
             val search=it.toString()

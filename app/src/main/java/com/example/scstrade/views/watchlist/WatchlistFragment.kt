@@ -43,9 +43,8 @@ class WatchlistFragment : Fragment() {
             WatchListViewModelFactory(requireActivity().application,(requireActivity().application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            titleItem.visibility = View.VISIBLE
-           group.visibility = View.GONE
-            titleItem.text = "Watchlist"
+
+//            subTitle.text = "Watchlist"
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->

@@ -37,13 +37,16 @@ class PortfolioDetailActivity : BaseActivity() {
     lateinit var login: LoginDataItem
     var portfolioMainID:Int?=null
 
-//    var portfolioMainID:Int?=-1
+    //    var portfolioMainID:Int?=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityPortfolioDetailBinding.inflate(LayoutInflater.from(this))
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Portfolio"
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
+
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel
         sharedViewModel.startPortfolioFinal()
@@ -54,7 +57,7 @@ class PortfolioDetailActivity : BaseActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-       portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
 //        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.apply {
@@ -166,20 +169,20 @@ class PortfolioDetailActivity : BaseActivity() {
                             history += it.salAmount.toDouble()
                         }
 
-                      val profitSummary  =  result.data?.closeTrades?.groupBy { it.symbol }?.map  { (symbol, trades)  ->
+                        val profitSummary  =  result.data?.closeTrades?.groupBy { it.symbol }?.map  { (symbol, trades)  ->
 
 
-                          val totalPurchaseAmount = trades.sumOf { it.purAmount.toDouble() }
-                          val totalPurchaseQty = trades.sumOf { it.purQuantity.toInt() }
-                          val avgBuyPrice = totalPurchaseAmount.div(totalPurchaseQty)
+                            val totalPurchaseAmount = trades.sumOf { it.purAmount.toDouble() }
+                            val totalPurchaseQty = trades.sumOf { it.purQuantity.toInt() }
+                            val avgBuyPrice = totalPurchaseAmount.div(totalPurchaseQty)
 
-                          val totalSaleAmount = trades.sumOf { it.salAmount.toDouble() }
-                          val totalSaleQty = trades.sumOf { it.salQuantity.toInt() }
-                          val avgSellPrice = totalSaleAmount.div(totalSaleQty)
+                            val totalSaleAmount = trades.sumOf { it.salAmount.toDouble() }
+                            val totalSaleQty = trades.sumOf { it.salQuantity.toInt() }
+                            val avgSellPrice = totalSaleAmount.div(totalSaleQty)
 
-                          val totalProfit=avgSellPrice.minus(avgBuyPrice).times(totalSaleQty)
-                          val totalProfitPercent=avgSellPrice.minus(avgBuyPrice).div(avgBuyPrice).times(100)
-                          SymbolProfit(symbol, totalProfit, totalProfitPercent)
+                            val totalProfit=avgSellPrice.minus(avgBuyPrice).times(totalSaleQty)
+                            val totalProfitPercent=avgSellPrice.minus(avgBuyPrice).div(avgBuyPrice).times(100)
+                            SymbolProfit(symbol, totalProfit, totalProfitPercent)
                         }
                         if (profitSummary != null) {
                             for (entry in profitSummary ){
@@ -270,19 +273,19 @@ class PortfolioDetailActivity : BaseActivity() {
     }
 
 
-   /* override fun onStop() {
-        sharedViewModel.stopPortfolioFinal()
-        Toast.makeText(this,"OnStopped",Toast.LENGTH_SHORT).show()
+    /* override fun onStop() {
+         sharedViewModel.stopPortfolioFinal()
+         Toast.makeText(this,"OnStopped",Toast.LENGTH_SHORT).show()
 
-        super.onStop()
-    }
-*/
+         super.onStop()
+     }
+ */
     override fun onDestroy() {
 
         super.onDestroy()
-       sharedViewModel.portfolioJob?.cancel()
-       sharedViewModel.mutablePortfolioFinalDetail.value=null
-       sharedViewModel.stopPortfolioFinal()
+        sharedViewModel.portfolioJob?.cancel()
+        sharedViewModel.mutablePortfolioFinalDetail.value=null
+        sharedViewModel.stopPortfolioFinal()
     }
     override fun getResources(): Resources {
 

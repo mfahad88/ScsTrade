@@ -51,10 +51,14 @@ class StockActivity : BaseActivity() {
         val b= intent.extras
         if(b!=null) {
             val fragment = AllStockFragment()
+            binding.toolbar.toggleToolbar(false)
+
             if(b.getString("index")!=null) {
-                binding.toolbar.binding.titleItem.text = b.getString("index")?.replace("Index", "")
+                binding.toolbar.binding.market.text = b.getString("index")?.replace("Index", "")
+//                binding.toolbar.binding.subTitle.text = b.getString("index")?.replace("Index", "")
             }else if (b.getString("sector")!=null){
-                binding.toolbar.binding.titleItem.text = b.getString("sector")
+//                binding.toolbar.binding.subTitle.text = b.getString("sector")
+                binding.toolbar.binding.market.text = b.getString("sector")
             }
             fragment.arguments =b
             loadFragment(fragment)

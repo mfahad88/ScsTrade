@@ -37,7 +37,8 @@ class TechnicalsActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
-
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Technicals"
         viewModel.getTechnicals()
         observerTechnicals()
         binding.recyclerView.apply {

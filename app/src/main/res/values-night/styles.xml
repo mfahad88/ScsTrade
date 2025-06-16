@@ -2,10 +2,10 @@
 <resources>
 
     <style name="scs_trade_p">
-        <item name="android:textSize">37.65sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">@color/md_theme_inverseSurface</item>
-        <item name="fontFamily">@font/inter_18pt_medium</item>
+        <item name="fontFamily">@font/custom_font</item>
 
     </style>
 
@@ -27,7 +27,7 @@
     </style>
 
     <style name="connecting_">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.04</item>
         <item name="android:textColor">@color/black</item>
         <item name="fontFamily">@font/custom_font</item>
@@ -96,7 +96,7 @@
 
     <style name="wtl">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">@color/black</item>
 
@@ -136,7 +136,7 @@
 
     <style name="valueTrade">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">@color/black</item>
     </style>
@@ -404,7 +404,7 @@
     </style>
 
     <style name="index_value_24sp">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
@@ -428,7 +428,7 @@
     </style>
 
     <style name="sidemenu_item">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
@@ -1481,6 +1481,11 @@
     <style name="snapshot_logo">
         <item name="tint">@color/black</item>
     </style>
-
+    <style name="committed_t_splash">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">34sp</item>
+    </style>
 
 </resources>

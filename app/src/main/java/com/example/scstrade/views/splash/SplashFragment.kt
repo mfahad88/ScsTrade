@@ -46,8 +46,8 @@ class SplashFragment : Fragment() {
             windowInsets
         }*/
         binding.main.post {
-            val centerX = (binding.main.width - binding.imageViewLogo.width) / 2f
-            val centerY = (binding.main.height - binding.imageViewLogo.height) / 3f
+            val centerX = (binding.imageView.width - binding.imageViewLogo.width) / 2f
+            val centerY = (binding.imageView.height - binding.imageViewLogo.height) / 2.5f
 
             // Get current absolute position of imageView relative to rootLayout
             val currentX = binding.imageViewLogo.x
@@ -64,6 +64,9 @@ class SplashFragment : Fragment() {
 
             binding.imageViewLogo.apply {
                 alpha = 0f // start from invisible
+            }
+            binding.scsTradeP.apply {
+                alpha = 0f
             }
 
             binding.bottomProgess.apply {
@@ -118,6 +121,9 @@ class SplashFragment : Fragment() {
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationY", 0f, deltaY),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "alpha", 0f, 1f),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -700f),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
@@ -127,6 +133,9 @@ class SplashFragment : Fragment() {
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
                         ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationX", 0f, deltaX),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationY", 0f, deltaY),
+                        ObjectAnimator.ofFloat(binding.scsTradeP, "alpha", 0f, 1f),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -600f),
                         ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)

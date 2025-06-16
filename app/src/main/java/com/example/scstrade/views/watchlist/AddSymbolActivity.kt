@@ -48,7 +48,9 @@ class AddSymbolActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
-        binding.toolbar.binding.titleItem.text = "Add Symbol"
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Add Symbol"
+//        binding.toolbar.binding.subTitle.text = "Add Symbol"
         fetchUser()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

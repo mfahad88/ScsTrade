@@ -25,6 +25,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
+import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
@@ -89,10 +91,8 @@ class NewsFragment : Fragment() {
             windowInsets
         }
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            group.visibility = View.GONE
-            titleItem.visibility = View.VISIBLE
 
-            titleItem.text = "News"
+//            subTitle.text = "News"
         }
 
         return binding.root
@@ -130,12 +130,12 @@ class NewsFragment : Fragment() {
         Column (
             modifier = Modifier.fillMaxSize()
         ){
-            TabRow(
+            ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
                 backgroundColor= Color.Transparent,
                 contentColor = colorResource(id = R.color.colorDarkerr),
                 modifier = Modifier.fillMaxWidth(),
-//                edgePadding = 15.dp,
+                edgePadding = 15.dp,
                 divider = {},
                 indicator = {tabPositions ->
                     TabRowDefaults.Indicator(
@@ -172,8 +172,6 @@ class NewsFragment : Fragment() {
                                     color = colorResource(id = R.color.black),
                                     maxLines = 1,
                                     overflow = TextOverflow.Clip,
-
-
                                     )
 
                             }
@@ -433,7 +431,7 @@ class NewsFragment : Fragment() {
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                     Row (
-                                        modifier = Modifier.padding(top = 2.dp),
+                                        modifier = Modifier.padding(top = 10.dp,),
                                     ){
 
                                         Image(
@@ -470,7 +468,12 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Divider(
+                        color = Color(0xFFB3C6C6CD),
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 10.dp)
+                    )
+//                    Spacer(modifier = Modifier.height(20.dp))
 
                 }
             }

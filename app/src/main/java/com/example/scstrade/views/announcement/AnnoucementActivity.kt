@@ -30,6 +30,8 @@ class AnnoucementActivity : BaseActivity() {
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityAnnoucementBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Announcements"
         snapshotViewModel = ViewModelProvider(this,
             SnapshotViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(SnapshotViewModel::class.java)

@@ -41,7 +41,8 @@
     <string name="register">Register</string>
     <string name="continue_wi">Continue with Google</string>
     <string name="scs_trade_p_logo">SCS Trade Pro</string>
-    <string name="committed_t">Committed to intelligent investing</string>
+    <string name="committed_t_appbar">Committed to intelligent investing</string>
+    <string name="committed_t">Committed to\nintelligent investing</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="register_an">Register An Account</string>
     <string name="create_weal">Create wealth and create a better future</string>
@@ -433,6 +434,10 @@
     <string name="holding_are">Holding are Empty</string>
     <string name="add_share_t">Add share to your portfolio</string>
     <string name="empowering_">TREC Holder Pakistan Stock Exchange Limited</string>
+    <string name="open_your_t">Open Your Trading Account</string>
+    <string name="join_now_an">Join now and trade with confidence.</string>
+    <string name="quote">Quote</string>
+    <string name="status">Market:</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

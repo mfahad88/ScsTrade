@@ -79,6 +79,7 @@ class LandingFragment : Fragment() {
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())
+        binding.toolbar.binding.tickerScroll.visibility = View.GONE
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.aof.setOnClickListener {
@@ -117,16 +118,24 @@ class LandingFragment : Fragment() {
 //            binding.bottomNavigationView.selectedItemId=item.itemId
             item.setChecked(true)
             if(item.itemId==R.id.homeFragment){
-
+                binding.toolbar.toggleToolbar(true)
+//                binding.toolbar.binding.tickerScroll.visibility = View.GONE
+//                binding.toolbar.binding.constraintMarketStat.visibility = View.VISIBLE
                 loadFragment(HomeFragment())
                 true
             }else if(item.itemId==R.id.watchlistFragment){
+                binding.toolbar.toggleToolbar(false)
+                binding.toolbar.binding.market.text = "Watchlist"
                 loadFragment(WatchlistFragment())
                 true
             }else if(item.itemId==R.id.marketFragment){
+                binding.toolbar.toggleToolbar(false)
+                binding.toolbar.binding.market.text = "Market"
                 loadFragment(MarketFragment())
                 true
             }else if(item.itemId==R.id.news){
+                binding.toolbar.toggleToolbar(false)
+                binding.toolbar.binding.market.text = "News"
                 loadFragment(NewsFragment())
                 true
             }
@@ -188,6 +197,7 @@ class LandingFragment : Fragment() {
 
 
     public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
+
         if(isBackStack){
             childFragmentManager
                 .beginTransaction()
@@ -243,12 +253,16 @@ class LandingFragment : Fragment() {
             adapter= SideMenuAdapter(list){ keyDescValue ->
                 System.out.println("Clicked: ${keyDescValue.toString()}")
                 if(keyDescValue.key?.equals("indices",true)?:false){
+                    binding.toolbar.toggleToolbar(false)
+                    binding.toolbar.binding.market.text = "Market"
                     val bundle=Bundle()
                     bundle.putString("key","indices")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
                     loadFragment(fragment,true)
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
+                    binding.toolbar.toggleToolbar(false)
+                    binding.toolbar.binding.market.text = "Market"
                     val bundle=Bundle()
                     bundle.putString("key","allStocks")
                     val fragment = MarketFragment()
@@ -259,6 +273,7 @@ class LandingFragment : Fragment() {
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())
                 }else if(keyDescValue.key?.equals("technical",true)?:false){
+
                     val intent = Intent(requireContext(),TechnicalsActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)

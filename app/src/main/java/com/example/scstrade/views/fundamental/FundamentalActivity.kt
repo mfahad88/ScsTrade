@@ -37,6 +37,8 @@ class FundamentalActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Fundamentals"
 
        /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

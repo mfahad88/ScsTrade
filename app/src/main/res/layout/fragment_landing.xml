@@ -46,6 +46,7 @@
                 android:layout_gravity="bottom"
                 android:background="@drawable/rectangle_bottom_bar"
                 app:labelVisibilityMode="labeled"
+                app:itemIconSize="27dp"
                 app:menu="@menu/menu" />
 
             <com.example.scstrade.views.widgets.mMarket

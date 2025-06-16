@@ -65,7 +65,8 @@ class NotificationDetailActivity : BaseActivity() {
         announcmentType=intent.getStringExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME)
         idRef = intent.getIntExtra(AppConstants.ID_REF,-1)
         sharedViewModel.notificationDetals(id = idRef?:-1, type =  announcmentType?:"")
-
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Notification"
         sharedViewModel.mutableNotificationDetailList.observe(this, Observer {result->
             when(result){
                 is Resource.Error -> {

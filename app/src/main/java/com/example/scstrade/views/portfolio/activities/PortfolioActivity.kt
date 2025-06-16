@@ -38,7 +38,8 @@ class PortfolioActivity : BaseActivity() {
         binding = ActivityPortfolioBinding.inflate(LayoutInflater.from(this))
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.main)
-
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Portfolio"
         fetchUser(this)
 //        login=(this.application as MyApp).login
         sharedViewModel = (this.application as MyApp).viewModel

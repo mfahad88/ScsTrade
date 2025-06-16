@@ -185,8 +185,6 @@ class LoginFragment : Fragment() {
 
                         (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
                         viewModel.mutableLogin.value=null
-                        binding.userName.text=null
-                        binding.password.text= null
                         binding.loader.visibility=View.GONE
                     }
                 }

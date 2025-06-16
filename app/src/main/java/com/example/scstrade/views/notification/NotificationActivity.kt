@@ -44,7 +44,8 @@ class NotificationActivity : BaseActivity() {
         binding = ActivityNotificaionBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
-
+        binding.toolbar.toggleToolbar(false)
+        binding.toolbar.binding.market.text = "Notification"
 
         notificationViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application as MyApp).create(NotificationViewModel::class.java)
 

@@ -557,101 +557,144 @@ class OverviewFragment : Fragment() {
         var expand by remember {
             mutableStateOf(false)
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .height(50.dp)
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFFE5E2E1),
-                    shape = RoundedCornerShape(6.dp)
-                )
-                .background(
-                    color = colorResource(
-                        id = R.color.md_theme_surfaceBright
+        Column (modifier = Modifier.border(
+            width = 1.dp,
+            color = Color(0xFFE5E2E1),
+            shape = RoundedCornerShape(6.dp)
+        )){
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .height(50.dp)
+                  /*  .border(
+                        width = 1.dp,
+                        color = Color(0xFFE5E2E1),
+                        shape = RoundedCornerShape(6.dp)
+                    )*/
+                    .background(
+                        color = colorResource(
+                            id = R.color.md_theme_surfaceBright
+                        )
+                    )
+                    .clickable {
+                        expand = !expand
+                    }
+            ) {
+                Text(
+                    text = title,
+                    modifier = Modifier.padding(start = 15.dp),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        lineHeight = 30.08.sp,
+                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                        fontWeight = FontWeight(600),
+                        color = colorResource(id = R.color.black),
                     )
                 )
-                .clickable {
-                    expand = !expand
-                }
-        ) {
-            Text(
-                text = title,
-                modifier = Modifier.padding(start = 15.dp),
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    lineHeight = 30.08.sp,
-                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                    fontWeight = FontWeight(600),
-                    color = colorResource(id = R.color.black),
-                )
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = if(expand) R.drawable.drop_up else R.drawable.drop_down),
-                contentDescription = "Expandable",
-                modifier = Modifier
-                    .size(30.dp)
-                    .padding(end = 15.dp),
-                colorFilter = ColorFilter.tint(color = colorResource(id = R.color.black)))
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = if(expand) R.drawable.drop_up else R.drawable.drop_down),
+                    contentDescription = "Expandable",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .padding(end = 15.dp),
+                    colorFilter = ColorFilter.tint(color = colorResource(id = R.color.black)))
 
-        }
-        if(expand){
-            Spacer(modifier = Modifier.height(7.dp))
-            list.forEachIndexed { index, descNameValue ->
-                val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
-                val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
-                Column {
-                    Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp)){
-                        Text(
-                            text = descNameValue.name?:"",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                lineHeight = 30.08.sp,
-                                fontFamily = FontFamily(Font(R.font.custom_font)),
-                                fontWeight = FontWeight(500),
-                                color = colorResource(id = R.color.black),
-                            )
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
-                        Text(
-                            text = descNameValue.desc?:"",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                lineHeight = 30.08.sp,
-                                fontFamily = FontFamily(Font(R.font.custom_font)),
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF787776),
-                            )
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-//                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
-                            text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                lineHeight = 30.08.sp,
-                                fontFamily = FontFamily(Font(R.font.custom_font)),
-                                fontWeight = FontWeight(700),
-                                color = colorResource(id = R.color.snapshot_value),
-                                textAlign = TextAlign.Right,
-                            )
-                        )
-                    }
-                    if(index<list.size-1){
-                        Divider(
-                            thickness = 1.dp,
-                            modifier = Modifier.fillMaxWidth(),
-                            color = Color(0xFFE5E2E1)
-                        )
-                    }
-
-
-                }
             }
+            if(expand){
+                Spacer(modifier = Modifier.height(7.dp))
+                list.forEachIndexed { index, descNameValue ->
+                    val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
+                    val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
+                    Column {
+                        Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp) ){
+                            Text(
+                                text = descNameValue.name?:"",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    lineHeight = 30.08.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(500),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(3.dp))
+                            Text(
+                                text = descNameValue.desc?:"",
+                                style = TextStyle(
+                                    fontSize = 12.sp,
+                                    lineHeight = 30.08.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF787776),
+                                )
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Text(
+//                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
+                                text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    lineHeight = 30.08.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(700),
+                                    color = colorResource(id = R.color.snapshot_value),
+                                    textAlign = TextAlign.Right,
+                                )
+                            )
+                        }
+                        if(index<list.size-1){
+                            Divider(
+                                thickness = 1.dp,
+                                modifier = Modifier.fillMaxWidth(),
+                                color = Color(0xFFE5E2E1)
+                            )
+                        }
 
-            if(title.equals("Equity Ratios",true)){
-                Column {
+
+                    }
+                }
+
+                if(title.equals("Equity Ratios",true)){
+                    Column {
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> CustomCombinedChart(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.bookValue?.bookValuePKR?.map { it.toFloat() }
+                                        ?.toMutableList(),
+                                    charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }
+                                        ?.toList(),
+                                    charting?.bookValue?.year,
+                                    android.graphics.Color.parseColor("#7cb5ec")
+                                )
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> MultiLineChartView(context) },
+                            update = {
+                                it.setChartData(charting?.rOAROE?.year,
+                                    listOf("Ret On CE","Ret On Equity","Ret On Assets"),
+                                    charting?.rOAROE?.returnOnCE?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
+                                    charting?.rOAROE?.returnOnEquity?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
+                                    charting?.rOAROE?.returnOnAssets?.mapIndexed { index, d ->  Entry(index.toFloat(),d.toFloat())},
+                                    mutableListOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
+                                )
+                            }
+                        )
+                    }
+                }
+                if(title.equals("Dividend",true)){
                     AndroidView(
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
@@ -659,17 +702,11 @@ class OverviewFragment : Fragment() {
                             .height(250.dp),
                         factory = { context -> CustomCombinedChart(context) },
                         update = {
-                            it.setChartData(
-                                charting?.bookValue?.bookValuePKR?.map { it.toFloat() }
-                                    ?.toMutableList(),
-                                charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }
-                                    ?.toList(),
-                                charting?.bookValue?.year,
-                                android.graphics.Color.parseColor("#7cb5ec")
-                            )
+                            it.setChartData(charting?.dividend?.dividend?.map { it.toFloat() },charting?.dividend?.dividendYieldPer?.map { it.toFloat() },charting?.dividend?.year,android.graphics.Color.parseColor("#ffaa07"))
                         }
                     )
                     Spacer(modifier = Modifier.height(5.dp))
+
                     AndroidView(
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
@@ -677,107 +714,77 @@ class OverviewFragment : Fragment() {
                             .height(250.dp),
                         factory = { context -> MultiLineChartView(context) },
                         update = {
-                            it.setChartData(charting?.rOAROE?.year,
-                                listOf("Ret On CE","Ret On Equity","Ret On Assets"),
-                                charting?.rOAROE?.returnOnCE?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
-                                charting?.rOAROE?.returnOnEquity?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
-                                charting?.rOAROE?.returnOnAssets?.mapIndexed { index, d ->  Entry(index.toFloat(),d.toFloat())},
-                                mutableListOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
+                            it.setChartData(charting?.payout?.year,
+                                listOf("Payout"),charting?.payout?.payoutRatio?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
+                                listOf(android.graphics.Color.parseColor("#000000"))
                             )
                         }
                     )
                 }
-            }
-            if(title.equals("Dividend",true)){
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> CustomCombinedChart(context) },
-                    update = {
-                       it.setChartData(charting?.dividend?.dividend?.map { it.toFloat() },charting?.dividend?.dividendYieldPer?.map { it.toFloat() },charting?.dividend?.year,android.graphics.Color.parseColor("#ffaa07"))
-                    }
-                )
-                Spacer(modifier = Modifier.height(5.dp))
 
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> MultiLineChartView(context) },
-                    update = {
-                        it.setChartData(charting?.payout?.year,
-                            listOf("Payout"),charting?.payout?.payoutRatio?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
-                            listOf(android.graphics.Color.parseColor("#000000"))
-                        )
-                    }
-                )
-            }
+                if(title.equals("Cash",true)){
 
-            if(title.equals("Cash",true)){
+                    AndroidView(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                            .fillMaxWidth()
+                            .height(250.dp),
+                        factory = { context -> MultiLineChartView(context) },
+                        update = {
+                            it.setChartData(charting?.cash?.year,
+                                listOf("Cash per Share"),charting?.cash?.cashPerShare?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
+                                listOf(android.graphics.Color.parseColor("#7cb5ec"))
+                            )
+                        }
+                    )
+                }
 
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> MultiLineChartView(context) },
-                    update = {
-                        it.setChartData(charting?.cash?.year,
-                            listOf("Cash per Share"),charting?.cash?.cashPerShare?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
-                            listOf(android.graphics.Color.parseColor("#7cb5ec"))
-                        )
-                    }
-                )
-            }
+                if(title.equals("Advances And Deposits",true)){
+                    AndroidView(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                            .fillMaxWidth()
+                            .height(250.dp),
+                        factory = { context -> MultiLineChartView(context) },
+                        update = {
+                            it.setChartData(charting?.aDR?.year,
+                                listOf("Equity to Ad","ADR","Cash to DPR"),charting?.aDR?.equityToAd?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.aDR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.cashToDPR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),
+                                listOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
+                            )
+                        }
+                    )
+                }
 
-            if(title.equals("Advances And Deposits",true)){
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> MultiLineChartView(context) },
-                    update = {
-                        it.setChartData(charting?.aDR?.year,
-                            listOf("Equity to Ad","ADR","Cash to DPR"),charting?.aDR?.equityToAd?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.aDR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.aDR?.cashToDPR?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),
-                            listOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
-                        )
-                    }
-                )
-            }
-
-            if(title.equals("Profitablility",true)){
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> MultiLineChartView(context) },
-                    update = {
-                        it.setChartData(charting?.profitablity?.year,
-                            listOf("Net Profit Margin","Gross Profit Margin"),charting?.profitablity?.netProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.profitablity?.grossProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
-                            listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
-                        )
-                    }
-                )
-            }
-            if(title.equals("Insurance",true)){
-                AndroidView(
-                    modifier = Modifier
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .fillMaxWidth()
-                        .height(250.dp),
-                    factory = { context -> MultiLineChartView(context) },
-                    update = {
-                        it.setChartData(charting?.insurance?.year,
-                            listOf("UWR to PAT","II to PAT"),charting?.insurance?.uWRToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.insurance?.iIToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
-                            listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
-                        )
-                    }
-                )
+                if(title.equals("Profitablility",true)){
+                    AndroidView(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                            .fillMaxWidth()
+                            .height(250.dp),
+                        factory = { context -> MultiLineChartView(context) },
+                        update = {
+                            it.setChartData(charting?.profitablity?.year,
+                                listOf("Net Profit Margin","Gross Profit Margin"),charting?.profitablity?.netProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.profitablity?.grossProfitMargin?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
+                                listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
+                            )
+                        }
+                    )
+                }
+                if(title.equals("Insurance",true)){
+                    AndroidView(
+                        modifier = Modifier
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                            .fillMaxWidth()
+                            .height(250.dp),
+                        factory = { context -> MultiLineChartView(context) },
+                        update = {
+                            it.setChartData(charting?.insurance?.year,
+                                listOf("UWR to PAT","II to PAT"),charting?.insurance?.uWRToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),charting?.insurance?.iIToPAT?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,
+                                listOf(android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#000000"))
+                            )
+                        }
+                    )
+                }
             }
         }
 
@@ -818,7 +825,7 @@ class OverviewFragment : Fragment() {
                     fontSize = 16.sp,
                     lineHeight = 30.08.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
-                    fontWeight = FontWeight(700),
+                    fontWeight = FontWeight(600),
                     color = colorResource(id = R.color.snapshot_value),
                     textAlign = TextAlign.Right,
                 )
