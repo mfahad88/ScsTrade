@@ -69,7 +69,7 @@ class SearchActivity : BaseActivity() {
 
         adapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1)
         binding.spinnerSector.adapter=adapter
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Search"
         adapter.add("All Sector")
         sharedViewModel.mutableAllData.value?.data?.map { it.sN }?.forEach {

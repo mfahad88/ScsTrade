@@ -27,21 +27,23 @@
 
     <com.example.scstrade.views.widgets.VolumeChip
         android:id="@+id/volumeChip"
-        android:layout_width="120dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         android:text="@string/volumeIndices"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/netChangeChip" />
 
     <com.example.scstrade.views.widgets.NetChangeChip
         android:id="@+id/netChangeChip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/netChange"
         app:layout_constraintEnd_toEndOf="@+id/volumeChip"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/volumeChip"
-        app:layout_constraintTop_toBottomOf="@+id/volumeChip" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/divider"
@@ -76,7 +78,7 @@
 
     <com.example.scstrade.views.widgets.LowView
         android:id="@+id/lowView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="@+id/highView"
@@ -106,15 +108,15 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
 
-
         <com.example.scstrade.views.widgets.mLineChart
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
-            android:background="@drawable/stock_card"
-            />
-        
+            android:padding="0dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:background="@drawable/stock_card" />
 
         <com.example.scstrade.views.widgets.CustomCandlestickChart
             android:id="@+id/candlestick_chart"
@@ -215,6 +217,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/highView"
                 app:setSelected="false" />
 
+            <com.example.scstrade.views.widgets.TimeChip
+                android:id="@+id/d1"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="1D"
+                app:layout_constraintStart_toStartOf="@+id/highView"
+                app:layout_constraintTop_toBottomOf="@+id/highView"
+                app:setSelected="false" />
         </LinearLayout>
     </HorizontalScrollView>
 

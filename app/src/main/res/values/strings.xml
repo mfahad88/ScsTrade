@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">ScsTrade</string>
+    <string name="app_name">SCSTrade Pro</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="scs_trade_p">SCS Trade Pro</string>
+    <string name="scs_trade_p">SCSTrade Pro</string>
     <string name="this_next_g">This next gen\nof your investments</string>
     <string name="connecting_">Connecting to 100+exchange worldwide ...</string>
     <string name="kse_100">KSE 100</string>
@@ -66,7 +66,7 @@
     <string name="sector">Sector</string>
     <string name="all_stock">All Stocks</string>
     <string name="kmiallshr">KMIALLSHR</string>
-    <string name="high_110_89">High: 0.0 0.0(0.0%)</string>
+    <string name="high_110_89">H: 0.0 0.0(0.0%)</string>
     <string name="leaders_">Leaders:</string>
     <string name="gainers_">Gainers</string>
     <string name="loser_">Losers</string>
@@ -438,6 +438,7 @@
     <string name="join_now_an">Join now and trade with confidence.</string>
     <string name="quote">Quote</string>
     <string name="status">Market:</string>
+    <string name="alerts">Alerts</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

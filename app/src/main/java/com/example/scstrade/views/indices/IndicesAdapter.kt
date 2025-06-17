@@ -23,10 +23,68 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
             binding.labelText.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
             binding.volume.text = kseIndices.vOLUMETRADED
             binding.valueTrade.text = kseIndices.vALUETRADED
-            binding.high.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                    "(${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
-            binding.l1167000.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                    "(${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%)"
+            if(kseIndices.hIGHINDEX.toDouble().minus(kseIndices.preClose)<0.0) {
+                binding.high.text =
+                    "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble() ?: 0.0)} ${
+                        Utils.formatDouble(
+                            kseIndices?.hIGHINDEX?.toDouble()
+                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                        )
+                    } " +
+                            "${
+                                Utils.formatDouble(
+                                    (kseIndices?.hIGHINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100) ?: 0.0
+                                )
+                            }%"
+            }else{
+                binding.high.text =
+                    "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble() ?: 0.0)} +${
+                        Utils.formatDouble(
+                            kseIndices?.hIGHINDEX?.toDouble()
+                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                        )
+                    } " +
+                            "+${
+                                Utils.formatDouble(
+                                    (kseIndices?.hIGHINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100) ?: 0.0
+                                )
+                            }%"
+            }
+            if(kseIndices.lOWINDEX.toDouble().minus(kseIndices.preClose)<0.0) {
+                binding.l1167000.text =
+                    "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble() ?: 0.0)} ${
+                        Utils.formatDouble(
+                            kseIndices?.lOWINDEX?.toDouble()
+                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                        )
+                    } " +
+                            "${
+                                Utils.formatDouble(
+                                    (kseIndices?.lOWINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100) ?: 0.0
+                                )
+                            }%"
+            }else{
+                binding.l1167000.text =
+                    "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble() ?: 0.0)} +${
+                        Utils.formatDouble(
+                            kseIndices?.lOWINDEX?.toDouble()
+                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                        )
+                    } " +
+                            "+${
+                                Utils.formatDouble(
+                                    (kseIndices?.lOWINDEX?.toDouble()
+                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                        ?.times(100) ?: 0.0
+                                )
+                            }%"
+            }
             binding.root.setOnClickListener {
                 onItemClick(kseIndices)
             }

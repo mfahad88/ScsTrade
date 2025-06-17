@@ -1,5 +1,7 @@
 package com.example.scstrade.views.widgets;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -8,6 +10,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,7 +76,7 @@ public class mMarket extends LinearLayout {
         binding= CustomToolbarBinding.inflate(LayoutInflater.from(context),this,true);
         Log.e("LifecycleOwner", "Context class: " + context.getClass().getName()+" "+(context instanceof AppCompatActivity));
 
-        tickerScroll = binding.tickerScroll;
+       /* tickerScroll = binding.tickerScroll;
 
         tickerContainer = binding.tickerContainer;
 
@@ -84,14 +88,9 @@ public class mMarket extends LinearLayout {
                 new TickerItem.Text("TREC Holder Pakstan Stock Exchange Limited"),
                 new TickerItem.Image(R.drawable.logo_splash)
         );
-        ticker(items);
+        ticker(items);*/
 
-//        addTickerItems(); // add text or image views
-//
-//        // Duplicate content to simulate infinite loop
-//        duplicateContent();
 
-//        startAutoScroll();
         if(attrs!=null){
             TypedArray a=getContext().getTheme().obtainStyledAttributes(
                     attrs,
@@ -173,6 +172,43 @@ public class mMarket extends LinearLayout {
 
                 contentLogo=binding.contentLogo;
                 contentText = binding.contentText;
+
+                binding.scstrade.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String url = "https://scstrade.com/";
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        getContext().startActivity(intent);
+                    }
+                });
+                binding.phone.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://wa.me/+923218296919" )); // Open chat with this number
+
+                        try {
+                            context.startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(context, "WhatsApp not installed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                binding.imageViewWhatsapp.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://wa.me/+923218296919" )); // Open chat with this number
+
+                        try {
+                            context.startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(context, "WhatsApp not installed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }catch (Exception e){
                 Log.e("LifecycleOwner",e.getMessage());
             }
@@ -184,7 +220,7 @@ public class mMarket extends LinearLayout {
 
     }
 
-    public void toggleToolbar(boolean isHome){
+  /*  public void toggleToolbar(boolean isHome){
         if(isHome){
             binding.contentLogo.setVisibility(View.VISIBLE);
             binding.contentText.setVisibility(View.GONE);
@@ -197,7 +233,7 @@ public class mMarket extends LinearLayout {
             binding.tickerScroll.setVisibility(View.VISIBLE);
             startAutoScroll();
         }
-    }
+    }*/
 
     public Activity getActivity(Context context)
     {

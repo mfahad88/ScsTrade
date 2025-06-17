@@ -48,7 +48,7 @@ class WatchListDetailActivity : BaseActivity() {
             WatchListViewModelFactory(this.application,sharedViewModel)
         ).get(WatchListViewModel::class.java)
         binding = ActivityWatchListDetailBinding.inflate(LayoutInflater.from(this))
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Watchlist"
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)

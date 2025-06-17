@@ -51,7 +51,7 @@ class BuySellActivity : BaseActivity() {
         val portfolioDetails=intent.getParcelableExtra<PortfolioDetails>(AppConstants.PORTFOLIO_DETAIL)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
-            binding.toolbar.toggleToolbar(false)
+            // binding.toolbar.toggleToolbar(false)
             binding.toolbar.binding.market.text = "Sell Stock"
             binding.toolbar.binding.apply {
 //                subTitle.text = "Sell Stock"
@@ -61,7 +61,7 @@ class BuySellActivity : BaseActivity() {
         }
         if(intent.getBooleanExtra(AppConstants.IS_BUY,false)){
             findViewById<View>(R.id.buy_container).visibility = View.VISIBLE
-            binding.toolbar.toggleToolbar(false)
+            // binding.toolbar.toggleToolbar(false)
             binding.toolbar.binding.market.text = "Buy Stock"
             binding.toolbar.binding.apply {
 //                subTitle.text = "Buy Stock"
@@ -73,7 +73,7 @@ class BuySellActivity : BaseActivity() {
             binding.toolbar.binding.apply {
 //                subTitle.text = "Dividend"
             }
-            binding.toolbar.toggleToolbar(false)
+            // binding.toolbar.toggleToolbar(false)
             binding.toolbar.binding.market.text = "Dividend"
 //
 //            (binding.dividendContainer as View).visibility = View.VISIBLE

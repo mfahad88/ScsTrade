@@ -64,9 +64,12 @@ public class mLineChart extends LineChart {
         return entries;
     }
 
-    public void setEntries(List<Entry> entries,boolean isRightEnabled) {
+    public void setEntries(List<Entry> entries,boolean isxAxis,boolean isRightEnabled) {
         this.entries = entries;
+        this.getXAxis().setEnabled(isxAxis);
         this.isRightEnabled = isRightEnabled;
+        this.setExtraOffsets(0f,0f,0f,0f);
+        this.setViewPortOffsets(0f,0f,0f,0f);
         init(context,attrs);
     }
 
@@ -138,6 +141,9 @@ public class mLineChart extends LineChart {
         rightAxis.setDrawGridLines(false);
         rightAxis.setEnabled(isRightEnabled);
 
+        this.setHighlightPerTapEnabled(false);
+        this.setHighlightPerDragEnabled(false);
+        this.getData().setHighlightEnabled(false);
         this.notifyDataSetChanged();
 //        this.animateXY(5000,5000);
         this.invalidate();

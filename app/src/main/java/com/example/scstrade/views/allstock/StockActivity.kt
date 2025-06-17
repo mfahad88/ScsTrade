@@ -51,7 +51,7 @@ class StockActivity : BaseActivity() {
         val b= intent.extras
         if(b!=null) {
             val fragment = AllStockFragment()
-            binding.toolbar.toggleToolbar(false)
+            // binding.toolbar.toggleToolbar(false)
 
             if(b.getString("index")!=null) {
                 binding.toolbar.binding.market.text = b.getString("index")?.replace("Index", "")

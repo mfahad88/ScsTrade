@@ -27,9 +27,9 @@ class IndexAdapter(
                 val percentChange=Utils.formatDouble(kseIndices.nETCHANGE.toDouble().div(kseIndices.preClose.toDouble()).times(100))
                 val net_Change = "${(if(kseIndices.nETCHANGE.toDouble()<0.0) "" else "+")} ${Utils.formatDouble(kseIndices.nETCHANGE.toDouble())}"
                 kse100.text = kseIndices.iNDEXCODE
-                tradingValue.text = if(kseIndices.vALUETRADED!="") Utils.convertToMillions(kseIndices.vALUETRADED.toDouble()) else 0.0.toString()
+                tradingValue.text = if(kseIndices.cURRENTINDEX!="") Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble()) else 0.0.toString()
                 netChange.text = "${percentChange} % ${net_Change}"
-                volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble()) else 0.0.toString()}"
+                volume.text = "MVol: ${if(kseIndices.vOLUMETRADED!="")Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble()) else 0.0.toString()}"
                 if(kseIndices.nETCHANGE.toDouble()<0.0){
                     binding.marketDown.visibility = View.VISIBLE
                     binding.marketUp.visibility = View.GONE
@@ -62,7 +62,7 @@ class IndexAdapter(
                         interval+=1
                         Entry(interval.toFloat(),it.tradingHigh.toFloat())
                     }
-                    binding.lineChart.setEntries(entries,false)
+                    binding.lineChart.setEntries(entries,false,false)
 
                     binding.lineChart.moveViewToX(interval.toFloat())
                     binding.lineChart.xAxis.apply {

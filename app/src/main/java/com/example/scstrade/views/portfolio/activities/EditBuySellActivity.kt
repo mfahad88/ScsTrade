@@ -38,7 +38,7 @@ class EditBuySellActivity : BaseActivity() {
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
         sharedViewModel.getPortfolioDetails(portfolioMainID)
         setContentView(binding.root)
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Edit"
         binding.tabLayout.getTabAt(0)?.select()
         loadFragment(BuyFragment())

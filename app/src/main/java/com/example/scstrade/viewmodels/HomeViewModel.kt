@@ -11,37 +11,43 @@ import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.RetrofitInstance
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(application: Application):AndroidViewModel(application) {
     val repository: MainRepository= MainRepository(RetrofitInstance.create(ApiService::class.java),application)
     val isLineSelected=MutableLiveData<Boolean>(true)
     val isCandleSelected=MutableLiveData<Boolean>(false)
     val chartItem = MutableLiveData<Resource<List<ChartItem>>>()
-    val selectedTime= MutableLiveData(arrayOf(true,false,false,false,false))
+    val selectedTime= MutableLiveData(arrayOf(true,false,false,false,false,false))
     val selectedIndex=MutableLiveData<KSEIndices>()
 
     fun fetchChart(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             while (true) {
-                chartItem.value = repository.getIndexChart(
+                val result= repository.getIndexChart(
                     if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kmi 30")
                             ?: false
-                    ) "kmi30"
+                    ) "KMI 30"
                     else if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 100")
                             ?: false
-                    ) "kse"
+                    ) "KSE 100"
                     else if (selectedIndex.value?.iNDEXCODE?.lowercase()?.contains("kse 30")
                             ?: false
-                    ) "kse30"
-                    else "kseall",
-                    if (selectedTime.value?.indexOf(true) == 0) 1
-                    else if (selectedTime.value?.indexOf(true) == 1) 5
-                    else if (selectedTime.value?.indexOf(true) == 2) 15
-                    else if (selectedTime.value?.indexOf(true) == 3) 30
-                    else 60
+                    ) "KSE 30"
+                    else "KSE ALL",
+                    if (selectedTime.value?.indexOf(true) == 0) "1"
+                    else if (selectedTime.value?.indexOf(true) == 1) "5"
+                    else if (selectedTime.value?.indexOf(true) == 2) "15"
+                    else if (selectedTime.value?.indexOf(true) == 3) "30"
+                    else if (selectedTime.value?.indexOf(true) == 4) "60"
+                    else "1D"
                 )
+                withContext(Dispatchers.Main){
+                    chartItem.postValue(result)
+                }
                 delay(5000)
             }
         }
@@ -51,19 +57,22 @@ class HomeViewModel(application: Application):AndroidViewModel(application) {
     fun setSelectedTime(time:Int){
         when(time){
             1-> {
-                selectedTime.value = arrayOf(true, false, false,false, false)
+                selectedTime.value = arrayOf(true, false, false,false, false, false)
             }
             5-> {
-                selectedTime.value = arrayOf(false, true, false,false, false)
+                selectedTime.value = arrayOf(false, true, false,false, false, false)
             }
             15-> {
-                selectedTime.value = arrayOf(false, false, true,false, false)
+                selectedTime.value = arrayOf(false, false, true,false, false, false)
             }
             30-> {
-                selectedTime.value = arrayOf(false, false, false,true, false)
+                selectedTime.value = arrayOf(false, false, false,true, false, false)
             }
             60-> {
-                selectedTime.value = arrayOf(false, false, false,false, true)
+                selectedTime.value = arrayOf(false, false, false,false, true, false)
+            }
+            1440->{
+                selectedTime.value = arrayOf(false, false, false,false, false, true)
             }
         }
         fetchChart()

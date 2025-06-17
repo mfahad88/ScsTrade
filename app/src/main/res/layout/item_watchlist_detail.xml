@@ -78,6 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="@string/companyName"
+            android:lines="1"
+            android:ellipsize="end"
             android:textAppearance="@style/companyName"
             android:textFontWeight="400"
             app:layout_constraintEnd_toStartOf="@+id/low"

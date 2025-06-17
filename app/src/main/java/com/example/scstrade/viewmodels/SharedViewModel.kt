@@ -94,8 +94,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     val result = repository.fetchAllData("AllData")
                     val result1 = repository.fetchAllData("FutureData")
                     withContext(Dispatchers.Main) {
-                        mutableAllData.value = result
-                        mutableFuture.value = result1
+                        mutableAllData.postValue(result)
+                        mutableFuture.postValue(result1)
                     }
                     delay(5000)
                 }
@@ -107,7 +107,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun fetchChart(symbol:String){
         viewModelScope.launch (Dispatchers.IO){
             if(isConnected.value==true) {
-                val result = repository.getIndexChart(symbol, 1)
+                val result = repository.getIndexChart(symbol, "1")
                 while (true) {
                     withContext(Dispatchers.Main) {
                         mutableChart.value = result
@@ -121,7 +121,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun fetchOnceChart(symbol:String){
         viewModelScope.launch (Dispatchers.IO){
             if(isConnected.value==true) {
-                val result = repository.getIndexChart(symbol, 1)
+                val result = repository.getIndexChart(symbol, "1")
                 withContext(Dispatchers.Main) {
                     mutableOnceChart.value = result
                 }

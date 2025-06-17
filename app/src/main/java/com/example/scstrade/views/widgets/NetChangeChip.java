@@ -61,7 +61,7 @@ public class NetChangeChip extends RelativeLayout {
         double changePercent = (netChange / preClose) * 100;
         String percentValue = Utils.Companion.formatDouble(changePercent);
 
-        String result = changeSign + changeValue + " " + changeSign + "(" + percentValue + "%)";
+        String result = changeSign + changeValue + " " + changeSign + "" + percentValue + "%";
         if (nChange.contains("-")) {
             binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
             binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));

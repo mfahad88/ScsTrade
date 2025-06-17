@@ -68,7 +68,7 @@ interface ApiService {
     @GET(value = "/Chart")
     suspend fun getChart(
         @Query("symbol") symbol: String,
-        @Query("resolution") resolution: Int
+        @Query("resolution") resolution: String
     ): List<ChartItem>
 
     @GET(value = "/Data")

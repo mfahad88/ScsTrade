@@ -79,7 +79,7 @@ class SnapshotActivity : BaseActivity() {
                 sharedViewModel.snapshotDetail(symbol)
             }
         })
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.apply {
             market.text = intent.extras?.getString(AppConstants.SYMBOL)?:""
 

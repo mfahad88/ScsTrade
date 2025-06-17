@@ -39,14 +39,14 @@ class ChartActivity : BaseActivity() {
         fetchUser(this)
         if(!Utils.getSharedPreference(this, LIGHT_MODE)){
             when(indices){
-                "KSE All Share Index" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE All"}")
+                "KSE All" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE ALL"}")
                 else -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileBlackNew.aspx?userid=E${login.registrationEmail}&symbol=${indices}")
 
             }
 
         }else{
             when(indices){
-                "KSE All Share Index" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE All"}")
+                "KSE All" -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=E${login.registrationEmail}&symbol=${"KSE ALL"}")
                 else -> binding.chart.loadUrl("https://scstrade.com/TechnicalAnalysis/TA_RealTimeChartingMobileNew.aspx?userid=E${login.registrationEmail}&symbol=${indices}")
             }
         }

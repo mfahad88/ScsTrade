@@ -3,14 +3,17 @@ package com.example.scstrade.views.allstock
 import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
+import com.example.scstrade.databinding.ItemHeadingBinding
 import com.example.scstrade.databinding.ItemStocksBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -18,10 +21,10 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
 
 
-class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false):
-    RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): ListAdapter<ListItem,RecyclerView.ViewHolder>(StockDiffCallback())
+    /*RecyclerView.Adapter<StockAdapter.StockViewHolder>()*/ {
     var previousStockItem: StockItem?=null
-    private var list:List<StockItem>?=null
+//    private var list:List<StockItem>?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(stockItem: StockItem?) {
             if (stockItem!=null){
@@ -57,7 +60,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 }
 
 
-                binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} (${if(stockItem.cH<0.0) "" else "+"} ${Utils.formatDouble(stockItem.cHP)}%)"
+                binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} ${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cHP)}%"
                 if(stockItem.cH<0.0){
                     binding.netChange.setTextColor(ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
                 }else if(stockItem.cH>0.0){
@@ -73,56 +76,91 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
                 previousStockItem=stockItem
             }
+            if(isMore){
 
+                binding.apply {
+                    binding.layoutMore.visibility=View.VISIBLE
+                    binding.moreDetail.setOnClickListener {
+                        if(binding.layoutDetails.visibility==View.GONE){
+                            binding.layoutDetails.visibility=View.VISIBLE
+                            binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.drop_down_icon,0)
+                        }else{
+                            binding.layoutDetails.visibility=View.GONE
+                            binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.drop_up_icon,0)
+                        }
+                    }
+                }
+            }
         }
 
 
     }
 
-    private class StockDiffCallback :  DiffUtil.ItemCallback<StockItem>(){
-        override fun areItemsTheSame(oldItem: StockItem, newItem: StockItem): Boolean {
-            return oldItem.sYM.equals(newItem.sYM)
+    inner class HeadingViewHolder( val binding: ItemHeadingBinding):RecyclerView.ViewHolder(binding.root) {
+        fun bind(title: String?) {
+            if (title!=null){
+                binding.leaders.text = title
+            }
+
         }
 
-        override fun areContentsTheSame(oldItem: StockItem, newItem: StockItem): Boolean {
+
+    }
+    override fun getItemViewType(position: Int): Int {
+        return getItem(position).viewType
+    }
+
+    private class StockDiffCallback :  DiffUtil.ItemCallback<ListItem>(){
+        override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
+            return when {
+                oldItem is ListItem.Header && newItem is ListItem.Header ->
+                    oldItem.title == newItem.title
+                oldItem is ListItem.Item && newItem is ListItem.Item ->
+                    oldItem.stockItem.sYM == newItem.stockItem.sYM
+                else -> false
+            }
+//            return oldItem.sYM.equals(newItem.sYM)
+        }
+
+        override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
             return oldItem==newItem
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType){
+            ListItem.VIEW_TYPE_HEADER -> {
+                val binding=ItemHeadingBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                return  HeadingViewHolder(binding)
+            }
+            ListItem.VIEW_TYPE_ITEM -> {
+                val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                return  StockViewHolder(binding)
+            }
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
 
-        val binding=ItemStocksBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return  StockViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
+ /*   override fun getItemCount(): Int {
         return list?.size?:0
-    }
-    fun submitList(list:List<StockItem>){
+    }*/
+   /* fun submitList(list:List<StockItem>){
         this.list = list
         notifyDataSetChanged()
-    }
-    override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
-        holder.bind(list?.get(position))
+    }*/
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+//        holder.bind(list?.get(position))
+     val start = System.nanoTime()
 
 
-
-        if(isMore){
-
-            holder.apply {
-                binding.layoutMore.visibility=View.VISIBLE
-                binding.moreDetail.setOnClickListener {
-                    if(binding.layoutDetails.visibility==View.GONE){
-                        binding.layoutDetails.visibility=View.VISIBLE
-                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.drop_down_icon,0)
-                    }else{
-                        binding.layoutDetails.visibility=View.GONE
-                        binding.moreDetail.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.drop_up_icon,0)
-                    }
-                }
-            }
-        }
+     when (val item = getItem(position)) {
+         is ListItem.Header -> (holder as HeadingViewHolder).bind(item.title)
+         is ListItem.Item -> (holder as StockViewHolder).bind(item.stockItem)
+     }
+     val end = System.nanoTime()
+     Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
     }
 
 

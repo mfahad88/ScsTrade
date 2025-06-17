@@ -31,7 +31,7 @@ class StockDetailActivity : BaseActivity() {
         binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Portfolio"
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)

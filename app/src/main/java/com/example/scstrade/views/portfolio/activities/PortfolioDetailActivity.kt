@@ -42,7 +42,7 @@ class PortfolioDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityPortfolioDetailBinding.inflate(LayoutInflater.from(this))
-        binding.toolbar.toggleToolbar(false)
+        // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Portfolio"
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)

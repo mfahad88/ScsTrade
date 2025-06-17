@@ -45,7 +45,6 @@
             android:layout_width="0dp"
             android:layout_height="61dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,14 +122,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             app:cardCornerRadius="12dp"
             app:contentPaddingTop="23dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/aof_card"
+            app:layout_constraintStart_toStartOf="@+id/aof_card"
             app:layout_constraintTop_toBottomOf="@+id/aof_card"
             app:strokeWidth="0dp">
 
@@ -157,7 +154,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/leaders_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,20 +166,21 @@
             android:textAppearance="@style/leaders_"
             android:translationY="-1.11sp"
             app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerLeaders"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/leaders_"
-            app:layout_constraintTop_toBottomOf="@+id/leaders_"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             tools:listitem="@layout/item_stocks" />
 
 
-        <TextView
+        <!--<TextView
             android:id="@+id/gainer_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -228,7 +226,7 @@
             android:paddingBottom="130dp"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView"
             app:layout_constraintStart_toStartOf="@+id/leaders_"
-            app:layout_constraintTop_toBottomOf="@+id/loser_" />
+            app:layout_constraintTop_toBottomOf="@+id/loser_" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

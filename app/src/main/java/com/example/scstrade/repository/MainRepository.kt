@@ -87,7 +87,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
 
 
 
-    suspend fun getIndexChart(symbol:String, resolution:Int): Resource<List<ChartItem>> {
+    suspend fun getIndexChart(symbol:String, resolution:String): Resource<List<ChartItem>> {
         try {
             return Resource.Success(apiService.getChart(symbol, resolution))
         }catch (e:Exception){

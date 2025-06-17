@@ -64,17 +64,36 @@ class AllStockFragment : Fragment() {
 
                     0-> {
 
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+                        val fullList = mutableListOf<ListItem>()
+                        list.forEach {
+                            fullList +=ListItem.Item(it)
+                        }
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
 
                     }
                     1 -> {
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                        val fullList = mutableListOf<ListItem>()
+                        list.sortedByDescending { it.v }.forEach {
+                            fullList +=ListItem.Item(it)
+                        }
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
                     }
                     2 -> {
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                        val fullList = mutableListOf<ListItem>()
+                        list.sortedByDescending { it.cHP  }.forEach {
+                            fullList +=ListItem.Item(it)
+                        }
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
                     }
                     3 -> {
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                        val fullList = mutableListOf<ListItem>()
+                        list.sortedBy { it.cHP }.forEach {
+                            fullList +=ListItem.Item(it)
+                        }
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                     }
 
                 }
@@ -98,11 +117,43 @@ class AllStockFragment : Fragment() {
                         list = result.data ?: emptyList()
 
                         when(binding.tabLayout.selectedTabPosition){
+                            0-> {
 
-                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
-                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
-                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
-                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                                val fullList = mutableListOf<ListItem>()
+                                list.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+
+                            }
+                            1 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedByDescending { it.v }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                            }
+                            2 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedByDescending { it.cHP  }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                            }
+                            3 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedBy { it.cHP }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                            }
+//                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+//                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+//                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+//                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                         }
 //                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
                         binding.loader.visibility=View.GONE
@@ -142,11 +193,43 @@ class AllStockFragment : Fragment() {
                             }
                         }
                         when(binding.tabLayout.selectedTabPosition){
+                            0-> {
 
-                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
-                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
-                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
-                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                                val fullList = mutableListOf<ListItem>()
+                                list.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+
+                            }
+                            1 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedByDescending { it.v }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+                            }
+                            2 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedByDescending { it.cHP  }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+                            }
+                            3 -> {
+                                val fullList = mutableListOf<ListItem>()
+                                list.sortedBy { it.cHP }.forEach {
+                                    fullList +=ListItem.Item(it)
+                                }
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                            }
+//                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
+//                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
+//                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
+//                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                         }
 //                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
                         binding.loader.visibility=View.GONE
