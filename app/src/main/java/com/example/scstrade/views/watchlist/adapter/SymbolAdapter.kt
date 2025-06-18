@@ -22,8 +22,13 @@ class SymbolAdapter(private val itemList: List<StockItem>, private val onItemCli
             Glide.with(binding.root.context).load(item.companyLogo).circleCrop()
                 .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
                 .into(binding.imageView6)
-            binding.root.setOnClickListener {
+            binding.main.setOnClickListener {
+                if(binding.imageViewSelected.visibility == View.INVISIBLE){
                 binding.imageViewSelected.visibility = View.VISIBLE
+
+                }else{
+                    binding.imageViewSelected.visibility = View.INVISIBLE
+                }
                 onItemClick(item)
             }
         }

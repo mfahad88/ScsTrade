@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -60,9 +61,17 @@ class  NewsDetailActivity : BaseActivity() {
                         binding.cardTitle.setTextColor(Color.WHITE)
                         binding.pubDate.setTextColor(Color.WHITE)
                         binding.imageView14.setColorFilter(Color.WHITE)
-                        binding.source.setOnClickListener {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(extractSource(data?.newsDesc?:"")))
-                            this.startActivity(intent)
+                        if(!TextUtils.isEmpty(extractSource(data?.newsDesc?:""))) {
+                            binding.source.visibility=View.VISIBLE
+                            binding.source.setOnClickListener {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(extractSource(data?.newsDesc ?: ""))
+                                )
+                                this.startActivity(intent)
+                            }
+                        }else{
+                            binding.source.visibility=View.GONE
                         }
                     }
                 }

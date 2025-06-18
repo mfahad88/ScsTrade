@@ -76,6 +76,7 @@ class WatchListDetailActivity : BaseActivity() {
         binding.buttonAdd.setOnClickListener {
             val intent= Intent(this,AddSymbolActivity::class.java)
             if (bundle != null) {
+                intent.putExtra(AppConstants.MODE,1)
                 intent.putExtras(bundle)
             }
 
@@ -124,14 +125,13 @@ class WatchListDetailActivity : BaseActivity() {
         binding.recyclerView.apply {
             layoutManager= LinearLayoutManager(this@WatchListDetailActivity, LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(20.dp))
-            adapter= WatchListDetailAdapter( emptyList()){ str, item->
-                if(str.contains("delete",true)){
-                    Utils.showConfirmationDialog(this.context,null,null,"Are you sure you want to delete this symbol?"){
-                        val stockItem=list.filter { it.watchListSymbol.equals(item.sYM,true) }.first()
-                        viewModel.deleteSymbol(stockItem.watchListDetailID,WatchListMainID?:0)
-                    }
+            adapter= WatchListDetailAdapter( emptyList()){  item->
+                val stockItem=list.filter { it.watchListSymbol.equals(item.sYM,true) }.first()
+                viewModel.deleteSymbol(stockItem.watchListDetailID,WatchListMainID?:0)
+             /*   Utils.showConfirmationDialog(this.context,null,null,"Are you sure you want to delete this symbol?"){
 
-                }
+                }*/
+
             }
             (binding.recyclerView.adapter as WatchListDetailAdapter).getItemTouchHelper().attachToRecyclerView(this)
         }

@@ -55,11 +55,18 @@ class WatchlistFragment : Fragment() {
         }
 
         binding.buttonAdd.setOnClickListener {
-            val bottomSheetFragment=AddWatchListBottomSheetFragment()
+            val intent= Intent(requireContext(),AddSymbolActivity::class.java)
+            intent.putExtra(AppConstants.MODE,0)
+            /*if (bundle != null) {
+                intent.putExtras(bundle)
+            }*/
+
+            startActivity(intent)
+            /*val bottomSheetFragment=AddWatchListBottomSheetFragment()
             val bundle=Bundle()
             bundle.putInt(AppConstants.MODE,0)
             bottomSheetFragment.arguments=bundle
-            bottomSheetFragment.show(childFragmentManager,"AddWatchList")
+            bottomSheetFragment.show(childFragmentManager,"AddWatchList")*/
         }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)

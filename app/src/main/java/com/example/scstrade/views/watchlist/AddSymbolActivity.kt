@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAddSymbolBinding
@@ -41,6 +44,8 @@ class AddSymbolActivity : BaseActivity() {
     lateinit var sharedViewModel: SharedViewModel
     lateinit var viewModel: WatchListViewModel
     lateinit var login:LoginDataItem
+    var myList=ArrayList<String>()
+    var mode:Int=-1
     var selectedItem=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +63,86 @@ class AddSymbolActivity : BaseActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+        mode=intent.getIntExtra(AppConstants.MODE,0)
         val bundle=intent.extras
         selectedItem=bundle?.getInt(AppConstants.WatchListMainID)?:0
         viewModel= ViewModelProvider(this,
             WatchListViewModelFactory(this.application,(this.application as MyApp).viewModel)
         ).get(WatchListViewModel::class.java)
         sharedViewModel = (this.application as MyApp).viewModel
+        if(mode==0) {
+            binding.watchlistName.textInputEditText.addTextChangedListener {
+
+                if (!TextUtils.isEmpty(it.toString()) && binding.watchlistName.textInputEditText.length() > 3) {
+                    binding.btnDone.isEnabled = true
+                }
+            }
+        }else{
+            binding.btnDone.isEnabled = true
+            binding.watchlistName.visibility = View.GONE
+        }
+        binding.btnDone.setOnClickListener {
+            if(mode==0){
+                if(myList.size>0) {
+                    viewModel.createWatchList(
+                        binding.watchlistName.text.toString(),
+                        login.registrationID ?: 0
+                    )
+                }else{
+                    Utils.showError(binding.root, getString(R.string.please_select_a_symbol))
+                }
+            }else{
+
+                if(myList.size>0){
+                    myList.forEach {
+                        viewModel.addSymbol(selectedItem,it)
+                    }
+                }else{
+                    Utils.showError(binding.root, getString(R.string.please_select_a_symbol))
+                }
+            }
+        }
+
+        viewModel.mutableCreate.observe(this, Observer {
+            when(it){
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                    Utils.showError(binding.root,it.message?:"An error occurred")
+                }
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    selectedItem = it.data?.last()?.WatchListMainID!!
+                    myList.forEach {
+                        viewModel.addSymbol(selectedItem,it)
+                    }
+                   /* val result = Bundle().apply { putString(AppConstants.BOTTOM_SHEET_STATUS,"Done") }
+                    parentFragmentManager.setFragmentResult(AppConstants.BOTTOM_SHEET,result)
+
+                    this.dismiss()*/
+                }
+            }
+        })
+        viewModel.mutableSymAdd.observe(this, Observer {
+            when(it){
+                is Resource.Error -> {
+
+                    Utils.showError(binding.root, it.message ?: "An error occurred")
+                }
+                is Resource.Loading ->  {
+                    if(mode>0) {
+                        binding.loader.visibility = View.VISIBLE
+                    }
+                }
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
+                    if(it.data?.last()?.watchListSymbol.equals(myList.last())){
+                        finish()
+                    }
+                }
+            }
+        })
         binding.symbol.textInputEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -98,9 +177,13 @@ class AddSymbolActivity : BaseActivity() {
                 list.addAll(value.data?.map { it.sN }?.toSet()?.toList()?: emptyList())
                 binding.sector.adapter=ArrayAdapter(this@AddSymbolActivity,android.R.layout.simple_list_item_1,list)
 
-                binding.recyclerView.adapter= SymbolAdapter(value.data?: emptyList()){
-                    viewModel.addSymbol(selectedItem,it.sYM)
-
+                binding.recyclerView.adapter= SymbolAdapter(value.data?: emptyList()){res->
+//                    viewModel.addSymbol(selectedItem,it.sYM)
+                    if(myList.contains(res.sYM)){
+                        myList.remove(res.sYM)
+                    }else {
+                        myList.add(res.sYM)
+                    }
 //                    viewModel.getWatchListDetail(sharedViewModel,selectedItem)
 
                 }

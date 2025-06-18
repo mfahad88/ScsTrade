@@ -44,7 +44,7 @@ class AllStockFragment : Fragment() {
         future = arguments?.getString("future")?:null
 
         binding.recyclerIndices.apply {
-            adapter= StockAdapter(true)
+            adapter= StockAdapter(false)
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))
         }

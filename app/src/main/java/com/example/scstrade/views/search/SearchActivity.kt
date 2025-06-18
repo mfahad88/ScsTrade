@@ -63,6 +63,12 @@ class SearchActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         binding=ActivitySearchBinding.inflate(LayoutInflater.from(this))
+        binding.searchText.post {
+            binding.searchText.requestFocus()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.searchText, InputMethodManager.SHOW_IMPLICIT)
+        }
+
         sharedViewModel = (this.application as MyApp).viewModel
 
         setContentView(binding.root)

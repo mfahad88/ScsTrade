@@ -1487,5 +1487,8 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textSize">34sp</item>
     </style>
-
+    <style name="CustomTabLayout" parent="Widget.Material3.TabLayout">
+        <item name="tabPaddingTop">-10dp</item>
+        <item name="tabPaddingBottom">-10dp</item>
+    </style>
 </resources>

@@ -60,13 +60,13 @@ public class ValueChip extends RelativeLayout {
     public void setText(String text){
         if(!TextUtils.isEmpty(text)){
             Double vol=Double.parseDouble(text);
-            if (text.contains("-")) {
+            /*if (text.contains("-")) {
                 binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
                 binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
             } else {
                 binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
                 binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
-            }
+            }*/
             /*if(previousText.equals(text)){
                 binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_blue));
                 binding.tv.setTextColor(Color.parseColor("#1A73E8"));

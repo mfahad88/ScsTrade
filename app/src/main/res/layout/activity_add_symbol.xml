@@ -8,6 +8,8 @@
     android:background="@color/md_theme_surface"
     tools:context=".views.watchlist.AddSymbolActivity">
 
+
+
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -15,37 +17,107 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content"/>
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:id="@+id/symbol"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="15dp"
-        app:hintText="@string/symbol"
-        app:hintTextField="@string/enter_symbol"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <Spinner
-        android:id="@+id/sector"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-        android:paddingVertical="5dp"
-        app:layout_constraintEnd_toEndOf="@id/symbol"
-        app:layout_constraintStart_toStartOf="@id/symbol"
-        app:layout_constraintTop_toBottomOf="@id/symbol" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_symbol"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/symbol"
-        app:layout_constraintStart_toStartOf="@id/symbol"
-        app:layout_constraintTop_toBottomOf="@id/sector" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/watchlistName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                app:hintText="@string/watchlist_name"
+                app:hintTextField="@string/enter_watch_list_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/symbol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/watchlistName"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                app:hintText="@string/symbol"
+                app:hintTextField="@string/enter_symbol"
+                app:layout_constraintEnd_toEndOf="@+id/watchlistName"
+                app:layout_constraintStart_toStartOf="@+id/watchlistName"
+                app:layout_constraintTop_toBottomOf="@+id/watchlistName" />
+
+            <Spinner
+                android:id="@+id/sector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/symbol"
+                android:layout_marginHorizontal="15dp"
+                android:paddingVertical="5dp"
+                app:layout_constraintEnd_toEndOf="@id/symbol"
+                app:layout_constraintStart_toStartOf="@id/symbol"
+                app:layout_constraintTop_toBottomOf="@id/symbol" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sector"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_above="@id/btnDone"
+                app:layout_constraintBottom_toTopOf="@+id/btnDone"
+                app:layout_constraintEnd_toEndOf="@id/symbol"
+                app:layout_constraintStart_toStartOf="@id/symbol"
+                app:layout_constraintTop_toBottomOf="@id/sector"
+                tools:listitem="@layout/item_symbol" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="Done"
+                android:enabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView" />
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/load_anim"
+                tools:visibility="visible" />
+
+        </RelativeLayout>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

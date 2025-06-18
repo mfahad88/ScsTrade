@@ -439,6 +439,8 @@
     <string name="quote">Quote</string>
     <string name="status">Market:</string>
     <string name="alerts">Alerts</string>
+    <string name="watchlist_name">Watchlist Name</string>
+    <string name="please_select_a_symbol">Please select a symbol</string>
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

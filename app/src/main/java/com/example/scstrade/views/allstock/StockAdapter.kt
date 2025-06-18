@@ -1,5 +1,7 @@
 package com.example.scstrade.views.allstock
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
@@ -7,7 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +30,42 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
     var previousStockItem: StockItem?=null
 //    private var list:List<StockItem>?=null
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
+    fun fadeIn(view: View, duration: Long = 500) {
+        view.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1f)
+                .setDuration(duration)
+                .setListener(object :AnimatorListenerAdapter(){
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.cardValueTrade.postDelayed({
+                            binding.cardValueTrade.visibility=View.INVISIBLE
+                        },1000)
+                      /*  postDelayed({
+                            animate().alpha(0f).setDuration(1000).withEndAction {
+                                postDelayed({
+                                    binding.cardValueTrade.visibility=View.INVISIBLE
+                                },100)
+                            }
+                        },2000)*/
+//                        fadeOut(view,duration)
+                    }
+                })
+        }
+    }
+
+    fun fadeOut(view: View, duration: Long = 300) {
+        view.animate()
+            .alpha(0f)
+            .setDuration(duration)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.cardValueTrade.visibility=View.INVISIBLE
+//                    view.visibility = View.INVISIBLE
+                }
+            })
+    }
         fun bind(stockItem: StockItem?) {
             if (stockItem!=null){
                 binding.root.setOnClickListener {
@@ -53,12 +93,41 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.bid.text = "Bid: ${stockItem.bP}"
                 binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
                 binding.ask.text = "Ask: ${stockItem.aP}"
-                if(previousStockItem?.cL?.compareTo(stockItem?.cL?:0.0)!=0){
-                    Utils.animatedValueChange(previousStockItem?.cL?:0.0,stockItem.cL, onUpdate = {
-                        binding.valueTrade.text = String.format("%.2f",stockItem.cL)
-                    })
+
+                binding.valueTrade.text = String.format("%.2f",stockItem.cL)
+                val compare = previousStockItem?.cL?:0.0.compareTo(stockItem.cL).toDouble()
+                if(compare==0.0){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+//                    binding.frameValueTrade.setBackgroundResource(0)
+//                    binding.frameValueTrade.visibility = View.INVISIBLE
+                }else if(compare<0.0){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                   /* binding.frameValueTrade.setBackground(
+                        AppCompatResources.getDrawable(
+                            binding.root.context,
+                            R.drawable.rounded_gray_green
+                        )
+                    )*/
+                    fadeIn(binding.frameValueTrade)
+
+                }else if (compare>0.0){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                   /* binding.frameValueTrade.setBackground(
+                        AppCompatResources.getDrawable(
+                            binding.root.context,
+                            R.drawable.rounded_gray_red
+                        )
+                    )*/
+                    fadeIn(binding.frameValueTrade)
+
                 }
 
+                /*if(previousStockItem?.cL?.compareTo(stockItem?.cL?:0.0)!=0){
+                    Utils.animatedValueChange(previousStockItem?.cL?:0.0,stockItem.cL, onUpdate = {
+
+                    })
+                }
+*/
 
                 binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} ${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cHP)}%"
                 if(stockItem.cH<0.0){
@@ -73,6 +142,8 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.low.text = "L: ${Utils.formatDouble(stockItem.lP)}"
                 binding.high52.text = if(!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"
                 binding.low52.text = if(!TextUtils.isEmpty(stockItem.low52)) stockItem.high52 else "0.0"
+
+                Log.e("Stock:","${previousStockItem.toString()}\n${stockItem.toString()}")
 
                 previousStockItem=stockItem
             }

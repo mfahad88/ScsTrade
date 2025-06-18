@@ -90,21 +90,21 @@
                 android:id="@+id/valueTrade"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/valueTradeIndices"
                 app:layout_constraintEnd_toEndOf="@+id/label_text"
                 app:layout_constraintStart_toStartOf="@+id/label_text"
-                app:layout_constraintTop_toBottomOf="@+id/label_text" />
+                app:layout_constraintTop_toBottomOf="@+id/volume" />
 
             <com.example.scstrade.views.widgets.VolumeChip
                 android:id="@+id/volume"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/volumeIndices"
                 app:layout_constraintEnd_toEndOf="@+id/valueTrade"
                 app:layout_constraintStart_toStartOf="@+id/valueTrade"
-                app:layout_constraintTop_toBottomOf="@+id/valueTrade" />
+                app:layout_constraintTop_toBottomOf="@+id/label_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

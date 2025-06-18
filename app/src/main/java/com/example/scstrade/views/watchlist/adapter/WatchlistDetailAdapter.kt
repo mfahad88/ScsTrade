@@ -16,12 +16,12 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import java.util.Collections
 
-class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
+class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
     class WatchListDetailViewHolder(private val binding: ItemWatchlistDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             stockItem: StockItem,
-            onItemClick: (String, StockItem) -> Unit
+            onItemClick: ( StockItem) -> Unit
         ) {
 
             Glide.with(binding.root.context).load(stockItem.companyLogo)
@@ -36,10 +36,10 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
             binding.symbol.text = stockItem.sYM
             binding.companyName.text = stockItem.nM
             binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
-            binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
-            binding.bid.text = "Bid: ${stockItem.bP}"
-            binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
-            binding.ask.text = "Ask: ${stockItem.aP}"
+            binding.bidVol.text = "${Utils.convertToMillions(stockItem.bV.toDouble())}"
+            binding.bid.text = "${stockItem.bP}"
+            binding.askVol.text = "${Utils.convertToMillions(stockItem.aV.toDouble())}"
+            binding.ask.text = "${stockItem.aP}"
             binding.valueTrade.text = String.format("%.2f",stockItem.cL)
             binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
             binding.high.text = "H: ${stockItem.hP.toString()}"
@@ -48,9 +48,11 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (String,
             binding.low52.text = stockItem.low52
 
             binding.imageViewThree.setOnClickListener {
-                Utils.showPopup(binding.root.context,it,null, listOf("Delete Company")){
-                    onItemClick(it,stockItem)
-                }
+                binding.imageViewThree.animate().rotation(180f).setDuration(500).start()
+                onItemClick(stockItem)
+                /*Utils.showPopup(binding.root.context,it,null, listOf("Delete Company")){
+
+                }*/
             }
         }
     }
