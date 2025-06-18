@@ -8,9 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +24,6 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.allstock.ListItem
 import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.aof.AofActivity
-import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry

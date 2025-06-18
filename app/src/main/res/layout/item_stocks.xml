@@ -116,6 +116,7 @@
             app:layout_constraintTop_toTopOf="@+id/symbol">
 
             <com.google.android.material.card.MaterialCardView
+                app:strokeWidth="0dp"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
                 android:id="@+id/cardValueTrade"

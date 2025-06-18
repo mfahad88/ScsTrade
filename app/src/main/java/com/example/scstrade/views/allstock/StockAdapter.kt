@@ -4,16 +4,15 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
+import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
-import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
@@ -23,51 +22,53 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
+import com.google.android.material.card.MaterialCardView
 
 
-class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): ListAdapter<ListItem,RecyclerView.ViewHolder>(StockDiffCallback())
-    /*RecyclerView.Adapter<StockAdapter.StockViewHolder>()*/ {
-    var previousStockItem: StockItem?=null
-//    private var list:List<StockItem>?=null
+class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): /*ListAdapter<ListItem,RecyclerView.ViewHolder>(StockDiffCallback())*/
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var prevList=ArrayList<ListItem>()
+    var list=ArrayList<ListItem>()
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
-    fun fadeIn(view: View, duration: Long = 500) {
-        view.apply {
-            alpha = 0f
-            visibility = View.VISIBLE
-            animate()
-                .alpha(1f)
-                .setDuration(duration)
-                .setListener(object :AnimatorListenerAdapter(){
-                    override fun onAnimationEnd(animation: Animator) {
-                        binding.cardValueTrade.postDelayed({
-                            binding.cardValueTrade.visibility=View.INVISIBLE
-                        },1000)
-                      /*  postDelayed({
-                            animate().alpha(0f).setDuration(1000).withEndAction {
-                                postDelayed({
-                                    binding.cardValueTrade.visibility=View.INVISIBLE
-                                },100)
-                            }
-                        },2000)*/
+        fun fadeIn(view: View, duration: Long = 500) {
+            view.apply {
+                alpha = 0f
+                visibility = View.VISIBLE
+                animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setListener(object :AnimatorListenerAdapter(){
+                        override fun onAnimationEnd(animation: Animator) {
+                            binding.cardValueTrade.postDelayed({
+                                binding.cardValueTrade.visibility=View.INVISIBLE
+                            },1000)
+                            /*  postDelayed({
+                                  animate().alpha(0f).setDuration(1000).withEndAction {
+                                      postDelayed({
+                                          binding.cardValueTrade.visibility=View.INVISIBLE
+                                      },100)
+                                  }
+                              },2000)*/
 //                        fadeOut(view,duration)
+                        }
+                    })
+            }
+        }
+
+        fun fadeOut(view: View, duration: Long = 300) {
+            view.animate()
+                .alpha(0f)
+                .setDuration(duration)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.cardValueTrade.visibility=View.INVISIBLE
+//                    view.visibility = View.INVISIBLE
                     }
                 })
         }
-    }
-
-    fun fadeOut(view: View, duration: Long = 300) {
-        view.animate()
-            .alpha(0f)
-            .setDuration(duration)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.cardValueTrade.visibility=View.INVISIBLE
-//                    view.visibility = View.INVISIBLE
-                }
-            })
-    }
-        fun bind(stockItem: StockItem?) {
+        fun bind(previousStockItem: StockItem?,stockItem: StockItem?) {
             if (stockItem!=null){
+
                 binding.root.setOnClickListener {
                     val intent= Intent(binding.root.context, SnapshotActivity::class.java)
                     intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
@@ -95,29 +96,33 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.ask.text = "Ask: ${stockItem.aP}"
 
                 binding.valueTrade.text = String.format("%.2f",stockItem.cL)
-                val compare = previousStockItem?.cL?:0.0.compareTo(stockItem.cL).toDouble()
-                if(compare==0.0){
-                    binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
-//                    binding.frameValueTrade.setBackgroundResource(0)
-//                    binding.frameValueTrade.visibility = View.INVISIBLE
-                }else if(compare<0.0){
-                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
-                   /* binding.frameValueTrade.setBackground(
-                        AppCompatResources.getDrawable(
-                            binding.root.context,
-                            R.drawable.rounded_gray_green
-                        )
-                    )*/
+
+
+                  val compare = previousStockItem?.cL?:0.0.compareTo(stockItem.cL).toDouble()
+
+                    binding.valueTrade.viewTreeObserver.addOnGlobalLayoutListener (object : ViewTreeObserver.OnGlobalLayoutListener{
+                        override fun onGlobalLayout() {
+                            binding.valueTrade.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                            val width = binding.valueTrade.width
+                            val height = binding.valueTrade.height
+
+                            val params=binding.cardValueTrade.layoutParams
+                            params.width = width+50
+                            params.height = height+10
+                            binding.cardValueTrade.layoutParams=params
+
+                            Log.d("TextViewWidth", "Width: $width px")
+                        }
+
+                    })
+                  if(previousStockItem?.cL==stockItem.cL){
+                      binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                  }else if(stockItem.cL>previousStockItem!!.cL){
+                      binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
                     fadeIn(binding.frameValueTrade)
 
-                }else if (compare>0.0){
+                }else if (stockItem.cL<previousStockItem!!.cL){
                     binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
-                   /* binding.frameValueTrade.setBackground(
-                        AppCompatResources.getDrawable(
-                            binding.root.context,
-                            R.drawable.rounded_gray_red
-                        )
-                    )*/
                     fadeIn(binding.frameValueTrade)
 
                 }
@@ -145,7 +150,6 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
                 Log.e("Stock:","${previousStockItem.toString()}\n${stockItem.toString()}")
 
-                previousStockItem=stockItem
             }
             if(isMore){
 
@@ -178,10 +182,16 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
     }
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).viewType
+
+        return list.get(position).viewType
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
     }
 
     private class StockDiffCallback :  DiffUtil.ItemCallback<ListItem>(){
+
         override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
             return when {
                 oldItem is ListItem.Header && newItem is ListItem.Header ->
@@ -197,6 +207,17 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
             return oldItem==newItem
         }
 
+        override fun getChangePayload(oldItem: ListItem, newItem: ListItem): Any? {
+            return if(oldItem is ListItem.Item && newItem is ListItem.Item){
+                Bundle().apply {
+                    if(oldItem.stockItem.sYM.equals(newItem.stockItem.sYM)){
+                        putDouble("oldPrice",oldItem.stockItem.cL)
+                        putDouble("newPrice",newItem.stockItem.cL)
+                    }
+                }.takeIf { it.size()>0 }
+            }else null
+//            return super.getChangePayload(oldItem, newItem)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -214,24 +235,50 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
     }
 
- /*   override fun getItemCount(): Int {
-        return list?.size?:0
-    }*/
-   /* fun submitList(list:List<StockItem>){
-        this.list = list
+    /*   override fun getItemCount(): Int {
+           return list?.size?:0
+       }*/
+    /* fun submitList(list:List<StockItem>){
+         this.list = list
+         notifyDataSetChanged()
+     }*/
+
+    fun submitList(currentList: List<ListItem>){
+        if(list.size==0){
+            prevList.addAll(currentList)
+        }else {
+            prevList.addAll(list)
+        }
+
+        list.clear()
+        list.addAll(currentList)
         notifyDataSetChanged()
-    }*/
+    }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        holder.bind(list?.get(position))
-     val start = System.nanoTime()
+        val start = System.nanoTime()
+        val item = list.get(position)
 
+        if(item is ListItem.Header){
+            (holder as HeadingViewHolder).bind(item.title)
+        }else if(item is ListItem.Item){
 
-     when (val item = getItem(position)) {
-         is ListItem.Header -> (holder as HeadingViewHolder).bind(item.title)
-         is ListItem.Item -> (holder as StockViewHolder).bind(item.stockItem)
-     }
-     val end = System.nanoTime()
-     Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
+            val prevItem = prevList.filter { if(it is ListItem.Item){(it as ListItem.Item).stockItem.sYM.equals(item.stockItem.sYM) }else false }.map { it as ListItem.Item }.first()
+
+            (holder as StockViewHolder).bind(prevItem.stockItem,item.stockItem)
+        }
+        /* when (val item = list.get(position)) {
+
+             is ListItem.Header -> (holder as HeadingViewHolder).bind(item.title)
+             is ListItem.Item -> {
+
+                 (holder as StockViewHolder).bind(item.stockItem)
+             }
+
+         }*/
+
+        val end = System.nanoTime()
+        Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
     }
 
 
