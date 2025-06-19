@@ -26,6 +26,7 @@ import com.example.scstrade.views.allstock.ListItem
 import com.example.scstrade.views.allstock.StockAdapter
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.widgets.HorizontalDivider
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 
@@ -255,6 +256,7 @@ class HomeFragment : Fragment() {
                            binding.cardHome.candlestickChart.setCandleData(candleEntry?: emptyList())
 
                        }else{
+
                            binding.cardHome.lineChart.setEntries(result.data?.reversed()?.map {
                                interval+=1
                                Entry(interval.toFloat(),it.tradingHigh.toFloat())

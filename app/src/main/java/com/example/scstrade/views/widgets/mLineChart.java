@@ -10,6 +10,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.example.scstrade.R;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -121,7 +122,6 @@ public class mLineChart extends LineChart {
         dataSet.setDrawIcons(false);
         this.setViewPortOffsets(0f,0f,70f,0f);
         this.setExtraOffsets(0f,0f,0f,0f);
-
         LineData lineData = new LineData(dataSet);
 
         this.setData(lineData);
@@ -147,6 +147,7 @@ public class mLineChart extends LineChart {
         this.setHighlightPerDragEnabled(false);
         this.getData().setHighlightEnabled(false);
         this.notifyDataSetChanged();
+
 //        this.animateXY(5000,5000);
         this.invalidate();
         a.recycle();

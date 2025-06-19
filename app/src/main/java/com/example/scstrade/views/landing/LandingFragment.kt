@@ -96,12 +96,16 @@ class LandingFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 val fragmentManager = requireActivity().supportFragmentManager
-                if (fragmentManager.backStackEntryCount > 0) {
-                    // 🔙 Pop fragment from back stack
-                    fragmentManager.popBackStack()
-                } else {
-                    // 🚪 Close the app
-                    showExitDialog()
+                if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
+                    binding.drawerLayout.closeDrawers()
+                }else {
+                    if (fragmentManager.backStackEntryCount > 0) {
+                        // 🔙 Pop fragment from back stack
+                        fragmentManager.popBackStack()
+                    } else {
+                        // 🚪 Close the app
+                        showExitDialog()
+                    }
                 }
             }
 
