@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.compose.ui.unit.dp
@@ -50,7 +51,8 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
         binding.aofCard.setOnClickListener {
-            startActivity(Intent(requireContext(), AofActivity::class.java))
+            Toast.makeText(requireContext(),"Working In Progress under fixes",Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(requireContext(), AofActivity::class.java))
         }
 
         /*(parentFragment as LandingFragment).binding.toolbar.binding.apply {

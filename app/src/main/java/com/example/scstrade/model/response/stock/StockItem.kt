@@ -23,6 +23,7 @@ data class StockItem(
     val cHP: Double,
     @SerializedName("CL")
     val cL: Double,
+    val prevCl: Double,
     @SerializedName("company_logo")
     val companyLogo: String,
     @SerializedName("HP")

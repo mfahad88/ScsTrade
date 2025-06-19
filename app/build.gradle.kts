@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -22,7 +26,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +38,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    applicationVariants.all {
+        outputs.all {
+            val variant = this@all
+            val date = SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Date())
+            val fileName = "SCSTrade-Pro_${defaultConfig.versionName}_$date.apk"
+            (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = fileName
         }
     }
     compileOptions {

@@ -22,7 +22,7 @@
     <string name="weeks">52 Weeks</string>
     <string name="high_52">147.5</string>
     <string name="low_52">141.6</string>
-    <string name="valueTrade">1.78</string>
+    <string name="valueTrade">0.0</string>
     <string name="netChange">0.00 (0.00%)</string>
     <string name="high">H: 1.85</string>
     <string name="low">L: 1.60</string>

@@ -415,8 +415,40 @@
             app:layout_constraintStart_toEndOf="@+id/shariah"
             app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
+        <FrameLayout
+            android:id="@+id/frameValueTrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewThree"
+            app:layout_constraintTop_toTopOf="@+id/symbol">
 
-        <TextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardValueTrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:cardCornerRadius="4dp"
+                app:contentPaddingBottom="2dp"
+                app:contentPaddingLeft="5dp"
+                app:contentPaddingRight="5dp"
+                app:contentPaddingTop="2dp"
+                app:strokeWidth="0dp">
+
+
+                <TextView
+                    android:id="@+id/valueTrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/valueTrade"
+                    android:textAppearance="@style/valueTrade"
+                    android:textFontWeight="700" />
+
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+        <!--<TextView
             android:id="@+id/valueTrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -426,7 +458,7 @@
             android:textAppearance="@style/valueTrade"
             android:textFontWeight="700"
             app:layout_constraintEnd_toStartOf="@+id/imageViewThree"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <ImageView
             android:id="@+id/imageViewThree"
@@ -436,9 +468,9 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"
             android:src="@drawable/baseline_delete_24"
-            app:layout_constraintBottom_toBottomOf="@+id/valueTrade"
+            app:layout_constraintBottom_toBottomOf="@+id/frameValueTrade"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/valueTrade" />
+            app:layout_constraintTop_toTopOf="@+id/frameValueTrade" />
 
         <TextView
             android:id="@+id/netChange"
@@ -449,7 +481,7 @@
             android:textAppearance="@style/netChange"
             android:textFontWeight="500"
             app:layout_constraintEnd_toEndOf="@+id/imageViewThree"
-            app:layout_constraintTop_toBottomOf="@+id/valueTrade" />
+            app:layout_constraintTop_toBottomOf="@+id/frameValueTrade" />
 
 
         <TextView
@@ -569,70 +601,121 @@
             app:layout_constraintStart_toStartOf="@+id/weeks"
             app:layout_constraintTop_toBottomOf="@+id/weeks" />
 
-
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bid_vol_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/bid_card"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/weeks"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            android:layout_marginTop="4dp"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="5dp"
+            app:contentPaddingRight="5dp"
+            app:contentPaddingTop="2dp"
+            app:strokeWidth="0dp">
         <TextView
             android:id="@+id/bid_vol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/divider"
             android:text="@string/bid_vol_100"
             android:textAppearance="@style/bid_vol_100"
-            android:textFontWeight="500"
-            app:layout_constraintEnd_toStartOf="@+id/bid"
+            android:textFontWeight="500" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bid_card"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/bid_vol_card"
+            app:layout_constraintEnd_toStartOf="@+id/ask_vol_card"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/weeks"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-
+            app:layout_constraintStart_toEndOf="@+id/bid_vol_card"
+            app:layout_constraintTop_toTopOf="@+id/bid_vol_card"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="5dp"
+            app:contentPaddingRight="5dp"
+            app:contentPaddingTop="2dp"
+            app:strokeWidth="0dp">
         <TextView
             android:id="@+id/bid"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_alignTop="@id/weeks"
             android:layout_toEndOf="@id/divider"
             android:gravity="end"
             android:text="@string/bid_2_78"
             android:textAppearance="@style/bid_vol_100"
             android:textFontWeight="700"
-            app:layout_constraintBottom_toBottomOf="@+id/bid_vol"
-            app:layout_constraintEnd_toStartOf="@+id/ask_vol"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bid_vol"
-            app:layout_constraintTop_toTopOf="@+id/bid_vol" />
+            />
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <TextView
-            android:id="@+id/ask_vol"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ask_vol_card"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_toEndOf="@id/bid_vol"
-            android:gravity="end"
-            android:text="@string/ask_vol_2_2"
-            android:textAppearance="@style/ask_vol"
-            android:textFontWeight="500"
-            app:layout_constraintBottom_toBottomOf="@+id/bid"
-            app:layout_constraintEnd_toStartOf="@+id/ask"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="5dp"
+            app:contentPaddingRight="5dp"
+            app:contentPaddingTop="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bid_vol_card"
+            app:layout_constraintEnd_toStartOf="@+id/ask_card"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bid"
-            app:layout_constraintTop_toTopOf="@+id/bid" />
+            app:layout_constraintStart_toEndOf="@+id/bid_card"
+            app:layout_constraintTop_toTopOf="@+id/bid_vol_card"
+            app:strokeWidth="0dp">
 
-        <TextView
-            android:id="@+id/ask"
+            <TextView
+                android:id="@+id/ask_vol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/bid_card"
+                android:gravity="end"
+                android:text="@string/ask_vol_2_2"
+                android:textAppearance="@style/ask_vol"
+                android:textFontWeight="500" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ask_card"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_alignStart="@id/ask_vol"
-            android:layout_alignTop="@id/bid"
-            android:gravity="end"
-            android:text="@string/ask_0_78"
-            android:textAppearance="@style/ask_vol"
-            android:textFontWeight="700"
-            app:layout_constraintBottom_toBottomOf="@+id/ask_vol"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp"
+            app:contentPaddingBottom="2dp"
+            app:contentPaddingLeft="5dp"
+            app:contentPaddingRight="5dp"
+            app:contentPaddingTop="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ask_vol_card"
             app:layout_constraintEnd_toEndOf="@+id/high"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ask_vol"
-            app:layout_constraintTop_toTopOf="@+id/ask_vol" />
+            app:layout_constraintStart_toEndOf="@+id/ask_vol_card"
+            app:layout_constraintTop_toTopOf="@+id/ask_vol_card"
+            app:strokeWidth="0dp">
 
+            <TextView
+                android:id="@+id/ask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="end"
+                android:text="@string/ask_0_78"
+                android:textAppearance="@style/ask_vol"
+                android:textFontWeight="700" />
+        </com.google.android.material.card.MaterialCardView>
         <!-- <RelativeLayout
              android:id="@+id/layout_more"
              android:layout_width="match_parent"

@@ -68,19 +68,20 @@ public class mLineChart extends LineChart {
         this.entries = entries;
         this.getXAxis().setEnabled(isxAxis);
         this.isRightEnabled = isRightEnabled;
+        this.setViewPortOffsets(0f,0f,70f,0f);
         this.setExtraOffsets(0f,0f,0f,0f);
-        this.setViewPortOffsets(0f,0f,0f,0f);
+
         init(context,attrs);
     }
 
     private List<Entry> entries;
     private boolean isRightEnabled=true;
-   /* public mLineChart(Context context) {
-        super(context);
-        this.context=context;
-        init(context, null);
-    }
-*/
+    /* public mLineChart(Context context) {
+         super(context);
+         this.context=context;
+         init(context, null);
+     }
+ */
     public mLineChart(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context=context;
@@ -118,7 +119,8 @@ public class mLineChart extends LineChart {
         dataSet.setColor(lineColor);
         dataSet.setLineWidth(2f);
         dataSet.setDrawIcons(false);
-
+        this.setViewPortOffsets(0f,0f,70f,0f);
+        this.setExtraOffsets(0f,0f,0f,0f);
 
         LineData lineData = new LineData(dataSet);
 

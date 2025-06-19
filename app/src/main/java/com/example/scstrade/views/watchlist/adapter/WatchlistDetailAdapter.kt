@@ -1,7 +1,8 @@
 package com.example.scstrade.views.watchlist.adapter
 
 import android.content.Context
-import android.util.Log
+import android.content.Intent
+import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
@@ -12,16 +13,30 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemWatchlistDetailBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.views.snapshot.SnapshotActivity
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.Collections
 
 class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
+    private val previousPrices = mutableMapOf<String, Double>()
+    private val previousAsk = mutableMapOf<String, Double>()
+    private val previousAskVol = mutableMapOf<String, Double>()
+    private val previousBid = mutableMapOf<String, Double>()
+    private val previousBidVol = mutableMapOf<String, Double>()
     class WatchListDetailViewHolder(private val binding: ItemWatchlistDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             stockItem: StockItem,
-            onItemClick: ( StockItem) -> Unit
+            onItemClick: (StockItem) -> Unit,
+            previousPrice: Double?,
+            previousPriceAsk: Double?,
+            previousPriceAskVol: Double?,
+            previousPriceBid: Double?,
+            previousPriceBidVol: Double?
         ) {
 
             Glide.with(binding.root.context).load(stockItem.companyLogo)
@@ -46,13 +61,114 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
             binding.low.text = "L: ${stockItem.lP.toString()}"
             binding.high52.text = stockItem.high52
             binding.low52.text = stockItem.low52
-
+            binding.root.setOnClickListener {
+                val intent= Intent(binding.root.context, SnapshotActivity::class.java)
+                intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
+                binding.root.context.startActivity(intent)
+            }
             binding.imageViewThree.setOnClickListener {
                 binding.imageViewThree.animate().rotation(180f).setDuration(500).start()
                 onItemClick(stockItem)
                 /*Utils.showPopup(binding.root.context,it,null, listOf("Delete Company")){
 
                 }*/
+            }
+
+            if(previousPrice==null){
+                binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                binding.cardValueTrade.alpha=1f
+            }else{
+                val diff=
+                    BigDecimal(stockItem.cL).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
+                if(diff>0){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                }else if (diff<0){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                }else{
+                    binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                }
+
+                binding.cardValueTrade.postDelayed({
+                    binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                },3000)
+            }
+
+
+            if(previousPriceAsk==null){
+                binding.askCard.setCardBackgroundColor(Color.TRANSPARENT)
+                binding.askCard.alpha=1f
+            }else{
+                val diff=
+                    BigDecimal(stockItem.aP).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceAsk)
+                if(diff>0){
+                    binding.askCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                }else if (diff<0){
+                    binding.askCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                }else{
+                    binding.askCard.setCardBackgroundColor(Color.TRANSPARENT)
+                }
+
+                binding.askCard.postDelayed({
+                    binding.askCard.setCardBackgroundColor(Color.TRANSPARENT)
+                },3000)
+            }
+
+            if(previousPriceAskVol==null){
+                binding.askVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                binding.askVolCard.alpha=1f
+            }else{
+                val diff=
+                    BigDecimal(stockItem.aV).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceAskVol)
+                if(diff>0){
+                    binding.askVolCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                }else if (diff<0){
+                    binding.askVolCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                }else{
+                    binding.askVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                }
+
+                binding.askVolCard.postDelayed({
+                    binding.askVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                },3000)
+            }
+
+
+            if(previousPriceBid==null){
+                binding.bidCard.setCardBackgroundColor(Color.TRANSPARENT)
+                binding.bidCard.alpha=1f
+            }else{
+                val diff=
+                    BigDecimal(stockItem.bP).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceBid)
+                if(diff>0){
+                    binding.bidCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                }else if (diff<0){
+                    binding.bidCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                }else{
+                    binding.bidCard.setCardBackgroundColor(Color.TRANSPARENT)
+                }
+
+                binding.bidCard.postDelayed({
+                    binding.bidCard.setCardBackgroundColor(Color.TRANSPARENT)
+                },3000)
+            }
+
+            if(previousPriceBidVol==null){
+                binding.bidVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                binding.bidVolCard.alpha=1f
+            }else{
+                val diff=
+                    BigDecimal(stockItem.bV).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceBidVol)
+                if(diff>0){
+                    binding.bidVolCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                }else if (diff<0){
+                    binding.bidVolCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                }else{
+                    binding.bidVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                }
+
+                binding.bidVolCard.postDelayed({
+                    binding.bidVolCard.setCardBackgroundColor(Color.TRANSPARENT)
+                },3000)
             }
         }
     }
@@ -63,7 +179,19 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
     }
 
     override fun onBindViewHolder(holder: WatchListDetailViewHolder, position: Int) {
-        holder.bind(list[position], onItemClick)
+        val item = list[position]
+        val current = item
+        val previousPrice = previousPrices[current.sYM]
+        val previousPriceAsk= previousAsk[current.sYM]
+        val previousPriceAskVol= previousAskVol[current.sYM]
+        val previousPriceBid= previousBid[current.sYM]
+        val previousPriceBidVol= previousBidVol[current.sYM]
+        previousPrices[current.sYM] = current.cL
+        previousAsk[current.sYM] = current.aP
+        previousAskVol[current.sYM] = current.aV.toDouble()
+        previousBid[current.sYM] = current.bP
+        previousBidVol[current.sYM] = current.bV.toDouble()
+        holder.bind(current, onItemClick,previousPrice,previousPriceAsk,previousPriceAskVol,previousPriceBid,previousPriceBidVol)
     }
 
     override fun getItemCount(): Int {

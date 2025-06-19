@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
@@ -84,7 +85,8 @@ class LandingFragment : Fragment() {
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.aof.setOnClickListener {
-            startActivity(Intent(requireContext(),AofActivity::class.java))
+            Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(requireContext(),AofActivity::class.java))
         }
 
 

@@ -22,26 +22,27 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
-import com.google.android.material.card.MaterialCardView
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
 class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): /*ListAdapter<ListItem,RecyclerView.ViewHolder>(StockDiffCallback())*/
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var prevList=ArrayList<ListItem>()
     var list=ArrayList<ListItem>()
+    private val previousPrices = mutableMapOf<String, Double>()
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
-        fun fadeIn(view: View, duration: Long = 500) {
+        fun fadeIn(view: View, duration: Long = 1000) {
             view.apply {
                 alpha = 0f
-                visibility = View.VISIBLE
+//                visibility = View.VISIBLE
                 animate()
                     .alpha(1f)
                     .setDuration(duration)
                     .setListener(object :AnimatorListenerAdapter(){
                         override fun onAnimationEnd(animation: Animator) {
                             binding.cardValueTrade.postDelayed({
-                                binding.cardValueTrade.visibility=View.INVISIBLE
-                            },1000)
+                                binding.cardValueTrade.alpha=0f
+                            },2000)
                             /*  postDelayed({
                                   animate().alpha(0f).setDuration(1000).withEndAction {
                                       postDelayed({
@@ -55,18 +56,18 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
             }
         }
 
-        fun fadeOut(view: View, duration: Long = 300) {
+        fun fadeOut(view: View, duration: Long = 500) {
             view.animate()
                 .alpha(0f)
                 .setDuration(duration)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        binding.cardValueTrade.visibility=View.INVISIBLE
+//                        binding.cardValueTrade.alpha=0f
 //                    view.visibility = View.INVISIBLE
                     }
                 })
         }
-        fun bind(previousStockItem: StockItem?,stockItem: StockItem?) {
+        fun bind(stockItem: StockItem?, previousPrice: Double?) {
             if (stockItem!=null){
 
                 binding.root.setOnClickListener {
@@ -95,44 +96,33 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
                 binding.ask.text = "Ask: ${stockItem.aP}"
 
+
+
+
+
+
+                if(previousPrice==null){
+                    binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                    binding.cardValueTrade.alpha=1f
+                }else{
+                    val diff=
+                        BigDecimal(stockItem.cL).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
+                    if(diff>0){
+                        binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    }else if (diff<0){
+                        binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    }else{
+                        binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                    }
+
+                    binding.cardValueTrade.postDelayed({
+                        binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
+                    },3000)
+                }
+
+                Log.e("Stock:", "${previousPrice}\n${stockItem.cL}")
                 binding.valueTrade.text = String.format("%.2f",stockItem.cL)
 
-
-                  val compare = previousStockItem?.cL?:0.0.compareTo(stockItem.cL).toDouble()
-
-                    binding.valueTrade.viewTreeObserver.addOnGlobalLayoutListener (object : ViewTreeObserver.OnGlobalLayoutListener{
-                        override fun onGlobalLayout() {
-                            binding.valueTrade.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                            val width = binding.valueTrade.width
-                            val height = binding.valueTrade.height
-
-                            val params=binding.cardValueTrade.layoutParams
-                            params.width = width+50
-                            params.height = height+10
-                            binding.cardValueTrade.layoutParams=params
-
-                            Log.d("TextViewWidth", "Width: $width px")
-                        }
-
-                    })
-                  if(previousStockItem?.cL==stockItem.cL){
-                      binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
-                  }else if(stockItem.cL>previousStockItem!!.cL){
-                      binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
-                    fadeIn(binding.frameValueTrade)
-
-                }else if (stockItem.cL<previousStockItem!!.cL){
-                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
-                    fadeIn(binding.frameValueTrade)
-
-                }
-
-                /*if(previousStockItem?.cL?.compareTo(stockItem?.cL?:0.0)!=0){
-                    Utils.animatedValueChange(previousStockItem?.cL?:0.0,stockItem.cL, onUpdate = {
-
-                    })
-                }
-*/
 
                 binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} ${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cHP)}%"
                 if(stockItem.cH<0.0){
@@ -148,7 +138,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.high52.text = if(!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"
                 binding.low52.text = if(!TextUtils.isEmpty(stockItem.low52)) stockItem.high52 else "0.0"
 
-                Log.e("Stock:","${previousStockItem.toString()}\n${stockItem.toString()}")
+
 
             }
             if(isMore){
@@ -244,13 +234,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
      }*/
 
     fun submitList(currentList: List<ListItem>){
-        if(list.size==0){
-            prevList.addAll(currentList)
-        }else {
-            prevList.addAll(list)
-        }
-
-        list.clear()
+        if(list.size>0){
+       list.clear()
+       }
         list.addAll(currentList)
         notifyDataSetChanged()
     }
@@ -262,10 +248,10 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
         if(item is ListItem.Header){
             (holder as HeadingViewHolder).bind(item.title)
         }else if(item is ListItem.Item){
-
-            val prevItem = prevList.filter { if(it is ListItem.Item){(it as ListItem.Item).stockItem.sYM.equals(item.stockItem.sYM) }else false }.map { it as ListItem.Item }.first()
-
-            (holder as StockViewHolder).bind(prevItem.stockItem,item.stockItem)
+            val current = item.stockItem
+            val previousPrice = previousPrices[current.sYM]
+            (holder as StockViewHolder).bind(current,previousPrice)
+            previousPrices[current.sYM] = current.cL
         }
         /* when (val item = list.get(position)) {
 

@@ -117,20 +117,30 @@
 
             <com.google.android.material.card.MaterialCardView
                 app:strokeWidth="0dp"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:id="@+id/cardValueTrade"
-                app:cardCornerRadius="4dp"
-                android:layout_gravity="center"
-                />
-            <TextView
-                android:id="@+id/valueTrade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/valueTrade"
-                android:textAppearance="@style/valueTrade"
-                android:textFontWeight="700" />
+                android:id="@+id/cardValueTrade"
+                app:contentPaddingTop="2dp"
+                app:contentPaddingBottom="2dp"
+                app:contentPaddingLeft="5dp"
+                app:contentPaddingRight="5dp"
+                app:cardBackgroundColor="@android:color/holo_red_light"
+                android:visibility="visible"
+                app:cardCornerRadius="4dp"
+                android:layout_gravity="center">
+
+
+                <TextView
+                    android:id="@+id/valueTrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/valueTrade"
+                    android:textAppearance="@style/valueTrade"
+                    android:textFontWeight="700" />
+
+            </com.google.android.material.card.MaterialCardView>
+
 
 
 

@@ -96,7 +96,9 @@ class AllStockFragment : Fragment() {
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                     }
 
+
                 }
+                binding.recyclerIndices.scrollToPosition(0)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
