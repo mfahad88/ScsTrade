@@ -24,12 +24,13 @@
             android:id="@+id/mainItem">
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="140dp"
+                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/toolbar"
                 app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!--<androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contentLogo"
                 android:visibility="gone"
                 tools:visibility="gone"
@@ -122,7 +123,7 @@
 
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contentText"
@@ -139,7 +140,7 @@
                     android:layout_marginBottom="16dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="Logo"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     android:src="@drawable/frame"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -152,16 +153,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
+                    android:gravity="bottom"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="0dp"
                     android:lineSpacingMultiplier="1"
-                    android:padding="0dp"
-                    android:minHeight="0dp"
                     android:lines="1"
+                    android:minHeight="0dp"
+                    android:padding="0dp"
                     android:text="@string/market"
                     android:textAppearance="@style/market"
                     android:visibility="visible"
+                    app:layout_constraintBaseline_toBottomOf="@id/logo"
                     app:layout_constraintBottom_toBottomOf="@+id/logo"
                     app:layout_constraintEnd_toStartOf="@+id/search"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -226,86 +228,96 @@
                     android:layout_marginTop="8dp"
                     android:gravity="top"
                     android:lineSpacingExtra="0sp"
+                    android:visibility="gone"
                     android:text="@string/status"
                     android:textAppearance="@style/status"
                     android:translationY="-0.11sp"
                     app:layout_constraintStart_toStartOf="@+id/logo"
                     app:layout_constraintTop_toBottomOf="@+id/market" />
 
-
                 <LinearLayout
-                    android:id="@+id/closeMarket"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="0.2"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/status"
-                    app:layout_constraintStart_toEndOf="@+id/status"
-                    app:layout_constraintTop_toTopOf="@+id/status"
-                    tools:visibility="visible">
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/status">
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/closeMarket"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_red" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/closed"
+                            android:textAllCaps="true"
+                            android:textAppearance="@style/closed"
+                            android:textFontWeight="700"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/openMarket"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/logo"
+                        app:layout_constraintTop_toTopOf="@+id/status"
+                        tools:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/open"
+                            android:textAppearance="@style/open"
+                            android:textFontWeight="700" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/dateTimeText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/green_red" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="@string/closed"
-                        android:textAllCaps="true"
-                        android:textAppearance="@style/closed"
-                        android:textFontWeight="700"
+                        android:gravity="center_vertical"
+                        android:text="@string/dec_2024_04"
+                        android:textAppearance="@style/dec_2024_04_text"
+                        android:textFontWeight="500"
+                        app:layout_constraintStart_toStartOf="@+id/market"
+                        app:layout_constraintTop_toTopOf="@+id/status" />
 
-                        />
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/openMarket"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="0.2"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/status"
-                    app:layout_constraintStart_toEndOf="@+id/status"
-                    app:layout_constraintTop_toTopOf="@+id/status"
-                    tools:visibility="visible">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/green_circle" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/open"
-                        android:textAppearance="@style/open"
-                        android:textFontWeight="700" />
-                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/dateTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="70dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/dec_2024_04"
-                    android:textAppearance="@style/dec_2024_04_text"
-                    android:textFontWeight="500"
-                    app:layout_constraintBottom_toBottomOf="@+id/status"
-                    app:layout_constraintStart_toEndOf="@+id/status"
-                    app:layout_constraintTop_toTopOf="@+id/status" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>

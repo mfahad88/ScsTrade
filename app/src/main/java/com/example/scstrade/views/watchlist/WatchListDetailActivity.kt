@@ -94,6 +94,18 @@ class WatchListDetailActivity : BaseActivity() {
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
 
+                    if(result.data?.isEmpty()?:false){
+                        binding.apply {
+                            emptyList.visibility = View.VISIBLE
+                            recyclerView.visibility = View.GONE
+                        }
+                    }else{
+                        binding.apply {
+                            emptyList.visibility = View.GONE
+                            recyclerView.visibility = View.VISIBLE
+                        }
+                    }
+
 
                     (binding.recyclerView.adapter as WatchListDetailAdapter).addItems(result.data?: emptyList())
                 }

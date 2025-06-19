@@ -63,20 +63,6 @@ class LandingFragment : Fragment() {
 
 
 
-    /*    ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar.binding.content) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            view.setPadding(0,insets.top,0,insets.bottom)
-            windowInsets
-        }*/
-      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView){v,windowInsets->
-            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            v.updateLayoutParams<MarginLayoutParams> {
-                bottomMargin=insets.bottom+31
-            }
-
-            windowInsets
-        }*/
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
         loadFragment(HomeFragment())

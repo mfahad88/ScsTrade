@@ -26,7 +26,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0.1"
+        versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +39,55 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
+    /*applicationVariants.all {
+        val variant = this
+
+        variant.outputs.all {
+            val output = this
+
+            val date = SimpleDateFormat("dd-MM-yyyy").format(Date())
+            val apkName = "SCSTrade-Pro_${variant.versionName}_$date.apk"
+            val outputFolder = File(buildDir, "outputs/apk/$date")
+
+            // 1. Change the output name (renames the APK)
+            (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = apkName
+
+            // 2. Register a task to copy the APK to the date folder after it's built
+            val variantCap = variant.name.replaceFirstChar { it.uppercaseChar() }
+            val moveTaskName = "move${variantCap}ApkToDateFolder"
+
+            tasks.register(moveTaskName) {
+                dependsOn("assemble${variantCap}")
+
+                doLast {
+                    // APK location from default output
+                    val generatedApk = File(buildDir, "outputs/apk/${variant.buildType.name}/$apkName")
+
+                    // Destination folder (create if not exists)
+                    if (!outputFolder.exists()) {
+                        outputFolder.mkdirs()
+                    }
+
+                    // Destination file
+                    val destFile = File(outputFolder, apkName)
+
+                    if (generatedApk.exists()) {
+                        generatedApk.copyTo(destFile, overwrite = true)
+                        println("✅ APK copied to: ${destFile.absolutePath}")
+                    } else {
+                        println("❌ APK not found: ${generatedApk.absolutePath}")
+                    }
+                }
+            }
+
+            // Optional: make it run after build
+            tasks.named("build") {
+                finalizedBy(moveTaskName)
+            }
+        }
+    }*/
     applicationVariants.all {
         outputs.all {
             val variant = this@all
@@ -56,7 +104,10 @@ android {
         jvmTarget = "1.8"
     }
 
+
 }
+
+
 
 dependencies {
     implementation(project(":MyCalendar-sdk"))

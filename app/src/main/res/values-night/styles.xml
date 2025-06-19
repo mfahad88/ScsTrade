@@ -116,7 +116,7 @@
     </style>
 
     <style name="weeks">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
@@ -416,7 +416,8 @@
     </style>
 
     <style name="market">
-        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
@@ -1491,4 +1492,20 @@
         <item name="tabPaddingTop">-10dp</item>
         <item name="tabPaddingBottom">-10dp</item>
     </style>
+
+    <style name="watchlist_empty">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="add_stock_to_watchlist">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="sector_breadcrums"></style>
 </resources>

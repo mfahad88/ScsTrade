@@ -1,6 +1,7 @@
 package com.example.scstrade.views.sector
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.example.scstrade.views.allstock.AllStockFragment
 import com.example.scstrade.views.allstock.StockActivity
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.market.MarketFragment
+import com.example.scstrade.views.widgets.SideBarDivider
 
 
 class SectorFragment : Fragment() {
@@ -56,6 +58,12 @@ class SectorFragment : Fragment() {
 //              loadFragment(fragment,it)
             }
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            val divider = SideBarDivider(
+                dividerColor = Color.parseColor("#B3C6C6CD"),
+                marginEnd = 10
+            )
+            addItemDecoration(divider)
+
         }
 
         binding.recyclerViewSector.post {

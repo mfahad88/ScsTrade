@@ -112,7 +112,7 @@
     </style>
 
     <style name="weeks">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">#484646</item>
         <item name="android:fontFamily">@font/custom_font</item>
@@ -318,7 +318,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/md_theme_errorContainer</item>
+        <item name="android:textColor">#D90202</item>
     </style>
 
     <style name="dec_2024_04">
@@ -427,7 +427,7 @@
 
     <style name="market">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
@@ -1539,5 +1539,26 @@
     <style name="CustomTabLayout" parent="Widget.Material3.TabLayout">
         <item name="tabPaddingTop">-10dp</item>
         <item name="tabPaddingBottom">-10dp</item>
+    </style>
+
+    <style name="watchlist_empty">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="add_stock_to_watchlist">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="sector_breadcrums">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

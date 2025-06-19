@@ -58,7 +58,9 @@ class StockActivity : BaseActivity() {
 //                binding.toolbar.binding.subTitle.text = b.getString("index")?.replace("Index", "")
             }else if (b.getString("sector")!=null){
 //                binding.toolbar.binding.subTitle.text = b.getString("sector")
-                binding.toolbar.binding.market.text = b.getString("sector")
+                binding.toolbar.binding.market.text = /*b.getString("sector")*/"Market"
+                binding.breadcrums.visibility = View.VISIBLE
+                binding.sector.text = b.getString("sector")
             }
             fragment.arguments =b
             loadFragment(fragment)

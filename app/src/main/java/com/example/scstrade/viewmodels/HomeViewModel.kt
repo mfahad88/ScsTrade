@@ -87,12 +87,66 @@ class HomeViewModel(application: Application):AndroidViewModel(application) {
     fun setSelectedLine(){
         isLineSelected.value = true
         isCandleSelected.value = false
-        setSelectedTime(1)
+        selectedTime.value?.forEachIndexed { index, b ->
+            if(index==0){
+                if(b){
+                    setSelectedTime(1)
+                }
+            }else if(index==1){
+                if(b){
+                    setSelectedTime(5)
+                }
+            }else if(index==2){
+                if(b){
+                    setSelectedTime(15)
+                }
+            }else if(index==3){
+                if(b){
+                    setSelectedTime(30)
+                }
+            }else if(index==4){
+                if(b){
+                    setSelectedTime(60)
+                }
+            }else if(index==5){
+                if(b){
+                    setSelectedTime(1440)
+                }
+            }
+        }
+
     }
 
     fun setSelectedCandle(){
         isLineSelected.value = false
         isCandleSelected.value = true
-        setSelectedTime(1)
+//        setSelectedTime(1)
+        selectedTime.value?.forEachIndexed { index, b ->
+            if(index==0){
+                if(b){
+                    setSelectedTime(1)
+                }
+            }else if(index==1){
+                if(b){
+                    setSelectedTime(5)
+                }
+            }else if(index==2){
+                if(b){
+                    setSelectedTime(15)
+                }
+            }else if(index==3){
+                if(b){
+                    setSelectedTime(30)
+                }
+            }else if(index==4){
+                if(b){
+                    setSelectedTime(60)
+                }
+            }else if(index==5){
+                if(b){
+                    setSelectedTime(1440)
+                }
+            }
+        }
     }
 }

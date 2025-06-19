@@ -71,7 +71,8 @@ public class mLineChart extends LineChart {
         this.isRightEnabled = isRightEnabled;
         this.setViewPortOffsets(0f,0f,70f,0f);
         this.setExtraOffsets(0f,0f,0f,0f);
-
+        this.setDragEnabled(false);
+        this.setTouchEnabled(false);
         init(context,attrs);
     }
 

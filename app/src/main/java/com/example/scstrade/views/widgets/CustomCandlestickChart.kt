@@ -78,6 +78,20 @@ class CustomCandlestickChart @JvmOverloads constructor(
             setDrawValues(false)
         }
         this.data = CandleData(candleDataSet)
+        this.setTouchEnabled(true)
+        this.isDragEnabled=true
+        this.setScaleEnabled(false)
+        this.setPinchZoom(false)
+        this.setDoubleTapToZoomEnabled(false)
+
+// Optional: Disable Y-axis scaling independently
+        this.isScaleYEnabled = false
+        this.isScaleXEnabled = false
+        this.isHighlightPerTapEnabled = false
+        this.isHighlightPerDragEnabled = false
+
+// Remove marker (popup with value info)
+        this.marker = null
 //        this.setVisibleXRange(10f,30f)
         setupChart()
         this.invalidate()

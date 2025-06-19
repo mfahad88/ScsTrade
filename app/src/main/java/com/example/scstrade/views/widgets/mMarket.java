@@ -139,13 +139,22 @@ public class mMarket extends LinearLayout {
                         binding.dateTimeText.setText(sdf1.format(new Date()));
                     }
                 });
-                binding.notificationIcon.setOnClickListener(view ->context.startActivity(new Intent(context, NotificationActivity.class)));
-                binding.searchIcon.setOnClickListener(view -> {context.startActivity(new Intent(context, SearchActivity.class));});
+//                binding.notificationIcon.setOnClickListener(view ->context.startActivity(new Intent(context, NotificationActivity.class)));
+//                binding.searchIcon.setOnClickListener(view -> {context.startActivity(new Intent(context, SearchActivity.class));});
 
                 binding.notification.setOnClickListener(view ->context.startActivity(new Intent(context, NotificationActivity.class)));
                 binding.search.setOnClickListener(view -> {context.startActivity(new Intent(context, SearchActivity.class));});
+                ViewCompat.setOnApplyWindowInsetsListener(binding.contentText, new androidx.core.view.OnApplyWindowInsetsListener() {
+                    @NonNull
+                    @Override
+                    public WindowInsetsCompat onApplyWindowInsets(@NonNull View view, @NonNull WindowInsetsCompat windowInsets) {
+                        Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                        view.setPadding(15,insets.top,50,insets.bottom);
 
-                binding.textView7.setOnClickListener(view -> context.startActivity(new Intent(context, SearchActivity.class)));
+                        return windowInsets;
+                    }
+                }) ;
+               /* binding.textView7.setOnClickListener(view -> context.startActivity(new Intent(context, SearchActivity.class)));
                 if(binding.contentLogo.getVisibility()==View.VISIBLE){
                     ViewCompat.setOnApplyWindowInsetsListener(binding.contentLogo, new androidx.core.view.OnApplyWindowInsetsListener() {
                         @NonNull
@@ -171,7 +180,7 @@ public class mMarket extends LinearLayout {
                 }
 
                 contentLogo=binding.contentLogo;
-                contentText = binding.contentText;
+                contentText = binding.contentText;*/
 
                 binding.scstrade.setOnClickListener(new OnClickListener() {
                     @Override

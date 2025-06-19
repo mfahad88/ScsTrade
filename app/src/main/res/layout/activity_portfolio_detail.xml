@@ -611,12 +611,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                app:constraint_referenced_ids="linearEmpty"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/p_l_card"
                 app:layout_constraintStart_toStartOf="@+id/p_l_card"
                 app:layout_constraintTop_toBottomOf="@+id/p_l_card"
-                app:constraint_referenced_ids="linearEmpty"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

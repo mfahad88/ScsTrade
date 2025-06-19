@@ -56,7 +56,7 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
             binding.askVol.text = "${Utils.convertToMillions(stockItem.aV.toDouble())}"
             binding.ask.text = "${stockItem.aP}"
             binding.valueTrade.text = String.format("%.2f",stockItem.cL)
-            binding.netChange.text = "${stockItem.cH} (${String.format("%.2f",stockItem.cHP)}%)"
+            binding.netChange.text = "${if (stockItem.cH>0.0) "+" else ""}${stockItem.cH} ${if (stockItem.cHP>0.0) "+" else ""}${String.format("%.2f",stockItem.cHP)}%"
             binding.high.text = "H: ${stockItem.hP.toString()}"
             binding.low.text = "L: ${stockItem.lP.toString()}"
             binding.high52.text = stockItem.high52

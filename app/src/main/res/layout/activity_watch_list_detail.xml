@@ -30,11 +30,51 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/emptyList"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+        <ImageView
+            android:id="@+id/imageView34"
+            android:layout_width="150dp"
+            android:layout_height="166dp"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonAdd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:srcCompat="@drawable/empty_holding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/watchlist_empty"
+            android:layout_marginTop="10dp"
+            android:textFontWeight="600"
+            android:textAppearance="@style/watchlist_empty"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_stock_to_watchlist"
+            android:layout_marginTop="5dp"
+            android:textFontWeight="200"
+            android:textAppearance="@style/add_stock_to_watchlist"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        tools:visibility="gone"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -51,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/add_to_stock"
+        android:text="@string/add_to_watchlist"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

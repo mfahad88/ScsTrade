@@ -1,5 +1,6 @@
 package com.example.scstrade.views.watchlist
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
@@ -73,7 +74,7 @@ class AddSymbolActivity : BaseActivity() {
         if(mode==0) {
             binding.watchlistName.textInputEditText.addTextChangedListener {
 
-                if (!TextUtils.isEmpty(it.toString()) && binding.watchlistName.textInputEditText.length() > 3) {
+                if (!TextUtils.isEmpty(it.toString()) /*&& binding.watchlistName.textInputEditText.length() > 3*/) {
                     binding.btnDone.isEnabled = true
                 }
             }
@@ -137,8 +138,18 @@ class AddSymbolActivity : BaseActivity() {
                 }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                    if(it.data?.last()?.watchListSymbol.equals(myList.last())){
-                        finish()
+                    if(mode==0) {
+                        if (it.data?.last()?.watchListSymbol.equals(myList.last())) {
+                            finish()
+                            val intent = Intent(this, WatchListDetailActivity::class.java)
+                            intent.putExtra(AppConstants.WatchListMainID, selectedItem)
+//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+                    }else{
+                        if (it.data?.last()?.watchListSymbol.equals(myList.last())) {
+                            finish()
+                        }
                     }
                 }
             }
