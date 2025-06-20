@@ -43,6 +43,7 @@ class AddWatchListBottomSheetFragment() : BottomSheetDialogFragment() {
             binding.editTextName.setText(watchListItem.WatchListMainName)
             binding.createANe.setText(getString(R.string.update_a_wat))
             binding.createWatch.setText(getString(R.string.update_a_wa))
+            binding.buttonAdd.setText(getString(R.string.update))
         }
         return binding.root
     }

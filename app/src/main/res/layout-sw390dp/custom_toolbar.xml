@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="3dp"
+    android:background="@color/md_theme_surface"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@android:color/white"
+        android:elevation="4dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainItem">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/toolbar"
+                app:shapeAppearanceOverlay="@style/RoundedImageView" />
+
+            <!--<androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contentLogo"
+                android:visibility="gone"
+                tools:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/logo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Logo"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/frame"
+                    app:layout_constraintBottom_toBottomOf="@id/subTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/custom_font"
+                    android:letterSpacing="-0.03"
+                    android:text="SCSTrade Pro"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/logo1"
+                    app:layout_constraintTop_toTopOf="@+id/logo1" />
+
+                <TextView
+                    android:id="@+id/subTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/custom_font"
+                    android:text="@string/committed_t_appbar"
+                    android:textColor="@android:color/white"
+                    android:textSize="7.42sp"
+                    android:textStyle="italic"
+                    app:layout_constraintStart_toEndOf="@+id/logo1"
+                    app:layout_constraintStart_toStartOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
+
+                <ImageView
+                    android:id="@+id/notificationIcon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Notifications"
+                    android:src="@drawable/notifications_none"
+                    app:layout_constraintBottom_toBottomOf="@+id/searchIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/searchIcon" />
+
+                <ImageView
+                    android:id="@+id/searchIcon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toLeftOf="@id/notificationIcon"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Search"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/search_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/title"
+                    app:layout_constraintEnd_toStartOf="@+id/notificationIcon"
+                    app:layout_constraintTop_toTopOf="@+id/title" />
+
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quote"
+                    android:textAppearance="@style/quotes"
+                    app:layout_constraintEnd_toEndOf="@+id/searchIcon"
+                    app:layout_constraintStart_toStartOf="@+id/searchIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/searchIcon" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contentText"
+                android:visibility="visible"
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Logo"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/market"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="bottom"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:lineSpacingMultiplier="1"
+                    android:lines="1"
+                    android:minHeight="0dp"
+                    android:padding="0dp"
+                    android:text="@string/market"
+                    android:textAppearance="@style/market"
+                    android:visibility="visible"
+                    app:layout_constraintBaseline_toBottomOf="@id/logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/logo"
+                    app:layout_constraintEnd_toStartOf="@+id/search"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/logo" />
+
+                <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Notifications"
+                    android:src="@drawable/notifications_none"
+                    app:layout_constraintBottom_toBottomOf="@+id/search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alerts"
+                    android:textAppearance="@style/quotes"
+                    app:layout_constraintEnd_toEndOf="@+id/notification"
+                    app:layout_constraintStart_toStartOf="@+id/notification"
+                    app:layout_constraintTop_toBottomOf="@+id/notification" />
+
+                <ImageView
+                    android:id="@+id/search"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toLeftOf="@id/notification"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Search"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/search_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/market"
+                    app:layout_constraintEnd_toStartOf="@+id/notification"
+                    app:layout_constraintTop_toTopOf="@+id/market" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quote"
+                    android:textAppearance="@style/quotes"
+                    app:layout_constraintEnd_toEndOf="@+id/search"
+                    app:layout_constraintStart_toStartOf="@+id/search"
+                    app:layout_constraintTop_toBottomOf="@+id/search" />
+
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="0sp"
+                    android:visibility="gone"
+                    android:text="@string/status"
+                    android:textAppearance="@style/status"
+                    android:translationY="-0.11sp"
+                    app:layout_constraintStart_toStartOf="@+id/logo"
+                    app:layout_constraintTop_toBottomOf="@+id/market" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/status">
+
+                    <LinearLayout
+                        android:id="@+id/closeMarket"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_red" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/closed"
+                            android:textAllCaps="true"
+                            android:textAppearance="@style/closed"
+                            android:textFontWeight="700"
+
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/openMarket"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/logo"
+                        app:layout_constraintTop_toTopOf="@+id/status"
+                        tools:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/open"
+                            android:textAppearance="@style/open"
+                            android:textFontWeight="700" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/dateTimeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/dec_2024_04"
+                        android:textAppearance="@style/dec_2024_04_text"
+                        android:textFontWeight="500"
+                        app:layout_constraintStart_toStartOf="@+id/market"
+                        app:layout_constraintTop_toTopOf="@+id/status" />
+
+                </LinearLayout>
+
+
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:paddingHorizontal="20dp"
+        >
+
+
+        <TextView
+            android:id="@+id/scstrade"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="www.scstrade.com"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewWhatsapp" />
+
+
+        <ImageView
+            android:id="@+id/imageViewWhatsapp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/whatsapp_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/phone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="+92-321-829-6919"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewWhatsapp" />
+
+        <!--<HorizontalScrollView
+            android:id="@+id/tickerScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/tickerContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingEnd="100dp" />
+        </HorizontalScrollView>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:paddingVertical="5dp"
+        android:visibility="gone"
+        android:id="@+id/constraint_market_stat"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/market_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.24"
+            android:text="@string/market_stat"
+            android:textAppearance="@style/market_stat"
+            android:textFontWeight="500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="0.15"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/market_stat"
+            app:layout_constraintStart_toEndOf="@+id/market_stat"
+            app:layout_constraintTop_toTopOf="@+id/market_stat"
+            tools:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/green_circle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/open"
+                android:textAppearance="@style/open"
+                android:textFontWeight="700"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/close"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/market_stat"
+            app:layout_constraintStart_toEndOf="@+id/market_stat"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/green_red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/closed"
+                android:textAllCaps="true"
+                android:textAppearance="@style/closed"
+                android:textFontWeight="700"
+
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/dateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end|center_vertical"
+            android:textFontWeight="500"
+            android:layout_gravity="end"
+            android:text="@string/dec_2024_04"
+            android:textAppearance="@style/dec_2024_04"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/md_theme_surfaceContainerHighest"/>
+</LinearLayout>

@@ -330,7 +330,7 @@
     </style>
 
     <style name="kmiallshr">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/special_headlines</item>
         <!--<item name="android:fontFamily">@font/inter_28pt_bold_700</item>-->
@@ -361,7 +361,7 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">-0.03</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">#3A66ED</item>
     </style>
 
     <style name="scs_trade_p_toolbar">

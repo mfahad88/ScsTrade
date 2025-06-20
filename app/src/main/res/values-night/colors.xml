@@ -182,4 +182,6 @@
     <color name="marketDown">@color/md_theme_errorContainer</color>
     <color name="portfolio_green">#4D032D00</color>
     <color name="dropdown">#070707</color>
+    <color name="green_increse">#EDFFE0</color>
+    <color name="red_decrease">#FFE0E0</color>
 </resources>

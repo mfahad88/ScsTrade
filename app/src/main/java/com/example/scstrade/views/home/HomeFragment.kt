@@ -29,6 +29,10 @@ import com.example.scstrade.views.widgets.HorizontalDivider
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 /**
@@ -95,12 +99,12 @@ class HomeFragment : Fragment() {
             d1.setOnClickListener {
                 homeViewModel.setSelectedTime(1440)
             }
-            imageViewDropDown.setOnClickListener {
+            cardKmiAllShr.setOnClickListener {
                 showPopup(it)
             }
 
             kmiallshr.setOnClickListener {
-                showPopup(imageViewDropDown)
+                showPopup(cardKmiAllShr)
             }
 
             homeViewModel.apply {
@@ -223,7 +227,7 @@ class HomeFragment : Fragment() {
                         homeViewModel.setSelectedIndex(result.data?.first {
                             it.iNDEXCODE.contains("kse 100",true)
                         }?: emptyList<KSEIndices>().first())
-                        homeViewModel.setSelectedLine()
+                        homeViewModel.setSelectedCandle()
 
 //                        homeViewModel.fetchChart()
                     }else{
@@ -286,11 +290,20 @@ class HomeFragment : Fragment() {
                         binding.main.visibility=View.VISIBLE
                         binding.loader.visibility=View.GONE
                     }
+
                     val list = mutableListOf<ListItem>()
                     list+=ListItem.Header("Leaders")
                     result.data?.sortedByDescending { it.v }?.take(10)?.forEach {
                         list+=ListItem.Item(it)
                     }
+                    val topPicks=viewModel.mutableTopPicks.value?.data
+                    if(topPicks!=null){
+                        list+=ListItem.Header("SCS Top Picks")
+                        topPicks.forEach { res->
+                            list+=ListItem.Item(result.data?.filter { it.sYM.equals(res.sCSImpItemSymbol) }!!.first())
+                        }
+                    }
+
                     list+=ListItem.Header("Gainers")
                     result.data?.sortedByDescending { it.cHP }?.take(10)?.forEach {
                         list+=ListItem.Item(it)
@@ -327,21 +340,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun showPopup(view: View) {
-        val popupMenu=PopupMenu(requireContext(),view)
+        val popupMenu = PopupMenu(requireContext(), view)
+
         entries.forEach {
             popupMenu.menu.add(it.iNDEXCODE)
         }
-        popupMenu.setOnMenuItemClickListener {menu->
+
+        popupMenu.setOnMenuItemClickListener { menu ->
 
             homeViewModel.setSelectedIndex(viewModel.mutableIndices.value?.data?.first {
-                it.iNDEXCODE.contains(menu.title.toString(),true)
-            }?: emptyList<KSEIndices>().first())
+                it.iNDEXCODE.contains(menu.title.toString(), true)
+            } ?: emptyList<KSEIndices>().first())
             homeViewModel.fetchChart()
             true
         }
         popupMenu.show()
-    }
 
+    }
 
 
 }

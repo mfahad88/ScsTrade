@@ -68,7 +68,12 @@ class AllStockFragment : Fragment() {
                         list.forEach {
                             fullList +=ListItem.Item(it)
                         }
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                            binding.recyclerIndices.scrollToPosition(0)
+                        }
+
+
+
 
                     }
                     1 -> {
@@ -76,7 +81,9 @@ class AllStockFragment : Fragment() {
                         list.sortedByDescending { it.v }.forEach {
                             fullList +=ListItem.Item(it)
                         }
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                            binding.recyclerIndices.scrollToPosition(0)
+                        }
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
                     }
                     2 -> {
@@ -84,7 +91,10 @@ class AllStockFragment : Fragment() {
                         list.sortedByDescending { it.cHP  }.forEach {
                             fullList +=ListItem.Item(it)
                         }
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                            binding.recyclerIndices.scrollToPosition(0)
+                        }
+//
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
                     }
                     3 -> {
@@ -92,13 +102,16 @@ class AllStockFragment : Fragment() {
                         list.sortedBy { it.cHP }.forEach {
                             fullList +=ListItem.Item(it)
                         }
-                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                        (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                            binding.recyclerIndices.scrollToPosition(0)
+                        }
+//
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                     }
 
 
                 }
-                binding.recyclerIndices.scrollToPosition(0)
+//                binding.recyclerIndices.scrollToPosition(0)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -125,7 +138,9 @@ class AllStockFragment : Fragment() {
                                 list.forEach {
                                     fullList +=ListItem.Item(it)
                                 }
-                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                                    binding.recyclerIndices.scrollToPosition(0)
+                                }
 
                             }
                             1 -> {
@@ -133,7 +148,9 @@ class AllStockFragment : Fragment() {
                                 list.sortedByDescending { it.v }.forEach {
                                     fullList +=ListItem.Item(it)
                                 }
-                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                                    binding.recyclerIndices.scrollToPosition(0)
+                                }
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
                             }
                             2 -> {
@@ -141,7 +158,9 @@ class AllStockFragment : Fragment() {
                                 list.sortedByDescending { it.cHP  }.forEach {
                                     fullList +=ListItem.Item(it)
                                 }
-                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                                    binding.recyclerIndices.scrollToPosition(0)
+                                }
 //                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
                             }
                             3 -> {
@@ -149,15 +168,11 @@ class AllStockFragment : Fragment() {
                                 list.sortedBy { it.cHP }.forEach {
                                     fullList +=ListItem.Item(it)
                                 }
-                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList)
-//                        (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
+                                (binding.recyclerIndices.adapter as StockAdapter).submitList(fullList){
+                                    binding.recyclerIndices.scrollToPosition(0)
+                                }
                             }
-//                            0-> (binding.recyclerIndices.adapter as StockAdapter).submitList(list?: emptyList())
-//                            1 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.v }?: emptyList())
-//                            2 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedByDescending { it.cHP }?: emptyList())
-//                            3 -> (binding.recyclerIndices.adapter as StockAdapter).submitList(list.sortedBy { it.cHP }?: emptyList())
                         }
-//                    (binding.recyclerIndices.adapter as StockAdapter).addItems(list?: emptyList())
                         binding.loader.visibility=View.GONE
                         binding.recyclerIndices.visibility = View.VISIBLE
                     }

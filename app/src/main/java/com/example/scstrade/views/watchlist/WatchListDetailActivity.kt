@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityWatchListDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -127,7 +128,9 @@ class WatchListDetailActivity : BaseActivity() {
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
                     viewModel.getWatchListDetail(WatchListMainID?:0)
-                    Utils.showDeleteBottomSheet(this,"Your symbol has been deleted from current watchlist.")
+                    Utils.showSuccess(binding.root,
+                        getString(R.string.your_symbol_has_been_deleted_from_current_watchlist))
+//                    Utils.showDeleteBottomSheet(this,"Your symbol has been deleted from current watchlist.")
 
                 }
             }

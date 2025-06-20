@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.databinding.ItemFundamentalBinding
 import com.example.scstrade.databinding.ItemSectorBinding
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import java.util.Collections
 
 class FundamentalAdapter(private val itemList: List<FundamentalData>, private val onItemClick: (FundamentalData) -> Unit) : RecyclerView.Adapter<FundamentalAdapter.FundamentalViewHolder>() {
 
-    class FundamentalViewHolder(private val binding: ItemSectorBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FundamentalViewHolder(private val binding: ItemFundamentalBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: FundamentalData, onItemClick: (FundamentalData) -> Unit) {
             binding.textView.text = item.fundamentals
@@ -19,7 +20,7 @@ class FundamentalAdapter(private val itemList: List<FundamentalData>, private va
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundamentalViewHolder {
-        val binding = ItemSectorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFundamentalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FundamentalViewHolder(binding)
     }
 

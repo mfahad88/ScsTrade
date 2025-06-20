@@ -45,6 +45,7 @@ import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
+import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -73,6 +74,9 @@ interface ApiService {
 
     @GET(value = "/Data")
     suspend fun fetchAllData(@Query("que") que: String): List<StockItem>
+
+    @GET(value = "/Data")
+    suspend fun fetchTopPicks(@Query("que")que: String="TopPicks"):List<TopPickItem>
 
     @GET(value = "/Login")
     suspend fun fetchLogin(
@@ -346,4 +350,5 @@ interface ApiService {
 
     @POST(value = "api/verify-otp")
     suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):Response<ApiResponse<Nothing>>
+
 }

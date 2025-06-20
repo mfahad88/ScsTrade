@@ -20,8 +20,8 @@
     <string name="companyName">Worldcall Telecom Limited</string>
     <string name="volume">Vol: 127,408.831</string>
     <string name="weeks">52 Weeks</string>
-    <string name="high_52">147.5</string>
-    <string name="low_52">141.6</string>
+    <string name="high_52">H: 147.5</string>
+    <string name="low_52">L: 141.6</string>
     <string name="valueTrade">0.0</string>
     <string name="netChange">0.00 (0.00%)</string>
     <string name="high">H: 1.85</string>
@@ -444,6 +444,11 @@
     <string name="watchlist_empty">Watchlist Empty</string>
     <string name="add_stock_to_watchlist">Add Stock to watchlist</string>
     <string name="add_to_watchlist">Add To Watchlist</string>
+    <string name="kse_30">KSE 30</string>
+    <string name="kmi_30">KMI 30</string>
+    <string name="update">Update</string>
+    <string name="your_symbol_has_been_deleted_from_current_watchlist">Your symbol has been deleted from current watchlist.</string>
+
     <array name="p_l_array">
         <item>P&amp;L</item>
         <item>P&amp;L %</item>

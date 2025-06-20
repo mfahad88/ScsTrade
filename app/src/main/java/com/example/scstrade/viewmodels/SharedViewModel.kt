@@ -32,6 +32,7 @@ import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
+import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.ApiService
@@ -87,15 +88,20 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val isConnected = ConnectivityObserver(application)
     var isHome=false
     var portfolioJob: Job? = null
+    val mutableTopPicks = MutableLiveData<Resource<List<TopPickItem>>>()
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
                 if(isConnected.value==true) {
+                    val result2 = repository.fetchTopPicks()
                     val result = repository.fetchAllData("AllData")
                     val result1 = repository.fetchAllData("FutureData")
+
                     withContext(Dispatchers.Main) {
+                        mutableTopPicks.postValue(result2)
                         mutableAllData.postValue(result)
                         mutableFuture.postValue(result1)
+
                     }
                     delay(5000)
                 }

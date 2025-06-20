@@ -29,6 +29,7 @@ import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
+import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
@@ -79,6 +80,16 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         try {
 
             return Resource.Success(apiService.fetchAllData(que))
+//            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred")
+        }
+    }
+
+    suspend fun fetchTopPicks(): Resource<List<TopPickItem>>{
+        try {
+
+            return Resource.Success(apiService.fetchTopPicks())
 //            return Resource.Success(AppDatabase.getDatabase(context).marketDao().getMarkets())
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred")

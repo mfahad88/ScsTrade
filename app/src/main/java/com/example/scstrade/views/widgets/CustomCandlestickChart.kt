@@ -24,7 +24,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
         setupChart()
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
+  /*  override fun onTouchEvent(event: MotionEvent?): Boolean {
         parent?.requestDisallowInterceptTouchEvent(true)
         return super.onTouchEvent(event)
     }
@@ -32,7 +32,7 @@ class CustomCandlestickChart @JvmOverloads constructor(
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         parent?.requestDisallowInterceptTouchEvent(true)
         return super.onInterceptTouchEvent(ev)
-    }
+    }*/
     private fun setupChart() {
         this.description.isEnabled = false
         this.setBackgroundColor(Color.WHITE)

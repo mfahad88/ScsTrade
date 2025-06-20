@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,11 +48,18 @@ class WatchlistFragment : Fragment() {
 //            subTitle.text = "Watchlist"
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonAdd) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-
-            view.setPadding(0,0,0,insets.bottom+250)
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                if(Utils.getSmallestWidthDp(requireContext())<390) {
+                    bottomMargin = 270.dp.value.toInt() + insets.bottom
+                }else{
+                    bottomMargin = 250.dp.value.toInt() + insets.bottom
+                }
+            }
             windowInsets
+           /* view.setPadding(0,0,0,insets.bottom+160)
+            windowInsets*/
         }
 
         binding.buttonAdd.setOnClickListener {

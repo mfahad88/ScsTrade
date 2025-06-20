@@ -23,22 +23,6 @@
             android:layout_marginEnd="10dp"
             android:layout_gravity="start|center_vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:strokeWidth="0dp"
-                app:cardBackgroundColor="#80D1D0CB"
-                app:contentPadding="5dp"
-                app:cardCornerRadius="4dp"
-                android:layout_gravity="start|center_vertical">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:scaleType="centerInside"
-                    android:id="@+id/imageView"
-                    app:srcCompat="@drawable/baseline_arrow_right_24" />
-            </com.google.android.material.card.MaterialCardView>
-
 
 
             <TextView

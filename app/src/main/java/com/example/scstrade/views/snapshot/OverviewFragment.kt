@@ -174,10 +174,19 @@ class OverviewFragment : Fragment() {
                        binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.valueTrade.text = item?.cL.toString()
-                       binding.netChange.text = "${item?.cH.toString()}(${String.format("%.2f",item?.cHP)}%)"
-                       if(item?.iN!="") {
-                           binding.labelTextIndex.text =
-                               item?.iN?.substring(0, item?.iN?.indexOf("|") ?: 0)
+                       binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"
+                       val indices=item?.iN?.split("|")
+                       indices?.forEach {
+                            if(it.contains("kse 100")){
+                                binding.kse100.visibility = View.VISIBLE
+
+                            }else if(it.contains("kse 30")){
+                                binding.kse30.visibility = View.VISIBLE
+                            }else if(it.contains("kmi 30")){
+                                binding.kmi30.visibility = View.VISIBLE
+                            }else if(it.contains("kmi all")){
+                                binding.shariah.visibility = View.VISIBLE
+                            }
                        }
                        binding.volumeValue.text = Utils.commaFormat(item?.v?.toDouble())
                        binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())

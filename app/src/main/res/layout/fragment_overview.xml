@@ -88,54 +88,83 @@
                             app:layout_constraintStart_toStartOf="@+id/companyName"
                             app:layout_constraintTop_toBottomOf="@+id/companyName" />
 
-                        <RelativeLayout
-                            android:id="@+id/relativeLayoutReg"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/drawable_reg"
-                            android:backgroundTint="#9EEFFD"
+                            android:orientation="horizontal"
+                            android:id="@+id/linearIndices"
+                            android:layout_marginTop="2dp"
                             app:layout_constraintStart_toStartOf="@+id/sector"
                             app:layout_constraintTop_toBottomOf="@+id/sector">
 
-                            <TextView
-                                android:id="@+id/label_text_reg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal|center_vertical"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="3dp"
-                                android:text="@string/label_text_reg"
-                                android:textAppearance="@style/label_text_reg"
-                                android:textFontWeight="500" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/relativeLayoutIndex"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/drawable_reg"
-                            android:backgroundTint="@color/colorDarkerr"
-                            app:layout_constraintBottom_toBottomOf="@+id/relativeLayoutReg"
-                            app:layout_constraintStart_toEndOf="@+id/relativeLayoutReg"
-                            app:layout_constraintTop_toTopOf="@+id/relativeLayoutReg">
 
                             <TextView
-                                android:id="@+id/label_text_index"
+                                android:id="@+id/shariah"
+                                android:visibility="gone"
+                                tools:visibility="visible"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/drawable_reg"
+                                android:backgroundTint="@color/md_theme_primary"
+                                android:gravity="center"
+                                android:paddingHorizontal="7dp"
+                                android:paddingVertical="2dp"
+                                android:layout_marginEnd="7dp"
+                                android:text="@string/sariah"
+                                android:textAppearance="@style/reg"
+                                app:layout_constraintBottom_toBottomOf="@+id/volume"
+                                app:layout_constraintStart_toStartOf="@+id/companyName"
+                                app:layout_constraintTop_toTopOf="@+id/volume" />
+
+                            <TextView
+                                android:id="@+id/kse_100"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:background="@drawable/drawable_reg"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:lineSpacingExtra="3sp"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="3dp"
                                 android:text="@string/label_text_index"
+                                android:layout_marginEnd="5dp"
                                 android:textAppearance="@style/label_text_index"
                                 android:textFontWeight="500" />
 
-                        </RelativeLayout>
+                            <TextView
+                                android:id="@+id/kse_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:background="@drawable/drawable_reg"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:lineSpacingExtra="3sp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingVertical="3dp"
+                                android:text="@string/kse_30"
+                                android:textAppearance="@style/label_text_index"
+                                android:textFontWeight="500" />
+
+                            <TextView
+                                android:id="@+id/kmi_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:background="@drawable/drawable_reg"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:lineSpacingExtra="3sp"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/kmi_30"
+                                android:textAppearance="@style/label_text_index"
+                                android:textFontWeight="500" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/linearLayout5"
@@ -146,7 +175,7 @@
                             android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/relativeLayoutReg" />
+                            app:layout_constraintTop_toBottomOf="@id/linearIndices" />
 
                         <TextView
                             android:id="@+id/rs_"
@@ -156,6 +185,7 @@
                             android:text="@string/rs_"
                             android:textAppearance="@style/rs_"
                             android:textFontWeight="300"
+                            app:layout_constraintBaseline_toBaselineOf="@id/valueTrade"
                             app:layout_constraintStart_toStartOf="@+id/imageView16"
                             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
@@ -182,10 +212,12 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/netChange_snapshot"
+                            app:layout_constraintBaseline_toBaselineOf="@id/valueTrade"
                             android:textAppearance="@style/netChange_snapshot"
                             app:layout_constraintBottom_toBottomOf="@+id/rs_"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/valueTrade" />
+                            app:layout_constraintStart_toEndOf="@+id/valueTrade"
+                            app:layout_constraintTop_toTopOf="@+id/valueTrade" />
 
                         <ImageView
                             android:id="@+id/imageViewShare"

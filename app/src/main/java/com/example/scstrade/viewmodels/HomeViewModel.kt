@@ -21,7 +21,7 @@ class HomeViewModel(application: Application):AndroidViewModel(application) {
     val isLineSelected=MutableLiveData<Boolean>(true)
     val isCandleSelected=MutableLiveData<Boolean>(false)
     val chartItem = MutableLiveData<Resource<List<ChartItem>>>()
-    val selectedTime= MutableLiveData(arrayOf(true,false,false,false,false,false))
+    val selectedTime= MutableLiveData(arrayOf(false,false,false,false,false,true))
     val selectedIndex=MutableLiveData<KSEIndices>()
 
     fun fetchChart(){

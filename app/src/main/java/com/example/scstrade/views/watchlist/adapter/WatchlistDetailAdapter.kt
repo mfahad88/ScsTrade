@@ -3,6 +3,7 @@ package com.example.scstrade.views.watchlist.adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.text.TextUtils
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
@@ -59,8 +60,16 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
             binding.netChange.text = "${if (stockItem.cH>0.0) "+" else ""}${stockItem.cH} ${if (stockItem.cHP>0.0) "+" else ""}${String.format("%.2f",stockItem.cHP)}%"
             binding.high.text = "H: ${stockItem.hP.toString()}"
             binding.low.text = "L: ${stockItem.lP.toString()}"
-            binding.high52.text = stockItem.high52
-            binding.low52.text = stockItem.low52
+            if(!TextUtils.isEmpty(stockItem.high52)) {
+                binding.high52.text = "H: ${stockItem.high52}"
+            }else{
+                binding.high52.text = "H: ${0.0}"
+            }
+            if(!TextUtils.isEmpty(stockItem.low52)) {
+                binding.low52.text = "L: ${stockItem.low52}"
+            }else{
+                binding.low52.text = "L: ${0.0}"
+            }
             binding.root.setOnClickListener {
                 val intent= Intent(binding.root.context, SnapshotActivity::class.java)
                 intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)

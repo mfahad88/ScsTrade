@@ -344,25 +344,23 @@
 
 
         <LinearLayout
+            android:id="@+id/linearVolume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/linearVolume"
-            app:layout_constraintTop_toBottomOf="@id/companyName"
             app:layout_constraintStart_toStartOf="@+id/companyName"
-            >
+            app:layout_constraintTop_toBottomOf="@id/companyName">
+
             <TextView
                 android:id="@+id/shariah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginEnd="2dp"
                 android:background="@drawable/drawable_reg"
                 android:backgroundTint="@color/md_theme_primary"
-                android:gravity="center"
-
+                android:layout_gravity="top"
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="2dp"
-                android:layout_marginEnd="2dp"
                 android:text="@string/sariah"
                 android:textAppearance="@style/reg"
                 app:layout_constraintBottom_toBottomOf="@+id/volume"
@@ -373,7 +371,6 @@
                 android:id="@+id/volume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:text="@string/volume"
                 android:textAppearance="@style/volume"
                 android:textFontWeight="600"
@@ -477,6 +474,7 @@
             android:gravity="end"
             android:text="@string/netChange"
             android:textAppearance="@style/netChange"
+            app:layout_constraintBaseline_toBaselineOf="@id/companyName"
             android:textFontWeight="500"
             app:layout_constraintEnd_toEndOf="@+id/imageViewThree"
             app:layout_constraintTop_toBottomOf="@+id/frameValueTrade" />
@@ -520,48 +518,56 @@
             app:layout_constraintTop_toBottomOf="@+id/linearVolume" />
 
 
-
-
-        <TextView
-            android:id="@+id/high_52"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/weeks"
-            android:text="@string/high_52"
-            android:textAppearance="@style/high_52"
-            android:textFontWeight="500"
+        <RelativeLayout
+            android:id="@+id/weeksHL"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="end"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/weeks"
-            app:layout_constraintEnd_toEndOf="@+id/low"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@+id/low"
-            app:layout_constraintVertical_bias="0.333" />
-
-
-
-
-        <TextView
-            android:id="@+id/low_52"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/high_52"
-            android:gravity="top"
-            android:text="@string/low_52"
-            android:textAppearance="@style/low_52"
-            android:textFontWeight="500"
-            app:layout_constraintBottom_toBottomOf="@+id/high_52"
             app:layout_constraintEnd_toEndOf="@+id/high"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="@+id/high_52"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toEndOf="@+id/linearVolume"
+            app:layout_constraintTop_toBottomOf="@+id/high">
+
+
+            <TextView
+                android:id="@+id/high_52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:layout_alignParentEnd="true"
+                android:text="@string/high"
+                android:textAppearance="@style/high_52"
+                android:textFontWeight="500" />
+
+
+            <TextView
+                android:id="@+id/low_52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/high_52"
+                android:layout_gravity="end"
+                android:layout_toStartOf="@id/high_52"
+                android:gravity="end"
+                android:text="@string/low"
+                android:textAppearance="@style/low_52"
+                android:textFontWeight="500"
+                />
+
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_alignTop="@id/weeks"
-            android:layout_alignBottom="@id/low_52"
+            android:layout_alignBottom="@id/weeksHL"
             android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/low_52"
+            android:layout_toEndOf="@id/weeksHL"
             android:background="#D9D9D9"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@+id/imageViewThree"

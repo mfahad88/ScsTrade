@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
@@ -26,47 +27,12 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): /*ListAdapter<ListItem,RecyclerView.ViewHolder>(StockDiffCallback())*/
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var list=ArrayList<ListItem>()
+class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolean=false): ListAdapter<ListItem, RecyclerView.ViewHolder>(StockDiffCallback())
+    /*RecyclerView.Adapter<RecyclerView.ViewHolder>()*/ {
+//    var list=ArrayList<ListItem>()
     private val previousPrices = mutableMapOf<String, Double>()
     inner class StockViewHolder( val binding: ItemStocksBinding):RecyclerView.ViewHolder(binding.root) {
-        fun fadeIn(view: View, duration: Long = 1000) {
-            view.apply {
-                alpha = 0f
-//                visibility = View.VISIBLE
-                animate()
-                    .alpha(1f)
-                    .setDuration(duration)
-                    .setListener(object :AnimatorListenerAdapter(){
-                        override fun onAnimationEnd(animation: Animator) {
-                            binding.cardValueTrade.postDelayed({
-                                binding.cardValueTrade.alpha=0f
-                            },2000)
-                            /*  postDelayed({
-                                  animate().alpha(0f).setDuration(1000).withEndAction {
-                                      postDelayed({
-                                          binding.cardValueTrade.visibility=View.INVISIBLE
-                                      },100)
-                                  }
-                              },2000)*/
-//                        fadeOut(view,duration)
-                        }
-                    })
-            }
-        }
 
-        fun fadeOut(view: View, duration: Long = 500) {
-            view.animate()
-                .alpha(0f)
-                .setDuration(duration)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-//                        binding.cardValueTrade.alpha=0f
-//                    view.visibility = View.INVISIBLE
-                    }
-                })
-        }
         fun bind(stockItem: StockItem?, previousPrice: Double?) {
             if (stockItem!=null){
 
@@ -108,9 +74,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     val diff=
                         BigDecimal(stockItem.cL).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
                     if(diff>0){
-                        binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                        binding.cardValueTrade.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                     }else if (diff<0){
-                        binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                        binding.cardValueTrade.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                     }else{
                         binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
                     }
@@ -173,12 +139,10 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
     }
     override fun getItemViewType(position: Int): Int {
 
-        return list.get(position).viewType
+        return getItem(position).viewType
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+
 
     private class StockDiffCallback :  DiffUtil.ItemCallback<ListItem>(){
 
@@ -197,17 +161,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
             return oldItem==newItem
         }
 
-        override fun getChangePayload(oldItem: ListItem, newItem: ListItem): Any? {
-            return if(oldItem is ListItem.Item && newItem is ListItem.Item){
-                Bundle().apply {
-                    if(oldItem.stockItem.sYM.equals(newItem.stockItem.sYM)){
-                        putDouble("oldPrice",oldItem.stockItem.cL)
-                        putDouble("newPrice",newItem.stockItem.cL)
-                    }
-                }.takeIf { it.size()>0 }
-            }else null
-//            return super.getChangePayload(oldItem, newItem)
-        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -225,25 +179,19 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
     }
 
-    /*   override fun getItemCount(): Int {
-           return list?.size?:0
-       }*/
-    /* fun submitList(list:List<StockItem>){
-         this.list = list
-         notifyDataSetChanged()
-     }*/
 
-    fun submitList(currentList: List<ListItem>){
+
+  /*  fun submitList(currentList: List<ListItem>){
         if(list.size>0){
        list.clear()
        }
         list.addAll(currentList)
         notifyDataSetChanged()
-    }
+    }*/
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        holder.bind(list?.get(position))
         val start = System.nanoTime()
-        val item = list.get(position)
+        val item = getItem(position)
 
         if(item is ListItem.Header){
             (holder as HeadingViewHolder).bind(item.title)
@@ -253,15 +201,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
             (holder as StockViewHolder).bind(current,previousPrice)
             previousPrices[current.sYM] = current.cL
         }
-        /* when (val item = list.get(position)) {
 
-             is ListItem.Header -> (holder as HeadingViewHolder).bind(item.title)
-             is ListItem.Item -> {
-
-                 (holder as StockViewHolder).bind(item.stockItem)
-             }
-
-         }*/
 
         val end = System.nanoTime()
         Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
