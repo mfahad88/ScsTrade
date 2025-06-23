@@ -314,6 +314,13 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
+    suspend fun quartersDetails(symbol: String): Resource<List<YearDetailsItem>> {
+        try {
+            return Resource.Success(apiService.quartersDetails(symbol))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
     suspend fun incomeStatement(symbol:String,year:String,quarter:String): Resource<List<IncomeStatementDataItem>> {
         try {
             if(quarter.contains("1")) {

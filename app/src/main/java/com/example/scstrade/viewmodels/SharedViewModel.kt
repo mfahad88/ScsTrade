@@ -29,9 +29,9 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.snapshot.Overview
+import com.example.scstrade.model.response.snapshot.ResultYearQuarter
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
-import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
@@ -69,7 +69,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableOverview=MutableLiveData<Resource<Overview>>()
     val mutableDetail=MutableLiveData<Resource<List<DetailItem>>>()
     val mutableSnapShotChart=MutableLiveData<Resource<Charting>>()
-    val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
+    val mutableYears = MutableLiveData<ResultYearQuarter>()
+//    val mutableYears=MutableLiveData<Resource<List<YearDetailsItem>>>()
+//    val mutableQuarters=MutableLiveData<Resource<List<YearDetailsItem>>>()
     val mutableIncomeStatement=MutableLiveData<Resource<List<IncomeStatementDataItem>>>()
     val mutableBalanceSheet=MutableLiveData<Resource<List<BalanceSheetDataItem>>>()
     val mutableDistribution=MutableLiveData<Resource<List<DistributionDataItem>>>()
@@ -92,6 +94,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
+                
                 if(isConnected.value==true) {
                     val result2 = repository.fetchTopPicks()
                     val result = repository.fetchAllData("AllData")
@@ -371,16 +374,37 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun yearsDetails(symbol: String){
-        mutableYears.value = Resource.Loading()
         if(isConnected.value==true){
+            mutableYears.value = ResultYearQuarter(Resource.Loading(),Resource.Loading())
             viewModelScope.launch (Dispatchers.IO){
-                val result = repository.yearsDetails(symbol)
+                val yearsDeferred= async{repository.yearsDetails(symbol)}
+                val quartersDeferred = async { repository.quartersDetails(symbol) }
+
+                val years = yearsDeferred.await()
+                val quarters = quartersDeferred.await()
+                withContext(Dispatchers.Main){
+                    mutableYears.value = ResultYearQuarter(years,quarters)
+                }
+
+                /*val result = repository.yearsDetails(symbol)
                 withContext(Dispatchers.Main){
                     mutableYears.value = result
-                }
+                }*/
             }
         }
     }
+
+/*    fun quartersDetails(symbol: String){
+        mutableQuarters.value = Resource.Loading()
+        if(isConnected.value==true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.quartersDetails(symbol)
+                withContext(Dispatchers.Main){
+                    mutableQuarters.value = result
+                }
+            }
+        }
+    }*/
 
     fun incomeStatement(symbol:String,year:String,quarter:String){
         mutableIncomeStatement.value = Resource.Loading()
@@ -389,6 +413,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.incomeStatement(symbol,year, quarter)
                 withContext(Dispatchers.Main){
                     mutableIncomeStatement.value = result
+
+
                 }
             }
         }

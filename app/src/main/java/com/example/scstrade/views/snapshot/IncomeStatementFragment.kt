@@ -41,6 +41,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
@@ -50,8 +51,10 @@ import com.example.scstrade.databinding.FragmentIncomeStatementBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import kotlin.reflect.full.memberProperties
 
 
 class IncomeStatementFragment : Fragment() {
@@ -60,9 +63,7 @@ class IncomeStatementFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
-        sharedViewModel.yearsDetails(
-            requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
-        )
+
     }
 
     override fun onCreateView(
@@ -71,169 +72,186 @@ class IncomeStatementFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentIncomeStatementBinding.inflate(inflater, container, false)
-        sharedViewModel.mutableYears.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Resource.Error -> {
-                    Utils.showError(binding.root, result.message ?: "An error occurred")
-                    binding.loader.visibility = View.GONE
-                }
+        sharedViewModel.yearsDetails(
+            requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
+        )
+        sharedViewModel.mutableYears.observe(viewLifecycleOwner, Observer { res ->
 
-                is Resource.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                    binding.main.visibility = View.GONE
-                }
+          if(res!=null){
+              when (res.yearsDetails) {
+                  is Resource.Error -> {
+                      Utils.showError(binding.root, "An error occurred")
+                      binding.loader.visibility = View.GONE
+                  }
 
-                is Resource.Success -> {
-                    binding.loader.visibility = View.GONE
-                    binding.main.visibility = View.VISIBLE
-                    if(result.data?.isNotEmpty()?:false){
-                        binding.main.setContent {
+                  is Resource.Loading -> {
+                      binding.loader.visibility = View.VISIBLE
+                      binding.main.visibility = View.GONE
+                  }
 
-                            Column {
-                                var selectedYear by remember {
-                                    mutableStateOf(
-                                        result.data?.map { it.yeartext }?.distinct()?.toList()?.first()
-                                    )
-                                }
-                                var selectedQuarter by remember {
-                                    mutableStateOf(result.data?.filter { it.yeartext.equals(selectedYear) }
-                                        ?.map { it.quarterNumber }?.toList()?.first())
-                                }
-                                sharedViewModel.incomeStatement(
-                                    requireActivity().intent.extras?.getString(
-                                        AppConstants.SYMBOL
-                                    ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
-                                )
-                                Row {
-                                    mDropdownMenu(
-                                        result.data?.map { it.yeartext }?.distinct()?.toList()
-                                            ?: emptyList(), selectedYear
-                                    ) {
-                                        selectedYear = it
-                                        selectedQuarter =
-                                            result.data?.filter { it.yeartext.equals(selectedYear) }
-                                                ?.map { it.quarterNumber }?.toList()?.first()
-                                        sharedViewModel.incomeStatement(
-                                            requireActivity().intent.extras?.getString(
-                                                AppConstants.SYMBOL
-                                            ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    mDropdownMenu(
-                                        result.data?.filter { it.yeartext.equals(selectedYear) }
-                                            ?.map { it.quarterNumber }?.toList() ?: emptyList(),
-                                        selectedQuarter
-                                    ) {
-                                        selectedQuarter = it
-                                        sharedViewModel.incomeStatement(
-                                            requireActivity().intent.extras?.getString(
-                                                AppConstants.SYMBOL
-                                            ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
-                                        )
-                                    }
-                                }
+                  is Resource.Success -> {
+                      val result=res.yearsDetails
+                      val resultQuarter=res.quartersDetails
+                      binding.loader.visibility = View.GONE
+                      binding.main.visibility = View.VISIBLE
+                      if(result.data?.isNotEmpty()?:false){
+                          binding.main.setContent {
 
-                                Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),
-                                    backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
-                                    val incomeStatement =
-                                        sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
-                                            initial = Resource.Loading()
-                                        ).value.data
-                                    Column {
-                                        Column(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(45.dp)
-                                                .background(
-                                                    colorResource(id = R.color.colorDarkerr),
-                                                    shape = RoundedCornerShape(
-                                                        topStart = 12.dp,
-                                                        topEnd = 12.dp,
-                                                        bottomStart = 0.dp,
-                                                        bottomEnd = 0.dp
-                                                    )
-                                                )
-                                        ) {
-                                            Row(
-                                                modifier = Modifier.padding(
-                                                    start = 15.dp,
-                                                    top = 10.dp,
-                                                    bottom = 10.dp
-                                                )
-                                            ) {
-                                                Text(
-                                                    text = "Year/Quarter",
-                                                    style = TextStyle(
-                                                        fontSize = 16.sp,
-                                                        lineHeight = 30.08.sp,
-                                                        fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                        fontWeight = FontWeight(700),
-                                                        color = Color(0xFFFFFFFF),
+                              Column {
+                                  var selectedYear by remember {
+                                      mutableStateOf(
+                                          result.data?.map { it.yeartext }?.distinct()?.toList()?.first()
+                                      )
+                                  }
+                                  var selectedQuarter by remember {
+                                      mutableStateOf(result.data?.filter { it.yeartext.equals(selectedYear) }
+                                          ?.map { it.quarterNumber }?.toList()?.first())
+                                  }
+                                  sharedViewModel.incomeStatement(
+                                      requireActivity().intent.extras?.getString(
+                                          AppConstants.SYMBOL
+                                      ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
+                                  )
+                                  Row {
+                                      mDropdownMenu(150.dp,
+                                          result.data?.map { it.yeartext }?.distinct()?.toList()
+                                              ?: emptyList(), selectedYear
+                                      ) {
+                                          selectedYear = it
+                                          selectedQuarter =
+                                              resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                                  ?.map { it.quarterNumber }?.toList()?.first()
+                                          sharedViewModel.incomeStatement(
+                                              requireActivity().intent.extras?.getString(
+                                                  AppConstants.SYMBOL
+                                              ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
+                                          )
+                                      }
+                                      Spacer(modifier = Modifier.weight(1f))
+                                      mDropdownMenu(200.dp,
+                                          resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                              ?.map { it.quarterName }?.toList() ?: emptyList(),
+                                          resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                              ?.filter { it.quarterNumber.equals(selectedQuarter) }?.map { it.quarterName }?.first()
 
-                                                        )
-                                                )
-                                                Spacer(modifier = Modifier.width(90.dp))
-                                                Text(
-                                                    text = "${selectedYear}/Q${selectedQuarter}",
-                                                    style = TextStyle(
-                                                        fontSize = 16.sp,
-                                                        lineHeight = 30.08.sp,
-                                                        fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                        fontWeight = FontWeight(700),
-                                                        color = Color(0xFFFFFFFF),
+                                      ) {selected->
+                                          selectedQuarter = resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                              ?.filter { it.quarterName.equals(selected) }
+                                              ?.map { it.quarterNumber }?.first()
+                                          sharedViewModel.incomeStatement(
+                                              requireActivity().intent.extras?.getString(
+                                                  AppConstants.SYMBOL
+                                              ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
+                                          )
+                                      }
+                                  }
 
-                                                        )
-                                                )
-                                            }
-                                        }
-                                        if(incomeStatement?.isNotEmpty() == true) {
-                                            Column (modifier = Modifier.padding(horizontal = 15.dp)){
-                                                cardItem("Cash", Utils.commaFormat(incomeStatement?.first()?.cash))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Current Asset", Utils.commaFormat(incomeStatement?.first()?.currentAsset))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Current Liability", Utils.commaFormat(incomeStatement?.first()?.currentLiability))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Fixed Asset", Utils.commaFormat(incomeStatement?.first()?.fixedAsset))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Fixed Liability", Utils.commaFormat(incomeStatement?.first()?.fixedLiability))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Inventory", Utils.commaFormat(incomeStatement?.first()?.inventory))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Investments", Utils.commaFormat(incomeStatement?.first()?.investments))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem("Paid Up Capital", Utils.commaFormat(incomeStatement?.first()?.paidUpCapital))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem(key = "Total Assets", value = Utils.commaFormat(incomeStatement?.first()?.totalAssets))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem(key = "Total Equity", value = Utils.commaFormat(incomeStatement?.first()?.totalEquity))
-                                                Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
-                                                cardItem(key = "Total Liabilities", value = Utils.commaFormat(incomeStatement?.first()?.totalLiabilities))
-                                            }
-                                        }else{
-                                            Column(modifier = Modifier.padding(10.dp)) {
-                                                Text(
-                                                    text = "No Record Found...",
-                                                    style = TextStyle(
-                                                        fontSize = 22.sp,
-                                                        lineHeight = 30.08.sp,
-                                                        fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                        fontWeight = FontWeight(500),
-                                                        color = colorResource(id = R.color.black),
-                                                    )
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        Utils.showError(requireView(), getString(R.string.no_record_found))
-                    }
-                }
-            }
+                                  Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),
+                                      backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
+                                      val incomeStatement =
+                                          sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
+                                              initial = Resource.Loading()
+                                          ).value.data
+                                      Column {
+                                          Column(
+                                              modifier = Modifier
+                                                  .fillMaxWidth()
+                                                  .height(45.dp)
+                                                  .background(
+                                                      colorResource(id = R.color.colorDarkerr),
+                                                      shape = RoundedCornerShape(
+                                                          topStart = 12.dp,
+                                                          topEnd = 12.dp,
+                                                          bottomStart = 0.dp,
+                                                          bottomEnd = 0.dp
+                                                      )
+                                                  )
+                                          ) {
+                                              Row(
+                                                  modifier = Modifier.padding(
+                                                      start = 15.dp,
+                                                      top = 10.dp,
+                                                      bottom = 10.dp
+                                                  )
+                                              ) {
+                                                  Text(
+                                                      text = "Year/Quarter",
+                                                      style = TextStyle(
+                                                          fontSize = 16.sp,
+                                                          lineHeight = 30.08.sp,
+                                                          fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                          fontWeight = FontWeight(700),
+                                                          color = Color(0xFFFFFFFF),
+
+                                                          )
+                                                  )
+                                                  Spacer(modifier = Modifier.width(90.dp))
+                                                  Text(
+                                                      text = "${selectedYear}/Q${selectedQuarter}",
+                                                      style = TextStyle(
+                                                          fontSize = 16.sp,
+                                                          lineHeight = 30.08.sp,
+                                                          fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                          fontWeight = FontWeight(700),
+                                                          color = Color(0xFFFFFFFF),
+
+                                                          )
+                                                  )
+                                              }
+                                          }
+                                          if(incomeStatement?.isNotEmpty() == true) {
+
+                                              Column (modifier = Modifier.padding(horizontal = 15.dp)){
+                                                  /*for(props in IncomeStatementDataItem::class.memberProperties){
+                                                      val regex = Regex(".*\\\\d.*")
+                                                      val name = props.name
+                                                      val value = props.get(incomeStatement.first())
+                                                      cardItem(name.replaceFirstChar { it.uppercase() }, if(regex.matches(value.toString())) Utils.commaFormat(value.toString().toDouble()) else value.toString())
+                                                      Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  }*/
+
+                                                  cardItem("Sales", Utils.commaFormat(incomeStatement?.first()?.sales))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Cost Of Sales", Utils.commaFormat(incomeStatement?.first()?.costOfSales))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Gross Profit", Utils.commaFormat(incomeStatement?.first()?.grossProfit))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Operating Profit", Utils.commaFormat(incomeStatement?.first()?.operatingProfit))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Other Income", Utils.commaFormat(incomeStatement?.first()?.otherIncome))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Finance Cost", Utils.commaFormat(incomeStatement?.first()?.financeCost))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Profit Before Tax", Utils.commaFormat(incomeStatement?.first()?.profitBeforeTax))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem("Taxation", Utils.commaFormat(incomeStatement?.first()?.taxation))
+                                                  Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                  cardItem(key = "Profit After Tax", value = Utils.commaFormat(incomeStatement?.first()?.profitAfterTax))
+                                              }
+                                          }else{
+                                              Column(modifier = Modifier.padding(10.dp)) {
+                                                  Text(
+                                                      text = "No Record Found...",
+                                                      style = TextStyle(
+                                                          fontSize = 22.sp,
+                                                          lineHeight = 30.08.sp,
+                                                          fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                          fontWeight = FontWeight(500),
+                                                          color = colorResource(id = R.color.black),
+                                                      )
+                                                  )
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }else{
+                          Utils.showError(requireView(), getString(R.string.no_record_found))
+                      }
+                  }
+              }
+          }
         })
         return binding.root
     }
@@ -277,7 +295,7 @@ class IncomeStatementFragment : Fragment() {
     }
 
     @Composable
-    fun mDropdownMenu(list: List<String>,selectedOption:String?, onClick: (String) -> Unit) {
+    fun mDropdownMenu(width: Dp, list: List<String>, selectedOption:String?, onClick: (String) -> Unit) {
         var expanded by remember { mutableStateOf(false) }
         /*  var selectedText by remember {
               mutableStateOf(selectedOption)
@@ -285,7 +303,7 @@ class IncomeStatementFragment : Fragment() {
         Box(
             modifier = Modifier
                 .padding(16.dp)
-                .width(150.dp)
+                .width(width)
                 .border(1.dp, Color.Gray, shape = RoundedCornerShape(10f))
         ) {
             Row (
@@ -310,7 +328,7 @@ class IncomeStatementFragment : Fragment() {
             DropdownMenu(
                 expanded = expanded,
                 modifier = Modifier.background(color = colorResource(id = R.color.dropdown)),
-                        onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false }
             ) {
                 list.forEach {
                     DropdownMenuItem(onClick = {
@@ -333,5 +351,11 @@ class IncomeStatementFragment : Fragment() {
 
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sharedViewModel.mutableYears.value=null
+
     }
 }

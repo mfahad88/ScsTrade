@@ -1,13 +1,13 @@
 package com.example.scstrade.views.snapshot
 
 import android.app.Dialog
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,10 +25,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,17 +37,12 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,8 +57,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.mycalendar_sdk.CustomDatePickerDialog
@@ -77,16 +68,13 @@ import com.example.scstrade.helper.downloadPdf
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
-import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.SnapshotViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.announcement.AnnoucementActivity
 import com.example.scstrade.views.widgets.ZoomImageView
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.Date
 
 
 class AnnouncementsFragment : Fragment() {
@@ -119,19 +107,20 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                            binding.main.visibility=View.VISIBLE
-                    /*if(result.data?.any { it.type.contains("insider",true) }?:false){
+                    binding.main.visibility=View.VISIBLE
+                    if(result.data?.any { it.type.contains("insider",true) }?:false){
 
                         binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
                     }else{
                         val list =result.data?.map {it.type }?.toList() as MutableList
                         list.add("Insider")
                         binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,list)
-                    }*/
-                    binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
+                    }
+//                    binding.spinnerAnnouncement.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,result.data?.map {it.type }?.toList() as MutableList)
                     if(binding.spinnerAnnouncement.adapter!=null && binding.spinnerAnnouncement.adapter.count>0){
                         binding.spinnerAnnouncement.setSelection(0)
                         snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())
+
                     }
 
                 }
@@ -151,11 +140,51 @@ class AnnouncementsFragment : Fragment() {
                         binding.main.setContent {
 
                             AnnouncementItems(list = result.data?: emptyList())
+
+                        }
+                        binding.apply {
+                            main.visibility = View.VISIBLE
+                            insider.visibility = View.GONE
                         }
                     }else{
                         Utils.showError(requireView(), getString(R.string.no_record_found))
                     }
 
+                }
+            }
+        })
+
+        snapshotViewModel.mutableInsider.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    Utils.showError(requireView(), result.message ?: "An error occurred...")
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
+                    if(result.data?.isNotEmpty()?:false){
+
+                        binding.main.setContent {
+                            if(!TextUtils.isEmpty(binding.textDate.text.toString())){
+                                InsiderItems(list = result.data?.filter {
+                                    Utils.compareDates(it.insiderTransactionDate?:"0L",binding.textDate.text.toString())
+                                }?: emptyList())
+
+                            }else{
+                                InsiderItems(list = result.data?: emptyList())
+                            }
+
+
+                        }
+
+                        binding.apply {
+                            main.visibility = View.VISIBLE
+                            insider.visibility = View.GONE
+                        }
+                    }else{
+                        Utils.showError(requireView(), getString(R.string.no_record_found))
+                    }
                 }
             }
         })
@@ -190,10 +219,26 @@ class AnnouncementsFragment : Fragment() {
                 isFormatting = false
                 if(binding.textDate.text.length==8){
                     Utils.hideKeyboard(requireContext(),binding.textDate)
-                    snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())
+                    if(binding.spinnerAnnouncement.selectedItem.toString().equals("insider",true)){
+                     snapshotViewModel.insider(symbol)
+                    }else {
+                        snapshotViewModel.announcement(
+                            symbol,
+                            binding.spinnerAnnouncement.selectedItem.toString(),
+                            binding.textDate.text.toString()
+                        )
+                    }
                 }else if(binding.textDate.text.length==0){
                     Utils.hideKeyboard(requireContext(),binding.textDate)
-                    snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),null)
+                    if(binding.spinnerAnnouncement.selectedItem.toString().equals("insider",true)){
+                        snapshotViewModel.insider(symbol)
+                    }else {
+                        snapshotViewModel.announcement(
+                            symbol,
+                            binding.spinnerAnnouncement.selectedItem.toString(),
+                            null
+                        )
+                    }
 
                 }
             }
@@ -204,7 +249,15 @@ class AnnouncementsFragment : Fragment() {
         }
         binding.spinnerAnnouncement.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                snapshotViewModel.announcement(symbol,binding.spinnerAnnouncement.selectedItem.toString(),binding.textDate.text.toString())
+                if(binding.spinnerAnnouncement.selectedItem.toString().equals("Insider",true)){
+                    snapshotViewModel.insider(symbol)
+                }else {
+                    snapshotViewModel.announcement(
+                        symbol,
+                        binding.spinnerAnnouncement.selectedItem.toString(),
+                        binding.textDate.text.toString()
+                    )
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -232,8 +285,9 @@ class AnnouncementsFragment : Fragment() {
         }
         if(binding.spinnerAnnouncement.selectedItem.toString().equals("Insider",true)){
             dialog.availableDates =
-                snapshotViewModel.mutableInsider.value?.data?.map { it.insiderTransactionPostDate ?: "0L" }
+                snapshotViewModel.mutableInsider.value?.data?.map { it.insiderTransactionDate ?: "0L" }
                     ?.toList() ?: emptyList<String>()
+
         }else if(binding.spinnerAnnouncement.selectedItem.toString().equals("All",true)){
             val list=ArrayList<String>()
             list.addAll(snapshotViewModel.mutableAnnouncementItem.value?.data?.map { it.bmDate ?: "0L" }?.toList()?: emptyList())
@@ -593,6 +647,384 @@ class AnnouncementsFragment : Fragment() {
                                 Row {
                                     GridView(map)
                                 }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Divider(
+                            thickness = 1.dp,
+                            color = Color(0xFFE5E2E1),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+            }
+        }else{
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(painter = painterResource(id = R.drawable.no_data), contentDescription = "No data", modifier = Modifier.size(300.dp))
+                Text(
+                    text = "No records available",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        lineHeight = 19.sp,
+                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                        fontWeight = FontWeight(600),
+                        color = colorResource(id = R.color.black),
+                    )
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun InsiderItems(list: List<InsiderDataItem>) {
+        /*var isExpanded by remember {
+            mutableStateOf(MutableList(list.size){false})
+        }*/
+
+        val stockItem = sharedViewModel.mutableAllData.value?.data?.filter {
+            it.sYM.equals(
+                list.filter { it.companyCode!=null }.map { it.companyCode }.first(),
+                true
+            )
+        }?.first()
+        val isExpanded = remember { mutableStateListOf(*Array(list.size) { false }) }
+        if(list.size>0) {
+            LazyColumn(modifier = Modifier.padding(horizontal = 15.dp)) {
+                items(list.size) { index ->
+                    val announcementItem = list?.get(index)
+                    var map = mutableMapOf<String, String>()
+                    if (!announcementItem?.insiderTransactionName.isNullOrBlank()) {
+                        map["Name"] = announcementItem?.insiderTransactionName ?: ""
+                    }
+                    if (!announcementItem?.insiderTransactionDesignation.isNullOrBlank()) {
+                        map["Designation"] = announcementItem?.insiderTransactionDesignation ?: ""
+                    }
+                    if (!announcementItem?.insiderTransactionMarket.isNullOrBlank()) {
+                        map["Market"] = announcementItem?.insiderTransactionMarket ?: ""
+                    }
+                    if (!announcementItem?.insiderTransactionForm.isNullOrBlank()) {
+                        map["Form Type"] = announcementItem?.insiderTransactionForm ?: ""
+                    }
+                    if (!announcementItem?.insiderTransactionAction.isNullOrBlank()) {
+                        map["Action"] = announcementItem?.insiderTransactionAction ?: ""
+                    }
+                    map["Quantity"] = announcementItem?.insiderTransactionQuantity.toString()
+                   /* if (!announcementItem?.insiderTransactionQuantity.isNullOrBlank()) {
+                        map["Dividend"] = announcementItem?.insiderTransactionQuantity ?: ""
+                    }*/
+                    map["Rate"] = announcementItem?.insiderTransactionRate.toString()
+                    /*if (!announcementItem?.bmRightPer.isNullOrBlank()) {
+                        map["Right Percent"] = announcementItem?.bmRightPer ?: ""
+                    }
+                    if (!announcementItem?.bmRightPrice.isNullOrBlank()) {
+                        map["Right Price"] = announcementItem?.bmRightPrice ?: ""
+                    }
+                    if (!announcementItem?.bmBcStartd.isNullOrBlank()) {
+                        map["Start Date"] = announcementItem?.bmBcStartd ?: ""
+                    }
+                    if (!announcementItem?.bmBcEndd.isNullOrBlank()) {
+                        map["End Date"] = announcementItem?.bmBcEndd ?: ""
+                    }*/
+                    Column {
+
+                        if(binding.spinnerAnnouncement.selectedItem!=null){
+                            Row(
+                                modifier = Modifier
+                                    .padding(0.dp)
+                                    .width(126.dp)
+                                    .height(20.dp)
+                                    .background(
+                                        color = Color(0x66625B71),
+                                        shape = RoundedCornerShape(size = 6.dp)
+                                    ),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    "Insider",
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        lineHeight = 20.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(500),
+                                        color =  Color(0xFF625B71),
+                                        textAlign = TextAlign.Center,
+                                        letterSpacing = 0.1.sp,
+                                    ),
+
+                                    )
+                            }
+                            Spacer(modifier = Modifier.height(7.dp))
+                        }
+
+                        Row {
+                            Text(
+                                text = stockItem?.sYM ?: "",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    lineHeight = 19.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = stockItem?.nM ?: "",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    lineHeight = 20.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF79776F),
+                                    textAlign = TextAlign.Center,
+                                    letterSpacing = 0.1.sp,
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(2.dp))
+                        if (!announcementItem?.insiderTransactionDesc.isNullOrBlank()) {
+                            Row {
+                                Text(
+                                    text = announcementItem?.insiderTransactionDesc ?: "",
+                                    style = TextStyle(
+                                        fontSize = 16.sp,
+                                        lineHeight = 20.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(600),
+                                        color = colorResource(id = R.color.md_theme_primary),
+                                    )
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(5.dp))
+                        }
+                        Row {
+                            Text(
+                                text = "${
+                                    Utils.convertDateString(
+                                        announcementItem?.insiderTransactionDate ?: "0L",
+                                        "dd MMM yyyy"
+                                    )
+                                }",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    lineHeight = 20.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(500),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Row {
+                                if (!announcementItem?.insiderTransactionImageLink.isNullOrEmpty()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .border(
+                                                width = 0.59191.dp,
+                                                color = Color(0xFF79776F),
+                                                shape = RoundedCornerShape(size = 59.19118.dp)
+                                            )
+                                            .width(28.dp)
+                                            .height(28.dp)
+                                            .clickable {
+                                                binding.loader.visibility = View.VISIBLE
+                                                val dialog = Dialog(requireContext())
+                                                dialog.setContentView(R.layout.dialog_image)
+                                                Glide
+                                                    .with(requireContext())
+                                                    .load(announcementItem?.insiderTransactionImageLink ?: "")
+                                                    .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
+                                                dialog.setCancelable(false)
+                                                dialog.setCanceledOnTouchOutside(false)
+                                                dialog
+                                                    .findViewById<ImageView>(R.id.btnClose)
+                                                    .setOnClickListener {
+                                                        dialog.dismiss()
+                                                    }
+                                                dialog.show()
+                                                binding.loader.visibility = View.GONE
+                                            }
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                                            contentDescription = "View",
+                                            modifier = Modifier
+                                                .size(18.dp)
+                                                .align(Alignment.Center),
+                                            colorFilter = ColorFilter.tint(color = colorResource(id = R.color.md_theme_onSurfaceVariant))
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                }
+                                if (!announcementItem?.insiderTransactionPDFLink.isNullOrEmpty()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .border(
+                                                width = 0.59191.dp,
+                                                color = Color(0xFF79776F),
+                                                shape = RoundedCornerShape(size = 59.19118.dp)
+                                            )
+                                            .width(28.dp)
+                                            .height(28.dp)
+                                            .clickable {
+                                                binding.loader.visibility = View.VISIBLE
+                                                downloadPdf(
+                                                    requireContext(),
+                                                    announcementItem?.insiderTransactionPDFLink.toString()
+                                                ) { file ->
+                                                    requireActivity().runOnUiThread {
+                                                        if (file != null) {
+                                                            openPdf(requireContext(), file)
+                                                            binding.loader.visibility = View.GONE
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.baseline_arrow_downward_24),
+                                            contentDescription = "Download",
+                                            modifier = Modifier
+                                                .size(18.dp)
+                                                .align(Alignment.Center),
+                                            colorFilter = ColorFilter.tint(color = colorResource(id = R.color.md_theme_onSurfaceVariant))
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                    Box(
+                                        modifier = Modifier
+                                            .border(
+                                                width = 0.59191.dp,
+                                                color = Color(0xFF79776F),
+                                                shape = RoundedCornerShape(size = 59.19118.dp)
+                                            )
+                                            .width(28.dp)
+                                            .height(28.dp)
+                                            .clickable {
+                                                binding.loader.visibility = View.VISIBLE
+                                                downloadPdf(
+                                                    requireContext(),
+                                                    announcementItem?.insiderTransactionPDFLink.toString()
+                                                ) { file ->
+                                                    requireActivity().runOnUiThread {
+                                                        if (file != null) {
+                                                            sharePdf(file)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.baseline_share_24),
+                                            contentDescription = "Share",
+                                            modifier = Modifier
+                                                .size(18.dp)
+                                                .align(Alignment.Center),
+                                            colorFilter = ColorFilter.tint(color = colorResource(id = R.color.md_theme_onSurfaceVariant))
+                                        )
+                                    }
+                                }
+
+
+                            }
+                            if (map.isNotEmpty()) {
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Row(
+                                        modifier = Modifier.clickable {
+                                            isExpanded[index] = !isExpanded[index]
+                                            isExpanded.forEachIndexed { i, b ->
+                                                if (index != i) isExpanded[i] = false
+                                            }
+                                        },
+                                        verticalAlignment = Alignment.Bottom
+                                    ) {
+                                        Text(
+                                            text = "More Details",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                lineHeight = 34.67.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(500),
+                                                color = colorResource(id = R.color.black),
+                                                textAlign = TextAlign.Right,
+                                            )
+                                        )
+                                        Spacer(modifier = Modifier.width(5.dp))
+                                        Image(
+                                            painter = painterResource(id = if (isExpanded[index]) R.drawable.drop_up_icon else R.drawable.drop_down_icon),
+                                            contentDescription = "Expanded",
+                                            modifier = Modifier.size(20.dp),
+                                            colorFilter = ColorFilter.tint(colorResource(id = R.color.black))
+                                        )
+                                    }
+                                }
+                            }
+
+                        }
+
+                        if (isExpanded[index]) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Column {
+                                Row {
+                                    Text(
+                                        text = "Sector:",
+                                        style = TextStyle(
+                                            fontSize = 14.sp,
+                                            lineHeight = 20.sp,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(500),
+                                            color = colorResource(id = R.color.black),
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.width(5.dp))
+                                    Text(
+                                        text = stockItem?.sN ?: "Not found",
+                                        style = TextStyle(
+                                            fontSize = 14.sp,
+                                            lineHeight = 20.sp,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(500),
+                                            color = colorResource(id = R.color.black),
+                                        )
+                                    )
+
+                                }
+                                map.forEach {
+                                    it.key
+                                    Row {
+                                        Text(
+                                            text = "${/*map.keys.toList()[index]*/it.key}: ",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                lineHeight = 20.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(500),
+                                                color = colorResource(id = R.color.black),
+                                            )
+                                        )
+                                        Text(
+                                            text = it.value,
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                lineHeight = 20.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(500),
+                                                color = colorResource(id = R.color.black),
+                                            )
+                                        )
+                                    }
+                                }
+                                /*Row {
+                                    GridView(map)
+                                }*/
                             }
                         }
                         Spacer(modifier = Modifier.height(10.dp))

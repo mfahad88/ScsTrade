@@ -44,6 +44,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
@@ -64,9 +65,7 @@ class BalanceSheetFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
-        sharedViewModel.yearsDetails(
-            requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
-        )
+
     }
 
     override fun onCreateView(
@@ -75,369 +74,399 @@ class BalanceSheetFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentBalanceSheetBinding.inflate(inflater,container,false)
-        sharedViewModel.mutableYears.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Resource.Error -> {
-                    Utils.showError(binding.root, result.message ?: "An error occurred")
-                    binding.loader.visibility = View.GONE
-                }
+        sharedViewModel.yearsDetails(
+            requireActivity().intent?.extras?.getString(AppConstants.SYMBOL) ?: ""
+        )
+        sharedViewModel.mutableYears.observe(viewLifecycleOwner, Observer { res ->
 
-                is Resource.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                    binding.main.visibility = View.GONE
-                }
+            if(res!=null){
+                when (res.yearsDetails) {
+                    is Resource.Error -> {
+                        Utils.showError(binding.root,  "An error occurred")
+                        binding.loader.visibility = View.GONE
+                    }
 
-                is Resource.Success -> {
-                    binding.loader.visibility = View.GONE
-                    binding.main.visibility = View.VISIBLE
-                    if(result.data?.isNotEmpty()?:false) {
-                        binding.main.setContent {
+                    is Resource.Loading -> {
+                        binding.loader.visibility = View.VISIBLE
+                        binding.main.visibility = View.GONE
+                    }
 
-                            Column {
-                                var selectedYear by remember {
-                                    mutableStateOf(
-                                        result.data?.map { it.yeartext }?.distinct()?.toList()
-                                            ?.first()
+                    is Resource.Success -> {
+                        binding.loader.visibility = View.GONE
+                        binding.main.visibility = View.VISIBLE
+                        val result = res.yearsDetails
+                        val  resultQuarter=res.quartersDetails
+
+                        if(result.data?.isNotEmpty()?:false) {
+                            binding.main.setContent {
+
+                                Column {
+                                    var selectedYear by remember {
+                                        mutableStateOf(
+                                            result.data?.map { it.yeartext }?.distinct()?.toList()
+                                                ?.first()
+                                        )
+                                    }
+                                    var selectedQuarter by remember {
+                                        mutableStateOf(resultQuarter.data?.filter {
+                                            it.yeartext.equals(
+                                                selectedYear
+                                            )
+                                        }
+                                            ?.map { it.quarterNumber }?.toList()?.first())
+                                    }
+                                    sharedViewModel.balanceSheet(
+                                        requireActivity().intent.extras?.getString(
+                                            AppConstants.SYMBOL
+                                        ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
                                     )
-                                }
-                                var selectedQuarter by remember {
-                                    mutableStateOf(result.data?.filter {
-                                        it.yeartext.equals(
-                                            selectedYear
-                                        )
-                                    }
-                                        ?.map { it.quarterNumber }?.toList()?.first())
-                                }
-                                sharedViewModel.balanceSheet(
-                                    requireActivity().intent.extras?.getString(
-                                        AppConstants.SYMBOL
-                                    ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
-                                )
-                                sharedViewModel.distribution(
-                                    requireActivity().intent.extras?.getString(
-                                        AppConstants.SYMBOL
-                                    ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
-                                )
-                                Row {
-                                    mDropdownMenu(
-                                        result.data?.map { it.yeartext }?.distinct()?.toList()
-                                            ?: emptyList(), selectedYear
-                                    ) {
-                                        selectedYear = it
-                                        selectedQuarter =
-                                            result.data?.filter { it.yeartext.equals(selectedYear) }
-                                                ?.map { it.quarterNumber }?.toList()?.first()
-                                        sharedViewModel.incomeStatement(
-                                            requireActivity().intent.extras?.getString(
-                                                AppConstants.SYMBOL
-                                            ) ?: "",
-                                            selectedYear ?: "2025",
-                                            "quarter${selectedQuarter}"
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    mDropdownMenu(
-                                        result.data?.filter { it.yeartext.equals(selectedYear) }
-                                            ?.map { it.quarterNumber }?.toList() ?: emptyList(),
-                                        selectedQuarter
-                                    ) {
-                                        selectedQuarter = it
-                                        sharedViewModel.incomeStatement(
-                                            requireActivity().intent.extras?.getString(
-                                                AppConstants.SYMBOL
-                                            ) ?: "",
-                                            selectedYear ?: "2025",
-                                            "quarter${selectedQuarter}"
-                                        )
-                                    }
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(bottom = 30.dp)
-                                        .verticalScroll(rememberScrollState())
-                                ) {
-                                    Text(
-                                        modifier = Modifier.padding(
-                                            start = 15.dp,
-                                            end = 15.dp,
-                                            bottom = 10.dp
-                                        ),
-                                        text = "Income Statement",
-                                        style = TextStyle(
-                                            fontSize = 18.sp,
-                                            lineHeight = 27.sp,
-                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                            fontWeight = FontWeight(700),
-                                            color = colorResource(id = R.color.md_theme_primary),
-                                        )
+                                    sharedViewModel.distribution(
+                                        requireActivity().intent.extras?.getString(
+                                            AppConstants.SYMBOL
+                                        ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
                                     )
-                                    Card(
-                                        modifier = Modifier.padding(horizontal = 15.dp),
-                                        border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
-                                        backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                                        shape = RoundedCornerShape(12.dp)
-                                    ) {
-                                        val balanceSheet =
-                                            sharedViewModel.mutableBalanceSheet.asFlow()
-                                                .collectAsState(
-                                                    initial = Resource.Loading()
-                                                ).value.data
-                                        Column {
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(45.dp)
-                                                    .background(
-                                                        colorResource(id = R.color.colorDarkerr),
-                                                        shape = RoundedCornerShape(
-                                                            topStart = 12.dp,
-                                                            topEnd = 12.dp,
-                                                            bottomStart = 0.dp,
-                                                            bottomEnd = 0.dp
-                                                        )
-                                                    )
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier.padding(
-                                                        start = 15.dp,
-                                                        top = 10.dp,
-                                                        bottom = 10.dp
-                                                    )
-                                                ) {
-                                                    Text(
-                                                        text = "Year/Quarter",
-                                                        style = TextStyle(
-                                                            fontSize = 16.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(700),
-                                                            color = Color(0xFFFFFFFF),
-
-                                                            )
-                                                    )
-                                                    Spacer(modifier = Modifier.width(90.dp))
-                                                    Text(
-                                                        text = "${selectedYear}/Q${selectedQuarter}",
-                                                        style = TextStyle(
-                                                            fontSize = 16.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(700),
-                                                            color = Color(0xFFFFFFFF),
-
-                                                            )
-                                                    )
-                                                }
-                                            }
-                                            if (balanceSheet?.isNotEmpty() == true) {
-                                                Column(modifier = Modifier.padding(horizontal = 15.dp)) {
-                                                    cardItem(
-                                                        "Cost Of Sales",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Cost_Of_Sales)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Finance Cost",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Finance_Cost)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Gross Profit",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Gross_Profit)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Operating Profit",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Operating_Profit)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Other Income",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Other_Income)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Profit Before Tax",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Profit_Before_Tax)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Profit After Tax",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Profit_After_Tax)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Sales",
-                                                        Utils.commaFormat(balanceSheet?.first()?.Sales)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        key = "Taxation",
-                                                        value = Utils.commaFormat(balanceSheet?.first()?.Taxation)
-                                                    )
-                                                }
-                                            } else {
-                                                Column(modifier = Modifier.padding(10.dp)) {
-                                                    Text(
-                                                        text = "No Record Found...",
-                                                        style = TextStyle(
-                                                            fontSize = 22.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(500),
-                                                            color = colorResource(id = R.color.colorDarkerr),
-                                                        )
-                                                    )
-                                                }
-                                            }
-
+                                    Row {
+                                        mDropdownMenu(
+                                            150.dp,
+                                            result.data?.map { it.yeartext }?.distinct()?.toList()
+                                                ?: emptyList(), selectedYear
+                                        ) {
+                                            selectedYear = it
+                                            selectedQuarter =
+                                                resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                                    ?.map { it.quarterNumber }?.toList()?.first()
+                                            sharedViewModel.incomeStatement(
+                                                requireActivity().intent.extras?.getString(
+                                                    AppConstants.SYMBOL
+                                                ) ?: "",
+                                                selectedYear ?: "2025",
+                                                "quarter${selectedQuarter}"
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.weight(1f))
+                                        mDropdownMenu(
+                                            180.dp,
+                                            resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                                ?.map { it.quarterName }?.toList() ?: emptyList(),
+                                            resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                                ?.filter { it.quarterNumber.equals(selectedQuarter) }?.map { it.quarterName }?.first()
+                                        ) {selected->
+                                            selectedQuarter = resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                                ?.filter { it.quarterName.equals(selected) }
+                                                ?.map { it.quarterNumber }?.first()
+                                            sharedViewModel.incomeStatement(
+                                                requireActivity().intent.extras?.getString(
+                                                    AppConstants.SYMBOL
+                                                ) ?: "",
+                                                selectedYear ?: "2025",
+                                                "quarter${selectedQuarter}"
+                                            )
                                         }
                                     }
-
-                                    Text(
-                                        modifier = Modifier.padding(
-                                            horizontal = 15.dp,
-                                            vertical = 15.dp
-                                        ),
-                                        text = "Balance Sheet",
-                                        style = TextStyle(
-                                            fontSize = 18.sp,
-                                            lineHeight = 27.sp,
-                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                            fontWeight = FontWeight(700),
-                                            color = colorResource(id = R.color.md_theme_primary),
-                                        )
-                                    )
-
-                                    Card(
-                                        modifier = Modifier.padding(horizontal = 15.dp),
-                                        border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
-                                        backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                                        shape = RoundedCornerShape(12.dp)
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(bottom = 30.dp)
+                                            .verticalScroll(rememberScrollState())
                                     ) {
-                                        val distribution =
-                                            sharedViewModel.mutableDistribution.asFlow()
-                                                .collectAsState(
-                                                    initial = Resource.Loading()
-                                                ).value.data
-                                        Column {
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(45.dp)
-                                                    .background(
-                                                        colorResource(id = R.color.colorDarkerr),
-                                                        shape = RoundedCornerShape(
-                                                            topStart = 12.dp,
-                                                            topEnd = 12.dp,
-                                                            bottomStart = 0.dp,
-                                                            bottomEnd = 0.dp
+                                        Text(
+                                            modifier = Modifier.padding(
+                                                start = 15.dp,
+                                                end = 15.dp,
+                                                bottom = 10.dp
+                                            ),
+                                            text = "Balance Sheet",
+                                            style = TextStyle(
+                                                fontSize = 18.sp,
+                                                lineHeight = 27.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(700),
+                                                color = colorResource(id = R.color.md_theme_primary),
+                                            )
+                                        )
+                                        Card(
+                                            modifier = Modifier.padding(horizontal = 15.dp),
+                                            border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
+                                            backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
+                                            shape = RoundedCornerShape(12.dp)
+                                        ) {
+                                            val balanceSheet =
+                                                sharedViewModel.mutableBalanceSheet.asFlow()
+                                                    .collectAsState(
+                                                        initial = Resource.Loading()
+                                                    ).value.data
+                                            Column {
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(45.dp)
+                                                        .background(
+                                                            colorResource(id = R.color.colorDarkerr),
+                                                            shape = RoundedCornerShape(
+                                                                topStart = 12.dp,
+                                                                topEnd = 12.dp,
+                                                                bottomStart = 0.dp,
+                                                                bottomEnd = 0.dp
+                                                            )
                                                         )
-                                                    )
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier.padding(
-                                                        start = 15.dp,
-                                                        top = 10.dp,
-                                                        bottom = 10.dp
-                                                    )
                                                 ) {
-                                                    Text(
-                                                        text = "Year/Quarter",
-                                                        style = TextStyle(
-                                                            fontSize = 16.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(700),
-                                                            color = Color(0xFFFFFFFF),
-
-                                                            )
-                                                    )
-                                                    Spacer(modifier = Modifier.width(90.dp))
-                                                    Text(
-                                                        text = "${selectedYear}/Q${selectedQuarter}",
-                                                        style = TextStyle(
-                                                            fontSize = 16.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(700),
-                                                            color = Color(0xFFFFFFFF),
-
-                                                            )
-                                                    )
-                                                }
-                                            }
-                                            if (distribution?.isNotEmpty() == true) {
-                                                Column(modifier = Modifier.padding(horizontal = 15.dp)) {
-                                                    cardItem(
-                                                        "Dividend",
-                                                        Utils.commaFormat(distribution.first().dividend)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Bonus",
-                                                        Utils.commaFormat(distribution.first().bonus)
-                                                    )
-                                                    Divider(
-                                                        thickness = 1.dp,
-                                                        color = Color(0xFFE5E2E1)
-                                                    )
-                                                    cardItem(
-                                                        "Right",
-                                                        Utils.commaFormat(distribution.first().right)
-                                                    )
-                                                }
-                                            } else {
-                                                Column(modifier = Modifier.padding(10.dp)) {
-                                                    Text(
-                                                        text = "No Record Found...",
-                                                        style = TextStyle(
-                                                            fontSize = 22.sp,
-                                                            lineHeight = 30.08.sp,
-                                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                            fontWeight = FontWeight(500),
-                                                            color = colorResource(id = R.color.colorDarkerr),
+                                                    Row(
+                                                        modifier = Modifier.padding(
+                                                            start = 15.dp,
+                                                            top = 10.dp,
+                                                            bottom = 10.dp
                                                         )
-                                                    )
-                                                }
-                                            }
+                                                    ) {
+                                                        Text(
+                                                            text = "Year/Quarter",
+                                                            style = TextStyle(
+                                                                fontSize = 16.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(700),
+                                                                color = Color(0xFFFFFFFF),
 
+                                                                )
+                                                        )
+                                                        Spacer(modifier = Modifier.width(90.dp))
+                                                        Text(
+                                                            text = "${selectedYear}/Q${selectedQuarter}",
+                                                            style = TextStyle(
+                                                                fontSize = 16.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(700),
+                                                                color = Color(0xFFFFFFFF),
+
+                                                                )
+                                                        )
+                                                    }
+                                                }
+                                                if (balanceSheet?.isNotEmpty() == true) {
+                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                        cardItem(
+                                                            "Cash",
+                                                            Utils.commaFormat(balanceSheet?.first()?.cash)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Inventory",
+                                                            Utils.commaFormat(balanceSheet?.first()?.inventory)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Current Asset",
+                                                            Utils.commaFormat(balanceSheet?.first()?.currentAsset)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Investments",
+                                                            Utils.commaFormat(balanceSheet?.first()?.investments)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Fixed Asset",
+                                                            Utils.commaFormat(balanceSheet?.first()?.fixedAsset)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Total Assets",
+                                                            Utils.commaFormat(balanceSheet?.first()?.totalAssets)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Current Liability",
+                                                            Utils.commaFormat(balanceSheet?.first()?.currentLiability)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Fixed Liability",
+                                                            Utils.commaFormat(balanceSheet?.first()?.fixedLiability)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Total Liabilities",
+                                                            value = Utils.commaFormat(balanceSheet?.first()?.totalLiabilities)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Paid Up Capital",
+                                                            value = Utils.commaFormat(balanceSheet?.first()?.paidUpCapital)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Total Equity",
+                                                            value = Utils.commaFormat(balanceSheet?.first()?.totalEquity)
+                                                        )
+                                                    }
+                                                } else {
+                                                    Column(modifier = Modifier.padding(10.dp)) {
+                                                        Text(
+                                                            text = "No Record Found...",
+                                                            style = TextStyle(
+                                                                fontSize = 22.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(500),
+                                                                color = colorResource(id = R.color.colorDarkerr),
+                                                            )
+                                                        )
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
+                                        Text(
+                                            modifier = Modifier.padding(
+                                                horizontal = 15.dp,
+                                                vertical = 15.dp
+                                            ),
+                                            text = "Distributions",
+                                            style = TextStyle(
+                                                fontSize = 18.sp,
+                                                lineHeight = 27.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(700),
+                                                color = colorResource(id = R.color.md_theme_primary),
+                                            )
+                                        )
+
+                                        Card(
+                                            modifier = Modifier.padding(horizontal = 15.dp),
+                                            border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
+                                            backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
+                                            shape = RoundedCornerShape(12.dp)
+                                        ) {
+                                            val distribution =
+                                                sharedViewModel.mutableDistribution.asFlow()
+                                                    .collectAsState(
+                                                        initial = Resource.Loading()
+                                                    ).value.data
+                                            Column {
+                                                Column(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(45.dp)
+                                                        .background(
+                                                            colorResource(id = R.color.colorDarkerr),
+                                                            shape = RoundedCornerShape(
+                                                                topStart = 12.dp,
+                                                                topEnd = 12.dp,
+                                                                bottomStart = 0.dp,
+                                                                bottomEnd = 0.dp
+                                                            )
+                                                        )
+                                                ) {
+                                                    Row(
+                                                        modifier = Modifier.padding(
+                                                            start = 15.dp,
+                                                            top = 10.dp,
+                                                            bottom = 10.dp
+                                                        )
+                                                    ) {
+                                                        Text(
+                                                            text = "Year/Quarter",
+                                                            style = TextStyle(
+                                                                fontSize = 16.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(700),
+                                                                color = Color(0xFFFFFFFF),
+
+                                                                )
+                                                        )
+                                                        Spacer(modifier = Modifier.width(90.dp))
+                                                        Text(
+                                                            text = "${selectedYear}/Q${selectedQuarter}",
+                                                            style = TextStyle(
+                                                                fontSize = 16.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(700),
+                                                                color = Color(0xFFFFFFFF),
+
+                                                                )
+                                                        )
+                                                    }
+                                                }
+                                                if (distribution?.isNotEmpty() == true) {
+                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                        cardItem(
+                                                            "Dividend",
+                                                            Utils.commaFormat(distribution.first().dividend)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Bonus",
+                                                            Utils.commaFormat(distribution.first().bonus)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Right",
+                                                            Utils.commaFormat(distribution.first().right)
+                                                        )
+                                                    }
+                                                } else {
+                                                    Column(modifier = Modifier.padding(10.dp)) {
+                                                        Text(
+                                                            text = "No Record Found...",
+                                                            style = TextStyle(
+                                                                fontSize = 22.sp,
+                                                                lineHeight = 30.08.sp,
+                                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                fontWeight = FontWeight(500),
+                                                                color = colorResource(id = R.color.colorDarkerr),
+                                                            )
+                                                        )
+                                                    }
+                                                }
+
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    else{
-                        Utils.showError(requireView(), getString(R.string.no_record_found))
+                        else{
+                            Utils.showError(requireView(), getString(R.string.no_record_found))
+                        }
                     }
                 }
             }
@@ -488,7 +517,7 @@ class BalanceSheetFragment : Fragment() {
     }
 
     @Composable
-    fun mDropdownMenu(list: List<String>,selectedOption:String?, onClick: (String) -> Unit) {
+    fun mDropdownMenu(width: Dp, list: List<String>, selectedOption:String?, onClick: (String) -> Unit) {
         var expanded by remember { mutableStateOf(false) }
         /*  var selectedText by remember {
               mutableStateOf(selectedOption)
@@ -496,7 +525,7 @@ class BalanceSheetFragment : Fragment() {
         Box(
             modifier = Modifier
                 .padding(16.dp)
-                .width(150.dp)
+                .width(width)
                 .border(1.dp, Color.Gray, shape = RoundedCornerShape(10f))
         ) {
             Row (

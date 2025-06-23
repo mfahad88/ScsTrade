@@ -38,22 +38,23 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
 
     fun announcement(symbol: String,type:String,date:String?){
         mutableAnnouncementItem.value = Resource.Loading()
-        if(type.equals("all",true)){
+       /* if(type.equals("all",true)){
             insider(symbol)
-        }
+        }*/
         viewModelScope.launch(Dispatchers.IO){
             val result = repository.announcements( symbol,type)
 
             withContext(Dispatchers.Main){
+//                insider(symbol)
                 val list=ArrayList<AnnouncementDataItem>()
                 if(date.isNullOrBlank()) {
                     list.addAll(result.data?: emptyList())
-                    if(type.equals("all",true)) {
+                  /*  if(type.equals("all",true)) {
                         list.addAll(mutableInsider.value?.data?.map {
                             AnnouncementDataItem(
                                 "Insider",
                                 bmDesc = it.insiderTransactionDesc,
-                                bmDate = it.insiderTransactionPostDate,
+                                bmDate = it.insiderTransactionDate,
                                 bmImageLink = it.insiderTransactionImageLink,
                                 bmPDFLink = it.insiderTransactionPDFLink,
                                 companyCode = null,
@@ -76,10 +77,10 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
                             )
                         }
                             ?: emptyList())
-                    }
+                    }*/
                 }else{
                     list.addAll(result.data?.filter { Utils.compareDates(it.bmDate?:"0L",date) }?: emptyList())
-                    if(type.equals("all",true)) {
+                   /* if(type.equals("all",true)) {
                         list.addAll(mutableInsider.value?.data?.filter {
                             Utils.compareDates(
                                 it.insiderTransactionPostDate ?: "0L", date
@@ -111,7 +112,7 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
                             )
                         }
                             ?: emptyList())
-                    }
+                    }*/
                 }
 
                 mutableAnnouncementItem.value = Resource.Success(list.sortedByDescending { it.bmDate })
@@ -122,9 +123,11 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
 
     fun insider(symbol: String){
         mutableInsider.value = Resource.Loading()
-        viewModelScope.launch{
+        viewModelScope.launch(Dispatchers.IO){
             val result = repository.insider( symbol)
-            mutableInsider.value = result
+            withContext(Dispatchers.Main){
+                mutableInsider.value = result
+            }
         }
     }
 

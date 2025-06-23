@@ -1561,4 +1561,10 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
+    <style name="item_dropdown">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
 </resources>

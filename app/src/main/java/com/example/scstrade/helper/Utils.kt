@@ -86,8 +86,9 @@ class Utils {
 
         fun commaFormat(value:Double?): String {
             try {
-                return NumberFormat.getInstance(Locale.US)
-                    .format(String.format("%.2f", value).toDouble())
+               /* return NumberFormat.getInstance(Locale.US)
+                    .format(String.format("%.2f", value).toDouble())*/
+                return String.format("%,.2f", value)
             }catch (e:Exception){
 
                 e.printStackTrace()

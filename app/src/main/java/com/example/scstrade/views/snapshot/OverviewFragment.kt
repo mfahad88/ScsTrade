@@ -1,6 +1,7 @@
 package com.example.scstrade.views.snapshot
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -175,18 +176,20 @@ class OverviewFragment : Fragment() {
                        binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.valueTrade.text = item?.cL.toString()
                        binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"
-                       val indices=item?.iN?.split("|")
-                       indices?.forEach {
-                            if(it.contains("kse 100")){
-                                binding.kse100.visibility = View.VISIBLE
+                       if(!TextUtils.isEmpty(item.iN)) {
+                           val indices = item?.iN?.split("|")
+                           indices?.forEach {
+                               if (it.contains("kse 100", true)) {
+                                   binding.kse100.visibility = View.VISIBLE
 
-                            }else if(it.contains("kse 30")){
-                                binding.kse30.visibility = View.VISIBLE
-                            }else if(it.contains("kmi 30")){
-                                binding.kmi30.visibility = View.VISIBLE
-                            }else if(it.contains("kmi all")){
-                                binding.shariah.visibility = View.VISIBLE
-                            }
+                               } else if (it.contains("kse 30", true)) {
+                                   binding.kse30.visibility = View.VISIBLE
+                               } else if (it.contains("kmi 30", true)) {
+                                   binding.kmi30.visibility = View.VISIBLE
+                               } else if (it.contains("kmi all", true)) {
+                                   binding.shariah.visibility = View.VISIBLE
+                               }
+                           }
                        }
                        binding.volumeValue.text = Utils.commaFormat(item?.v?.toDouble())
                        binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())
@@ -260,7 +263,7 @@ class OverviewFragment : Fragment() {
                     }
                     ItemValue(
                         "Total No Shares:",
-                        Utils.commaFormat(data?.totalNoShares?.toDouble()),
+                        Utils.convertToMillions(data?.totalNoShares?.toDouble()),
                         null
                     )
                     Row {
@@ -270,7 +273,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Free_Float:", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
+                    ItemValue("Free Float:", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -296,17 +299,7 @@ class OverviewFragment : Fragment() {
                         )
                     }
 
-                    ItemValue(
-                        "Beta:",
-                        Utils.roundTwoDecimal(data?.beta?.toDouble()),null
-                    )
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
-                    }
+
                     ItemValue("Free Float:", "${Utils.roundTwoDecimal(data?.freeFloatPer?.toDouble()) ?: "0"}%", null)
                     Row {
                         Divider(
@@ -618,27 +611,29 @@ class OverviewFragment : Fragment() {
                     val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
                     Column {
                         Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp) ){
-                            Text(
-                                text = descNameValue.name?:"",
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    lineHeight = 30.08.sp,
-                                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                                    fontWeight = FontWeight(500),
-                                    color = colorResource(id = R.color.black),
+                            Column{
+                                Text(
+                                    text = descNameValue.name?:"",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        lineHeight = 30.08.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(500),
+                                        color = colorResource(id = R.color.black),
+                                    )
                                 )
-                            )
-                            Spacer(modifier = Modifier.width(3.dp))
-                            Text(
-                                text = descNameValue.desc?:"",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    lineHeight = 30.08.sp,
-                                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                                    fontWeight = FontWeight(500),
-                                    color = Color(0xFF787776),
+                                Spacer(modifier = Modifier.width(3.dp))
+                                Text(
+                                    text = descNameValue.desc?:"",
+                                    style = TextStyle(
+                                        fontSize = 12.sp,
+                                        lineHeight = 30.08.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(500),
+                                        color = Color(0xFF787776),
+                                    )
                                 )
-                            )
+                            }
                             Spacer(modifier = Modifier.weight(1f))
                             Text(
 //                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
