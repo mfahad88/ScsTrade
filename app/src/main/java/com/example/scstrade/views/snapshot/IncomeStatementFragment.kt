@@ -276,7 +276,9 @@ class IncomeStatementFragment : Fragment() {
     @Composable
     private fun cardItem(key: String, value: String) {
         Row (modifier = Modifier.fillMaxWidth()){
-            Box(modifier = Modifier
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
                 .weight(1f)
                 .padding(vertical = 10.dp)) {
 
@@ -285,7 +287,7 @@ class IncomeStatementFragment : Fragment() {
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Start,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -293,8 +295,9 @@ class IncomeStatementFragment : Fragment() {
                     )
                 )
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Box(modifier = Modifier
+            Box(
+                contentAlignment = Alignment.CenterEnd,
+                modifier = Modifier
                 .weight(1f)
                 .padding(vertical = 10.dp)) {
 
@@ -303,7 +306,7 @@ class IncomeStatementFragment : Fragment() {
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),

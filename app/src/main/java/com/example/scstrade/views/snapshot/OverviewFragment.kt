@@ -13,9 +13,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -608,7 +611,7 @@ class OverviewFragment : Fragment() {
             width = 1.dp,
             color = Color(0xFFE5E2E1),
             shape = RoundedCornerShape(6.dp)
-        )){
+        ).padding(horizontal = 15.dp, vertical = 10.dp)){
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -630,7 +633,6 @@ class OverviewFragment : Fragment() {
             ) {
                 Text(
                     text = title,
-                    modifier = Modifier.padding(start = 15.dp),
                     style = TextStyle(
                         fontSize = 18.sp,
                         lineHeight = 30.08.sp,
@@ -644,8 +646,7 @@ class OverviewFragment : Fragment() {
                     painter = painterResource(id = if(expand) R.drawable.drop_up else R.drawable.drop_down),
                     contentDescription = "Expandable",
                     modifier = Modifier
-                        .size(30.dp)
-                        .padding(end = 15.dp),
+                        .size(15.dp),
                     colorFilter = ColorFilter.tint(color = colorResource(id = R.color.black)))
 
             }
@@ -655,7 +656,10 @@ class OverviewFragment : Fragment() {
                     val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
                     val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
                     Column {
-                        Row (modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp) ){
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(vertical = 5.dp/*, horizontal = 5.dp*/)
+                        ){
                             Column{
                                 Text(
                                     text = descNameValue.name?:"",
@@ -667,7 +671,6 @@ class OverviewFragment : Fragment() {
                                         color = colorResource(id = R.color.black),
                                     )
                                 )
-                                Spacer(modifier = Modifier.width(3.dp))
                                 Text(
                                     text = descNameValue.desc?:"",
                                     style = TextStyle(
@@ -680,18 +683,21 @@ class OverviewFragment : Fragment() {
                                 )
                             }
                             Spacer(modifier = Modifier.weight(1f))
-                            Text(
-//                            text ="${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}",
-                                text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    lineHeight = 30.08.sp,
-                                    fontFamily = FontFamily(Font(R.font.custom_font)),
-                                    fontWeight = FontWeight(700),
-                                    color = colorResource(id = R.color.snapshot_value),
-                                    textAlign = TextAlign.Right,
-                                )
-                            )
+
+                           Column (modifier = Modifier.fillMaxHeight()){
+                               Text(
+                                   text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
+                                   style = TextStyle(
+                                       fontSize = 16.sp,
+                                       lineHeight = 30.08.sp,
+                                       fontFamily = FontFamily(Font(R.font.custom_font)),
+                                       fontWeight = FontWeight(700),
+                                       color = colorResource(id = R.color.snapshot_value),
+                                       textAlign = TextAlign.Right,
+                                   )
+                               )
+                           }
+
                         }
                         if(index<list.size-1){
                             Divider(

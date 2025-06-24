@@ -44,6 +44,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -492,7 +493,7 @@ class BalanceSheetFragment : Fragment() {
                 Text(
                     text = key,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -501,14 +502,17 @@ class BalanceSheetFragment : Fragment() {
                 )
             }
 
-            Box(modifier = Modifier
+            Box(
+                contentAlignment = Alignment.CenterEnd,
+                modifier = Modifier
                 .weight(1f)
                 .padding(vertical = 10.dp)) {
 
                 Text(
                     text = value,
+                    textAlign = TextAlign.End,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
