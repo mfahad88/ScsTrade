@@ -125,7 +125,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:contentPaddingTop="23dp"
+            app:contentPaddingTop="5dp"
             app:layout_constraintEnd_toEndOf="@+id/aof_card"
             app:layout_constraintStart_toStartOf="@+id/aof_card"
             app:layout_constraintTop_toBottomOf="@+id/aof_card"

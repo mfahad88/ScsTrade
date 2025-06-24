@@ -112,7 +112,7 @@ class BalanceSheetFragment : Fragment() {
                                             it.yeartext.equals(
                                                 selectedYear
                                             )
-                                        }
+                                        }?.filter { it.quarterName.contains(selectedYear.toString()) }
                                             ?.map { it.quarterNumber }?.toList()?.first())
                                     }
                                     sharedViewModel.balanceSheet(
@@ -146,7 +146,7 @@ class BalanceSheetFragment : Fragment() {
                                         Spacer(modifier = Modifier.weight(1f))
                                         mDropdownMenu(
                                             180.dp,
-                                            resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
+                                            resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }?.filter { it.quarterName.contains(selectedYear.toString()) }
                                                 ?.map { it.quarterName }?.toList() ?: emptyList(),
                                             resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
                                                 ?.filter { it.quarterNumber.equals(selectedQuarter) }?.map { it.quarterName }?.first()
@@ -163,12 +163,14 @@ class BalanceSheetFragment : Fragment() {
                                             )
                                         }
                                     }
+
                                     Column(
                                         modifier = Modifier
                                             .fillMaxSize()
                                             .padding(bottom = 30.dp)
                                             .verticalScroll(rememberScrollState())
                                     ) {
+
                                         Text(
                                             modifier = Modifier.padding(
                                                 start = 15.dp,
@@ -191,10 +193,10 @@ class BalanceSheetFragment : Fragment() {
                                             shape = RoundedCornerShape(12.dp)
                                         ) {
                                             val balanceSheet =
-                                                sharedViewModel.mutableBalanceSheet.asFlow()
-                                                    .collectAsState(
-                                                        initial = Resource.Loading()
-                                                    ).value.data
+                                            sharedViewModel.mutableBalanceSheet.asFlow()
+                                                .collectAsState(
+                                                    initial = Resource.Loading()
+                                                ).value
                                             Column {
                                                 Column(
                                                     modifier = Modifier
@@ -242,94 +244,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                     }
                                                 }
-                                                if (balanceSheet?.isNotEmpty() == true) {
-                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
-                                                        cardItem(
-                                                            "Cash",
-                                                            Utils.commaFormat(balanceSheet?.first()?.cash)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Inventory",
-                                                            Utils.commaFormat(balanceSheet?.first()?.inventory)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Current Asset",
-                                                            Utils.commaFormat(balanceSheet?.first()?.currentAsset)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Investments",
-                                                            Utils.commaFormat(balanceSheet?.first()?.investments)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Fixed Asset",
-                                                            Utils.commaFormat(balanceSheet?.first()?.fixedAsset)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Total Assets",
-                                                            Utils.commaFormat(balanceSheet?.first()?.totalAssets)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Current Liability",
-                                                            Utils.commaFormat(balanceSheet?.first()?.currentLiability)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Fixed Liability",
-                                                            Utils.commaFormat(balanceSheet?.first()?.fixedLiability)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            key = "Total Liabilities",
-                                                            value = Utils.commaFormat(balanceSheet?.first()?.totalLiabilities)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            key = "Paid Up Capital",
-                                                            value = Utils.commaFormat(balanceSheet?.first()?.paidUpCapital)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            key = "Total Equity",
-                                                            value = Utils.commaFormat(balanceSheet?.first()?.totalEquity)
-                                                        )
-                                                    }
-                                                } else {
+                                                if (balanceSheet.data?.isEmpty() == true) {
                                                     Column(modifier = Modifier.padding(10.dp)) {
                                                         Text(
                                                             text = "No Record Found...",
@@ -340,6 +255,94 @@ class BalanceSheetFragment : Fragment() {
                                                                 fontWeight = FontWeight(500),
                                                                 color = colorResource(id = R.color.colorDarkerr),
                                                             )
+                                                        )
+                                                    }
+
+                                                } else {
+                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                        cardItem(
+                                                            "Cash",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.cash)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Inventory",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.inventory)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Current Asset",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.currentAsset)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Investments",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.investments)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Fixed Asset",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.fixedAsset)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Total Assets",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.totalAssets)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Current Liability",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.currentLiability)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Fixed Liability",
+                                                            Utils.commaFormat(balanceSheet.data?.first()?.fixedLiability)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Total Liabilities",
+                                                            value = Utils.commaFormat(balanceSheet.data?.first()?.totalLiabilities)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Paid Up Capital",
+                                                            value = Utils.commaFormat(balanceSheet.data?.first()?.paidUpCapital)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            key = "Total Equity",
+                                                            value = Utils.commaFormat(balanceSheet.data?.first()?.totalEquity)
                                                         )
                                                     }
                                                 }
@@ -420,30 +423,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                     }
                                                 }
-                                                if (distribution?.isNotEmpty() == true) {
-                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
-                                                        cardItem(
-                                                            "Dividend",
-                                                            Utils.commaFormat(distribution.first().dividend)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Bonus",
-                                                            Utils.commaFormat(distribution.first().bonus)
-                                                        )
-                                                        Divider(
-                                                            thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
-                                                        )
-                                                        cardItem(
-                                                            "Right",
-                                                            Utils.commaFormat(distribution.first().right)
-                                                        )
-                                                    }
-                                                } else {
+                                                if (distribution?.isEmpty() == true) {
                                                     Column(modifier = Modifier.padding(10.dp)) {
                                                         Text(
                                                             text = "No Record Found...",
@@ -454,6 +434,30 @@ class BalanceSheetFragment : Fragment() {
                                                                 fontWeight = FontWeight(500),
                                                                 color = colorResource(id = R.color.colorDarkerr),
                                                             )
+                                                        )
+                                                    }
+
+                                                } else {
+                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                        cardItem(
+                                                            "Dividend",
+                                                            Utils.commaFormat(distribution?.first()?.dividend)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Bonus",
+                                                            Utils.commaFormat(distribution?.first()?.bonus)
+                                                        )
+                                                        Divider(
+                                                            thickness = 1.dp,
+                                                            color = Color(0xFFE5E2E1)
+                                                        )
+                                                        cardItem(
+                                                            "Right",
+                                                            Utils.commaFormat(distribution?.first()?.right)
                                                         )
                                                     }
                                                 }

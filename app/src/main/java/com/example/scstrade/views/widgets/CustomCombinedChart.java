@@ -55,6 +55,7 @@ public class CustomCombinedChart extends CombinedChart {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
         xAxis.setDrawGridLines(false);
 
         // Configure Left Y-Axis
@@ -76,13 +77,27 @@ public class CustomCombinedChart extends CombinedChart {
 
         // Bar Data (Book Value)
         BarData barData = generateBarData(barValues,barColor);
-        barData.setBarWidth(0.5f);
+        /*float groupCount = barValues.size();
+        float barWidth = 0.5f;
+        float xMin = 0f;
+        float xMax = xMin + groupCount;
 
+        this.getXAxis().setAxisMinimum(xMin);
+        this.getXAxis().setAxisMaximum(xMax);*/
+        float barWidth = 0.5f;
+        float barCount = barValues.size();
+        barData.setBarWidth(barWidth);
+        getXAxis().setAxisMinimum(-barWidth); // Shift to show first bar completely
+        getXAxis().setAxisMaximum(barCount - 1 + barWidth ); // Extend to show last bar
+
+
+
+//        barData.groupBars(0f,0.3f,0.1f);
         data.setData(barData);
 
         // Set Data to Chart
         this.setData(data);
-
+        this.getXAxis().setAvoidFirstLastClipping(true);
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.invalidate();
     }
@@ -98,7 +113,6 @@ public class CustomCombinedChart extends CombinedChart {
         dataSet.setColor(barColor);
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(10f);
-
 
 
         List<IBarDataSet> dataSets = new ArrayList<>();

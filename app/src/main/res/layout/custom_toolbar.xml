@@ -127,20 +127,21 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contentText"
-                android:visibility="visible"
-                tools:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="40dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
+                    app:layout_constraintDimensionRatio="H,32:9"
                     android:adjustViewBounds="true"
                     android:contentDescription="Logo"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/frame"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +164,6 @@
                     android:text="@string/market"
                     android:textAppearance="@style/market"
                     android:visibility="visible"
-                    app:layout_constraintBaseline_toBottomOf="@id/logo"
                     app:layout_constraintBottom_toBottomOf="@+id/logo"
                     app:layout_constraintEnd_toStartOf="@+id/search"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -186,13 +186,28 @@
                     app:layout_constraintTop_toTopOf="@+id/search" />
 
                 <TextView
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/alerts"
                     android:textAppearance="@style/quotes"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@+id/notification"
                     app:layout_constraintStart_toStartOf="@+id/notification"
                     app:layout_constraintTop_toBottomOf="@+id/notification" />
+
+                <TextView
+                    android:id="@+id/dateTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="@string/dec_2024_04"
+                    android:textAppearance="@style/dec_2024_04_text"
+                    android:textFontWeight="500"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout10"
+                    app:layout_constraintStart_toStartOf="@+id/logo"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout10" />
 
                 <ImageView
                     android:id="@+id/search"
@@ -209,11 +224,13 @@
                     app:layout_constraintBottom_toBottomOf="@+id/market"
                     app:layout_constraintEnd_toStartOf="@+id/notification"
                     app:layout_constraintTop_toTopOf="@+id/market" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quote"
                     android:textAppearance="@style/quotes"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@+id/search"
                     app:layout_constraintStart_toStartOf="@+id/search"
                     app:layout_constraintTop_toBottomOf="@+id/search" />
@@ -228,19 +245,20 @@
                     android:layout_marginTop="8dp"
                     android:gravity="top"
                     android:lineSpacingExtra="0sp"
-                    android:visibility="gone"
                     android:text="@string/status"
                     android:textAppearance="@style/status"
                     android:translationY="-0.11sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@+id/logo"
                     app:layout_constraintTop_toBottomOf="@+id/market" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="5dp"
-                    app:layout_constraintStart_toStartOf="@+id/logo"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/notification"
                     app:layout_constraintTop_toTopOf="@+id/status">
 
                     <LinearLayout
@@ -253,23 +271,25 @@
 
                         tools:visibility="visible">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/green_red" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
                             android:text="@string/closed"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             android:textAppearance="@style/closed"
-                            android:textFontWeight="700"
+                            android:textFontWeight="500"
 
                             />
+
+                        <ImageView
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_red" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/openMarket"
                         android:layout_width="0dp"
@@ -281,41 +301,31 @@
                         app:layout_constraintTop_toTopOf="@+id/status"
                         tools:visibility="gone">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/green_circle" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
                             android:text="@string/open"
                             android:textAppearance="@style/open"
-                            android:textFontWeight="700" />
+                            android:textFontWeight="500" />
+
+                        <ImageView
+                            android:layout_width="7dp"
+                            android:layout_height="7dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/green_circle" />
                     </LinearLayout>
 
 
-                    <TextView
-                        android:id="@+id/dateTimeText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/dec_2024_04"
-                        android:textAppearance="@style/dec_2024_04_text"
-                        android:textFontWeight="500"
-                        app:layout_constraintStart_toStartOf="@+id/market"
-                        app:layout_constraintTop_toTopOf="@+id/status" />
-
                 </LinearLayout>
 
-
-
-
-
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="52dp" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

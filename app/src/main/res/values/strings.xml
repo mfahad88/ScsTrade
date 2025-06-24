@@ -448,6 +448,19 @@
     <string name="kmi_30">KMI 30</string>
     <string name="update">Update</string>
     <string name="your_symbol_has_been_deleted_from_current_watchlist">Your symbol has been deleted from current watchlist.</string>
+    <string name="balance_sheet">Balance Sheet</string>
+    <string name="current_asset">Current Asset</string>
+    <string name="inventory">Inventory</string>
+    <string name="cash">Cash</string>
+    <string name="investments">Investments</string>
+    <string name="fixed_assets">Fixed Assets</string>
+    <string name="current_liability">Current Liability</string>
+    <string name="fixed_liability">Fixed Liability</string>
+    <string name="total_liabilities">Total Liabilities</string>
+    <string name="paid_up">Paid Up Capital</string>
+    <string name="total_equity">Total Equity</string>
+    <string name="year_quarter">Year/Quarter</string>
+    <string name="current_quarter">2025/Q4</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

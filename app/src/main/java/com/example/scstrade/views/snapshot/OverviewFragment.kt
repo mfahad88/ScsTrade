@@ -12,6 +12,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -66,6 +67,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.widgets.CustomBarChart
 import com.example.scstrade.views.widgets.CustomCombinedChart
+import com.example.scstrade.views.widgets.CustomEVCombinedChart
 import com.example.scstrade.views.widgets.GroupedBarChart
 import com.example.scstrade.views.widgets.MultiLineChartView
 import com.github.mikephil.charting.data.BarEntry
@@ -422,14 +424,35 @@ class OverviewFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     if(charting.data?.ePSYear!=null) {
-                        AndroidView(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                                .height(250.dp),
-                            factory = { context -> CustomBarChart(context) },
-                            update = { populateBarChart(it, charting.data?.ePSYear) }
-                        )
+                        Column (modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                shape = RoundedCornerShape(6.dp)
+                            )
+                            .padding(10.dp)
+                        ){
+                            Row (modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center){
+                                Text(
+                                    text = charting.data?.ePSYear?.chartName ?: "",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(600),
+                                        color = colorResource(id = R.color.black),
+                                    )
+                                )
+                            }
+                            AndroidView(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                    .height(250.dp),
+                                factory = { context -> CustomBarChart(context) },
+                                update = { populateBarChart(it, charting.data?.ePSYear) }
+                            )
+                        }
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                 }
@@ -437,19 +460,41 @@ class OverviewFragment : Fragment() {
 
 
             if(charting.data?.ePS!=null) {
-                AndroidView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                        .height(250.dp),
-                    factory = { context -> GroupedBarChart(context) },
-                    update = { populateGroupBarChart(it, charting.data?.ePS) }
-                )
+                Column(modifier = Modifier
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFFE5E2E1),
+                        shape = RoundedCornerShape(6.dp)
+                    )
+                    .padding(10.dp)) {
+
+                    Row (modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center){
+                        Text(
+                            text = charting.data?.ePS?.chartName ?: "",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                fontWeight = FontWeight(600),
+                                color = colorResource(id = R.color.black),
+                            )
+                        )
+                    }
+                    AndroidView(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                            .height(250.dp),
+                        factory = { context -> GroupedBarChart(context) },
+                        update = { populateGroupBarChart(it, charting.data?.ePS) }
+                    )
+                }
                 Spacer(modifier = Modifier.height(15.dp))
             }
 
 
             if(detail?.snapShot?.equity!=null) {
+
                 ExpandableList("Equity Ratios", detail.snapShot.equity,charting.data)
                 Spacer(modifier = Modifier.height(5.dp))
             }
@@ -569,7 +614,7 @@ class OverviewFragment : Fragment() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .height(50.dp)
-                  /*  .border(
+                    /*  .border(
                         width = 1.dp,
                         color = Color(0xFFE5E2E1),
                         shape = RoundedCornerShape(6.dp)
@@ -662,6 +707,20 @@ class OverviewFragment : Fragment() {
 
                 if(title.equals("Equity Ratios",true)){
                     Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center) {
+                            Text(
+                                text = "Book Value PKR",
+                                modifier = Modifier.padding(start = 15.dp),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                        }
                         AndroidView(
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
@@ -675,7 +734,7 @@ class OverviewFragment : Fragment() {
                                     charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }
                                         ?.toList(),
                                     charting?.bookValue?.year,
-                                    android.graphics.Color.parseColor("#7cb5ec")
+                                    android.graphics.Color.parseColor("#7cb5ec"),
                                 )
                             }
                         )
@@ -699,50 +758,179 @@ class OverviewFragment : Fragment() {
                     }
                 }
                 if(title.equals("Dividend",true)){
-                    AndroidView(
-                        modifier = Modifier
-                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                            .fillMaxWidth()
-                            .height(250.dp),
-                        factory = { context -> CustomCombinedChart(context) },
-                        update = {
-                            it.setChartData(charting?.dividend?.dividend?.map { it.toFloat() },charting?.dividend?.dividendYieldPer?.map { it.toFloat() },charting?.dividend?.year,android.graphics.Color.parseColor("#ffaa07"))
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    AndroidView(
-                        modifier = Modifier
-                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                            .fillMaxWidth()
-                            .height(250.dp),
-                        factory = { context -> MultiLineChartView(context) },
-                        update = {
-                            it.setChartData(charting?.payout?.year,
-                                listOf("Payout"),charting?.payout?.payoutRatio?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
-                                listOf(android.graphics.Color.parseColor("#000000"))
+                    Column {
+                        Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center) {
+                            Text(
+                                text = "Dividend",
+                                modifier = Modifier.padding(start = 15.dp),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
                             )
                         }
-                    )
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> CustomCombinedChart(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.dividend?.dividend?.map { it.toFloat() },
+                                    charting?.dividend?.dividendYieldPer?.map { it.toFloat() },
+                                    charting?.dividend?.year,
+                                    android.graphics.Color.parseColor("#ffaa07"),
+                                )
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> MultiLineChartView(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.payout?.year,
+                                    listOf("Payout"),
+                                    charting?.payout?.payoutRatio?.mapIndexed { index, d ->
+                                        Entry(
+                                            index.toFloat(),
+                                            d.toFloat()
+                                        )
+                                    }?.toList(),
+                                    null,
+                                    null,
+                                    listOf(android.graphics.Color.parseColor("#000000"))
+                                )
+                            }
+                        )
+                    }
+                }
+
+                if(title.equals("sales",true)){
+                    Column {
+                        Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center) {
+                            Text(
+                                text = "Sales Per Share",
+                                modifier = Modifier.padding(start = 15.dp),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                        }
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> CustomCombinedChart(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.sales?.salesPerSharePKR?.map { it.toFloat() }
+                                        ?.reversed(),
+                                    charting?.sales?.priceToSalesPer?.map { it.toFloat() }
+                                        ?.reversed(),
+                                    charting?.sales?.year?.reversed(),
+                                    android.graphics.Color.parseColor("#cebca6"),
+                                )
+                            }
+                        )
+                    }
                 }
 
                 if(title.equals("Cash",true)){
 
-                    AndroidView(
-                        modifier = Modifier
-                            .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                            .fillMaxWidth()
-                            .height(250.dp),
-                        factory = { context -> MultiLineChartView(context) },
-                        update = {
-                            it.setChartData(charting?.cash?.year,
-                                listOf("Cash per Share"),charting?.cash?.cashPerShare?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) }?.toList(),null,null,
-                                listOf(android.graphics.Color.parseColor("#7cb5ec"))
+                    Column {
+                        Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center) {
+                            Text(
+                                text = "Cash PS PKR",
+                                modifier = Modifier.padding(start = 15.dp),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
                             )
                         }
-                    )
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> MultiLineChartView(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.cash?.year,
+                                    listOf("Cash per Share"),
+                                    charting?.cash?.cashPerShare?.mapIndexed { index, d ->
+                                        Entry(
+                                            index.toFloat(),
+                                            d.toFloat()
+                                        )
+                                    }?.toList(),
+                                    null,
+                                    null,
+                                    listOf(android.graphics.Color.parseColor("#7cb5ec"))
+                                )
+                            }
+                        )
+                    }
                 }
+                if(title.equals("Enterprise Value",true)){
 
+                    Column {
+                        Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center) {
+                            Text(
+                                text = "Market Cap / EV PKR in Billion",
+                                modifier = Modifier.padding(start = 15.dp),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.custom_font)),
+                                    fontWeight = FontWeight(600),
+                                    color = colorResource(id = R.color.black),
+                                )
+                            )
+                        }
+                        AndroidView(
+                            modifier = Modifier
+                                .background(color = colorResource(id = R.color.md_theme_surfaceBright))
+                                .fillMaxWidth()
+                                .height(250.dp),
+                            factory = { context -> CustomEVCombinedChart(context) },
+                            update = {
+                                it.setChartData(
+                                    charting?.enterprise?.marketCap?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.ePValue?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.eVEBITDA?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.year,
+                                )
+                               /* it.setChartData(
+                                    charting?.enterprise?.marketCap?.map { it.toFloat() },
+                                    charting?.enterprise?.ePValue?.map { it.toFloat() },
+                                    charting?.enterprise?.eVEBITDA?.map { it.toFloat() },
+                                    charting?.enterprise?.year,
+                                    android.graphics.Color.parseColor("#eeeeee"),
+                                    android.graphics.Color.parseColor("#7cb5ec")
+
+                                )*/
+                            }
+                        )
+                    }
+                }
                 if(title.equals("Advances And Deposits",true)){
                     AndroidView(
                         modifier = Modifier
@@ -859,7 +1047,7 @@ class OverviewFragment : Fragment() {
             group4.add(BarEntry(index.toFloat(),d.toFloat()))
         }
 
-        groupedBarChart.setGroupedBarData(group1, group2,group3,group4, "Q1", "Q2","Q3","Q4")
+        groupedBarChart.setGroupedBarData(group1, group2,group3,group4,ePS?.year, "Q1", "Q2","Q3","Q4")
     }
 
     private fun populateBarChart(customBarChart: CustomBarChart, ePS: EPSYear?) {

@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class GroupedBarChart extends BarChart {
         leftAxis.setDrawGridLines(false);
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawZeroLine(true);
+
         Legend legend = this.getLegend();
         legend.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -66,7 +68,7 @@ public class GroupedBarChart extends BarChart {
         this.getAxisRight().setEnabled(false);
     }
 
-    public void setGroupedBarData(List<BarEntry> group1, List<BarEntry> group2, List<BarEntry> group3,List<BarEntry> group4, String label1, String label2, String label3,String label4) {
+    public void setGroupedBarData(List<BarEntry> group1, List<BarEntry> group2, List<BarEntry> group3,List<BarEntry> group4,List<String> years, String label1, String label2, String label3,String label4) {
         float groupSpace = 0.1f;
         float barSpace = 0.05f;
         float barWidth = 0.2f;
@@ -84,10 +86,29 @@ public class GroupedBarChart extends BarChart {
         set4.setColor(Color.parseColor("#f7a35c")); // Orange
 
         BarData data = new BarData(set1, set2,set3,set4);
+
+        XAxis xAxis=this.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(years));
+        xAxis.setGranularity(1f); // ensures 1:1 mapping
+        xAxis.setGranularityEnabled(true);
         data.setBarWidth(barWidth);
-        
         this.setData(data);
+        int groupCount = group1.size();
+        float groupWidth = data.getGroupWidth(groupSpace, barSpace);
+        this.setDrawValueAboveBar(true);
+        getXAxis().setAxisMinimum(0f);
+        getXAxis().setAxisMaximum(0f + groupCount * groupWidth);
+        this.setFitBars(true);
+        this.setExtraOffsets(0f,0f,0f,0f);
         this.groupBars(0f, groupSpace, barSpace);
+
+        if(!group1.stream().anyMatch(value->value.getY()<0) || !group2.stream().anyMatch(value->value.getY()<0) ||
+                !group3.stream().anyMatch(value->value.getY()<0) ) {
+            this.getAxisLeft().setAxisMinimum(0f);
+        }
+
+
+//        this.groupBars(0f, groupSpace, barSpace);
         this.invalidate();
     }
 }
