@@ -735,12 +735,14 @@ class OverviewFragment : Fragment() {
                             factory = { context -> CustomCombinedChart(context) },
                             update = {
                                 it.setChartData(
-                                    charting?.bookValue?.bookValuePKR?.map { it.toFloat() }
+                                    charting?.bookValue?.bookValuePKR?.map { it.toFloat() }?.reversed()
                                         ?.toMutableList(),
-                                    charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }
+                                    charting?.bookValue?.priceToBookValueX?.map { it.toFloat() }?.reversed()
                                         ?.toList(),
-                                    charting?.bookValue?.year,
+                                    charting?.bookValue?.year?.reversed(),
                                     android.graphics.Color.parseColor("#7cb5ec"),
+                                    "Book Value",
+                                    "Price To BookValue"
                                 )
                             }
                         )
@@ -790,6 +792,9 @@ class OverviewFragment : Fragment() {
                                     charting?.dividend?.dividendYieldPer?.map { it.toFloat() },
                                     charting?.dividend?.year,
                                     android.graphics.Color.parseColor("#ffaa07"),
+                                    "Dividend Yield",
+                                    "Dividend"
+
                                 )
                             }
                         )
@@ -849,6 +854,9 @@ class OverviewFragment : Fragment() {
                                         ?.reversed(),
                                     charting?.sales?.year?.reversed(),
                                     android.graphics.Color.parseColor("#cebca6"),
+                                    "Price to Sales",
+                                    "Sales Per Share"
+
                                 )
                             }
                         )

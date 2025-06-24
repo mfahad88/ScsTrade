@@ -67,16 +67,16 @@ public class CustomCombinedChart extends CombinedChart {
         this.getAxisRight().setEnabled(false);
     }
 
-    public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor) {
+    public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor,String name1,String name2) {
         CombinedData data = new CombinedData();
 
 
         // Line Data (Price to Book Value)
-        LineData lineData = generateLineData(lineValues);
+        LineData lineData = generateLineData(lineValues,name1);
         data.setData(lineData);
 
         // Bar Data (Book Value)
-        BarData barData = generateBarData(barValues,barColor);
+        BarData barData = generateBarData(barValues,barColor,name2);
         /*float groupCount = barValues.size();
         float barWidth = 0.5f;
         float xMin = 0f;
@@ -102,13 +102,13 @@ public class CustomCombinedChart extends CombinedChart {
         this.invalidate();
     }
 
-    private BarData generateBarData(List<Float> values, int barColor) {
+    private BarData generateBarData(List<Float> values, int barColor,String name) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             entries.add(new BarEntry(i, values.get(i)));
         }
 
-        BarDataSet dataSet = new BarDataSet(entries, "Book Value");
+        BarDataSet dataSet = new BarDataSet(entries, name);
 
         dataSet.setColor(barColor);
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
@@ -121,13 +121,13 @@ public class CustomCombinedChart extends CombinedChart {
         return new BarData(dataSets);
     }
 
-    private LineData generateLineData(List<Float> values) {
+    private LineData generateLineData(List<Float> values,String name) {
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             entries.add(new Entry(i, values.get(i)));
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, "Price To Book Value");
+        LineDataSet dataSet = new LineDataSet(entries, name);
         dataSet.setColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(10f);

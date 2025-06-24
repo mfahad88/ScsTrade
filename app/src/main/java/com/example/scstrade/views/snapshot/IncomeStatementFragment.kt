@@ -182,33 +182,48 @@ class IncomeStatementFragment : Fragment() {
                                                       Row(
                                                           modifier = Modifier.padding(
                                                               start = 15.dp,
+                                                              end = 15.dp,
                                                               top = 10.dp,
                                                               bottom = 10.dp
                                                           )
                                                       ) {
-                                                          Text(
-                                                              text = "Year/Quarter",
-                                                              style = TextStyle(
-                                                                  fontSize = 16.sp,
-                                                                  lineHeight = 30.08.sp,
-                                                                  fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                                  fontWeight = FontWeight(700),
-                                                                  color = Color(0xFFFFFFFF),
+                                                          Box(
+                                                              contentAlignment = Alignment.CenterStart,
+                                                              modifier = Modifier
+                                                                  .weight(1f)
+                                                                  ) {
 
-                                                                  )
-                                                          )
-                                                          Spacer(modifier = Modifier.width(90.dp))
-                                                          Text(
-                                                              text = "${selectedYear}/Q${selectedQuarter}",
-                                                              style = TextStyle(
-                                                                  fontSize = 16.sp,
-                                                                  lineHeight = 30.08.sp,
-                                                                  fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                                  fontWeight = FontWeight(700),
-                                                                  color = Color(0xFFFFFFFF),
+                                                              Text(
+                                                                  text = "Year/Quarter",
+                                                                  style = TextStyle(
+                                                                      fontSize = 16.sp,
+                                                                      lineHeight = 30.08.sp,
+                                                                      fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                      fontWeight = FontWeight(700),
+                                                                      color = Color(0xFFFFFFFF),
 
-                                                                  )
-                                                          )
+                                                                      )
+                                                              )
+                                                          }
+
+                                                          Box(
+                                                              contentAlignment = Alignment.CenterEnd,
+                                                              modifier = Modifier
+                                                                  .weight(1f)
+                                                                  ) {
+
+                                                              Text(
+                                                                  text = "${selectedYear}/Q${selectedQuarter}",
+                                                                  style = TextStyle(
+                                                                      fontSize = 16.sp,
+                                                                      lineHeight = 30.08.sp,
+                                                                      fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                                      fontWeight = FontWeight(700),
+                                                                      color = Color(0xFFFFFFFF),
+
+                                                                      )
+                                                              )
+                                                          }
                                                       }
                                                   }
                                                   if(incomeStatement?.isNotEmpty() == true) {
