@@ -62,7 +62,7 @@
     <string name="market_stat">Market Status:</string>
     <string name="open">OPEN</string>
     <string name="closed">Closed</string>
-    <string name="dec_2024_04">21 Dec 2024 | 04:30PM</string>
+    <string name="dec_2024_04">04:30PM</string>
     <string name="sector">Sector</string>
     <string name="all_stock">All Stocks</string>
     <string name="kmiallshr">KMIALLSHR</string>
@@ -461,6 +461,7 @@
     <string name="total_equity">Total Equity</string>
     <string name="year_quarter">Year/Quarter</string>
     <string name="current_quarter">2025/Q4</string>
+    <string name="open_an_account">Open an account</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

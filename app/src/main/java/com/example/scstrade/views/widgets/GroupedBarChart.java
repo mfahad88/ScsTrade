@@ -18,9 +18,11 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class GroupedBarChart extends BarChart {
 
@@ -75,20 +77,61 @@ public class GroupedBarChart extends BarChart {
 
         BarDataSet set1 = new BarDataSet(group1, label1);
         set1.setColor(Color.parseColor("#7cb5ec")); // Purple
-
+        set1.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
         BarDataSet set2 = new BarDataSet(group2, label2);
         set2.setColor(Color.parseColor("#434348")); // Orange
-
+        set2.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
         BarDataSet set3 = new BarDataSet(group3, label3);
         set3.setColor(Color.parseColor("#90ed7d")); // Orange
-
+        set3.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
         BarDataSet set4 = new BarDataSet(group4, label4);
         set4.setColor(Color.parseColor("#f7a35c")); // Orange
+        set4.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
 
         BarData data = new BarData(set1, set2,set3,set4);
-
         XAxis xAxis=this.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(years));
+
         xAxis.setGranularity(1f); // ensures 1:1 mapping
         xAxis.setGranularityEnabled(true);
         data.setBarWidth(barWidth);

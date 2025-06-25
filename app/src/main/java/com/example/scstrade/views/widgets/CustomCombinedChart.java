@@ -60,11 +60,13 @@ public class CustomCombinedChart extends CombinedChart {
 
         // Configure Left Y-Axis
         YAxis leftAxis = this.getAxisLeft();
-        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawGridLines(false);
         leftAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
 
         // Disable Right Y-Axis
-        this.getAxisRight().setEnabled(false);
+        YAxis rightAxis = this.getAxisRight();
+        rightAxis.setDrawGridLines(true);
+        this.getAxisRight().setEnabled(true);
     }
 
     public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor,String name1,String name2) {
@@ -113,7 +115,7 @@ public class CustomCombinedChart extends CombinedChart {
         dataSet.setColor(barColor);
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(10f);
-
+        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
         List<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
@@ -133,7 +135,9 @@ public class CustomCombinedChart extends CombinedChart {
         dataSet.setValueTextSize(10f);
         dataSet.setCircleColor(Color.BLACK);
         dataSet.setCircleRadius(4f);
-
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setCubicIntensity(0.2f);
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
 

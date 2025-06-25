@@ -21,7 +21,7 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
         fun bind(kseIndices: KSEIndices, previousIndex: Double?) {
             binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
             binding.indexValue.text = Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble())
-            binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
+//            binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
 //            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
             binding.labelText.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
             binding.volume.text = kseIndices.vOLUMETRADED

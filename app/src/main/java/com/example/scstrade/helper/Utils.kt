@@ -84,15 +84,50 @@ class Utils {
             }
         }
 
-        fun commaFormat(value:Double?): String {
-            try {
-               /* return NumberFormat.getInstance(Locale.US)
-                    .format(String.format("%.2f", value).toDouble())*/
+        fun commaFormat(value:Double?,ignoreDecimal:Boolean=false): String {
+            return try {
+                if (value == null) return "0"
+
+                if(ignoreDecimal){
+                    String.format("%,.0f", value)
+                }else {
+
+                    if (value % 1.0 == 0.0) {
+                        // Whole number → no decimals
+                        String.format("%,.0f", value)
+                    } else {
+                        // Has decimal → 2 decimal places
+                        String.format("%,.2f", value)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                ""
+            }
+          /*  try {
+               *//* return NumberFormat.getInstance(Locale.US)
+                    .format(String.format("%.2f", value).toDouble())*//*
                 return String.format("%,.2f", value)
             }catch (e:Exception){
 
                 e.printStackTrace()
                 return ""
+            }*/
+        }
+
+        fun roundPercent(value:Double?,ignoreDecimal:Boolean=false): String {
+            return try {
+                if (value == null) return "0.0"
+
+                if(ignoreDecimal){
+                    String.format("%,.0f", value)
+                }else {
+
+                    String.format("%,.2f", value)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                ""
             }
         }
         fun roundTwoDecimal(value:Double?):String{

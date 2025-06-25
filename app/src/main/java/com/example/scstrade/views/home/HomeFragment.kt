@@ -2,9 +2,11 @@ package com.example.scstrade.views.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
@@ -12,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHomeBinding
 import com.example.scstrade.helper.Utils
@@ -33,6 +37,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -142,6 +147,7 @@ class HomeFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(15.dp))
             isNestedScrollingEnabled=true
+
         }
 
       /*  binding.recyclerGainers.apply {
@@ -286,38 +292,58 @@ class HomeFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
+
+                    val list = mutableListOf<ListItem>()
+                    lifecycleScope.launch {
+
+                        withContext(Dispatchers.IO){
+                            list+=ListItem.Header("Leaders")
+                            result.data?.sortedByDescending { it.v }?.take(10)?.forEach {
+                                list+=ListItem.Item(it)
+                            }
+                            val topPicks=viewModel.mutableTopPicks.value?.data
+                            if(topPicks!=null){
+                                list+=ListItem.Header("SCS Top Picks")
+                                topPicks.forEach { res->
+                                    list+=ListItem.Item(result.data?.filter { it.sYM.equals(res.sCSImpItemSymbol) }!!.first())
+                                }
+                            }
+
+                            list+=ListItem.Header("Gainers")
+                            result.data?.sortedByDescending { it.cHP }?.take(10)?.forEach {
+                                list+=ListItem.Item(it)
+                            }
+                            list+=ListItem.Header("Losers")
+                            result.data?.sortedBy { it.cHP }?.take(10)?.forEach {
+                                list+=ListItem.Item(it)
+                            }
+                        }
+
+                       /* (binding.recyclerLeaders.adapter as StockAdapter).submitList(list){
+                            binding.recyclerLeaders.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
+                                override fun onGlobalLayout() {
+                                    binding.recyclerLeaders.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                                    binding.recyclerLeaders.visibility = View.VISIBLE
+                                    Log.d("RecyclerView", "RecyclerView is now visible after rendering")
+                                }
+
+                            })
+                        }*/
+
+
+
+
+                    }
+                   binding.root.postDelayed(
+                       {
+                           (binding.recyclerLeaders.adapter as StockAdapter).submitList(list)
+                       },400
+                   )
                     if(binding.main.visibility==View.GONE){
                         binding.main.visibility=View.VISIBLE
                         binding.loader.visibility=View.GONE
                     }
 
-                    val list = mutableListOf<ListItem>()
-                    list+=ListItem.Header("Leaders")
-                    result.data?.sortedByDescending { it.v }?.take(10)?.forEach {
-                        list+=ListItem.Item(it)
-                    }
-                    val topPicks=viewModel.mutableTopPicks.value?.data
-                    if(topPicks!=null){
-                        list+=ListItem.Header("SCS Top Picks")
-                        topPicks.forEach { res->
-                            list+=ListItem.Item(result.data?.filter { it.sYM.equals(res.sCSImpItemSymbol) }!!.first())
-                        }
-                    }
-
-                    list+=ListItem.Header("Gainers")
-                    result.data?.sortedByDescending { it.cHP }?.take(10)?.forEach {
-                        list+=ListItem.Item(it)
-                    }
-                    list+=ListItem.Header("Losers")
-                    result.data?.sortedBy { it.cHP }?.take(10)?.forEach {
-                        list+=ListItem.Item(it)
-                    }
-
-                   binding.root.postDelayed(
-                       {
-                           (binding.recyclerLeaders.adapter as StockAdapter).submitList(list)
-                       },450
-                   )
 
                     /*binding.recyclerLeaders.postDelayed (
                         {

@@ -2,10 +2,12 @@ package com.example.scstrade.views.snapshot
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -51,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
@@ -181,6 +184,11 @@ class OverviewFragment : Fragment() {
                        binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.valueTrade.text = item?.cL.toString()
                        binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"
+                       if(item?.cH!!<0.0) {
+                           binding.netChange.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
+                       }else{
+                           binding.netChange.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_secondaryFixed))
+                       }
                        if(!TextUtils.isEmpty(item.iN)) {
                            val indices = item?.iN?.split("|")
                            indices?.forEach {
@@ -197,8 +205,8 @@ class OverviewFragment : Fragment() {
                            }
                        }
                        binding.volumeValue.text = Utils.commaFormat(item?.v?.toDouble())
-                       binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble())
-                       binding.marketCapValue.text = Utils.commaFormat(result.data?.marketCap?.toDouble())
+                       binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble(),true)
+                       binding.marketCapValue.text = Utils.convertToBillions(result.data?.marketCap)
                        binding.companyName.text = item?.nM
 
 
@@ -247,7 +255,7 @@ class OverviewFragment : Fragment() {
             ) {
                 Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
                     ItemValue(
-                        "Paid Up Capital:",
+                        "Paid Up Capital",
                         Utils.convertToMillions(data?.paidUpCapital?.toDouble()),
                         null
                     )
@@ -258,7 +266,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Authorized Capital:", Utils.convertToMillions(data?.authorizedCapital?.toDouble()) ?: "0", null)
+                    ItemValue("Authorized Capital", Utils.convertToMillions(data?.authorizedCapital?.toDouble()) ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -267,7 +275,7 @@ class OverviewFragment : Fragment() {
                         )
                     }
                     ItemValue(
-                        "Total No Shares:",
+                        "Total No Shares",
                         Utils.convertToMillions(data?.totalNoShares?.toDouble()),
                         null
                     )
@@ -278,7 +286,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Free Float:", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
+                    ItemValue("Free Float", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -286,7 +294,15 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                     }
-                    ItemValue("Beta:", Utils.roundTwoDecimal(data?.beta?.toDouble()) ?: "0", null)
+                    ItemValue("Free Float(%)", "${Utils.roundPercent(data?.freeFloatPer?.toDouble()) ?: "0"}%", null)
+                    Row {
+                        Divider(
+                            thickness = 1.dp,
+                            color = Color(0xFFE5E2E1),
+                            modifier = Modifier.padding(vertical = 4.dp)
+                        )
+                    }
+                    ItemValue("Beta", Utils.roundTwoDecimal(data?.beta?.toDouble()) ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -295,7 +311,7 @@ class OverviewFragment : Fragment() {
                         )
                     }
 
-                    ItemValue("Face Value:", data?.faceValue ?: "0", null)
+                    ItemValue("Face Value", data?.faceValue ?: "0", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -305,15 +321,8 @@ class OverviewFragment : Fragment() {
                     }
 
 
-                    ItemValue("Free Float:", "${Utils.roundTwoDecimal(data?.freeFloatPer?.toDouble()) ?: "0"}%", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
-                    }
-                    ItemValue("Year End:", data?.yearEnd ?: "", null)
+
+                    ItemValue("Year End", data?.yearEnd ?: "", null)
                     Row {
                         Divider(
                             thickness = 1.dp,
@@ -323,7 +332,7 @@ class OverviewFragment : Fragment() {
                     }
 
                     ItemValue(
-                        "Market Cap:",
+                        "Market Cap",
                         Utils.convertToBillions(data?.marketCap ?: "0"),
                         null
                     )
@@ -584,7 +593,13 @@ class OverviewFragment : Fragment() {
                         )
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    Text(
+                    AndroidView(factory = { context ->
+                        TextView(context).apply {
+                            text = HtmlCompat.fromHtml(data?.description?:"", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                            movementMethod = LinkMovementMethod.getInstance() // Enable links if present
+                        }
+                    })
+                    /*Text(
                         text = data?.description?:"",
                         style = TextStyle(
                             fontSize = 16.sp,
@@ -593,7 +608,7 @@ class OverviewFragment : Fragment() {
                             fontWeight = FontWeight(500),
                             color = colorResource(id = R.color.black),
                         )
-                    )
+                    )*/
 
                 }
             }
@@ -686,7 +701,7 @@ class OverviewFragment : Fragment() {
 
                            Column (modifier = Modifier.fillMaxHeight()){
                                Text(
-                                   text = if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else descNameValue.value?:"",
+                                   text = /*if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else */descNameValue.value?:"",
                                    style = TextStyle(
                                        fontSize = 16.sp,
                                        lineHeight = 30.08.sp,
@@ -754,11 +769,11 @@ class OverviewFragment : Fragment() {
                                 .height(250.dp),
                             factory = { context -> MultiLineChartView(context) },
                             update = {
-                                it.setChartData(charting?.rOAROE?.year,
+                                it.setChartData(charting?.rOAROE?.year?.reversed(),
                                     listOf("Ret On CE","Ret On Equity","Ret On Assets"),
-                                    charting?.rOAROE?.returnOnCE?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
-                                    charting?.rOAROE?.returnOnEquity?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
-                                    charting?.rOAROE?.returnOnAssets?.mapIndexed { index, d ->  Entry(index.toFloat(),d.toFloat())},
+                                    charting?.rOAROE?.returnOnCE?.reversed()?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
+                                    charting?.rOAROE?.returnOnEquity?.reversed()?.mapIndexed { index, d -> Entry(index.toFloat(),d.toFloat()) },
+                                    charting?.rOAROE?.returnOnAssets?.reversed()?.mapIndexed { index, d ->  Entry(index.toFloat(),d.toFloat())},
                                     mutableListOf(android.graphics.Color.parseColor("#90ed7d"),android.graphics.Color.parseColor("#7cb5ec"),android.graphics.Color.parseColor("#434348"))
                                 )
                             }
@@ -788,9 +803,9 @@ class OverviewFragment : Fragment() {
                             factory = { context -> CustomCombinedChart(context) },
                             update = {
                                 it.setChartData(
-                                    charting?.dividend?.dividend?.map { it.toFloat() },
-                                    charting?.dividend?.dividendYieldPer?.map { it.toFloat() },
-                                    charting?.dividend?.year,
+                                    charting?.dividend?.dividend?.reversed()?.map { it.toFloat() },
+                                    charting?.dividend?.dividendYieldPer?.reversed()?.map { it.toFloat() },
+                                    charting?.dividend?.year?.reversed(),
                                     android.graphics.Color.parseColor("#ffaa07"),
                                     "Dividend Yield",
                                     "Dividend"
@@ -887,9 +902,9 @@ class OverviewFragment : Fragment() {
                             factory = { context -> MultiLineChartView(context) },
                             update = {
                                 it.setChartData(
-                                    charting?.cash?.year,
+                                    charting?.cash?.year?.reversed(),
                                     listOf("Cash per Share"),
-                                    charting?.cash?.cashPerShare?.mapIndexed { index, d ->
+                                    charting?.cash?.cashPerShare?.reversed()?.mapIndexed { index, d ->
                                         Entry(
                                             index.toFloat(),
                                             d.toFloat()
@@ -926,11 +941,17 @@ class OverviewFragment : Fragment() {
                                 .height(250.dp),
                             factory = { context -> CustomEVCombinedChart(context) },
                             update = {
+                                /*it.setChartData(
+                                    listOf(520.45f, 475.30f, 412.89f, 390.22f, 450.75f),
+                                    listOf(430.00f, 445.00f, 460.00f, 470.00f, 480.00f),
+                                    listOf(3.5f, 2.9f, 2.2f, 1.8f, 2.4f),
+                                    listOf("2020", "2021", "2022", "2023", "2024")
+                                )*/
                                 it.setChartData(
-                                    charting?.enterprise?.marketCap?.map { it.toFloat() }?.toList(),
-                                    charting?.enterprise?.ePValue?.map { it.toFloat() }?.toList(),
-                                    charting?.enterprise?.eVEBITDA?.map { it.toFloat() }?.toList(),
-                                    charting?.enterprise?.year,
+                                    charting?.enterprise?.marketCap?.reversed()?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.ePValue?.reversed()?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.eVEBITDA?.reversed()?.map { it.toFloat() }?.toList(),
+                                    charting?.enterprise?.year?.reversed(),
                                 )
                                /* it.setChartData(
                                     charting?.enterprise?.marketCap?.map { it.toFloat() },
@@ -998,7 +1019,7 @@ class OverviewFragment : Fragment() {
 
     @Composable
     private fun ItemValue(key:String,value:String,desc:String?) {
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
                     text = key,
@@ -1007,6 +1028,7 @@ class OverviewFragment : Fragment() {
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
+                        textAlign = TextAlign.Start,
                         color = colorResource(id = R.color.black),
                     )
                 )
@@ -1018,6 +1040,7 @@ class OverviewFragment : Fragment() {
                             lineHeight = 30.08.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(500),
+                            textAlign = TextAlign.Start,
                             color =  colorResource(R.color.md_theme_outline),
                         )
                     )
@@ -1033,7 +1056,7 @@ class OverviewFragment : Fragment() {
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(600),
                     color = colorResource(id = R.color.snapshot_value),
-                    textAlign = TextAlign.Right,
+                    textAlign = TextAlign.End,
                 )
             )
         }
@@ -1067,8 +1090,8 @@ class OverviewFragment : Fragment() {
     private fun populateBarChart(customBarChart: CustomBarChart, ePS: EPSYear?) {
         try {
             customBarChart.setChartData(
-                ePS?.year,
-                ePS?.earningPerShare?.map { it.toFloat() }?.toList(),
+                ePS?.year?.reversed(),
+                ePS?.earningPerShare?.map { it.toFloat() }?.toList()?.reversed(),
                 0.5f
             )
         }catch (e:Exception){

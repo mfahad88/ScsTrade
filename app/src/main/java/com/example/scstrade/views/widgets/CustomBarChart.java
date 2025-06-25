@@ -16,10 +16,12 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomBarChart extends BarChart {
     public CustomBarChart(Context context) {
@@ -87,7 +89,17 @@ public class CustomBarChart extends BarChart {
         dataSet.setColors(colors);
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         dataSet.setValueTextSize(12f);
-
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
 
         BarData data = new BarData(dataSet);
         data.setBarWidth(barWidth);

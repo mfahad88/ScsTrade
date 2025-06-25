@@ -11,13 +11,16 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MultiLineChartView extends LineChart {
     public MultiLineChartView(Context context) {
@@ -43,6 +46,7 @@ public class MultiLineChartView extends LineChart {
         XAxis xAxis = this.getXAxis();
         xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
 
         // Y-Axis Configuration
@@ -50,8 +54,8 @@ public class MultiLineChartView extends LineChart {
         leftAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         leftAxis.setDrawLabels(false);
         leftAxis.setTextSize(12f);
-        this.getAxisRight().setEnabled(false);
 
+        this.getAxisRight().setEnabled(false);
         // Legend
         Legend legend = this.getLegend();
         legend.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
@@ -69,6 +73,7 @@ public class MultiLineChartView extends LineChart {
             greenLineDataSet.setValueTextSize(12f);
             greenLineDataSet.setLineWidth(2f);
             lineData.addDataSet(greenLineDataSet);
+
         }
 
         if(blueLineEntries!=null) {
@@ -94,7 +99,17 @@ public class MultiLineChartView extends LineChart {
         }
 
         // Combine Data
-
+        lineData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
 
 //        this.getAxisLeft().setValueFormatter(new IndexAxisValueFormatter(strings));
         // Apply Data to Chart

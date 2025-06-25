@@ -20,6 +20,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomEVCombinedChart extends CombinedChart {
 
@@ -68,11 +69,11 @@ public class CustomEVCombinedChart extends CombinedChart {
         // Right Y-Axis (Market Cap & EP Value)
         YAxis rightAxis = this.getAxisRight();
         rightAxis.setDrawGridLines(false);
-        rightAxis.setEnabled(false);
+        rightAxis.setEnabled(true);
         rightAxis.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_bright));
         rightAxis.setAxisMinimum(0f);
-        rightAxis.setAxisMaximum(750f);
-        rightAxis.setGranularity(100f);
+//        rightAxis.setAxisMaximum(750f);
+//        rightAxis.setGranularity(100f);
         rightAxis.setValueFormatter(new BillionFormatter());
 
         // Legend
@@ -93,24 +94,27 @@ public class CustomEVCombinedChart extends CombinedChart {
         BarData barData = generateBarData(marketCapValues, epValues);
         float barWidth = 0.3f;
         float groupSpace = 0.5f;
-        float barSpace = 0.05f;
+        float barSpace = 0.02f;
         barData.setBarWidth(barWidth);
         barData.groupBars(0f, groupSpace, barSpace);
         data.setData(barData);
+        float groupWidth = barData.getGroupWidth(groupSpace, barSpace);
+        float xAxisMin   = 0f;                // start at 0 (matches groupBars call)
+        float xAxisMax   = xAxisMin + labels.size() * groupWidth;
 
+        getXAxis().setAxisMinimum(xAxisMin);
+        getXAxis().setAxisMaximum(xAxisMax);
         // LineData (EV / EBITDA)
         LineData lineData = generateLineData(evEbitdaValues);
         data.setData(lineData);
-        float maxBar = Math.max(getMaxValue(marketCapValues), getMaxValue(epValues));
-        float maxLine = getMaxValue(evEbitdaValues);
+
         // Apply to chart
         this.setData(data);
         this.getXAxis().setAvoidFirstLastClipping(true);
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.getXAxis().setAxisMinimum(0f);
         this.getXAxis().setAxisMaximum(labels.size());
-//        this.getAxisRight().setAxisMaximum(roundUp(maxBar));
-//        this.getAxisLeft().setAxisMaximum(roundUp(maxLine));
+
         this.invalidate();
     }
 
@@ -123,11 +127,13 @@ public class CustomEVCombinedChart extends CombinedChart {
             epEntries.add(new BarEntry(i, epValues.get(i)));
         }
 
+
         BarDataSet marketSet = new BarDataSet(marketEntries, "Market Cap");
         marketSet.setColor(Color.RED);
         marketSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
         marketSet.setValueTextSize(10f);
         marketSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+//        marketSet.setValueFormatter(new IndexAxisValueFormatter(marketCaps.stream().map(String::valueOf).collect(Collectors.toList())));
         marketSet.setValueFormatter(new BillionFormatter());
 
         BarDataSet epSet = new BarDataSet(epEntries, "EP Value");
@@ -158,6 +164,8 @@ public class CustomEVCombinedChart extends CombinedChart {
         lineSet.setCircleRadius(4f);
         lineSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineSet.setValueFormatter(new BillionFormatter());
+        lineSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineSet.setCubicIntensity(0.2f);
 
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineSet);
@@ -169,9 +177,9 @@ public class CustomEVCombinedChart extends CombinedChart {
         @Override
         public String getFormattedValue(float value) {
             if(value >=1_000_000_000){
-                return String.format("%.1fB", value / 1_000_000_000);
+                return String.format("%.0f", value / 1_000_000_000);
             }else{
-                return String.format("%.2f", value);
+                return String.format("%.0f", value);
             }
 
         }

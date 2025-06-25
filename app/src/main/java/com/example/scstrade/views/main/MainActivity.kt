@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +50,9 @@ class MainActivity : BaseActivity() {
         }else{
             setTheme(R.style.DarkTheme)
         }*/
+
+
+
         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
         FacebookSdk.sdkInitialize(this)
         FirebaseMessaging.getInstance().token
