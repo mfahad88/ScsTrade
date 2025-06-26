@@ -5,14 +5,20 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityTechnicalsDetailBinding
 import com.example.scstrade.helper.AppConstants
@@ -24,6 +30,9 @@ import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.snapshot.SnapshotActivity
 import com.example.scstrade.views.technicals.adapter.TechnicalDetailAdapter
+import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
+import com.google.gson.JsonObject
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,7 +49,7 @@ class TechnicalsDetailActivity : BaseActivity() {
         setContentView(binding.root)
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Technicals"
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
@@ -55,18 +64,66 @@ class TechnicalsDetailActivity : BaseActivity() {
                 }
                 is Resource.Loading -> binding.loader.visibility=View.VISIBLE
                 is Resource.Success -> {
-                    binding.loader.visibility = View.GONE
-                    binding.recyclerView.adapter = TechnicalDetailAdapter(it.data?: emptyList(),viewModel){
-                        val intent= Intent(this@TechnicalsDetailActivity, SnapshotActivity::class.java)
-                        intent.putExtra(AppConstants.SYMBOL, it.symbol)
-                        startActivity(intent)
+
+                    val jsonElement=it.data
+
+                    if(jsonElement?.isJsonArray?:false){
+                        var count=0
+                        jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
+                            if(!it.key.equals("company_name",true)) {
+                                count++
+                                if(count==1){
+                                    binding.header1.text = it.key
+                                }
+                                if(count==2){
+                                    binding.header2.text = it.key
+                                }
+                                if(count==3){
+                                    binding.header3.text = it.key
+                                }
+                                if(count==4){
+                                    binding.header4.text = it.key
+                                }
+
+                                System.out.println(it.key)
+                            }
+                        }
+                        val list= ArrayList<Array<String>>()
+                        jsonElement?.asJsonArray?.forEach { it ->
+                            val obj: JsonObject? =it.asJsonObject
+
+
+                            obj?.entrySet()?.forEach {
+                                list.add(obj.entrySet()?.map { it.value.asString }?.toTypedArray()!!)
+
+                            }
+
+                        }
+                        binding.recyclerView.apply {
+                            adapter = TechnicalDetailAdapter(list,viewModel){
+                                val intent= Intent(this@TechnicalsDetailActivity, SnapshotActivity::class.java)
+                                intent.putExtra(AppConstants.SYMBOL, it)
+                                startActivity(intent)
+                            }
+
+                            doOnPreDraw {
+                                Log.d("TAG", "RecyclerView visible rows are rendered")
+                                binding.groupMain.visibility = View.VISIBLE
+                                binding.loader.visibility = View.GONE
+                            }
+                        }
+
+
                     }
+
+
                 }
             }
         })
 
         binding.recyclerView.apply {
             layoutManager=LinearLayoutManager(this@TechnicalsDetailActivity,LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(VerticalSpaceItemDecoration(1,ContextCompat.getColor(this@TechnicalsDetailActivity,R.color.md_theme_outline)))
         }
 
 

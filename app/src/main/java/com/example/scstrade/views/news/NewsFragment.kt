@@ -2,6 +2,7 @@ package com.example.scstrade.views.news
 
 import RssItem
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,8 +27,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
@@ -44,12 +48,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -197,10 +205,10 @@ class NewsFragment : Fragment() {
                             binding.loader.visibility= View.GONE
                             newList(data = data.value.data?: emptyList()){
 
-                                val intent= Intent(requireContext(),NewsDetailActivity::class.java)
+                               /* val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
                                 intent.putExtra(AppConstants.TITLE,it.newsDesc)
-                                startActivity(intent)
+                                startActivity(intent)*/
                             }
 
                         }
@@ -421,22 +429,59 @@ class NewsFragment : Fragment() {
                             modifier = Modifier
                                 .weight(3f),
                             content = {
-                                Column {
+                                Column(modifier = Modifier.fillMaxHeight()) {
+                                    if(!data[index].newsHeading.equals("General News",true)){
+                                        Text(
+                                            text = data[index].newsHeading,
+                                            fontSize = 16.sp,
+                                            maxLines = 1,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(600),
+                                            color = colorResource(id = R.color.black),
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+
+                                    if(!data[index].type.equals("General News",true)) {
+                                        Text(
+                                            text = data[index].type,
+                                            fontSize = 14.sp,
+                                            maxLines = 1,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(600),
+                                            color = colorResource(id = R.color.black),
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
                                     Text(
-                                        text = data[index].newsDesc,
-                                        fontSize = 16.sp,
+                                        text = data[index].newsText,
+                                        fontSize = 14.sp,
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
-                                        fontWeight = FontWeight(600),
+                                        fontWeight = FontWeight(400),
                                         color = colorResource(id = R.color.black),
                                         overflow = TextOverflow.Ellipsis,
                                         modifier = Modifier.fillMaxWidth()
                                     )
+
                                     Row (
                                         modifier = Modifier.padding(top = 10.dp,),
                                     ){
-
-                                        Image(
+                                        IntentLinkText("Source",data[index].newsLink,
+                                            )
+                                        /*Text(
+                                            text = "Source",
+                                            fontSize = 14.sp,
+                                            maxLines = 3,
+                                            fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
+                                            fontWeight = FontWeight(600),
+                                            color = colorResource(id = R.color.black),
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )*/
+                                       /* Image(
                                             painter = painterResource(id = R.drawable.clock),
                                             contentDescription = "Clock",
                                             modifier = Modifier.size(15.dp)
@@ -450,7 +495,7 @@ class NewsFragment : Fragment() {
                                                 fontWeight = FontWeight(500),
                                                 color = Color(0xFF79776F)
                                             )
-                                        )
+                                        )*/
                                     }
                                 }
                             }
@@ -481,7 +526,34 @@ class NewsFragment : Fragment() {
             }
         }
     }
+    @Composable
+    fun IntentLinkText(
+        label: String,
+        url: String,
+        modifier: Modifier = Modifier,
+    ) {
+        val context = LocalContext.current
 
+        ClickableText(
+            modifier = modifier,
+            text = buildAnnotatedString {
+                append(label)
+                addStyle(
+                    SpanStyle(
+                        color = MaterialTheme.colors.primary,
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    0,
+                    label.length
+                )
+            },
+            onClick = {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                // Optionally add flags, chooser, etc.
+                context.startActivity(intent)
+            }
+        )
+    }
     fun extractImage(input: String): String? {
         val regex = """src=["'](https?://[^"']+)["']""".toRegex()
         return regex.find(input)?.groupValues?.get(1) // Returns first matched group

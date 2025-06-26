@@ -150,19 +150,7 @@ class HomeFragment : Fragment() {
 
         }
 
-      /*  binding.recyclerGainers.apply {
-            adapter= StockAdapter()
-            layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(15.dp))
-            isNestedScrollingEnabled=true
-        }
-        binding.recyclerLosers.apply {
-            adapter= StockAdapter()
-            layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(30.dp))
-            isNestedScrollingEnabled=true
 
-        }*/
 
         homeViewModel.selectedIndex.observe(viewLifecycleOwner, Observer {
             if(it!=null){
@@ -209,9 +197,9 @@ class HomeFragment : Fragment() {
                             binding.cardHome.apply {
                                 tradeValueView.text = "0.0"
                                 volumeChip.text="0.0"
-                                netChangeChip.setText("0.0 (0.0%)","0.0")
-                                highView.text = "H: 0.0 0.0(0.0%)"
-                                lowView.text = "L: 0.0 0.0(0.0%)"
+                                netChangeChip.setText("0.0 0.0%","0.0")
+                                highView.text = "H: 0.0 0.0 0.0%"
+                                lowView.text = "L: 0.0 0.0 0.0%"
                             }
                         }
 
@@ -319,30 +307,15 @@ class HomeFragment : Fragment() {
                             }
                         }
 
-                       /* (binding.recyclerLeaders.adapter as StockAdapter).submitList(list){
-                            binding.recyclerLeaders.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener{
-                                override fun onGlobalLayout() {
-                                    binding.recyclerLeaders.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                                    binding.recyclerLeaders.visibility = View.VISIBLE
-                                    Log.d("RecyclerView", "RecyclerView is now visible after rendering")
-                                }
-
-                            })
-                        }*/
-
-
-
 
                     }
+
                    binding.root.postDelayed(
                        {
                            (binding.recyclerLeaders.adapter as StockAdapter).submitList(list)
                        },400
                    )
-                    if(binding.main.visibility==View.GONE){
-                        binding.main.visibility=View.VISIBLE
-                        binding.loader.visibility=View.GONE
-                    }
+
 
 
                     /*binding.recyclerLeaders.postDelayed (

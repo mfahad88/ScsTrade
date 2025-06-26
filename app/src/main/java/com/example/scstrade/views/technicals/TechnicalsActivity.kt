@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -23,6 +24,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.technicals.adapter.TechnicalAdapter
+import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,6 +41,11 @@ class TechnicalsActivity : BaseActivity() {
         setContentView(binding.root)
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Technicals"
+        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
         viewModel.getTechnicals()
         observerTechnicals()
         binding.recyclerView.apply {
@@ -49,6 +56,13 @@ class TechnicalsActivity : BaseActivity() {
     }
 
     private fun observerTechnicals() {
+        binding.recyclerView.apply {
+            layoutManager=LinearLayoutManager(this@TechnicalsActivity,LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(
+                VerticalSpaceItemDecoration(1,
+                    ContextCompat.getColor(this@TechnicalsActivity,R.color.md_theme_outline))
+            )
+        }
         viewModel.mutableTechnical.observe(this@TechnicalsActivity, Observer { result->
 
             when(result){
@@ -64,6 +78,8 @@ class TechnicalsActivity : BaseActivity() {
                         intent.putExtra(AppConstants.TECHNICAL_SELECTION,it.technicals)
                         startActivity(intent)
                     }
+
+
                 }
             }
 

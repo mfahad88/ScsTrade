@@ -144,13 +144,13 @@ interface ApiService {
     suspend fun getTechnicals():List<TechnicalData>
 
     @GET(value = "/Data")
-    suspend fun getTechnicalDetails(@Query("que")que:String):List<TechnicalDetailData>
+    suspend fun getTechnicalDetails(@Query("que")que:String):JsonElement
 
     @GET(value = "/Data?que=Fundamentals")
     suspend fun getFundamental():List<FundamentalData>
 
     @GET(value = "/Data")
-    suspend fun getFundamentalDetails(@Query("que")que:String):List<FundamentalDetailData>
+    suspend fun getFundamentalDetails(@Query("que")que:String):JsonElement
 
     @GET(value = "/Data?que=News")
     suspend fun news():List<NewsData>

@@ -7,79 +7,120 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_surface"
     tools:context=".views.technicals.TechnicalsActivity">
+
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:orientation="horizontal"
-        android:id="@+id/header"
-        android:weightSum="10"
-        android:paddingHorizontal="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingHorizontal="8dp"
         android:background="@color/colorDarkerr"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/header1"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:text="@string/symbol"
-            android:textAppearance="@style/symbol" />
+            android:textAlignment="center"
+            android:textAppearance="@style/symbol"
+            android:textFontWeight="600"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/header2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/header2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical"
-            android:text="E P/E"
-            android:textAppearance="@style/symbol" />
+            android:gravity="center"
+            android:text="Signal"
+            android:textAlignment="center"
+            android:textAppearance="@style/symbol"
+            android:textFontWeight="600"
+            app:layout_constraintBottom_toBottomOf="@+id/header1"
+            app:layout_constraintEnd_toStartOf="@+id/header3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/header1"
+            app:layout_constraintTop_toTopOf="@+id/header1" />
 
         <TextView
+            android:id="@+id/header3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:layout_gravity="center_vertical"
-            android:text="Price"
-            android:textAppearance="@style/symbol" />
+            android:gravity="end"
+            android:text="Initated"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/symbol"
+            android:textFontWeight="600"
+            app:layout_constraintBottom_toBottomOf="@+id/header1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/header2"
+            app:layout_constraintTop_toTopOf="@+id/header1" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical"
-            android:text="Avg. Vol"
-            android:textAppearance="@style/symbol" />
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="7dp"
-        tools:listitem="@layout/item_technical_detail"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header" />
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/item_fundament_detail"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupMain"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="header,recyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

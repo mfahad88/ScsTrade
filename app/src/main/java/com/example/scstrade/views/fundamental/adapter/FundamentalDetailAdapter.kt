@@ -7,32 +7,34 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
+import com.example.scstrade.databinding.ItemFundamentDetailBinding
+import com.example.scstrade.databinding.ItemFundamentalBinding
 import com.example.scstrade.databinding.ItemTechnicalDetailBinding
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.viewmodels.SharedViewModel
 
 import java.util.Collections
 
-class FundamentalDetailAdapter(private val itemList: List<FundamentalDetailData>,private val sharedViewModel: SharedViewModel, private val onItemClick: (FundamentalDetailData) -> Unit) : RecyclerView.Adapter<FundamentalDetailAdapter.FundamentalDetailViewHolder>() {
+class FundamentalDetailAdapter(private val itemList: ArrayList<Array<String>>,private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<FundamentalDetailAdapter.FundamentalDetailViewHolder>() {
 
-    class FundamentalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+    class FundamentalDetailViewHolder(private val binding: ItemFundamentDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: FundamentalDetailData,sharedViewModel: SharedViewModel, onItemClick: (FundamentalDetailData) -> Unit) {
+        fun bind(item: Array<String>,sharedViewModel: SharedViewModel, onItemClick: (String) -> Unit) {
             binding.apply {
-                symbol.text=item.symbol
-                ePE.text=item.ePE.toString()
-                price.text = item.price.toString()
-//                avgVol.text = item.avgVol
-                companyName.text = item.companyName
-                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item.symbol) }?.map { it.companyLogo }?.first()
-                Glide.with(binding.root.context).load(logo).placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building)).circleCrop().into(binding.imageViewLogo)
+                symbol.text=item[0]
+                ePE.text=item[1]
+                price.text = item[3]
+                companyName.text = item[2]
+
+                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.companyLogo }?.first()
+                Glide.with(binding.root.context).load(logo).circleCrop().into(binding.imageViewLogo)
             }
-            binding.root.setOnClickListener { onItemClick(item) }
+            binding.root.setOnClickListener { onItemClick(item[0]) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundamentalDetailViewHolder {
-        val binding = ItemTechnicalDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFundamentDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FundamentalDetailViewHolder(binding)
     }
 

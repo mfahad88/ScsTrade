@@ -25,6 +25,7 @@ import android.text.format.DateUtils
 import android.util.Base64
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -39,6 +40,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.helper.AppConstants.Companion.LIGHT_MODE
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -193,6 +195,17 @@ class Utils {
                 return "0.0"
             }
 
+        }
+
+        fun waitForRecyclerViewLayoutComplete(recyclerView: RecyclerView, onComplete: () -> Unit) {
+            recyclerView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    recyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                    // All visible views (including RecyclerView rows) have been laid out
+                    onComplete()
+                }
+            })
         }
         fun dpToPx(dp: Int): Int {
             return (dp * Resources.getSystem().displayMetrics.density).toInt()

@@ -48,7 +48,7 @@ class  NewsDetailActivity : BaseActivity() {
 
         newsType= intent.extras?.getString(AppConstants.NEWS_TYPE).toString()
         title = intent.extras?.getString(AppConstants.TITLE).toString()
-        if(newsType.equals(AppConstants.SCS,true)){
+        /*if(newsType.equals(AppConstants.SCS,true)){
             sharedViewModel.mutableNews.observe(this, Observer { result->
                 when(result){
                     is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
@@ -76,8 +76,8 @@ class  NewsDetailActivity : BaseActivity() {
                     }
                 }
             })
-        }
-       else if(newsType.equals(AppConstants.BRECODER,true)){
+        }*/
+       if(newsType.equals(AppConstants.BRECODER,true)){
             sharedViewModel.mutableBrecoder.observe(this, Observer {result->
                 when(result){
                     is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")

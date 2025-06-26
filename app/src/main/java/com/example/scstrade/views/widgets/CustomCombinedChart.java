@@ -19,11 +19,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomCombinedChart extends CombinedChart {
 
@@ -119,7 +121,17 @@ public class CustomCombinedChart extends CombinedChart {
 
         List<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
-
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
         return new BarData(dataSets);
     }
 
@@ -140,6 +152,18 @@ public class CustomCombinedChart extends CombinedChart {
         dataSet.setCubicIntensity(0.2f);
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
+
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
 
         return new LineData(dataSets);
     }

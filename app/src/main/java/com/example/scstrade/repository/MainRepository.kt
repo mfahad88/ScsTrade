@@ -136,7 +136,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun getTechnicalDetails(que:String): Resource<List<TechnicalDetailData>> {
+    suspend fun getTechnicalDetails(que:String): Resource<JsonElement> {
         try {
             return Resource.Success(apiService.getTechnicalDetails(que))
         }catch (e:Exception){
@@ -152,7 +152,7 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun getFundamentalDetails(que:String): Resource<List<FundamentalDetailData>> {
+    suspend fun getFundamentalDetails(que:String): Resource<JsonElement> {
         try {
             return Resource.Success(apiService.getFundamentalDetails(que))
         }catch (e:Exception){

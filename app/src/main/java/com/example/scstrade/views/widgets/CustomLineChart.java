@@ -7,16 +7,19 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CustomLineChart extends LineChart {
 
@@ -80,7 +83,17 @@ public class CustomLineChart extends LineChart {
             dataSet.setDrawCircles(false);
             dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-
+            dataSet.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getBarLabel(BarEntry barEntry) {
+                    float y = barEntry.getY();
+                    // Treat anything extremely close to zero as zero
+                    if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                        return "";
+                    }
+                    return String.format(Locale.US, "%,.2f", y);
+                }
+            });
 
             // Create LineData object and set it to the chart
             LineData lineData = new LineData(dataSet);

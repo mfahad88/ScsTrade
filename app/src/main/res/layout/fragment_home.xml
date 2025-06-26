@@ -154,20 +154,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-       <!-- <TextView
-            android:id="@+id/leaders_"
-            android:layout_width="wrap_content"
+<!--        <androidx.compose.ui.platform.ComposeView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="top"
-            android:lineSpacingExtra="2sp"
-            android:text="@string/leaders_"
-            android:textFontWeight="700"
-            android:textAppearance="@style/leaders_"
-            android:translationY="-1.11sp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/recyclerLeaders"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
             app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />-->
-
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerLeaders"
             android:layout_width="0dp"
@@ -181,53 +175,6 @@
             tools:listitem="@layout/item_stocks" />
 
 
-        <!--<TextView
-            android:id="@+id/gainer_"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="top"
-            android:lineSpacingExtra="2sp"
-            android:text="@string/gainers_"
-            android:textFontWeight="700"
-            android:textAppearance="@style/leaders_"
-            android:translationY="-1.11sp"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerLeaders" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerGainers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/leaders_"
-            app:layout_constraintTop_toBottomOf="@+id/gainer_" />
-
-
-        <TextView
-            android:id="@+id/loser_"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="top"
-            android:lineSpacingExtra="2sp"
-            android:textFontWeight="700"
-            android:text="@string/loser_"
-            android:textAppearance="@style/leaders_"
-            android:translationY="-1.11sp"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerGainers" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerLosers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:paddingBottom="130dp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/leaders_"
-            app:layout_constraintTop_toBottomOf="@+id/loser_" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

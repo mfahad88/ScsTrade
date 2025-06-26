@@ -20,6 +20,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CustomEVCombinedChart extends CombinedChart {
@@ -136,6 +137,7 @@ public class CustomEVCombinedChart extends CombinedChart {
 //        marketSet.setValueFormatter(new IndexAxisValueFormatter(marketCaps.stream().map(String::valueOf).collect(Collectors.toList())));
         marketSet.setValueFormatter(new BillionFormatter());
 
+
         BarDataSet epSet = new BarDataSet(epEntries, "EP Value");
         epSet.setColor(Color.parseColor("#ADD8E6"));
         epSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
@@ -166,9 +168,20 @@ public class CustomEVCombinedChart extends CombinedChart {
         lineSet.setValueFormatter(new BillionFormatter());
         lineSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineSet.setCubicIntensity(0.2f);
-
+        lineSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                // Treat anything extremely close to zero as zero
+                if (Math.abs(y) < 0.0001f) {          // 0 → show nothing
+                    return "";
+                }
+                return String.format(Locale.US, "%,.2f", y);
+            }
+        });
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineSet);
+
 
         return new LineData(dataSets);
     }

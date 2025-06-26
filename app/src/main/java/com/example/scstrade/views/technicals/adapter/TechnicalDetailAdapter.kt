@@ -10,22 +10,22 @@ import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.viewmodels.SharedViewModel
 import java.util.Collections
 
-class TechnicalDetailAdapter(private val itemList: List<TechnicalDetailData>,private val sharedViewModel: SharedViewModel, private val onItemClick: (TechnicalDetailData) -> Unit) : RecyclerView.Adapter<TechnicalDetailAdapter.TechnicalDetailViewHolder>() {
+class TechnicalDetailAdapter(private val itemList: ArrayList<Array<String>>,private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<TechnicalDetailAdapter.TechnicalDetailViewHolder>() {
 
     class TechnicalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TechnicalDetailData,sharedViewModel: SharedViewModel, onItemClick: (TechnicalDetailData) -> Unit) {
+        fun bind(item: Array<String>,sharedViewModel: SharedViewModel, onItemClick: (String) -> Unit) {
             binding.apply {
-                symbol.text=item.symbol
-                ePE.text=item.signal
-                price.text = item.initiated
-                avgVol.text = item.initiatedAt
-                companyName.text = item.companyName
+                symbol.text=item[0]
+                ePE.text=item[1]
+                price.text = item[2]
+                avgVol.text = item[3]
+                companyName.text = item[4]
 
-                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item.symbol) }?.map { it.companyLogo }?.first()
+                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.companyLogo }?.first()
                 Glide.with(binding.root.context).load(logo).circleCrop().into(binding.imageViewLogo)
             }
-            binding.root.setOnClickListener { onItemClick(item) }
+            binding.root.setOnClickListener { onItemClick(item[0]) }
         }
     }
 
