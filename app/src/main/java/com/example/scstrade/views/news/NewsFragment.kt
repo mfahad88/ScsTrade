@@ -4,6 +4,8 @@ import RssItem
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -65,7 +67,9 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.asFlow
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentNewsBinding
 import com.example.scstrade.helper.AppConstants
@@ -83,7 +87,7 @@ class NewsFragment : Fragment() {
     lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       
+
     }
 
     override fun onCreateView(
@@ -182,7 +186,7 @@ class NewsFragment : Fragment() {
                                     color = colorResource(id = R.color.black),
                                     maxLines = 1,
                                     overflow = TextOverflow.Clip,
-                                    )
+                                )
 
                             }
                         }
@@ -205,10 +209,10 @@ class NewsFragment : Fragment() {
                             binding.loader.visibility= View.GONE
                             newList(data = data.value.data?: emptyList()){
 
-                               /* val intent= Intent(requireContext(),NewsDetailActivity::class.java)
-                                intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
-                                intent.putExtra(AppConstants.TITLE,it.newsDesc)
-                                startActivity(intent)*/
+                                /* val intent= Intent(requireContext(),NewsDetailActivity::class.java)
+                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
+                                 intent.putExtra(AppConstants.TITLE,it.newsDesc)
+                                 startActivity(intent)*/
                             }
 
                         }
@@ -430,20 +434,8 @@ class NewsFragment : Fragment() {
                                 .weight(3f),
                             content = {
                                 Column(modifier = Modifier.fillMaxHeight()) {
-                                    if(!data[index].newsHeading.equals("General News",true)){
-                                        Text(
-                                            text = data[index].newsHeading,
-                                            fontSize = 16.sp,
-                                            maxLines = 1,
-                                            fontFamily = FontFamily(Font(R.font.custom_font)),
-                                            fontWeight = FontWeight(600),
-                                            color = colorResource(id = R.color.black),
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
-                                    }
 
-                                    if(!data[index].type.equals("General News",true)) {
+
                                         Text(
                                             text = data[index].type,
                                             fontSize = 14.sp,
@@ -454,12 +446,25 @@ class NewsFragment : Fragment() {
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier.fillMaxWidth()
                                         )
+
+                                    if(!data[index].type.equals("General News",true)){
+                                        Text(
+                                            text = data[index].newsHeading,
+                                            fontSize = 14.sp,
+                                            maxLines = 1,
+                                            fontFamily = FontFamily(Font(R.font.custom_font)),
+                                            fontWeight = FontWeight(600),
+                                            color = colorResource(id = R.color.black),
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
                                     }
+
                                     Text(
                                         text = data[index].newsText,
                                         fontSize = 14.sp,
                                         maxLines = 3,
-                                        fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(400),
                                         color = colorResource(id = R.color.black),
                                         overflow = TextOverflow.Ellipsis,
@@ -470,32 +475,8 @@ class NewsFragment : Fragment() {
                                         modifier = Modifier.padding(top = 10.dp,),
                                     ){
                                         IntentLinkText("Source",data[index].newsLink,
-                                            )
-                                        /*Text(
-                                            text = "Source",
-                                            fontSize = 14.sp,
-                                            maxLines = 3,
-                                            fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
-                                            fontWeight = FontWeight(600),
-                                            color = colorResource(id = R.color.black),
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.fillMaxWidth()
-                                        )*/
-                                       /* Image(
-                                            painter = painterResource(id = R.drawable.clock),
-                                            contentDescription = "Clock",
-                                            modifier = Modifier.size(15.dp)
                                         )
-                                        Text(
-                                            text = Utils.convertDate(data[index].newsDate),
 
-                                            style = TextStyle(
-                                                fontSize = 12.sp,
-                                                fontFamily = FontFamily(Font(R.font.custom_font)),
-                                                fontWeight = FontWeight(500),
-                                                color = Color(0xFF79776F)
-                                            )
-                                        )*/
                                     }
                                 }
                             }
@@ -506,12 +487,42 @@ class NewsFragment : Fragment() {
                             modifier = Modifier
                                 .weight(1f),
                             content = {
-                                Image(
-                                    painter = painterResource(id = R.drawable.news_empty_old),
-                                    contentDescription = "Dawn",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.FillWidth
-                                )
+                                val context = LocalContext.current
+                                if(!TextUtils.isEmpty(data[index].newsLink)) {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(context)
+                                            .data("https://scstrade.com/img/newsicon/${
+                                                data[index].newsLink.substringAfter(
+                                                    "www."
+                                                ).substringBefore(".com")
+                                            }.png")
+                                            .crossfade(true)
+                                            .placeholder(R.drawable.news_empty_old)
+                                            .error(R.drawable.news_empty_old)
+                                            .listener(
+                                                onError = { request, throwable ->
+                                                    // 🔥 Error caught here
+                                                    Log.e("ImageLoad", "Failed to load image", throwable.throwable)
+                                                },
+                                                onSuccess = { request, result ->
+                                                    // ✅ Successfully loaded
+                                                    Log.d("ImageLoad", "Image loaded successfully")
+                                                }
+                                            )
+                                            .build(),
+                                        contentDescription = data[index].newsLink,
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.FillWidth
+
+                                    )
+                                }else {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.news_empty_old),
+                                        contentDescription = "Dawn",
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.FillWidth
+                                    )
+                                }
                             }
                         )
                     }
@@ -537,6 +548,7 @@ class NewsFragment : Fragment() {
         ClickableText(
             modifier = modifier,
             text = buildAnnotatedString {
+
                 append(label)
                 addStyle(
                     SpanStyle(
