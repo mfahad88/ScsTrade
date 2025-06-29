@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
@@ -53,6 +55,8 @@ class LandingFragment : Fragment() {
     lateinit var binding: FragmentLandingBinding
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val ROOT_FRAGMENT:String="Home"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +69,9 @@ class LandingFragment : Fragment() {
 
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment
-        loadFragment(HomeFragment())
+        loadFragment("Home"){
+            HomeFragment()
+        }
         binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
 //        binding.toolbar.binding.tickerScroll.visibility = View.GONE
 //        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -81,13 +87,31 @@ class LandingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentManager = childFragmentManager
                 if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                     binding.drawerLayout.closeDrawers()
                 }else {
-                    if (fragmentManager.backStackEntryCount > 0) {
+
+                    if (fragmentManager.backStackEntryCount > 1) {
                         // 🔙 Pop fragment from back stack
+
+                        val currentFragment = childFragmentManager.findFragmentById(R.id.fragment_container)
+                        val fragmentName = currentFragment?.javaClass?.simpleName
+                        Log.d("CurrentFragment", "Visible Fragment: $fragmentName: ${currentFragment?.id}")
                         fragmentManager.popBackStack()
+                    /*
+                        if(fragmentName?.contains("Watchlist",true)?:false){
+                            binding.bottomNavigationView.selectedItemId= R.id.watchlistFragment
+                        }else if(fragmentName?.contains("Market",true)?:false){
+                            binding.bottomNavigationView.selectedItemId= R.id.marketFragment
+                        }else if(fragmentName?.contains("News",true)?:false){
+                            binding.bottomNavigationView.selectedItemId= R.id.news
+                        }else{
+                            binding.bottomNavigationView.selectedItemId= R.id.homeFragment
+                        }
+
+                       */
+
                     } else {
                         // 🚪 Close the app
                         showExitDialog()
@@ -114,23 +138,31 @@ class LandingFragment : Fragment() {
 //                binding.toolbar.toggleToolbar(true)
 //                binding.toolbar.binding.tickerScroll.visibility = View.GONE
 //                binding.toolbar.binding.constraintMarketStat.visibility = View.VISIBLE
-                loadFragment(HomeFragment())
+                loadFragment("Home"){
+                    HomeFragment()
+                }
                 binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
                 true
             }else if(item.itemId==R.id.watchlistFragment){
                 // binding.toolbar.toggleToolbar(false)
                 binding.toolbar.binding.market.text = "Watchlist"
-                loadFragment(WatchlistFragment())
+                loadFragment("WatchList"){
+                    WatchlistFragment()
+                }
                 true
             }else if(item.itemId==R.id.marketFragment){
                 // binding.toolbar.toggleToolbar(false)
                 binding.toolbar.binding.market.text = "Market"
-                loadFragment(MarketFragment())
+                loadFragment("Market"){
+                    MarketFragment()
+                }
                 true
             }else if(item.itemId==R.id.news){
                 // binding.toolbar.toggleToolbar(false)
                 binding.toolbar.binding.market.text = "News"
-                loadFragment(NewsFragment())
+                loadFragment("News"){
+                    NewsFragment()
+                }
                 true
             }
 
@@ -190,37 +222,46 @@ class LandingFragment : Fragment() {
     }*/
 
 
-    public fun loadFragment(fragment: Fragment, isBackStack:Boolean = false) {
+/*    public fun loadFragment(fragment: Fragment, flag:Int=1) {
+        val fm=childFragmentManager
+        val ft= fm.beginTransaction()
+        if(flag==0){
+            ft.add(R.id.fragment_container,fragment)
+            fm.popBackStack(ROOT_FRAGMENT,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            ft.addToBackStack(ROOT_FRAGMENT)
 
-        if(isBackStack){
-            childFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
-               /* .setCustomAnimations(
-                    R.anim.slide_in_right,    // enter
-                    R.anim.slide_out_left,    // exit
-                    R.anim.slide_in_left,     // popEnter (when back pressed)
-                    R.anim.slide_out_right    // popExit (when back pressed)
-                )*/
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit()
         }else{
-            childFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
-                /*.setCustomAnimations(
-                    R.anim.slide_in_right,    // enter
-                    R.anim.slide_out_left,    // exit
-                    R.anim.slide_in_left,     // popEnter (when back pressed)
-                    R.anim.slide_out_right    // popExit (when back pressed)
-                )*/
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+            ft.replace(R.id.fragment_container,fragment)
+            ft.addToBackStack(null)
         }
+        ft.commit()
+    }*/
+
+    fun loadFragment(tag: String, newInstance: () -> Fragment) {
+        val fm = childFragmentManager
+        val current = fm.findFragmentById(R.id.fragment_container)
+
+        val tx = fm.beginTransaction()
+
+        // 1. Hide the fragment that’s currently visible
+        current?.let { tx.hide(it) }
+
+        // 2. Look for a cached instance with this tag
+        val cached = fm.findFragmentByTag(tag)
+
+        if (cached == null) {
+            // First time → add, *not* replace
+            tx.add(R.id.fragment_container, newInstance(), tag)
+            tx.addToBackStack(tag)             // makes Back button work
+
+        } else {
+            // Second time → just show the already‑created instance
+            tx.show(cached)
+            fm.popBackStack(tag, 0)            // bring its BackStackEntry to top
+        }
+
+        tx.commit()
     }
-
-
 
     private fun initSideMenu() {
         val list:List<KeyDescValue> = listOf(
@@ -253,7 +294,7 @@ class LandingFragment : Fragment() {
                     bundle.putString("key","indices")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment(fragment,true)
+                    loadFragment("Market"){fragment}
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
                     // binding.toolbar.toggleToolbar(false)
                     binding.toolbar.binding.market.text = "Market"
@@ -261,7 +302,7 @@ class LandingFragment : Fragment() {
                     bundle.putString("key","allStocks")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment(fragment,true)
+                    loadFragment("AllStocks"){fragment}
                 }else if(keyDescValue.key?.equals("logout",true)?:false){
                     Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
@@ -314,7 +355,7 @@ class LandingFragment : Fragment() {
         if(resultCode == Activity.RESULT_OK){
             val fragmentToOpen = data?.getStringExtra("fragment_to_open")
             if (fragmentToOpen != null) {
-                loadFragment(WatchlistFragment())
+                loadFragment("WatchList"){WatchlistFragment()}
             }
 
         }

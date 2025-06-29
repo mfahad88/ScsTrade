@@ -65,14 +65,6 @@ class HomeFragment : Fragment() {
 //            startActivity(Intent(requireContext(), AofActivity::class.java))
         }
 
-        /*(parentFragment as LandingFragment).binding.toolbar.binding.apply {
-            titleItem.visibility = View.GONE
-            group.visibility = View.VISIBLE
-            titleItem.text = "Home"
-        }*/
-
-//        viewModel.fetchAllData()
-//        viewModel.fetchIndices()
 
         binding.cardHome.apply {
             zoom.setOnClickListener {
@@ -281,56 +273,57 @@ class HomeFragment : Fragment() {
                 }
                 is Resource.Success -> {
 
-                    val list = mutableListOf<ListItem>()
                     lifecycleScope.launch {
+                        // Step 1: build everything off‑thread
+                        val items: List<ListItem> = withContext(Dispatchers.Default) {
+                            val data        = result.data ?: emptyList()
+                            val topPicks    = viewModel.mutableTopPicks.value?.data ?: emptyList()
+                            val bySymbolMap = data.associateBy { it.sYM }   // O(n) once
 
-                        withContext(Dispatchers.IO){
-                            list+=ListItem.Header("Leaders")
-                            result.data?.sortedByDescending { it.v }?.take(10)?.forEach {
-                                list+=ListItem.Item(it)
-                            }
-                            val topPicks=viewModel.mutableTopPicks.value?.data
-                            if(topPicks!=null){
-                                list+=ListItem.Header("SCS Top Picks")
-                                topPicks.forEach { res->
-                                    list+=ListItem.Item(result.data?.filter { it.sYM.equals(res.sCSImpItemSymbol) }!!.first())
+                            buildList {
+                                // Leaders
+                                add(ListItem.Header("Leaders"))
+                                data.sortedByDescending { it.v }
+                                    .take(10)
+                                    .forEach { add(ListItem.Item(it)) }
+
+                                // SCS Top Picks
+                                if (topPicks.isNotEmpty()) {
+                                    add(ListItem.Header("SCS Top Picks"))
+                                    topPicks.forEach { pick ->
+                                        bySymbolMap[pick.sCSImpItemSymbol]?.let { add(ListItem.Item(it)) }
+                                    }
                                 }
-                            }
 
-                            list+=ListItem.Header("Gainers")
-                            result.data?.sortedByDescending { it.cHP }?.take(10)?.forEach {
-                                list+=ListItem.Item(it)
-                            }
-                            list+=ListItem.Header("Losers")
-                            result.data?.sortedBy { it.cHP }?.take(10)?.forEach {
-                                list+=ListItem.Item(it)
+                                // Gainers
+                                add(ListItem.Header("Gainers"))
+                                data.sortedByDescending { it.cHP }
+                                    .take(10)
+                                    .forEach { add(ListItem.Item(it)) }
+
+                                // Losers
+                                add(ListItem.Header("Losers"))
+                                data.sortedBy { it.cHP }
+                                    .take(10)
+                                    .forEach { add(ListItem.Item(it)) }
                             }
                         }
 
-
+                        // Step 2: back on Main—update once
+                        (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
+                            binding.apply {
+                                if(loader.visibility == View.VISIBLE){
+                                    loader.visibility = View.GONE
+                                    main.visibility = View.VISIBLE
+                                }
+                            }
+                        }  // DiffUtil can now run efficiently
                     }
 
-                   binding.root.postDelayed(
-                       {
-                           (binding.recyclerLeaders.adapter as StockAdapter).submitList(list)
-                       },400
-                   )
 
 
 
-                    /*binding.recyclerLeaders.postDelayed (
-                        {
-                            (binding.recyclerLeaders.adapter as StockAdapter).submitList(result.data?.sortedByDescending { it.v }?.take(10)?: emptyList())
 
-                        },500
-                    )
-
-                    binding.recyclerGainers.postDelayed({
-                        (binding.recyclerGainers.adapter as StockAdapter).submitList(result.data?.sortedByDescending { it.cHP }?.take(10)?: emptyList())
-                    },600)
-                    binding.recyclerLosers.postDelayed({
-                        (binding.recyclerLosers.adapter as StockAdapter).submitList(result.data?.sortedBy { it.cHP }?.take(10)?: emptyList())
-                    },700)*/
 
 
                 }

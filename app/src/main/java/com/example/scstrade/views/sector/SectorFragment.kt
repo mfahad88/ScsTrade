@@ -87,11 +87,5 @@ class SectorFragment : Fragment() {
 
 
 
-    fun loadFragment(fragment: Fragment, s: String){
-        ((parentFragment as MarketFragment).parentFragment as LandingFragment).loadFragment(fragment,true)
-        /*(requireActivity() as MainActivity).loadFragment(fragment,true)
-        (requireActivity() as MainActivity).binding.toolbar.visibility=View.VISIBLE
-        (requireActivity() as MainActivity).binding.title.text = s*/
 
-    }
 }
