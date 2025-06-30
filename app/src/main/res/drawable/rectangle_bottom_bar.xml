@@ -10,6 +10,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item>
+   <!-- <bitmap android:src="@drawable/bottom_nav" />-->
     <shape android:shape="rectangle">
       <size android:width="426dp"
           android:height="70dp"/>

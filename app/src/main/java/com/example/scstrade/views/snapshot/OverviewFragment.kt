@@ -185,7 +185,7 @@ class OverviewFragment : Fragment() {
                        binding.valueTrade.text = item?.cL.toString()
                        binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"
                        if(item?.cH!!<0.0) {
-                           binding.netChange.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
+                           binding.netChange.setTextColor(android.graphics.Color.parseColor("#D01B10"))
                        }else{
                            binding.netChange.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_secondaryFixed))
                        }

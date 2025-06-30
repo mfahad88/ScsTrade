@@ -14,13 +14,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.content.res.AppCompatResources
+
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.DividerItemDecoration
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLandingBinding
@@ -73,8 +69,6 @@ class LandingFragment : Fragment() {
             HomeFragment()
         }
         binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
-//        binding.toolbar.binding.tickerScroll.visibility = View.GONE
-//        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.aof.setOnClickListener {
             Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
@@ -82,7 +76,23 @@ class LandingFragment : Fragment() {
         }
 
 
+        childFragmentManager.addOnBackStackChangedListener {
+            val count = childFragmentManager.backStackEntryCount
+            val fragment = childFragmentManager.findFragmentById(R.id.fragment_container)
 
+            Log.d("BackStackListener", "Back stack count: $count")
+            Log.d("BackStackListener", "Current fragment: ${fragment?.javaClass?.simpleName}")
+            val fragmentName = fragment?.javaClass?.simpleName
+            if(fragmentName?.contains("Watchlist",true)?:false){
+                binding.bottomNavigationView.selectedItemId= R.id.watchlistFragment
+            }else if(fragmentName?.contains("Market",true)?:false){
+                binding.bottomNavigationView.selectedItemId= R.id.marketFragment
+            }else if(fragmentName?.contains("News",true)?:false){
+                binding.bottomNavigationView.selectedItemId= R.id.news
+            }else{
+                binding.bottomNavigationView.selectedItemId= R.id.homeFragment
+            }
+        }
 
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object: OnBackPressedCallback(true){
@@ -94,23 +104,8 @@ class LandingFragment : Fragment() {
 
                     if (fragmentManager.backStackEntryCount > 1) {
                         // 🔙 Pop fragment from back stack
-
-                        val currentFragment = childFragmentManager.findFragmentById(R.id.fragment_container)
-                        val fragmentName = currentFragment?.javaClass?.simpleName
-                        Log.d("CurrentFragment", "Visible Fragment: $fragmentName: ${currentFragment?.id}")
                         fragmentManager.popBackStack()
-                    /*
-                        if(fragmentName?.contains("Watchlist",true)?:false){
-                            binding.bottomNavigationView.selectedItemId= R.id.watchlistFragment
-                        }else if(fragmentName?.contains("Market",true)?:false){
-                            binding.bottomNavigationView.selectedItemId= R.id.marketFragment
-                        }else if(fragmentName?.contains("News",true)?:false){
-                            binding.bottomNavigationView.selectedItemId= R.id.news
-                        }else{
-                            binding.bottomNavigationView.selectedItemId= R.id.homeFragment
-                        }
 
-                       */
 
                     } else {
                         // 🚪 Close the app
@@ -202,46 +197,17 @@ class LandingFragment : Fragment() {
             .setNegativeButton("No") { dialog, _ -> dialog.dismiss() } // ❌ Dismiss
             .show()
     }
-  /*  private fun updateMarket(it: Resource<List<KSEIndices>>) {
-        binding.mMarket.apply {
-            if(it.data?.isNotEmpty()?:false){
-                if(it.data?.first()?.marketStatus.equals("CLOSE",true)){
-                    close.visibility= View.VISIBLE
-                    open.visibility = View.GONE
-                }else{
-                    close.visibility= View.GONE
-                    open.visibility = View.VISIBLE
-                }
-                var sdf = SimpleDateFormat("dd MMM yyyy | hh:mma", Locale.ENGLISH);
-
-                // Get the current date and time
-                var formattedDate = sdf.format(Date())
-                dateTime.text = formattedDate
-            }
-        }
-    }*/
-
-
-/*    public fun loadFragment(fragment: Fragment, flag:Int=1) {
-        val fm=childFragmentManager
-        val ft= fm.beginTransaction()
-        if(flag==0){
-            ft.add(R.id.fragment_container,fragment)
-            fm.popBackStack(ROOT_FRAGMENT,FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            ft.addToBackStack(ROOT_FRAGMENT)
-
-        }else{
-            ft.replace(R.id.fragment_container,fragment)
-            ft.addToBackStack(null)
-        }
-        ft.commit()
-    }*/
 
     fun loadFragment(tag: String, newInstance: () -> Fragment) {
         val fm = childFragmentManager
         val current = fm.findFragmentById(R.id.fragment_container)
 
         val tx = fm.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
+            .setReorderingAllowed(true)
 
         // 1. Hide the fragment that’s currently visible
         current?.let { tx.hide(it) }

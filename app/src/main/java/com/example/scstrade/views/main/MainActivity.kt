@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.scstrade.R
@@ -108,11 +109,11 @@ class MainActivity : BaseActivity() {
 
         subscribeToTopic("all")
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView.rootView) { _, insets ->
+        /*ViewCompat.setOnApplyWindowInsetsListener(window.decorView.rootView) { _, insets ->
             val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
             val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             insets
-        }
+        }*/
     }
 
 

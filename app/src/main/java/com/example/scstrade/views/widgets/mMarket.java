@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +34,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewTreeLifecycleOwner;
@@ -100,12 +102,11 @@ public class mMarket extends LinearLayout {
             );
             try{
                 Window window=((Activity) context).getWindow();
-//                window.setStatusBarColor(Color.TRANSPARENT);
-//                window.setNavigationBarColor(Color.TRANSPARENT);
-               /* window.getDecorView().setSystemUiVisibility(
+                window.setStatusBarColor(Color.TRANSPARENT);
+                window.setNavigationBarColor(Color.TRANSPARENT);
+                window.getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 );
-*/
                 SharedViewModel sharedViewModel=((MyApp) context.getApplicationContext()).viewModel;
                 LifecycleOwner lifecycleOwner =  (LifecycleOwner) context;
                 if(getActivity(context)!=null){
@@ -157,16 +158,20 @@ public class mMarket extends LinearLayout {
 
                 binding.notification.setOnClickListener(view ->context.startActivity(new Intent(context, NotificationActivity.class)));
                 binding.search.setOnClickListener(view -> {context.startActivity(new Intent(context, SearchActivity.class));});
-                ViewCompat.setOnApplyWindowInsetsListener(binding.contentText, new androidx.core.view.OnApplyWindowInsetsListener() {
-                    @NonNull
-                    @Override
-                    public WindowInsetsCompat onApplyWindowInsets(@NonNull View view, @NonNull WindowInsetsCompat windowInsets) {
-                        Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
-                        view.setPadding(15,insets.top,50,insets.bottom);
 
-                        return windowInsets;
-                    }
-                }) ;
+
+                if(Build.VERSION.SDK_INT>=29){
+                    ViewCompat.setOnApplyWindowInsetsListener(binding.contentText, new androidx.core.view.OnApplyWindowInsetsListener() {
+                        @NonNull
+                        @Override
+                        public WindowInsetsCompat onApplyWindowInsets(@NonNull View view, @NonNull WindowInsetsCompat windowInsets) {
+                            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                            view.setPadding(15,insets.top,50,insets.bottom);
+
+                            return windowInsets;
+                        }
+                    }) ;
+                }
                /* binding.textView7.setOnClickListener(view -> context.startActivity(new Intent(context, SearchActivity.class)));
                 if(binding.contentLogo.getVisibility()==View.VISIBLE){
                     ViewCompat.setOnApplyWindowInsetsListener(binding.contentLogo, new androidx.core.view.OnApplyWindowInsetsListener() {

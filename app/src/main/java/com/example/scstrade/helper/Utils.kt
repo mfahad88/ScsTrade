@@ -325,10 +325,17 @@ class Utils {
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 )
             } else {
-                // Android 6+ (API 23+)
+                window.decorView.systemUiVisibility = (
+
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+                        )
+                /*// Android 6+ (API 23+)
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility =
-                    if (darkIcons) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+                    if (darkIcons) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0*/
             }
         }
 

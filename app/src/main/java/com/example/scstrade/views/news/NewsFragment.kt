@@ -11,11 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,12 +27,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -39,15 +44,19 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -67,6 +76,7 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -80,6 +90,7 @@ import com.example.scstrade.model.response.news.brecoder.Item
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
+import kotlinx.coroutines.launch
 
 
 class NewsFragment : Fragment() {
@@ -139,59 +150,122 @@ class NewsFragment : Fragment() {
     @Composable
     private fun newsChannels(list: List<String>, images: List<Int>) {
         var selectedTabIndex by remember { mutableStateOf(0) }
-
+        val scope = rememberCoroutineScope()
+        val scrollState = rememberScrollState()
         Column (
             modifier = Modifier.fillMaxSize()
         ){
-            ScrollableTabRow(
-                selectedTabIndex = selectedTabIndex,
-                backgroundColor= Color.Transparent,
-                contentColor = colorResource(id = R.color.colorDarkerr),
-                modifier = Modifier.fillMaxWidth(),
-                edgePadding = -2.dp,
-                divider = {},
-                indicator = {tabPositions ->
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                        color = colorResource(id = R.color.md_theme_primary),
-                        height = 2.dp
-                    )
-                }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 10.dp)
+                    // TabRow height
             ) {
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(scrollState)
+                        .padding(horizontal = 48.dp)
+                )
+                /*ScrollableTabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    backgroundColor = Color.Transparent,
+                    contentColor = colorResource(id = R.color.colorDarkerr),
+                    modifier = Modifier.wrapContentSize(),
+                    //                edgePadding = -2.dp,
+                    divider = {},
+                    indicator = { tabPositions ->
+                        TabRowDefaults.Indicator(
+                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                            color = colorResource(id = R.color.md_theme_primary),
+                            height = 2.dp
+                        )
+                    }
+                )*/ {
 
-                list.forEachIndexed { index, s ->
-                    Tab(selected = selectedTabIndex==index,
-                        modifier = Modifier.weight(1f),
+                    list.forEachIndexed { index, s ->
+                        Tab(selected = selectedTabIndex == index,
+//                            modifier = Modifier.weight(1f),
 
-                        onClick = {
-                            selectedTabIndex=index
-                            when (index){
-                                0-> sharedViewModel.news()
-                                1-> sharedViewModel.brecoderNews()
-                                2-> sharedViewModel.tribuneNews()
-                                3-> sharedViewModel.profitNews()
-                                4-> sharedViewModel.mettisNews()
-                                5-> sharedViewModel.dawnNews()
+                            onClick = {
+                                selectedTabIndex = index
+                                when (index) {
+                                    0 -> sharedViewModel.news()
+                                    1 -> sharedViewModel.brecoderNews()
+                                    2 -> sharedViewModel.tribuneNews()
+                                    3 -> sharedViewModel.profitNews()
+                                    4 -> sharedViewModel.mettisNews()
+                                    5 -> sharedViewModel.dawnNews()
+                                }
+                            },
+                            text = {
+
+                                Column(
+                                    verticalArrangement = Arrangement.SpaceBetween,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = images[index]),
+                                        contentDescription = list[index],
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(6.dp))
+                                    Text(
+                                        text = list[index],
+                                        fontSize = 12.sp,
+                                        fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
+                                        fontWeight = FontWeight(500),
+                                        color = colorResource(id = R.color.black),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Clip,
+                                    )
+
+                                }
                             }
-                        },
-                        text = {
-
-                            Column (verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally){
-                                Image(painter = painterResource(id = images[index]), contentDescription = list[index], modifier = Modifier.size(24.dp))
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(text = list[index],
-                                    fontSize = 12.sp,
-                                    fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
-                                    fontWeight = FontWeight(500),
-                                    color = colorResource(id = R.color.black),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Clip,
-                                )
-
-                            }
-                        }
-                    )
+                        )
+                    }
                 }
+
+
+
+                IconButton(
+                    onClick = {
+                        scope.launch {
+                            val target = (scrollState.value - 200).coerceAtLeast(0)
+                            scrollState.animateScrollTo(target)
+                        }
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
+                ) {
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Left", modifier = Modifier.size(30.dp))
+                }
+
+                // Right scroll button
+                IconButton(
+                    onClick = {
+                        scope.launch {
+                            val target = (scrollState.value + 200)
+                            scrollState.animateScrollTo(target)
+                        }
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
+                ) {
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Right", modifier = Modifier.size(30.dp).rotate(180f))
+                }
+                /*Box(
+                    Modifier
+                        .width(fadeWidth)
+                        .fillMaxHeight()
+                        .background(
+                            Brush.horizontalGradient(
+                                colors = listOf(Color.Transparent, Color.White)
+                            )
+                        )
+                        .align(Alignment.CenterEnd)
+                )*/
             }
 
             when (selectedTabIndex) {
@@ -424,14 +498,17 @@ class NewsFragment : Fragment() {
 
         Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
 
-            LazyColumn {
+            LazyColumn(modifier = Modifier.fillMaxHeight()) {
                 items(data.size) { index ->
-                    Row(modifier = Modifier.clickable {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.clickable {
                         onItemClick(data[index])
                     }){
                         Box(
                             modifier = Modifier
-                                .weight(3f),
+                                .weight(3f)
+                                .padding(end = 5.dp),
                             content = {
                                 Column(modifier = Modifier.fillMaxHeight()) {
 
@@ -444,7 +521,9 @@ class NewsFragment : Fragment() {
                                             fontWeight = FontWeight(600),
                                             color = colorResource(id = R.color.black),
                                             overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.fillMaxWidth()
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(bottom = 5.dp)
                                         )
 
                                     if(!data[index].type.equals("General News",true)){
@@ -456,7 +535,9 @@ class NewsFragment : Fragment() {
                                             fontWeight = FontWeight(600),
                                             color = colorResource(id = R.color.black),
                                             overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.fillMaxWidth()
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(bottom = 5.dp)
                                         )
                                     }
 
@@ -489,12 +570,14 @@ class NewsFragment : Fragment() {
                             content = {
                                 val context = LocalContext.current
                                 if(!TextUtils.isEmpty(data[index].newsLink)) {
+                                    val source=extractSourceName(data[index].newsLink)
+                                    println("Source: https://scstrade.com/img/newsicon/${
+                                        source
+                                    }.png")
                                     AsyncImage(
                                         model = ImageRequest.Builder(context)
                                             .data("https://scstrade.com/img/newsicon/${
-                                                data[index].newsLink.substringAfter(
-                                                    "www."
-                                                ).substringBefore(".com")
+                                                source
                                             }.png")
                                             .crossfade(true)
                                             .placeholder(R.drawable.news_empty_old)
@@ -569,5 +652,24 @@ class NewsFragment : Fragment() {
     fun extractImage(input: String): String? {
         val regex = """src=["'](https?://[^"']+)["']""".toRegex()
         return regex.find(input)?.groupValues?.get(1) // Returns first matched group
+    }
+
+    fun extractSourceName(newsLink: String): String {
+        val secondLevelTlds = listOf("com.pk", "org.pk", "net.pk", "gov.pk")
+        return try {
+            val uri = java.net.URI(newsLink)
+            val host = uri.host ?: return "Unknown"
+            val parts = host.split(".")
+            return if (secondLevelTlds.any { host.endsWith(it) }) {
+                // .com.pk domain
+                if (parts.size >= 3) parts[parts.size - 3] // e.thenews.com.pk
+                else parts[0] // tribune.com.pk
+            } else {
+                // normal domain
+                if (parts.size >= 2) parts[parts.size - 2] else parts[0]
+            }
+        } catch (e: Exception) {
+            "Unknown"
+        }
     }
 }

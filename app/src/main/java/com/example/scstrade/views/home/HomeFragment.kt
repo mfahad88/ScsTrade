@@ -272,59 +272,57 @@ class HomeFragment : Fragment() {
 
                 }
                 is Resource.Success -> {
-
+                    val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
                     lifecycleScope.launch {
-                        // Step 1: build everything off‑thread
+                        // Step 1: Do heavy computation off the main thread
                         val items: List<ListItem> = withContext(Dispatchers.Default) {
-                            val data        = result.data ?: emptyList()
-                            val topPicks    = viewModel.mutableTopPicks.value?.data ?: emptyList()
-                            val bySymbolMap = data.associateBy { it.sYM }   // O(n) once
+                            val data = result.data ?: emptyList()
+
+                            val bySymbolMap = data.associateBy { it.sYM } // O(n) map for fast lookup
 
                             buildList {
-                                // Leaders
+                                // Leaders Section
                                 add(ListItem.Header("Leaders"))
-                                data.sortedByDescending { it.v }
+                                data.sortedByDescending { it.v } // sort by volume descending
                                     .take(10)
                                     .forEach { add(ListItem.Item(it)) }
 
-                                // SCS Top Picks
-                                if (topPicks.isNotEmpty()) {
+                                // SCS Top Picks - Optimized
+                                val scsItems = topPicks
+                                    .asSequence()
+                                    .map { it.sCSImpItemSymbol }
+                                    .mapNotNull { bySymbolMap[it] }
+                                    .toList()
+
+                                if (scsItems.isNotEmpty()) {
                                     add(ListItem.Header("SCS Top Picks"))
-                                    topPicks.forEach { pick ->
-                                        bySymbolMap[pick.sCSImpItemSymbol]?.let { add(ListItem.Item(it)) }
-                                    }
+                                    scsItems.forEach { add(ListItem.Item(it)) }
                                 }
 
-                                // Gainers
+                                // Gainers Section
                                 add(ListItem.Header("Gainers"))
-                                data.sortedByDescending { it.cHP }
+                                data.sortedByDescending { it.cHP } // sort by change percentage high to low
                                     .take(10)
                                     .forEach { add(ListItem.Item(it)) }
 
-                                // Losers
+                                // Losers Section
                                 add(ListItem.Header("Losers"))
-                                data.sortedBy { it.cHP }
+                                data.sortedBy { it.cHP } // sort by change percentage low to high
                                     .take(10)
                                     .forEach { add(ListItem.Item(it)) }
                             }
                         }
 
-                        // Step 2: back on Main—update once
+                        // Step 2: Back on the main thread, update UI once
                         (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
                             binding.apply {
-                                if(loader.visibility == View.VISIBLE){
+                                if (loader.visibility == View.VISIBLE) {
                                     loader.visibility = View.GONE
                                     main.visibility = View.VISIBLE
                                 }
                             }
-                        }  // DiffUtil can now run efficiently
+                        }
                     }
-
-
-
-
-
-
 
                 }
             }

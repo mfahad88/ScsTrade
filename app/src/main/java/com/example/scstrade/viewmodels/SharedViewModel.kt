@@ -20,6 +20,7 @@ import com.example.scstrade.model.response.technicals.TechnicalData
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
+import com.example.scstrade.model.response.indices.ResultIndices
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
 import com.example.scstrade.model.response.notification.NotificationDto
@@ -87,10 +88,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
+    var isLineChart:Boolean=false
     val isConnected = ConnectivityObserver(application)
     var isHome=false
     var portfolioJob: Job? = null
     val mutableTopPicks = MutableLiveData<Resource<List<TopPickItem>>>()
+    val mutableResultIndices= MutableLiveData<Resource<ResultIndices>>()
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
@@ -140,14 +143,33 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun fetchIndices(){
-
+        mutableResultIndices.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchIndices) {
 //            mutableAllData.value = Resource.Loading()
                 if (isConnected.value == true) {
-                    val result = repository.getIndices()
-                    withContext(Dispatchers.Main) {
-                        mutableIndices.value = result
+
+                    if(isLineChart){
+                        val resultDeffered = async{repository.getIndices()}
+                        val result_KSEALLDeffered= async{ repository.getIndexChart("KSE ALL", "1") }
+                        val result_KSE100Deffered = async { repository.getIndexChart("KSE", "1") }
+                        val result_KSE30Deffered = async { repository.getIndexChart("KSE 30", "1") }
+                        val result_KMI30Deffered = async { repository.getIndexChart("KMI 30", "1") }
+                        withContext(Dispatchers.Main){
+                            val result=resultDeffered.await()
+                            val result_KSEALL= result_KSEALLDeffered.await()
+                            val result_KSE100 = result_KSE100Deffered.await()
+                            val result_KSE30 = result_KSE30Deffered.await()
+                            val result_KMI30 = result_KMI30Deffered.await()
+
+
+                            mutableResultIndices.value=Resource.Success(ResultIndices(result.data,result_KSEALL.data,result_KSE100.data,result_KSE30.data,result_KMI30.data))
+                        }
+                    }else {
+                        val result = repository.getIndices()
+                        withContext(Dispatchers.Main) {
+                            mutableIndices.value = result
+                        }
                     }
 
                     delay(5000)

@@ -2,6 +2,7 @@ package com.example.scstrade.views.login
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentLoginBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.GoogleSignInUtils
@@ -34,13 +34,9 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.messaging.FirebaseMessaging
 
 
@@ -82,18 +78,20 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLoginBinding.inflate(inflater,container,false)
         viewModel=(requireActivity().application as MyApp).viewModel
+        if (Build.VERSION.SDK_INT >= 29) {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+            ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, insets ->
+                val imeInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.setPadding(0, 0, 0, imeInsets.bottom+31)
+                insets
+            }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, insets ->
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(0, 0, 0, imeInsets.bottom+31)
-            insets
-        }
 
         firebaseAuth = FirebaseAuth.getInstance()
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
@@ -149,9 +147,10 @@ class LoginFragment : Fragment() {
                 Utils.showError(binding.root,"Please provide valid username and password")
             }
         }
+        viewModel.isLineChart = true
         viewModel.fetchIndices()
         binding.recyclerIndices.apply {
-            adapter= IndexAdapter(emptyList(),viewModel,viewLifecycleOwner)
+            adapter= IndexAdapter()
             layoutManager=
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
             addItemDecoration(VerticalDivider())
@@ -191,7 +190,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        viewModel.mutableIndices.observe(viewLifecycleOwner, Observer { resource ->
+        viewModel.mutableResultIndices.observe(viewLifecycleOwner, Observer { resource ->
             when (resource){
                 is Resource.Loading ->{
                     binding.loader.visibility=View.VISIBLE
@@ -203,20 +202,14 @@ class LoginFragment : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    val data = resource.data
                     binding.loader.visibility=View.GONE
                     binding.container.visibility=View.VISIBLE
                     binding.recyclerIndices.visibility=View.VISIBLE
                     (binding.recyclerIndices.adapter as IndexAdapter).addItems(
-                        resource.data ?: emptyList()
+                        data?.kseIndices?: emptyList(),data?.chartItemKSEALL?: emptyList(),data?.chartItemKSE100?: emptyList(),data?.chartItemKSE30?: emptyList(),data?.chartItemKMI30?: emptyList()
                     )
-                    /*if(resource.data?.first()?.marketStatus?.lowercase()=="close"){
-                        binding.recyclerIndices.visibility=View.GONE
-                    }else {
-                        binding.recyclerIndices.visibility=View.VISIBLE
-                        (binding.recyclerIndices.adapter as IndexAdapter).addItems(
-                            resource.data ?: emptyList()
-                        )
-                    }*/
+
                 }
             }
         })
@@ -246,6 +239,8 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.mutableLogin.value = null
+        viewModel.mutableResultIndices.value = null
+        viewModel.isLineChart=false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

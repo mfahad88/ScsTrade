@@ -168,5 +168,6 @@ dependencies {
     // Use debugImplementation to avoid shipping Chucker in production
     debugImplementation ("com.github.chuckerteam.chucker:library:4.1.0")
     releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.1.0")
+    implementation ("androidx.compose.material:material-icons-extended:1.6.0")
 
 }
