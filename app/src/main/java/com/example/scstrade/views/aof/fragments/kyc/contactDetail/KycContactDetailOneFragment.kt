@@ -1,6 +1,7 @@
 package com.example.scstrade.views.aof.fragments.kyc.contactDetail
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.example.scstrade.databinding.FragmentKycFourBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.aof.contactDetails.ContactDetailResponse
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
@@ -25,14 +27,7 @@ class KycContactDetailOneFragment : Fragment() {
     lateinit var binding:FragmentKycFourBinding
     lateinit var login:LoginDataItem
     lateinit var viewModel: AofViewModel
-    var mobile_Number:String?=null
-    var email_Address:String?=null
-    var mailing_Address:String?=null
-    var mailing_Country:String?=null
-    var mailing_Province:String?=null
-    var mailing_Province_Other:String?=null
-    var mailing_City:String?=null
-    var mailing_City_Other:String?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,201 +38,114 @@ class KycContactDetailOneFragment : Fragment() {
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
         fetchUser()
         viewModel.getcontactDetails()
-        populateDropdown()
-        initDetails()
+        initField()
 
-        binding.apply {
-            mobile_Number = login.registrationPhone
-            mobileNumber.textInputEditText.setText(mobile_Number)
-            mobileNumber.textInputEditText.isEnabled=false
-            email_Address = login.registrationEmail
-            email.textInputEditText.setText(email_Address)
-            email.textInputEditText.isEnabled=false
-            back.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycBasicDataThreeFragment())
-            }
-            mailingAddress.addTextChangedListener {
-                mailing_Address=it.toString()
-            }
-            btnContinue.setOnClickListener {
-                if(mobileNumber.textInputEditText.text!!.isNotEmpty() && email.textInputEditText.text!!.isNotEmpty() && mailing_Address!!.isNotEmpty() &&
-                    mailing_Country!!.isNotEmpty() && mailing_Province!!.isNotEmpty() && mailing_City!!.isNotEmpty()){
-                    viewModel.contactDetail.apply {
-                        mobileNumber = mobile_Number
-                        emailAddress = email_Address
-                        mailingAddress = mailing_Address
-                        mailingCountry = mailing_Country
-                        mailingProvince = mailing_Province
-                        mailingProvinceOther = mailing_Province_Other
-                        mailingCity = mailing_City
-                        mailingCityOther = mailing_City_Other
-                    }
-//                    viewModel.saveContactDetails()
-                    (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
 
-                }else{
-                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
-                }
-            }
-        }
+
         return binding.root
     }
 
+    private fun initField() {
+        binding.apply {
+            mobileNumber.textInputEditText.setText(login.registrationPhone)
+            email.textInputEditText.setText(login.registrationEmail)
+            mailingCountry.setListEntries(AppConstants.COUNTRY.map { (label, code) -> android.util.Pair(label, code)  })
+            mailingProvince.setListEntries(AppConstants.PROVINCE.map { (label, code) -> android.util.Pair(label, code)  })
+            mailingCity.setListEntries(AppConstants.CITY.map { android.util.Pair(it.first.first,it.first.second) })
 
-    private fun initDetails() {
-
-        viewModel.mutableContactDetailResponse.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
-                is Resource.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is Resource.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    val response = result.data?.data
-                    binding.apply {
-                        if(mobile_Number!="") {
-                            mobileNumber.textInputEditText.setText(mobile_Number)
-                        }
-                        if(email_Address!="") {
-                            email.textInputEditText.setText(email_Address)
+            permanentCountry.setListEntries(AppConstants.COUNTRY.map { (label, code) -> android.util.Pair(label, code)  })
+            permanentProvince.setListEntries(AppConstants.PROVINCE.map { (label, code) -> android.util.Pair(label, code)  })
+            permanentCity.setListEntries(AppConstants.CITY.map { android.util.Pair(it.first.first,it.first.second) })
+            viewModel.mutableContactDetailResponse.observe(viewLifecycleOwner, Observer { result->
+                when(result){
+                    is Resource.Error -> Utils.showError(requireView(),result.message)
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        val data=result.data?.data
+                        if(data!=null) {
+                            populateRecord(data)
                         }
                     }
-                    viewModel.contactDetail.apply {
-                        if(response!=null){
-                            mailingAddress = response.mailingAddress1
-                            mailingCountry = response.mailingCountryId
-                            mailingProvince = response.mailingProvinceId
-                            mailingProvinceOther = response.mailingProvinceOther
-                            mailingCity = response.mailingCityId
-                            officeNumber = response.mailingphoneNo
-                            residenceNumber= response.mailingResidence
-                            parmanentAddress= response.permanentAddress1
-                            parmanentCountry = response.permanentCountryId
-                            parmanentCity = response.permanentCityId
-                            permanentCityOther = response.permanentCityOther
-                            parmanentProvince = response.permanentProvinceId
-                            permanentProvinceOther = response.permanentProvinceOther
-                            parmanentOfficeNumber = response.permanentphoneNo
-                            parmanentResidenceNumber = response.permanentResidence
-                            mailingCityOther = response.mailingCityOther
-//                            viewModel.saveContactDetails()
-                            val contactDetail = viewModel.contactDetail
-                            contactDetail.apply {
-                                mobile_Number = mobileNumber
-                                email_Address = emailAddress
-                                mailing_Address = mailingAddress
-                                mailing_Country = mailingCountry
-                                mailing_Province = mailingProvince
-                                mailing_Province_Other = mailingProvinceOther
-                                mailing_City = mailingCity
-                                mailing_City_Other = mailingCityOther
-
-                                binding.apply {
-
-                                    if(mailing_Address!="") {
-                                        mailingAddress.setText(mailing_Address)
-                                    }
-                                    if(mailing_Country!="") {
-
-                                        mailingCountry.dropdown.setText(AppConstants.COUNTRY.get(AppConstants.COUNTRY.indexOfFirst { it.second.equals(mailing_Country,true) }).first,false)
-                                    }
-                                    if(mailing_City!="") {
-                                        mailingCity.dropdown.setText(AppConstants.CITY.filter {
-                                            it.first.second.equals(
-                                                mailing_City,
-                                                true
-                                            )
-                                        }.map { it.first.first }.first(),false)
-                                        mailingProvince.visibility = View.VISIBLE
-                                        mailingOtherProvince.visibility = View.INVISIBLE
-                                    }
-
-                                    if(mailing_Province!="") {
-                                        mailingProvince.dropdown.setText(AppConstants.PROVINCE.filter {
-                                            it.second.equals(
-                                                mailing_Province,
-                                                true
-                                            )
-                                        }.map { it.first }.first(),false)
-                                        mailingProvince.visibility = View.VISIBLE
-                                        mailingOtherProvince.visibility = View.INVISIBLE
-                                    }
-
-                                    if(mailing_Province_Other!=""){
-                                        mailingOtherProvince.textInputEditText.setText(mailing_Province_Other)
-                                        mailingProvince.visibility = View.INVISIBLE
-                                        mailingOtherProvince.visibility = View.VISIBLE
-                                    }
-
-
-                                    if(mailing_City_Other!=""){
-                                        mailingOtherCity.textInputEditText.setText(mailing_City_Other)
-                                        mailingCity.visibility = View.INVISIBLE
-                                        mailingOtherCity.visibility = View.VISIBLE
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    binding.loader.visibility = View.GONE
                 }
-            }
-        })
-
-
+            })
+        }
     }
 
-    private fun populateDropdown() {
-        binding.mailingCountry.setEntries(AppConstants.COUNTRY.map { it.first }.toList())
-        binding.mailingProvince.setEntries(AppConstants.PROVINCE.map { it.first }.toList())
-        binding.mailingCity.setEntries(AppConstants.CITY.map { it.first.first }.toList())
-
-        binding.mailingCountry.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            if(AppConstants.COUNTRY.get(i).first.contains("pakistan",true)){ //pakistan
-                binding.apply {
-                    mailingProvince.visibility = View.VISIBLE
-                    mailingCity.visibility = View.VISIBLE
-                    mailingOtherProvince.visibility = View.INVISIBLE
-                    mailingOtherCity.visibility = View.INVISIBLE
-                }
-            }else{          //other country
-                binding.apply {
-                    mailingProvince.visibility = View.INVISIBLE
-                    mailingCity.visibility = View.INVISIBLE
-                    mailingOtherProvince.visibility = View.VISIBLE
-                    mailingOtherCity.visibility = View.VISIBLE
-                }
+    private fun populateRecord(data: ContactDetailResponse) {
+        binding.apply {
+            if(!TextUtils.isEmpty(data.mailingAddress1)) {
+                mailingAddress.setText(data.mailingAddress1)
             }
-            mailing_Country=AppConstants.COUNTRY.get(i).second
-        }
-
-        binding.mailingProvince.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            mailing_Province=AppConstants.PROVINCE.get(i).second
-            binding.mailingCity.setEntries(AppConstants.CITY.filter { it.second.equals(mailing_Province) }.map { it.first.first }.toList())
-
-        }
-
-        binding.mailingOtherProvince.textInputEditText.addTextChangedListener {
-            if(binding.mailingOtherProvince.visibility == View.VISIBLE){
-                mailing_Province_Other = it.toString()
-                viewModel.contactDetail.mailingProvinceOther = mailing_Province_Other
+            if(!TextUtils.isEmpty(data.mailingCountryId)) {
+                mailingCountry.dropdown.setText(AppConstants.COUNTRY.filter { it.first.equals(data.mailingCountryId) }
+                    .map { it.second }.first(), true)
             }
-        }
+            if(!TextUtils.isEmpty(data.mailingProvinceOther)){
+                mailingOtherProvince.textInputEditText.setText(data.mailingProvinceOther)
+                mailingProvince.visibility=View.INVISIBLE
+                mailingOtherProvince.visibility = View.VISIBLE
+            }
 
-        binding.mailingCity.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-            mailing_City=AppConstants.CITY.get(i).first.second
-        }
+            if(!TextUtils.isEmpty(data.mailingCityOther)){
+                mailingOtherCity.textInputEditText.setText(data.mailingCityOther)
+                mailingCity.visibility = View.INVISIBLE
+                mailingOtherCity.visibility = View.VISIBLE
+            }
 
-        binding.mailingOtherCity.textInputEditText.addTextChangedListener {
-            if(binding.mailingOtherCity.visibility == View.VISIBLE){
-                mailing_City_Other = it.toString()
-                viewModel.contactDetail.mailingCityOther = mailing_City_Other
+            if(!TextUtils.isEmpty(data.mailingphoneNo)){
+                officeResidenceNumber.textview_1.setText(data.mailingphoneNo)
+                officeResidenceNumber.textview_2.setText(data.mailingResidence)
+            }
+            parmanentAddrOption.setOnButtonOneClickListener {
+                groupMailing.visibility = View.VISIBLE
+            }
+            parmanentAddrOption.setOnButtonTwoClickListener {
+                groupMailing.visibility = View.GONE
+            }
+            if(!TextUtils.isEmpty(data.permanentAddress1)){
+            parmanentAddr.setText(data.permanentAddress1)
+            }
+            if(!TextUtils.isEmpty(data.permanentCountryId)) {
+                permanentCountry.dropdown.setText(AppConstants.COUNTRY.filter { it.first.equals(data.permanentCountryId) }
+                    .map { it.second }.first(), true)
+            }
+            if(!TextUtils.isEmpty(data.permanentProvinceId)) {
+                permanentProvince.dropdown.setText(AppConstants.PROVINCE.filter {
+                    it.second.equals(
+                        data.permanentProvinceId
+                    )
+                }.map { it.first }.first(), true)
+                permanentProvince.visibility = View.VISIBLE
+                permanentOtherProvince.visibility = View.INVISIBLE
+            }
+
+            if(!TextUtils.isEmpty(data.permanentCityId)) {
+                permanentCity.dropdown.setText(AppConstants.CITY.filter { it.first.first.equals(data.permanentCityId) }
+                    .map { it.first.second }.first(), true)
+                permanentCity.visibility = View.VISIBLE
+                permanentOtherCity.visibility = View.INVISIBLE
+            }
+
+            if(!TextUtils.isEmpty(data.permanentProvinceOther)) {
+                permanentOtherProvince.textInputEditText.setText(data.permanentProvinceOther)
+                permanentProvince.visibility = View.INVISIBLE
+                permanentOtherProvince.visibility = View.VISIBLE
+            }
+
+            if(!TextUtils.isEmpty(data.permanentCityOther)) {
+                permanentOtherCity.textInputEditText.setText(data.permanentCityOther)
+                permanentCity.visibility = View.INVISIBLE
+                permanentOtherCity.visibility = View.VISIBLE
+            }
+            if(!TextUtils.isEmpty(data.permanentphoneNo)) {
+                phoneNumbers.textview_1.setText(data.permanentphoneNo)
+            }
+            if(!TextUtils.isEmpty(data.permanentResidence)) {
+                phoneNumbers.textview_2.setText(data.permanentResidence)
             }
         }
     }
+
 
     private fun fetchUser() {
         val listType = object : TypeToken<List<LoginDataItem>>() {}

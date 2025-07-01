@@ -24,6 +24,7 @@ import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.LoginAOFFragment
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
 import com.example.scstrade.views.widgets.DualOptionToggleView
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -56,6 +57,7 @@ class KycBasicDataOneFragment : Fragment() {
                 is Resource.Loading -> binding.loader.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
+                    (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
                 }
             }
         })
@@ -177,7 +179,7 @@ class KycBasicDataOneFragment : Fragment() {
                 is Resource.Success -> {
                     val data=result.data?.user
                     binding.apply {
-                        uinType.setSelectedDropDown(AppConstants.NIC_TYPE_LIST.filter { it.second.equals(data?.identificationType) }.map { it.second }.first())
+                        uinType.dropdown.setText(AppConstants.NIC_TYPE_LIST.filter { it.second.equals(data?.identificationType) }.map { it.second }.first(),true)
                         uinType.isEnabled = false
                         fullName.textInputEditText.setText(data?.name)
                         fullName.textInputEditText.isEnabled = false
@@ -230,20 +232,20 @@ class KycBasicDataOneFragment : Fragment() {
             binding.motherName.textInputEditText.setText(basicData.motherMaidenName)
         }
         if(!TextUtils.isEmpty(basicData.nationalityId)){
-            binding.dropdownNationality.dropdown.setText(AppConstants.COUNTRY.filter { it.first.equals(basicData.nationalityId) }.map { it.second }.toString())
+            binding.dropdownNationality.dropdown.setText(AppConstants.COUNTRY.filter { it.second.equals(basicData.nationalityId) }.map { it.first }.first(),true)
         }
         if(!TextUtils.isEmpty(basicData.maritalStatus)){
-            binding.maritalStatus.selectedOption=basicData.maritalStatus
+            binding.maritalStatus.setSelectedOption(basicData.maritalStatus)
         }
         if(!TextUtils.isEmpty(basicData.relationship)){
-            binding.relationship.selectedOption=basicData.relationship
+            binding.relationship.setSelectedOption(basicData.relationship)
             if(!TextUtils.isEmpty(basicData.fatherHusbandName)){
                 binding.relationship.textFieldValue=basicData.fatherHusbandName
             }
         }
 
         if(!TextUtils.isEmpty(basicData.lifeTime)){
-            binding.cardNic.selectedOption = basicData.lifeTime
+            binding.cardNic.setSelectedOption(basicData.lifeTime)
             if(!TextUtils.isEmpty(basicData.uinExpiryDate)){
                 binding.cardNic.textFieldValue = basicData.uinExpiryDate
             }
@@ -253,18 +255,15 @@ class KycBasicDataOneFragment : Fragment() {
             binding.placeBirth.autoCompleteTextView1.setText(
                 AppConstants
                     .COUNTRY
-                    .filter { it.first.equals(basicData.placeOfBirth,true)}
-                    .map { it.second }.toString(),true)
+                    .filter { it.second.equals(basicData.placeOfBirth,true)}
+                    .map { it.first }.toString(),true)
         }
 
-        if(TextUtils.isEmpty(basicData.placeOfBirthCity)){
-            binding.placeBirth.autoCompleteTextView2.isEnabled=false
-        }else{
-            binding.placeBirth.autoCompleteTextView2.isEnabled=true
+        if(!TextUtils.isEmpty(basicData.placeOfBirthCity)){
             binding.placeBirth.autoCompleteTextView2.setText(AppConstants
                 .CITY
                 .filter { it.first.equals(basicData.placeOfBirthCity) }
-                .map { it.second }.toString(),true)
+                .map { it.second }.first(),true)
         }
 
         if(!TextUtils.isEmpty(basicData.ivrstatus)){

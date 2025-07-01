@@ -1,355 +1,378 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
 
-    android:paddingHorizontal="15dp"
-
-    tools:context=".views.aof.fragments.kyc.contactDetail.KycContactDetail">
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/load_anim" />
-    <TextView
-        android:id="@+id/tell_us_abo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:gravity="top"
-        android:lineSpacingExtra="3sp"
-        android:text="@string/tell_us_abo_contact"
-        android:textAppearance="@style/tell_us_abo"
-        android:textFontWeight="500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:id="@+id/mobile_number"
-        android:inputType="number"
-        android:digits="@string/_0_9"
-        app:hintText="Mobile Number"
-        android:text="03143966681"
-        android:background="@color/md_theme_surfaceBright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@color/md_theme_surfaceBright"
-        android:inputType="textEmailAddress"
-        android:text="Test@mailinator.com"
-        app:hintText="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
-
-    <EditText
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="top"
-        android:layout_marginTop="20dp"
-        android:id="@+id/mailing_address"
-        android:inputType="text|textMultiLine"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="5dp"
-        android:hint="@string/enter_your_"
-        android:background="@drawable/drawable_text_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"/>
+        android:layout_height="match_parent"
+        android:paddingHorizontal="15dp"
+        tools:context=".views.aof.fragments.kyc.contactDetail.KycContactDetail">
 
-    <com.example.scstrade.views.widgets.LabelledSpinner
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/load_anim"
+            tools:visibility="visible" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/mailing_country"
-        app:hintLabel="@string/mailing_country"
-        app:dropdownLabel="@string/select_your_mailing_country"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_address"/>
-
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/mailing_province"
-        app:hintLabel="@string/mailing_province"
-        app:dropdownLabel="@string/select_your_province"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_country"/>
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/mailing_other_province"
-        android:visibility="invisible"
-        android:maxLines="1"
-        app:hintText="@string/mailing_province"
-        app:hintTextField="@string/select_your_province"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_country"/>
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/mailing_city"
-        app:hintLabel="@string/mailing_city"
-        app:dropdownLabel="@string/select_your_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_province"/>
-
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:id="@+id/mailing_other_city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:maxLines="1"
-        android:visibility="invisible"
-        app:hintText="@string/mailing_city"
-        app:hintTextField="@string/select_your_city"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_province"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
 
-
-    <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/office_residence_number"
-        app:typeDualDropdown1="text"
-        app:typeDualDropdown2="text"
-        app:titleDualDropdown="@string/kindly_ente"
-        app:hintDualDropdown1="@string/enter_your_office"
-        app:hintDualDropdown2="Enter your Residence Number"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mailing_other_city" />
-
-    <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/parmanent_addr_option"
-        app:titleDualOption="@string/is_your_mai"
-        app:titleButton1="No"
-        app:titleButton2="Yes"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/office_residence_number"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/no_worries"
-        android:layout_width="0dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="8dp"
-        app:cardBackgroundColor="#F4F9FF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parmanent_addr_option"
-        app:strokeColor="#1A73E8">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_no_worries" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/no_worries_"
-                    android:textAppearance="@style/no_worries_"
-                    android:textFontWeight="600" />
-            </LinearLayout>
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/please_tap_"
-                android:layout_width="match_parent"
+                android:id="@+id/tell_us_abo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:paddingEnd="90dp"
-                android:text="@string/please_tap_"
-                android:textAppearance="@style/please_tap_"
-                android:textFontWeight="400"
+                android:layout_marginTop="23dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/tell_us_abo_contact"
+                android:textAppearance="@style/tell_us_abo"
+                android:textFontWeight="500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                />
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/mobile_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@color/md_theme_surfaceBright"
+                android:digits="@string/_0_9"
+                android:inputType="number"
+                android:text="03143966681"
+                app:hintText="Mobile Number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@color/md_theme_surfaceBright"
+                android:inputType="textEmailAddress"
+                android:text="Test@mailinator.com"
+                app:hintText="Email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
+
+            <EditText
+                android:id="@+id/mailing_address"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/drawable_text_border"
+                android:gravity="top"
+                android:hint="@string/enter_your_"
+                android:inputType="text|textMultiLine"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/mailing_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:dropdownLabel="@string/select_your_mailing_country"
+                app:hintLabel="@string/mailing_country"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_address" />
+
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/mailing_province"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:dropdownLabel="@string/select_your_province"
+                app:hintLabel="@string/mailing_province"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_country" />
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/mailing_other_province"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:maxLines="1"
+                android:visibility="invisible"
+                app:hintText="@string/mailing_province"
+                app:hintTextField="@string/select_your_province"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_country" />
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/mailing_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:dropdownLabel="@string/select_your_city"
+                app:hintLabel="@string/mailing_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_province" />
+
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/mailing_other_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:maxLines="1"
+                android:visibility="invisible"
+                app:hintText="@string/mailing_city"
+                app:hintTextField="@string/select_your_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_province"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/office_residence_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:hintDualDropdown1="@string/enter_your_office"
+                app:hintDualDropdown2="Enter your Residence Number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mailing_other_city"
+                app:titleDualDropdown="@string/kindly_ente"
+                app:typeDualDropdown1="text"
+                app:typeDualDropdown2="text" />
+
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:id="@+id/parmanent_addr_option"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/office_residence_number"
+                app:titleButton1="No"
+                app:titleButton2="Yes"
+                app:titleDualOption="@string/is_your_mai" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/no_worries"
+                android:layout_width="0dp"
+                android:layout_height="115dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#F4F9FF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/parmanent_addr_option"
+                app:strokeColor="#1A73E8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_no_worries" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/no_worries_"
+                            android:textAppearance="@style/no_worries_"
+                            android:textFontWeight="600" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/please_tap_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:paddingEnd="90dp"
+                        android:text="@string/please_tap_"
+                        android:textAppearance="@style/please_tap_"
+                        android:textFontWeight="400"
+
+                        />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <EditText
+                android:id="@+id/parmanent_addr"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_text_border"
+                android:gravity="top"
+                android:hint="@string/enter_your_parmanent"
+                android:inputType="text|textMultiLine"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/no_worries" />
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/permanent_country"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:dropdownLabel="@string/select_your_permanent_country"
+                app:hintLabel="@string/permanent_country"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/parmanent_addr" />
+
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/permanent_province"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:dropdownLabel="@string/select_your_permanent_province"
+                app:hintLabel="@string/permanent_province"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permanent_country" />
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/permanent_other_province"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:maxLength="20"
+                android:visibility="invisible"
+                app:hintText="@string/permanent_province"
+                app:hintTextField="@string/select_your_permanent_province"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permanent_country" />
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/permanent_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:dropdownLabel="@string/select_your_city"
+                app:hintLabel="@string/permanent_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permanent_province" />
+
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/permanent_other_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:maxLength="20"
+                android:visibility="invisible"
+                app:hintText="@string/permanent_city"
+                app:hintTextField="@string/select_your_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permanent_province" />
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/phone_numbers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                app:hintDualDropdown1="@string/enter_your_office"
+                app:hintDualDropdown2="@string/residence_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/permanent_city"
+                app:titleDualDropdown="@string/kindly_ente"
+                app:typeDualDropdown1="text"
+                app:typeDualDropdown2="text" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupMailing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:visibility="visible"
+                android:visibility="gone"
+                app:constraint_referenced_ids="parmanent_addr,phone_numbers,permanent_country,permanent_province,permanent_city,permanent_other_province,permanent_other_city" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="Back" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.8"
+                android:text="Continue" />
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:id="@+id/parmanent_addr"
-        android:background="@drawable/drawable_text_border"
-        android:hint="@string/enter_your_parmanent"
-        android:padding="10dp"
-        android:inputType="text|textMultiLine"
-        android:gravity="top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/no_worries"/>
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/permanent_country"
-        app:hintLabel="@string/permanent_country"
-        app:dropdownLabel="@string/select_your_permanent_country"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/parmanent_addr"/>
-
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/permanent_province"
-        app:hintLabel="@string/permanent_province"
-        app:dropdownLabel="@string/select_your_permanent_province"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/permanent_other_province"
-        app:hintText="@string/permanent_province"
-        app:hintTextField="@string/select_your_permanent_province"
-        android:layout_marginTop="20dp"
-        android:maxLength="20"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/permanent_city"
-        app:hintLabel="@string/permanent_city"
-        app:dropdownLabel="@string/select_your_city"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
-
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/permanent_other_city"
-        app:hintText="@string/permanent_city"
-        app:hintTextField="@string/select_your_city"
-        android:layout_marginTop="20dp"
-        android:maxLength="20"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
-    <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/phone_numbers"
-        android:layout_marginTop="20dp"
-        app:titleDualDropdown="@string/kindly_ente"
-        app:typeDualDropdown1="text"
-        app:typeDualDropdown2="text"
-        app:hintDualDropdown1="@string/enter_your_office"
-        app:hintDualDropdown2="@string/residence_number"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/permanent_city"/>
-
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout9"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/back"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.8"
-            android:text="Back" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.8"
-            android:text="Continue" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
