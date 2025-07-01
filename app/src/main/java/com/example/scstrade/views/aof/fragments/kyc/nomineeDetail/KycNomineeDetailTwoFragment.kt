@@ -49,12 +49,9 @@ class KycNomineeDetailTwoFragment : Fragment() {
             }
             nomineeNic.editText.setOnFocusChangeListener { view, b ->
                 if(b){
-                    Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val customDate = LocalDate.of(year , month, day)
-                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                        val formatted = customDate.format(formatter)
-                        nomineeNic.editText.setText(formatted)
-                        nominee_nic_expiry=formatted
+                    Utils.showDatePicker(requireContext(),"yyyy-MM-dd"){ date->
+                        nomineeNic.editText.setText(date)
+                        nominee_nic_expiry=date
                         viewModel.nominee.nomineeNicExpiry = nominee_nic_expiry
                     }
                 }

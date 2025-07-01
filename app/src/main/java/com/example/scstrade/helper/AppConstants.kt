@@ -81,6 +81,13 @@ class AppConstants {
             ("NICOP - OVERSEAS PAKISTANI CARD" to "NICOP"),
             ("POC - PAKISTAN ORIGIN CARD" to "POC")  
         )
+
+        val NIC_TYPE_LIST= listOf(
+            "SNIC - SMART CARD WITH CHIP" to "SNIC",
+            "CNIC - CARD WITHOUT CHIP" to "CNIC",
+            "NICOP - OVERSEAS PAKISTANI CARD" to "NICOP",
+            "POC - PAKISTAN ORIGIN CARD" to "POC"
+        )
    /*     val RESIDENTIAL_STATUS= listOf(
             mapOf("Resident" to "01"),
             mapOf("Non-Resident" to "02")
@@ -150,9 +157,18 @@ class AppConstants {
             mapOf("Married" to "M")
         )
 
+        val MARITAL_STATUS_LIST= listOf(
+            "Single" to "S",
+           "Married" to "M"
+        )
+
         val RELATIONSHIP = listOf(
             mapOf("Father" to "F"),
             mapOf("Husband" to "H")
+        )
+        val RELATIONSHIP_LIST = listOf(
+            "Father" to "F",
+            "Husband" to "H"
         )
 
         val SALUTATION = listOf(
@@ -166,9 +182,18 @@ class AppConstants {
             mapOf("NO" to "N")
         )
 
+        val IVRSTATUSLIST = listOf(
+            "Yes" to "Y",
+            "NO" to "N"
+        )
+
         val LIFETIMECNICSTATUS = listOf(
             mapOf("Life time CNIC is available" to "Y"),
             mapOf("Life Time CNIC is not avilable and expiry date is provided" to "N")
+        )
+        val LIFETIMECNICSTATUSLIST = listOf(
+            "Yes" to "Y",
+            "No" to "N"
         )
 
         val IDTYPE = listOf(

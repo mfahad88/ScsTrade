@@ -75,13 +75,10 @@ class AccountOpeningOneFragment : Fragment() {
 
             nicIssueDate.textInputEditText.setOnFocusChangeListener { view, b ->
                 if(b){
-                    Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val customDate = LocalDate.of(year , month, day)
-                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                        val formatted = customDate.format(formatter)
+                    Utils.showDatePicker(requireContext(),"yyyy-MM-dd"){ date->
 
-                        binding.nicIssueDate.textInputEditText.setText(formatted)
-                        issue_date = formatted
+                        binding.nicIssueDate.textInputEditText.setText(date)
+                        issue_date = date
                         viewModel.accountOpening.accountopeningnicIssueDate =issue_date
                     }
                 }

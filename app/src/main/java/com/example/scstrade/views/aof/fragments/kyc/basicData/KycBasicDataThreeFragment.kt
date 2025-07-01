@@ -55,12 +55,9 @@ class KycBasicDataThreeFragment : Fragment() {
             }
             editText.setOnFocusChangeListener { view, b ->
                 if(b){
-                    Utils.showDatePicker(requireContext()) { day, month, year ->
-                        val customDate = LocalDate.of(year, month, day)
-                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                        val formatted = customDate.format(formatter)
-                        editText.setText(formatted)
-                        nicExpiry = formatted
+                    Utils.showDatePicker(requireContext(),"yyyy-MM-dd") { date->
+                        editText.setText(date)
+                        nicExpiry = date
                     }
                 }
             }

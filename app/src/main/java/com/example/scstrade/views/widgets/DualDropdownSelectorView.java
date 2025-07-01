@@ -3,6 +3,7 @@ package com.example.scstrade.views.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,14 +16,16 @@ import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualDropdownSelectorViewBinding;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DualDropdownSelectorView extends MaterialCardView {
     private DualDropdownSelectorViewBinding binding;
+    public String selectedDropDown1,selectedDropDown2;
     ArrayAdapter adapter1,adapter2;
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
     public EditText textview_1,textview_2;
-
+    public List<Pair<String,String>> entries1,entries2;
     public DualDropdownSelectorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -102,11 +105,52 @@ public class DualDropdownSelectorView extends MaterialCardView {
             autoCompleteTextView1=binding.autocompleteTextview1;
             autoCompleteTextView2=binding.autocompleteTextview2;
 
+            binding.autocompleteTextview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                    String selectedLabel = (String) parent.getItemAtPosition(position);
+                    for (Pair<String, String> item : entries1) {
+                        if (item.first.equalsIgnoreCase(selectedLabel)) {
+                            selectedDropDown1 = item.second; // e.g. "S"
+                            break;
+                        }
+                    }
+                }
+            });
 
+            binding.autocompleteTextview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                    String selectedLabel = (String) parent.getItemAtPosition(position);
+                    for (Pair<String, String> item : entries2) {
+                        if (item.first.equalsIgnoreCase(selectedLabel)) {
+                            selectedDropDown2 = item.second; // e.g. "S"
+                            break;
+                        }
+                    }
+                }
+            });
 
         }
     }
 
+    public void setListEntriesFirst(List<Pair<String,String>> entries){
+        this.entries1 = entries;
+        List<String> labels= new ArrayList<>();
+        for (Pair<String,String> item:entries1){
+            labels.add(item.first);
+        }
+        binding.autocompleteTextview1.setAdapter(new ArrayAdapter(this.binding.getRoot().getContext(),android.R.layout.simple_list_item_1,labels));
+    }
+
+    public void setListEntriesSecond(List<Pair<String,String>> entries){
+        this.entries2 = entries;
+        List<String> labels= new ArrayList<>();
+        for (Pair<String,String> item:entries2){
+            labels.add(item.first);
+        }
+        binding.autocompleteTextview2.setAdapter(new ArrayAdapter(this.binding.getRoot().getContext(),android.R.layout.simple_list_item_1,labels));
+    }
     public void setList1(List<String> list){
         if(!list.isEmpty()) {
             adapter1 = new ArrayAdapter(this.binding.getRoot().getContext(), android.R.layout.simple_list_item_1, list);

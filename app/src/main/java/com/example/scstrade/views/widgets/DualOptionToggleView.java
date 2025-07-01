@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,9 +18,22 @@ import androidx.core.content.ContextCompat;
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualOptionToggleViewBinding;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public class DualOptionToggleView extends RelativeLayout {
     DualOptionToggleViewBinding binding;
     public EditText editText;
+    List<Pair<String,String>> list;
+    public String selectedOption;
+
+    public void setTextFieldValue(String textFieldValue) {
+        this.textFieldValue = textFieldValue;
+        binding.editText.setText(textFieldValue);
+    }
+
+    private String textFieldValue;
     private OnButtonClickListener listenerOne, listenerTwo;
     private OnFocus listener;
     public DualOptionToggleView(Context context, AttributeSet attrs) {
@@ -62,6 +78,23 @@ public class DualOptionToggleView extends RelativeLayout {
                 }else{
                     binding.textField.setVisibility(View.GONE);
                 }
+
+                binding.editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            textFieldValue=charSequence.toString();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
 
                 if(subTitle!=null){
                     binding.subHeading.setText(subTitle);
@@ -121,6 +154,26 @@ public class DualOptionToggleView extends RelativeLayout {
     public interface OnFocus{
         void onChange(boolean b);
     }
+    public void setList(List<Pair<String,String>> list){
+        binding.text1.setText(list.get(0).first);
+        binding.text2.setText(list.get(1).first);
+        this.list = list;
+    }
+
+
+    public String getTextFieldValue(){
+        return textFieldValue;
+    }
+
+    public void setSelectedOption(String option){
+        if(list.get(0).second.equalsIgnoreCase(option)){
+            selectedOption=option;
+            toggleSelection(true);
+        }else{
+            selectedOption=option;
+            toggleSelection(false);
+        }
+    }
 
     public void toggleSelection(Boolean isButtonOneSelected){
         if(isButtonOneSelected){
@@ -128,11 +181,27 @@ public class DualOptionToggleView extends RelativeLayout {
             binding.btnMarried.setSelected(false);
             binding.text1.setTextColor(Color.parseColor("#ffffff"));
             binding.text2.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(),R.color.md_theme_primary));
+            for (Pair<String, String> item : list) {
+                if (item.first.equalsIgnoreCase(binding.text1.getText().toString())) {
+                    String value = item.second;  // this will be "S"
+                    selectedOption = value;
+                    System.out.println("Value for " +item.first+": "+ value);
+                    break;
+                }
+            }
         }else{
             binding.btnSingle.setSelected(false);
             binding.btnMarried.setSelected(true);
             binding.text1.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(),R.color.md_theme_primary));
             binding.text2.setTextColor(Color.parseColor("#ffffff"));
+            for (Pair<String, String> item : list) {
+                if (item.first.equalsIgnoreCase(binding.text2.getText().toString())) {
+                    String value = item.second;  // this will be "S"
+                    selectedOption = value;
+                    System.out.println("Value for " +item.first+": "+ value);
+                    break;
+                }
+            }
         }
     }
 }

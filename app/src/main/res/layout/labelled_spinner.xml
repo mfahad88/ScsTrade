@@ -20,7 +20,4 @@
         tools:hint="Select Registered Person"
         android:inputType="none" />
 
-
-
-
 </com.google.android.material.textfield.TextInputLayout>

@@ -76,12 +76,10 @@ class KycAttorneyDetailTwoFragment : Fragment() {
 
             isAttorney.editText.setOnFocusChangeListener { view, b ->
                 if(b){
-                    Utils.showDatePicker(requireContext()){ day, month, year ->
-                        val customDate = LocalDate.of(year , month, day)
-                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                        val formatted = customDate.format(formatter)
-                        isAttorney.editText.setText(formatted)
-                        nic_valid=formatted
+                    Utils.showDatePicker(requireContext(),"yyyy-MM-dd"){date->
+
+                        isAttorney.editText.setText(date)
+                        nic_valid=date
                     }
                 }
             }

@@ -44,6 +44,7 @@ import com.example.scstrade.databinding.CustomToolbarBinding;
 import com.example.scstrade.databinding.MmarketBinding;
 import com.example.scstrade.viewmodels.SharedViewModel;
 import com.example.scstrade.views.MyApp;
+import com.example.scstrade.views.aof.AofActivity;
 import com.example.scstrade.views.notification.NotificationActivity;
 import com.example.scstrade.views.search.SearchActivity;
 
@@ -128,8 +129,9 @@ public class mMarket extends LinearLayout {
                 binding.aofTop.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getContext(),"Working In Progress under fixes",Toast.LENGTH_SHORT).show();
-//            startActivity(Intent(requireContext(), AofActivity::class.java))
+//                        Toast.makeText(getContext(),"Working In Progress under fixes",Toast.LENGTH_SHORT).show();
+//                    .
+                    context.startActivity(new Intent(context, AofActivity.class));
                     }
                 });
                 sharedViewModel.getMutableIndices().observe(lifecycleOwner, listResource -> {
