@@ -169,7 +169,7 @@
     <com.example.scstrade.views.widgets.DualOptionToggleView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/parmanent_addr"
+        android:id="@+id/parmanent_addr_option"
         app:titleDualOption="@string/is_your_mai"
         app:titleButton1="No"
         app:titleButton2="Yes"
@@ -183,12 +183,10 @@
         android:layout_width="0dp"
         android:layout_height="115dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="#F4F9FF"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parmanent_addr"
+        app:layout_constraintTop_toBottomOf="@+id/parmanent_addr_option"
         app:strokeColor="#1A73E8">
 
         <LinearLayout
@@ -230,6 +228,94 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:id="@+id/parmanent_addr"
+        android:background="@drawable/drawable_text_border"
+        android:hint="@string/enter_your_parmanent"
+        android:padding="10dp"
+        android:inputType="text|textMultiLine"
+        android:gravity="top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_worries"/>
+
+    <com.example.scstrade.views.widgets.LabelledSpinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/permanent_country"
+        app:hintLabel="@string/permanent_country"
+        app:dropdownLabel="@string/select_your_permanent_country"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parmanent_addr"/>
+
+
+    <com.example.scstrade.views.widgets.LabelledSpinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/permanent_province"
+        app:hintLabel="@string/permanent_province"
+        app:dropdownLabel="@string/select_your_permanent_province"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/permanent_other_province"
+        app:hintText="@string/permanent_province"
+        app:hintTextField="@string/select_your_permanent_province"
+        android:layout_marginTop="20dp"
+        android:maxLength="20"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
+
+    <com.example.scstrade.views.widgets.LabelledSpinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/permanent_city"
+        app:hintLabel="@string/permanent_city"
+        app:dropdownLabel="@string/select_your_city"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
+
+    <com.example.scstrade.views.widgets.LabelledTextField
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/permanent_other_city"
+        app:hintText="@string/permanent_city"
+        app:hintTextField="@string/select_your_city"
+        android:layout_marginTop="20dp"
+        android:maxLength="20"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
+    <com.example.scstrade.views.widgets.DualDropdownSelectorView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_numbers"
+        android:layout_marginTop="20dp"
+        app:titleDualDropdown="@string/kindly_ente"
+        app:typeDualDropdown1="text"
+        app:typeDualDropdown2="text"
+        app:hintDualDropdown1="@string/enter_your_office"
+        app:hintDualDropdown2="@string/residence_number"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permanent_city"/>
 
 
 
