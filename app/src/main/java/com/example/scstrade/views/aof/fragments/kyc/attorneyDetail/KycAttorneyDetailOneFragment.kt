@@ -1,6 +1,7 @@
 package com.example.scstrade.views.aof.fragments.kyc.attorneyDetail
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,11 +24,7 @@ import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDeta
 class KycAttorneyDetailOneFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     lateinit var binding: FragmentKycSevenBinding
-    var attorney_type:String?=null
-    var attorney_saluation:String?=null
-    var attorney_FullName:String?=null
-    var attorney_Uin_Type:String?=null
-    var attorney_Uin_Number:String?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,86 +33,9 @@ class KycAttorneyDetailOneFragment : Fragment() {
         binding = FragmentKycSevenBinding.inflate(inflater,container,false)
         (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.attorney_details)
         viewModel = (requireActivity() as AofActivity).viewModel
+        viewModel.getattorneyDetails()
         initFields()
-        populateDropdown()
-        binding.apply {
-            /*back.setOnClickListener {
-                (requireActivity() as AofActivity).supportFragmentManager.popBackStack()
-            }*/
-            back.setOnClickListener {
-                if(viewModel.getContactDetails().parmanentAddress?.isNotEmpty()?:false){
-                    (requireActivity() as AofActivity).loadFragment(KycContactDetailThreeFragment())
-                }else{
-                    (requireActivity() as AofActivity).loadFragment(KycContactDetailTwoFragment())
-                }
-            }
 
-            isTheAtto.apply {
-                setOnButtonOneClickListener {
-                    attorney_type= AppConstants.ATTORNEYTYPE[0].second
-                    viewModel.attorneyDetail.attorneyType = attorney_type
-                   /* viewModel.attorneyDetail.attorneyType="self"
-                    attorney_type = "self"*/
-                    binding.someElseContainer.visibility= View.GONE
-                }
-
-                setOnButtonTwoClickListener {
-                    attorney_type= AppConstants.ATTORNEYTYPE[1].second
-                    viewModel.attorneyDetail.attorneyType = attorney_type
-                    /*viewModel.attorneyDetail.attorneyType="someone else"
-                    attorney_type = "someone else"*/
-                    binding.someElseContainer.visibility= View.VISIBLE
-                }
-            }
-
-            fullName.textInputEditText.addTextChangedListener {
-                attorney_FullName = it.toString()
-            }
-
-            uinNumber.textInputEditText.addTextChangedListener {
-                attorney_Uin_Number = it.toString()
-            }
-
-            btnContinue.setOnClickListener {
-                viewModel.attorneyDetail.attorneyType=attorney_type
-                if(attorney_type?.equals("o",false)?:false) {
-                    if (someElseContainer.visibility == View.VISIBLE) {
-                        viewModel.attorneyDetail.apply {
-                            attorneySalutation = attorney_saluation
-                            attorneyFullName = attorney_FullName
-                            attorneyUinType = attorney_Uin_Type
-                            attorneyUinNumber = attorney_Uin_Number
-                        }
-                    }
-//                    viewModel.saveAttorneyDetails()
-                    (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailTwoFragment())
-                }else{
-                    viewModel.attorneyDetails(
-                        AttorneyDetailDto(
-                            id = null,
-                            landlineAtr = null,
-                            mailingCityAtr = null,
-                            mailingCountryAtr = null,
-                            otherMailingProvAtr = null,
-                            otherMailingCityAtr = null,
-                            clientNameAtr = null,
-                            salutationAtr = null,
-                            mobileAtr = null,
-                            identificationAtr = null,
-                            cnicExpiryDateAtr = null,
-                            mailingProvinceAtr = null,
-                            mailingAddressAtr2 = null,
-                            mailingAddressAtr1 = null,
-                            cnicAtr = null,
-                            emailAtr = null,
-                            cnicLifeTimeAtr = null,
-                            mailingAddressAtr3 = null,
-                            attorneyType = attorney_type,
-                        )
-                    )
-                }
-            }
-        }
 
         viewModel.mutableAttorneyDetail.observe(viewLifecycleOwner, Observer { result->
             when(result){
@@ -141,73 +61,46 @@ class KycAttorneyDetailOneFragment : Fragment() {
     }
 
     private fun initFields() {
-
+        binding.isTheAtto.setList(AppConstants.ATTORNEYTYPE.map { android.util.Pair(it.first,it.second) })
+        binding.labelledSpinner.setListEntries(AppConstants.SALUTATION.map { android.util.Pair(it.first,it.second) })
+        binding.uinType.setListEntries(AppConstants.NIC_TYPE_LIST.map { android.util.Pair(it.first,it.second) })
+        binding.isAttorney.setList(AppConstants.LIFETIMECNICSTATUSLIST.map { android.util.Pair(it.first,it.second) })
+        binding.attorneyCountry.setListEntries(AppConstants.COUNTRY.map { android.util.Pair(it.first,it.second) })
+        binding.attorneyProvince.setListEntries(AppConstants.PROVINCE.map { android.util.Pair(it.first,it.second)  })
+        binding.attorneyCity.setListEntries(AppConstants.CITY.map { android.util.Pair(android.util.Pair(it.first.first,it.first.second),it.second) })
         viewModel.mutableAttorneyDetailResponse.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     val response = result.data?.data
-                    viewModel.attorneyDetail.apply {
-                        if(response!=null){
-                            attorneyType = response.attorneyType
-                            attorneySalutation = response.salutationAtr
-                            attorneyFullName = response.clientNameAtr
-                            attorneyUinType = response.identificationAtr
-                            attorneyNicType = response.cnicLifeTimeAtr
-                            attorneyNicExpiry = response.cnicExpiryDateAtr?.let {
-                                Utils.convertIsoToDate(
-                                    it
-                                )
-                            }
-                            attorneyMobileNumber = response.mobileAtr
-                            attorneyEmailAdress = response.emailAtr
-                            attorneyMailingAddress = response.mailingAddressAtr1
-                            attorneyResidenceNumber = response.landlineAtr
-                            attorneyCountry = response.mailingCountryAtr
-                            attorneyCity = response.mailingCityAtr
-                            attorneyProvince = response.mailingProvinceAtr
-//                            viewModel.saveAttorneyDetails()
-                            val attorneyDetail= viewModel.attorneyDetail
-                            attorney_type=attorneyDetail.attorneyType
-                            attorney_saluation = attorneyDetail.attorneySalutation
-                            attorney_FullName = attorneyDetail.attorneyFullName
-                            attorney_Uin_Type = attorneyDetail.attorneyUinType
-                            attorney_Uin_Number = attorneyDetail.attorneyUinNumber
-
-                            binding.apply {
-                                if(attorney_saluation!=null) {
-                                    labelledSpinner.dropdown.setText(AppConstants.SALUTATION.filter {
-                                        it.second.equals(
-                                            attorney_saluation
-                                        )
-                                    }.map { it.first }.first())
-                                }
-                                if(attorney_Uin_Type!=null) {
-                                    uinType.dropdown.setText(AppConstants.IDTYPE.filter {
-                                        it.second.equals(
-                                            attorney_Uin_Type
-                                        )
-                                    }.map { it.first }.first())
-                                }
-                                if(attorney_FullName!=null) {
-                                    fullName.textInputEditText.setText(attorney_FullName)
-                                }
-                                if(attorney_Uin_Number!=null) {
-                                    uinNumber.textInputEditText.setText(attorney_Uin_Number)
-                                }
-                                if(attorney_type!=null) {
-                                    if (attorney_type.equals("o",true)) {
-                                        isTheAtto.toggleSelection(false)
-                                        someElseContainer.visibility = View.VISIBLE
-                                    } else {
-                                        isTheAtto.toggleSelection(true)
-                                        someElseContainer.visibility = View.GONE
-                                    }
-                                }
-                            }
-                        }
+                    binding.isTheAtto.setSelectedOption(response?.attorneyType)
+                    binding.labelledSpinner.setSelectedDropDown(response?.salutationAtr)
+                    binding.fullName.selectedOption=response?.clientNameAtr
+                    binding.uinType.setSelectedDropDown(response?.identificationAtr)
+                    binding.uinNumber.selectedOption=response?.cnicAtr
+                    binding.isAttorney.setSelectedOption(response?.cnicLifeTimeAtr)
+                    binding.isAttorney.textFieldValue= response?.cnicExpiryDateAtr?.let { Utils.formatDateString(inputDate = it) }
+                    binding.mobileNumber.selectedOption=response?.mobileAtr
+                    binding.emailAddr.selectedOption=response?.emailAtr
+                    if(!TextUtils.isEmpty(response?.mailingAddressAtr1)) {
+                        binding.mailingAddress1.setText(response?.mailingAddressAtr1)
                     }
+                    if(!TextUtils.isEmpty(response?.mailingAddressAtr2)) {
+                        binding.mailingAddress2.setText(response?.mailingAddressAtr2)
+                    }
+                    if(!TextUtils.isEmpty(response?.mailingAddressAtr3)) {
+                        binding.mailingAddress3.setText(response?.mailingAddressAtr3)
+                    }
+
+                    binding.residenceNumber.selectedOption=response?.landlineAtr
+
+                    binding.attorneyCountry.setSelectedDropDown(response?.mailingCountryAtr)
+
+                    binding.attorneyProvince.setSelectedDropDown(response?.mailingProvinceAtr)
+
+                    binding.attorneyCity.setSelectedDropDown(response?.mailingCityAtr)
+
                 }
             }
         })
@@ -215,20 +108,6 @@ class KycAttorneyDetailOneFragment : Fragment() {
 
     }
 
-    private fun populateDropdown() {
-        binding.apply {
-            labelledSpinner.setEntries(AppConstants.SALUTATION.map { it.first })
-            uinType.setEntries(AppConstants.IDTYPE.map { it.first })
-
-            labelledSpinner.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-                attorney_saluation=AppConstants.SALUTATION.get(i).second
-            }
-
-            uinType.dropdown.setOnItemClickListener { adapterView, view, i, l ->
-                attorney_Uin_Type=AppConstants.IDTYPE.get(i).second
-            }
-        }
-    }
 
 
 }

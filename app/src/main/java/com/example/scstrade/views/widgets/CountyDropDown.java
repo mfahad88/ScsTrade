@@ -13,47 +13,39 @@ import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.LabelledSpinnerBinding;
+import com.example.scstrade.model.Resource;
+import com.example.scstrade.model.response.ApiResponse;
+import com.example.scstrade.model.response.aof.country.CountryDto;
+import com.example.scstrade.viewmodels.AofViewModel;
+import com.example.scstrade.views.MyApp;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class LabelledSpinner extends TextInputLayout {
+public class CountyDropDown extends TextInputLayout {
     LabelledSpinnerBinding binding;
     public AutoCompleteTextView dropdown;
-    public Pair<String,String> selectedDropDown;
+    private Pair<String,String> selectedDropDown;
     public List<Pair<String,String>> entries;
-
-    public boolean isEmpty(){
-        return selectedDropDown==null;
-    }
-    public Pair<String,String> getSelectedDropDown() {
-        return selectedDropDown;
-    }
-
-    public void setSelectedDropDown(String selectedDropDown) {
-        if(!TextUtils.isEmpty(selectedDropDown)){
-            for (Pair<String,String> item: entries){
-                if(item.second.equalsIgnoreCase(selectedDropDown)){
-                    this.selectedDropDown = item;
-                    binding.dropdown.setText(item.first,true);
-                    break;
-                }
-            }
-        }
-
-    }
-    public LabelledSpinner(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CountyDropDown(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
     }
 
+    public boolean isEmpty(){
+        return selectedDropDown==null;
+    }
+
     private void init(Context context, AttributeSet attrs) {
         binding = LabelledSpinnerBinding.inflate(LayoutInflater.from(context),this,true);
+
         if(attrs!=null){
             TypedArray a=context.getTheme().obtainStyledAttributes(
                     attrs,
@@ -78,10 +70,10 @@ public class LabelledSpinner extends TextInputLayout {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                         String selectedLabel = (String) parent.getItemAtPosition(position);
-                        for (Pair<String, String> item : entries) {
-                            if (item.first.equalsIgnoreCase(selectedLabel)) {
+                        for (Pair<String,String> item : entries) {
+                            if (item.second.equalsIgnoreCase(selectedLabel)) {
                                 selectedDropDown = item; // e.g. "S"
-                                break;
+//                                break;
                             }
                         }
                     }
@@ -93,15 +85,31 @@ public class LabelledSpinner extends TextInputLayout {
             }
         }
     }
-    public void setEntries(List<String> entries){
+
+    public Pair<String, String> getSelectedDropDown() {
+        return selectedDropDown;
+    }
+
+    public void setSelectedDropDown(String selectedDropDown) {
+        if(!TextUtils.isEmpty(selectedDropDown)){
+            for (Pair<String,String> item:entries){
+                if(item.first.equalsIgnoreCase(selectedDropDown)){
+                    binding.dropdown.setText(item.second,false);
+                    this.selectedDropDown=item;
+//                    break;
+                }
+            }
+        }
 
     }
+
     public void setListEntries(List<Pair<String,String>> entries){
         this.entries=entries;
         List<String> labels= new ArrayList<>();
         for (Pair<String,String> item:this.entries){
-            labels.add(item.first);
+            labels.add(item.second.toString());
         }
         binding.dropdown.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,labels));
+
     }
 }

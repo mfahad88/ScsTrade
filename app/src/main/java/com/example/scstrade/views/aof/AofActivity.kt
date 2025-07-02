@@ -52,7 +52,7 @@ class AofActivity : BaseActivity() {
                 }
                 is Resource.Success -> {
                     if(result.data?.statusCode==200){
-                        val country= result.data?.data?.map { it.name to it.id }?.toList()
+                        val country= result.data?.data?.map { it.id to it.name  }?.toList()
                         AppConstants.COUNTRY = country?: emptyList()
                     }
                 }
@@ -67,7 +67,7 @@ class AofActivity : BaseActivity() {
                 }
                 is Resource.Success -> {
                     if(result.data?.statusCode==200){
-                        val city= result.data?.data?.map { it.name to it.id to it.provinceCode }?.toList()
+                        val city= result.data?.data?.map { it.id to it.name  to it.provinceCode }?.toList()
 
                         AppConstants.CITY = city?: emptyList()
                     }

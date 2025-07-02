@@ -89,7 +89,6 @@ class KycBasicDataThreeFragment : Fragment() {
 //                    viewModel.saveBasicData()
                     viewModel.basicData(
                         BasicDetailDto(
-                            id = null,
                             salutation = viewModel.basicData.salutation ?: "",
                             lifeTime = viewModel.basicData.nicType ?: "",
                             gender = if (viewModel.basicData.salutation.equals("MR")) "M" else "F",

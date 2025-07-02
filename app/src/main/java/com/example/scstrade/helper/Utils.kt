@@ -576,6 +576,18 @@ class Utils {
                 "Invalid date"
             }
         }
+
+        fun formatDateString(
+            inputDate: String,
+            inputPattern: String = "yyyy-MM-dd'T'HH:mm:ss.SSSX",
+            outputPattern: String = "yyyy-MM-dd"
+        ): String {
+            val inputFormatter = DateTimeFormatter.ofPattern(inputPattern)
+            val outputFormatter = DateTimeFormatter.ofPattern(outputPattern)
+            val date = LocalDate.parse(inputDate, inputFormatter)
+            return date.format(outputFormatter)
+        }
+
         fun showDatePicker(context: Context,datePattern:String="yyyy-MM-dd", onDateSelected: (date:String) -> Unit) {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)

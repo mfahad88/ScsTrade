@@ -21,7 +21,8 @@ import java.util.List;
 
 public class DualDropdownSelectorView extends MaterialCardView {
     private DualDropdownSelectorViewBinding binding;
-    public String selectedDropDown1,selectedDropDown2;
+    public Pair<String,String> selectedDropDown1,selectedDropDown2;
+
     ArrayAdapter adapter1,adapter2;
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
     public EditText textview_1,textview_2;
@@ -110,8 +111,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                     String selectedLabel = (String) parent.getItemAtPosition(position);
                     for (Pair<String, String> item : entries1) {
-                        if (item.first.equalsIgnoreCase(selectedLabel)) {
-                            selectedDropDown1 = item.second; // e.g. "S"
+                        if (item.second.equalsIgnoreCase(selectedLabel)) {
+                            selectedDropDown1 = item; // e.g. "S"
                             break;
                         }
                     }
@@ -123,8 +124,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                     String selectedLabel = (String) parent.getItemAtPosition(position);
                     for (Pair<String, String> item : entries2) {
-                        if (item.first.equalsIgnoreCase(selectedLabel)) {
-                            selectedDropDown2 = item.second; // e.g. "S"
+                        if (item.second.equalsIgnoreCase(selectedLabel)) {
+                            selectedDropDown2 = item; // e.g. "S"
                             break;
                         }
                     }
@@ -138,7 +139,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
         this.entries1 = entries;
         List<String> labels= new ArrayList<>();
         for (Pair<String,String> item:entries1){
-            labels.add(item.first);
+            labels.add(item.second);
         }
         binding.autocompleteTextview1.setAdapter(new ArrayAdapter(this.binding.getRoot().getContext(),android.R.layout.simple_list_item_1,labels));
     }
@@ -147,7 +148,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
         this.entries2 = entries;
         List<String> labels= new ArrayList<>();
         for (Pair<String,String> item:entries2){
-            labels.add(item.first);
+            labels.add(item.second);
         }
         binding.autocompleteTextview2.setAdapter(new ArrayAdapter(this.binding.getRoot().getContext(),android.R.layout.simple_list_item_1,labels));
     }

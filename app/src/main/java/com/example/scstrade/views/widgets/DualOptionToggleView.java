@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -19,23 +20,35 @@ import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualOptionToggleViewBinding;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
+
 
 public class DualOptionToggleView extends RelativeLayout {
     DualOptionToggleViewBinding binding;
     public EditText editText;
     List<Pair<String,String>> list;
-    public String selectedOption;
-
-    public void setTextFieldValue(String textFieldValue) {
-        this.textFieldValue = textFieldValue;
-        binding.editText.setText(textFieldValue);
-    }
-
+    public Pair<String,String> selectedOption;
     private String textFieldValue;
     private OnButtonClickListener listenerOne, listenerTwo;
     private OnFocus listener;
+
+    public boolean isTextFieldEmpty(){
+        return TextUtils.isEmpty(textFieldValue);
+    }
+
+    public boolean isSelectedOtionEmpty(){
+        return selectedOption==null;
+    }
+
+    public void setTextFieldValue(String textFieldValue) {
+        if(!TextUtils.isEmpty(textFieldValue)) {
+            this.textFieldValue = textFieldValue;
+            binding.editText.setText(textFieldValue);
+        }
+    }
+    public String getTextFieldValue(){
+        return textFieldValue;
+    }
+
     public DualOptionToggleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -161,17 +174,17 @@ public class DualOptionToggleView extends RelativeLayout {
     }
 
 
-    public String getTextFieldValue(){
-        return textFieldValue;
-    }
+
 
     public void setSelectedOption(String option){
-        if(list.get(0).second.equalsIgnoreCase(option)){
-            selectedOption=option;
-            toggleSelection(true);
-        }else{
-            selectedOption=option;
-            toggleSelection(false);
+        if(!TextUtils.isEmpty(option)) {
+            if (list.get(0).second.equalsIgnoreCase(option)) {
+                selectedOption = list.get(0);
+                toggleSelection(true);
+            } else {
+                selectedOption = list.get(1);
+                toggleSelection(false);
+            }
         }
     }
 
@@ -184,7 +197,7 @@ public class DualOptionToggleView extends RelativeLayout {
             for (Pair<String, String> item : list) {
                 if (item.first.equalsIgnoreCase(binding.text1.getText().toString())) {
                     String value = item.second;  // this will be "S"
-                    selectedOption = value;
+                    selectedOption = item;
                     System.out.println("Value for " +item.first+": "+ value);
                     break;
                 }
@@ -197,7 +210,7 @@ public class DualOptionToggleView extends RelativeLayout {
             for (Pair<String, String> item : list) {
                 if (item.first.equalsIgnoreCase(binding.text2.getText().toString())) {
                     String value = item.second;  // this will be "S"
-                    selectedOption = value;
+                    selectedOption = item;
                     System.out.println("Value for " +item.first+": "+ value);
                     break;
                 }

@@ -1,10 +1,12 @@
 package com.example.scstrade.views.aof.fragments.kyc.basicData
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
 import android.util.Log
 import android.view.LayoutInflater
@@ -71,7 +73,6 @@ class KycBasicDataOneFragment : Fragment() {
 
         binding.cardNic.editText.setOnFocusChangeListener { view, b ->
             if(b){
-                Toast.makeText(requireContext(),binding.cardNic.selectedOption,Toast.LENGTH_SHORT).show()
                 Utils.showDatePicker(requireContext()){
                     binding.cardNic.textFieldValue= it
                 }
@@ -82,74 +83,72 @@ class KycBasicDataOneFragment : Fragment() {
 
               }*/
         }
+
+        binding.placeBirth.autoCompleteTextView1.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(!p0?.toString().equals("pakistan",true)){
+                    binding.placeBirth.autoCompleteTextView2.isEnabled=false
+                }else{
+                    binding.placeBirth.autoCompleteTextView2.isEnabled=true
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
         binding.dobInputLayout.setOnFocusListener {
             if(it) {
                 Utils.showDatePicker(requireContext(), "yyyy-MM-dd") { date ->
-                    binding.dobInputLayout.textInputEditText.setText(date)
+                    binding.dobInputLayout.selectedOption=date
                 }
             }
         }
+        binding.back.setOnClickListener {
+            (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
+        }
+
         binding.btnContinue.setOnClickListener {
           binding.apply {
-           /*   if(TextUtils.isEmpty(dropdownTitle.selectedDropDown)){
-                    dropdownTitle.dropdown.error="Please select Saluation"
-              }
-              if(TextUtils.isEmpty(dobInputLayout.textInputEditText.text.toString())){
-                  dobInputLayout.textInputEditText.error="Please select Dob"
-              }
 
-              if(TextUtils.isEmpty(motherName.textInputEditText.text.toString())){
-                  motherName.textInputEditText.error= "Please provide mother maiden name"
-              }
 
-              if(TextUtils.isEmpty(dropdownNationality.selectedDropDown)){
-                  motherName.textInputEditText.error= "Please select nationality"
-              }
-
-              if(TextUtils.isEmpty(maritalStatus.textFieldValue)){
-                  motherName.textInputEditText.error= "Please select nationality"
-              }
-
-              if(TextUtils.isEmpty(relationship.selectedOption)){
-                  relationship.editText.error = "Please select relation"
-              }
-
-              if(TextUtils.isEmpty(cardNic.selectedOption)){
-                  cardNic.editText.error = "Please select nic expiry"
-              }*/
-
-                if(!TextUtils.isEmpty(uinType.selectedDropDown) &&
-                    !TextUtils.isEmpty(uinNumber.textInputEditText.text) &&
-                    !TextUtils.isEmpty(dropdownTitle.selectedDropDown) &&
-                    !TextUtils.isEmpty(dobInputLayout.textInputEditText.text) &&
-                    !TextUtils.isEmpty(motherName.textInputEditText.text) &&
-                    !TextUtils.isEmpty(dropdownNationality.selectedDropDown) &&
-                    !TextUtils.isEmpty(maritalStatus.selectedOption) &&
-                    !TextUtils.isEmpty(relationship.selectedOption) &&
-                    !TextUtils.isEmpty(cardNic.selectedOption) &&
+                if(!uinType.isEmpty &&
+                    !uinNumber.isEmpty &&
+                    !dropdownTitle.isEmpty &&
+                    !dobInputLayout.isEmpty &&
+                    !motherName.isEmpty &&
+                    !dropdownNationality.isEmpty &&
+                    !maritalStatus.isSelectedOtionEmpty &&
+                    !relationship.isSelectedOtionEmpty &&
+                    !cardNic.isSelectedOtionEmpty &&
                     !TextUtils.isEmpty(placeBirth.autoCompleteTextView1.text) &&
-                    !TextUtils.isEmpty(placeBirth.autoCompleteTextView2.text) &&
-                    !TextUtils.isEmpty(ivrService.selectedOption) ){
+                    !ivrService.isSelectedOtionEmpty ){
                     viewModel.basicData(BasicDetailDto(
-                        id = 0,
-                        salutation = dropdownTitle.selectedDropDown,
-                        lifeTime = cardNic.selectedOption,
-                        gender = if (dropdownTitle.selectedDropDown.equals("mr",true)) "M" else "F",
-                        relationship = relationship.selectedOption,
+                        salutation = dropdownTitle.selectedDropDown.second,
+                        lifeTime = cardNic.selectedOption.second,
+                        gender = if (dropdownTitle.selectedDropDown.second.equals("mr",true)) "M" else "F",
+                        relationship = relationship.selectedOption.second,
                         fatherHusbandName = relationship.textFieldValue,
-                        motherMaidenName = motherName.textInputEditText.text.toString(),
-                        nationalityId = AppConstants.COUNTRY.filter { it.second.equals(dropdownNationality.selectedDropDown) }.map { it.second }.first(),
-                        maritalStatus = maritalStatus.selectedOption,
-                        placeOfBirth = AppConstants.COUNTRY.filter { it.second.equals(placeBirth.selectedDropDown1) }.map { it.first }.first(),
-                        placeOfBirthCity = AppConstants.CITY
-                                        .filter { it.first.first.equals(placeBirth.autoCompleteTextView2.text.toString(),true) }
-                            .map { it.first.second }.first(),
-                        ivrstatus = ivrService.selectedOption,
+                        motherMaidenName = motherName.selectedOption,
+                        nationalityId = dropdownNationality.selectedDropDown.first,
+                        maritalStatus = maritalStatus.selectedOption.second,
+                        placeOfBirth = AppConstants.COUNTRY.filter { it.second.equals(placeBirth.autoCompleteTextView1.text.toString()) }.map { it.first }.first(),
+                        placeOfBirthCity = if(binding.placeBirth.autoCompleteTextView2.isEnabled) AppConstants.CITY
+                                        .filter { it.first.second.equals(placeBirth.autoCompleteTextView2.text.toString(),true) }
+                            .map { it.first.first }.first() else null,
+                        ivrstatus = ivrService.selectedOption.second,
                         uinExpiryDate = cardNic.textFieldValue,
-                        dateOfBirth = dobInputLayout.textInputEditText.text.toString()
+                        dateOfBirth = dobInputLayout.selectedOption
 
 
                     ))
+                }else{
+                    Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
           }
         }
@@ -159,9 +158,8 @@ class KycBasicDataOneFragment : Fragment() {
     }
 
     private fun initFields() {
+
         binding.apply {
-            cardNic.editText.isEnabled=false
-            uinType.setListEntries(AppConstants.NIC_TYPE_LIST.map { (label, code) -> android.util.Pair(label, code) })
             dropdownTitle.setListEntries(AppConstants.SALUTATION.map { (label, code) -> android.util.Pair(label, code) })
             dropdownNationality.setListEntries(AppConstants.COUNTRY.map { (label, code) -> android.util.Pair(label, code)  })
             placeBirth.setListEntriesFirst(AppConstants.COUNTRY.map { (label, code) -> android.util.Pair(label, code)  })
@@ -171,7 +169,6 @@ class KycBasicDataOneFragment : Fragment() {
             maritalStatus.setList(AppConstants.MARITAL_STATUS_LIST.map { (label, code) -> android.util.Pair(label, code)  })
             ivrService.setList(AppConstants.IVRSTATUSLIST.map { (label, code) -> android.util.Pair(label, code)  })
         }
-
         viewModel.mutableProtected.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> Utils.showError(requireView(),result.message)
@@ -179,11 +176,12 @@ class KycBasicDataOneFragment : Fragment() {
                 is Resource.Success -> {
                     val data=result.data?.user
                     binding.apply {
-                        uinType.dropdown.setText(AppConstants.NIC_TYPE_LIST.filter { it.second.equals(data?.identificationType) }.map { it.second }.first(),true)
+                        uinType.setListEntries(AppConstants.NIC_TYPE_LIST.map { (label, code) -> android.util.Pair(label, code) })
+                        uinType.setSelectedDropDown(data?.identificationType)
                         uinType.isEnabled = false
-                        fullName.textInputEditText.setText(data?.name)
+                        fullName.selectedOption = data?.name
                         fullName.textInputEditText.isEnabled = false
-                        uinNumber.textInputEditText.setText(data?.uin)
+                        uinNumber.selectedOption = data?.uin
                         uinNumber.textInputEditText.isEnabled = false
                     }
 
@@ -212,9 +210,14 @@ class KycBasicDataOneFragment : Fragment() {
                         loader.visibility = View.GONE
                         groupMain.visibility = View.VISIBLE
                         val basicData = result.data?.data
+                        cardNic.editText.isEnabled=false
+
+
                         if(basicData!=null) {
                             populateRecord(basicData)
                         }
+
+
                     }
                 }
             }
@@ -222,53 +225,40 @@ class KycBasicDataOneFragment : Fragment() {
     }
 
     private fun populateRecord(basicData: BasicDetailResponse) {
-        if(!TextUtils.isEmpty(basicData.salutation)){
-            binding.dropdownTitle.dropdown.setText(basicData.salutation,true)
-        }
-        if(!TextUtils.isEmpty(basicData.dateOfBirth)){
-            binding.dobInputLayout.textInputEditText.setText(basicData.dateOfBirth)
-        }
-        if(!TextUtils.isEmpty(basicData.motherMaidenName)){
-            binding.motherName.textInputEditText.setText(basicData.motherMaidenName)
-        }
-        if(!TextUtils.isEmpty(basicData.nationalityId)){
-            binding.dropdownNationality.dropdown.setText(AppConstants.COUNTRY.filter { it.second.equals(basicData.nationalityId) }.map { it.first }.first(),true)
-        }
-        if(!TextUtils.isEmpty(basicData.maritalStatus)){
-            binding.maritalStatus.setSelectedOption(basicData.maritalStatus)
-        }
-        if(!TextUtils.isEmpty(basicData.relationship)){
-            binding.relationship.setSelectedOption(basicData.relationship)
-            if(!TextUtils.isEmpty(basicData.fatherHusbandName)){
-                binding.relationship.textFieldValue=basicData.fatherHusbandName
-            }
-        }
+        binding.dropdownTitle.setSelectedDropDown(basicData.salutation)
+        binding.dobInputLayout.selectedOption=Utils.formatDateString(inputDate = basicData.dateOfBirth.toString())
+        binding.motherName.selectedOption = basicData.motherMaidenName
+        binding.dropdownNationality.setSelectedDropDown(basicData.nationalityId)
+        binding.maritalStatus.setSelectedOption(basicData.maritalStatus)
+        binding.relationship.setSelectedOption(basicData.relationship)
+        binding.relationship.setSelectedOption(basicData.relationship)
+        binding.relationship.textFieldValue=basicData.fatherHusbandName
 
-        if(!TextUtils.isEmpty(basicData.lifeTime)){
-            binding.cardNic.setSelectedOption(basicData.lifeTime)
-            if(!TextUtils.isEmpty(basicData.uinExpiryDate)){
-                binding.cardNic.textFieldValue = basicData.uinExpiryDate
-            }
-        }
+        binding.cardNic.setSelectedOption(basicData.lifeTime)
+        binding.cardNic.textFieldValue = Utils.formatDateString(inputDate = basicData.uinExpiryDate.toString())
+
 
         if(!TextUtils.isEmpty(basicData.placeOfBirth)){
+            if(basicData.placeOfBirth?.equals("pak",true)?:false){
+                binding.placeBirth.isEnabled=true
+            }else{
+                binding.placeBirth.isEnabled=false
+            }
             binding.placeBirth.autoCompleteTextView1.setText(
                 AppConstants
                     .COUNTRY
-                    .filter { it.second.equals(basicData.placeOfBirth,true)}
-                    .map { it.first }.toString(),true)
+                    .filter { it.first.equals(basicData.placeOfBirth,true)}
+                    .map { it.second }.first(),false)
         }
 
         if(!TextUtils.isEmpty(basicData.placeOfBirthCity)){
             binding.placeBirth.autoCompleteTextView2.setText(AppConstants
                 .CITY
-                .filter { it.first.equals(basicData.placeOfBirthCity) }
-                .map { it.second }.first(),true)
+                .filter { it.first.first.equals(basicData.placeOfBirthCity) }
+                .map { it.first.second }.first(),false)
         }
 
-        if(!TextUtils.isEmpty(basicData.ivrstatus)){
-            binding.ivrService.selectedOption=basicData.ivrstatus
-        }
+        binding.ivrService.setSelectedOption(basicData.ivrstatus)
 
     }
 

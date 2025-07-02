@@ -26,10 +26,26 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LabelledTextField extends LinearLayout {
     LabelledTextfieldBinding binding;
     public TextInputEditText textInputEditText;
+    private String selectedOption;
     private OnFocus listener;
     public LabelledTextField(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
+    }
+
+    public boolean isEmpty(){
+        return TextUtils.isEmpty(selectedOption);
+    }
+
+    public String getSelectedOption() {
+        return selectedOption;
+    }
+
+    public void setSelectedOption(String selectedOption) {
+        if(!TextUtils.isEmpty(selectedOption)) {
+            binding.textInputEditText.setText(selectedOption);
+            this.selectedOption = selectedOption;
+        }
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -101,7 +117,22 @@ public class LabelledTextField extends LinearLayout {
                 if(hint.toLowerCase().contains("mobile")){
                     textInputEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
                 }
+                textInputEditText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        selectedOption=textInputEditText.getText().toString();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
              /*   if(hintField!="" || hintField!=null) {
                     if (hintField.toLowerCase().contains("uin") || hintField.toLowerCase().contains("nic")
                             || hintField.toLowerCase().contains("cnic")) {

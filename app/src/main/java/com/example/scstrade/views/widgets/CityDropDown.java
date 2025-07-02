@@ -20,36 +20,37 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class LabelledSpinner extends TextInputLayout {
+public class CityDropDown extends TextInputLayout {
+
     LabelledSpinnerBinding binding;
-    public AutoCompleteTextView dropdown;
-    public Pair<String,String> selectedDropDown;
-    public List<Pair<String,String>> entries;
 
-    public boolean isEmpty(){
-        return selectedDropDown==null;
+    //    public AutoCompleteTextView dropdown;
+    public Pair<Pair<String,String>,String> selectedDropDown;
+    public List<Pair<Pair<String,String>,String>> entries;
+    public CityDropDown(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(context,attrs);
     }
-    public Pair<String,String> getSelectedDropDown() {
+
+    public Pair<Pair<String, String>, String> getSelectedDropDown() {
         return selectedDropDown;
     }
 
     public void setSelectedDropDown(String selectedDropDown) {
         if(!TextUtils.isEmpty(selectedDropDown)){
-            for (Pair<String,String> item: entries){
-                if(item.second.equalsIgnoreCase(selectedDropDown)){
+            for(Pair<Pair<String,String>,String> item:entries){
+                if(item.first.first.equalsIgnoreCase(selectedDropDown)){
                     this.selectedDropDown = item;
-                    binding.dropdown.setText(item.first,true);
+                    binding.dropdown.setText(item.second,true);
                     break;
                 }
             }
         }
-
     }
-    public LabelledSpinner(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context,attrs);
+
+    public boolean isEmpty(){
+        return  selectedDropDown==null;
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -78,8 +79,8 @@ public class LabelledSpinner extends TextInputLayout {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                         String selectedLabel = (String) parent.getItemAtPosition(position);
-                        for (Pair<String, String> item : entries) {
-                            if (item.first.equalsIgnoreCase(selectedLabel)) {
+                        for (Pair<Pair<String,String>,String> item : entries) {
+                            if (item.first.second.equalsIgnoreCase(selectedLabel)) {
                                 selectedDropDown = item; // e.g. "S"
                                 break;
                             }
@@ -87,20 +88,18 @@ public class LabelledSpinner extends TextInputLayout {
                     }
                 });
 
-                dropdown=binding.dropdown;
+//                dropdown=binding.dropdown;
             }finally {
                 a.recycle();
             }
         }
     }
-    public void setEntries(List<String> entries){
 
-    }
-    public void setListEntries(List<Pair<String,String>> entries){
+    public void setListEntries(List<Pair<Pair<String,String>,String> > entries){
         this.entries=entries;
         List<String> labels= new ArrayList<>();
-        for (Pair<String,String> item:this.entries){
-            labels.add(item.first);
+        for (Pair<Pair<String,String>,String> item:this.entries){
+            labels.add(item.first.second);
         }
         binding.dropdown.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,labels));
     }
