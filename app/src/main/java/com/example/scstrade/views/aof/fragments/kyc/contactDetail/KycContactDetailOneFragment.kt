@@ -141,7 +141,13 @@ class KycContactDetailOneFragment : Fragment() {
             }
 
             btnContinue.setOnClickListener {
+
+
+
+
                 if(!isEmpty(mailingAddress1) &&
+                    !isEmpty(mailingAddress2) &&
+                    !isEmpty(mailingAddress3) &&
                     !mailingCountry.isEmpty &&
                     !isEmpty(officeResidenceNumber.textview_1)&&
                     !isEmpty(officeResidenceNumber.textview_2)){
@@ -268,6 +274,8 @@ class KycContactDetailOneFragment : Fragment() {
             }
 
             if(!TextUtils.isEmpty(data.permanentAddress1)){
+                parmanentAddrOption.toggleSelection(true)
+                layoutPermanent.visibility = View.VISIBLE
                 parmanentAddr1.setText(data.permanentAddress1)
             }
 
@@ -284,6 +292,8 @@ class KycContactDetailOneFragment : Fragment() {
             permanentCity.setSelectedDropDown(data.permanentCityId)
             permanentOtherProvince.selectedOption=data.permanentProvinceOther
             permanentOtherCity.selectedOption=data.permanentCityOther
+            phoneNumbers.textview_1.setText(data.permanentphoneNo)
+            phoneNumbers.textview_2.setText(data.permanentResidence)
         }
     }
 
@@ -294,6 +304,11 @@ class KycContactDetailOneFragment : Fragment() {
             AppConstants.USER,listType)
         login=user.first()
         Log.e("User: ",user.toString())
+    }
+
+    override fun onDestroyView() {
+        viewModel.mutableCreateContactDetail.value=null
+        super.onDestroyView()
     }
 
 }

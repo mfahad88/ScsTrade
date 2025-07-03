@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualDropdownSelectorViewBinding;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public class DualDropdownSelectorView extends MaterialCardView {
     private DualDropdownSelectorViewBinding binding;
     public Pair<String,String> selectedDropDown1,selectedDropDown2;
-
+    public TextInputLayout dropdown_1,dropdown_2;
     ArrayAdapter adapter1,adapter2;
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
     public EditText textview_1,textview_2;
@@ -105,6 +106,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
             textview_2 = binding.textview2;
             autoCompleteTextView1=binding.autocompleteTextview1;
             autoCompleteTextView2=binding.autocompleteTextview2;
+            dropdown_1=binding.dropdown1;
+            dropdown_2=binding.dropdown2;
 
             binding.autocompleteTextview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

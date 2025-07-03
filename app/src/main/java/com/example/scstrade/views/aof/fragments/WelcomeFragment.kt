@@ -23,10 +23,10 @@ class WelcomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentWelcomeBinding.inflate(inflater,container,false)
         binding.signup.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningOneFragment())
+            (requireActivity() as AofActivity).loadFragment(fragment = AccountOpeningOneFragment())
         }
         binding.login.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
+            (requireActivity() as AofActivity).loadFragment(fragment = LoginAOFFragment())
         }
         return binding.root
     }

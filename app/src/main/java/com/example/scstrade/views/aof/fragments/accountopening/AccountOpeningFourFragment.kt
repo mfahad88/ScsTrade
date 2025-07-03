@@ -26,7 +26,7 @@ class AccountOpeningFourFragment : Fragment() {
         viewModel = (requireActivity() as AofActivity).viewModel
 //        initFields()
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
+            (requireActivity() as AofActivity).loadFragment(fragment = AccountOpeningThreeFragment())
         }
 
         binding.apply {
@@ -89,7 +89,7 @@ class AccountOpeningFourFragment : Fragment() {
                     val data = result.data
 
                     if(data?.statusCode==200 && data.isSuccess==true){
-                        (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
+                        (requireActivity() as AofActivity).loadFragment(fragment = LoginAOFFragment())
                     }else{
                         Utils.showError(requireView(),data?.message?:"An error occurred...")
                     }

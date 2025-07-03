@@ -59,19 +59,19 @@ class AccountOpeningThreeFragment : Fragment() {
                 cameraImageUri?.let {
                     if(proofIbanClicked) {
                         uriIban=it
-                        binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                        binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
                         ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
                     }else if(nicFrontClicked){
                         uriNicFront=it
-                        binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                        binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
                         nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
                     }else if(nicBackClicked){
                         uriNicBack=it
-                        binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                        binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
                         nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
                     }else if(proofRelationshipClicked){
                         uriRelationship = it
-                        binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
+//                        binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
                         relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
                     }
                 }
@@ -87,19 +87,19 @@ class AccountOpeningThreeFragment : Fragment() {
             uri?.let {
                 if(proofIbanClicked) {
                     uriIban=it
-                    binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
                 }else if(nicFrontClicked){
                     uriNicFront=it
-                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
                 }else if(nicBackClicked){
                     uriNicBack=it
-                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
                 }else if(proofRelationshipClicked){
                     uriRelationship = it
-                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
+//                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
                     relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
                 }
             }
@@ -198,7 +198,7 @@ class AccountOpeningThreeFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener {
-            if(binding.proofOfIb.fileName.isNotEmpty() && binding.nicBack.fileName.isNotEmpty() && binding.nicFront.fileName.isNotEmpty()){
+            if(binding.proofOfIb.fileName!!.isNotEmpty() && binding.nicBack.fileName!!.isNotEmpty() && binding.nicFront.fileName!!.isNotEmpty()){
                 viewModel.accountOpening.apply {
                     accountopeningproofIban = binding.proofOfIb.fileName
                     accountopeningproofIbanImage = ibanBase64.toString()
@@ -223,13 +223,13 @@ class AccountOpeningThreeFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            proofOfIb.fileName=viewModel.accountOpening.accountopeningproofIban
+//            proofOfIb.fileName=viewModel.accountOpening.accountopeningproofIban
             ibanBase64=viewModel.accountOpening.accountopeningproofIbanImage
-            nicFront.fileName=viewModel.accountOpening.accountopeningnicFront
+//            nicFront.fileName=viewModel.accountOpening.accountopeningnicFront
             nicFrontBase64=viewModel.accountOpening.accountopeningnicFrontImage
-            nicBack.fileName=viewModel.accountOpening.accountopeningnicBack
+//            nicBack.fileName=viewModel.accountOpening.accountopeningnicBack
             nicBackBase64=viewModel.accountOpening.accountopeningnicBackImage
-            proofOfRelative.fileName=viewModel.accountOpening.accountopeningproofRelative
+//            proofOfRelative.fileName=viewModel.accountOpening.accountopeningproofRelative
             relationshipBase64=viewModel.accountOpening.accountopeningproofRelativeImage
         }
     }

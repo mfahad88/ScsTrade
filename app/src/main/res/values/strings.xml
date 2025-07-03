@@ -462,6 +462,12 @@
     <string name="year_quarter">Year/Quarter</string>
     <string name="current_quarter">2025/Q4</string>
     <string name="open_an_account">Open an account</string>
+    <string name="board_meetings">BOARD MEETINGS</string>
+    <string name="finanical_results">Financial Results</string>
+    <string name="material_information">Material Information</string>
+    <string name="executive_disclosures">Executive Disclosures</string>
+    <string name="board_meeti">Board Meeting Other Than Financial Results\nAgritech Limited</string>
+    <string name="engineering">Engineering</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

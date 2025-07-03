@@ -210,7 +210,6 @@ class KycBasicDataOneFragment : Fragment() {
                         loader.visibility = View.GONE
                         groupMain.visibility = View.VISIBLE
                         val basicData = result.data?.data
-                        cardNic.editText.isEnabled=false
 
 
                         if(basicData!=null) {
@@ -233,16 +232,21 @@ class KycBasicDataOneFragment : Fragment() {
         binding.relationship.setSelectedOption(basicData.relationship)
         binding.relationship.setSelectedOption(basicData.relationship)
         binding.relationship.textFieldValue=basicData.fatherHusbandName
-
+        if(basicData.lifeTime?.equals("Y",true)?:false){
+            binding.cardNic.editText.isEnabled=false
+        }
         binding.cardNic.setSelectedOption(basicData.lifeTime)
-        binding.cardNic.textFieldValue = Utils.formatDateString(inputDate = basicData.uinExpiryDate.toString())
+        if(!TextUtils.isEmpty(basicData.uinExpiryDate)) {
+            binding.cardNic.textFieldValue =
+                Utils.formatDateString(inputDate = basicData.uinExpiryDate.toString())
+        }
 
 
         if(!TextUtils.isEmpty(basicData.placeOfBirth)){
             if(basicData.placeOfBirth?.equals("pak",true)?:false){
-                binding.placeBirth.isEnabled=true
+                binding.placeBirth.dropdown_2.isEnabled=true
             }else{
-                binding.placeBirth.isEnabled=false
+                binding.placeBirth.dropdown_2.isEnabled=false
             }
             binding.placeBirth.autoCompleteTextView1.setText(
                 AppConstants
@@ -263,6 +267,10 @@ class KycBasicDataOneFragment : Fragment() {
     }
 
 
-
+    override fun onDestroyView() {
+        viewModel.mutableBasicData.value=null
+        viewModel.mutableBasicDataResponse.value=null
+        super.onDestroyView()
+    }
 
 }

@@ -107,6 +107,7 @@ class AofActivity : BaseActivity() {
     }
 
 
+
     override fun getResources(): Resources {
 
         val res = super.getResources()

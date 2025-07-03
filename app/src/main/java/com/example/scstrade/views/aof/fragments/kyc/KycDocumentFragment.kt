@@ -53,15 +53,15 @@ class KycDocumentFragment : Fragment() {
             cameraImageUri?.let {
                 if(proofPermanentAddressClicked) {
                     uriproofPermanentAddress=it
-                    binding.proofOfPe.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.proofOfPe.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     proofPermanentAddressBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofPermanentAddress!!)}"
                 }else if(proofPermanentEmployerAddressClicked){
                     uriproofPermanentEmployerAddress=it
-                    binding.incomeProo.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.incomeProo.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     proofPermanentEmployerAddressBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofPermanentEmployerAddress!!)}"
                 }else if(proofSignatureClicked){
                     uriproofSignature=it
-                    binding.specimenSi.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.specimenSi.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     proofSignatureBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofSignature!!)}"
                 /*    binding.imageView26.setImageBitmap(proofSignatureBase64?.let { it1 ->
                         Utils.base64ToBitmap(
@@ -70,7 +70,7 @@ class KycDocumentFragment : Fragment() {
                     })*/
                 }else if(proofZakatClicked){
                     uriproofZakat = it
-                    binding.zakatDecla.fileName = Utils.getFileNameFromUri(requireContext(),it)
+//                    binding.zakatDecla.fileName = Utils.getFileNameFromUri(requireContext(),it)
                     proofZakatBase64 = "data:image/jpeg;base64,${Utils.convertImageUriToBase64(requireContext(), uriproofZakat!!)}"
                 }
             }
@@ -202,13 +202,13 @@ class KycDocumentFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            proofOfPe.fileName=viewModel.otherDetail.otherDetailProofParmanentAddressFilename
+//            proofOfPe.fileName=viewModel.otherDetail.otherDetailProofParmanentAddressFilename
             proofPermanentAddressBase64=viewModel.otherDetail.otherDetailProofParmanentAddress
-            incomeProo.fileName=viewModel.otherDetail.otherDetailProofEmployerAddressFilename
+//            incomeProo.fileName=viewModel.otherDetail.otherDetailProofEmployerAddressFilename
             proofPermanentEmployerAddressBase64=viewModel.otherDetail.otherDetailProofEmployerAddress
-            specimenSi.fileName=viewModel.otherDetail.otherDetailSpecimenSignatureFilename
+//            specimenSi.fileName=viewModel.otherDetail.otherDetailSpecimenSignatureFilename
             proofSignatureBase64=viewModel.otherDetail.otherDetailSpecimenSignature
-            zakatDecla.fileName=viewModel.otherDetail.otherDetailZakatDeclarationFilename
+//            zakatDecla.fileName=viewModel.otherDetail.otherDetailZakatDeclarationFilename
             proofZakatBase64=viewModel.otherDetail.otherDetailZakatDeclaration
         }
     }

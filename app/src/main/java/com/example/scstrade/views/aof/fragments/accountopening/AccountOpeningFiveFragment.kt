@@ -45,7 +45,7 @@ class AccountOpeningFiveFragment : Fragment() {
                 is Resource.Success -> {
                     val response = result.data
                     if(response?.statusCode==200){
-                        (requireActivity() as AofActivity).loadFragment(AccountOpeningSixFragment())
+                        (requireActivity() as AofActivity).loadFragment(fragment = AccountOpeningSixFragment())
                     }else{
                         Utils.showError(requireView(),response?.message?:"An error occurred")
                     }

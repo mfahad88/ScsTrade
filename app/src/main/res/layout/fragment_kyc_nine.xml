@@ -64,61 +64,61 @@
                 app:titleDualOption="@string/do_you_have_a_nominee" />
 
             <LinearLayout
+                android:id="@+id/nominee_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                tools:visibility="visible"
                 android:visibility="gone"
-                android:id="@+id/nominee_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nominee">
+                app:layout_constraintTop_toBottomOf="@id/nominee"
+                tools:visibility="visible">
 
                 <com.example.scstrade.views.widgets.LabelledSpinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/nominee_relation"
-                    app:hintLabel="@string/nominee_relation"
-                    app:dropdownLabel="@string/spouse"/>
-
-                <com.example.scstrade.views.widgets.LabelledTextField
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    app:dropdownLabel="@string/spouse"
+                    app:hintLabel="@string/nominee_relation" />
+
+                <com.example.scstrade.views.widgets.LabelledTextField
                     android:id="@+id/nominee_name"
-                    android:maxLength="30"
-                    android:inputType="textPersonName"
-                    app:hintText="@string/nominee_name"
-                    app:hintTextField="@string/enter_nominee_name"/>
-
-                <com.example.scstrade.views.widgets.LabelledTextField
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:inputType="textPersonName"
+                    android:maxLength="30"
+                    app:hintText="@string/nominee_name"
+                    app:hintTextField="@string/enter_nominee_name" />
+
+                <com.example.scstrade.views.widgets.LabelledTextField
                     android:id="@+id/nominee_mobile"
-                    android:maxLength="14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:inputType="number"
+                    android:maxLength="14"
                     app:hintText="@string/mobile_number"
-                    app:hintTextField="@string/enter_your_mobile_number"/>
+                    app:hintTextField="@string/enter_your_mobile_number" />
 
                 <com.example.scstrade.views.widgets.LabelledSpinner
+                    android:id="@+id/uin_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:id="@+id/uin_type"
-                    app:hintLabel="@string/uin_type"
-                    app:dropdownLabel="@string/cnic"/>
+                    app:dropdownLabel="@string/cnic"
+                    app:hintLabel="@string/uin_type" />
 
                 <com.example.scstrade.views.widgets.LabelledTextField
+                    android:id="@+id/uin_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:id="@+id/uin_number"
-                    android:maxLength="14"
                     android:inputType="number"
+                    android:maxLength="14"
                     app:hintText="@string/uin"
-                    app:hintTextField="@string/enter_uin_number"/>
+                    app:hintTextField="@string/enter_uin_number" />
 
                 <EditText
                     android:id="@+id/nominee_address"
@@ -136,79 +136,81 @@
 
 
                 <com.example.scstrade.views.widgets.DualOptionToggleView
+                    android:id="@+id/nominee_nic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:titleDualOption="@string/is_nominee"
-                    app:titleButton1="No"
-                    app:titleButton2="Yes"
-                    android:id="@+id/nominee_nic"
-                    app:hintDualOption="@string/select_nic_expiry_date"
                     app:drawable="@drawable/baseline_calendar_today_24"
+                    app:hintDualOption="@string/select_nic_expiry_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nominee_address"/>
-            </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/nominee_address"
+                    app:titleButton1="No"
+                    app:titleButton2="Yes"
+                    app:titleDualOption="@string/is_nominee" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:strokeWidth="0dp"
-                app:cardElevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/md_theme_surfaceBright"
-                    android:paddingHorizontal="10dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="15dp">
+                    android:layout_marginTop="8dp"
+                    app:strokeWidth="0dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-
-                    <TextView
-                        android:id="@+id/tell_us_abos"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="50dp"
-                        android:text="@string/upload_all_nominee"
-                        android:textAppearance="@style/tell_us_abo"
-                        android:textFontWeight="500"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.example.scstrade.views.widgets.FileUploadCamera
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:colorFileUpload="#1A73E8"
-                        android:layout_marginTop="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tell_us_abos"
-                        app:titleFileUpload="@string/nominee_nic"
-                        android:id="@+id/nic_front"
-                        />
+                        android:background="@color/md_theme_surfaceBright"
+                        android:paddingHorizontal="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="15dp">
 
 
-                    <com.example.scstrade.views.widgets.FileUploadCamera
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:colorFileUpload="#1A73E8"
-                        android:layout_marginTop="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/nic_front"
-                        app:titleFileUpload="@string/nominee_nic_back"
-                        android:id="@+id/nic_back"
-                        />
+                        <TextView
+                            android:id="@+id/tell_us_abos"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="50dp"
+                            android:text="@string/upload_all_nominee"
+                            android:textAppearance="@style/tell_us_abo"
+                            android:textFontWeight="500"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.example.scstrade.views.widgets.FileUploadCamera
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:colorFileUpload="#1A73E8"
+                            android:layout_marginTop="15dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tell_us_abos"
+                            app:titleFileUpload="@string/nominee_nic"
+                            android:id="@+id/nic_front"
+                            />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <com.example.scstrade.views.widgets.FileUploadCamera
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:colorFileUpload="#1A73E8"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nic_front"
+                            app:titleFileUpload="@string/nominee_nic_back"
+                            android:id="@+id/nic_back"
+                            />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

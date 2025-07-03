@@ -51,11 +51,11 @@ class KycNomineeDetailThreeFragment : Fragment() {
             cameraImageUri?.let {
               if(nicFrontClicked){
                     uriNicFront=it
-                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
                 }else{
                     uriNicBack=it
-                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
                 }
             }
@@ -67,11 +67,11 @@ class KycNomineeDetailThreeFragment : Fragment() {
             uri?.let {
                 if(nicFrontClicked){
                     uriNicFront=it
-                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
                 }else{
                     uriNicBack=it
-                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
+//                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
                     nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
                 }
             }
@@ -126,7 +126,7 @@ class KycNomineeDetailThreeFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener {
-            if(binding.nicBack.fileName.isNotEmpty() && binding.nicFront.fileName.isNotEmpty()){
+            if(binding.nicBack.fileName!!.isNotEmpty() && binding.nicFront.fileName!!.isNotEmpty()){
                 viewModel.nominee.apply {
                     nomineeNicFrontFileName = binding.nicFront.fileName
                     nomineeNicFront = nicFrontBase64
@@ -183,9 +183,9 @@ class KycNomineeDetailThreeFragment : Fragment() {
 
     private fun initFields() {
         binding.apply {
-            nicFront.fileName=viewModel.nominee.nomineeNicFrontFileName
+          //  nicFront.fileName=viewModel.nominee.nomineeNicFrontFileName
             nicFrontBase64=viewModel.nominee.nomineeNicFront
-            nicBack.fileName=viewModel.nominee.nomineeNicBackFileName
+         //   nicBack.fileName=viewModel.nominee.nomineeNicBackFileName
             nicBackBase64=viewModel.nominee.nomineeNicBack
         }
     }

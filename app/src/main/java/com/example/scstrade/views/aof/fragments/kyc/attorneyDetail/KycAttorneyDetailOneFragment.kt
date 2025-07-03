@@ -2,6 +2,7 @@ package com.example.scstrade.views.aof.fragments.kyc.attorneyDetail
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailThreeFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment
 import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
@@ -36,7 +38,84 @@ class KycAttorneyDetailOneFragment : Fragment() {
         viewModel.getattorneyDetails()
         initFields()
 
+        viewModel.mutableAttorneyDetail.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    Log.e("Aof",result.message?:"")
+                    Utils.showError(requireView(), result.message)
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
+                    (requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                }
+            }
+        })
 
+        binding.apply {
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
+            }
+            btnContinue.setOnClickListener {
+                if(someElseContainer.visibility == View.GONE){
+                    viewModel.attorneyDetails(
+                        AttorneyDetailDto(
+                            isTheAtto.selectedOption.second,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                        )
+                    )
+                }else{
+                    viewModel.attorneyDetails(
+                        AttorneyDetailDto(
+                            isTheAtto.selectedOption.second,
+                            fullName.selectedOption,
+                            uinNumber.selectedOption,
+                            isAttorney.textFieldValue,
+                            isAttorney.selectedOption.second,
+                            emailAddr.selectedOption,
+                            null,
+                            uinType.selectedDropDown.second,
+                            residenceNumber.selectedOption,
+                            mailingAddress1.text.toString(),
+                            mailingAddress2.text.toString(),
+                            mailingAddress3.text.toString(),
+                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyCity.selectedDropDown.first.first else null,
+                            attorneyCountry.selectedDropDown.first,
+                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyProvince.selectedDropDown.second else null,
+                            mobileNumber.selectedOption,
+                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherCity.selectedOption,
+                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherProvince.selectedOption,
+                            labelledSpinner.selectedDropDown.second,
+                        )
+                    )
+                }
+            }
+        }
+
+        binding.isTheAtto.setOnButtonOneClickListener {
+            binding.someElseContainer.visibility = View.GONE
+        }
+        binding.isTheAtto.setOnButtonTwoClickListener {
+            binding.someElseContainer.visibility = View.VISIBLE
+        }
         viewModel.mutableAttorneyDetail.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {
@@ -75,6 +154,11 @@ class KycAttorneyDetailOneFragment : Fragment() {
                 is Resource.Success -> {
                     val response = result.data?.data
                     binding.isTheAtto.setSelectedOption(response?.attorneyType)
+                    if(response?.attorneyType.equals("S",true)){
+                        binding.someElseContainer.visibility=View.GONE
+                    }else{
+                        binding.someElseContainer.visibility=View.VISIBLE
+                    }
                     binding.labelledSpinner.setSelectedDropDown(response?.salutationAtr)
                     binding.fullName.selectedOption=response?.clientNameAtr
                     binding.uinType.setSelectedDropDown(response?.identificationAtr)

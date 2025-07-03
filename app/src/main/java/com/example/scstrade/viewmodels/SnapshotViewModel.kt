@@ -1,6 +1,7 @@
 package com.example.scstrade.viewmodels
 
 import android.app.Application
+import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,6 +17,7 @@ import com.example.scstrade.services.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.internal.filterList
 
 class SnapshotViewModel(application: Application, private  val sharedViewModel: SharedViewModel): AndroidViewModel(application) {
     val mutableAnnouncementItem= MutableLiveData<Resource<List<AnnouncementDataItem>>>()
@@ -36,87 +38,49 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
         }
     }
 
-    fun announcement(symbol: String,type:String,date:String?){
+    fun announcement(symbol: String, type: String, date: String?) {
         mutableAnnouncementItem.value = Resource.Loading()
-       /* if(type.equals("all",true)){
-            insider(symbol)
-        }*/
-        viewModelScope.launch(Dispatchers.IO){
-            val result = repository.announcements( symbol,type)
 
-            withContext(Dispatchers.Main){
-//                insider(symbol)
-                val list=ArrayList<AnnouncementDataItem>()
-                if(date.isNullOrBlank()) {
-                    list.addAll(result.data?: emptyList())
-                  /*  if(type.equals("all",true)) {
-                        list.addAll(mutableInsider.value?.data?.map {
-                            AnnouncementDataItem(
-                                "Insider",
-                                bmDesc = it.insiderTransactionDesc,
-                                bmDate = it.insiderTransactionDate,
-                                bmImageLink = it.insiderTransactionImageLink,
-                                bmPDFLink = it.insiderTransactionPDFLink,
-                                companyCode = null,
-                                bmEpsQuarter = null,
-                                bmEpsCum = null,
-                                bmQuarterNumber = null,
-                                bmRightPrice = null,
-                                bmRightD = null,
-                                bmRightP = null,
-                                bmRightPer = null,
-                                bmBcStartd = null,
-                                bmDividend = null,
-                                bmBcLd = null,
-                                bmTime = null,
-                                bmYear = null,
-                                bmBcExp = null,
-                                bmBonus = null,
-                                bmPlace = null,
-                                bmBcEndd = null
-                            )
-                        }
-                            ?: emptyList())
-                    }*/
-                }else{
-                    list.addAll(result.data?.filter { Utils.compareDates(it.bmDate?:"0L",date) }?: emptyList())
-                   /* if(type.equals("all",true)) {
-                        list.addAll(mutableInsider.value?.data?.filter {
-                            Utils.compareDates(
-                                it.insiderTransactionPostDate ?: "0L", date
-                            )
-                        }?.map {
-                            AnnouncementDataItem(
-                                "Insider",
-                                bmDesc = it.insiderTransactionDesc,
-                                bmDate = it.insiderTransactionPostDate,
-                                bmImageLink = it.insiderTransactionImageLink,
-                                bmPDFLink = it.insiderTransactionPDFLink,
-                                companyCode = null,
-                                bmEpsQuarter = null,
-                                bmEpsCum = null,
-                                bmQuarterNumber = null,
-                                bmRightPrice = null,
-                                bmRightD = null,
-                                bmRightP = null,
-                                bmRightPer = null,
-                                bmBcStartd = null,
-                                bmDividend = null,
-                                bmBcLd = null,
-                                bmTime = null,
-                                bmYear = null,
-                                bmBcExp = null,
-                                bmBonus = null,
-                                bmPlace = null,
-                                bmBcEndd = null
-                            )
-                        }
-                            ?: emptyList())
-                    }*/
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val result = repository.announcements(symbol, type)
+
+            // ---------- 1.  Handle error or empty response ----------
+            if (result !is Resource.Success) {
+                withContext(Dispatchers.Main) { mutableAnnouncementItem.value = result }
+                return@launch
+            }
+
+            // ---------- 2.  Build one lookup map (sYM -> nM) ----------
+            val symToName: Map<String, String?> =
+                sharedViewModel.mutableAllData.value?.data
+                    ?.associate { it.sYM.trim() to it.nM }
+                    ?: emptyMap()
+
+            // ---------- 3.  Filter + mutate in ONE pass --------------
+            val filtered: MutableList<AnnouncementDataItem> = result.data
+                .orEmpty()
+                .asSequence()                              // lazy pipeline
+                .filter { ann ->                           // (a) TYPE filter
+                    type.equals("all", true) ||
+                            ann.AnnouncementType.equals(type, true)
                 }
+                .filter { ann ->                           // (b) DATE filter
+                    if (date.isNullOrBlank()) return@filter true
+                    val raw = ann.Announcement_Date?.toString()
+                        .takeIf { !it.isNullOrBlank() }
+                        ?: ann.Meeting_Date?.toString().orEmpty()
+                    Utils.compareDates(raw, date)          // keep if ≥ input date
+                }
+                .map { ann -> ann.apply {                  // (c) SET name
+                    val code = company_code?.trim().orEmpty()
+                    name = symToName[code].orEmpty()       // "" if not found
+                }}
+                .toMutableList()
 
-                mutableAnnouncementItem.value = Resource.Success(list.sortedByDescending { it.bmDate })
-
+            // ---------- 4.  Post back to UI --------------------------
+            withContext(Dispatchers.Main) {
+                mutableAnnouncementItem.value = Resource.Success(filtered)
             }
         }
     }
@@ -131,17 +95,17 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
         }
     }
 
- /*   fun filterByType(symbol:String,type: String, date: String) {
-        mutableFilteredList.value = Resource.Loading()
-        try {
-            announcement(symbol, type)
-            mutableFilteredList.value = Resource.Success(
-                listAnnouncement.filter {
-                    Utils.compareDates(it.bmDate?:"0L",date)
-                }
-            )
-        }catch ( e:Exception){
-            mutableFilteredList.value = Resource.Error(e.message?:"An error occurred...")
-        }
-    }*/
+    /*   fun filterByType(symbol:String,type: String, date: String) {
+           mutableFilteredList.value = Resource.Loading()
+           try {
+               announcement(symbol, type)
+               mutableFilteredList.value = Resource.Success(
+                   listAnnouncement.filter {
+                       Utils.compareDates(it.bmDate?:"0L",date)
+                   }
+               )
+           }catch ( e:Exception){
+               mutableFilteredList.value = Resource.Error(e.message?:"An error occurred...")
+           }
+       }*/
 }

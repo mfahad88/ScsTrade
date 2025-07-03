@@ -78,7 +78,7 @@ class LoginAOFFragment : Fragment() {
                     viewModel.getotherDetails()
                     viewModel.mutableProtected.value=null
                     viewModel.mutableLoginUser.value=null
-                    (requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
+                    (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
                 }
             }
 
@@ -92,6 +92,5 @@ class LoginAOFFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.mutableLoginUser.value=null
-        viewModel.mutableProtected.value=null
     }
 }

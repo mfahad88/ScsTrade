@@ -42,7 +42,7 @@ public class CityDropDown extends TextInputLayout {
             for(Pair<Pair<String,String>,String> item:entries){
                 if(item.first.first.equalsIgnoreCase(selectedDropDown)){
                     this.selectedDropDown = item;
-                    binding.dropdown.setText(item.second,true);
+                    binding.dropdown.setText(item.first.second,false);
                     break;
                 }
             }

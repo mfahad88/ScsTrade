@@ -1508,4 +1508,18 @@
     </style>
 
     <style name="sector_breadcrums"></style>
+
+    <style name="board_meetings">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#187376</item>
+    </style>
+
+    <style name="finanical_results">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#A44FA9</item>
+    </style>
+
+    <style name="material_information"></style>
 </resources>
