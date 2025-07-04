@@ -84,9 +84,8 @@ class KycNomineeDetailOneFragment : Fragment() {
         viewModel = (requireActivity() as AofActivity).viewModel
         (requireActivity() as AofActivity).binding.welcome.text =
             getString(R.string.nominee_details)
-
+        viewModel.getNomineeDetails()
         initFields()
-        binding.nominee.setList(AppConstants.NomineeType.map { android.util.Pair(it.first,it.second) })
         binding.nominee.apply {
             setOnButtonOneClickListener {
                 binding.nomineeView.visibility = View.VISIBLE

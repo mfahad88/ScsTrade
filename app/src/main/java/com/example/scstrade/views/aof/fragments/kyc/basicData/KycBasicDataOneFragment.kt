@@ -240,13 +240,20 @@ class KycBasicDataOneFragment : Fragment() {
             binding.cardNic.textFieldValue =
                 Utils.formatDateString(inputDate = basicData.uinExpiryDate.toString())
         }
-
+        if(!TextUtils.isEmpty(basicData.placeOfBirthCity)){
+            binding.placeBirth.autoCompleteTextView2.setText(AppConstants
+                .CITY
+                .filter { it.first.first.equals(basicData.placeOfBirthCity) }
+                .map { it.first.second }.first(),false)
+        }
 
         if(!TextUtils.isEmpty(basicData.placeOfBirth)){
             if(basicData.placeOfBirth?.equals("pak",true)?:false){
                 binding.placeBirth.dropdown_2.isEnabled=true
+                binding.placeBirth.autoCompleteTextView2.isEnabled=true
             }else{
                 binding.placeBirth.dropdown_2.isEnabled=false
+                binding.placeBirth.autoCompleteTextView2.isEnabled=false
             }
             binding.placeBirth.autoCompleteTextView1.setText(
                 AppConstants
@@ -255,12 +262,7 @@ class KycBasicDataOneFragment : Fragment() {
                     .map { it.second }.first(),false)
         }
 
-        if(!TextUtils.isEmpty(basicData.placeOfBirthCity)){
-            binding.placeBirth.autoCompleteTextView2.setText(AppConstants
-                .CITY
-                .filter { it.first.first.equals(basicData.placeOfBirthCity) }
-                .map { it.first.second }.first(),false)
-        }
+
 
         binding.ivrService.setSelectedOption(basicData.ivrstatus)
 

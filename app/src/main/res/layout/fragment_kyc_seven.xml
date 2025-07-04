@@ -32,6 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="20dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tell_us_abo"
@@ -224,17 +225,16 @@
 
 
                 <com.example.scstrade.views.widgets.CountyDropDown
+                    android:id="@+id/attorney_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:id="@+id/attorney_country"
-                    app:hintLabel="@string/attorney_country"
+                    android:layout_marginTop="8dp"
                     app:dropdownLabel="@string/select_your_country"
+                    app:hintLabel="@string/attorney_country"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/residence_number"/>
-
+                    app:layout_constraintTop_toBottomOf="@+id/residence_number" />
 
                 <com.example.scstrade.views.widgets.LabelledSpinner
                     android:layout_width="match_parent"

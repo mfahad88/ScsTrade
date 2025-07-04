@@ -43,12 +43,9 @@ class KycContactDetailOneFragment : Fragment() {
         fetchUser()
         viewModel.getcontactDetails()
         initField()
-        val list=listOf(
-            "No" to "N",
-            "Yes" to "Y"
-        )
 
-        binding.parmanentAddrOption.setList(list.map { android.util.Pair(it.first,it.second) })
+
+
 
         binding.mailingCountry.dropdown.addTextChangedListener {
             if(it.toString().equals("Pakistan",true)){
@@ -77,7 +74,32 @@ class KycContactDetailOneFragment : Fragment() {
                 binding.permanentOtherCity.visibility=View.VISIBLE
             }
         }
+        binding.btnCopy.setOnClickListener {
+            binding.apply {
+                parmanentAddr1.text=mailingAddress1.text
+                parmanentAddr2.text=mailingAddress2.text
+                parmanentAddr3.text=mailingAddress3.text
 
+                permanentCountry.setSelectedDropDown(mailingCountry.selectedDropDown.first)
+                permanentProvince.setSelectedDropDown(mailingProvince.selectedDropDown.first)
+                permanentCity.setSelectedDropDown(mailingCity.selectedDropDown.first.first)
+
+                permanentOtherProvince.selectedOption=mailingOtherProvince.selectedOption
+                permanentOtherCity.selectedOption=mailingOtherCity.selectedOption
+
+                if(permanentCountry.selectedDropDown.first.equals("pak",true)){
+                    permanentProvince.visibility=View.VISIBLE
+                    permanentCity.visibility = View.VISIBLE
+                    permanentOtherProvince.visibility = View.GONE
+                    permanentOtherCity.visibility = View.GONE
+                }else{
+                    permanentProvince.visibility=View.GONE
+                    permanentCity.visibility = View.GONE
+                    permanentOtherProvince.visibility = View.VISIBLE
+                    permanentOtherCity.visibility = View.VISIBLE
+                }
+            }
+        }
 
 
         binding.mailingProvince.dropdown.addTextChangedListener {province->
@@ -113,13 +135,7 @@ class KycContactDetailOneFragment : Fragment() {
                 })
             }
         }
-        binding.parmanentAddrOption.setOnButtonOneClickListener {
-            binding.layoutPermanent.visibility = View.VISIBLE
-        }
 
-        binding.parmanentAddrOption.setOnButtonTwoClickListener {
-            binding.layoutPermanent.visibility = View.GONE
-        }
         viewModel.mutableCreateContactDetail.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {
@@ -149,67 +165,44 @@ class KycContactDetailOneFragment : Fragment() {
                     !isEmpty(mailingAddress2) &&
                     !isEmpty(mailingAddress3) &&
                     !mailingCountry.isEmpty &&
+                    !isEmpty(parmanentAddr1) &&
+                    !isEmpty(parmanentAddr2) &&
+                    !isEmpty(parmanentAddr3) &&
+                    !permanentCountry.isEmpty &&
                     !isEmpty(officeResidenceNumber.textview_1)&&
-                    !isEmpty(officeResidenceNumber.textview_2)){
+                    !isEmpty(officeResidenceNumber.textview_2) &&
+                    !isEmpty(phoneNumbers.textview_1)&&
+                    !isEmpty(phoneNumbers.textview_2)
+                    ){
 
                     viewModel.createContactDetail(
                         ContactDetailDto(
-                            id=null,
-                            mailingAddress1=mailingAddress1.text.toString(),
-                            mailingAddress2=mailingAddress2.text.toString(),
-                            mailingAddress3=mailingAddress3.text.toString(),
-                            mailingCountryId=mailingCountry.selectedDropDown.first,
-                            mailingProvinceId= if(mailingProvince.visibility==View.VISIBLE) mailingProvince.selectedDropDown.second else null,
-                            mailingCityId= if(mailingCity.visibility==View.VISIBLE) mailingCity.selectedDropDown.first.first else null,
+                            id = null,
+                            mailingAddress1 = mailingAddress1.text.toString(),
+                            mailingAddress2 = mailingAddress2.text.toString(),
+                            mailingAddress3 = mailingAddress3.text.toString(),
+                            mailingCountryId = mailingCountry.selectedDropDown.first,
+                            mailingProvinceId =  if (mailingProvince.visibility == View.VISIBLE) mailingProvince.selectedDropDown.second else null,
+                            mailingCityId = if (mailingCity.visibility == View.VISIBLE) mailingCity.selectedDropDown.first.first else null,
                             mailingCityOther = mailingOtherCity.selectedOption,
                             mailingProvinceOther = mailingOtherProvince.selectedOption,
-                            mailingphoneNo= officeResidenceNumber.textview_1.text.toString(),
-                            mailingResidence= officeResidenceNumber.textview_2.text.toString(),
-                            mailingProof= mailingAddress1.text.toString(),
-                            permanentProof= if(!TextUtils.isEmpty(parmanentAddr1.text.toString()))parmanentAddr1.text.toString() else null,
-                            permanentAddress1=if(!TextUtils.isEmpty(parmanentAddr1.text.toString()))parmanentAddr1.text.toString() else null,
-                            permanentAddress2=if(!TextUtils.isEmpty(parmanentAddr2.text.toString()))parmanentAddr2.text.toString() else null,
-                            permanentAddress3=if(!TextUtils.isEmpty(parmanentAddr3.text.toString()))parmanentAddr3.text.toString() else null,
-                            permanentCountryId=if(!TextUtils.isEmpty(permanentCountry.selectedDropDown.first))permanentCountry.selectedDropDown.first else null,
-                            permanentProvinceOther=if(!TextUtils.isEmpty(permanentOtherProvince.selectedOption))permanentOtherProvince.selectedOption else null,
-                            permanentCityOther= if(!TextUtils.isEmpty(permanentOtherCity.selectedOption))permanentOtherCity.selectedOption else null,
-                            permanentProvinceId=if(permanentProvince.visibility==View.VISIBLE) permanentProvince.selectedDropDown.second else null,
-                            permanentCityId= if(permanentCity.visibility==View.VISIBLE) permanentCity.selectedDropDown.first.first else null,
-                            permanentphoneNo=if(!TextUtils.isEmpty(phoneNumbers.textview_1.text.toString()))phoneNumbers.textview_1.text.toString() else null,
-                            permanentResidence = if(!TextUtils.isEmpty(phoneNumbers.textview_2.text.toString()))phoneNumbers.textview_2.text.toString() else null,
-
+                            mailingphoneNo = officeResidenceNumber.textview_1.text.toString(),
+                            mailingResidence = officeResidenceNumber.textview_2.text.toString(),
+                            mailingProof = mailingAddress1.text.toString(),
+                            permanentProof = parmanentAddr1.text.toString(),
+                            permanentAddress1 = parmanentAddr1.text.toString(),
+                            permanentAddress2 = parmanentAddr2.text.toString(),
+                            permanentAddress3 = parmanentAddr3.text.toString(),
+                            permanentCountryId = permanentCountry.selectedDropDown.first,
+                            permanentProvinceOther = permanentOtherProvince.selectedOption,
+                            permanentCityOther = permanentOtherCity.selectedOption,
+                            permanentProvinceId = if (permanentProvince.visibility == View.VISIBLE) permanentProvince.selectedDropDown.second else null,
+                            permanentCityId = if (permanentCity.visibility == View.VISIBLE) permanentCity.selectedDropDown.first.first else null,
+                            permanentphoneNo = phoneNumbers.textview_1.text.toString(),
+                            permanentResidence = phoneNumbers.textview_1.text.toString(),
                         )
                     )
-                  /*  if(mailingCountry.selectedDropDown.second.equals("pakistan",true)){
-                        if(!mailingProvince.isEmpty && mailingCity.isEmpty && binding.parmanentAddrOption.selectedOption.second.equals("N")){
-                            if(!isEmpty(binding.parmanentAddr1) && !permanentCountry.isEmpty && !isEmpty(phoneNumbers.textview_1) && !isEmpty(phoneNumbers.textview_2)){
-                                if(permanentCountry.selectedDropDown.second.equals("pakistan",true)){
-                                    if(!permanentProvince.isEmpty && permanentCity.isEmpty && binding.parmanentAddrOption.selectedOption.second.equals("N")){
-                                        //api call
-                                    }else{
 
-                                    }
-                                }
-                                //api call
-                            }else{
-                                Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
-                            }
-
-                        }else if (!mailingProvince.isEmpty && mailingCity.isEmpty && binding.parmanentAddrOption.selectedOption.second.equals("Y")){
-                            //api call
-                        }else{
-                            Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
-                        }
-                    }else{
-                        if(!mailingOtherProvince.isEmpty && !mailingOtherCity.isEmpty && binding.parmanentAddrOption.selectedOption.second.equals("N")){
-                            //api call
-                        }else if(!mailingOtherProvince.isEmpty && !mailingOtherCity.isEmpty && binding.parmanentAddrOption.selectedOption.second.equals("Y")){
-                            //api call
-                        }else{
-                            Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
-                        }
-                    }
-*/
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
@@ -274,10 +267,9 @@ class KycContactDetailOneFragment : Fragment() {
             }
 
             if(!TextUtils.isEmpty(data.permanentAddress1)){
-                parmanentAddrOption.toggleSelection(true)
-                layoutPermanent.visibility = View.VISIBLE
                 parmanentAddr1.setText(data.permanentAddress1)
             }
+
 
             if(!TextUtils.isEmpty(data.permanentAddress2)){
                 parmanentAddr2.setText(data.permanentAddress2)
@@ -287,6 +279,8 @@ class KycContactDetailOneFragment : Fragment() {
                 parmanentAddr3.setText(data.permanentAddress3)
             }
 
+            mailingOtherProvince.selectedOption=data.mailingProvinceOther
+            mailingOtherCity.selectedOption=data.mailingCityOther
             permanentCountry.setSelectedDropDown(data.permanentCountryId)
             permanentProvince.setSelectedDropDown(data.permanentProvinceId)
             permanentCity.setSelectedDropDown(data.permanentCityId)

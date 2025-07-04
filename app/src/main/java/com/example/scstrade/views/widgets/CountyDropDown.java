@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,6 +34,7 @@ public class CountyDropDown extends TextInputLayout {
     LabelledSpinnerBinding binding;
     public AutoCompleteTextView dropdown;
     private Pair<String,String> selectedDropDown;
+    public MutableLiveData<Pair<String,String>> mutableSelectedDropdown;
     public List<Pair<String,String>> entries;
     public CountyDropDown(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -45,7 +47,7 @@ public class CountyDropDown extends TextInputLayout {
 
     private void init(Context context, AttributeSet attrs) {
         binding = LabelledSpinnerBinding.inflate(LayoutInflater.from(context),this,true);
-
+        mutableSelectedDropdown=new MutableLiveData<>();
         if(attrs!=null){
             TypedArray a=context.getTheme().obtainStyledAttributes(
                     attrs,
@@ -73,6 +75,7 @@ public class CountyDropDown extends TextInputLayout {
                         for (Pair<String,String> item : entries) {
                             if (item.second.equalsIgnoreCase(selectedLabel)) {
                                 selectedDropDown = item; // e.g. "S"
+                                mutableSelectedDropdown.setValue(item);
 //                                break;
                             }
                         }
@@ -96,6 +99,7 @@ public class CountyDropDown extends TextInputLayout {
                 if(item.first.equalsIgnoreCase(selectedDropDown)){
                     binding.dropdown.setText(item.second,false);
                     this.selectedDropDown=item;
+                    mutableSelectedDropdown.setValue(item);
 //                    break;
                 }
             }

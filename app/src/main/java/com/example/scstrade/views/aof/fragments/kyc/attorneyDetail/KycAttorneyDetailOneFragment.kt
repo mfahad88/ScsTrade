@@ -42,6 +42,24 @@ class KycAttorneyDetailOneFragment : Fragment() {
         viewModel = (requireActivity() as AofActivity).viewModel
         viewModel.getattorneyDetails()
         initFields()
+        binding.attorneyCountry.mutableSelectedDropdown.observe(viewLifecycleOwner, Observer {
+            if(it.first.equals("pak",true)){
+                binding.apply {
+                    attorneyProvince.visibility=View.VISIBLE
+                    attorneyCity.visibility=View.VISIBLE
+                    attorneyOtherProvince.visibility = View.INVISIBLE
+                    attorneyOtherCity.visibility = View.INVISIBLE
+                }
+            }else{
+                binding.apply {
+                    attorneyProvince.visibility=View.INVISIBLE
+                    attorneyCity.visibility=View.INVISIBLE
+                    attorneyOtherProvince.visibility = View.VISIBLE
+                    attorneyOtherCity.visibility = View.VISIBLE
+                }
+            }
+        })
+
 
         viewModel.mutableAttorneyDetail.observe(viewLifecycleOwner, Observer { result->
             when(result){
@@ -205,6 +223,8 @@ class KycAttorneyDetailOneFragment : Fragment() {
                     binding.attorneyProvince.setSelectedDropDown(response?.mailingProvinceAtr)
 
                     binding.attorneyCity.setSelectedDropDown(response?.mailingCityAtr)
+                    binding.attorneyOtherProvince.selectedOption=response?.otherMailingProvAtr
+                    binding.attorneyOtherCity.selectedOption=response?.otherMailingCityAtr
 
                 }
             }

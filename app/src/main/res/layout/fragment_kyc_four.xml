@@ -37,6 +37,7 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -145,7 +146,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mailing_address_3" />
 
-
             <com.example.scstrade.views.widgets.LabelledSpinner
                 android:id="@+id/mailing_province"
                 android:layout_width="match_parent"
@@ -220,7 +220,32 @@
                 app:typeDualDropdown1="text"
                 app:typeDualDropdown2="text" />
 
-            <com.example.scstrade.views.widgets.DualOptionToggleView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:textFontWeight="500"
+                    android:textAppearance="@style/click_to_fill"
+                    android:text="@string/click_to_fill"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:cornerRadius="7dp"
+                    android:id="@+id/btn_copy"
+                    app:backgroundTint="#3b82f6"
+                    android:layout_weight="0.5"
+                    android:text="Copy"/>
+            </LinearLayout>
+            <!--<com.example.scstrade.views.widgets.DualOptionToggleView
                 android:id="@+id/parmanent_addr_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -230,13 +255,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/office_residence_number"
                 app:titleButton1="No"
                 app:titleButton2="Yes"
-                app:titleDualOption="@string/is_your_mai" />
+                app:titleDualOption="@string/is_your_mai" />-->
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/no_worries"
                 android:layout_width="match_parent"
                 android:layout_height="115dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="15dp"
                 app:cardBackgroundColor="#F4F9FF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -288,8 +313,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layoutPermanent"
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:orientation="vertical">
 
                 <EditText
@@ -414,6 +437,8 @@
                     app:titleDualDropdown="@string/kindly_ente"
                     app:typeDualDropdown1="text"
                     app:typeDualDropdown2="text" />
+
+
             </LinearLayout>
 
             <!--<androidx.constraintlayout.widget.Group

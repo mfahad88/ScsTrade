@@ -86,7 +86,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     },3000)
                 }
 
-                Log.e("Stock:", "${previousPrice}\n${stockItem.cL}")
+//                Log.e("Stock:", "${previousPrice}\n${stockItem.cL}")
                 binding.valueTrade.text = String.format("%.2f",stockItem.cL)
 
 
@@ -204,7 +204,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
 
         val end = System.nanoTime()
-        Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
+//        Log.d("RecyclerView", "Bind time: ${(end - start)/1_000_000} ms")
     }
 
 
