@@ -29,6 +29,10 @@ public class FileUploadCamera extends MaterialCardView {
 
     public FileUploadCameraBinding binding;
 
+    public void setFileName(@Nullable String fileName) {
+        this.fileName = fileName;
+    }
+
     private @Nullable String fileName;          // shown in UI
     private @Nullable String base64;            // encoded image
 
@@ -115,7 +119,7 @@ public class FileUploadCamera extends MaterialCardView {
 
     /* --------------------------- ui helpers ----------------------------- */
 
-    private void updateVisuals(boolean hasFile) {
+    public void updateVisuals(boolean hasFile) {
         if (hasFile) {
             binding.fileName.setText(fileName);
             binding.fileName.setVisibility(View.VISIBLE);

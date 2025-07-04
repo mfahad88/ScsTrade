@@ -597,7 +597,33 @@ class AofRepository (val apiService: ApiService,val context: Context){
 
     suspend fun nomineeDetails(nomineeDetailDto: NomineeDetailDto):Resource<ApiResponse<Nothing>>{
         try {
-            val response = apiService.nomineeDetails(nomineeDetailDto)
+            fun String?.toPart() = this?.toRequestBody("text/plain".toMediaTypeOrNull())
+            fun Int?.toPart() = this?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val addressNmn = nomineeDetailDto.addressNmn.toPart()
+            val cnicExpiryDateNmn = nomineeDetailDto.cnicExpiryDateNmn.toPart()
+            val cnicLifeTimeNmn = nomineeDetailDto.cnicLifeTimeNmn.toPart()
+            val cnicNmn = nomineeDetailDto.cnicNmn.toPart()
+            val id = nomineeDetailDto.id.toPart()
+            val identificationNmn = nomineeDetailDto.identificationNmn.toPart()
+            val mobileNoNmn = nomineeDetailDto.mobileNoNmn.toPart()
+            val nameNmn = nomineeDetailDto.nameNmn.toPart()
+            val nicBackNmn = nomineeDetailDto.nicBackNmn.toPart()
+            val nicFrontNmn = nomineeDetailDto.nicFrontNmn.toPart()
+            val nomineeType = nomineeDetailDto.nomineeType.toPart()
+            val relationShipNmn = nomineeDetailDto.relationShipNmn.toPart()
+            val response = apiService.nomineeDetails( addressNmn,
+                cnicExpiryDateNmn,
+                cnicLifeTimeNmn,
+                cnicNmn,
+                id,
+                identificationNmn,
+                mobileNoNmn,
+                nameNmn,
+                nicBackNmn,
+                nicFrontNmn,
+                nomineeType,
+                relationShipNmn)
             if(response.isSuccessful){
                 return Resource.Success(response.body()!!)
             }else{

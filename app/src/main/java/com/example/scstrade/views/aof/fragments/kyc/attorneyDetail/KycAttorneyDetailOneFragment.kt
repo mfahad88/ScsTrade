@@ -27,6 +27,11 @@ class KycAttorneyDetailOneFragment : Fragment() {
     lateinit var viewModel: AofViewModel
     lateinit var binding: FragmentKycSevenBinding
 
+    override fun onDestroyView() {
+        viewModel.mutableAttorneyDetail.value=null
+        super.onDestroyView()
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,29 +88,45 @@ class KycAttorneyDetailOneFragment : Fragment() {
                         )
                     )
                 }else{
-                    viewModel.attorneyDetails(
-                        AttorneyDetailDto(
-                            isTheAtto.selectedOption.second,
-                            fullName.selectedOption,
-                            uinNumber.selectedOption,
-                            isAttorney.textFieldValue,
-                            isAttorney.selectedOption.second,
-                            emailAddr.selectedOption,
-                            null,
-                            uinType.selectedDropDown.second,
-                            residenceNumber.selectedOption,
-                            mailingAddress1.text.toString(),
-                            mailingAddress2.text.toString(),
-                            mailingAddress3.text.toString(),
-                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyCity.selectedDropDown.first.first else null,
-                            attorneyCountry.selectedDropDown.first,
-                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyProvince.selectedDropDown.second else null,
-                            mobileNumber.selectedOption,
-                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherCity.selectedOption,
-                            if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherProvince.selectedOption,
-                            labelledSpinner.selectedDropDown.second,
+                    if(!labelledSpinner.isEmpty &&
+                       !fullName.isEmpty &&
+                        !uinType.isEmpty &&
+                        !uinNumber.isEmpty &&
+                        !isAttorney.isSelectedOtionEmpty &&
+                        !mobileNumber.isEmpty &&
+                        !emailAddr.isEmpty &&
+                        !TextUtils.isEmpty(mailingAddress1.text.toString()) &&
+                        !TextUtils.isEmpty(mailingAddress2.text.toString()) &&
+                        !TextUtils.isEmpty(mailingAddress3.text.toString()) &&
+                        !residenceNumber.isEmpty &&
+                        !attorneyCountry.isEmpty){
+                        viewModel.attorneyDetails(
+                            AttorneyDetailDto(
+                                isTheAtto.selectedOption.second,
+                                fullName.selectedOption,
+                                uinNumber.selectedOption,
+                                isAttorney.textFieldValue,
+                                isAttorney.selectedOption.second,
+                                emailAddr.selectedOption,
+                                null,
+                                uinType.selectedDropDown.second,
+                                residenceNumber.selectedOption,
+                                mailingAddress1.text.toString(),
+                                mailingAddress2.text.toString(),
+                                mailingAddress3.text.toString(),
+                                if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyCity.selectedDropDown.first.first else null,
+                                attorneyCountry.selectedDropDown.first,
+                                if(attorneyCountry.selectedDropDown.first.equals("pak",true))attorneyProvince.selectedDropDown.second else null,
+                                mobileNumber.selectedOption,
+                                if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherCity.selectedOption,
+                                if(attorneyCountry.selectedDropDown.first.equals("pak",true))null else attorneyOtherProvince.selectedOption,
+                                labelledSpinner.selectedDropDown.second,
+                            )
                         )
-                    )
+                    }else{
+                        Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                    }
+
                 }
             }
         }

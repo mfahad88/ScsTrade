@@ -315,8 +315,23 @@ interface ApiService {
     @POST(value = "api/attorney-details")
     suspend fun attorneyDetails(@Body attorneyDetailDto: AttorneyDetailDto):Response<ApiResponse<Nothing>>
 
+    @Multipart
     @POST(value = "api/nominee-details")
-    suspend fun nomineeDetails(@Body nomineeDetailDto: NomineeDetailDto):Response<ApiResponse<Nothing>>
+    suspend fun nomineeDetails(
+        @Part("addressNmn") addressNmn: RequestBody?,
+        @Part("cnicExpiryDateNmn") cnicExpiryDateNmn: RequestBody?,
+        @Part("cnicLifeTimeNmn") cnicLifeTimeNmn: RequestBody?,
+        @Part("cnicNmn") cnicNmn: RequestBody?,
+        @Part("id") id: RequestBody?, // convert int to string
+        @Part("identificationNmn") identificationNmn: RequestBody?,
+        @Part("mobileNoNmn") mobileNoNmn: RequestBody?,
+        @Part("nameNmn") nameNmn: RequestBody?,
+        @Part("nicBackNmn") nicBackNmn: RequestBody?,
+        @Part("nicFrontNmn") nicFrontNmn: RequestBody?,
+        @Part("nomineeType") nomineeType: RequestBody?,
+        @Part("relationShipNmn") relationShipNmn: RequestBody?
+    ): Response<ApiResponse<Nothing>>
+//    suspend fun nomineeDetails(@Body nomineeDetailDto: NomineeDetailDto):Response<ApiResponse<Nothing>>
 
     @POST(value = "api/other-details")
     suspend fun otherDetails(@Body otherDetailDto: OtherDetailDto):Response<ApiResponse<Nothing>>

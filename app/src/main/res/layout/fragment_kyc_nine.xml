@@ -153,11 +153,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:strokeWidth="0dp"
                     app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeWidth="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -181,29 +181,27 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.example.scstrade.views.widgets.FileUploadCamera
+                            android:id="@+id/nic_front"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:colorFileUpload="#1A73E8"
                             android:layout_marginTop="15dp"
+                            app:colorFileUpload="#1A73E8"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tell_us_abos"
-                            app:titleFileUpload="@string/nominee_nic"
-                            android:id="@+id/nic_front"
-                            />
+                            app:titleFileUpload="@string/nominee_nic" />
 
 
                         <com.example.scstrade.views.widgets.FileUploadCamera
+                            android:id="@+id/nic_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:colorFileUpload="#1A73E8"
                             android:layout_marginTop="10dp"
+                            app:colorFileUpload="#1A73E8"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/nic_front"
-                            app:titleFileUpload="@string/nominee_nic_back"
-                            android:id="@+id/nic_back"
-                            />
+                            app:titleFileUpload="@string/nominee_nic_back" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

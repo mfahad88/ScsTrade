@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.*
@@ -18,8 +19,12 @@ import com.example.scstrade.databinding.FragmentKycNineBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
+import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailOneFragment
 
 class KycNomineeDetailOneFragment : Fragment() {
 
@@ -33,7 +38,8 @@ class KycNomineeDetailOneFragment : Fragment() {
     /* Output Uris for camera */
     private var frontCamUri: Uri? = null
     private var backCamUri : Uri? = null
-
+    private var nicNMBack:String? =null
+    private var nicNMFront:String? =null
     /* ---------- runtime CAMERA permission ---------- */
 
     private var pendingCameraAction: (() -> Unit)? = null
@@ -66,6 +72,11 @@ class KycNomineeDetailOneFragment : Fragment() {
 
     /* ------------------------------------------------ */
 
+    override fun onDestroyView() {
+        viewModel.mutableNomineeDetail.value =null
+        super.onDestroyView()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -88,7 +99,7 @@ class KycNomineeDetailOneFragment : Fragment() {
         val frontGallery = registerForActivityResult(GetContent()) { uri ->
             uri?.let {
                 binding.nicFront.bindImage(it)
-                nicFrontB64 = binding.nicFront.getBase64()
+                nicFrontB64 = "data:image/jpeg;base64,${binding.nicFront.getBase64()}"
             }
         }
 
@@ -96,7 +107,7 @@ class KycNomineeDetailOneFragment : Fragment() {
             if (ok) {
                 frontCamUri?.let {
                     binding.nicFront.bindImage(it)
-                    nicFrontB64 = binding.nicFront.getBase64()
+                    nicFrontB64 = "data:image/jpeg;base64,${binding.nicFront.getBase64()}"
                 }
             }
         }
@@ -111,7 +122,7 @@ class KycNomineeDetailOneFragment : Fragment() {
         val backGallery = registerForActivityResult(GetContent()) { uri ->
             uri?.let {
                 binding.nicBack.bindImage(it)
-                nicBackB64 = binding.nicBack.getBase64()
+                nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
             }
         }
 
@@ -119,7 +130,7 @@ class KycNomineeDetailOneFragment : Fragment() {
             if (ok) {
                 backCamUri?.let {
                     binding.nicBack.bindImage(it)
-                    nicBackB64 = binding.nicBack.getBase64()
+                    nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
                 }
             }
         }
@@ -129,7 +140,89 @@ class KycNomineeDetailOneFragment : Fragment() {
         binding.nicBack.binding.cardUpload.setOnClickListener {
             withCameraPermission { backCamera.launch(backCamUri) }
         }
+        viewModel.mutableNomineeDetail.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    Log.e("Aof",result.message?:"")
+                    Utils.showError(requireView(), result.message)
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    binding.loader.visibility = View.GONE
+                    (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                }
+            }
+        })
+        binding.apply {
+            nomineeNic.editText.setOnFocusChangeListener { view, b ->
+                if(b){
+                    Utils.showDatePicker(requireContext()){
+                        nomineeNic.textFieldValue=it
+                    }
+                }
+            }
+            back.setOnClickListener {
+                (requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+            }
+            btnContinue.setOnClickListener {
 
+                if(nominee.selectedOption.second.equals("n",true)){
+
+                    viewModel.nomineeDetails(
+                        NomineeDetailDto(
+                            addressNmn = null,
+                            cnicExpiryDateNmn = null,
+                            cnicLifeTimeNmn = null,
+                            cnicNmn = null,
+                            identificationNmn = null,
+                            mobileNoNmn = null,
+                            nameNmn = null,
+                            nicBackNmn = null,
+                            nicFrontNmn = null,
+                            nomineeType = nominee.selectedOption.second,
+                            relationShipNmn = null,
+                            id = null
+                        )
+                    )
+
+                }else{
+                    if(
+                        !nomineeRelation.isEmpty &&
+                        !nomineeName.isEmpty &&
+                        !nomineeMobile.isEmpty &&
+                        !uinType.isEmpty &&
+                        !uinNumber.isEmpty &&
+                        !TextUtils.isEmpty(nomineeAddress.text.toString()) &&
+                        !nomineeNic.isSelectedOtionEmpty &&
+                        (!TextUtils.isEmpty(nicNMBack.toString()) || !TextUtils.isEmpty(nicBackB64.toString())) &&
+                        (!TextUtils.isEmpty(nicNMFront.toString()) || !TextUtils.isEmpty(nicFrontB64.toString()))
+                    ){
+                        viewModel.nomineeDetails(
+                            NomineeDetailDto(
+                                addressNmn = nomineeAddress.text.toString(),
+                                cnicExpiryDateNmn = nomineeNic.textFieldValue,
+                                cnicLifeTimeNmn = nomineeNic.selectedOption.second,
+                                cnicNmn = uinNumber.selectedOption,
+                                identificationNmn = uinType.selectedDropDown.second,
+                                mobileNoNmn = nomineeMobile.selectedOption,
+                                nameNmn = nomineeName.selectedOption,
+                                nicBackNmn = if(!TextUtils.isEmpty(nicBackB64)) nicBackB64 else nicNMBack,
+                                nicFrontNmn = if(!TextUtils.isEmpty(nicFrontB64)) nicFrontB64 else nicNMFront,
+                                nomineeType = nominee.selectedOption.second,
+                                relationShipNmn = nomineeRelation.selectedDropDown.second,
+                                id = null
+                            )
+                        )
+                    }else{
+                        Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
+                    }
+
+                }
+
+
+            }
+        }
         return binding.root
     }
 
@@ -163,8 +256,22 @@ class KycNomineeDetailOneFragment : Fragment() {
                         binding.uinType.setSelectedDropDown(data.identificationNmn)
                         binding.uinNumber.selectedOption=data.cnicNmn
                         binding.nomineeAddress.setText(data.addressNmn)
-                        if(data.cnicLifeTimeNmn.equals("n")){
+                        binding.nomineeNic.setSelectedOption(data.cnicLifeTimeNmn)
+                        if(data.cnicLifeTimeNmn.equals("n",true)){
+
                             binding.nomineeNic.textFieldValue=Utils.formatDateString(data.cnicExpiryDateNmn)
+                        }
+                        nicNMBack=data.nicBackNmn
+                        nicNMFront=data.nicFrontNmn
+
+                        if(!TextUtils.isEmpty(nicNMBack)){
+                            binding.nicBack.fileName=nicNMBack
+                            binding.nicBack.updateVisuals(true)
+                        }
+
+                        if(!TextUtils.isEmpty(nicNMFront)){
+                            binding.nicFront.fileName=nicNMFront
+                            binding.nicFront.updateVisuals(true)
                         }
                     }
                 }

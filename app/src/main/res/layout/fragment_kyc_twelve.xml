@@ -20,98 +20,263 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
-    <TextView
-        android:id="@+id/tell_us_abo"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/please_prov_record"
-        android:textAppearance="@style/tell_us_abo"
-        android:textFontWeight="500"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/account_type"
-        android:layout_marginTop="32dp"
-        app:titleDualOption="@string/what_is_you"
-        app:titleButton1="@string/normal"
-        app:titleButton2="@string/sahulat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
-
-    <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:id="@+id/gross_annual_incomeslab"
-        app:hintLabel="@string/gross_annual_incomeslab"
-        app:dropdownLabel="@string/select_your_gross"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/account_type"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-    <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:maxLength="30"
-        android:inputType="text"
-        android:id="@+id/source_of_income"
-        app:hintText="@string/source_of_income"
-        app:hintTextField="@string/enter_your_source"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gross_annual_incomeslab"/>
+            <TextView
+                android:id="@+id/tell_us_abo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/please_prov_record"
+                android:textAppearance="@style/tell_us_abo"
+                android:textFontWeight="500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_type"
+                android:layout_marginTop="32dp"
+                app:titleDualOption="@string/what_is_you"
+                app:titleButton1="@string/normal"
+                app:titleButton2="@string/sahulat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
+
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:id="@+id/gross_annual_incomeslab"
+                app:hintLabel="@string/gross_annual_incomeslab"
+                app:dropdownLabel="@string/select_your_gross"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/account_type"/>
 
 
-    <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/occupation"
-        app:titleDualDropdown="@string/what_is_you_occ"
-        android:layout_marginTop="12dp"
-        app:hintDualDropdown1="Other"
-        app:hintDualDropdown2="@string/enter_your_occupation"
-        app:typeDualDropdown1="dropdown"
-        app:typeDualDropdown2="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/source_of_income"/>
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:maxLength="30"
+                android:inputType="text"
+                android:id="@+id/source_of_income"
+                app:hintText="@string/source_of_income"
+                app:hintTextField="@string/enter_your_source"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gross_annual_incomeslab"/>
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/occupation"
+                app:titleDualDropdown="@string/what_is_you_occ"
+                android:layout_marginTop="12dp"
+                app:hintDualDropdown1="Other"
+                app:hintDualDropdown2="@string/enter_your_occupation"
+                app:typeDualDropdown1="dropdown"
+                app:typeDualDropdown2="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/source_of_income"/>
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/job_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleDualDropdown="@string/please_prov_job"
+                app:typeDualDropdown1="text"
+                app:typeDualDropdown2="text"
+                app:hintDualDropdown1="@string/enter_your_job_designation"
+                app:hintDualDropdown2="@string/enter_your_department"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/employer_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleDualDropdown="@string/please_prov_employer"
+                app:typeDualDropdown1="text"
+                app:typeDualDropdown2="text"
+                app:hintDualDropdown1="@string/enter_your_job_employer_name"
+                app:hintDualDropdown2="@string/enter_your_employer_address"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/job_details" />
+
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/zakat_status"
+                app:hintDualDropdown1="@string/select_your_zakat_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleDualDropdown="@string/please_spec"
+                app:typeDualDropdown1="dropdown" />
+
+
+
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:hintDualDropdown1="UBL Bank"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/zakat_status"
+                app:titleDualDropdown="@string/please_select_your_bank_from_the_list_below"
+                app:typeDualDropdown1="text" />
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/remittance_basis"
+                app:typeDualDropdown1="dropdown"
+                app:hintDualDropdown1="@string/select_remittance_basis"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bank"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="128dp"
+                android:text="@string/upload_all_"
+                android:textAppearance="@style/tell_us_abo"
+                android:textFontWeight="500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.example.scstrade.views.widgets.FileUploadCamera
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/proof_of_pe"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:colorFileUpload="#1A73E8"
+                android:layout_marginTop="15dp"
+                app:titleFileUpload="@string/proof_of_pe"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
+
+            <com.example.scstrade.views.widgets.FileUploadCamera
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/income_proo"
+                app:colorFileUpload="#1A73E8"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:titleFileUpload="@string/income_proo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proof_of_pe"/>
+
+
+            <com.example.scstrade.views.widgets.FileUploadCamera
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/specimen_si"
+                app:colorFileUpload="#1A73E8"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:titleFileUpload="@string/specimen_si"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/income_proo"/>
+
+
+            <com.example.scstrade.views.widgets.FileUploadCamera
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/zakat_decla"
+                app:colorFileUpload="#1A73E8"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:titleFileUpload="@string/zakat_decla"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/specimen_si"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:gravity="center_horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.8"
-                android:text="Back"
-                style="@style/Widget.Material3.Button.OutlinedButton"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Back" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.8"
-                android:text="Continue" />
-        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:text="Continue" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
