@@ -22,6 +22,8 @@ data class OtherDetailResponse(
     val jobTitle: String,
     @SerializedName("occupation")
     val occupation: String,
+    @SerializedName("bankName")
+    val bankName: String,
     @SerializedName("otherOccupation")
     val otherOccupation: String,
     @SerializedName("remittanceBasis")

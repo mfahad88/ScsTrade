@@ -350,6 +350,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun documents(/*documentDto: DocumentDto*/
+                  context: Context,
                   zakatStatus: String,
                   accountType: String,
                   terms: String,
@@ -357,8 +358,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
                   sigUri: String,
                   empUri: String,
                   addUri: String,
-                  zakaatUri: String,
-                  context: Context){
+                  zakaatUri: String){
         mutableDocument.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val zakat = zakatStatus.toRequestBody("text/plain".toMediaTypeOrNull())

@@ -146,6 +146,7 @@ class KycDocumentFragment : Fragment() {
             }
             btnContinue.setOnClickListener {
                 viewModel.documents(
+                    requireContext(),
                     viewModel.otherDetail.otherDetailZakatStatus?:"",
                     viewModel.otherDetail.otherDetailAccountType?:"",
                     "Y",
@@ -153,19 +154,7 @@ class KycDocumentFragment : Fragment() {
                     proofSignatureBase64!!,
                     proofPermanentEmployerAddressBase64!!,
                     proofPermanentAddressBase64!!,
-                    proofZakatBase64!!,
-                    requireContext()
-                   /* DocumentDto(
-                        accountType = viewModel.otherDetail.otherDetailAccountType?:"",
-                        identificationType =  viewModel.basicData.uinType?:"",
-                        zakatStatus =  viewModel.otherDetail.otherDetailZakatStatus?:"",
-                        signatureProof = proofSignatureBase64?:"",
-                        zakaatDeclaration = proofZakatBase64?:"",
-                        addProof = proofPermanentEmployerAddressBase64?:"",
-                        empAddProof = proofPermanentEmployerAddressBase64?:"",
-                        termsAndCondition = "Y",
-                        id = null
-                    )*/
+                    proofZakatBase64!!
                 )
             }
         }

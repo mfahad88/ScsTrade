@@ -12,6 +12,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.scstrade.R;
 import com.example.scstrade.databinding.DualDropdownSelectorViewBinding;
 import com.google.android.material.card.MaterialCardView;
@@ -23,6 +25,7 @@ import java.util.List;
 public class DualDropdownSelectorView extends MaterialCardView {
     private DualDropdownSelectorViewBinding binding;
     public Pair<String,String> selectedDropDown1,selectedDropDown2;
+    public MutableLiveData<Pair<String,String>> mutableselectedDropDown1,mutableselectedDropDown2;
     public TextInputLayout dropdown_1,dropdown_2;
     ArrayAdapter adapter1,adapter2;
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
@@ -35,7 +38,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
 
     private void init(Context context, AttributeSet attrs) {
         binding = DualDropdownSelectorViewBinding.inflate(LayoutInflater.from(context),this,true);
-
+        mutableselectedDropDown1=new MutableLiveData<Pair<String,String>>();
+        mutableselectedDropDown2=new MutableLiveData<Pair<String,String>>();
         if(attrs!=null){
             TypedArray a=context.getTheme().obtainStyledAttributes(
                     attrs,
@@ -116,6 +120,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
                     for (Pair<String, String> item : entries1) {
                         if (item.second.equalsIgnoreCase(selectedLabel)) {
                             selectedDropDown1 = item; // e.g. "S"
+                            mutableselectedDropDown1.setValue(item);
                             break;
                         }
                     }
@@ -129,6 +134,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
                     for (Pair<String, String> item : entries2) {
                         if (item.second.equalsIgnoreCase(selectedLabel)) {
                             selectedDropDown2 = item; // e.g. "S"
+                            mutableselectedDropDown2.setValue(item);
                             break;
                         }
                     }

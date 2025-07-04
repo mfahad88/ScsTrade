@@ -240,7 +240,7 @@ class AppConstants {
             "Above 500,000" to "J10",
        )
 
-        val AnnualIncomeNormal = listOf(
+                val AnnualIncomeNormal = listOf(
             "UP TO 100,000" to "J01",
             "100,001 - 250,000" to "J02",
             "250,001 - 500,000" to "J03",
