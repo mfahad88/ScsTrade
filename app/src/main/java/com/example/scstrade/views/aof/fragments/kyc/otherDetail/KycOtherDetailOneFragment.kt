@@ -199,29 +199,7 @@ class KycOtherDetailOneFragment : Fragment() {
                     }else{
                         Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                     }
-                    /*else{
-                        if(!grossAnnualIncomeslab.isEmpty){
-                            viewModel.otherDetails(
-                                OtherDetailDto(
-                                    accountType = accountType.selectedOption.second,
-                                    annualIncomeNormal = grossAnnualIncomeslab.selectedDropDown.second,
-                                    department = "N/A",
-                                    employeeAddress = "N/A",
-                                    employeeName = "N/A",
-                                    id = null,
-                                    jobTitle = "N/A",
-                                    occupation = "N/A",
-                                    otherOccupation = "N/A",
-                                    remittanceBasis = remittanceBasis.selectedDropDown1.second,
-                                    sourceOfIncome = "N/A",
-                                    zakatStatus = "N/A"
 
-                                )
-                            )
-                        }else{
-                            Utils.showError(requireView(),"Please select Annual Income SLAB")
-                        }
-                    }*/
                 }else{
                     Utils.showError(requireView(),getString(R.string.empty_fields_not_allowed))
                 }
@@ -402,7 +380,9 @@ class KycOtherDetailOneFragment : Fragment() {
 
                     binding.sourceOfIncome.selectedOption=response?.sourceOfIncome ?:""
                     binding.occupation.setSelectedDropDown1(response?.occupation)
-                    binding.occupation.textview_1.setText(response?.otherOccupation?:"")
+                    if(!TextUtils.isEmpty(response?.otherOccupation)?:false) {
+                        binding.occupation.textview_1.setText(response?.otherOccupation ?: "")
+                    }
                     if(response?.occupation.equals("P999")?:false){
                         binding.occupation.textview_1.isEnabled=true
                     }else{
@@ -413,7 +393,7 @@ class KycOtherDetailOneFragment : Fragment() {
                     binding.jobDetails.textview_2.setText(response?.department?: "")
                     binding.employerDetails.textview_1.setText(response?.employeeName?: "")
                     binding.employerDetails.textview_2.setText(response?.employeeAddress?: "")
-                    binding.bank.textview_1.setText(response?.bankName)
+                    binding.bank.textview_1.setText(response?.bankName?:"")
                     binding.zakatStatus.setSelectedDropDown1(response?.zakatStatus)
                     if(!TextUtils.isEmpty(response?.remittanceBasis)) {
                         if(!response?.remittanceBasis.equals("N/A",true)){

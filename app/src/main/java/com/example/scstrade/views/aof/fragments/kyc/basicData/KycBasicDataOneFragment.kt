@@ -232,6 +232,7 @@ class KycBasicDataOneFragment : Fragment() {
         binding.relationship.setSelectedOption(basicData.relationship)
         binding.relationship.setSelectedOption(basicData.relationship)
         binding.relationship.textFieldValue=basicData.fatherHusbandName
+
         if(basicData.lifeTime?.equals("Y",true)?:false){
             binding.cardNic.editText.isEnabled=false
         }
@@ -255,11 +256,7 @@ class KycBasicDataOneFragment : Fragment() {
                 binding.placeBirth.dropdown_2.isEnabled=false
                 binding.placeBirth.autoCompleteTextView2.isEnabled=false
             }
-            binding.placeBirth.autoCompleteTextView1.setText(
-                AppConstants
-                    .COUNTRY
-                    .filter { it.first.equals(basicData.placeOfBirth,true)}
-                    .map { it.second }.first(),false)
+            binding.placeBirth.setSelectedDropDown1(basicData.placeOfBirth)
         }
 
 

@@ -219,7 +219,7 @@ class KycContactDetailOneFragment : Fragment() {
     private fun initField() {
         binding.apply {
             mobileNumber.textInputEditText.setText(login.registrationPhone)
-            email.textInputEditText.setText(login.registrationEmail)
+            email.selectedOption=login.registrationEmail
             mailingCountry.setListEntries(AppConstants.COUNTRY.map { (label, code) -> android.util.Pair(label, code)  })
             mailingProvince.setListEntries(AppConstants.PROVINCE.map { (label, code) -> android.util.Pair(label, code)  })
             mailingCity.setListEntries(AppConstants.CITY.map { android.util.Pair(android.util.Pair(it.first.first,it.first.second),it.second) })

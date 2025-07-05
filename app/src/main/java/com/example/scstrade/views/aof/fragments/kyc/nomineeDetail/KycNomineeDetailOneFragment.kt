@@ -254,11 +254,16 @@ class KycNomineeDetailOneFragment : Fragment() {
                         binding.nomineeMobile.selectedOption = data.mobileNoNmn
                         binding.uinType.setSelectedDropDown(data.identificationNmn)
                         binding.uinNumber.selectedOption=data.cnicNmn
-                        binding.nomineeAddress.setText(data.addressNmn)
+                        if(!TextUtils.isEmpty(data.addressNmn)) {
+                            binding.nomineeAddress.setText(data.addressNmn)
+                        }
                         binding.nomineeNic.setSelectedOption(data.cnicLifeTimeNmn)
-                        if(data.cnicLifeTimeNmn.equals("n",true)){
+                        if(!TextUtils.isEmpty(data.cnicLifeTimeNmn)) {
+                            if (data.cnicLifeTimeNmn.equals("n", true)) {
 
-                            binding.nomineeNic.textFieldValue=Utils.formatDateString(data.cnicExpiryDateNmn)
+                                binding.nomineeNic.textFieldValue =
+                                    Utils.formatDateString(data.cnicExpiryDateNmn)
+                            }
                         }
                         nicNMBack=data.nicBackNmn
                         nicNMFront=data.nicFrontNmn

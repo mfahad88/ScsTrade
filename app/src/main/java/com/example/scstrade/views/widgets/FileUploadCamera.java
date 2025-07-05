@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,9 @@ public class FileUploadCamera extends MaterialCardView {
     public FileUploadCameraBinding binding;
 
     public void setFileName(@Nullable String fileName) {
-        this.fileName = fileName;
+        if(!TextUtils.isEmpty(fileName)) {
+            this.fileName = fileName;
+        }
     }
 
     private @Nullable String fileName;          // shown in UI

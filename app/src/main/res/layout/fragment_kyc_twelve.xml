@@ -25,6 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:paddingBottom="20dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
@@ -35,6 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:orientation="vertical">
 
 
