@@ -2,6 +2,7 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ public class DualDropdownSelectorView extends MaterialCardView {
     public MutableLiveData<Pair<String,String>> mutableselectedDropDown1,mutableselectedDropDown2;
     public TextInputLayout dropdown_1,dropdown_2;
     ArrayAdapter adapter1,adapter2;
+
+
+
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
     public EditText textview_1,textview_2;
     public List<Pair<String,String>> entries1,entries2;
@@ -35,7 +39,51 @@ public class DualDropdownSelectorView extends MaterialCardView {
         super(context, attrs);
         init(context,attrs);
     }
+    public Pair<String, String> getSelectedDropDown1() {
+        return selectedDropDown1;
+    }
 
+    public void setSelectedDropDown1(String selectedDropDown1) {
+        if(!TextUtils.isEmpty(selectedDropDown1)) {
+            for (Pair<String, String> item : entries1) {
+                if (item.second.equalsIgnoreCase(selectedDropDown1)) {
+                    this.selectedDropDown1 = item; // e.g. "S"
+                    mutableselectedDropDown1.setValue(item);
+                    binding.autocompleteTextview1.setText(item.first,false);
+                    break;
+                }else if(item.first.equalsIgnoreCase(selectedDropDown1)){
+                    this.selectedDropDown1 = item; // e.g. "S"
+                    mutableselectedDropDown1.setValue(item);
+                    binding.autocompleteTextview1.setText(item.second,false);
+                    break;
+                }
+
+            }
+        }
+    }
+
+    public Pair<String, String> getSelectedDropDown2() {
+        return selectedDropDown2;
+    }
+
+    public void setSelectedDropDown2(String  selectedDropDown2) {
+        if(!TextUtils.isEmpty(selectedDropDown2)) {
+            for (Pair<String, String> item : entries1) {
+                if (item.second.equalsIgnoreCase(selectedDropDown2)) {
+                    this.selectedDropDown2 = item; // e.g. "S"
+                    mutableselectedDropDown2.setValue(item);
+                    binding.autocompleteTextview2.setText(item.first,false);
+                    break;
+                }else if(item.first.equalsIgnoreCase(selectedDropDown2)){
+                    this.selectedDropDown2 = item; // e.g. "S"
+                    mutableselectedDropDown2.setValue(item);
+                    binding.autocompleteTextview2.setText(item.second,false);
+                    break;
+                }
+
+            }
+        }
+    }
     private void init(Context context, AttributeSet attrs) {
         binding = DualDropdownSelectorViewBinding.inflate(LayoutInflater.from(context),this,true);
         mutableselectedDropDown1=new MutableLiveData<Pair<String,String>>();

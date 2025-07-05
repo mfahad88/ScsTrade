@@ -81,7 +81,7 @@ class KycContactDetailOneFragment : Fragment() {
                 parmanentAddr3.text=mailingAddress3.text
 
                 permanentCountry.setSelectedDropDown(mailingCountry.selectedDropDown.first)
-                permanentProvince.setSelectedDropDown(mailingProvince.selectedDropDown.first)
+                permanentProvince.setSelectedDropDown(mailingProvince.selectedDropDown.second)
                 permanentCity.setSelectedDropDown(mailingCity.selectedDropDown.first.first)
 
                 permanentOtherProvince.selectedOption=mailingOtherProvince.selectedOption

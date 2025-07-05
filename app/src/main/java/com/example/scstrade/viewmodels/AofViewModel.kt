@@ -77,25 +77,6 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val mutableAttorneyDetailResponse = MutableLiveData<Resource<ApiResponse<AttorneyDetailResponse>>>()
     val mutableNomineeDetailResponse = MutableLiveData<Resource<ApiResponse<NomineeDetailResponse>>>()
     val mutableOtherDetailResponse = MutableLiveData<Resource<ApiResponse<OtherDetailResponse>>>()
-    var isWelcomeDone=MutableLiveData(false)
-    var isAccountOpeningDone=MutableLiveData(false)
-    var isEmailVerificationDone=MutableLiveData(false)
-    var isBasicDataDone=MutableLiveData(false)
-    var isAtteroneyDetailDone=MutableLiveData(false)
-    var isNomineeDetailDone=MutableLiveData(false)
-    var isOtherDetailDone=MutableLiveData(false)
-    var isUndertakingDone=MutableLiveData(false)
-    var isFormSubmitDone=MutableLiveData(false)
-
-    var isWelcomeActive=MutableLiveData(false)
-    var isAccountOpeningActive=MutableLiveData(false)
-    var isEmailVerificationActive=MutableLiveData(false)
-    var isBasicDataActive=MutableLiveData(false)
-    var isAtteroneyDetailActive=MutableLiveData(false)
-    var isNomineeDetailActive=MutableLiveData(false)
-    var isOtherDetailActive=MutableLiveData(false)
-    var isUndertakingActive=MutableLiveData(false)
-    var isFormSubmitActive=MutableLiveData(false)
 
 
     public fun saveContactIban(

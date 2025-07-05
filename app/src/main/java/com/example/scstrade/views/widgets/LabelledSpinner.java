@@ -40,7 +40,7 @@ public class LabelledSpinner extends TextInputLayout {
             for (Pair<String,String> item: entries){
                 if(item.second.equalsIgnoreCase(selectedDropDown)){
                     this.selectedDropDown = item;
-                    binding.dropdown.setText(item.first,true);
+                    binding.dropdown.setText(item.first,false);
                     break;
                 }
             }
