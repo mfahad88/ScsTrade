@@ -71,8 +71,8 @@ class LandingFragment : Fragment() {
         binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.aof.setOnClickListener {
-            Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(requireContext(),AofActivity::class.java))
+//            Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(),AofActivity::class.java))
         }
 
 

@@ -14,6 +14,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.activity.result.contract.ActivityResultContracts.TakePicture
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,91 +36,56 @@ import com.example.scstrade.views.aof.AofActivity
 class AccountOpeningThreeFragment : Fragment() {
     lateinit var binding: FragmentAccountOpeningThreeBinding
     lateinit var viewModel: AofViewModel
-    private var cameraImageUri: Uri? = null
-    private val PERMISSION_CAMERA = Manifest.permission.CAMERA
+    private var proofIbanB64: String? = null
+    private var proofIbanCamUri: Uri? = null
+    private var proofIbanNM:String? =null
 
-    private val PERMISSION_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE
-    private val PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
-    private val PERMISSION_REQ_CODE = 100
-    private val PERMISSION_REQ_CODE_GALLERY = 101
-    private var proofIbanClicked=false
-    private var nicFrontClicked=false
-    private var nicBackClicked=false
-    private var proofRelationshipClicked=false
-    private var uriIban:Uri?=null
-    private var uriNicFront:Uri?=null
-    private var uriNicBack:Uri?=null
-    private var uriRelationship:Uri?=null
-    private var ibanBase64:String?=null
-    private var nicFrontBase64:String?=null
-    private var nicBackBase64:String?=null
-    private var relationshipBase64:String?=null
+    private var nicFrontB64: String? = null
+    private var nicFrontCamUri: Uri? = null
+    private var nicFrontNM:String? =null
 
-    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        try {
-            if (success) {
-                cameraImageUri?.let {
-                    if(proofIbanClicked) {
-                        uriIban=it
-//                        binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                        ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
-                    }else if(nicFrontClicked){
-                        uriNicFront=it
-//                        binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                        nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
-                    }else if(nicBackClicked){
-                        uriNicBack=it
-//                        binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                        nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
-                    }else if(proofRelationshipClicked){
-                        uriRelationship = it
-//                        binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
-                        relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
-                    }
-                }
+    private var nicBackB64: String? = null
+    private var nicBackCamUri: Uri? = null
+    private var nicBackNM:String? =null
+
+    private var proofRelB64: String? = null
+    private var proofRelCamUri: Uri? = null
+    private var proofRelNM:String? =null
+
+
+
+    private var pendingCameraAction: (() -> Unit)? = null
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(RequestPermission()) { granted ->
+            if (granted) {
+                pendingCameraAction?.invoke()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Camera permission is required to take photos",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }catch (e:Exception)
-        {
-            e.printStackTrace()
+            pendingCameraAction = null
         }
-    }
 
-    private val pickImageLauncher  = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        try {
-            uri?.let {
-                if(proofIbanClicked) {
-                    uriIban=it
-//                    binding.proofOfIb.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    ibanBase64 = Utils.convertImageUriToBase64(requireContext(), uriIban!!)
-                }else if(nicFrontClicked){
-                    uriNicFront=it
-//                    binding.nicFront.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    nicFrontBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicFront!!)
-                }else if(nicBackClicked){
-                    uriNicBack=it
-//                    binding.nicBack.fileName = Utils.getFileNameFromUri(requireContext(), it)
-                    nicBackBase64 = Utils.convertImageUriToBase64(requireContext(), uriNicBack!!)
-                }else if(proofRelationshipClicked){
-                    uriRelationship = it
-//                    binding.proofOfRelative.fileName = Utils.getFileNameFromUri(requireContext(),it)
-                    relationshipBase64 = Utils.convertImageUriToBase64(requireContext(), uriRelationship!!)
-                }
-            }
-        }catch (e:Exception)
-        {
-            e.printStackTrace()
+    private fun withCameraPermission(action: () -> Unit) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            action()
+        } else {
+            pendingCameraAction = action
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
 
-    private fun proceedWithCameraOrStorage() {
-        try {
-            cameraImageUri = createImageUri()
-            cameraImageUri?.let { takePictureLauncher.launch(it) }
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -132,82 +100,116 @@ class AccountOpeningThreeFragment : Fragment() {
         }else{
             binding.proofOfRelative.visibility = View.VISIBLE
         }
-        binding.proofOfIb.materialSelect.setOnClickListener {
-            proofIbanClicked=true
-            nicFrontClicked=false
-            nicBackClicked=false
-            proofRelationshipClicked=false
-            pickImageLauncher.launch("image/*")
-        }
-        binding.proofOfIb.cardUpload.setOnClickListener {
-            proofIbanClicked=true
-            nicFrontClicked=false
-            nicBackClicked=false
-            proofRelationshipClicked=false
-            requestRuntimePermission()
 
-        }
-        binding.nicFront.cardUpload.setOnClickListener {
-            proofIbanClicked=false
-            nicFrontClicked=true
-            nicBackClicked=false
-            proofRelationshipClicked=false
-            requestRuntimePermission()
-        }
-
-        binding.nicFront.materialSelect.setOnClickListener {
-            proofIbanClicked=false
-            nicFrontClicked=true
-            nicBackClicked=false
-            proofRelationshipClicked=false
-            pickImageLauncher.launch("image/*")
-        }
-        binding.nicBack.cardUpload.setOnClickListener{
-            proofIbanClicked=false
-            nicFrontClicked=false
-            nicBackClicked=true
-            proofRelationshipClicked=false
-            requestRuntimePermission()
-        }
-
-        binding.nicBack.materialSelect.setOnClickListener {
-            proofIbanClicked=false
-            nicFrontClicked=false
-            nicBackClicked=true
-            proofRelationshipClicked=false
-            pickImageLauncher.launch("image/*")
-        }
-
-        binding.proofOfRelative.cardUpload.setOnClickListener {
-
-            proofIbanClicked=false
-            nicFrontClicked=false
-            nicBackClicked=false
-            proofRelationshipClicked=true
-            requestRuntimePermission()
-        }
-        binding.proofOfRelative.materialSelect.setOnClickListener {
-            proofIbanClicked=false
-            nicFrontClicked=false
-            nicBackClicked=false
-            proofRelationshipClicked=true
-            pickImageLauncher.launch("image/*")
-        }
         binding.back.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
         }
+
+        val IbanGallery = registerForActivityResult(GetContent()) { uri ->
+            uri?.let {
+                binding.proofOfIb.bindImage(it)
+                proofIbanB64 = "data:image/jpeg;base64,${binding.proofOfIb.getBase64()}"
+            }
+        }
+
+        val IbanCamera = registerForActivityResult(TakePicture()) { ok ->
+            if (ok) {
+                proofIbanCamUri?.let {
+                    binding.proofOfIb.bindImage(it)
+                    proofIbanB64 = "data:image/jpeg;base64,${binding.proofOfIb.getBase64()}"
+                }
+            }
+        }
+
+        proofIbanCamUri = createImageUri()
+        binding.proofOfIb.setGalleryLauncher(IbanGallery)
+        binding.proofOfIb.binding.cardUpload.setOnClickListener {          // ← click from custom view
+            withCameraPermission { IbanCamera.launch(proofIbanCamUri) }
+        }
+        //////////////////////////////////////////////////////////////
+
+        val frontGallery = registerForActivityResult(GetContent()) { uri ->
+            uri?.let {
+                binding.nicFront.bindImage(it)
+                nicFrontB64 = "data:image/jpeg;base64,${binding.nicFront.getBase64()}"
+            }
+        }
+
+        val frontCamera = registerForActivityResult(TakePicture()) { ok ->
+            if (ok) {
+                nicFrontCamUri?.let {
+                    binding.nicFront.bindImage(it)
+                    nicFrontB64 = "data:image/jpeg;base64,${binding.nicFront.getBase64()}"
+                }
+            }
+        }
+
+        nicFrontCamUri = createImageUri()
+        binding.nicFront.setGalleryLauncher(frontGallery)
+        binding.nicFront.binding.cardUpload.setOnClickListener {          // ← click from custom view
+            withCameraPermission { frontCamera.launch(nicFrontCamUri) }
+        }
+
+        /////////////////////////////////////////////////////////
+
+        val backGallery = registerForActivityResult(GetContent()) { uri ->
+            uri?.let {
+                binding.nicBack.bindImage(it)
+                nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
+            }
+        }
+
+        val backCamera = registerForActivityResult(TakePicture()) { ok ->
+            if (ok) {
+                nicFrontCamUri?.let {
+                    binding.nicFront.bindImage(it)
+                    nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
+                }
+            }
+        }
+
+        nicBackCamUri = createImageUri()
+        binding.nicBack.setGalleryLauncher(backGallery)
+        binding.nicBack.binding.cardUpload.setOnClickListener {          // ← click from custom view
+            withCameraPermission { backCamera.launch(nicBackCamUri) }
+        }
+
+        ////////////////////////////////////////////
+
+        val relGallery = registerForActivityResult(GetContent()) { uri ->
+            uri?.let {
+                binding.proofOfRelative.bindImage(it)
+                proofRelB64 = "data:image/jpeg;base64,${binding.proofOfRelative.getBase64()}"
+            }
+        }
+
+        val relCamera = registerForActivityResult(TakePicture()) { ok ->
+            if (ok) {
+                nicFrontCamUri?.let {
+                    binding.nicFront.bindImage(it)
+                    proofRelB64 = "data:image/jpeg;base64,${binding.proofOfRelative.getBase64()}"
+                }
+            }
+        }
+
+        proofRelCamUri = createImageUri()
+        binding.proofOfRelative.setGalleryLauncher(relGallery)
+        binding.proofOfRelative.binding.cardUpload.setOnClickListener {          // ← click from custom view
+            withCameraPermission { relCamera.launch(proofRelCamUri) }
+        }
+
 
         binding.btnContinue.setOnClickListener {
             if(binding.proofOfIb.fileName!!.isNotEmpty() && binding.nicBack.fileName!!.isNotEmpty() && binding.nicFront.fileName!!.isNotEmpty()){
                 viewModel.accountOpening.apply {
                     accountopeningproofIban = binding.proofOfIb.fileName
-                    accountopeningproofIbanImage = ibanBase64.toString()
+                    accountopeningproofIbanImage = proofIbanB64.toString()
                     accountopeningnicFront = binding.nicFront.fileName
-                    accountopeningnicFrontImage = nicFrontBase64.toString()
+                    accountopeningnicFrontImage = nicFrontB64.toString()
                     accountopeningnicBack = binding.nicBack.fileName
-                    accountopeningnicBackImage = nicBackBase64.toString()
+                    accountopeningnicBackImage = nicBackB64.toString()
                     accountopeningproofRelative = binding.proofOfRelative.fileName
-                    accountopeningproofRelativeImage = relationshipBase64.toString()
+                    accountopeningproofRelativeImage = proofRelB64.toString()
                 }
 
 
@@ -224,63 +226,17 @@ class AccountOpeningThreeFragment : Fragment() {
     private fun initFields() {
         binding.apply {
 //            proofOfIb.fileName=viewModel.accountOpening.accountopeningproofIban
-            ibanBase64=viewModel.accountOpening.accountopeningproofIbanImage
+            proofIbanB64=viewModel.accountOpening.accountopeningproofIbanImage
 //            nicFront.fileName=viewModel.accountOpening.accountopeningnicFront
-            nicFrontBase64=viewModel.accountOpening.accountopeningnicFrontImage
+            nicFrontB64=viewModel.accountOpening.accountopeningnicFrontImage
 //            nicBack.fileName=viewModel.accountOpening.accountopeningnicBack
-            nicBackBase64=viewModel.accountOpening.accountopeningnicBackImage
+            nicBackB64=viewModel.accountOpening.accountopeningnicBackImage
 //            proofOfRelative.fileName=viewModel.accountOpening.accountopeningproofRelative
-            relationshipBase64=viewModel.accountOpening.accountopeningproofRelativeImage
-        }
-    }
-
-    private fun requestRuntimePermission() {
-        if(ActivityCompat.checkSelfPermission(requireContext(),PERMISSION_CAMERA) == PackageManager.PERMISSION_GRANTED){
-            proceedWithCameraOrStorage()
-        }else if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),PERMISSION_CAMERA)){
-            val builder= AlertDialog.Builder(requireContext())
-                .setMessage("This app requires CAMERA permission for taking picture")
-                .setTitle("Permission Required")
-                .setCancelable(false)
-                .setPositiveButton("Ok",object :DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(PERMISSION_CAMERA),PERMISSION_REQ_CODE)
-                        p0?.dismiss()
-
-                    }
-
-                })
-                .setNeutralButton("Cancel",object:DialogInterface.OnClickListener{
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        p0?.dismiss()
-                    }
-
-                }).show()
-        }else{
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(PERMISSION_CAMERA,PERMISSION_WRITE_EXTERNAL_STORAGE),PERMISSION_REQ_CODE)
+            proofRelB64=viewModel.accountOpening.accountopeningproofRelativeImage
         }
     }
 
 
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_REQ_CODE){
-            if(grantResults.size>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                proceedWithCameraOrStorage()
-            }else if(!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),PERMISSION_CAMERA)){
-                Toast.makeText(requireContext(),"Please check permission...",Toast.LENGTH_SHORT).show()
-            }else{
-                requestRuntimePermission()
-            }
-        }
-
-
-    }
 
 
 

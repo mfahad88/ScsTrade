@@ -61,8 +61,8 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
 
         binding.aofCard.setOnClickListener {
-            Toast.makeText(requireContext(),"Working In Progress under fixes",Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(requireContext(), AofActivity::class.java))
+//            Toast.makeText(requireContext(),"Working In Progress under fixes",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), AofActivity::class.java))
         }
 
 

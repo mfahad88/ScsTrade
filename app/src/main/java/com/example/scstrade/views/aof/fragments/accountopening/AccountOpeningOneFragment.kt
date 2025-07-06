@@ -134,7 +134,7 @@ class AccountOpeningOneFragment : Fragment() {
     private fun initFields() {
         val accountOpening= viewModel.accountOpening
         accountOpening.apply {
-
+            binding.residentialStatus.setList(AppConstants.RESIDENTIALSTATUS.map { android.util.Pair(it.first,it.second) })
             if(accountopeningfullName!="" && accountopeningfullName!=null){
                 full_name=accountopeningfullName!!
                 binding.fullName.textInputEditText.setText(full_name)
@@ -164,11 +164,12 @@ class AccountOpeningOneFragment : Fragment() {
 
             if(accountopeningresidentialStatus!="" && accountopeningresidentialStatus!=null){
                 resident_status = accountopeningresidentialStatus!!
-                if(resident_status.equals("02")){
+                binding.residentialStatus.setSelectedOption(resident_status)
+             /*   if(resident_status.equals("02")){
                     binding.residentialStatus.toggleSelection(false)
                 }else{
                     binding.residentialStatus.toggleSelection(true)
-                }
+                }*/
             }
         }
     }

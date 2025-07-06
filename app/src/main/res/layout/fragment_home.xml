@@ -134,7 +134,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/stock_card"
                 android:paddingHorizontal="16dp"
                 android:paddingTop="4dp"
