@@ -118,6 +118,7 @@ class LandingFragment : Fragment() {
    /*     sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
         })*/
+        
         binding.profile.setOnClickListener {
             startActivity(Intent(requireContext(),ProfileActivity::class.java))
         }

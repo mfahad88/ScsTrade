@@ -30,7 +30,6 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.CongratulationsFragment
 import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailThreeFragment
 
 
 class KycOtherDetailOneFragment : Fragment() {
@@ -94,7 +93,7 @@ class KycOtherDetailOneFragment : Fragment() {
         viewModel.getotherDetails()
         viewModel.getDocuments()
         initFields()
-
+        binding.remittanceBasis.autoCompleteTextView1.isEnabled=false
         viewModel.mutableOtherDetail.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {

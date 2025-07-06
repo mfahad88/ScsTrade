@@ -18,8 +18,6 @@ import com.example.scstrade.model.request.aof.attorneyDetail.AttorneyDetailDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailThreeFragment
-import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment
 import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
 
 

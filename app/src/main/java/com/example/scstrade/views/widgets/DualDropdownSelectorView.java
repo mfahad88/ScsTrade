@@ -161,6 +161,7 @@ public class DualDropdownSelectorView extends MaterialCardView {
             dropdown_1=binding.dropdown1;
             dropdown_2=binding.dropdown2;
 
+
             binding.autocompleteTextview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long l) {

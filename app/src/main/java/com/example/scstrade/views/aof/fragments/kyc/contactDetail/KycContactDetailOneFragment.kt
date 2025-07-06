@@ -22,7 +22,6 @@ import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
-import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment
 import com.google.gson.reflect.TypeToken
 import kotlin.math.log
 

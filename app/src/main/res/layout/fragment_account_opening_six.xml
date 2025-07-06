@@ -158,12 +158,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:visibility="gone"
             android:layout_weight="0.8"
             android:text="Go to Dashboard"
-            android:textSize="12sp"
-            style="@style/Widget.Material3.Button.OutlinedButton"/>
+            android:textSize="12sp" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
