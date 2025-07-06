@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:fillViewport="true">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:paddingHorizontal="15dp"
 
         tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataOneFragment">
@@ -29,196 +25,226 @@
             app:lottie_rawRes="@raw/load_anim"
             tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tell_us_abo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:gravity="top"
-            android:lineSpacingExtra="3sp"
-            android:text="@string/tell_us_abo_basic"
-            android:textAppearance="@style/tell_us_abo"
-            android:textFontWeight="500"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingBottom="10dp"
+        android:fadingEdge="vertical"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="50dp"
+        android:id="@+id/groupMain"
+        android:fillViewport="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/controls">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:id="@+id/tell_us_abo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:gravity="top"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/tell_us_abo_basic"
+                android:textAppearance="@style/tell_us_abo"
+                android:textFontWeight="500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.example.scstrade.views.widgets.LabelledSpinner
-            android:id="@+id/uin_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:dropdownLabel="@string/uin_type"
-            app:hintLabel="CNIC"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
+            <com.example.scstrade.views.widgets.LabelledSpinner
+                android:id="@+id/uin_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:dropdownLabel="@string/uin_type"
+                app:hintLabel="CNIC"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
 
 
-        <com.example.scstrade.views.widgets.LabelledTextField
-            android:id="@+id/uin_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:digits="@string/_0_9"
-            android:inputType="number"
-            android:maxLength="13"
-            android:maxLines="1"
-            app:hintText="@string/uin"
-            app:hintTextField="@string/enter_your_uin_number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/uin_type" />
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/uin_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:digits="@string/_0_9"
+                android:inputType="number"
+                android:maxLength="13"
+                android:maxLines="1"
+                app:hintText="@string/uin"
+                app:hintTextField="@string/enter_your_uin_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/uin_type" />
 
-        <com.example.scstrade.views.widgets.LabelledSpinner
-            android:id="@+id/dropdown_title"
-            android:layout_width="95dp"
-            android:layout_height="wrap_content"
-            app:dropdownLabel="Mr."
-            app:hintLabel=""
-            app:layout_constraintBottom_toBottomOf="@+id/fullName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fullName" />
-
-
-        <com.example.scstrade.views.widgets.LabelledTextField
-            android:id="@+id/fullName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:digits="@string/alphabets"
-            android:inputType="textPersonName"
-            android:maxLength="50"
-            android:maxLines="1"
-            app:hintText="@string/full_name"
-            app:hintTextField="@string/enter_fname_nic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/dropdown_title"
-            app:layout_constraintTop_toBottomOf="@+id/uin_number" />
-
-        <com.example.scstrade.views.widgets.LabelledTextField
-            android:id="@+id/dobInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableEnd="@drawable/baseline_calendar_today_24"
-            android:maxLines="1"
-            app:hintText="@string/dob"
-            app:hintTextField="@string/enter_your_dob"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fullName" />
-
-        <com.example.scstrade.views.widgets.LabelledTextField
-            android:id="@+id/mother_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:digits="@string/alphabets"
-            android:inputType="textPersonName"
-            android:maxLength="50"
-            android:maxLines="1"
-            app:hintText="@string/mother_name"
-            app:hintTextField="@string/enter_your_mother_maiden_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dobInputLayout" />
-
-        <com.example.scstrade.views.widgets.CountyDropDown
-            android:id="@+id/dropdownNationality"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:dropdownLabel="@string/your_nationality"
-            app:hintLabel="Pakistan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mother_name" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <com.example.scstrade.views.widgets.LabelledSpinner
+                    android:id="@+id/dropdown_title"
+                    android:layout_width="95dp"
+                    android:layout_height="match_parent"
+                    app:dropdownLabel="Mr."
+                    app:hintLabel=""
+                    app:layout_constraintBottom_toBottomOf="@+id/fullName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/fullName" />
 
 
-        <com.example.scstrade.views.widgets.DualOptionToggleView
-            android:id="@+id/marital_status"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dropdownNationality"
-            app:titleButton1="@string/single"
-            app:titleButton2="@string/married"
-            app:titleDualOption="@string/select_your" />
+                <com.example.scstrade.views.widgets.LabelledTextField
+                    android:id="@+id/fullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:digits="@string/alphabets"
+                    android:inputType="textPersonName"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    app:hintText="@string/full_name"
+                    app:hintTextField="@string/enter_fname_nic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/dropdown_title"
+                    app:layout_constraintTop_toBottomOf="@+id/uin_number" />
+            </LinearLayout>
 
-        <com.example.scstrade.views.widgets.DualOptionToggleView
-            android:id="@+id/relationship"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardElevation="0dp"
-            app:hintDualOption="@string/please_enter_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/marital_status"
-            app:titleButton1="@string/father"
-            app:titleButton2="@string/husband"
-            app:titleDualOption="@string/choose_your" />
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/dobInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:drawableEnd="@drawable/baseline_calendar_today_24"
+                android:maxLines="1"
+                app:hintText="@string/dob"
+                app:hintTextField="@string/enter_your_dob"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fullName" />
 
+            <com.example.scstrade.views.widgets.LabelledTextField
+                android:id="@+id/mother_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:digits="@string/alphabets"
+                android:inputType="textPersonName"
+                android:maxLength="50"
+                android:maxLines="1"
+                app:hintText="@string/mother_name"
+                app:hintTextField="@string/enter_your_mother_maiden_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dobInputLayout" />
 
-        <com.example.scstrade.views.widgets.DualOptionToggleView
-            android:id="@+id/cardNic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            app:drawable="@drawable/baseline_calendar_today_24"
-            app:hintDualOption="@string/select_nic_expiry_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/relationship"
-            app:strokeWidth="0dp"
-            app:titleButton1="No"
-            app:titleButton2="Yes"
-            app:titleDualOption="@string/is_your_nic" />
-
-        <com.example.scstrade.views.widgets.DualDropdownSelectorView
-            android:id="@+id/placeBirth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="20dp"
-            app:hintDualDropdown1="@string/select_your_country"
-            app:hintDualDropdown2="@string/select_your_city"
-            app:layout_constraintBottom_toTopOf="@+id/ivr_service"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardNic"
-            app:titleDualDropdown="@string/place_of_bi"
-            app:typeDualDropdown1="dropdown"
-            app:typeDualDropdown2="dropdown" />
+            <com.example.scstrade.views.widgets.CountyDropDown
+                android:id="@+id/dropdownNationality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:dropdownLabel="@string/your_nationality"
+                app:hintLabel="Pakistan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mother_name" />
 
 
-        <com.example.scstrade.views.widgets.DualOptionToggleView
-            android:id="@+id/ivr_service"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@id/controls"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/placeBirth"
-            app:layout_constraintVertical_bias="0.0"
-            app:strokeWidth="0dp"
-            app:subTitleDualOption="@string/do_you_wish"
-            app:titleButton1="No"
-            app:titleButton2="Yes"
-            app:titleDualOption="@string/cdc_ivr_ser" />
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:id="@+id/marital_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dropdownNationality"
+                app:titleButton1="@string/single"
+                app:titleButton2="@string/married"
+                app:titleDualOption="@string/select_your" />
+
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:id="@+id/relationship"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardElevation="0dp"
+                app:hintDualOption="@string/please_enter_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/marital_status"
+                app:titleButton1="@string/father"
+                app:titleButton2="@string/husband"
+                app:titleDualOption="@string/choose_your" />
+
+
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:id="@+id/cardNic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:drawable="@drawable/baseline_calendar_today_24"
+                app:hintDualOption="@string/select_nic_expiry_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/relationship"
+                app:strokeWidth="0dp"
+                app:titleButton1="No"
+                app:titleButton2="Yes"
+                app:titleDualOption="@string/is_your_nic" />
+
+            <com.example.scstrade.views.widgets.DualDropdownSelectorView
+                android:id="@+id/placeBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
+                app:hintDualDropdown1="@string/select_your_country"
+                app:hintDualDropdown2="@string/select_your_city"
+                app:layout_constraintBottom_toTopOf="@+id/ivr_service"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardNic"
+                app:titleDualDropdown="@string/place_of_bi"
+                app:typeDualDropdown1="dropdown"
+                app:typeDualDropdown2="dropdown" />
+
+
+            <com.example.scstrade.views.widgets.DualOptionToggleView
+                android:id="@+id/ivr_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@id/controls"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeBirth"
+                app:layout_constraintVertical_bias="0.0"
+                app:strokeWidth="0dp"
+                app:subTitleDualOption="@string/do_you_wish"
+                app:titleButton1="No"
+                app:titleButton2="Yes"
+                app:titleDualOption="@string/cdc_ivr_ser" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
         <LinearLayout
             android:id="@+id/controls"
@@ -252,14 +278,6 @@
                 android:text="Continue" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:visibility="visible"
-            android:visibility="gone"
-            app:constraint_referenced_ids="tell_us_abo, textInputTitle,uin_type,uin_number,fullName,dobInputLayout,mother_name,dropdownNationality,marital_status,relationship,cardNic,placeBirth,ivr_service" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>

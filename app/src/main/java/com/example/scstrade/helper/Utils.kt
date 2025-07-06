@@ -654,8 +654,12 @@ class Utils {
 
 
         fun showError(view: View,message:String?,duration:Int=Snackbar.LENGTH_SHORT): Snackbar {
-            val snackbar:Snackbar
-            if(isDarkMode(view.context)){
+            val snackbar:Snackbar= Snackbar.make(view, message?:"An error occurred", duration)
+                .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_error))
+                .setTextColor(
+                    Color.parseColor("#FFFFFF")
+                )
+            /*if(isDarkMode(view.context)){
                 snackbar = Snackbar.make(view, message?:"An error occurred", duration)
                     .setBackgroundTint(ContextCompat.getColor(view.context, R.color.md_theme_errorContainer))
                     .setTextColor(
@@ -674,7 +678,7 @@ class Utils {
                             R.color.md_theme_surfaceContainerLowest
                         )
                     )
-            }
+            }*/
             snackbar.show()
             return snackbar
         }
