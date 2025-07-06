@@ -48,7 +48,12 @@ class KycBasicDataOneFragment : Fragment() {
         viewModel.protectedAppId()
         viewModel.getBasicData()
         initFields()
-        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.basic_data)
+        (requireActivity() as AofActivity).binding.apply {
+            welcome.text = getString(R.string.basic_data)
+            progressBar.setProgress(1)
+            steps.text="1/6"
+            progressValue.setText("Progress (10%)")
+        }
         viewModel.mutableBasicData.observe(viewLifecycleOwner, Observer { result->
             when(result){
                 is Resource.Error -> {

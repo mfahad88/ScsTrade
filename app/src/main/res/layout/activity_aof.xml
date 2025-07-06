@@ -72,6 +72,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="8dp"
                 android:gravity="top"
+                android:visibility="gone"
                 android:lineSpacingExtra="9sp"
                 android:text="@string/progress_10"
                 android:textAppearance="@style/progress_10"

@@ -36,7 +36,12 @@ class KycAttorneyDetailOneFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentKycSevenBinding.inflate(inflater,container,false)
-        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.attorney_details)
+        (requireActivity() as AofActivity).binding.apply {
+            welcome.text = getString(R.string.attorney_details)
+            progressBar.setProgress(3)
+            steps.text="3/6"
+            progressValue.setText("Progress (20%)")
+        }
         viewModel = (requireActivity() as AofActivity).viewModel
         viewModel.getattorneyDetails()
         initFields()

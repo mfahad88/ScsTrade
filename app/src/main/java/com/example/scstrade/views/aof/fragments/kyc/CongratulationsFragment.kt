@@ -21,6 +21,10 @@ class CongratulationsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCongratulationsBinding.inflate(inflater,container,false)
+        (requireActivity() as AofActivity).binding.apply {
+            progressBar.setProgress(6)
+            steps.text="6/6"
+        }
         binding.btnDashboard.setOnClickListener {
             (requireActivity() as AofActivity).finish()
         }

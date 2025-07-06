@@ -38,7 +38,12 @@ class KycContactDetailOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycFourBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
-        (requireActivity() as AofActivity).binding.welcome.text = getString(R.string.contact_detail)
+        (requireActivity() as AofActivity).binding.apply {
+            welcome.text = getString(R.string.contact_detail)
+            steps.text="2/6"
+            progressBar.setProgress(2)
+            progressValue.setText("Progress (20%)")
+        }
         fetchUser()
         viewModel.getcontactDetails()
         initField()

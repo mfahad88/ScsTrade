@@ -82,8 +82,12 @@ class KycNomineeDetailOneFragment : Fragment() {
     ): View {
         binding = FragmentKycNineBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        (requireActivity() as AofActivity).binding.welcome.text =
-            getString(R.string.nominee_details)
+        (requireActivity() as AofActivity).binding.apply {
+            welcome.text =
+                getString(R.string.nominee_details)
+            progressBar.setProgress(4)
+            steps.text="4/6"
+        }
         viewModel.getNomineeDetails()
         initFields()
         binding.nominee.apply {
