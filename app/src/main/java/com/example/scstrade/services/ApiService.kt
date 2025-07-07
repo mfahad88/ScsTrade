@@ -41,6 +41,7 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -166,6 +167,9 @@ interface ApiService {
 
     @GET(value = "/SnapCharting")
     suspend fun snapshotChart(@Query("symbolin")symbol:String) : Charting
+
+    @GET(value = "/Profile")
+    suspend fun getCompanyDetail(@Query("symbol")symbol:String) : List<CompanyDetailItem>
 
     @GET(value = "/YearsDetails")
     suspend fun yearsDetails(@Query("symbol")symbol:String): List<YearDetailsItem>

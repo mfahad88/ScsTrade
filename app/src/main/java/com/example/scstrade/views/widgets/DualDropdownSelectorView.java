@@ -30,9 +30,29 @@ public class DualDropdownSelectorView extends MaterialCardView {
     public TextInputLayout dropdown_1,dropdown_2;
     ArrayAdapter adapter1,adapter2;
 
-
-
     public AutoCompleteTextView autoCompleteTextView1,autoCompleteTextView2;
+
+    public EditText getTextview_1() {
+        return textview_1;
+    }
+
+    public void setTextview_1(String text) {
+        if(!TextUtils.isEmpty(text)){
+            this.textview_1.setText(text);
+
+        }
+    }
+
+    public EditText getTextview_2() {
+        return textview_2;
+    }
+
+    public void setTextview_2(String text) {
+        if(!TextUtils.isEmpty(text)) {
+            this.textview_2.setText(text);
+        }
+    }
+
     public EditText textview_1,textview_2;
     public List<Pair<String,String>> entries1,entries2;
     public DualDropdownSelectorView(Context context, AttributeSet attrs) {
@@ -65,6 +85,8 @@ public class DualDropdownSelectorView extends MaterialCardView {
     public Pair<String, String> getSelectedDropDown2() {
         return selectedDropDown2;
     }
+
+
 
     public void setSelectedDropDown2(String  selectedDropDown2) {
         if(!TextUtils.isEmpty(selectedDropDown2)) {

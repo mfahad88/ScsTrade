@@ -395,6 +395,8 @@ class KycOtherDetailOneFragment : Fragment() {
                         binding.occupation.textview_1.isEnabled=false
                     }
 
+                    binding.occupation.setTextview_2(response?.otherOccupation)
+
                     binding.jobDetails.textview_1.setText(response?.jobTitle ?: "")
                     binding.jobDetails.textview_2.setText(response?.department?: "")
                     binding.employerDetails.textview_1.setText(response?.employeeName?: "")

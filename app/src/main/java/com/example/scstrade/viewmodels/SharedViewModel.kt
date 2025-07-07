@@ -29,6 +29,7 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.ResultYearQuarter
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -94,6 +95,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     var portfolioJob: Job? = null
     val mutableTopPicks = MutableLiveData<Resource<List<TopPickItem>>>()
     val mutableResultIndices= MutableLiveData<Resource<ResultIndices>>()
+    val mutableCompanyDetail = MutableLiveData<Resource<List<CompanyDetailItem>>>()
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.IO) {
             while(isFetchAllData) {
@@ -391,6 +393,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.snapshotChart(symbol)
                 withContext(Dispatchers.Main){
                     mutableSnapShotChart.value = result
+                }
+            }
+        }
+    }
+
+    fun getCompanyDetail(symbol: String){
+        mutableCompanyDetail.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.getCompanyDetail(symbol)
+                withContext(Dispatchers.Main){
+                    mutableCompanyDetail.value = result
                 }
             }
         }

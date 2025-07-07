@@ -13,8 +13,11 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailOneFragment
+import com.example.scstrade.views.aof.fragments.kyc.otherDetail.KycOtherDetailOneFragment
 
 
 /**
@@ -69,8 +72,19 @@ class LoginAOFFragment : Fragment() {
                     viewModel.basicData.fullNicName = user?.name
                     viewModel.basicData.uinNumber = user?.uin
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
+                    Log.e("Lifecycle:",user?.lifecycleStatusId.toString())
+                    when(user?.lifecycleStatusId?:0){
+                        70 -> (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
+                        80 ->(requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
+                        90 ->(requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())
+                        100 ->(requireActivity() as AofActivity).loadFragment(KycNomineeDetailOneFragment())
+                        110 ->(requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                        120 ->(requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                        140 ->(requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())
+                        else -> (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
+                    }
 
-                    (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
+//                    (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
                 }
             }
 

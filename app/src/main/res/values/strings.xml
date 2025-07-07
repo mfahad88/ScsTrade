@@ -471,6 +471,14 @@
     <string name="click_to_fill">Click to fill permanent data same as mailing address:</string>
     <string name="index">Index</string>
     <string name="form_submitted">Form Submitted</string>
+    <string name="about_compa">About Company:</string>
+    <string name="oil_and_gas">Oil and Gas Development Company Limited (OGDCL), was incorporated on 23 October 1997 under the Companies Ordinance, 1984 (now the Companies Act, 2017). The Company was established to undertake exploration and development of oil and gas resources, including production and sale of oil and gas and related activities formerly carried on by Oil and Gas Development Corporation.</string>
+    <string name="information"><![CDATA[Information & Contact:]]></string>
+    <string name="registrar_">Registrar:</string>
+    <string name="cdc_share_r">CDC-Share Registrar Services Limited,\nCDC House, 99-B, Block-B, S.M.C.H.S.,\nMain Shahrah-e-Faisal, Karachi</string>
+    <string name="auditor">Auditor</string>
+    <string name="website">Website:</string>
+    <string name="address">Address:</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

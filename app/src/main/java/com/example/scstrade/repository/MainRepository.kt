@@ -26,6 +26,7 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
@@ -302,6 +303,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun snapshotChart(symbol: String):Resource<Charting>{
         try {
             return Resource.Success(apiService.snapshotChart(symbol))
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun getCompanyDetail(symbol: String):Resource<List<CompanyDetailItem>>{
+        try {
+            return Resource.Success(apiService.getCompanyDetail(symbol))
         }catch (e:Exception){
             return Resource.Error(e.message?:"An error occurred",null)
         }

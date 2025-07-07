@@ -5,13 +5,7 @@
     android:background="@android:color/transparent"
     android:layout_width="350dp"
     android:layout_height="500dp">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/close_btn"
-        android:id="@+id/btnClose"
-        android:padding="10dp"
-        android:layout_gravity="end|top"/>
+
 
     <com.example.scstrade.views.widgets.ZoomImageView
         android:id="@+id/imageView"
@@ -20,5 +14,11 @@
         android:layout_margin="15dp"
         android:scaleType="matrix"
         />
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close_btn"
+        android:id="@+id/btnClose"
+        android:padding="20dp"
+        android:layout_gravity="end|top"/>
 </FrameLayout>

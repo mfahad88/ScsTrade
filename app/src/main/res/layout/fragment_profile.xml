@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="20dp"
+    tools:context=".views.snapshot.ProfileFragment">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/load_anim" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:id="@+id/main"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FCF8F8"
+                app:cardCornerRadius="10dp"
+                app:contentPaddingBottom="19dp"
+                app:contentPaddingLeft="15dp"
+                app:contentPaddingRight="15dp"
+                app:contentPaddingTop="19dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#E5E2E1"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/about_compa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_compa"
+                        android:textAppearance="@style/about_compa"
+                        android:textFontWeight="700" />
+
+
+                    <TextView
+                        android:id="@+id/oil_and_gas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="top"
+                        android:lineSpacingExtra="11sp"
+                        tools:text="@string/oil_and_gas"
+                        android:textAppearance="@style/oil_and_gas"
+                        android:textFontWeight="500" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:cardBackgroundColor="#FCF8F8"
+                app:cardCornerRadius="10dp"
+                app:contentPaddingBottom="19dp"
+                app:contentPaddingLeft="15dp"
+                app:contentPaddingRight="15dp"
+                app:contentPaddingTop="19dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card1"
+                app:strokeColor="#E5E2E1"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/information"
+                        android:textAppearance="@style/about_compa"
+                        android:textFontWeight="700" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="top"
+                        android:lineSpacingExtra="8sp"
+                        android:text="@string/registrar_"
+                        android:textAppearance="@style/registrar_"
+                        android:textFontWeight="700"
+                        android:translationY="-4.15sp" />
+
+                    <TextView
+                        android:id="@+id/cdc_share_r"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:lineSpacingExtra="9sp"
+                        tools:text="@string/cdc_share_r"
+                        android:textAppearance="@style/cdc_share_r"
+                        android:textFontWeight="500"
+                        android:translationY="-4.32sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="top"
+                        android:lineSpacingExtra="8sp"
+                        android:text="@string/auditor"
+                        android:textAppearance="@style/registrar_"
+                        android:textFontWeight="700"
+                        android:translationY="-4.15sp" />
+
+                    <TextView
+                        android:id="@+id/auditor_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:lineSpacingExtra="9sp"
+                        tools:text="@string/cdc_share_r"
+                        android:textAppearance="@style/cdc_share_r"
+                        android:textFontWeight="500"
+                        android:translationY="-4.32sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="top"
+                        android:lineSpacingExtra="8sp"
+                        android:text="@string/website"
+                        android:textAppearance="@style/registrar_"
+                        android:textFontWeight="700"
+                        android:translationY="-4.15sp" />
+
+                    <TextView
+                        android:id="@+id/urlText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="https://example.com"
+                        android:autoLink="web"
+                        android:textColorLink="#1A73E8" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="top"
+                        android:lineSpacingExtra="8sp"
+                        android:text="@string/address"
+                        android:textAppearance="@style/registrar_"
+                        android:textFontWeight="700"
+                        android:translationY="-4.15sp" />
+
+
+                    <TextView
+                        android:id="@+id/address_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:lineSpacingExtra="9sp"
+                        tools:text="@string/cdc_share_r"
+                        android:textAppearance="@style/cdc_share_r"
+                        android:textFontWeight="500"
+                        android:translationY="-4.32sp" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

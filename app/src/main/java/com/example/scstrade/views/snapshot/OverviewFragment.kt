@@ -569,7 +569,7 @@ class OverviewFragment : Fragment() {
             }
             Spacer(modifier = Modifier.height(15.dp))
 
-            Card(
+        /*    Card(
                 modifier = Modifier
 
                     .fillMaxWidth()
@@ -599,7 +599,7 @@ class OverviewFragment : Fragment() {
                             movementMethod = LinkMovementMethod.getInstance() // Enable links if present
                         }
                     })
-                    /*Text(
+                    *//*Text(
                         text = data?.description?:"",
                         style = TextStyle(
                             fontSize = 16.sp,
@@ -608,10 +608,10 @@ class OverviewFragment : Fragment() {
                             fontWeight = FontWeight(500),
                             color = colorResource(id = R.color.black),
                         )
-                    )*/
+                    )*//*
 
                 }
-            }
+            }*/
         }
 
 
