@@ -2,6 +2,7 @@ package com.example.scstrade.repository
 
 import RssFeed
 import android.content.Context
+import android.text.TextUtils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
@@ -383,13 +384,9 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun announcements(symbol: String, type: String): Resource<List<AnnouncementDataItem>> {
+    suspend fun announcements(symbol: String?,date:String?, type: String): Resource<List<AnnouncementDataItem>> {
        return try{
-           if(symbol.equals("")){
-               Resource.Success(apiService.announcements(type))
-           }else {
-               Resource.Success(apiService.announcements(type, symbol))
-           }
+           Resource.Success(apiService.announcements(type,date, symbol))
         }catch (e:Exception){
            Resource.Error(e.message?:"An error occurred",null)
         }

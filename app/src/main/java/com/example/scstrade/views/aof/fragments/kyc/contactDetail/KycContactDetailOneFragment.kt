@@ -84,13 +84,22 @@ class KycContactDetailOneFragment : Fragment() {
                 parmanentAddr2.text=mailingAddress2.text
                 parmanentAddr3.text=mailingAddress3.text
 
-                permanentCountry.setSelectedDropDown(mailingCountry.selectedDropDown.first)
-                permanentProvince.setSelectedDropDown(mailingProvince.selectedDropDown.second)
-                permanentCity.setSelectedDropDown(mailingCity.selectedDropDown.first.first)
+                if(mailingCountry.visibility==View.VISIBLE){
+                    permanentCountry.setSelectedDropDown(mailingCountry.selectedDropDown.first)
+                }
+                if(mailingProvince.visibility==View.VISIBLE){
+                    permanentProvince.setSelectedDropDown(mailingProvince.selectedDropDown.second)
+                }
+
+                if(mailingCity.visibility==View.VISIBLE){
+                    permanentCity.setSelectedDropDown(mailingCity.selectedDropDown.first.first)
+                }
+
 
                 permanentOtherProvince.selectedOption=mailingOtherProvince.selectedOption
                 permanentOtherCity.selectedOption=mailingOtherCity.selectedOption
-
+                phoneNumbers.textview_1.setText(officeResidenceNumber.textview_1.text)
+                phoneNumbers.textview_2.setText(officeResidenceNumber.textview_2.text)
                 if(permanentCountry.selectedDropDown.first.equals("pak",true)){
                     permanentProvince.visibility=View.VISIBLE
                     permanentCity.visibility = View.VISIBLE

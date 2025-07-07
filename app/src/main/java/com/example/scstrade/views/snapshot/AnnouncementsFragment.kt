@@ -75,7 +75,7 @@ class AnnouncementsFragment : Fragment() {
                     dialog.setContentView(R.layout.dialog_image)
                     Glide
                         .with(requireContext())
-                        .load(it?.bm_ImageLink ?: "")
+                        .load(it?.imageLink ?: "")
                         .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
                     dialog.setCancelable(false)
                     dialog.setCanceledOnTouchOutside(false)
@@ -92,7 +92,7 @@ class AnnouncementsFragment : Fragment() {
                     binding.loader.visibility = View.VISIBLE
                     downloadPdf(
                         requireContext(),
-                        it?.bm_PDFLink.toString()
+                        it?.pDFLink.toString()
                     ) { file ->
                         requireActivity().runOnUiThread {
                             if (file != null) {
@@ -106,7 +106,7 @@ class AnnouncementsFragment : Fragment() {
                     binding.loader.visibility = View.VISIBLE
                     downloadPdf(
                         requireContext(),
-                        it?.bm_PDFLink.toString()
+                        it?.pDFLink.toString()
                     ) { file ->
                         requireActivity().runOnUiThread {
                             if (file != null) {
@@ -122,6 +122,7 @@ class AnnouncementsFragment : Fragment() {
             onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedLabel = parent!!.getItemAtPosition(position) as String
+                    binding.textDate.text.clear()
                     snapshotViewModel.announcement(symbol,selectedLabel,null)
                 }
 
@@ -210,7 +211,7 @@ class AnnouncementsFragment : Fragment() {
                     snapshotViewModel.announcement(
                         symbol,
                         binding.spinnerAnnouncement.selectedItem.toString(),
-                        null
+                        ""
                     )
                 }
             }

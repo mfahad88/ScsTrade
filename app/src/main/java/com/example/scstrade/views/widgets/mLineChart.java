@@ -69,7 +69,8 @@ public class mLineChart extends LineChart {
         this.entries = entries;
         this.getXAxis().setEnabled(isxAxis);
         this.isRightEnabled = isRightEnabled;
-        this.setViewPortOffsets(0f,0f,70f,0f);
+        this.fitScreen();
+        this.setViewPortOffsets(0f,0f,0f,0f);
         this.setExtraOffsets(0f,0f,0f,0f);
         this.setDragEnabled(false);
         this.setTouchEnabled(false);

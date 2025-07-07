@@ -9,23 +9,13 @@ android:background="@color/md_theme_surface"
 tools:context=".views.login.LoginFragment">
 
 
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    android:paddingBottom="10dp"
-    app:contentInsetStart="0dp"
-    app:contentInsetStartWithNavigation="0dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-
-
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/toolbar_image"
@@ -74,7 +64,22 @@ tools:context=".views.login.LoginFragment">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
-</androidx.appcompat.widget.Toolbar>
+<!--<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:paddingBottom="10dp"
+    app:contentInsetStart="0dp"
+    app:contentInsetStartWithNavigation="0dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+</androidx.appcompat.widget.Toolbar>-->
 
 <com.airbnb.lottie.LottieAnimationView
     android:layout_width="wrap_content"

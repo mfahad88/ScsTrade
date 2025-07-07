@@ -213,7 +213,7 @@ interface ApiService {
     suspend fun announcementType(@Query("type")type:String):List<AnnouncementTypeDataItem>
 
     @GET(value = "/Announcements")
-    suspend fun announcements(@Query("type")type:String,@Query("symbol")symbol:String):List<AnnouncementDataItem>
+    suspend fun announcements(@Query("type")type:String,@Query("date")date:String?,@Query("symbol")symbol:String?):List<AnnouncementDataItem>
 
     @GET(value = "/Announcements")
     suspend fun announcements(@Query("type")type:String):List<AnnouncementDataItem>

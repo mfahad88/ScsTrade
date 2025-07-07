@@ -38,12 +38,18 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
         }
     }
 
-    fun announcement(symbol: String, type: String, date: String?) {
+    fun announcement(symbol: String?, type: String, date: String?) {
         mutableAnnouncementItem.value = Resource.Loading()
 
         viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.announcements(if(symbol?.equals("")?:false)null else symbol, date?.let {
+                Utils.formatDateString(
+                    inputPattern = "dd/MM/yy",
+                    outputPattern = "yyyy-MM-dd",
+                    inputDate = it
+                )
+            }, type)
 
-            val result = repository.announcements(symbol, type)
 
             // ---------- 1.  Handle error or empty response ----------
             if (result !is Resource.Success) {
@@ -61,7 +67,7 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
             val filtered: MutableList<AnnouncementDataItem> = result.data
                 .orEmpty()
                 .asSequence()                              // lazy pipeline
-                .filter { ann ->                           // (a) TYPE filter
+              /*  .filter { ann ->                           // (a) TYPE filter
                     type.equals("all", true) ||
                             ann.AnnouncementType.equals(type, true)
                 }
@@ -71,9 +77,9 @@ class SnapshotViewModel(application: Application, private  val sharedViewModel: 
                         .takeIf { !it.isNullOrBlank() }
                         ?: ann.Meeting_Date?.toString().orEmpty()
                     Utils.compareDates(raw, date)          // keep if ≥ input date
-                }
+                }*/
                 .map { ann -> ann.apply {                  // (c) SET name
-                    val code = company_code?.trim().orEmpty()
+                    val code = companyCode?.trim().orEmpty()
                     name = symToName[code].orEmpty()       // "" if not found
                 }}
                 .toMutableList()

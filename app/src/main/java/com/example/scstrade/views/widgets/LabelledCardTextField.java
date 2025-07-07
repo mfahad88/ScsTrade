@@ -2,6 +2,7 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -35,11 +36,13 @@ public class LabelledCardTextField extends TextInputLayout {
                String hint1=a.getString(R.styleable.LabelledCardTextField_hint1);
                String hint2=a.getString(R.styleable.LabelledCardTextField_hint2);
                if(hint1!=null){
+                   binding.text1.setInputType(InputType.TYPE_CLASS_TEXT);
                    binding.text1.setHint(hint1);
                }
 
                if(hint2!=null){
                    binding.text2.setHint(hint2);
+                   binding.text2.setInputType(InputType.TYPE_CLASS_NUMBER);
                }
 
                if(title!=null){

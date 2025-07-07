@@ -95,7 +95,6 @@
             android:id="@+id/label_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/executive_disclosures"
             android:textAppearance="@style/executive_disclosures"
             android:lineSpacingExtra="5sp"
             android:layout_gravity="center"

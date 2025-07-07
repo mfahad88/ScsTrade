@@ -581,11 +581,15 @@ class Utils {
             inputDate: String,
             inputPattern: String = "yyyy-MM-dd'T'HH:mm:ss.SSSX",
             outputPattern: String = "yyyy-MM-dd"
-        ): String {
-            val inputFormatter = DateTimeFormatter.ofPattern(inputPattern)
-            val outputFormatter = DateTimeFormatter.ofPattern(outputPattern)
-            val date = LocalDate.parse(inputDate, inputFormatter)
-            return date.format(outputFormatter)
+        ): String? {
+            if(inputDate.isNotEmpty()) {
+                val inputFormatter = DateTimeFormatter.ofPattern(inputPattern)
+                val outputFormatter = DateTimeFormatter.ofPattern(outputPattern)
+                val date = LocalDate.parse(inputDate, inputFormatter)
+                return date.format(outputFormatter)
+            }else{
+                return null
+            }
         }
 
         fun showDatePicker(context: Context,datePattern:String="yyyy-MM-dd", onDateSelected: (date:String) -> Unit) {

@@ -469,6 +469,8 @@
     <string name="board_meeti">Board Meeting Other Than Financial Results\nAgritech Limited</string>
     <string name="engineering">Engineering</string>
     <string name="click_to_fill">Click to fill permanent data same as mailing address:</string>
+    <string name="index">Index</string>
+    <string name="form_submitted">Form Submitted</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

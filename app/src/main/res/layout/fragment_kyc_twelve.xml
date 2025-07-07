@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/account_type"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="15dp"
                 app:titleDualOption="@string/what_is_you"
                 app:titleButton1="@string/normal"
                 app:titleButton2="@string/sahulat"
@@ -71,7 +71,7 @@
             <com.example.scstrade.views.widgets.LabelledSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:id="@+id/gross_annual_incomeslab"
                 app:hintLabel="@string/gross_annual_incomeslab"
                 app:dropdownLabel="@string/select_your_gross"
@@ -83,7 +83,7 @@
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:maxLength="30"
                 android:inputType="text"
                 android:id="@+id/source_of_income"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/occupation"
                 app:titleDualDropdown="@string/what_is_you_occ"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="15dp"
                 app:hintDualDropdown1="Other"
                 app:hintDualDropdown2="@string/enter_your_occupation"
                 app:typeDualDropdown1="dropdown"
@@ -118,7 +118,7 @@
                 app:typeDualDropdown2="text"
                 app:hintDualDropdown1="@string/enter_your_job_designation"
                 app:hintDualDropdown2="@string/enter_your_department"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -133,7 +133,7 @@
                 app:typeDualDropdown2="text"
                 app:hintDualDropdown1="@string/enter_your_job_employer_name"
                 app:hintDualDropdown2="@string/enter_your_employer_address"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/job_details" />
@@ -159,7 +159,7 @@
                 android:id="@+id/bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 app:hintDualDropdown1="UBL Bank"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +172,7 @@
             <com.example.scstrade.views.widgets.DualDropdownSelectorView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:id="@+id/remittance_basis"
                 app:typeDualDropdown1="dropdown"
                 app:hintDualDropdown1="@string/select_remittance_basis"

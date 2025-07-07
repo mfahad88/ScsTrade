@@ -1,28 +1,68 @@
 package com.example.scstrade.model.response.announcement
 
+
+import com.google.gson.annotations.SerializedName
+
 data class AnnouncementDataItem(
-    val AnnouncementType: String?,
-    val Announcement_Date: Any?,
-    var name:String?,
-    val Bonus: String?,
-    val Cumulutive_EPS: String?,
-    val Discription: String?,
-    val Dividend: String?,
-    val Meeting_Date: String?,
-    val Meeting_Place: String?,
-    val Meeting_Time: String?,
-    val Quarter: String?,
-    val Quarterly_EPS: String?,
-    val Right: String?,
-    val Right_Discount: String?,
-    val Right_Premium: String?,
-    val Right_Price: String?,
-    val Year: String?,
-    val bm_ImageLink: String?,
-    val bm_PDFLink: String?,
-    val bm_bc_endd: Any?,
-    val bm_bc_ld: Any?,
-    val bm_bc_startd: Any?,
-    val company_code: String?,
-    val x_Price_Date: String?
+    var name:String,
+    @SerializedName("Action")
+    val action: String,
+    @SerializedName("Announcement_Date")
+    val announcementDate: String,
+    @SerializedName("Announcement_Type")
+    val announcementType: String,
+    @SerializedName("Bonus")
+    val bonus: String,
+    @SerializedName("company_code")
+    val companyCode: String,
+    @SerializedName("Cumulutive_EPS")
+    val cumulutiveEPS: String,
+    @SerializedName("Designation")
+    val designation: String,
+    @SerializedName("Discription")
+    val discription: String,
+    @SerializedName("Dividend")
+    val dividend: String,
+    @SerializedName("Form_of_Shares")
+    val formOfShares: String,
+    @SerializedName("ImageLink")
+    val imageLink: String,
+    @SerializedName("Insider_Name")
+    val insiderName: String,
+    @SerializedName("Market")
+    val market: String,
+    @SerializedName("Meeting_Date")
+    val meetingDate: String,
+    @SerializedName("Meeting_Place")
+    val meetingPlace: String,
+    @SerializedName("Meeting_Time")
+    val meetingTime: String,
+    @SerializedName("PDFLink")
+    val pDFLink: String,
+    @SerializedName("Post_Date")
+    val postDate: String,
+    @SerializedName("Quantity")
+    val quantity: String,
+    @SerializedName("Quarter")
+    val quarter: String,
+    @SerializedName("Quarterly_EPS")
+    val quarterlyEPS: String,
+    @SerializedName("Rate")
+    val rate: String,
+    @SerializedName("Right")
+    val right: String,
+    @SerializedName("Right_Discount")
+    val rightDiscount: String,
+    @SerializedName("Right_Premium")
+    val rightPremium: String,
+    @SerializedName("Right_Price")
+    val rightPrice: String,
+    @SerializedName("Transaction_Date")
+    val transactionDate: String,
+    @SerializedName("Type")
+    val type: String,
+    @SerializedName("x_Price_Date")
+    val xPriceDate: String,
+    @SerializedName("Year")
+    val year: String
 )

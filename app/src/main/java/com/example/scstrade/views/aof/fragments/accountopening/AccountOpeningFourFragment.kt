@@ -60,7 +60,7 @@ class AccountOpeningFourFragment : Fragment() {
                                 relationship = viewModel.getaccountOpening().accountopeningrelationshipType?:"",
                                 relativeName = viewModel.getaccountOpening().accountopeningrelativeName?:"",
                                 relativeUIN = viewModel.getaccountOpening().accountopeningrelativeUin?:"",
-                                isApp = "1",
+                                isApp = true,
                                 issueDate = viewModel.getaccountOpening().accountopeningnicIssueDate?:""
 
                             )

@@ -114,9 +114,9 @@ class KycOtherDetailOneFragment : Fragment() {
                             accountType.selectedOption.second ?: "",
                             "Y",
                             uinType ?: "",
-                            if(!TextUtils.isEmpty(signatureB64)) signatureB64!! else  signatureNm!!,
-                            if(!TextUtils.isEmpty(permanentAddressB64)) permanentAddressB64!! else  permanentAddressNm!!,
-                            if(!TextUtils.isEmpty(employeerAddressB64)) employeerAddressB64!! else  employeerAddressNm!!,
+                            if(!TextUtils.isEmpty(signatureB64)) signatureB64!! else  signatureNm?:"",
+                            if(!TextUtils.isEmpty(permanentAddressB64)) permanentAddressB64!! else  permanentAddressNm?:"N/A",
+                            if(!TextUtils.isEmpty(employeerAddressB64)) employeerAddressB64!! else  employeerAddressNm?:"N/A",
                             if(!TextUtils.isEmpty(zakatB64)) zakatB64!! else  zakatNm!!,
                         )
                     }
@@ -231,10 +231,11 @@ class KycOtherDetailOneFragment : Fragment() {
         })
 
         binding.zakatStatus.mutableselectedDropDown1.observe(viewLifecycleOwner, Observer { result->
-            if(result.first.equals("5")){
-                binding.zakatDecla.visibility = View.VISIBLE
-            }else{
+            if(result.first.equals("7")){
                 binding.zakatDecla.visibility = View.GONE
+
+            }else{
+                binding.zakatDecla.visibility = View.VISIBLE
             }
         })
      /*   binding.zakatStatus.autoCompleteTextView1.setOnItemClickListener { adapterView, view, i, l ->
@@ -373,9 +374,11 @@ class KycOtherDetailOneFragment : Fragment() {
                 is Resource.Success -> {
                     val response = result.data?.data
                     binding.accountType.setSelectedOption(response?.accountType)
-                    if(response?.accountType?.equals("nka")?:false){
+                    if(response?.accountType?.equals("nka",true)?:false){
                         binding.grossAnnualIncomeslab.setListEntries(AppConstants.AnnualIncomeNormal.map { android.util.Pair(it.first,it.second) })
                         binding.grossAnnualIncomeslab.setSelectedDropDown(response?.annualIncomeNormal)
+                        binding.proofOfPe.visibility= View.VISIBLE
+                        binding.incomeProo.visibility = View.VISIBLE
                     }else{
                         binding.grossAnnualIncomeslab.setListEntries(AppConstants.AnnualIncomeSahulat.map { android.util.Pair(it.first,it.second) })
                         binding.grossAnnualIncomeslab.setSelectedDropDown(response?.annualIncomeNormal)

@@ -77,8 +77,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
     val mutableAttorneyDetailResponse = MutableLiveData<Resource<ApiResponse<AttorneyDetailResponse>>>()
     val mutableNomineeDetailResponse = MutableLiveData<Resource<ApiResponse<NomineeDetailResponse>>>()
     val mutableOtherDetailResponse = MutableLiveData<Resource<ApiResponse<OtherDetailResponse>>>()
-
-
+    val mutableLifeCycle = MutableLiveData<Int>()
     public fun saveContactIban(
         mobileNumber: String,
         registerUnder: String,
@@ -166,6 +165,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.registerUser(registerUser)
             withContext(Dispatchers.Main){
+
                 mutableRegisterUser.value = result
             }
         }
@@ -176,6 +176,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.loginUser(loginUser)
             withContext(Dispatchers.Main){
+
                 mutableLoginUser.value = result
             }
         }
@@ -186,6 +187,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.protectedAppId()
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.user?.lifecycleStatusId
                 mutableProtected.value = result
             }
         }
@@ -197,6 +199,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.basicData(basicDetailDto)
             withContext(Dispatchers.Main){
+
                 mutableBasicData.value = result
             }
         }
@@ -207,6 +210,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.createContactDetails(contactDetailDto)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableCreateContactDetail.value = result
             }
         }
@@ -265,6 +269,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.attorneyDetails(attorneyDetailDto)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableAttorneyDetail.value =result
             }
         }
@@ -286,6 +291,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.nomineeDetails(nomineeDetailDto)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableNomineeDetail.value =result
             }
         }
@@ -306,6 +312,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.otherDetails(otherDetailDto)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableOtherDetail.value =result
             }
         }
@@ -356,6 +363,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
             val zakaat = uriToPart(context, zakaatUri, "zakaatDeclaration")*/
             val result = repository.documents(zakat, account, termsBody, id, signatureProof, empAddProof, addProof, zakaatDeclaration)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableDocument.value =result
             }
         }

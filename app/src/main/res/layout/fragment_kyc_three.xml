@@ -11,19 +11,20 @@
         android:paddingHorizontal="15dp"
         android:background="@color/md_theme_surface"
         tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataThreeFragment">
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone"
-            tools:visibility="visible"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/load_anim" />
+            app:lottie_rawRes="@raw/load_anim"
+            tools:visibility="visible" />
         <com.example.scstrade.views.widgets.DualOptionToggleView
             android:id="@+id/cardNic"
             android:layout_width="0dp"

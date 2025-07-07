@@ -102,7 +102,7 @@ class AccountOpeningThreeFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            (requireActivity() as AofActivity).loadFragment(AccountOpeningFourFragment())
+            (requireActivity() as AofActivity).loadFragment(AccountOpeningTwoFragment())
         }
 
         val IbanGallery = registerForActivityResult(GetContent()) { uri ->

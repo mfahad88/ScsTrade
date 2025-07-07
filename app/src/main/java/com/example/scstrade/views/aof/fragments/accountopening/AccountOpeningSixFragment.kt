@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.scstrade.databinding.FragmentAccountOpeningSixBinding
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.LoginAOFFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 
 
@@ -21,7 +22,7 @@ class AccountOpeningSixFragment : Fragment() {
         binding = FragmentAccountOpeningSixBinding.inflate(inflater,container,false)
         binding.apply {
             btnContinue.setOnClickListener {
-                (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
+                (requireActivity() as AofActivity).loadFragment(LoginAOFFragment())
             }
         }
         return binding.root

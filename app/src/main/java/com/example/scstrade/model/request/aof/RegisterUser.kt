@@ -15,7 +15,7 @@ data class RegisterUser(
     @SerializedName("identificationType")
     val identificationType: String,
     @SerializedName("isApp")
-    val isApp: String,
+    val isApp: Boolean,
     @SerializedName("issueDate")
     val issueDate: String,
     @SerializedName("lifecycleStatus")

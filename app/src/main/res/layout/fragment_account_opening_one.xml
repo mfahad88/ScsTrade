@@ -96,7 +96,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:inputType="text"
+        android:inputType="number"
         android:maxLength="50"
         app:hintText="@string/nic_num"
         app:hintTextField="@string/enter_nic_num"

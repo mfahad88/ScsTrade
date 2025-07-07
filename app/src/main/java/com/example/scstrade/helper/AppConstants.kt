@@ -291,7 +291,7 @@ class AppConstants {
         )
         
         val RemittanceDescription = listOf(
-            "Non-Resident Pakistani (Repatriable)" to "1",
+            "Non-Resid`ent Pakistani (Repatriable)" to "1",
             "Non-Resident Pakistani (Non-Repatriable)" to "2",
             "Foreigner Resident (Repatriable)" to "3",
             "Foreigner Resident (Non-Repatriable)" to "4",
@@ -299,5 +299,15 @@ class AppConstants {
             "Foreigner Non-Resident (Non-Repatriable)" to "6",
             "Resident Pakistani" to "7"
             )
+
+        val LifeCycleStatus = listOf(
+            "BASIC_DATA" to 70,
+            "CONTACT_DETAILS" to 80,
+            "ATTORNEY_DETAILS" to 90,
+            "NOMINEE_DETAILS" to 100,
+            "OTHER_DETAILS" to 110,
+            "DOCUMENTS" to 120,
+            "COMPLETED" to 140
+        )
     }
 }

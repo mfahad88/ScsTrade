@@ -44,6 +44,9 @@ class AofActivity : BaseActivity() {
         }
         viewModel.country()
         viewModel.city()
+        binding.imageView22.setOnClickListener {
+//            startActivity(Intent(this,StatusActivity::class.java))
+        }
         viewModel.mutableCounty.observe(this, Observer { result->
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")

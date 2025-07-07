@@ -475,11 +475,6 @@ class AofRepository (val apiService: ApiService,val context: Context){
     }
 
     suspend fun registerUser(registerUser: RegisterUser): Resource<ResponseRegisterUser> {
-        /*try{
-            return  Resource.Success(apiService.registerAof(registerUser))
-        }catch (e:Exception){
-            return Resource.Error(e.message?:"An error occurred")
-        }*/
 
         try{
             val response = apiService.registerAof(registerUser)

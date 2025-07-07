@@ -52,8 +52,8 @@ class AnnouncementAdapter(
         fun bind(item: AnnouncementDataItem) = with(binding) {
 
             // Set company title and date
-            mcbimFunds.text = item.company_code?.trim() ?: ""
-            mar202512.text = if(!TextUtils.isEmpty(item.Announcement_Date?.toString())) formatDotNetDate(item.Announcement_Date?.toString() ?: "") else formatDotNetDate(item.Meeting_Date)
+            mcbimFunds.text = item.companyCode?.trim() ?: ""
+            mar202512.text = if(!TextUtils.isEmpty(item.announcementDate?.toString())) formatDotNetDate(item.announcementDate?.toString() ?: "") else formatDotNetDate(item.meetingDate)
        /*     if(TextUtils.isEmpty(item.Announcement_Date?.toString())){
                 mar202512.visibility = View.GONE
             }else{
@@ -62,15 +62,36 @@ class AnnouncementAdapter(
 
             crescentSt.text = item.name
             // Set short description
-            boardMeeti.text = item.Discription ?: ""
+            boardMeeti.text = item.discription ?: ""
 
             // Control tags visibility based on announcement type
-            boardMeetings.visibility = if (item.AnnouncementType?.contains("Board", true) == true) View.VISIBLE else View.GONE
-            finanicalResults.visibility = if (item.AnnouncementType?.contains("Result", true) == true) View.VISIBLE else View.GONE
-            materialInformation.visibility = if (item.AnnouncementType?.contains("Material", true) == true) View.VISIBLE else View.GONE
-            executiveDisclosures.visibility = if (item.AnnouncementType?.contains("Board", true) != true && item.AnnouncementType?.contains("Result", true) != true && item.AnnouncementType?.contains("Material", true) != true) View.VISIBLE else View.GONE
+            if(item.announcementType.contains("Board",true)){
+                boardMeetings.visibility = View.VISIBLE
+                finanicalResults.visibility = View.GONE
+                materialInformation.visibility = View.GONE
+                executiveDisclosures.visibility = View.GONE
+            }else if (item.announcementType.contains("Result",true)){
+                boardMeetings.visibility = View.GONE
+                finanicalResults.visibility = View.VISIBLE
+                materialInformation.visibility = View.GONE
+                executiveDisclosures.visibility = View.GONE
+            }else if (item.announcementType.contains("Material",true)){
+                boardMeetings.visibility = View.GONE
+                finanicalResults.visibility = View.GONE
+                materialInformation.visibility = View.VISIBLE
+                executiveDisclosures.visibility = View.GONE
+            }else{
+                boardMeetings.visibility = View.GONE
+                finanicalResults.visibility = View.GONE
+                materialInformation.visibility = View.GONE
+                executiveDisclosures.visibility = View.VISIBLE
+            }
+//            boardMeetings.visibility = if (item.announcementType?.contains("Board", true) == true) View.VISIBLE else View.GONE
+//            finanicalResults.visibility = if (item.announcementType?.contains("Result", true) == true) View.VISIBLE else View.GONE
+//            materialInformation.visibility = if (item.announcementType?.contains("Material", true) == true) View.VISIBLE else View.GONE
+//            executiveDisclosures.visibility = if (item.announcementType?.contains("Board", true) != true && item.type?.contains("Result", true) != true && item.type?.contains("Material", true) != true) View.VISIBLE else View.GONE
 
-            labelText.text = item.AnnouncementType
+            labelText.text = item.announcementType
             // Handle click actions
             eye.setOnClickListener { onEyeClick(item) }
             download.setOnClickListener { onDownloadClick(item) }
@@ -88,7 +109,7 @@ class AnnouncementAdapter(
 
             // Keys we ALREADY displayed so we must skip them
             val staticKeys = setOf(
-                "company_code", "Announcement_Date", "Discription", "AnnouncementType","bm_PDFLink","bm_ImageLink"
+                "companyCode", "announcementDate", "discription", "announcementType","imageLink","pDFLink"
             )
 
             // Kotlin reflection gives us all properties
@@ -110,7 +131,7 @@ class AnnouncementAdapter(
                         }
 
                         val keyTv = TextView(root.context).apply {
-                            text = prop.name.replace("_", " ") + ": "
+                            text = prop.name.replace("_", " ").replaceFirstChar { it.uppercaseChar() } + ": "
                             setTypeface(typeface, Typeface.BOLD)
                         }
                         val valueTv = TextView(root.context).apply {
