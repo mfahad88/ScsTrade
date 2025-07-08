@@ -148,8 +148,16 @@ class IncomeStatementFragment : Fragment() {
                                       }
                                   }
 
-                                  Card(modifier = Modifier.padding(horizontal = 15.dp), border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)), shape = RoundedCornerShape(12.dp),
-                                      backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),) {
+                                  Card(
+                                      modifier = Modifier.padding(horizontal = 15.dp),
+                                      border = BorderStroke(
+                                          1.dp, color = colorResource(
+                                              id = R.color.md_theme_surfaceContainerHighest
+                                          )
+                                      ),
+                                      shape = RoundedCornerShape(12.dp),
+                                      backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
+                                  ) {
                                       val res =
                                           sharedViewModel.mutableIncomeStatement.asFlow().collectAsState(
                                               initial = Resource.Loading()
@@ -233,25 +241,25 @@ class IncomeStatementFragment : Fragment() {
                                                               val name = props.name
                                                               val value = props.get(incomeStatement.first())
                                                               cardItem(name.replaceFirstChar { it.uppercase() }, if(regex.matches(value.toString())) Utils.commaFormat(value.toString().toDouble()) else value.toString())
-                                                              Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                              Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           }*/
 
                                                           cardItem("Sales", Utils.commaFormat(incomeStatement?.first()?.sales))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Cost Of Sales", Utils.commaFormat(incomeStatement?.first()?.costOfSales))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Gross Profit", Utils.commaFormat(incomeStatement?.first()?.grossProfit))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Operating Profit", Utils.commaFormat(incomeStatement?.first()?.operatingProfit))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Other Income", Utils.commaFormat(incomeStatement?.first()?.otherIncome))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Finance Cost", Utils.commaFormat(incomeStatement?.first()?.financeCost))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Profit Before Tax", Utils.commaFormat(incomeStatement?.first()?.profitBeforeTax))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem("Taxation", Utils.commaFormat(incomeStatement?.first()?.taxation))
-                                                          Divider(thickness = 1.dp, color = Color(0xFFE5E2E1))
+                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                           cardItem(key = "Profit After Tax", value = Utils.commaFormat(incomeStatement?.first()?.profitAfterTax))
                                                       }
                                                   }else{
@@ -294,8 +302,8 @@ class IncomeStatementFragment : Fragment() {
             Box(
                 contentAlignment = Alignment.CenterStart,
                 modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 10.dp)) {
+                    .weight(1f)
+                    .padding(vertical = 10.dp)) {
 
                 Text(
                     text = key,
@@ -313,8 +321,8 @@ class IncomeStatementFragment : Fragment() {
             Box(
                 contentAlignment = Alignment.CenterEnd,
                 modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 10.dp)) {
+                    .weight(1f)
+                    .padding(vertical = 10.dp)) {
 
                 Text(
                     text = value,

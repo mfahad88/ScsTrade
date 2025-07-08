@@ -21,6 +21,7 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHomeBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.HomeViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -38,6 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.PriorityQueue
 
 
 /**
@@ -208,19 +210,21 @@ class HomeFragment : Fragment() {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     entries=result.data?: emptyList()
-                    if(homeViewModel.selectedIndex.value==null){
+                   if(!entries.isNullOrEmpty()){
+                       if(homeViewModel.selectedIndex.value==null){
 
-                        homeViewModel.setSelectedIndex(result.data?.first {
-                            it.iNDEXCODE.contains("kse 100",true)
-                        }?: emptyList<KSEIndices>().first())
-                        homeViewModel.setSelectedCandle()
+                           homeViewModel.setSelectedIndex(result.data?.first {
+                               it.iNDEXCODE.contains("kse 100",true)
+                           }?: emptyList<KSEIndices>().first())
+                           homeViewModel.setSelectedCandle()
 
 //                        homeViewModel.fetchChart()
-                    }else{
-                        homeViewModel.setSelectedIndex(result.data?.first {
-                            it.iNDEXCODE.replace("Index","").replace("Share","").contains(binding.cardHome.kmiallshr.text,true)
-                        }?: emptyList<KSEIndices>().first())
-                    }
+                       }else{
+                           homeViewModel.setSelectedIndex(result.data?.first {
+                               it.iNDEXCODE.replace("Index","").replace("Share","").contains(binding.cardHome.kmiallshr.text,true)
+                           }?: emptyList<KSEIndices>().first())
+                       }
+                   }
 
                 }
             }
@@ -264,6 +268,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
+
             when(result){
                 is Resource.Error -> {
 
@@ -274,55 +279,136 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
                     lifecycleScope.launch {
-                        // Step 1: Do heavy computation off the main thread
-                        val items: List<ListItem> = withContext(Dispatchers.Default) {
-                            val data = result.data ?: emptyList()
+                        if (!result.data.isNullOrEmpty()) {
+                            val items: List<ListItem> = withContext(Dispatchers.Default) {
+                                val data = result.data ?: emptyList()
+                                val bySymbolMap = data.associateBy { it.sYM }
 
-                            val bySymbolMap = data.associateBy { it.sYM } // O(n) map for fast lookup
-
-                            buildList {
-                                // Leaders Section
-                                add(ListItem.Header("Leaders"))
-                                data.sortedByDescending { it.v } // sort by volume descending
-                                    .take(10)
-                                    .forEach { add(ListItem.Item(it)) }
-
-                                // SCS Top Picks - Optimized
-                                val scsItems = topPicks
-                                    .asSequence()
-                                    .map { it.sCSImpItemSymbol }
-                                    .mapNotNull { bySymbolMap[it] }
-                                    .toList()
-
-                                if (scsItems.isNotEmpty()) {
-                                    add(ListItem.Header("SCS Top Picks"))
-                                    scsItems.forEach { add(ListItem.Item(it)) }
+                                // Helper functions for top-k selection
+                                fun topKByVolume(data: List<StockItem>, k: Int = 10): List<StockItem> {
+                                    val minHeap = PriorityQueue(compareBy<StockItem> { it.v })
+                                    for (item in data) {
+                                        minHeap.add(item)
+                                        if (minHeap.size > k) minHeap.poll()
+                                    }
+                                    return minHeap.sortedByDescending { it.v }
                                 }
 
-                                // Gainers Section
-                                add(ListItem.Header("Gainers"))
-                                data.sortedByDescending { it.cHP } // sort by change percentage high to low
-                                    .take(10)
-                                    .forEach { add(ListItem.Item(it)) }
+                                fun topKByGain(data: List<StockItem>, k: Int = 10): List<StockItem> {
+                                    val minHeap = PriorityQueue(compareBy<StockItem> { it.cHP })
+                                    for (item in data) {
+                                        minHeap.add(item)
+                                        if (minHeap.size > k) minHeap.poll()
+                                    }
+                                    return minHeap.sortedByDescending { it.cHP }
+                                }
 
-                                // Losers Section
-                                add(ListItem.Header("Losers"))
-                                data.sortedBy { it.cHP } // sort by change percentage low to high
-                                    .take(10)
-                                    .forEach { add(ListItem.Item(it)) }
+                                fun topKByLoss(data: List<StockItem>, k: Int = 10): List<StockItem> {
+                                    val maxHeap = PriorityQueue(compareByDescending<StockItem> { it.cHP })
+                                    for (item in data) {
+                                        maxHeap.add(item)
+                                        if (maxHeap.size > k) maxHeap.poll()
+                                    }
+                                    return maxHeap.sortedBy { it.cHP }
+                                }
+
+                                buildList {
+                                    // Leaders Section
+                                    val leaders = topKByVolume(data)
+                                    add(ListItem.Header("Leaders"))
+                                    leaders.forEach { add(ListItem.Item(it)) }
+
+                                    // SCS Top Picks
+                                    val scsItems = topPicks
+                                        .asSequence()
+                                        .map { it.sCSImpItemSymbol }
+                                        .mapNotNull { bySymbolMap[it] }
+                                        .toList()
+
+                                    if (scsItems.isNotEmpty()) {
+                                        add(ListItem.Header("SCS Top Picks"))
+                                        scsItems.forEach { add(ListItem.Item(it)) }
+                                    }
+
+                                    // Gainers Section
+                                    val gainers = topKByGain(data)
+                                    add(ListItem.Header("Gainers"))
+                                    gainers.forEach { add(ListItem.Item(it)) }
+
+                                    // Losers Section
+                                    val losers = topKByLoss(data)
+                                    add(ListItem.Header("Losers"))
+                                    losers.forEach { add(ListItem.Item(it)) }
+                                }
                             }
-                        }
 
-                        // Step 2: Back on the main thread, update UI once
-                        (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
-                            binding.apply {
-                                if (loader.visibility == View.VISIBLE) {
-                                    loader.visibility = View.GONE
-                                    main.visibility = View.VISIBLE
+                            // Submit list to RecyclerView
+                            (binding.recyclerLeaders.adapter as StockAdapter).apply {
+                                submitList(items) {
+                                    binding.apply {
+                                        if (loader.visibility == View.VISIBLE) {
+                                            loader.visibility = View.GONE
+                                            main.visibility = View.VISIBLE
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                   /* val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
+                    lifecycleScope.launch {
+                        // Step 1: Do heavy computation off the main thread
+                        if(!result.data.isNullOrEmpty()){
+                            val items: List<ListItem> = withContext(Dispatchers.Default) {
+                                val data = result.data ?: emptyList()
+
+                                val bySymbolMap = data.associateBy { it.sYM } // O(n) map for fast lookup
+
+                                buildList {
+                                    // Leaders Section
+                                    add(ListItem.Header("Leaders"))
+                                    data.sortedByDescending { it.v } // sort by volume descending
+                                        .take(10)
+                                        .forEach { add(ListItem.Item(it)) }
+
+                                    // SCS Top Picks - Optimized
+                                    val scsItems = topPicks
+                                        .asSequence()
+                                        .map { it.sCSImpItemSymbol }
+                                        .mapNotNull { bySymbolMap[it] }
+                                        .toList()
+
+                                    if (scsItems.isNotEmpty()) {
+                                        add(ListItem.Header("SCS Top Picks"))
+                                        scsItems.forEach { add(ListItem.Item(it)) }
+                                    }
+
+                                    // Gainers Section
+                                    add(ListItem.Header("Gainers"))
+                                    data.sortedByDescending { it.cHP } // sort by change percentage high to low
+                                        .take(10)
+                                        .forEach { add(ListItem.Item(it)) }
+
+                                    // Losers Section
+                                    add(ListItem.Header("Losers"))
+                                    data.sortedBy { it.cHP } // sort by change percentage low to high
+                                        .take(10)
+                                        .forEach { add(ListItem.Item(it)) }
+                                }
+                            }
+
+                            // Step 2: Back on the main thread, update UI once
+                            (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
+                                binding.apply {
+                                    if (loader.visibility == View.VISIBLE) {
+                                        loader.visibility = View.GONE
+                                        main.visibility = View.VISIBLE
+                                    }
+                                }
+                            }
+                        }
+
+                    }*/
 
                 }
             }
@@ -333,16 +419,20 @@ class HomeFragment : Fragment() {
         val popupMenu = PopupMenu(requireContext(), view)
 
         entries.forEach {
-            popupMenu.menu.add(it.iNDEXCODE)
+            popupMenu.menu.add(it.iNDEXCODE.replace("Index","").replace("Share",""))
         }
 
         popupMenu.setOnMenuItemClickListener { menu ->
-
-            homeViewModel.setSelectedIndex(viewModel.mutableIndices.value?.data?.first {
-                it.iNDEXCODE.contains(menu.title.toString(), true)
-            } ?: emptyList<KSEIndices>().first())
-            homeViewModel.fetchChart()
-            true
+            if(!viewModel.mutableIndices.value?.data.isNullOrEmpty()) {
+                homeViewModel.setSelectedIndex(viewModel.mutableIndices.value?.data?.first {
+                    it.iNDEXCODE.replace("Index", "").replace("Share", "")
+                        .contains(menu.title.toString(), true)
+                } ?: emptyList<KSEIndices>().first())
+                homeViewModel.fetchChart()
+                true
+            }else{
+                false
+            }
         }
         popupMenu.show()
 

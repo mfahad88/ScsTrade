@@ -90,9 +90,9 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
                 val diff=
                     BigDecimal(stockItem.cL).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
                 if(diff>0){
-                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    binding.cardValueTrade.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                 }else if (diff<0){
-                    binding.cardValueTrade.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    binding.cardValueTrade.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                 }else{
                     binding.cardValueTrade.setCardBackgroundColor(Color.TRANSPARENT)
                 }
@@ -110,9 +110,9 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
                 val diff=
                     BigDecimal(stockItem.aP).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceAsk)
                 if(diff>0){
-                    binding.askCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    binding.askCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                 }else if (diff<0){
-                    binding.askCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    binding.askCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                 }else{
                     binding.askCard.setCardBackgroundColor(Color.TRANSPARENT)
                 }
@@ -129,9 +129,9 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
                 val diff=
                     BigDecimal(stockItem.aV).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceAskVol)
                 if(diff>0){
-                    binding.askVolCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    binding.askVolCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                 }else if (diff<0){
-                    binding.askVolCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    binding.askVolCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                 }else{
                     binding.askVolCard.setCardBackgroundColor(Color.TRANSPARENT)
                 }
@@ -149,9 +149,9 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
                 val diff=
                     BigDecimal(stockItem.bP).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceBid)
                 if(diff>0){
-                    binding.bidCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    binding.bidCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                 }else if (diff<0){
-                    binding.bidCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    binding.bidCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                 }else{
                     binding.bidCard.setCardBackgroundColor(Color.TRANSPARENT)
                 }
@@ -168,9 +168,9 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
                 val diff=
                     BigDecimal(stockItem.bV).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPriceBidVol)
                 if(diff>0){
-                    binding.bidVolCard.setCardBackgroundColor(Color.parseColor("#EDFFE0"))
+                    binding.bidVolCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                 }else if (diff<0){
-                    binding.bidVolCard.setCardBackgroundColor(Color.parseColor("#FFE0E0"))
+                    binding.bidVolCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.red_decrease))
                 }else{
                     binding.bidVolCard.setCardBackgroundColor(Color.TRANSPARENT)
                 }

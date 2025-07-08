@@ -162,6 +162,7 @@
                     android:textAppearance="@style/enter_code" />
             </RelativeLayout>
 
+
             <com.example.scstrade.views.widgets.LabelledSpinner
                 android:id="@+id/textInputBank"
                 android:layout_width="0dp"
@@ -171,9 +172,10 @@
                 app:hintLabel=""
                 app:layout_constraintBottom_toBottomOf="@+id/layout_code"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/layout_code"
-                app:layout_constraintTop_toTopOf="@+id/layout_code" />
-
+                app:layout_constraintTop_toTopOf="@+id/layout_code"
+                app:layout_constraintVertical_bias="0.0" />
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/iban"

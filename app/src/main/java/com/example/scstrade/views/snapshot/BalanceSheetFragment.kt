@@ -189,7 +189,7 @@ class BalanceSheetFragment : Fragment() {
                                         )
                                         Card(
                                             modifier = Modifier.padding(horizontal = 15.dp),
-                                            border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
+                                            border = BorderStroke(1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
                                             backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                                             shape = RoundedCornerShape(12.dp)
                                         ) {
@@ -281,7 +281,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Inventory",
@@ -289,7 +289,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Current Asset",
@@ -297,7 +297,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Investments",
@@ -305,7 +305,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Fixed Asset",
@@ -313,7 +313,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Total Assets",
@@ -321,7 +321,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Current Liability",
@@ -329,7 +329,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Fixed Liability",
@@ -337,7 +337,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             key = "Total Liabilities",
@@ -345,7 +345,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             key = "Paid Up Capital",
@@ -353,7 +353,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             key = "Total Equity",
@@ -382,7 +382,7 @@ class BalanceSheetFragment : Fragment() {
 
                                         Card(
                                             modifier = Modifier.padding(horizontal = 15.dp),
-                                            border = BorderStroke(1.dp, color = Color(0xFFE5E2E1)),
+                                            border = BorderStroke(1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
                                             backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                                             shape = RoundedCornerShape(12.dp)
                                         ) {
@@ -474,7 +474,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Bonus",
@@ -482,7 +482,7 @@ class BalanceSheetFragment : Fragment() {
                                                         )
                                                         Divider(
                                                             thickness = 1.dp,
-                                                            color = Color(0xFFE5E2E1)
+                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
                                                             "Right",
@@ -533,8 +533,8 @@ class BalanceSheetFragment : Fragment() {
             Box(
                 contentAlignment = Alignment.CenterEnd,
                 modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 10.dp)) {
+                    .weight(1f)
+                    .padding(vertical = 10.dp)) {
 
                 Text(
                     text = value,

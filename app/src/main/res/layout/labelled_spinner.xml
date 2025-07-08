@@ -7,11 +7,10 @@
     android:layout_height="60dp"
     android:id="@+id/textInput"
     tools:hint="@string/mobile_number_is_registered_under"
-    app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
     app:hintTextColor="@color/md_theme_onSurfaceVariant"
     app:expandedHintEnabled="false"
     app:boxBackgroundMode="outline"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+    style="@style/CustomTextInput">
 
     <AutoCompleteTextView
         android:id="@+id/dropdown"

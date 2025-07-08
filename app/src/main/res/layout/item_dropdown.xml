@@ -13,7 +13,7 @@
         android:textAppearance="@style/item_dropdown"
         android:gravity="center_vertical"
         android:paddingVertical="10dp"
-        android:paddingHorizontal="5dp"
+        android:paddingHorizontal="15dp"
          />
 
 

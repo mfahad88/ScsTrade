@@ -1448,7 +1448,11 @@
         <item name="boxStrokeWidthFocused">1dp</item>
         <item name="hintTextColor">@color/black</item>
     </style>
-
+    <style name="CustomTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/md_theme_onSurfaceVariant</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">3dp</item>
+    </style>
     <style name="preferences">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">18sp</item>
@@ -1565,6 +1569,7 @@
     <style name="item_dropdown">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:letterSpacing">-0.02</item>
     </style>
 
@@ -1631,7 +1636,7 @@
     <style name="engineering">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="click_to_fill">

@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemAnnouncementBinding
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
@@ -130,8 +132,11 @@ class AnnouncementAdapter(
                             orientation = LinearLayout.HORIZONTAL
                         }
 
-                        val keyTv = TextView(root.context).apply {
-                            text = prop.name.replace("_", " ").replaceFirstChar { it.uppercaseChar() } + ": "
+                        val keyTv = TextView(ContextThemeWrapper(root.context, R.style.engineering)).apply {
+                            text =  prop.name
+                                .replace("_", " ")                                  // snake_case to words
+                                .replace(Regex("(?<=[a-z])(?=[A-Z])"), " ")         // camelCase to words
+                                .replaceFirstChar { it.uppercaseChar() }  + ": "
                             setTypeface(typeface, Typeface.BOLD)
                         }
                         val valueTv = TextView(root.context).apply {

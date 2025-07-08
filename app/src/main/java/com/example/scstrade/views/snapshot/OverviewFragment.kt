@@ -106,11 +106,13 @@ class OverviewFragment : Fragment() {
                 }
                 is Resource.Success -> {
                    try{
+                       Log.e("Result",result.data.toString())
                        binding.onePecent.text = "${result.data?.oneMonthReturn}%"
                        binding.threePecent.text = "${result.data?.twoMonthReturn}%"
                        binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
                        binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
-
+                       binding.loader.visibility = View.GONE
+                       binding.main.visibility = View.VISIBLE
                        binding.apply {
                                onePerformance.background?.let {
                                val wrappedDrawable = DrawableCompat.wrap(it)
@@ -225,8 +227,7 @@ class OverviewFragment : Fragment() {
 
                            populateRatios(data = result.data)
                        }
-                       binding.loader.visibility = View.GONE
-                       binding.main.visibility = View.VISIBLE
+
                    }catch(e:Exception){
                        e.printStackTrace()
                    }
@@ -254,88 +255,126 @@ class OverviewFragment : Fragment() {
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
-                    ItemValue(
-                        "Paid Up Capital",
-                        Utils.convertToMillions(data?.paidUpCapital?.toDouble()),
-                        null
-                    )
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
+                    if(!data?.paidUpCapital.isNullOrEmpty()) {
+                        ItemValue(
+                            "Paid Up Capital",
+                            Utils.convertToMillions(data?.paidUpCapital?.toDouble()),
+                            null
                         )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
-                    ItemValue("Authorized Capital", Utils.convertToMillions(data?.authorizedCapital?.toDouble()) ?: "0", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
+                    if(!data?.authorizedCapital.isNullOrEmpty()) {
+                        ItemValue(
+                            "Authorized Capital",
+                            Utils.convertToMillions(
+                                data?.authorizedCapital?.toDouble() ?: "0.0".toDouble()
+                            ),
+                            null
                         )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
-                    ItemValue(
-                        "Total No Shares",
-                        Utils.convertToMillions(data?.totalNoShares?.toDouble()),
-                        null
-                    )
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
+                    if(data?.totalNoShares.isNullOrEmpty()) {
+                        ItemValue(
+                            "Total No Shares",
+                            Utils.convertToMillions(
+                                data?.totalNoShares?.toDouble() ?: "0.0".toDouble()
+                            ),
+                            null
                         )
-                    }
-                    ItemValue("Free Float", Utils.convertToMillions(data?.freeFloat?.toDouble()), null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
-                    }
-                    ItemValue("Free Float(%)", "${Utils.roundPercent(data?.freeFloatPer?.toDouble()) ?: "0"}%", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
-                    }
-                    ItemValue("Beta", Utils.roundTwoDecimal(data?.beta?.toDouble()) ?: "0", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
 
-                    ItemValue("Face Value", data?.faceValue ?: "0", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
+                    if(!data?.freeFloat.isNullOrEmpty()) {
+                        ItemValue(
+                            "Free Float",
+                            Utils.convertToMillions(
+                                data?.freeFloat?.toDouble() ?: "0.0".toDouble()
+                            ),
+                            null
                         )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
+                    }
+                    if(!data?.freeFloatPer.isNullOrEmpty()) {
+                        ItemValue(
+                            "Free Float(%)",
+                            "${Utils.roundPercent(data?.freeFloatPer?.toDouble() ?: "0.0".toDouble())}%",
+                            null
+                        )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
+                    }
+                    if(!data?.beta.isNullOrEmpty()) {
+                        ItemValue(
+                            "Beta",
+                            Utils.roundTwoDecimal(data?.beta?.toDouble() ?: "0.0".toDouble()),
+                            null
+                        )
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
+                    }
+                    if(!data?.faceValue.isNullOrEmpty()) {
+                        ItemValue("Face Value", data?.faceValue ?: "0", null)
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
 
-
-
-                    ItemValue("Year End", data?.yearEnd ?: "", null)
-                    Row {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xFFE5E2E1),
-                            modifier = Modifier.padding(vertical = 4.dp)
-                        )
+                    if(!data?.yearEnd.isNullOrEmpty()) {
+                        ItemValue("Year End", data?.yearEnd ?: "", null)
+                        Row {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0xFFE5E2E1),
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
+                        }
                     }
 
-                    ItemValue(
-                        "Market Cap",
-                        Utils.convertToBillions(data?.marketCap ?: "0"),
-                        null
-                    )
+                    if(!data?.marketCap.isNullOrEmpty()) {
+                        ItemValue(
+                            "Market Cap",
+                            Utils.convertToBillions(data?.marketCap ?: "0"),
+                            null
+                        )
+                    }
                 }
             }
 
@@ -1018,7 +1057,7 @@ class OverviewFragment : Fragment() {
     }
 
     @Composable
-    private fun ItemValue(key:String,value:String,desc:String?) {
+    private fun ItemValue(key:String,value:String?,desc:String?) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
@@ -1049,7 +1088,7 @@ class OverviewFragment : Fragment() {
 
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = value,
+                text = value?:"",
                 style = TextStyle(
                     fontSize = 16.sp,
                     lineHeight = 30.08.sp,

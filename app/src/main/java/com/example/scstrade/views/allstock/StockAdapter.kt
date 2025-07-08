@@ -38,7 +38,11 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
                 binding.root.setOnClickListener {
                     val intent= Intent(binding.root.context, SnapshotActivity::class.java)
-                    intent.putExtra(AppConstants.SYMBOL,stockItem.sYM)
+                    if(stockItem.sYM.contains("-")) {
+                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM.substringBefore("-"))
+                    }else{
+                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM)
+                    }
                     binding.root.context.startActivity(intent)
                 }
                 Glide.with(binding.root.context).load(stockItem.companyLogo)
@@ -134,9 +138,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
             }
 
         }
-
-
     }
+
+
     override fun getItemViewType(position: Int): Int {
 
         return getItem(position).viewType

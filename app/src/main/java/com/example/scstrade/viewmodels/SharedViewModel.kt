@@ -97,7 +97,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableResultIndices= MutableLiveData<Resource<ResultIndices>>()
     val mutableCompanyDetail = MutableLiveData<Resource<List<CompanyDetailItem>>>()
     fun fetchAllData(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             while(isFetchAllData) {
                 
                 if(isConnected.value==true) {

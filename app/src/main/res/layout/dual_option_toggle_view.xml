@@ -98,6 +98,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:background="@color/md_theme_surfaceContainerLowest_highContrast"
                 android:layout_height="48dp">
 
                 <EditText

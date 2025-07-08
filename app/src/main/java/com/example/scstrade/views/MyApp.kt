@@ -47,6 +47,7 @@ class MyApp : Application() {
         RetrofitInstanceAof.init(this)
         RetrofitInstance.init(this)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
+
         viewModel.apply {
             fetchIndices()
             fetchAllData()
