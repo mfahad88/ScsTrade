@@ -128,8 +128,11 @@ class AnnouncementsFragment : Fragment() {
             onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedLabel = parent!!.getItemAtPosition(position) as String
-                    binding.textDate.text.clear()
-                    snapshotViewModel.announcement(symbol,selectedLabel,null)
+                    if(selectedLabel.equals("all",true)){
+                        binding.textDate.text.clear()
+                    }
+//                    binding.textDate.text.clear()
+                    snapshotViewModel.announcement(symbol,selectedLabel,binding.textDate.text.toString())
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -150,7 +153,6 @@ class AnnouncementsFragment : Fragment() {
                 is Resource.Success -> {
                     binding.apply {
                         loader.visibility = View.GONE
-                        main.visibility = View.VISIBLE
                     }
                     binding.spinnerAnnouncement.adapter=
                         CustomArrayAdapter(requireContext(),result.data?.map { it.type }?.toList()?: emptyList())
@@ -170,8 +172,17 @@ class AnnouncementsFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
+                    if(!result.data.isNullOrEmpty()) {
+                        binding.main.visibility = View.VISIBLE
+                        binding.noAnnouncement.visibility = View.GONE
+                        (binding.main.adapter as AnnouncementAdapter).setData(
+                            result.data ?: emptyList()
+                        )
+                    }else{
+                        binding.main.visibility = View.GONE
+                        binding.noAnnouncement.visibility = View.VISIBLE
+                    }
 
-                    (binding.main.adapter as AnnouncementAdapter).setData(result.data?: emptyList())
                 }
             }
         })
@@ -223,7 +234,7 @@ class AnnouncementsFragment : Fragment() {
             }
         })
 
-        binding.imageView.setOnClickListener {
+        binding.relativeLayoutDate.setOnClickListener {
             showDatePicker(binding.textDate)
         }
 

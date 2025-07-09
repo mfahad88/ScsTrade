@@ -13,6 +13,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.LoginUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.accountopening.AccountOpeningFiveFragment
 import com.example.scstrade.views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 import com.example.scstrade.views.aof.fragments.kyc.contactDetail.KycContactDetailOneFragment
@@ -74,6 +75,7 @@ class LoginAOFFragment : Fragment() {
                     Log.e("ApiId:",Utils.decryptStatus(user?.sub?:""))
                     Log.e("Lifecycle:",user?.lifecycleStatusId.toString())
                     when(user?.lifecycleStatusId?:0){
+                        30 -> (requireActivity() as AofActivity).loadFragment(AccountOpeningFiveFragment())
                         70 -> (requireActivity() as AofActivity).loadFragment(KycBasicDataOneFragment())
                         80 ->(requireActivity() as AofActivity).loadFragment(KycContactDetailOneFragment())
                         90 ->(requireActivity() as AofActivity).loadFragment(KycAttorneyDetailOneFragment())

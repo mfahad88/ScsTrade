@@ -8,34 +8,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityTechnicalsDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.snapshot.SnapshotActivity
 import com.example.scstrade.views.technicals.adapter.TechnicalDetailAdapter
 import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
-import com.google.gson.JsonObject
-import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class TechnicalsDetailActivity : BaseActivity() {
     lateinit var binding: ActivityTechnicalsDetailBinding
@@ -69,6 +59,7 @@ class TechnicalsDetailActivity : BaseActivity() {
 
                     if(jsonElement?.isJsonArray?:false){
                         var count=0
+                        val resultList = mutableListOf<Array<String>>()
                         jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
                             if(!it.key.equals("company_name",true)) {
                                 count++
@@ -88,19 +79,16 @@ class TechnicalsDetailActivity : BaseActivity() {
                                 System.out.println(it.key)
                             }
                         }
-                        val list= ArrayList<Array<String>>()
                         jsonElement?.asJsonArray?.forEach { it ->
-                            val obj: JsonObject? =it.asJsonObject
+                            val obj = it.asJsonObject
+//                               val map = Gson().fromJson(jsonElement, Map::class.java) as Map<String, Any>
+                            val values = obj.entrySet().map { it.value.asString }.toTypedArray()
+                            resultList.add(values)
 
-
-                            obj?.entrySet()?.forEach {
-                                list.add(obj.entrySet()?.map { it.value.asString }?.toTypedArray()!!)
-
-                            }
 
                         }
                         binding.recyclerView.apply {
-                            adapter = TechnicalDetailAdapter(list,viewModel){
+                            adapter = TechnicalDetailAdapter(resultList,viewModel){
                                 val intent= Intent(this@TechnicalsDetailActivity, SnapshotActivity::class.java)
                                 intent.putExtra(AppConstants.SYMBOL, it)
                                 startActivity(intent)

@@ -48,6 +48,11 @@ class KycBasicDataOneFragment : Fragment() {
         viewModel.protectedAppId()
         viewModel.getBasicData()
         initFields()
+        binding.ivrService.apply {
+            setSelectedOption(AppConstants.IVRSTATUSLIST.filter { it.second.equals("y",true) }.map { it.second }.first())
+            binding.btnSingle.isEnabled=false
+            binding.btnMarried.isEnabled=false
+        }
         (requireActivity() as AofActivity).binding.apply {
             welcome.text = getString(R.string.basic_data)
             progressBar.setProgress(1)

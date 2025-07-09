@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemTechnicalDetailBinding
-import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.viewmodels.SharedViewModel
 import java.util.Collections
 
-class TechnicalDetailAdapter(private val itemList: ArrayList<Array<String>>,private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<TechnicalDetailAdapter.TechnicalDetailViewHolder>() {
+class TechnicalDetailAdapter(private val itemList: MutableList<Array<String>>, private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<TechnicalDetailAdapter.TechnicalDetailViewHolder>() {
 
     class TechnicalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -19,7 +18,7 @@ class TechnicalDetailAdapter(private val itemList: ArrayList<Array<String>>,priv
                 symbol.text=item[0]
                 ePE.text=item[1]
                 price.text = item[2]
-                avgVol.text = item[3]
+                av.text = item[3]
                 companyName.text = item[4]
 
                 val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.companyLogo }?.first()

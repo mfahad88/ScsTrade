@@ -108,17 +108,33 @@ class KycOtherDetailOneFragment : Fragment() {
                 is Resource.Loading -> binding.loader.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.apply {
-                        viewModel.documents(
-                            requireContext(),
-                            zakatStatus.selectedDropDown1.first ?: "",
-                            accountType.selectedOption.second ?: "",
-                            "Y",
-                            uinType ?: "",
-                            if(!TextUtils.isEmpty(signatureB64)) signatureB64!! else  signatureNm?:"",
-                            if(!TextUtils.isEmpty(permanentAddressB64)) permanentAddressB64!! else  permanentAddressNm?:"N/A",
-                            if(!TextUtils.isEmpty(employeerAddressB64)) employeerAddressB64!! else  employeerAddressNm?:"N/A",
-                            if(!TextUtils.isEmpty(zakatB64)) zakatB64!! else  zakatNm!!,
-                        )
+
+                        if(!zakatB64.isNullOrEmpty() || !zakatNm.isNullOrEmpty()){
+                            viewModel.documents(
+                                requireContext(),
+                                zakatStatus.selectedDropDown1.first ?: "",
+                                accountType.selectedOption.second ?: "",
+                                "Y",
+                                uinType ?: "",
+                                if(!TextUtils.isEmpty(signatureB64)) signatureB64!! else  signatureNm?:"",
+                                if(!TextUtils.isEmpty(permanentAddressB64)) permanentAddressB64!! else  permanentAddressNm?:"N/A",
+                                if(!TextUtils.isEmpty(employeerAddressB64)) employeerAddressB64!! else  employeerAddressNm?:"N/A",
+                                if(!TextUtils.isEmpty(zakatB64)) zakatB64!! else  zakatNm!!,
+                            )
+                        }else{
+                            viewModel.documents(
+                                requireContext(),
+                                zakatStatus.selectedDropDown1.first ?: "",
+                                accountType.selectedOption.second ?: "",
+                                "Y",
+                                uinType ?: "",
+                                if(!TextUtils.isEmpty(signatureB64)) signatureB64!! else  signatureNm?:"",
+                                if(!TextUtils.isEmpty(permanentAddressB64)) permanentAddressB64!! else  permanentAddressNm?:"N/A",
+                                if(!TextUtils.isEmpty(employeerAddressB64)) employeerAddressB64!! else  employeerAddressNm?:"N/A",
+                                null,
+                            )
+                        }
+
                     }
                     /*binding.loader.visibility = View.GONE
                     (requireActivity() as AofActivity).loadFragment(KycOtherDetailOneFragment())*/
@@ -231,7 +247,7 @@ class KycOtherDetailOneFragment : Fragment() {
         })
 
         binding.zakatStatus.mutableselectedDropDown1.observe(viewLifecycleOwner, Observer { result->
-            if(result.first.equals("7")){
+            if(result.first.equals("5")){
                 binding.zakatDecla.visibility = View.GONE
 
             }else{

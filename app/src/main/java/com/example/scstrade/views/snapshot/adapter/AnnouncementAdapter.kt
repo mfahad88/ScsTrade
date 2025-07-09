@@ -1,5 +1,7 @@
 package com.example.scstrade.views.snapshot.adapter
 
+import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemAnnouncementBinding
@@ -55,7 +58,7 @@ class AnnouncementAdapter(
 
             // Set company title and date
             mcbimFunds.text = item.companyCode?.trim() ?: ""
-            mar202512.text = if(!TextUtils.isEmpty(item.announcementDate?.toString())) formatDotNetDate(item.announcementDate?.toString() ?: "") else formatDotNetDate(item.meetingDate)
+            mar202512.text = if(!TextUtils.isEmpty(item.announcementDate?.toString())) "Announcement Date: ${formatDotNetDate(item.announcementDate?.toString() ?: "")}" else "Meeting Date: ${formatDotNetDate(item.meetingDate)}"
        /*     if(TextUtils.isEmpty(item.Announcement_Date?.toString())){
                 mar202512.visibility = View.GONE
             }else{
@@ -67,31 +70,8 @@ class AnnouncementAdapter(
             boardMeeti.text = item.discription ?: ""
 
             // Control tags visibility based on announcement type
-            if(item.announcementType.contains("Board",true)){
-                boardMeetings.visibility = View.VISIBLE
-                finanicalResults.visibility = View.GONE
-                materialInformation.visibility = View.GONE
-                executiveDisclosures.visibility = View.GONE
-            }else if (item.announcementType.contains("Result",true)){
-                boardMeetings.visibility = View.GONE
-                finanicalResults.visibility = View.VISIBLE
-                materialInformation.visibility = View.GONE
-                executiveDisclosures.visibility = View.GONE
-            }else if (item.announcementType.contains("Material",true)){
-                boardMeetings.visibility = View.GONE
-                finanicalResults.visibility = View.GONE
-                materialInformation.visibility = View.VISIBLE
-                executiveDisclosures.visibility = View.GONE
-            }else{
-                boardMeetings.visibility = View.GONE
-                finanicalResults.visibility = View.GONE
-                materialInformation.visibility = View.GONE
-                executiveDisclosures.visibility = View.VISIBLE
-            }
-//            boardMeetings.visibility = if (item.announcementType?.contains("Board", true) == true) View.VISIBLE else View.GONE
-//            finanicalResults.visibility = if (item.announcementType?.contains("Result", true) == true) View.VISIBLE else View.GONE
-//            materialInformation.visibility = if (item.announcementType?.contains("Material", true) == true) View.VISIBLE else View.GONE
-//            executiveDisclosures.visibility = if (item.announcementType?.contains("Board", true) != true && item.type?.contains("Result", true) != true && item.type?.contains("Material", true) != true) View.VISIBLE else View.GONE
+            boardMeetings.setCardBackgroundColor(getTypeBackgroundColor(binding.root.context,item.discription))
+            labelText.setTextColor(getTypeFontColor(binding.root.context,item.discription))
 
             labelText.text = item.announcementType
             // Handle click actions
@@ -159,5 +139,32 @@ class AnnouncementAdapter(
         return if (ms != null) {
             SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date(ms))
         } else str
+    }
+
+    fun getTypeBackgroundColor(context: Context, type: String): Int {
+        return when (type) {
+            "Board Meetings" -> ContextCompat.getColor(context, R.color.type_board_meeting_bg)
+            "Material Information" -> ContextCompat.getColor(context, R.color.type_material_info_bg)
+            "Financial Result" -> ContextCompat.getColor(context, R.color.type_financial_result_bg)
+            "Executive Disclosures" -> ContextCompat.getColor(context, R.color.type_exec_disclosure_bg)
+            "Shareholder Meetings" -> ContextCompat.getColor(context, R.color.type_shareholder_meeting_bg)
+            "Insider Transactions" -> ContextCompat.getColor(context, R.color.type_insider_tx_bg)
+            "Payout" -> ContextCompat.getColor(context, R.color.type_payout_bg)
+            "Other" -> ContextCompat.getColor(context, R.color.type_other_bg)
+            else -> ContextCompat.getColor(context, R.color.type_default_bg)
+        }
+    }
+
+    fun getTypeFontColor(context: Context, type: String): Int {
+        return when (type) {
+            "Board Meetings" -> ContextCompat.getColor(context, R.color.type_board_meeting_fg)
+            "Material Information" -> ContextCompat.getColor(context, R.color.type_material_info_fg)
+            "Financial Result" -> ContextCompat.getColor(context, R.color.type_financial_result_fg)
+            "Shareholder Meetings" -> ContextCompat.getColor(context, R.color.type_shareholder_meeting_fg)
+            "Insider Transactions" -> ContextCompat.getColor(context, R.color.type_insider_tx_fg)
+            "Payout" -> ContextCompat.getColor(context, R.color.type_payout_fg)
+            "Other" -> ContextCompat.getColor(context, R.color.type_other_fg)
+            else -> ContextCompat.getColor(context, R.color.type_default_fg)
+        }
     }
 }

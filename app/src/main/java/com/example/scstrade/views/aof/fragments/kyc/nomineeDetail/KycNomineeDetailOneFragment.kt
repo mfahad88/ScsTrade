@@ -92,10 +92,10 @@ class KycNomineeDetailOneFragment : Fragment() {
         initFields()
         binding.nominee.apply {
             setOnButtonOneClickListener {
-                binding.nomineeView.visibility = View.VISIBLE
+                this@KycNomineeDetailOneFragment.binding.nomineeView.visibility = View.VISIBLE
             }
             setOnButtonTwoClickListener {
-                binding.nomineeView.visibility = View.GONE
+                this@KycNomineeDetailOneFragment.binding.nomineeView.visibility = View.GONE
             }
         }
         /* ---------- FRONT ---------- */

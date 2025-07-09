@@ -13,6 +13,7 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
+import com.example.scstrade.views.aof.fragments.kyc.basicData.KycBasicDataOneFragment
 
 
 class AccountOpeningFiveFragment : Fragment() {
@@ -28,10 +29,12 @@ class AccountOpeningFiveFragment : Fragment() {
         val uin =aofViewModel.getaccountOpening().accountopeningnicNumber
         binding.apply {
             btnContinue.setOnClickListener {
-                if(binding.pinview.value.isNotEmpty() && uin?.isNotEmpty()?:false){
+                if(!binding.pinview.value.isNullOrEmpty() && binding.pinview.value.length==6){
 
-                    aofViewModel.verifyOtp(VerifyOtpDto(pinview.value.toString(), "v",uin.toString()))
+                    aofViewModel.verifyOtp(VerifyOtpDto(pinview.value.toString()/*, "v",uin.toString()*/))
 
+                }else{
+                    Utils.showError(requireView(),"Please input correct OTP...")
                 }
             }
 
@@ -44,8 +47,8 @@ class AccountOpeningFiveFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     val response = result.data
-                    if(response?.statusCode==200){
-                        (requireActivity() as AofActivity).loadFragment(fragment = AccountOpeningSixFragment())
+                    if(response?.isSuccess == true){
+                        (requireActivity() as AofActivity).loadFragment(fragment = KycBasicDataOneFragment())
                     }else{
                         Utils.showError(requireView(),response?.message?:"An error occurred")
                     }

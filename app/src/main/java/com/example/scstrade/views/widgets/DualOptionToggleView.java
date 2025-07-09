@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class DualOptionToggleView extends RelativeLayout {
-    DualOptionToggleViewBinding binding;
+    public DualOptionToggleViewBinding binding;
     public EditText editText;
     List<Pair<String,String>> list;
     public Pair<String,String> selectedOption;

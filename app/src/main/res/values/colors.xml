@@ -186,4 +186,24 @@
     <color name="dropdown">#FFFFFF</color>
     <color name="green_increse">#EDFFE0</color>
     <color name="red_decrease">#FFE0E0</color>
+
+
+    <color name="type_board_meeting_bg">#1A4CAF50</color>     <!-- green with 10% -->
+    <color name="type_material_info_bg">#1A2196F3</color>     <!-- blue with 10% -->
+    <color name="type_financial_result_bg">#1A9C27B0</color>  <!-- purple with 10% -->
+    <color name="type_exec_disclosure_bg">#33444444</color>   <!-- gray with 20% -->
+    <color name="type_shareholder_meeting_bg">#33F44336</color> <!-- red 20% -->
+    <color name="type_insider_tx_bg">#33FF9800</color>        <!-- orange 20% -->
+    <color name="type_payout_bg">#33A52A2A</color>            <!-- brown 20% -->
+    <color name="type_other_bg">#33444444</color>             <!-- gray 20% -->
+    <color name="type_default_bg">#1A000000</color>           <!-- black 10% -->
+
+    <color name="type_board_meeting_fg">#4CAF50</color>
+    <color name="type_material_info_fg">#2196F3</color>
+    <color name="type_financial_result_fg">#9C27B0</color>
+    <color name="type_shareholder_meeting_fg">#CCF44336</color>
+    <color name="type_insider_tx_fg">#CCFF9800</color>
+    <color name="type_payout_fg">#CCA52A2A</color>
+    <color name="type_other_fg">#CCFF9800</color>
+    <color name="type_default_fg">#000000</color>
 </resources>

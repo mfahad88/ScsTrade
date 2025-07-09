@@ -236,31 +236,44 @@ class IncomeStatementFragment : Fragment() {
                                                   }
                                                   if(incomeStatement?.isNotEmpty() == true) {
                                                       Column (modifier = Modifier.padding(horizontal = 15.dp)){
-                                                          /*for(props in IncomeStatementDataItem::class.memberProperties){
-                                                              val regex = Regex(".*\\\\d.*")
-                                                              val name = props.name
-                                                              val value = props.get(incomeStatement.first())
-                                                              cardItem(name.replaceFirstChar { it.uppercase() }, if(regex.matches(value.toString())) Utils.commaFormat(value.toString().toDouble()) else value.toString())
-                                                              Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          }*/
+                                                          val statement = incomeStatement?.first()
 
-                                                          cardItem("Sales", Utils.commaFormat(incomeStatement?.first()?.sales))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Cost Of Sales", Utils.commaFormat(incomeStatement?.first()?.costOfSales))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Gross Profit", Utils.commaFormat(incomeStatement?.first()?.grossProfit))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Operating Profit", Utils.commaFormat(incomeStatement?.first()?.operatingProfit))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Other Income", Utils.commaFormat(incomeStatement?.first()?.otherIncome))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Finance Cost", Utils.commaFormat(incomeStatement?.first()?.financeCost))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Profit Before Tax", Utils.commaFormat(incomeStatement?.first()?.profitBeforeTax))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem("Taxation", Utils.commaFormat(incomeStatement?.first()?.taxation))
-                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
-                                                          cardItem(key = "Profit After Tax", value = Utils.commaFormat(incomeStatement?.first()?.profitAfterTax))
+                                                          val financialItems = listOf(
+                                                              "Sales" to statement?.sales,
+                                                              "Cost Of Sales" to statement?.costOfSales,
+                                                              "Gross Profit" to statement?.grossProfit,
+                                                              "Operating Profit" to statement?.operatingProfit,
+                                                              "Other Income" to statement?.otherIncome,
+                                                              "Finance Cost" to statement?.financeCost,
+                                                              "Profit Before Tax" to statement?.profitBeforeTax,
+                                                              "Taxation" to statement?.taxation,
+                                                              "Profit After Tax" to statement?.profitAfterTax
+                                                          )
+
+                                                          for ((label, value) in financialItems) {
+                                                              if (value != null && value > 0) {
+                                                                  Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+                                                                  cardItem(label, Utils.commaFormat(value))
+                                                              }
+                                                          }
+
+//                                                          cardItem("Sales", Utils.commaFormat(incomeStatement?.first()?.sales))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Cost Of Sales", Utils.commaFormat(incomeStatement?.first()?.costOfSales))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Gross Profit", Utils.commaFormat(incomeStatement?.first()?.grossProfit))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Operating Profit", Utils.commaFormat(incomeStatement?.first()?.operatingProfit))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Other Income", Utils.commaFormat(incomeStatement?.first()?.otherIncome))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Finance Cost", Utils.commaFormat(incomeStatement?.first()?.financeCost))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Profit Before Tax", Utils.commaFormat(incomeStatement?.first()?.profitBeforeTax))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem("Taxation", Utils.commaFormat(incomeStatement?.first()?.taxation))
+//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          cardItem(key = "Profit After Tax", value = Utils.commaFormat(incomeStatement?.first()?.profitAfterTax))
                                                       }
                                                   }else{
                                                       Column(modifier = Modifier.padding(10.dp)) {

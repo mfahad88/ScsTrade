@@ -7,13 +7,15 @@
     android:paddingVertical="5dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="126dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:contentPaddingLeft="8dp"
+        app:contentPaddingRight="8dp"
         app:strokeColor="@null"
         app:strokeWidth="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/board_meetings"
         app:cardBackgroundColor="#1A187376"
         app:cardCornerRadius="5dp"
@@ -22,6 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/labelText"
             android:text="@string/board_meetings"
             android:textAppearance="@style/board_meetings"
             android:lineSpacingExtra="5sp"
@@ -30,76 +33,76 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="126dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:strokeColor="@null"
-        app:strokeWidth="0dp"
-        android:visibility="gone"
-        android:id="@+id/finanical_results"
-        app:cardBackgroundColor="#1AA44FA9"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/finanical_results"
-            android:textAppearance="@style/finanical_results"
-            android:lineSpacingExtra="5sp"
-            android:layout_gravity="center"
-            />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="126dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:strokeColor="@null"-->
+<!--        app:strokeWidth="0dp"-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/finanical_results"-->
+<!--        app:cardBackgroundColor="#1AA44FA9"-->
+<!--        app:cardCornerRadius="5dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/finanical_results"-->
+<!--            android:textAppearance="@style/finanical_results"-->
+<!--            android:lineSpacingExtra="5sp"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
 
-    </com.google.android.material.card.MaterialCardView>
+<!--    </com.google.android.material.card.MaterialCardView>-->
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="126dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:strokeColor="@null"
-        app:strokeWidth="0dp"
-        android:visibility="gone"
-        android:id="@+id/material_information"
-        app:cardBackgroundColor="#1A1A73E8"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/material_information"
-            android:textAppearance="@style/material_information"
-            android:lineSpacingExtra="5sp"
-            android:layout_gravity="center"
-            />
-    </com.google.android.material.card.MaterialCardView>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="126dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:strokeColor="@null"-->
+<!--        app:strokeWidth="0dp"-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/material_information"-->
+<!--        app:cardBackgroundColor="#1A1A73E8"-->
+<!--        app:cardCornerRadius="5dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/material_information"-->
+<!--            android:textAppearance="@style/material_information"-->
+<!--            android:lineSpacingExtra="5sp"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="126dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:strokeColor="@null"
-        app:strokeWidth="0dp"
-        android:visibility="gone"
-        android:id="@+id/executive_disclosures"
-        app:cardBackgroundColor="#1A625B71"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/label_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/executive_disclosures"
-            android:lineSpacingExtra="5sp"
-            android:layout_gravity="center"
-            />
-    </com.google.android.material.card.MaterialCardView>
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="126dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        app:strokeColor="@null"-->
+<!--        app:strokeWidth="0dp"-->
+<!--        android:visibility="gone"-->
+<!--        android:id="@+id/executive_disclosures"-->
+<!--        app:cardBackgroundColor="#1A625B71"-->
+<!--        app:cardCornerRadius="5dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        <TextView-->
+<!--            android:id="@+id/label_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textAppearance="@style/executive_disclosures"-->
+<!--            android:lineSpacingExtra="5sp"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
 
     <TextView
         android:id="@+id/mcbim_funds"
@@ -199,8 +202,8 @@
 
     <ImageView
         android:id="@+id/eye"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:padding="2dp"
         android:layout_marginTop="4dp"
         android:scaleType="fitCenter"
@@ -213,8 +216,8 @@
 
     <ImageView
         android:id="@+id/download"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:padding="2dp"
@@ -227,8 +230,8 @@
 
     <ImageView
         android:id="@+id/share"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:padding="2dp"

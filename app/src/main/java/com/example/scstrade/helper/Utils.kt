@@ -510,7 +510,7 @@ class Utils {
         }
         fun bitmapToBase64(bitmap: Bitmap): String {
             val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             val byteArray = outputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.NO_WRAP)
         }
@@ -525,7 +525,7 @@ class Utils {
         }
         fun convertImageUriToBase64(context: Context, imageUri: Uri): String? {
             val bitmap = uriToBitmap(context, imageUri)
-            return bitmap?.let { resizeBitmap(it,200,200) }
+            return bitmap?.let { resizeBitmap(it,1024,800) }
         }
         fun saveSharedPreference(context: Context,key:String,value:List<Any>){
             val gson=Gson()
@@ -599,7 +599,7 @@ class Utils {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(context, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
-                val customDate = LocalDate.of(selectedYear, selectedMonth, selectedDay)
+                val customDate = LocalDate.of(selectedYear, selectedMonth+1, selectedDay)
                 val formatter = DateTimeFormatter.ofPattern(datePattern)
                 val formatted = customDate.format(formatter)
                 onDateSelected(formatted)

@@ -346,7 +346,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
                   sigUri: String,
                   empUri: String,
                   addUri: String,
-                  zakaatUri: String){
+                  zakaatUri: String?){
         mutableDocument.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val zakat = zakatStatus.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -356,7 +356,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
             val signatureProof = sigUri.toRequestBody("text/plain".toMediaTypeOrNull())
             val empAddProof = empUri.toRequestBody("text/plain".toMediaTypeOrNull())
             val addProof = addUri.toRequestBody("text/plain".toMediaTypeOrNull())
-            val zakaatDeclaration = zakaatUri.toRequestBody("text/plain".toMediaTypeOrNull())
+            val zakaatDeclaration = zakaatUri?.toRequestBody("text/plain".toMediaTypeOrNull())
             /*val signature = uriToPart(context, sigUri, "signatureProof")
             val emp = uriToPart(context, empUri, "empAddProof")
             val add = uriToPart(context, addUri, "addProof")

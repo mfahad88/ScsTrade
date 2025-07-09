@@ -116,20 +116,20 @@
     </style>
 
     <style name="weeks">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
 
     <style name="high_52">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
 
     <style name="low_52">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_error</item>
     </style>

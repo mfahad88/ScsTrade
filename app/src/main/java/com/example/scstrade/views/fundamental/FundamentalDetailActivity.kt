@@ -5,15 +5,12 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,20 +19,14 @@ import com.example.scstrade.databinding.ActivityFundamentalDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
-import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.fundamental.adapter.FundamentalDetailAdapter
 import com.example.scstrade.views.snapshot.SnapshotActivity
-import com.example.scstrade.views.technicals.adapter.TechnicalDetailAdapter
 import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
-import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class FundamentalDetailActivity : BaseActivity() {
     lateinit var binding: ActivityFundamentalDetailBinding
@@ -54,6 +45,14 @@ class FundamentalDetailActivity : BaseActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+        binding.recyclerView.apply {
+            layoutManager=LinearLayoutManager(this@FundamentalDetailActivity,LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(
+                VerticalSpaceItemDecoration(1,
+                    ContextCompat.getColor(this@FundamentalDetailActivity,R.color.md_theme_outline))
+            )
+
+        }
         viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)?:"")
 
         viewModel.mutableFundamentalDetail.observe(this, Observer {
@@ -71,7 +70,7 @@ class FundamentalDetailActivity : BaseActivity() {
 
                     if(jsonElement?.isJsonArray?:false){
                         var count=0
-                        val list= ArrayList<Array<String>>()
+                        val resultList = mutableListOf<Array<String>>()
                        lifecycleScope.launch (Dispatchers.IO){
                            jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
                                if(!it.key.equals("company_name",true)) {
@@ -89,21 +88,20 @@ class FundamentalDetailActivity : BaseActivity() {
 
                                    System.out.println(it.key)
                                }
+
                            }
 
                            jsonElement?.asJsonArray?.forEach { it ->
-                               val obj: JsonObject? =it.asJsonObject
+                               val obj = it.asJsonObject
+//                               val map = Gson().fromJson(jsonElement, Map::class.java) as Map<String, Any>
+                               val values = obj.entrySet().map { it.value.asString }.toTypedArray()
+                               resultList.add(values)
 
-
-                               obj?.entrySet()?.forEach {
-                                   list.add(obj.entrySet()?.map { it.value.asString }?.toTypedArray()!!)
-
-                               }
 
                            }
                        }
                         binding.recyclerView.apply {
-                            adapter = FundamentalDetailAdapter(list,viewModel){
+                            adapter = FundamentalDetailAdapter(resultList,viewModel){
                                 val intent= Intent(this@FundamentalDetailActivity, SnapshotActivity::class.java)
                                 intent.putExtra(AppConstants.SYMBOL, it)
                                 startActivity(intent)
@@ -119,20 +117,10 @@ class FundamentalDetailActivity : BaseActivity() {
                 }
             }
         })
-        binding.recyclerView.apply {
-            layoutManager=LinearLayoutManager(this@FundamentalDetailActivity,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(
-                VerticalSpaceItemDecoration(1,
-                    ContextCompat.getColor(this@FundamentalDetailActivity,R.color.md_theme_outline))
-            )
-            doOnPreDraw {
-                Log.d("TAG", "RecyclerView visible rows are rendered")
-                binding.groupMain.visibility = View.VISIBLE
-                binding.loader.visibility = View.GONE
-            }
-        }
 
 
+        binding.groupMain.visibility = View.VISIBLE
+        binding.loader.visibility = View.GONE
 
     }
 

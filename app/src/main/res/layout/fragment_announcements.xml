@@ -28,7 +28,7 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDate"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -46,20 +46,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/calendar_icon" />
 
         <EditText
             android:id="@+id/textDate"
-            android:layout_width="match_parent"
+            android:layout_width="95dp"
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/imageView"
             android:background="@null"
-            android:textSize="14sp"
             android:digits="0123456789/"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:hint="DD/MM/YY"
-            android:inputType="date" />
+            android:inputType="date"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -74,6 +76,19 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_announcement"
+        android:text="NO ANNOUNCEMENT"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textFontWeight="700"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayoutAnnouncement" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main"

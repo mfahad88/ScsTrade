@@ -54,9 +54,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_otp_ha"
         app:password="false"
-        app:pinHeight="50dp"
-        app:pinLength="4"
-        app:pinWidth="50dp" />
+        app:pinHeight="38dp"
+        app:pinLength="6"
+        app:pinWidth="38dp" />
 
     <TextView
         android:id="@+id/didn_t_rece"

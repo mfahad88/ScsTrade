@@ -350,7 +350,7 @@ interface ApiService {
                           @Part("signatureProof") signatureProof: RequestBody,
                           @Part("empAddProof") empAddProof: RequestBody,
                           @Part("addProof") addProof: RequestBody,
-                          @Part("zakaatDeclaration") zakaatDeclaration: RequestBody):Response<ApiResponse<Nothing>>
+                          @Part("zakaatDeclaration") zakaatDeclaration: RequestBody?):Response<ApiResponse<Nothing>>
 
     @GET(value = "/api/documents/application/{applicationId}")
     suspend fun getDocuments(@Path("applicationId")applicationId:String):Response<ApiResponse<DocumentDto>>
@@ -370,7 +370,7 @@ interface ApiService {
     @GET(value = "api/other-details/application/{applicationId}")
     suspend fun getOtherDetails(@Path("applicationId")applicationId:String):Response<ApiResponse<OtherDetailResponse>>
 
-    @POST(value = "api/verify-otp")
+    @POST(value = "api/verify-otp-new")
     suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):Response<ApiResponse<Nothing>>
 
 }

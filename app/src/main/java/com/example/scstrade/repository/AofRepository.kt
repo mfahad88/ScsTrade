@@ -654,7 +654,7 @@ class AofRepository (val apiService: ApiService,val context: Context){
                           signatureProof: RequestBody,
                           empAddProof: RequestBody,
                           addProof: RequestBody,
-                          zakaatDeclaration: RequestBody):Resource<ApiResponse<Nothing>>{
+                          zakaatDeclaration: RequestBody?):Resource<ApiResponse<Nothing>>{
         try {
 
 //            val response = apiService.documents(documentDto)
