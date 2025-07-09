@@ -42,7 +42,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             val marketValue = stockItem.cL.times(item.quantity.toInt())
             val avgCost = item.price.toDouble()
             val dayPL = stockItem.cH.times(item.quantity.toInt())
-            val percentDayPL = stockItem.cH.div(stockItem.cL).times(100)
+            val percentDayPL = stockItem.cHP/*.div(stockItem.cL).times(100)*/
             val totalPL = stockItem.oC.minus(item.price.toDouble()).times(item.quantity.toDouble())
             val percentTotalPL = stockItem.oC.minus(item.price.toDouble()).div(item.price.toDouble()).times(100)
             binding.symbol.text = item.symbol
@@ -54,7 +54,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.marketValue.text = "${Utils.roundTwoDecimal(marketValue)}"
             binding.shareValue.text = item.quantity
             binding.daysPL.text = Utils.roundTwoDecimal(dayPL)
-            if(percentDayPL!=null && percentDayPL>0.0) {
+            if(percentDayPL!=null ) {
                 binding.daysPercentPL.text = "(${Utils.roundTwoDecimal(percentDayPL)}%)"
             }else{
                 binding.daysPercentPL.text = "(0.0%)"

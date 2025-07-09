@@ -2,6 +2,7 @@ package com.example.scstrade.views.portfolio.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,12 @@ class SummaryFragment : Fragment() {
     lateinit var stockDetailActivity: StockDetailActivity
 
 
+    override fun onDestroyView() {
+   /*     sharedViewModel.mutablePortfolioFinalDetailOnce.value = null
+        sharedViewModel.mutablePortfolioItemDetail.value = null
+        sharedViewModel.mutableAllData.value = null*/
+        super.onDestroyView()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,81 +82,85 @@ class SummaryFragment : Fragment() {
                             holdingPL.text = "0 (0.0%)"
                         }
                     }
+                    sharedViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer { result->
+                        when(result){
+                            is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
+                            is Resource.Loading -> {
 
-                }
-            }
-        })
-
-        sharedViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer { result->
-            when(result){
-                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    try {
-                        val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
-                        val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
-                        val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
-                        val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
-                        val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
+                            }
+                            is Resource.Success -> {
+                                try {
+                                    val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
+                                    val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
+                                    val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
+                                    val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
+                                    val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
 //                        val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
-                        val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
-                        val dividendShare=sharedViewModel.mutableDividend.value?.data?.map { it.dividendPerShare }?.sumOf { it }
-                        val stockItem = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
-                        val historPL=(soldValue.plus(dividendShare?:0.0)).minus(totalPurchase)
+                                    val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
+//                        val dividendShare=sharedViewModel.mutableDividend.value?.data?.map { it.dividendPerShare }?.sumOf { it }
+                                    val stockItem = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
+//                        val historPL=(soldValue.plus(dividendShare?:0.0)).minus(totalPurchase)
+                                    val historPL=(soldValue).minus(totalPurchase)
+                                    val res=sharedViewModel.mutablePortfolioItemDetail.value!!
+                                    val shares=res.data?.map { it.quantity.toDouble() }?.sumOf { it }
+                                    val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
+                                    val currentMarketValue = currentPrice?.times(shares?:0.0)
+                                    val purchaseCost= res.data?.map { (it.rate.toDouble().times(it.quantity.toDouble())) }?.sumOf { it }
+                                    val holdingsPL=currentMarketValue?.minus(purchaseCost?:0.0)
+                                    binding.apply {
+                                        historyCost.text = Utils.commaSeparated(totalPurchase.roundToInt())
+//                            historyValue.text = Utils.commaSeparated((soldValue.plus(dividendShare?:0.0)).roundToInt())
+                                        historyValue.text = Utils.commaSeparated((soldValue).roundToInt())
+                                        ffl.text = stockItem?.sYM
+                                        faujiFoods.text = stockItem?.nM
+                                        if(totalPurchase!=0.0) {
+//                                Log.e("PL","${historPL.roundToInt()} \n ${soldValue} \n ${totalPurchase}")
+                                            historyPL.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
+                                                Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
+                                            }%)"
+                                        }else{
+                                            historyPL.text = "0 (0.0%)"
+                                        }
 
-                        val res=sharedViewModel.mutablePortfolioItemDetail.value!!
-                        val shares=res.data?.map { it.quantity.toDouble() }?.sumOf { it }
-                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
-                        val currentMarketValue = currentPrice?.times(shares?:0.0)
-                        val purchaseCost= res.data?.map { (it.rate.toDouble().times(it.quantity.toDouble())) }?.sumOf { it }
-                        val holdingsPL=currentMarketValue?.minus(purchaseCost?:0.0)
-                        binding.apply {
-                            historyCost.text = Utils.commaSeparated(totalPurchase.roundToInt())
-                            historyValue.text = Utils.commaSeparated((soldValue.plus(dividendShare?:0.0)).roundToInt())
-                            ffl.text = stockItem?.sYM
-                            faujiFoods.text = stockItem?.nM
-                            if(totalPurchase!=0.0) {
-                                historyPL.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
-                                    Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
-                                }%)"
-                            }else{
-                                historyPL.text = "0 (0.0%)"
+                                        totalCost.text = Utils.commaSeparated(totalPurchase.plus(purchaseCost?:0.0).roundToInt())
+//                            totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue.plus(dividendShare?:0.0))?.roundToInt()?:0)
+                                        totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue)?.roundToInt()?:0)
+                                        if(totalPurchase!=0.0) {
+                                            Log.e("PL","${holdingsPL} \n ${historPL}")
+                                            totalPL.text = "${
+                                                Utils.commaSeparated(
+                                                    holdingsPL?.plus(historPL)?.roundToInt() ?: 0
+                                                )
+                                            } (${
+                                                Utils.roundTwoDecimal(
+                                                    ((holdingsPL?.plus(historPL))?.div(
+                                                        totalPurchase.plus(purchaseCost ?: 0.0)
+                                                    ))?.times(100)
+                                                )
+                                            }%)"
+                                        }else{
+                                            totalPL.text = "0 (0.0%)"
+                                        }
+
+                                        totalPL.setTextColor(if(totalPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+                                        historyPL.setTextColor(if(historyPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+                                        holdingPL.setTextColor(if(holdingPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+
+                                        mainContainer.visibility = View.VISIBLE
+                                        loader.visibility = View.GONE
+                                    }
+
+                                }catch (e:Exception){
+                                    e.printStackTrace()
+                                }
                             }
-
-                            totalCost.text = Utils.commaSeparated(totalPurchase.plus(purchaseCost?:0.0).roundToInt())
-                            totalValue.text = Utils.commaSeparated(currentMarketValue?.plus(soldValue.plus(dividendShare?:0.0))?.roundToInt()?:0)
-                            if(totalPurchase!=0.0) {
-                                totalPL.text = "${
-                                    Utils.commaSeparated(
-                                        holdingsPL?.plus(historPL)?.roundToInt() ?: 0
-                                    )
-                                } (${
-                                    Utils.roundTwoDecimal(
-                                        ((holdingsPL?.plus(historPL))?.div(
-                                            totalPurchase.plus(purchaseCost ?: 0.0)
-                                        ))?.times(100)
-                                    )
-                                }%)"
-                            }else{
-                                totalPL.text = "0 (0.0%)"
-                            }
-
-                            totalPL.setTextColor(if(totalPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-                            historyPL.setTextColor(if(historyPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-                            holdingPL.setTextColor(if(holdingPL.text.contains("-")) ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-
-                            mainContainer.visibility = View.VISIBLE
-                            loader.visibility = View.GONE
                         }
-
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                    }
+                    })
                 }
             }
         })
+
+
 
 
         return binding.root

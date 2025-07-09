@@ -36,7 +36,8 @@ class HoldingFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity=(requireActivity() as StockDetailActivity)
-        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
+//        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
+        sharedViewModel.getPortfolioDetails(stockDetailActivity.portfolioMainID)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +47,67 @@ class HoldingFragment : Fragment() {
         binding = FragmentHoldingBinding.inflate(inflater)
 
         binding.buyTransac.text = getString(R.string.buy_transac,stockDetailActivity.symbol)
-        sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer {result->
+        sharedViewModel.mutablePortfolioDetails.observe(viewLifecycleOwner, Observer {result->
+
+            when(result){
+                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    binding.recyclerView.apply {
+
+                        val shares=result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { it.portfolioQuantity.toDouble() }?.sumOf { it }
+                        val purchaseCost= result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { (it.portfolioRate.times(it.portfolioQuantity.toDouble())) }?.sumOf { it }
+                        val avgBuyPrice = purchaseCost?.div(shares?:0.0)
+                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
+                        val currentMarketValue = currentPrice?.times(shares?:0.0)
+
+                        val daysPercentPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cHP }?.first()
+                        val totalPL= currentMarketValue?.minus(purchaseCost?:0.0)
+                        val totalPercentPL= (totalPL?.div(purchaseCost?:0.0))?.times(100)
+                        val fifo=sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(stockDetailActivity.symbol) }?.first()
+                        val daysPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cH }?.first()?.times(fifo?.quantity?.toDouble()?:0.0)
+                        binding.apply {
+                            currentPriValue.text = Utils.roundTwoDecimal(currentPrice)
+                            shareOwnedValue.text = "${shares}"
+                            purchaseCoValue.text = Utils.roundTwoDecimal(purchaseCost)
+                            avgBuyPriValue.text = Utils.roundTwoDecimal(avgBuyPrice)
+                            currentMarValue.text = Utils.roundTwoDecimal(currentMarketValue)
+                            daysPLHoValue.text = "${Utils.roundTwoDecimal(daysPL)} (${Utils.roundTwoDecimal(daysPercentPL)}%)"
+                            totalPLHValue.text = "${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(totalPercentPL)}%)"
+                            mainContainer.visibility = View.VISIBLE
+                            loader.visibility = View.GONE
+                        }
+                        val list= mutableListOf<PortfolioItemDetail>()
+
+                        result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.forEach {
+                            list.add(PortfolioItemDetail(it.portfolioDate,it.portfolioQuantity.toString(),it.portfolioRate.toString(),(currentPrice!!.minus(it.portfolioRate)).times(it.portfolioQuantity.toDouble()),
+                                ((currentPrice.times(it.portfolioQuantity.toInt()).minus(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).div(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).times(100)
+                                ,null))
+                        }
+
+                        adapter = HoldingAdapter(list, onItemClick = {
+
+                        }, onItemEditClick = {
+                            val intent = Intent(requireContext(), BuySellActivity::class.java)
+                            intent.putExtra(AppConstants.IS_BUY,true)
+                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,stockDetailActivity.portfolioMainID)
+                            intent.putExtra(AppConstants.SYMBOL,stockDetailActivity.symbol)
+                            intent.putExtra(AppConstants.MODE,1)
+                            intent.putExtra(AppConstants.PORTFOLIO_ITEM,it)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }, onItemDeleteClick = {
+
+                        })
+                        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                    }
+                }
+            }
+
+        })
+      /*  sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer {result->
 
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
@@ -102,7 +163,7 @@ class HoldingFragment : Fragment() {
                 }
             }
 
-        })
+        })*/
         return binding.root
     }
 

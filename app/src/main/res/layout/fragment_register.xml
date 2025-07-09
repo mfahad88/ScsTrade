@@ -10,7 +10,7 @@
 
 
     <FrameLayout
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/dp_24"
             android:id="@+id/main">
 
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/dp_32"
                 android:gravity="center_horizontal|top"
                 android:text="@string/register_an"
                 android:textAppearance="@style/register_an"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/dp_4"
                 android:gravity="center_horizontal|top"
                 android:text="@string/create_weal"
                 android:textAppearance="@style/create_weal"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/loader"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/dp_22"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,8 +90,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingBottom="30dp"
+            android:layout_height="@dimen/dp_0"
+            android:paddingBottom="@dimen/dp_30"
             android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,14 +102,14 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerIndices"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:outlineProvider="bounds"
                 android:clipChildren="false"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp"
+                android:paddingBottom="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_16"
                 tools:itemCount="3"
                 android:requiresFadingEdge="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -120,11 +120,11 @@
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/fullName"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="34dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_34"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:inputType="textPersonName"
                 app:hintText="@string/full_name"
                 app:hintTextField="@string/enter_your_name"
@@ -134,11 +134,11 @@
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/email"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="34dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_34"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:inputType="textEmailAddress"
                 app:hintText="@string/email"
                 app:hintTextField="@string/enter_your_email"
@@ -149,11 +149,11 @@
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/password"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="34dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_34"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:inputType="textPassword"
                 app:hintText="Password"
                 app:passwordToggleEnabled="true"
@@ -162,9 +162,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/email" />
             <RelativeLayout
                 android:id="@+id/relativeLayout4"
-                android:layout_width="94dp"
-                android:layout_height="62dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="@dimen/dp_94"
+                android:layout_height="@dimen/dp_62"
+                android:layout_marginTop="@dimen/dp_30"
                 android:background="@drawable/rounded_country_code"
                 app:layout_constraintStart_toStartOf="@+id/password"
                 app:layout_constraintTop_toBottomOf="@+id/password">
@@ -179,10 +179,10 @@
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/mobileNumber"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:inputType="phone"
                 app:hintText="@string/mobile_number"
                 app:hintTextField="@string/enter_your_mobile_number"
@@ -193,9 +193,9 @@
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/dp_24"
                 android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="@+id/mobileNumber"
                 app:layout_constraintStart_toStartOf="@+id/email"
@@ -203,9 +203,9 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_30"
                 android:background="@drawable/vertical_separator_neu_60"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/button"
@@ -215,11 +215,11 @@
 
             <TextView
                 android:id="@+id/continue_wi"
-                android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_24"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/dp_20"
                 android:gravity="center_horizontal|top"
                 android:lineSpacingExtra="5sp"
                 android:text="@string/continue_wi"
@@ -231,9 +231,9 @@
 
             <RelativeLayout
                 android:id="@+id/google"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="13dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_52"
+                android:layout_marginTop="@dimen/dp_13"
                 android:background="@drawable/gray_stroke"
                 app:layout_constraintEnd_toEndOf="@+id/button"
                 app:layout_constraintStart_toStartOf="@+id/button"
@@ -249,9 +249,9 @@
 
             <RelativeLayout
                 android:id="@+id/facebook"
-                android:layout_width="169dp"
-                android:layout_height="52dp"
-                android:layout_marginEnd="30dp"
+                android:layout_width="@dimen/dp_169"
+                android:layout_height="@dimen/dp_52"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:visibility="gone"
                 android:background="@drawable/gray_stroke"
                 app:layout_constraintBottom_toBottomOf="@+id/google"
@@ -269,8 +269,8 @@
                 android:id="@+id/imageView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="@dimen/dp_60"
+                android:layout_marginBottom="@dimen/dp_30"
                 android:src="@drawable/logo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/google"
@@ -280,7 +280,7 @@
                 android:id="@+id/scs_trade_p"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
+                android:layout_marginStart="@dimen/dp_7"
                 android:text="@string/scs_trade_p_logo"
                 android:textAppearance="@style/scs_trade_p_logo"
                 app:layout_constraintStart_toEndOf="@+id/imageView13"
@@ -301,7 +301,7 @@
                 android:id="@+id/version_1_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="@dimen/dp_30"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/version_1_0"
                 android:textAppearance="@style/version_1_0"
