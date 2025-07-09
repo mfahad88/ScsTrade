@@ -156,6 +156,7 @@
                 android:layout_marginEnd="30dp"
                 android:inputType="textPassword"
                 app:hintText="Password"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email" />
