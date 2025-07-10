@@ -18,6 +18,7 @@ import com.example.scstrade.helper.Utils;
 
 public class TimeChip extends RelativeLayout {
     private TimeChipBinding binding;
+    public boolean isSelected=false;
     public TimeChip(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
@@ -65,6 +66,7 @@ public class TimeChip extends RelativeLayout {
     }
 
     public void setChipSelected(Boolean isSelected){
+        this.isSelected = isSelected;
        if(isSelected){
            if(!Utils.Companion.getSharedPreference(getContext(), AppConstants.Companion.getLIGHT_MODE())){
                binding.chip.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.time_chip_selected));

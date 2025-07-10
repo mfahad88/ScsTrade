@@ -484,6 +484,7 @@
     <string name="currency">Currency</string>
     <string name="crypto">Crypto</string>
     <string name="bonds">Bonds</string>
+    <string name="index_vs_stocks">Index Vs Stocks</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

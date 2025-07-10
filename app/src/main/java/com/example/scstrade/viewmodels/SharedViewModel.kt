@@ -119,16 +119,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
-    fun fetchChart(symbol:String){
+    fun fetchChart(symbol:String,resolution:String){
         viewModelScope.launch (Dispatchers.IO){
-            if(isConnected.value==true) {
-                val result = repository.getIndexChart(symbol, "1")
-                while (true) {
-                    withContext(Dispatchers.Main) {
-                        mutableChart.value = result
-                    }
-                    delay(5000)
-                }
+            val result = repository.getIndexChart(symbol, resolution)
+            withContext(Dispatchers.Main) {
+                mutableChart.value = result
             }
         }
     }

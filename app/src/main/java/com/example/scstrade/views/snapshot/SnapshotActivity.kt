@@ -214,6 +214,7 @@ class SnapshotActivity : BaseActivity() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab?.text){
                     "Overview"->loadFragment(OverviewFragment())
+                    "Technical" -> loadFragment(TechnicalFragment())
                     "Profile"->loadFragment(ProfileFragment())
                     "Income Statements"->loadFragment(IncomeStatementFragment())
                     "Balance Sheet" -> loadFragment(BalanceSheetFragment())
