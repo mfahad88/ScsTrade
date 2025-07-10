@@ -15,8 +15,8 @@
         android:id="@+id/tell_us_abo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginStart="@dimen/dp_19"
+        android:layout_marginTop="@dimen/dp_23"
         android:gravity="top"
         android:lineSpacingExtra="3sp"
         android:text="@string/tell_us_abo_your_se"
@@ -28,11 +28,11 @@
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/fullName"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_20"
         android:inputType="text"
         android:maxLength="50"
         app:hintText="@string/full_name"
@@ -45,9 +45,9 @@
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/emailAddress"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/dp_24"
         android:inputType="text"
         android:maxLength="50"
         app:hintText="@string/email"
@@ -57,9 +57,9 @@
         app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:titleDualOption="@string/residential"
         app:titleButton1="@string/resident"
         app:titleButton2="@string/non_resident"
@@ -74,9 +74,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputNic"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:hint="@string/nic_type"
         app:boxBackgroundMode="outline"
         app:expandedHintEnabled="false"
@@ -94,9 +94,9 @@
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/nic_card"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:inputType="number"
         android:maxLength="50"
         app:hintText="@string/nic_num"
@@ -110,8 +110,8 @@
         android:id="@+id/supporting_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_16"
         android:gravity="right|top"
         android:lineSpacingExtra="1sp"
         android:text="@string/supporting_"
@@ -122,9 +122,9 @@
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/nic_issue_date"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:inputType="text"
         android:maxLength="50"
         app:hintText="@string/nic_issue_date"
@@ -137,7 +137,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="2"
@@ -150,20 +150,20 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
             style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back" />
 
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Continue" />
     </LinearLayout>

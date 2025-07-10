@@ -31,6 +31,7 @@ import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.contact.ContactActivity
 import com.example.scstrade.views.detailquote.DetailQuoteActivity
 import com.example.scstrade.views.fundamental.FundamentalActivity
+import com.example.scstrade.views.globalmarket.GlobalMarketActivity
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
@@ -118,6 +119,9 @@ class LandingFragment : Fragment() {
    /*     sharedViewModel.mutableIndices.observe(requireActivity(), Observer {
             updateMarket(it)
         })*/
+        binding.globalMarket.setOnClickListener {
+            startActivity(Intent(requireContext(),GlobalMarketActivity::class.java))
+        }
         
         binding.profile.setOnClickListener {
             startActivity(Intent(requireContext(),ProfileActivity::class.java))
@@ -232,14 +236,16 @@ class LandingFragment : Fragment() {
 
     private fun initSideMenu() {
         val list:List<KeyDescValue> = listOf(
-            KeyDescValue("Indices",null,R.drawable.indices),
-            KeyDescValue("All Stocks",null,R.drawable.all_stocks),
-            KeyDescValue("Detailed Quote",null,R.drawable.detail_quote),
-            KeyDescValue("Fundamental",null,R.drawable.fundamental),
-            KeyDescValue("Technical",null,R.drawable.technicals),
-//            KeyDescValue("SCS Portfolio",null,R.drawable.scs_portfolio),
-            KeyDescValue("My Portfolio",null,R.drawable.my_portfolio),
-            KeyDescValue("Announcements",null,R.drawable.announcements),
+//            KeyDescValue("Home",null,R.drawable.side_home),
+            KeyDescValue("PSX Market",null,R.drawable.side_psx_market),
+            KeyDescValue("Watchlist",null,R.drawable.side_watchlist),
+            KeyDescValue("News",null,R.drawable.side_news),
+            KeyDescValue("Detailed Quote",null,R.drawable.side_detail_quote),
+            KeyDescValue("Fundamental",null,R.drawable.side_fundamental),
+            KeyDescValue("Technical",null,R.drawable.side_technical),
+            KeyDescValue("Technical",null,R.drawable.side_technical),
+//            KeyDescValue("SCS Portfolio",null,R.drawable.side_scs_portfolio),
+            KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
         binding.contact.setOnClickListener {
@@ -254,14 +260,17 @@ class LandingFragment : Fragment() {
         binding.sideMenu.apply {
             adapter= SideMenuAdapter(list){ keyDescValue ->
                 System.out.println("Clicked: ${keyDescValue.toString()}")
-                if(keyDescValue.key?.equals("indices",true)?:false){
+                if(keyDescValue.key?.equals("psx market",true)?:false){
+                    binding.bottomNavigationView.selectedItemId = R.id.marketFragment
+                } else if(keyDescValue.key?.equals("psx market",true)?:false){
                     // binding.toolbar.toggleToolbar(false)
                     binding.toolbar.binding.market.text = "Market"
                     val bundle=Bundle()
                     bundle.putString("key","indices")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment("Market"){fragment}
+                    binding.bottomNavigationView.selectedItemId = R.id.marketFragment
+//                    loadFragment("Market"){fragment}
                 }else if(keyDescValue.key?.equals("all stocks",true)?:false){
                     // binding.toolbar.toggleToolbar(false)
                     binding.toolbar.binding.market.text = "Market"
@@ -269,8 +278,15 @@ class LandingFragment : Fragment() {
                     bundle.putString("key","allStocks")
                     val fragment = MarketFragment()
                     fragment.arguments = bundle
-                    loadFragment("AllStocks"){fragment}
-                }else if(keyDescValue.key?.equals("logout",true)?:false){
+//                    loadFragment("AllStocks"){fragment}
+                    binding.bottomNavigationView.selectedItemId = R.id.marketFragment
+                }else if(keyDescValue.key?.equals("Watchlist",true)?:false){
+                    binding.bottomNavigationView.selectedItemId = R.id.watchlistFragment
+//                    loadFragment("Watchlist"){ WatchlistFragment() }
+                }else if(keyDescValue.key?.equals("news",true)?:false){
+                    binding.bottomNavigationView.selectedItemId = R.id.news
+//                    loadFragment("news"){ NewsFragment() }
+                } else if(keyDescValue.key?.equals("logout",true)?:false){
                     Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())

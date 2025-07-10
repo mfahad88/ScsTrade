@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="7dp"
-    android:paddingVertical="4dp"
+    android:paddingHorizontal="@dimen/dp_7"
+    android:paddingVertical="@dimen/dp_4"
     android:id="@+id/relativeLayout"
     android:background="@drawable/rounded_gray_chip">
     <TextView

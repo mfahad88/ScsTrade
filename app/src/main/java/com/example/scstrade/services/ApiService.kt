@@ -32,6 +32,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.globalMarket.GlobalMarketItem
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
@@ -294,6 +295,9 @@ interface ApiService {
     @GET(value="/NotificationDetails")
     suspend fun notificationDetails(@Query("Type")type:String, @Query("id")id:Int):JsonElement
 
+    @GET(value = "/GlobalMarket")
+    suspend fun globalMarket():List<GlobalMarketItem>
+
     /////////////////////////////////AOF///////////////////////////////////////
     @POST(value="api/register")
     suspend fun registerAof(@Body regiserUser: RegisterUser): Response<ResponseRegisterUser>
@@ -372,5 +376,6 @@ interface ApiService {
 
     @POST(value = "api/verify-otp-new")
     suspend fun verifyOtp(@Body verifyOtpDto: VerifyOtpDto):Response<ApiResponse<Nothing>>
+
 
 }

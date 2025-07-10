@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="3dp"
+    android:paddingBottom="@dimen/dp_3"
     android:background="@color/md_theme_surface"
     android:orientation="vertical">
     <FrameLayout
@@ -14,7 +14,7 @@
         android:id="@+id/mainItem">
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/dp_100"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/toolbar"
@@ -30,9 +30,9 @@
             <ImageView
                 android:id="@+id/logo1"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_24"
                 android:adjustViewBounds="true"
                 android:contentDescription="Logo"
                 android:scaleType="centerCrop"
@@ -47,7 +47,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/dp_8"
                 android:fontFamily="@font/custom_font"
                 android:letterSpacing="-0.03"
                 android:text="SCSTrade Pro"
@@ -71,12 +71,12 @@
 
             <ImageView
                 android:id="@+id/notificationIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/dp_8"
                 android:adjustViewBounds="true"
                 android:contentDescription="Notifications"
                 android:src="@drawable/notifications_none"
@@ -86,11 +86,11 @@
 
             <ImageView
                 android:id="@+id/searchIcon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/dp_8"
                 android:layout_toLeftOf="@id/notificationIcon"
                 android:adjustViewBounds="true"
                 android:contentDescription="Search"
@@ -124,10 +124,10 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:adjustViewBounds="true"
                 android:contentDescription="Logo"
                 android:scaleType="centerCrop"
@@ -140,17 +140,17 @@
 
             <TextView
                 android:id="@+id/market"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
                 android:gravity="bottom"
                 android:includeFontPadding="false"
-                android:lineSpacingExtra="0dp"
+                android:lineSpacingExtra="@dimen/dp_0"
                 android:lineSpacingMultiplier="1"
                 android:lines="1"
-                android:minHeight="0dp"
-                android:padding="0dp"
+                android:minHeight="@dimen/dp_0"
+                android:padding="@dimen/dp_0"
                 android:text="@string/market"
                 android:textAppearance="@style/market"
                 android:visibility="visible"
@@ -162,12 +162,12 @@
 
             <ImageView
                 android:id="@+id/notification"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/dp_8"
                 android:adjustViewBounds="true"
                 android:contentDescription="Notifications"
                 android:src="@drawable/notifications_none"
@@ -189,9 +189,9 @@
             <TextView
                 android:id="@+id/dateTimeText"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/dp_8"
                 android:gravity="center_vertical"
                 android:text="@string/dec_2024_04"
                 android:textAppearance="@style/dec_2024_04_text"
@@ -202,8 +202,8 @@
 
             <ImageView
                 android:id="@+id/search"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end"
                 android:layout_toLeftOf="@id/notification"
@@ -244,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:gravity="top"
                 android:lineSpacingExtra="0sp"
                 android:text="@string/status"
@@ -256,16 +256,16 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout10"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp_5"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/notification"
                 app:layout_constraintTop_toTopOf="@+id/status">
 
                 <LinearLayout
                     android:id="@+id/closeMarket"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:orientation="horizontal"
@@ -277,7 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="@dimen/dp_5"
                         android:text="@string/closed"
                         android:textAllCaps="false"
                         android:textAppearance="@style/closed"
@@ -286,15 +286,15 @@
                         />
 
                     <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
+                        android:layout_width="@dimen/dp_7"
+                        android:layout_height="@dimen/dp_7"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/green_red" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/openMarket"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:orientation="horizontal"
@@ -307,14 +307,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="@dimen/dp_5"
                         android:text="@string/open"
                         android:textAppearance="@style/open"
                         android:textFontWeight="500" />
 
                     <ImageView
-                        android:layout_width="7dp"
-                        android:layout_height="7dp"
+                        android:layout_width="@dimen/dp_7"
+                        android:layout_height="@dimen/dp_7"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/green_circle" />
                 </LinearLayout>
@@ -331,15 +331,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:paddingHorizontal="20dp"
+        android:layout_marginTop="@dimen/dp_3"
+        android:paddingHorizontal="@dimen/dp_20"
         >
 
 
         <ImageView
             android:id="@+id/imageViewWhatsapp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
             android:src="@drawable/whatsapp_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -349,7 +349,7 @@
         <TextView
             android:id="@+id/phone"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:gravity="center_vertical"
             android:text="+92-321-829-6919"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -360,7 +360,7 @@
         <TextView
             android:id="@+id/aof_top"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:gravity="center_vertical"
             android:textFontWeight="500"
             android:textColor="@color/md_theme_primary"
@@ -371,11 +371,11 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="20dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginEnd="@dimen/dp_8"
             android:adjustViewBounds="true"
-            android:padding="5dp"
+            android:padding="@dimen/dp_5"
             android:rotation="180"
             android:scaleType="centerCrop"
             android:src="@drawable/baseline_arrow_back_ios_24"
@@ -400,18 +400,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingEnd="100dp" />
+                android:paddingEnd="@dimen/dp_100" />
         </HorizontalScrollView>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:paddingVertical="5dp"
+        android:layout_marginTop="@dimen/dp_3"
+        android:paddingVertical="@dimen/dp_5"
         android:visibility="gone"
         android:id="@+id/constraint_market_stat"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="@dimen/dp_20">
 
         <TextView
             android:id="@+id/market_stat"
@@ -430,7 +430,7 @@
             android:id="@+id/open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/dp_4"
             android:layout_weight="0.15"
             android:gravity="start"
             android:orientation="horizontal"
@@ -449,7 +449,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/dp_5"
                 android:text="@string/open"
                 android:textAppearance="@style/open"
                 android:textFontWeight="700"
@@ -459,9 +459,9 @@
 
         <LinearLayout
             android:id="@+id/close"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_weight="0.2"
             android:orientation="horizontal"
             android:visibility="gone"
@@ -479,7 +479,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/dp_5"
                 android:text="@string/closed"
                 android:textAllCaps="true"
                 android:textAppearance="@style/closed"
@@ -504,8 +504,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginHorizontal="@dimen/dp_20"
         android:background="@color/md_theme_surfaceContainerHighest"/>
 </LinearLayout>

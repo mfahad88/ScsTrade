@@ -16,8 +16,8 @@
         android:id="@+id/tell_us_abo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginStart="@dimen/dp_19"
+        android:layout_marginTop="@dimen/dp_23"
         android:gravity="top"
         android:lineSpacingExtra="3sp"
         android:text="@string/tell_us_abo"
@@ -28,11 +28,11 @@
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/mobileNumber"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_20"
         android:inputType="phone"
         android:maxLength="50"
         app:hintText="@string/mobile_number"
@@ -46,8 +46,8 @@
         android:id="@+id/supporting_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_16"
         android:lineSpacingExtra="1sp"
         android:text="@string/supporting_"
         android:textAppearance="@style/supporting_"
@@ -56,9 +56,9 @@
 
     <com.example.scstrade.views.widgets.LabelledSpinner
         android:id="@+id/textInputMobile"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/dp_40"
         app:entries="@array/p_l_array"
         app:hintLabel="@string/mobile_number_is_registered_under"
         app:dropdownLabel="@string/select_registered_person"
@@ -68,12 +68,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_relationship"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:visibility="gone"
         tools:visibility="visible"
-        app:cardElevation="0dp"
+        app:cardElevation="@dimen/dp_0"
         app:layout_constraintEnd_toEndOf="@+id/textInputMobile"
         app:layout_constraintStart_toStartOf="@+id/textInputMobile"
         app:layout_constraintTop_toBottomOf="@+id/textInputMobile">
@@ -93,10 +93,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView9"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:cardElevation="0dp"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardElevation="@dimen/dp_0"
         app:layout_constraintEnd_toEndOf="@+id/textInputMobile"
         app:layout_constraintStart_toStartOf="@+id/textInputMobile"
         app:layout_constraintTop_toBottomOf="@+id/card_relationship">
@@ -105,8 +105,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/md_theme_surfaceBright"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="@dimen/dp_15"
+            android:paddingVertical="@dimen/dp_10">
 
             <TextView
                 android:id="@+id/iban_nu"
@@ -122,16 +122,16 @@
                 android:id="@+id/layout_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/dp_12"
                 android:background="@drawable/square_field"
-                android:paddingHorizontal="15dp"
+                android:paddingHorizontal="@dimen/dp_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iban_nu">
 
                 <TextView
                     android:id="@+id/country_code"
-                    android:layout_width="30dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_24"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="5sp"
@@ -140,8 +140,8 @@
 
                 <LinearLayout
                     android:id="@+id/separator"
-                    android:layout_width="2dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/country_code"
                     android:background="#C6C6CD"
@@ -149,10 +149,10 @@
 
                 <EditText
                     android:id="@+id/code"
-                    android:layout_width="85dp"
+                    android:layout_width="@dimen/dp_85"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:layout_toEndOf="@id/separator"
                     android:background="@null"
                     android:backgroundTint="@android:color/transparent"
@@ -165,9 +165,9 @@
 
             <com.example.scstrade.views.widgets.LabelledSpinner
                 android:id="@+id/textInputBank"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_8"
                 app:dropdownLabel="Select Bank"
                 app:hintLabel=""
                 app:layout_constraintBottom_toBottomOf="@+id/layout_code"
@@ -179,9 +179,9 @@
 
             <com.example.scstrade.views.widgets.LabelledTextField
                 android:id="@+id/iban"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="@dimen/dp_13"
                 android:inputType="number"
                 android:maxLength="16"
                 app:hintText="@string/iban_number"
@@ -191,9 +191,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/layout_code" />
 
             <LinearLayout
-                android:layout_width="250dp"
+                android:layout_width="@dimen/dp_250"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/dp_12"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,7 +210,7 @@
                     android:id="@+id/bank_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="@dimen/dp_5"
                     android:textAppearance="@style/pk_36_scbl_"
                     tools:text="36" />
 
@@ -218,7 +218,7 @@
                     android:id="@+id/bank_swift"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="@dimen/dp_5"
                     android:textAppearance="@style/pk_36_scbl_"
                     tools:text="SCBL" />
 
@@ -226,7 +226,7 @@
                     android:id="@+id/iban_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="@dimen/dp_5"
                     android:textAppearance="@style/pk_36_scbl_"
                     tools:text="0000001123456702" />
             </LinearLayout>
@@ -234,7 +234,7 @@
                 android:id="@+id/pk_36_scbl_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/dp_12"
                 tools:text="@string/pk_36_scbl_"
                 android:textAppearance="@style/pk_36_scbl_"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -248,7 +248,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="2"
@@ -261,20 +261,20 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
             style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back" />
 
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Continue" />
     </LinearLayout>

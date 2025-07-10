@@ -10,7 +10,7 @@ tools:context=".views.login.LoginFragment">
 
 
     <FrameLayout
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@ tools:context=".views.login.LoginFragment">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/dp_24"
             android:id="@+id/main">
 
 
@@ -39,7 +39,7 @@ tools:context=".views.login.LoginFragment">
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="@dimen/dp_28"
                 android:gravity="center_horizontal|top"
                 android:text="@string/hi_there_we"
                 android:textAppearance="@style/register_an"
@@ -54,7 +54,7 @@ tools:context=".views.login.LoginFragment">
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/dp_4"
                 android:gravity="center_horizontal|top"
                 android:text="@string/let_s_sign_"
                 android:textAppearance="@style/create_weal"
@@ -66,12 +66,12 @@ tools:context=".views.login.LoginFragment">
     </FrameLayout>
 <!--<androidx.appcompat.widget.Toolbar
     android:id="@+id/toolbar"
-    android:layout_width="0dp"
+    android:layout_width="@dimen/dp_0"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    android:paddingBottom="10dp"
-    app:contentInsetStart="0dp"
-    app:contentInsetStartWithNavigation="0dp"
+    android:paddingBottom="@dimen/dp_10"
+    app:contentInsetStart="@dimen/dp_0"
+    app:contentInsetStartWithNavigation="@dimen/dp_0"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -85,7 +85,7 @@ tools:context=".views.login.LoginFragment">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/loader"
-    android:layout_marginTop="22dp"
+    android:layout_marginTop="@dimen/dp_22"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@ tools:context=".views.login.LoginFragment">
 
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+    android:layout_height="@dimen/dp_0"
     android:fillViewport="true"
     android:scrollbars="none"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -119,14 +119,14 @@ tools:context=".views.login.LoginFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerIndices"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:outlineProvider="bounds"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
+            android:paddingTop="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_6"
             android:requiresFadingEdge="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -140,8 +140,8 @@ tools:context=".views.login.LoginFragment">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textFontWeight="600"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_4"
             android:lineSpacingExtra="0sp"
             android:text="@string/sign_in"
             android:textAppearance="@style/sign_in"
@@ -150,11 +150,11 @@ tools:context=".views.login.LoginFragment">
 
         <com.example.scstrade.views.widgets.LabelledTextField
             android:id="@+id/userName"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_30"
             android:inputType="text"
             android:imeOptions="actionNext"
             android:maxLength="50"
@@ -166,11 +166,11 @@ tools:context=".views.login.LoginFragment">
 
         <com.example.scstrade.views.widgets.LabelledTextField
             android:id="@+id/password"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_30"
             android:inputType="textPassword"
             android:imeOptions="actionDone"
             app:hintText="@string/password"
@@ -183,9 +183,9 @@ tools:context=".views.login.LoginFragment">
 
         <TextView
             android:id="@+id/forgot_pass"
-            android:layout_width="125dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="@dimen/dp_125"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_16"
             android:gravity="right|top"
             android:visibility="gone"
             android:lineSpacingExtra="5sp"
@@ -197,9 +197,9 @@ tools:context=".views.login.LoginFragment">
 
         <Button
             android:id="@+id/button"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/dp_12"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toEndOf="@+id/userName"
             app:layout_constraintStart_toStartOf="@+id/rememberMe"
@@ -211,7 +211,7 @@ tools:context=".views.login.LoginFragment">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textFontWeight="500"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:lineSpacingExtra="2sp"
             android:text="@string/don_t_have_"
             android:textAppearance="@style/don_t_have_"
@@ -224,9 +224,9 @@ tools:context=".views.login.LoginFragment">
         <TextView
             android:id="@+id/sign_up"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginEnd="@dimen/dp_8"
             android:lineSpacingExtra="2sp"
             android:text="@string/sign_up"
             android:textFontWeight="700"
@@ -242,18 +242,18 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/rememberMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:minWidth="@dimen/dp_0"
+            android:minHeight="@dimen/dp_0"
             android:text="@string/remember_me"
             app:layout_constraintStart_toStartOf="@+id/password"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="45dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_45"
             android:background="@drawable/vertical_separator_neu_60"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/button"
@@ -266,11 +266,11 @@ tools:context=".views.login.LoginFragment">
 
         <RelativeLayout
             android:id="@+id/google"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:background="@drawable/gray_stroke"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="@+id/button"
             app:layout_constraintStart_toStartOf="@+id/button"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -288,8 +288,8 @@ tools:context=".views.login.LoginFragment">
             <TextView
                 android:id="@+id/continue_wi"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginStart="10dp"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginStart="@dimen/dp_10"
                 android:layout_toEndOf="@id/image_google"
                 android:layout_centerVertical="true"
                 android:text="@string/sign_in_wit"
@@ -300,9 +300,9 @@ tools:context=".views.login.LoginFragment">
 
         <RelativeLayout
             android:id="@+id/facebook"
-            android:layout_width="169dp"
-            android:layout_height="52dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="@dimen/dp_169"
+            android:layout_height="@dimen/dp_52"
+            android:layout_marginEnd="@dimen/dp_30"
             android:visibility="gone"
             android:background="@drawable/gray_stroke"
             app:layout_constraintBottom_toBottomOf="@+id/google"
@@ -320,7 +320,7 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/imageView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/dp_16"
             android:visibility="gone"
             android:src="@drawable/logo"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -330,7 +330,7 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/scs_trade_p"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
+            android:layout_marginStart="@dimen/dp_7"
             android:text="@string/scs_trade_p_logo"
             android:visibility="gone"
             android:textAppearance="@style/scs_trade_p_logo"
@@ -353,7 +353,7 @@ tools:context=".views.login.LoginFragment">
             android:id="@+id/version_1_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="@dimen/dp_30"
             android:lineSpacingExtra="7sp"
             android:text="@string/version_1_0"
             android:visibility="gone"

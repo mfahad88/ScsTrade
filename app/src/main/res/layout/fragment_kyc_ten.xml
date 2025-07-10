@@ -3,29 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.aof.fragments.kyc.nomineeDetail.KycNomineeDetailTwoFragment">
 
     <EditText
         android:id="@+id/nominee_address"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/drawable_text_border"
         android:gravity="top"
         android:hint="@string/enter_nominee_address"
         android:inputType="text|textMultiLine"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:titleDualOption="@string/is_nominee"
         app:titleButton1="No"
         app:titleButton2="Yes"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/nominee_address"/>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_55"
             android:orientation="horizontal"
             android:weightSum="2"
             android:gravity="center_horizontal"
@@ -47,20 +47,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Back"
                 style="@style/Widget.Material3.Button.OutlinedButton"/>
             <View
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Continue" />
         </LinearLayout>

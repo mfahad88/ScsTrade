@@ -479,6 +479,11 @@
     <string name="auditor">Auditor</string>
     <string name="website">Website:</string>
     <string name="address">Address:</string>
+    <string name="global_mark">Global Market</string>
+    <string name="commodities">Commodities</string>
+    <string name="currency">Currency</string>
+    <string name="crypto">Crypto</string>
+    <string name="bonds">Bonds</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

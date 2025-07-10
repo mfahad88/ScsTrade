@@ -3,20 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.aof.fragments.kyc.otherDetail.KycOtherDetailTwoFragment">
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
         android:id="@+id/job_details"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:titleDualDropdown="@string/please_prov_job"
         app:typeDualDropdown1="text"
         app:typeDualDropdown2="text"
         app:hintDualDropdown1="@string/enter_your_job_designation"
         app:hintDualDropdown2="@string/enter_your_department"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,21 +24,21 @@
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
         android:id="@+id/employer_details"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:titleDualDropdown="@string/please_prov_employer"
         app:typeDualDropdown1="text"
         app:typeDualDropdown2="text"
         app:hintDualDropdown1="@string/enter_your_job_employer_name"
         app:hintDualDropdown2="@string/enter_your_employer_address"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/job_details" />
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_55"
             android:orientation="horizontal"
             android:weightSum="2"
             android:gravity="center_horizontal"
@@ -48,20 +48,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Back"
                 style="@style/Widget.Material3.Button.OutlinedButton"/>
             <View
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Continue" />
         </LinearLayout>

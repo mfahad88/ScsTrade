@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    app:cardCornerRadius="4dp"
-    app:contentPaddingTop="8dp"
-    app:contentPaddingBottom="8dp"
-    app:contentPaddingLeft="10dp"
-    app:contentPaddingRight="10dp"
+    android:layout_height="@dimen/dp_60"
+    app:cardCornerRadius="@dimen/dp_4"
+    app:contentPaddingTop="@dimen/dp_8"
+    app:contentPaddingBottom="@dimen/dp_8"
+    app:contentPaddingLeft="@dimen/dp_10"
+    app:contentPaddingRight="@dimen/dp_10"
     app:strokeWidth="@null"
     android:background="@color/md_theme_surfaceBright">
 
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/play"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_gravity="start|center_vertical">
 
 
@@ -29,7 +29,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/dp_10"
                 android:text="@string/headline"
                 android:layout_gravity="center_vertical"
                 android:lines="1"

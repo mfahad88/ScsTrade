@@ -13,8 +13,8 @@
         <!-- Dummy shimmer item layout (match your row layout) -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/dp_100"
             android:background="#DDDDDD"
-            android:layout_margin="8dp"/>
+            android:layout_margin="@dimen/dp_8"/>
     </LinearLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>

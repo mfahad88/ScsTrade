@@ -10,7 +10,7 @@
 
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loader"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,12 +34,12 @@
 
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_0"
         android:background="@color/colorDarkerr"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="@dimen/dp_8"
         android:visibility="visible"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/header1"
-            android:layout_width="80dp"
+            android:layout_width="@dimen/dp_80"
             android:layout_height="match_parent"
             android:gravity="center|start"
             android:layout_weight="1"
@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/header2"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1"
@@ -77,7 +77,7 @@
 
         <TextView
             android:id="@+id/header3"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center"
@@ -92,7 +92,7 @@
 
         <TextView
             android:id="@+id/header4"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center"
@@ -108,9 +108,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="7dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_7"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

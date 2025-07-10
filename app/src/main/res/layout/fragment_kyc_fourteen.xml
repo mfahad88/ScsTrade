@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.aof.fragments.kyc.otherDetail.KycOtherDetailThreeFragment">
 
@@ -21,7 +21,7 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/zakat_status"
         app:hintDualDropdown1="@string/select_your_zakat_status"
@@ -34,9 +34,9 @@
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
         android:id="@+id/bank"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:hintDualDropdown1="UBL Bank"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,9 +47,9 @@
         app:typeDualDropdown1="text" />
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:id="@+id/remittance_basis"
         app:typeDualDropdown1="dropdown"
         app:hintDualDropdown1="@string/select_remittance_basis"
@@ -59,7 +59,7 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_55"
             android:orientation="horizontal"
             android:weightSum="2"
             android:gravity="center_horizontal"
@@ -69,20 +69,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Back"
                 style="@style/Widget.Material3.Button.OutlinedButton"/>
             <View
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Save &amp; Next" />
         </LinearLayout>

@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_20"
         android:background="#012D00"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">

@@ -17,10 +17,10 @@
 
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_120"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="@dimen/dp_400"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:id="@+id/imageViewLogo"
@@ -44,7 +44,7 @@
         android:orientation="vertical"
         android:id="@+id/bottomProgess"
         android:layout_marginBottom="-200dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="@dimen/dp_20"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true">
 
@@ -68,18 +68,18 @@
             android:visibility="visible"
             android:text="@string/empowering_"
             android:textAppearance="@style/connecting_"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="@dimen/dp_7"
             android:gravity="center_horizontal|top" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="@dimen/dp_8"
             android:max="100"
             android:progress="0"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_30"
             android:progressDrawable="@drawable/gradient_progress" />
 
 

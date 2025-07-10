@@ -8,7 +8,7 @@
     android:background="@color/md_theme_surface"
     android:fillViewport="true"
     android:fadingEdge="horizontal|vertical"
-    android:fadingEdgeLength="50dp"
+    android:fadingEdgeLength="@dimen/dp_50"
     android:requiresFadingEdge="horizontal|vertical"
     tools:context=".views.home.HomeFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,14 +42,14 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/aof_card"
-            android:layout_width="0dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_61"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeWidth="0dp">
+            app:strokeWidth="@dimen/dp_0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -58,19 +58,19 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/aof_logo"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="@dimen/dp_44"
+                    android:layout_height="@dimen/dp_44"
+                    android:layout_marginStart="@dimen/dp_8"
                     app:cardBackgroundColor="#1C0130"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeWidth="0dp">
+                    app:strokeWidth="@dimen/dp_0">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="6dp"
+                        android:padding="@dimen/dp_6"
                         android:src="@drawable/aof_icon" />
 
                 </com.google.android.material.card.MaterialCardView>
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:gravity="top"
                     android:lineSpacingExtra="2sp"
                     android:text="@string/open_your_t"
@@ -93,7 +93,7 @@
 
                 <TextView
                     android:id="@+id/join_now_an"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:lineSpacingExtra="0sp"
@@ -109,7 +109,7 @@
                     android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="@dimen/dp_24"
                     android:rotation="180"
                     android:src="@drawable/baseline_arrow_back_ios_24"
                     app:layout_constraintBottom_toBottomOf="@+id/aof_logo"
@@ -122,31 +122,31 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:contentPaddingTop="5dp"
+            app:cardCornerRadius="@dimen/dp_12"
+            app:contentPaddingTop="@dimen/dp_5"
             app:layout_constraintEnd_toEndOf="@+id/aof_card"
             app:layout_constraintStart_toStartOf="@+id/aof_card"
             app:layout_constraintTop_toBottomOf="@+id/aof_card"
-            app:strokeWidth="0dp">
+            app:strokeWidth="@dimen/dp_0">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stock_card"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="15dp">
+                android:paddingHorizontal="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_15">
 
 
                 <include
                     android:id="@+id/cardHome"
                     layout="@layout/include_home_card"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/dp_10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -155,20 +155,20 @@
         </com.google.android.material.card.MaterialCardView>
 
 <!--        <androidx.compose.ui.platform.ComposeView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/recyclerLeaders"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView"
             app:layout_constraintStart_toStartOf="@+id/materialCardView"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"/>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerLeaders"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:nestedScrollingEnabled="false"
-            android:paddingBottom="130dp"
+            android:paddingBottom="@dimen/dp_130"
             app:layout_constraintEnd_toEndOf="@+id/materialCardView"
             app:layout_constraintStart_toStartOf="@+id/materialCardView"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"

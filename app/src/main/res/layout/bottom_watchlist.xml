@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="350dp">
+    android:layout_height="@dimen/dp_350">
 
     <TextView
         android:id="@+id/save_compan"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="@dimen/dp_25"
         android:text="@string/save_compan"
         android:textAppearance="@style/save_compan"
         app:layout_constraintBottom_toBottomOf="@+id/new_watchlist"
@@ -22,17 +22,17 @@
         android:id="@+id/new_watchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
         android:background="@drawable/outlined_rounded_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView18"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="13dp"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:layout_marginStart="@dimen/dp_13"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/baseline_add_24"
             android:layout_alignParentStart="true"
@@ -42,7 +42,7 @@
             android:id="@+id/label_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/dp_4"
             android:text="@string/new_watchlist"
             android:textAppearance="@style/new_watchlist"
             android:layout_toEndOf="@id/imageView18"
@@ -53,10 +53,10 @@
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:paddingBottom="50dp"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,9 +71,9 @@
         android:id="@+id/btnSave"
         android:text="Save"
         style="@style/custom_green"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:layout_marginBottom="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

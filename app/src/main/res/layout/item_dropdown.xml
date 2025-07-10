@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/item_dropdown"
         android:gravity="center_vertical"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="15dp"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_15"
          />
 
 

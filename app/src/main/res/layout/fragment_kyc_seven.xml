@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_surfaceContainerLowest"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     tools:context=".views.aof.fragments.kyc.attorneyDetail.KycAttorneyDetailOneFragment">
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loader"
@@ -21,14 +21,14 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
    <androidx.core.widget.NestedScrollView
-       android:layout_width="0dp"
-       android:layout_height="0dp"
+       android:layout_width="@dimen/dp_0"
+       android:layout_height="@dimen/dp_0"
        android:fillViewport="true"
        android:scrollbars="vertical"
-       android:paddingBottom="10dp"
+       android:paddingBottom="@dimen/dp_10"
        android:fadingEdge="vertical"
        android:requiresFadingEdge="vertical"
-       android:fadingEdgeLength="50dp"
+       android:fadingEdgeLength="@dimen/dp_50"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
                 android:id="@+id/tell_us_abo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="@dimen/dp_23"
                 android:gravity="top"
                 android:lineSpacingExtra="3sp"
                 android:text="@string/please_prov"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/is_the_atto"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/dp_15"
                 app:titleDualOption="@string/is_the_attorney_yourself_or_someone_else"
                 app:titleButton1="@string/self"
                 app:titleButton2="@string/someone_else"
@@ -69,14 +69,14 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:id="@+id/some_else_container"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/dp_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/is_the_atto">
 
                 <com.example.scstrade.views.widgets.LabelledSpinner
                     android:id="@+id/labelledSpinner"
-                    android:layout_width="95dp"
+                    android:layout_width="@dimen/dp_95"
                     android:layout_height="wrap_content"
                     app:dropdownLabel="Mr."
                     app:hintLabel=""
@@ -87,9 +87,9 @@
 
                 <com.example.scstrade.views.widgets.LabelledTextField
                     android:id="@+id/fullName"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:inputType="text"
                     android:maxLength="50"
                     app:hintText="@string/full_name"
@@ -101,20 +101,20 @@
 
                 <com.example.scstrade.views.widgets.LabelledSpinner
                     android:id="@+id/uin_type"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     app:dropdownLabel="@string/cnic"
                     app:hintLabel="@string/uin_type"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fullName" />
 
                 <com.example.scstrade.views.widgets.LabelledTextField
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:inputType="number"
                     android:maxLength="20"
                     app:hintText="@string/uin"
@@ -129,7 +129,7 @@
                     android:id="@+id/is_attorney"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     app:drawable="@drawable/baseline_calendar_today_24"
                     app:hintDualOption="@string/select_nic_expiry_date"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +143,7 @@
                 <com.example.scstrade.views.widgets.LabelledTextField
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/mobile_number"
                     android:inputType="phone"
                     android:maxLength="12"
@@ -158,7 +158,7 @@
                 <com.example.scstrade.views.widgets.LabelledTextField
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/email_addr"
                     app:hintText="@string/email"
                     android:inputType="textEmailAddress"
@@ -170,11 +170,11 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="@dimen/dp_80"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/mailing_address_1"
                     android:inputType="text|textMultiLine"
-                    android:padding="10dp"
+                    android:padding="@dimen/dp_10"
                     android:gravity="top"
                     android:hint="@string/enter_your_mailing_address"
                     android:background="@drawable/drawable_text_border"
@@ -185,11 +185,11 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="@dimen/dp_80"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/mailing_address_2"
                     android:inputType="text|textMultiLine"
-                    android:padding="10dp"
+                    android:padding="@dimen/dp_10"
                     android:gravity="top"
                     android:hint="@string/enter_your_mailing_address"
                     android:background="@drawable/drawable_text_border"
@@ -199,11 +199,11 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="@dimen/dp_80"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/mailing_address_3"
                     android:inputType="text|textMultiLine"
-                    android:padding="10dp"
+                    android:padding="@dimen/dp_10"
                     android:gravity="top"
                     android:hint="@string/enter_your_mailing_address"
                     android:background="@drawable/drawable_text_border"
@@ -214,7 +214,7 @@
                 <com.example.scstrade.views.widgets.LabelledTextField
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/residence_number"
                     android:inputType="phone"
                     android:maxLength="30"
@@ -230,7 +230,7 @@
                     android:id="@+id/attorney_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     app:dropdownLabel="@string/select_your_country"
                     app:hintLabel="@string/attorney_country"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -241,7 +241,7 @@
                 <com.example.scstrade.views.widgets.LabelledSpinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/attorney_province"
                     app:hintLabel="@string/attorney_province"
                     app:dropdownLabel="@string/select_your_province"
@@ -254,7 +254,7 @@
                     android:id="@+id/attorney_other_province"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:maxLines="1"
                     android:visibility="gone"
                     android:inputType="text"
@@ -269,7 +269,7 @@
                 <com.example.scstrade.views.widgets.CityDropDown
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:id="@+id/attorney_city"
                     app:hintLabel="@string/attorney_city"
                     app:dropdownLabel="@string/select_your_city"
@@ -283,7 +283,7 @@
                     android:id="@+id/attorney_other_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_15"
                     android:maxLines="1"
                     android:visibility="gone"
                     android:inputType="text"
@@ -303,7 +303,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:weightSum="2"
         android:id="@+id/controls"
@@ -314,20 +314,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Continue" />
     </LinearLayout>

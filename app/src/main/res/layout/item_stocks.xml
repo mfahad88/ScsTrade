@@ -6,21 +6,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    app:strokeWidth="0dp">
+    app:cardCornerRadius="@dimen/dp_10"
+    app:strokeWidth="@dimen/dp_0">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="8dp"
+        android:paddingBottom="@dimen/dp_8"
         android:background="@drawable/stock_card">
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/dp_4"
             android:background="@drawable/drawable_reg"
             android:gravity="center"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="1dp"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_1"
             android:text="@string/reg"
             android:textAppearance="@style/reg"
             android:visibility="gone"
@@ -50,8 +50,8 @@
             android:background="@drawable/drawable_reg"
             android:backgroundTint="@color/md_theme_primary"
             android:gravity="center"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="1dp"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:paddingVertical="@dimen/dp_1"
             android:text="@string/sariah"
             android:textAppearance="@style/reg"
             app:layout_constraintBottom_toBottomOf="@+id/volume"
@@ -62,7 +62,7 @@
             android:id="@+id/symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/dp_4"
             android:text="@string/wtl"
             android:textAppearance="@style/wtl"
             android:textFontWeight="600"
@@ -73,33 +73,34 @@
 
         <TextView
             android:id="@+id/companyName"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/dp_20"
             android:ellipsize="end"
-            android:layout_marginEnd="20dp"
             android:lines="1"
             android:maxLines="1"
             android:text="@string/companyName"
             android:textAppearance="@style/companyName"
             android:textFontWeight="400"
             app:layout_constraintEnd_toStartOf="@+id/low"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/symbol" />
 
 
         <View
             android:id="@+id/separator"
-            android:layout_width="8dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_10"
             app:layout_constraintBottom_toBottomOf="@+id/shariah"
             app:layout_constraintStart_toEndOf="@+id/shariah"
             app:layout_constraintTop_toTopOf="@+id/shariah" />
 
         <TextView
             android:id="@+id/volume"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/dp_2"
             android:text="@string/volume"
             android:textAppearance="@style/volume"
             android:textFontWeight="600"
@@ -111,22 +112,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/frameValueTrade"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="@dimen/dp_15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/symbol">
 
             <com.google.android.material.card.MaterialCardView
-                app:strokeWidth="0dp"
+                app:strokeWidth="@dimen/dp_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cardValueTrade"
-                app:contentPaddingTop="2dp"
-                app:contentPaddingBottom="2dp"
-                app:contentPaddingLeft="5dp"
-                app:contentPaddingRight="5dp"
+                app:contentPaddingTop="@dimen/dp_2"
+                app:contentPaddingBottom="@dimen/dp_2"
+                app:contentPaddingLeft="@dimen/dp_5"
+                app:contentPaddingRight="@dimen/dp_5"
                 app:cardBackgroundColor="@android:color/holo_red_light"
                 android:visibility="visible"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="@dimen/dp_4"
                 android:layout_gravity="center">
 
 
@@ -163,7 +164,7 @@
         <TextView
             android:id="@+id/high"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:text="@string/high"
             android:textAppearance="@style/high_stock"
             android:textFontWeight="500"
@@ -175,7 +176,7 @@
             android:id="@+id/low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="11dp"
+            android:layout_marginEnd="@dimen/dp_11"
             android:gravity="end"
             android:text="@string/low"
             android:textAppearance="@style/low_stock"
@@ -186,7 +187,7 @@
 
         <RelativeLayout
             android:id="@+id/layout_more"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/netChange"
@@ -200,8 +201,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:drawablePadding="4dp"
-                android:padding="5dp"
+                android:drawablePadding="@dimen/dp_4"
+                android:padding="@dimen/dp_5"
                 android:text="@string/more_detail"
                 android:textAppearance="@style/more_detail"
                 app:drawableEndCompat="@drawable/drop_up_icon" />
@@ -229,14 +230,14 @@
 
                 <ImageView
                     android:id="@+id/imageView7"
-                    android:layout_width="8dp"
-                    android:layout_height="7dp"
+                    android:layout_width="@dimen/dp_8"
+                    android:layout_height="@dimen/dp_7"
                     android:layout_below="@id/weeks"
                     android:layout_alignTop="@id/high_52"
                     android:layout_alignBottom="@id/high_52"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_8"
                     android:src="@drawable/drop_up"
                     app:layout_constraintBottom_toBottomOf="@+id/high_52"
                     app:layout_constraintEnd_toStartOf="@+id/high_52"
@@ -247,7 +248,7 @@
 
                 <TextView
                     android:id="@+id/high_52"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/weeks"
                     android:layout_toEndOf="@id/imageView7"
@@ -262,12 +263,12 @@
 
                 <ImageView
                     android:id="@+id/imageView9"
-                    android:layout_width="8dp"
-                    android:layout_height="7dp"
+                    android:layout_width="@dimen/dp_8"
+                    android:layout_height="@dimen/dp_7"
                     android:layout_alignTop="@id/imageView7"
                     android:layout_alignBottom="@id/imageView7"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_8"
                     android:layout_toEndOf="@id/high_52"
                     android:src="@drawable/drop_down"
                     app:layout_constraintBottom_toBottomOf="@+id/low_52"
@@ -281,7 +282,7 @@
 
                 <TextView
                     android:id="@+id/low_52"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/high_52"
                     android:layout_alignBottom="@+id/high_52"
@@ -298,9 +299,9 @@
 
                 <TextView
                     android:id="@+id/bid_vol"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:gravity="top"
                     android:text="@string/bid_vol_100"
                     android:textAppearance="@style/bid_vol_100"
@@ -312,7 +313,7 @@
 
                 <TextView
                     android:id="@+id/bid"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:text="@string/bid_2_78"
                     android:textAlignment="textStart"
@@ -328,14 +329,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_begin="212dp" />
+                    app:layout_constraintGuide_begin="@dimen/dp_212" />
 
 
                 <TextView
                     android:id="@+id/ask_vol"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="@dimen/dp_1"
                     android:layout_toEndOf="@id/bid_vol"
                     android:gravity="start"
                     android:text="@string/ask_vol_2_2"
@@ -349,7 +350,7 @@
 
                 <TextView
                     android:id="@+id/ask"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@id/ask_vol"
                     android:layout_alignTop="@id/bid"
@@ -364,7 +365,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#B3C6C6CD"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toTopOf="@+id/bid_vol"
@@ -375,7 +376,7 @@
             <!--<LinearLayout
                 android:id="@+id/layout_details"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/dp_50"
                 android:layout_below="@id/more_detail"
                 android:visibility="gone"
                 android:orientation="horizontal"
@@ -383,7 +384,7 @@
                 tools:visibility="visible">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.65">
 
@@ -392,15 +393,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="@string/weeks"
                         android:textAppearance="@style/weeks"
                         android:textFontWeight="700" />
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="8dp"
-                        android:layout_height="7dp"
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_7"
                         android:layout_below="@id/weeks"
                         android:layout_alignTop="@id/high_52"
                         android:layout_alignBottom="@id/high_52"
@@ -414,8 +415,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/weeks"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginTop="@dimen/dp_1"
                         android:layout_toEndOf="@id/imageView7"
                         android:text="1000.50"
                         android:textAppearance="@style/high_52"
@@ -423,11 +424,11 @@
 
                     <ImageView
                         android:id="@+id/imageView9"
-                        android:layout_width="8dp"
-                        android:layout_height="7dp"
+                        android:layout_width="@dimen/dp_8"
+                        android:layout_height="@dimen/dp_7"
                         android:layout_alignTop="@id/imageView7"
                         android:layout_alignBottom="@id/imageView7"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_toEndOf="@id/high_52"
                         android:src="@drawable/drop_down"
                         app:tint="@color/md_theme_error" />
@@ -438,8 +439,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/high_52"
                         android:layout_alignBottom="@+id/high_52"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_marginTop="@dimen/dp_0"
                         android:layout_toEndOf="@id/imageView9"
                         android:text="@string/low_52"
                         android:textAppearance="@style/low_52"
@@ -449,18 +450,18 @@
 
                 <LinearLayout
                     android:id="@+id/divider"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="0.015"
                     android:layout_alignTop="@id/weeks"
                     android:layout_alignBottom="@id/low_52"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/dp_15"
                     android:layout_toEndOf="@id/low_52"
                     android:background="#D9D9D9"
                     android:orientation="vertical" />
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1.33">
 
@@ -469,8 +470,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/bid"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="@dimen/dp_12"
+                        android:layout_marginBottom="@dimen/dp_4"
                         android:gravity="top"
                         android:text="@string/bid_vol_100"
                         android:textAppearance="@style/bid_vol_100"
@@ -481,9 +482,9 @@
                         android:id="@+id/bid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="1dp"
+                        android:layout_marginStart="@dimen/dp_12"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_1"
                         android:gravity="end"
                         android:text="@string/bid_2_78"
                         android:textAppearance="@style/bid_vol_100"
@@ -495,7 +496,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ask"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="@dimen/dp_15"
                         android:layout_toEndOf="@id/bid_vol"
                         android:gravity="start"
                         android:text="@string/ask_vol_2_2"

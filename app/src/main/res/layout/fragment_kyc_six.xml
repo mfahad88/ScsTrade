@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.aof.fragments.kyc.contactDetail.KycContactDetailThreeFragment">
     <com.airbnb.lottie.LottieAnimationView
@@ -20,12 +20,12 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/load_anim" />
     <EditText
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
         android:id="@+id/parmanent_addr"
         android:background="@drawable/drawable_text_border"
         android:hint="@string/enter_your_parmanent"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         android:inputType="text|textMultiLine"
         android:gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,35 +33,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/permanent_country"
         app:hintLabel="@string/permanent_country"
         app:dropdownLabel="@string/select_your_permanent_country"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parmanent_addr"/>
 
 
     <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/permanent_province"
         app:hintLabel="@string/permanent_province"
         app:dropdownLabel="@string/select_your_permanent_province"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
 
     <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/permanent_other_province"
         app:hintText="@string/permanent_province"
         app:hintTextField="@string/select_your_permanent_province"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:maxLength="20"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,33 +69,33 @@
         app:layout_constraintTop_toBottomOf="@id/permanent_country"/>
 
     <com.example.scstrade.views.widgets.LabelledSpinner
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/permanent_city"
         app:hintLabel="@string/permanent_city"
         app:dropdownLabel="@string/select_your_city"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
 
     <com.example.scstrade.views.widgets.LabelledTextField
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/permanent_other_city"
         app:hintText="@string/permanent_city"
         app:hintTextField="@string/select_your_city"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:maxLength="20"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/permanent_province"/>
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/phone_numbers"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:titleDualDropdown="@string/kindly_ente"
         app:typeDualDropdown1="text"
         app:typeDualDropdown2="text"
@@ -107,7 +107,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center_horizontal"
@@ -117,20 +117,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Save &amp; Next" />
     </LinearLayout>

@@ -9,8 +9,8 @@
         android:id="@+id/create_a_ne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/dp_26"
+        android:layout_marginTop="@dimen/dp_16"
         android:textFontWeight="600"
         android:text="@string/create_a_new_portfolio_group"
         android:textAppearance="@style/create_a_ne"
@@ -19,11 +19,11 @@
 
     <TextView
         android:id="@+id/create_message"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="@dimen/dp_24"
         android:text="@string/create_a_new_portfolio_group_to_organize_and_track_your_investments_easily"
         android:textAppearance="@style/create_a_message"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +33,9 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/gray_container"
         app:layout_constraintEnd_toEndOf="@+id/create_message"
         app:layout_constraintStart_toStartOf="@+id/create_message"
@@ -52,14 +52,14 @@
             android:inputType="text"
             android:lines="1"
             android:maxLines="1"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="@dimen/dp_10"
             android:singleLine="true" />
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:text="Add"
         android:id="@+id/btn_add"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"
@@ -69,11 +69,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel"
         style="@style/custom_gray_outlined"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_25"
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

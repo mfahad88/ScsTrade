@@ -9,7 +9,7 @@
 
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -26,12 +26,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        android:translationZ="1dp"
+        android:translationZ="@dimen/dp_1"
         app:lottie_rawRes="@raw/load_anim" />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,55 +54,55 @@
 
             <com.example.scstrade.views.widgets.GrayCardView
                 android:id="@+id/card_mar"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_4"
                 android:text="@string/current_mar_value"
-                app:cardElevation="2dp"
+                app:cardElevation="@dimen/dp_2"
                 app:layout_constraintEnd_toStartOf="@+id/card_compan"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeWidth="0dp"
+                app:strokeWidth="@dimen/dp_0"
                 app:titleGrayView="@string/current_mar" />
 
             <com.example.scstrade.views.widgets.GrayCardView
                 android:id="@+id/card_compan"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_10"
                 android:text="@string/current_mar_value"
-                app:cardElevation="2dp"
+                app:cardElevation="@dimen/dp_2"
                 app:layout_constraintBottom_toBottomOf="@+id/card_mar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/card_mar"
 
                 app:layout_constraintTop_toTopOf="@+id/card_mar"
-                app:strokeWidth="0dp"
+                app:strokeWidth="@dimen/dp_0"
                 app:titleGrayView="@string/total_compa" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/p_l_card"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardElevation="2dp"
+                android:layout_marginTop="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_2"
                 app:layout_constraintEnd_toEndOf="@+id/card_compan"
                 app:layout_constraintStart_toStartOf="@+id/card_mar"
                 app:layout_constraintTop_toBottomOf="@+id/card_mar"
-                app:strokeWidth="0dp">
+                app:strokeWidth="@dimen/dp_0">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/md_theme_surfaceBright"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="7dp">
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingVertical="@dimen/dp_7">
 
                     <TextView
                         android:id="@+id/p_l_summary"
@@ -116,7 +116,7 @@
 
                     <RelativeLayout
                         android:id="@+id/view_detail"
-                        android:layout_width="103dp"
+                        android:layout_width="@dimen/dp_103"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
@@ -133,10 +133,10 @@
                             android:textAppearance="@style/view_det" />
 
                         <ImageView
-                            android:layout_width="8dp"
+                            android:layout_width="@dimen/dp_8"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="@dimen/dp_3"
                             android:layout_toEndOf="@id/view_det"
                             android:src="@drawable/drop_down"
                             app:tint="@color/colorDarkerr" />
@@ -148,13 +148,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/p_l_summary"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="0dp"
-                            android:layout_height="59dp"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_59"
                             android:layout_gravity="start"
                             android:layout_weight="0.975"
                             app:cardBackgroundColor="@color/portfolio_green"
@@ -170,7 +170,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="5dp"
+                                    android:layout_marginTop="@dimen/dp_5"
                                     android:text="@string/days_p_l_ho"
                                     android:textAppearance="@style/days_p_l_ho"
                                     android:textFontWeight="400" />
@@ -188,13 +188,13 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.05" />
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="0dp"
-                            android:layout_height="59dp"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="@dimen/dp_59"
                             android:layout_gravity="end"
                             android:layout_weight="0.975"
                             app:cardBackgroundColor="@color/portfolio_green"
@@ -210,7 +210,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:layout_marginTop="5dp"
+                                    android:layout_marginTop="@dimen/dp_5"
                                     android:text="@string/total_p_l_h"
                                     android:textAppearance="@style/days_p_l_ho"
                                     android:textFontWeight="400" />
@@ -234,7 +234,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/holdings"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:visibility="gone"
                         tools:visibility="gone">
 
@@ -245,14 +245,14 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="45dp"
+                                android:layout_height="@dimen/dp_45"
                                 android:background="@color/colorDarkerr"
                                 android:orientation="horizontal"
-                                android:paddingHorizontal="15dp"
+                                android:paddingHorizontal="@dimen/dp_15"
                                 android:weightSum="3">
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
@@ -261,7 +261,7 @@
                                     android:textFontWeight="700" />
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="0.6"
@@ -270,7 +270,7 @@
                                     android:textFontWeight="700" />
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1.4"
@@ -281,14 +281,14 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="45dp"
+                                android:layout_height="@dimen/dp_45"
                                 android:orientation="horizontal"
-                                android:paddingHorizontal="15dp"
+                                android:paddingHorizontal="@dimen/dp_15"
                                 android:weightSum="3">
 
                                 <TextView
                                     android:id="@+id/total"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
@@ -298,7 +298,7 @@
 
                                 <TextView
                                     android:id="@+id/total_cost"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="0.6"
@@ -308,7 +308,7 @@
 
                                 <TextView
                                     android:id="@+id/total_p_l"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start|center_vertical"
                                     android:layout_weight="1.4"
@@ -319,14 +319,14 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="45dp"
+                                android:layout_height="@dimen/dp_45"
                                 android:orientation="horizontal"
-                                android:paddingHorizontal="15dp"
+                                android:paddingHorizontal="@dimen/dp_15"
                                 android:weightSum="3">
 
                                 <TextView
                                     android:id="@+id/holding"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
@@ -336,7 +336,7 @@
 
                                 <TextView
                                     android:id="@+id/holding_cost"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="0.6"
@@ -346,7 +346,7 @@
 
                                 <TextView
                                     android:id="@+id/holding_p_l"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start|center_vertical"
                                     android:layout_weight="1.4"
@@ -357,14 +357,14 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="45dp"
+                                android:layout_height="@dimen/dp_45"
                                 android:orientation="horizontal"
-                                android:paddingHorizontal="15dp"
+                                android:paddingHorizontal="@dimen/dp_15"
                                 android:weightSum="3">
 
                                 <TextView
                                     android:id="@+id/history"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
@@ -374,7 +374,7 @@
 
                                 <TextView
                                     android:id="@+id/history_cost"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="0.6"
@@ -384,7 +384,7 @@
 
                                 <TextView
                                     android:id="@+id/history_p_l"
-                                    android:layout_width="0dp"
+                                    android:layout_width="@dimen/dp_0"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start|center_vertical"
                                     android:layout_weight="1.4"
@@ -402,9 +402,9 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout7"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/dp_16"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/p_l_card"
                 app:layout_constraintStart_toStartOf="@id/p_l_card"
@@ -420,7 +420,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/dp_4"
                     android:text="@string/share_in"
                     android:textAppearance="@style/share_in"
                     android:textFontWeight="400" />
@@ -428,9 +428,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="@dimen/dp_15"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -441,9 +441,9 @@
 
             <LinearLayout
                 android:id="@+id/linearLayoutHistory"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/dp_16"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@id/p_l_card"
                 app:layout_constraintStart_toStartOf="@id/p_l_card"
@@ -459,7 +459,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/dp_4"
                     android:text="@string/history_1_y"
                     android:textAppearance="@style/share_in"
                     android:textFontWeight="400" />
@@ -467,10 +467,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerHistory"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -484,8 +484,8 @@
                 style="@style/CustomFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:clickable="true"
                 android:contentDescription="Add to watchlist"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -494,15 +494,15 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/floating_menu"
-                android:layout_width="146dp"
+                android:layout_width="@dimen/dp_146"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/md_theme_surface"
-                app:cardElevation="2dp"
+                app:cardElevation="@dimen/dp_2"
                 app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
                 app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
-                app:strokeWidth="0dp"
+                app:strokeWidth="@dimen/dp_0"
                 tools:visibility="gone">
 
                 <LinearLayout
@@ -510,26 +510,26 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingVertical="10dp">
+                    android:paddingVertical="@dimen/dp_10">
 
                     <TextView
                         android:id="@+id/new_buy_trade"
-                        android:layout_width="120dp"
+                        android:layout_width="@dimen/dp_120"
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:lineSpacingExtra="3sp"
-                        android:paddingVertical="5dp"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="@string/new_buy_trade"
                         android:textAppearance="@style/new_buy_trade"
                         android:textFontWeight="500" />
 
                     <TextView
                         android:id="@+id/sell_trade"
-                        android:layout_width="120dp"
+                        android:layout_width="@dimen/dp_120"
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:lineSpacingExtra="3sp"
-                        android:paddingVertical="5dp"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="@string/sell_trade"
                         android:textAppearance="@style/new_buy_trade"
                         android:textFontWeight="500"
@@ -537,11 +537,11 @@
 
                     <TextView
                         android:id="@+id/add_dividend"
-                        android:layout_width="120dp"
+                        android:layout_width="@dimen/dp_120"
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:lineSpacingExtra="3sp"
-                        android:paddingVertical="5dp"
+                        android:paddingVertical="@dimen/dp_5"
                         android:text="@string/add_dividend"
                         android:textAppearance="@style/new_buy_trade"
                         android:textFontWeight="500" />
@@ -564,7 +564,7 @@
                 app:constraint_referenced_ids="linearLayoutHistory,recyclerHistory" />
 
          <LinearLayout
-             android:layout_width="0dp"
+             android:layout_width="@dimen/dp_0"
              android:layout_height="wrap_content"
              android:orientation="vertical"
              android:id="@+id/linearEmpty"
@@ -575,8 +575,8 @@
 
              <ImageView
                  android:id="@+id/imageView34"
-                 android:layout_width="150dp"
-                 android:layout_height="166dp"
+                 android:layout_width="@dimen/dp_150"
+                 android:layout_height="@dimen/dp_166"
                  android:layout_gravity="center_horizontal"
                  app:srcCompat="@drawable/empty_holding" />
 
@@ -584,7 +584,7 @@
                  android:id="@+id/textView5"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:layout_marginTop="4dp"
+                 android:layout_marginTop="@dimen/dp_4"
                  android:layout_gravity="center_horizontal"
                  android:text="@string/holding_are"
                  android:textAppearance="@style/holding_are"

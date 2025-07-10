@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="15dp">
+        android:paddingTop="@dimen/dp_15">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
@@ -26,15 +26,15 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView2"
                 android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_height="@dimen/dp_230"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
                 app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="15dp"
+                app:cardCornerRadius="@dimen/dp_15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeWidth="0dp">
+                app:strokeWidth="@dimen/dp_0">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -53,10 +53,10 @@
 
                         <ImageView
                             android:id="@+id/imageView16"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_width="@dimen/dp_38"
+                            android:layout_height="@dimen/dp_38"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_16"
                             android:scaleType="fitCenter"
                             android:src="@drawable/snapshot_icon"
                             app:layout_constraintStart_toStartOf="parent"
@@ -65,10 +65,10 @@
 
                         <TextView
                             android:id="@+id/companyName"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
                             android:text="@string/fauji_foods"
                             android:maxLines="1"
                             android:ellipsize="end"
@@ -80,7 +80,7 @@
 
                         <TextView
                             android:id="@+id/sector"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
                             android:text="@string/food_person"
                             android:textAppearance="@style/food_person"
@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:id="@+id/linearIndices"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/dp_2"
                             app:layout_constraintStart_toStartOf="@+id/sector"
                             app:layout_constraintTop_toBottomOf="@+id/sector">
 
@@ -109,9 +109,9 @@
                                 android:background="@drawable/drawable_reg"
                                 android:backgroundTint="@color/md_theme_primary"
                                 android:gravity="center"
-                                android:paddingHorizontal="7dp"
-                                android:paddingVertical="2dp"
-                                android:layout_marginEnd="7dp"
+                                android:paddingHorizontal="@dimen/dp_7"
+                                android:paddingVertical="@dimen/dp_2"
+                                android:layout_marginEnd="@dimen/dp_7"
                                 android:text="@string/sariah"
                                 android:textAppearance="@style/reg"
                                 app:layout_constraintBottom_toBottomOf="@+id/volume"
@@ -127,10 +127,10 @@
                                 android:background="@drawable/drawable_reg"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:lineSpacingExtra="3sp"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="3dp"
+                                android:paddingHorizontal="@dimen/dp_10"
+                                android:paddingVertical="@dimen/dp_3"
                                 android:text="@string/label_text_index"
-                                android:layout_marginEnd="5dp"
+                                android:layout_marginEnd="@dimen/dp_5"
                                 android:textAppearance="@style/label_text_index"
                                 android:textFontWeight="500" />
 
@@ -143,9 +143,9 @@
                                 android:background="@drawable/drawable_reg"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:lineSpacingExtra="3sp"
-                                android:paddingHorizontal="10dp"
-                                android:layout_marginEnd="5dp"
-                                android:paddingVertical="3dp"
+                                android:paddingHorizontal="@dimen/dp_10"
+                                android:layout_marginEnd="@dimen/dp_5"
+                                android:paddingVertical="@dimen/dp_3"
                                 android:text="@string/kse_30"
                                 android:textAppearance="@style/label_text_index"
                                 android:textFontWeight="500" />
@@ -159,9 +159,9 @@
                                 android:background="@drawable/drawable_reg"
                                 android:gravity="center_horizontal|center_vertical"
                                 android:lineSpacingExtra="3sp"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="3dp"
-                                android:layout_marginEnd="5dp"
+                                android:paddingHorizontal="@dimen/dp_10"
+                                android:paddingVertical="@dimen/dp_3"
+                                android:layout_marginEnd="@dimen/dp_5"
                                 android:text="@string/kmi_30"
                                 android:textAppearance="@style/label_text_index"
                                 android:textFontWeight="500" />
@@ -170,8 +170,8 @@
                         <LinearLayout
                             android:id="@+id/linearLayout5"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_height="@dimen/dp_1"
+                            android:layout_marginTop="@dimen/dp_15"
                             android:background="@color/md_theme_surfaceContainerHighest"
                             android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -182,7 +182,7 @@
                             android:id="@+id/rs_"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="@dimen/dp_16"
                             android:text="@string/rs_"
                             android:textAppearance="@style/rs_"
                             android:textFontWeight="300"
@@ -194,8 +194,8 @@
                             android:id="@+id/valueTrade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="@dimen/dp_2"
+                            android:layout_marginTop="@dimen/dp_20"
                             android:gravity="top"
                             android:lineSpacingExtra="-18sp"
                             android:text="@string/valueTrade_snapshot"
@@ -208,10 +208,10 @@
 
                         <TextView
                             android:id="@+id/netChange"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_8"
                             android:text="@string/netChange_snapshot"
                             app:layout_constraintBaseline_toBaselineOf="@id/valueTrade"
                             android:textAppearance="@style/netChange_snapshot"
@@ -223,8 +223,8 @@
                         <ImageView
                             android:id="@+id/imageViewShare"
                             android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_height="@dimen/dp_0"
+                            android:layout_marginEnd="@dimen/dp_16"
                             android:src="@drawable/circle_share"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView16"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -235,7 +235,7 @@
                             android:id="@+id/volume_"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:text="@string/volume_"
                             android:textAppearance="@style/volume_"
                             android:textFontWeight="500"
@@ -245,9 +245,9 @@
 
                         <TextView
                             android:id="@+id/volume_value"
-                            android:layout_width="70dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_width="@dimen/dp_70"
+                            android:layout_height="@dimen/dp_0"
+                            android:layout_marginStart="@dimen/dp_6"
                             android:text="@string/volume_value"
                             android:textAppearance="@style/volume_value"
                             android:textFontWeight="700"
@@ -260,7 +260,7 @@
                             android:id="@+id/avg_volume_"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/dp_4"
                             android:text="@string/avg_volume_"
                             android:textAppearance="@style/volume_"
                             app:layout_constraintStart_toStartOf="@+id/volume_"
@@ -270,8 +270,8 @@
                         <TextView
                             android:id="@+id/avg_volume_value"
                             android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_height="@dimen/dp_0"
+                            android:layout_marginStart="@dimen/dp_6"
                             android:text="@string/volume_value"
                             android:textAppearance="@style/volume_value"
                             android:textFontWeight="700"
@@ -284,7 +284,7 @@
                             android:id="@+id/market_cap_"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="@dimen/dp_6"
                             android:text="@string/market_cap_"
                             android:textAppearance="@style/volume_"
                             android:textFontWeight="500"
@@ -294,9 +294,9 @@
 
                         <TextView
                             android:id="@+id/market_cap_value"
-                            android:layout_width="70dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
+                            android:layout_width="@dimen/dp_70"
+                            android:layout_height="@dimen/dp_0"
+                            android:layout_marginStart="@dimen/dp_8"
                             android:text="@string/volume_value"
                             android:textAppearance="@style/volume_value"
                             android:textFontWeight="700"
@@ -315,7 +315,7 @@
                 android:id="@+id/day_s_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:text="@string/day_s_range"
                 android:textAppearance="@style/day_s_range"
                 android:textFontWeight="500"
@@ -325,9 +325,9 @@
 
             <com.example.scstrade.views.widgets.DayRange
                 android:id="@+id/dayRange"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 app:layout_constraintEnd_toStartOf="@+id/dayRange52"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"
@@ -337,7 +337,7 @@
                 android:id="@+id/range_52"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:text="@string/range_52"
                 android:textAppearance="@style/day_s_range"
                 android:textFontWeight="500"
@@ -347,10 +347,10 @@
 
             <com.example.scstrade.views.widgets.DayRange
                 android:id="@+id/dayRange52"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_8"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/dayRange"
@@ -358,14 +358,14 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView4"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp_5"
                 app:cardBackgroundColor="@color/md_theme_surfaceBright"
-                app:contentPaddingBottom="20dp"
-                app:contentPaddingLeft="15dp"
-                app:contentPaddingRight="15dp"
-                app:contentPaddingTop="12dp"
+                app:contentPaddingBottom="@dimen/dp_20"
+                app:contentPaddingLeft="@dimen/dp_15"
+                app:contentPaddingRight="@dimen/dp_15"
+                app:contentPaddingTop="@dimen/dp_12"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"
                 app:layout_constraintTop_toBottomOf="@+id/dayRange52">
@@ -388,7 +388,7 @@
                         android:id="@+id/one_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:text="@string/one_month"
                         android:textAppearance="@style/one_month"
                         android:textFontWeight="500"
@@ -398,9 +398,9 @@
 
                     <RelativeLayout
                         android:id="@+id/one_performance"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginBottom="@dimen/dp_4"
                         android:background="@drawable/performance_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/three_performance"
@@ -440,10 +440,10 @@
 
                     <RelativeLayout
                         android:id="@+id/three_performance"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_4"
                         android:background="@drawable/performance_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/six_performance"
@@ -472,10 +472,10 @@
 
                     <RelativeLayout
                         android:id="@+id/six_performance"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_4"
                         android:background="@drawable/performance_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/one_year_performance"
@@ -494,10 +494,10 @@
 
                     <RelativeLayout
                         android:id="@+id/one_year_performance"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_marginBottom="@dimen/dp_4"
                         android:background="@drawable/performance_container"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -521,18 +521,18 @@
 
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/ratios"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView4"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView4"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView4" />
 
             <com.example.scstrade.views.widgets.CustomBarChart
                 android:id="@+id/customBarChart"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_300"
+                android:layout_marginTop="@dimen/dp_20"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"
@@ -540,9 +540,9 @@
 
             <com.example.scstrade.views.widgets.GroupedBarChart
                 android:id="@+id/groupBarChart"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_300"
+                android:layout_marginTop="@dimen/dp_20"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"
@@ -550,9 +550,9 @@
 
             <com.example.scstrade.views.widgets.CustomCombinedChart
                 android:id="@+id/combineChart"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_300"
+                android:layout_marginTop="@dimen/dp_20"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"
@@ -561,9 +561,9 @@
 
             <com.example.scstrade.views.widgets.MultiLineChartView
                 android:id="@+id/multilineChart"
-                android:layout_width="0dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_300"
+                android:layout_marginTop="@dimen/dp_20"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView2"

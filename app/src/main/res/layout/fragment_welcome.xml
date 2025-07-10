@@ -11,8 +11,8 @@
         android:id="@+id/open_your"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_23"
         android:textFontWeight="500"
         android:text="@string/open_your"
         android:textAppearance="@style/open_your"
@@ -32,7 +32,7 @@
     <TextView
         android:id="@+id/digital_account"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:text="@string/digital_account"
         android:textAppearance="@style/digital_account"
         android:textFontWeight="500"
@@ -44,7 +44,7 @@
         android:id="@+id/trade_anywh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="@dimen/dp_17"
         android:text="@string/trade_anywh"
         android:textAppearance="@style/trade_anywh"
         android:textFontWeight="400"
@@ -53,10 +53,10 @@
 
     <TextView
         android:id="@+id/by_filling_"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_20"
         android:gravity="top"
         android:lineSpacingExtra="6sp"
         android:text="@string/by_filling_"
@@ -69,8 +69,8 @@
 
     <ImageView
         android:id="@+id/imageView23"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
         android:src="@drawable/green_check"
         app:layout_constraintBottom_toBottomOf="@+id/manage_your"
         app:layout_constraintStart_toStartOf="@+id/by_filling_"
@@ -80,8 +80,8 @@
         android:id="@+id/manage_your"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_27"
         android:text="@string/manage_your"
         android:textAppearance="@style/manage_your"
         android:textFontWeight="400"
@@ -90,8 +90,8 @@
 
     <ImageView
         android:id="@+id/imageView24"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
         android:src="@drawable/green_check"
         app:layout_constraintBottom_toBottomOf="@+id/stay_updated"
         app:layout_constraintStart_toStartOf="@+id/imageView23"
@@ -101,8 +101,8 @@
         android:id="@+id/stay_updated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
         android:text="@string/stay_updated"
         android:textAppearance="@style/manage_your"
         android:textFontWeight="400"
@@ -113,8 +113,8 @@
 
     <ImageView
         android:id="@+id/imageView25"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
         android:src="@drawable/green_check"
         app:layout_constraintBottom_toBottomOf="@+id/buy_sell"
         app:layout_constraintStart_toStartOf="@+id/imageView24"
@@ -124,8 +124,8 @@
         android:id="@+id/buy_sell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
         android:text="@string/buy_sell"
         android:textAppearance="@style/manage_your"
         android:textFontWeight="400"
@@ -134,7 +134,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center_horizontal"
@@ -144,20 +144,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signup"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Signup"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Login" />
     </LinearLayout>

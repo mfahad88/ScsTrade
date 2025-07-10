@@ -18,14 +18,14 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         app:cardBackgroundColor="#011900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:strokeWidth="0dp">
+        app:strokeWidth="@dimen/dp_0">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,11 +34,11 @@
 
             <ImageView
                 android:id="@+id/imageViewLogo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/dp_10"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/frame" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/imageViewLogo"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/dp_8"
                 android:layout_toEndOf="@id/imageViewLogo"
                 android:text="@string/scs_trade_p"
                 android:textAppearance="@style/scs_trade_p_contact"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/scs_trade_p_"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_toEndOf="@id/scs_trade_p_"
                 android:text="@string/office_timi"
                 android:textAppearance="@style/office_timi"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/office_timi"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_toEndOf="@id/am_to_5pm"
                 app:srcCompat="@drawable/animate_open" />
 
@@ -118,9 +118,9 @@
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/horizontalList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_14"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView3"

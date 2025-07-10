@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="8dp"
-        android:layout_height="6.55dp"
+        android:layout_width="@dimen/dp_8"
+        android:layout_height="@dimen/dp_6"
         android:layout_centerVertical="true"
         android:rotation="180"
         app:tint="@color/md_theme_errorContainer"
@@ -17,7 +17,7 @@
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="4dp"
+        android:paddingStart="@dimen/dp_4"
         android:textFontWeight="500"
         android:layout_toEndOf="@id/imageView4"
         android:gravity="start"

@@ -21,7 +21,7 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="147dp" />
+            android:layout_marginTop="@dimen/dp_147" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:layout_gravity="bottom"
                 android:background="@drawable/rectangle_bottom_bar"
                 app:labelVisibilityMode="labeled"
-                app:itemIconSize="27dp"
+                app:itemIconSize="@dimen/dp_27"
                 app:menu="@menu/menu" />
 
             <com.example.scstrade.views.widgets.mMarket
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignStart="@id/sideMenu"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="@dimen/dp_40"
                         app:srcCompat="@drawable/close_btn" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -99,8 +99,41 @@
 
                         tools:listitem="@layout/item_side_menu"
                         android:layout_below="@id/imageViewClose"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="30dp"/>
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_30"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:background="@drawable/gradient_global_market"
+                        android:layout_below="@id/sideMenu"
+                        android:layout_alignEnd="@id/contact"
+                        android:layout_alignStart="@id/sideMenu"
+                        app:cornerRadius="5dp"
+                        android:id="@+id/globalMarket">
+                        
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/global_icon"
+                            android:layout_centerInParent="true"
+                            android:layout_toStartOf="@id/global_mark"
+                            />
+
+                        <TextView
+                            android:id="@+id/global_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/global_mark"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="@dimen/dp_7"
+                            android:textAppearance="@style/global_mark"
+                            />
+                        
+                    </RelativeLayout>
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -108,18 +141,21 @@
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         android:id="@+id/aof"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="@dimen/dp_10"
                         android:layout_alignStart="@id/sideMenu"
                         app:srcCompat="@drawable/open_account"
-                        android:layout_below="@id/sideMenu"/>
+                        android:layout_below="@id/globalMarket"/>
+
+
+
 
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="@dimen/dp_60"
                         app:cardBackgroundColor="@color/white"
                         android:id="@+id/contact"
-                        android:layout_marginEnd="7dp"
+                        android:layout_marginEnd="@dimen/dp_7"
                         android:layout_below="@id/aof"
                         android:layout_alignStart="@id/aof"
                         android:layout_alignEnd="@id/aof">
@@ -133,7 +169,7 @@
                                 android:src="@drawable/monogram"
                                 android:id="@+id/callIcon"
                                 android:layout_alignParentStart="true"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:layout_centerVertical="true"/>
 
                             <TextView
@@ -143,7 +179,7 @@
                                 android:layout_toRightOf="@id/callIcon"
                                 android:layout_alignTop="@id/callIcon"
                                 android:textFontWeight="500"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:text="@string/contact_sup"
                                 android:textAppearance="@style/contact_sup"
                                 />
@@ -165,8 +201,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="5dp"
-                                android:padding="10dp"
+                                android:layout_marginEnd="@dimen/dp_5"
+                                android:padding="@dimen/dp_10"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
 
 
@@ -175,11 +211,11 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="@dimen/dp_60"
                         app:cardBackgroundColor="@color/white"
                         android:id="@+id/profile"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="7dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_7"
                         android:layout_below="@id/contact"
                         android:layout_alignStart="@id/aof"
                         android:layout_alignEnd="@id/aof">
@@ -198,7 +234,7 @@
                                 android:textFontWeight="700"
                                 android:gravity="center"
                                 android:layout_alignParentStart="true"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:layout_centerVertical="true"/>
 
                             <TextView
@@ -208,7 +244,7 @@
                                 android:layout_toRightOf="@id/roundedAvatar"
                                 android:layout_alignTop="@id/roundedAvatar"
                                 android:textFontWeight="500"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:textAppearance="@style/contact_sup"
                                 />
 
@@ -227,8 +263,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="5dp"
-                                android:padding="10dp"
+                                android:layout_marginEnd="@dimen/dp_5"
+                                android:padding="@dimen/dp_10"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
 
 
@@ -246,7 +282,7 @@
                         android:layout_below="@id/profile"
                         android:id="@+id/appSettings"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@drawable/green_stroke">
 
                         <ImageView
@@ -261,7 +297,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/app_settings"
                             android:id="@+id/settings"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/dp_10"
                             android:textAppearance="@style/app_settings"
                             android:lineSpacingExtra="3sp"
                             android:layout_centerInParent="true"

@@ -284,120 +284,41 @@ class HomeFragment : Fragment() {
                                 val data = result.data ?: emptyList()
                                 val bySymbolMap = data.associateBy { it.sYM }
 
-                                // Helper functions for top-k selection
-                                fun topKByVolume(data: List<StockItem>, k: Int = 10): List<StockItem> {
-                                    val minHeap = PriorityQueue(compareBy<StockItem> { it.v })
-                                    for (item in data) {
-                                        minHeap.add(item)
-                                        if (minHeap.size > k) minHeap.poll()
-                                    }
-                                    return minHeap.sortedByDescending { it.v }
-                                }
+                                fun topKByVolume(data: List<StockItem>, k: Int = 10) =
+                                    data.sortedByDescending { it.v }.take(k)
 
-                                fun topKByGain(data: List<StockItem>, k: Int = 10): List<StockItem> {
-                                    val minHeap = PriorityQueue(compareBy<StockItem> { it.cHP })
-                                    for (item in data) {
-                                        minHeap.add(item)
-                                        if (minHeap.size > k) minHeap.poll()
-                                    }
-                                    return minHeap.sortedByDescending { it.cHP }
-                                }
+                                fun topKByGain(data: List<StockItem>, k: Int = 10) =
+                                    data.sortedByDescending { it.cHP }.take(k)
 
-                                fun topKByLoss(data: List<StockItem>, k: Int = 10): List<StockItem> {
-                                    val maxHeap = PriorityQueue(compareByDescending<StockItem> { it.cHP })
-                                    for (item in data) {
-                                        maxHeap.add(item)
-                                        if (maxHeap.size > k) maxHeap.poll()
-                                    }
-                                    return maxHeap.sortedBy { it.cHP }
-                                }
+                                fun topKByLoss(data: List<StockItem>, k: Int = 10) =
+                                    data.sortedBy { it.cHP }.take(k)
+
+                                val leaders = topKByVolume(data).map { ListItem.Item(it) }
+                                val gainers = topKByGain(data).map { ListItem.Item(it) }
+                                val losers = topKByLoss(data).map { ListItem.Item(it) }
+
+                                val scsItems = topPicks
+                                    .mapNotNull { bySymbolMap[it.sCSImpItemSymbol] }
+                                    .map { ListItem.Item(it) }
 
                                 buildList {
-                                    // Leaders Section
-                                    val leaders = topKByVolume(data)
                                     add(ListItem.Header("Leaders"))
-                                    leaders.forEach { add(ListItem.Item(it)) }
-
-                                    // SCS Top Picks
-                                    val scsItems = topPicks
-                                        .asSequence()
-                                        .map { it.sCSImpItemSymbol }
-                                        .mapNotNull { bySymbolMap[it] }
-                                        .toList()
+                                    addAll(leaders)
 
                                     if (scsItems.isNotEmpty()) {
                                         add(ListItem.Header("SCS Top Picks"))
-                                        scsItems.forEach { add(ListItem.Item(it)) }
+                                        addAll(scsItems)
                                     }
 
-                                    // Gainers Section
-                                    val gainers = topKByGain(data)
                                     add(ListItem.Header("Gainers"))
-                                    gainers.forEach { add(ListItem.Item(it)) }
+                                    addAll(gainers)
 
-                                    // Losers Section
-                                    val losers = topKByLoss(data)
                                     add(ListItem.Header("Losers"))
-                                    losers.forEach { add(ListItem.Item(it)) }
+                                    addAll(losers)
                                 }
                             }
 
                             // Submit list to RecyclerView
-                            (binding.recyclerLeaders.adapter as StockAdapter).apply {
-                                submitList(items) {
-                                    binding.apply {
-                                        if (loader.visibility == View.VISIBLE) {
-                                            loader.visibility = View.GONE
-                                            main.visibility = View.VISIBLE
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                   /* val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
-                    lifecycleScope.launch {
-                        // Step 1: Do heavy computation off the main thread
-                        if(!result.data.isNullOrEmpty()){
-                            val items: List<ListItem> = withContext(Dispatchers.Default) {
-                                val data = result.data ?: emptyList()
-
-                                val bySymbolMap = data.associateBy { it.sYM } // O(n) map for fast lookup
-
-                                buildList {
-                                    // Leaders Section
-                                    add(ListItem.Header("Leaders"))
-                                    data.sortedByDescending { it.v } // sort by volume descending
-                                        .take(10)
-                                        .forEach { add(ListItem.Item(it)) }
-
-                                    // SCS Top Picks - Optimized
-                                    val scsItems = topPicks
-                                        .asSequence()
-                                        .map { it.sCSImpItemSymbol }
-                                        .mapNotNull { bySymbolMap[it] }
-                                        .toList()
-
-                                    if (scsItems.isNotEmpty()) {
-                                        add(ListItem.Header("SCS Top Picks"))
-                                        scsItems.forEach { add(ListItem.Item(it)) }
-                                    }
-
-                                    // Gainers Section
-                                    add(ListItem.Header("Gainers"))
-                                    data.sortedByDescending { it.cHP } // sort by change percentage high to low
-                                        .take(10)
-                                        .forEach { add(ListItem.Item(it)) }
-
-                                    // Losers Section
-                                    add(ListItem.Header("Losers"))
-                                    data.sortedBy { it.cHP } // sort by change percentage low to high
-                                        .take(10)
-                                        .forEach { add(ListItem.Item(it)) }
-                                }
-                            }
-
-                            // Step 2: Back on the main thread, update UI once
                             (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
                                 binding.apply {
                                     if (loader.visibility == View.VISIBLE) {
@@ -407,8 +328,8 @@ class HomeFragment : Fragment() {
                                 }
                             }
                         }
+                    }
 
-                    }*/
 
                 }
             }

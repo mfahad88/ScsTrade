@@ -10,10 +10,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         android:hint="@string/sector"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/md_theme_onSurfaceVariant"
@@ -28,14 +28,14 @@
         <Spinner
             android:id="@+id/sector"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="@dimen/dp_40" />
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/loader"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/dp_22"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,11 +47,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerIndices"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_20"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
         app:tabGravity="center"
-        app:tabMaxWidth="150dp"
-        app:tabMinWidth="100dp"
+        app:tabMaxWidth="@dimen/dp_150"
+        app:tabMinWidth="@dimen/dp_100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

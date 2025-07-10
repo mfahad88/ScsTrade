@@ -9,7 +9,7 @@
 
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,10 +18,10 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/progress_card"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginEnd="21dp"
-        android:elevation="5dp"
+        android:layout_height="@dimen/dp_58"
+        android:layout_marginStart="@dimen/dp_21"
+        android:layout_marginEnd="@dimen/dp_21"
+        android:elevation="@dimen/dp_5"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +36,8 @@
                 android:id="@+id/imageView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="11dp"
+                android:layout_marginTop="@dimen/dp_11"
+                android:layout_marginEnd="@dimen/dp_11"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/circular_info" />
@@ -53,11 +53,11 @@
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginEnd="@dimen/dp_16"
                 android:max="6"
                 android:progress="1"
                 app:layout_constraintEnd_toStartOf="@+id/imageView21"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:gravity="top"
                 android:visibility="gone"
                 android:lineSpacingExtra="9sp"
@@ -84,7 +84,7 @@
                 android:id="@+id/steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/dp_4"
                 android:text="@string/steps"
                 android:textAppearance="@style/steps"
                 app:layout_constraintEnd_toEndOf="@+id/progressBar"
@@ -95,19 +95,19 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="20dp"
-        app:cardElevation="2dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_20"
+        app:cardElevation="@dimen/dp_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_card"
         app:strokeColor="@color/md_theme_surfaceContainerHighest"
-        app:strokeWidth="2dp">
+        app:strokeWidth="@dimen/dp_2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,14 +115,14 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="@dimen/dp_52"
                 android:background="@color/md_theme_surfaceBright">
 
                 <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="@dimen/dp_28"
+                    android:layout_height="@dimen/dp_28"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="@dimen/dp_12"
                     app:srcCompat="@drawable/icon_aof" />
 
                 <TextView
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/dp_4"
                     android:text="@string/index"
                     android:textAllCaps="true"
                     android:textAppearance="@style/welcome"
@@ -152,14 +152,14 @@
                 android:visibility="gone"
                 android:id="@+id/main"
                 tools:visibility="visible"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="10dp"
+                android:paddingHorizontal="@dimen/dp_12"
+                android:paddingVertical="@dimen/dp_10"
                 android:background="@color/md_theme_onPrimary">
             
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
                     
                     <ImageView
@@ -170,7 +170,7 @@
 
                     <TextView
                         android:id="@+id/basic_data"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="500"
@@ -180,13 +180,13 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -199,20 +199,20 @@
                         android:id="@+id/contact_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:text="@string/contact_detail"
                         android:textAppearance="@style/welcome"
                         android:textFontWeight="500" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -223,7 +223,7 @@
 
                     <TextView
                         android:id="@+id/attorney_details"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="500"
@@ -233,13 +233,13 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -250,7 +250,7 @@
 
                     <TextView
                         android:id="@+id/nominee_details"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="500"
@@ -260,13 +260,13 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -277,7 +277,7 @@
 
                     <TextView
                         android:id="@+id/other_details"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="500"
@@ -287,13 +287,13 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="7dp"
+                    android:paddingVertical="@dimen/dp_7"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -304,7 +304,7 @@
 
                     <TextView
                         android:id="@+id/form_submitted"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="500"
@@ -314,7 +314,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="#E5E2E1"/>
 
 

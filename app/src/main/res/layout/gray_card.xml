@@ -2,9 +2,9 @@
 <com.google.android.material.card.MaterialCardView android:id="@+id/card_mar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
+    app:cardElevation="@dimen/dp_2"
     app:strokeColor="@null"
-    app:strokeWidth="0dp"
+    app:strokeWidth="@dimen/dp_0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:background="@color/md_theme_surfaceBright"
         android:orientation="vertical"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="5dp">
+        android:paddingHorizontal="@dimen/dp_15"
+        android:paddingVertical="@dimen/dp_5">
 
         <TextView
             android:id="@+id/current_mar"

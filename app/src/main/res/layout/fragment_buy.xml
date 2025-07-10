@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorDarkerr"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_5"
         android:weightSum="4"
         android:id="@+id/header"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/buy_date"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Date"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/shares"
-            android:layout_width="10dp"
+            android:layout_width="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:text="@string/shares"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/price_cost"
-            android:layout_width="15dp"
+            android:layout_width="@dimen/dp_15"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/price_cost"
@@ -48,8 +48,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

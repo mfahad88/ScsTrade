@@ -41,79 +41,79 @@
         android:layout_width="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/dayRange"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/dp_4"
         android:weightSum="10"
         android:id="@+id/progress"
-        android:layout_height="10dp">
+        android:layout_height="@dimen/dp_10">
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
             android:backgroundTint="#A50026"
             android:background="@drawable/rounded_rectangle" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#D73027" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#F46D43" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#FDAE61" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#FEE08B" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#D9EF8B" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#A6D96A" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#66BD63" />
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:background="#1A9850" />
 
         <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
             android:rotation="180"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="@dimen/dp_2"
             android:backgroundTint="#006837"
             android:background="@drawable/rounded_rectangle"/>
 
@@ -121,9 +121,9 @@
     <ImageView
         android:id="@+id/indicator"
         android:layout_below="@id/progress"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_5"
         app:srcCompat="@drawable/drop_up"
         app:tint="@color/black" />
 </RelativeLayout>

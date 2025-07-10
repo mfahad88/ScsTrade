@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     tools:context=".views.aof.fragments.kyc.KycDocumentFragment">
 
     <TextView
         android:id="@+id/tell_us_abo"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginStart="@dimen/dp_19"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_128"
         android:text="@string/upload_all_"
         android:textAppearance="@style/tell_us_abo"
         android:textFontWeight="500"
@@ -23,24 +23,24 @@
 
 
     <com.example.scstrade.views.widgets.FileUploadCamera
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/proof_of_pe"
         android:visibility="gone"
         tools:visibility="visible"
         app:colorFileUpload="#1A73E8"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/dp_15"
         app:titleFileUpload="@string/proof_of_pe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tell_us_abo"/>
 
     <com.example.scstrade.views.widgets.FileUploadCamera
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/income_proo"
         app:colorFileUpload="#1A73E8"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/dp_15"
         android:visibility="gone"
         tools:visibility="visible"
         app:titleFileUpload="@string/income_proo"
@@ -50,11 +50,11 @@
 
 
     <com.example.scstrade.views.widgets.FileUploadCamera
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/specimen_si"
         app:colorFileUpload="#1A73E8"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/dp_15"
         android:visibility="gone"
         tools:visibility="visible"
         app:titleFileUpload="@string/specimen_si"
@@ -64,11 +64,11 @@
 
 
     <com.example.scstrade.views.widgets.FileUploadCamera
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/zakat_decla"
         app:colorFileUpload="#1A73E8"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/dp_15"
         android:visibility="gone"
         tools:visibility="visible"
         app:titleFileUpload="@string/zakat_decla"
@@ -78,7 +78,7 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_55"
             android:orientation="horizontal"
             android:weightSum="2"
             android:gravity="center_horizontal"
@@ -88,29 +88,29 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Back"
                 style="@style/Widget.Material3.Button.OutlinedButton"/>
             <View
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Save &amp; Next" />
         </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView26"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginTop="@dimen/dp_24"
         android:visibility="gone"
         android:src="@drawable/all_stocks"
         app:layout_constraintEnd_toEndOf="parent"

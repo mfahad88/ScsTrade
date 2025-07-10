@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:padding="@dimen/dp_15"
     tools:context=".views.aof.fragments.kyc.basicData.KycBasicDataTwoFragment">
 
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,19 +20,19 @@
         android:id="@+id/marital_status"/>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="170dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_170"
+        app:cardElevation="@dimen/dp_0"
+        app:strokeWidth="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/marital_status" >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="15dp"
+            android:paddingVertical="@dimen/dp_8"
+            android:paddingHorizontal="@dimen/dp_15"
             android:background="@color/md_theme_surfaceBright">
 
             <TextView
@@ -46,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_below="@id/choose_your"
                 android:id="@+id/family"
                 android:gravity="center"
@@ -54,7 +54,7 @@
 
                 <RelativeLayout
                     android:id="@+id/btn_father"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:background="@drawable/drawable_toggle">
@@ -70,13 +70,13 @@
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1" />
 
                 <RelativeLayout
                     android:id="@+id/btn_husband"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:background="@drawable/drawable_toggle">
@@ -94,11 +94,11 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="@dimen/dp_56"
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_below="@id/family"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="0dp"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:cardElevation="@dimen/dp_0"
                 app:strokeColor="@color/md_theme_outline">
 
                 <EditText
@@ -110,7 +110,7 @@
                     android:digits="@string/alphabets"
                     android:inputType="textPersonName"
                     android:hint="@string/please_enter_name"
-                    android:paddingHorizontal="16dp" />
+                    android:paddingHorizontal="@dimen/dp_16" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -121,7 +121,7 @@
     </com.google.android.material.card.MaterialCardView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center_horizontal"
@@ -131,20 +131,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Continue" />
     </LinearLayout>

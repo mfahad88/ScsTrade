@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     android:background="@color/md_theme_surfaceContainerLowest"
     tools:context=".views.aof.fragments.kyc.CongratulationsFragment">
 
@@ -13,7 +13,7 @@
         android:id="@+id/imageView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="@dimen/dp_130"
         android:src="@drawable/green_tick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/dp_25"
         android:textFontWeight="700"
         android:text="@string/congratulats"
         android:textAppearance="@style/undertaking"
@@ -41,9 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_32"
         android:text="@string/you_have_su"
         android:textAppearance="@style/whatever_in"
         android:textFontWeight="500"
@@ -52,11 +52,11 @@
         app:layout_constraintTop_toBottomOf="@+id/undertaking" />
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:text="@string/continueB"
         android:id="@+id/btnDashboard"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

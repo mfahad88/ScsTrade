@@ -22,8 +22,8 @@
         app:lottie_rawRes="@raw/load_anim" />
 
     <androidx.compose.ui.platform.ComposeView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
         android:visibility="gone"
         android:id="@+id/main"
         app:layout_constraintBottom_toBottomOf="parent"

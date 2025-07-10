@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="20dp">
+    android:paddingBottom="@dimen/dp_20">
 
     <ImageView
         android:id="@+id/imageView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="@dimen/dp_25"
         app:layout_constraintBottom_toBottomOf="@+id/company_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/company_add"
@@ -20,8 +20,8 @@
         android:id="@+id/company_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="@dimen/dp_11"
+        android:layout_marginTop="@dimen/dp_18"
         android:lineSpacingExtra="14sp"
         android:text="@string/company_add"
         android:textAppearance="@style/company_add"
@@ -32,11 +32,11 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinue"
         style="@style/custom_gray_outlined"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_25"
         android:text="Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

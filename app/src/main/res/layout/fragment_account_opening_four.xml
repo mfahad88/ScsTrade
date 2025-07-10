@@ -26,11 +26,11 @@
 
         <TextView
             android:id="@+id/tell_us_abo"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="128dp"
+            android:layout_marginStart="@dimen/dp_19"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_128"
             android:gravity="top"
             android:lineSpacingExtra="3sp"
             android:text="@string/if_any_refe"
@@ -43,11 +43,11 @@
 
         <com.example.scstrade.views.widgets.LabelledTextField
             android:id="@+id/reference"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_20"
             android:inputType="text"
             android:maxLength="50"
             app:hintText="@string/reference"
@@ -59,13 +59,13 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_i_human"
-            android:layout_width="0dp"
-            android:layout_height="113dp"
-            android:layout_marginTop="20dp"
-            app:contentPaddingLeft="15dp"
-            app:contentPaddingRight="15dp"
-            app:contentPaddingTop="10dp"
-            app:contentPaddingBottom="10dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_113"
+            android:layout_marginTop="@dimen/dp_20"
+            app:contentPaddingLeft="@dimen/dp_15"
+            app:contentPaddingRight="@dimen/dp_15"
+            app:contentPaddingTop="@dimen/dp_10"
+            app:contentPaddingBottom="@dimen/dp_10"
             app:cardBackgroundColor="@color/md_theme_surfaceBright"
             app:layout_constraintEnd_toEndOf="@+id/reference"
             app:layout_constraintStart_toStartOf="@+id/reference"
@@ -87,9 +87,9 @@
 
                 <RelativeLayout
                     android:id="@+id/captcha_view"
-                    android:layout_width="100dp"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="@dimen/dp_7"
                     android:background="#65558F"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/i_am_a_huma">
@@ -106,11 +106,11 @@
 
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="0dp"
-                    app:cardCornerRadius="4dp"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_0"
+                    app:cardCornerRadius="@dimen/dp_4"
                     app:strokeColor="@color/md_theme_outline"
                     app:layout_constraintBottom_toBottomOf="@+id/captcha_view"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +125,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/captcha_input"
-                            android:paddingHorizontal="5dp"
+                            android:paddingHorizontal="@dimen/dp_5"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:imeOptions="actionNext"
@@ -143,9 +143,9 @@
 
         <TextView
             android:id="@+id/let_s_agree"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/dp_14"
             android:text="@string/let_s_agree"
             android:textAppearance="@style/tell_us_abo"
             android:textFontWeight="500"
@@ -155,26 +155,26 @@
 
         <com.example.scstrade.views.widgets.TermsConditionView
             android:id="@+id/card_terms_one"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_20"
             app:layout_constraintEnd_toEndOf="@+id/let_s_agree"
             app:layout_constraintStart_toStartOf="@+id/let_s_agree"
             app:layout_constraintTop_toBottomOf="@+id/let_s_agree"/>
 
         <com.example.scstrade.views.widgets.TermsConditionView
             android:id="@+id/card_terms_two"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_20"
             app:layout_constraintEnd_toEndOf="@+id/let_s_agree"
             app:layout_constraintStart_toStartOf="@+id/let_s_agree"
             app:layout_constraintTop_toBottomOf="@+id/card_terms_one"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_55"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:weightSum="2"
@@ -187,20 +187,20 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
                 style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="Back" />
 
             <View
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinue"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="0.8"
                 android:text="@string/signup_next" />
         </LinearLayout>

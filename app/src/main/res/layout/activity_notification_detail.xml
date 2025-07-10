@@ -8,7 +8,7 @@
     tools:context=".views.notification.NotificationDetailActivity">
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,9 +28,9 @@
     <include
         layout="@layout/notification_detail_item"
         android:id="@+id/detail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="10dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:padding="@dimen/dp_10"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

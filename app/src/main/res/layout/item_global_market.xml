@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:strokeWidth="@dimen/dp_0">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dp_8"
+        android:background="@drawable/stock_card">
+
+        <TextView
+            android:id="@+id/companyName"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="@string/companyName"
+            android:textAppearance="@style/companyName"
+            android:textFontWeight="400"
+            app:layout_constraintEnd_toStartOf="@+id/low"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frameValueTrade" />
+
+
+        <FrameLayout
+            android:id="@+id/frameValueTrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/dp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardValueTrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:cardBackgroundColor="@android:color/holo_red_light"
+                app:cardCornerRadius="@dimen/dp_4"
+                app:contentPaddingBottom="@dimen/dp_2"
+                app:contentPaddingLeft="@dimen/dp_5"
+                app:contentPaddingRight="@dimen/dp_5"
+                app:contentPaddingTop="@dimen/dp_2"
+                app:strokeWidth="@dimen/dp_0">
+
+
+                <TextView
+                    android:id="@+id/valueTrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/valueTrade"
+                    android:textAppearance="@style/valueTrade"
+                    android:textFontWeight="700" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </FrameLayout>
+
+
+
+        <TextView
+            android:id="@+id/netChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/netChange"
+            android:textAppearance="@style/netChange"
+            android:textFontWeight="500"
+            app:layout_constraintEnd_toEndOf="@+id/frameValueTrade"
+            app:layout_constraintTop_toBottomOf="@+id/frameValueTrade" />
+
+
+        <TextView
+            android:id="@+id/high"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_0"
+            android:text="@string/high"
+            android:textAppearance="@style/high_stock"
+            android:textFontWeight="500"
+            app:layout_constraintBottom_toBottomOf="@+id/low"
+            app:layout_constraintEnd_toEndOf="@+id/netChange"
+            app:layout_constraintTop_toTopOf="@+id/low" />
+
+        <TextView
+            android:id="@+id/low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_11"
+            android:gravity="end"
+            android:text="@string/low"
+            android:textAppearance="@style/low_stock"
+            android:textFontWeight="500"
+            app:layout_constraintEnd_toStartOf="@+id/high"
+            app:layout_constraintTop_toBottomOf="@+id/netChange" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

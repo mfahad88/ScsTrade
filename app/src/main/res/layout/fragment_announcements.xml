@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp"
+    android:paddingTop="@dimen/dp_15"
     android:background="@color/md_theme_surface"
     tools:context=".views.snapshot.AnnouncementsFragment">
 
     <RelativeLayout
         android:id="@+id/relativeLayoutAnnouncement"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginStart="@dimen/dp_8"
         android:background="@drawable/gray_container"
         app:layout_constraintEnd_toStartOf="@+id/relativeLayoutDate"
         app:layout_constraintHorizontal_bias="0.5"
@@ -28,13 +28,13 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDate"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
         android:background="@drawable/gray_container"
-        android:paddingRight="5dp"
-        android:paddingLeft="10dp"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingLeft="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/relativeLayoutAnnouncement"
@@ -52,7 +52,7 @@
 
         <EditText
             android:id="@+id/textDate"
-            android:layout_width="95dp"
+            android:layout_width="@dimen/dp_95"
             android:layout_height="match_parent"
             android:layout_toStartOf="@id/imageView"
             android:background="@null"
@@ -78,23 +78,23 @@
         app:lottie_rawRes="@raw/load_anim" />
 
     <TextView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/no_announcement"
         android:text="NO ANNOUNCEMENT"
         android:visibility="gone"
         android:gravity="center"
         android:textFontWeight="700"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayoutAnnouncement" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_8"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

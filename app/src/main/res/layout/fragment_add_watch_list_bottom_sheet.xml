@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/md_theme_surface"
-    android:paddingVertical="10dp"
-    android:paddingHorizontal="15dp"
+    android:paddingVertical="@dimen/dp_10"
+    android:paddingHorizontal="@dimen/dp_15"
     >
 
     <TextView
         android:id="@+id/create_a_ne"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
         android:text="@string/create_a_ne"
         android:textAppearance="@style/create_a_ne"
         android:textFontWeight="600"
@@ -24,10 +24,10 @@
 
     <TextView
         android:id="@+id/create_watch"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
         android:text="@string/create_watch"
         android:textAppearance="@style/create_watch"
         android:textFontWeight="400"
@@ -38,12 +38,12 @@
     <EditText
         android:id="@+id/editTextName"
         android:textAppearance="@style/CustomEditText"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/dp_16"
 
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
         android:hint="@string/enter_watch_list_name"
         android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,12 +52,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonAdd"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="@dimen/dp_18"
         android:text="Add"
         style="@style/filledButton"
-        app:cornerRadius="20dp"
+        app:cornerRadius="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="@+id/editTextName"
         app:layout_constraintStart_toStartOf="@+id/editTextName"
         app:layout_constraintTop_toBottomOf="@+id/editTextName" />
@@ -65,9 +65,9 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonCancel"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:backgroundTint="@null"
         android:text="Cancel"
         android:textColor="@color/md_theme_outline"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="15dp"
+    android:paddingHorizontal="@dimen/dp_15"
     android:background="@color/md_theme_surface"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.aof.fragments.kyc.contactDetail.KycContactDetailTwoFragment">
@@ -12,7 +12,7 @@
         android:id="@+id/tell_us_abo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="@dimen/dp_23"
         android:gravity="top"
         android:lineSpacingExtra="3sp"
         android:text="@string/tell_us_abo_contact"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.scstrade.views.widgets.DualDropdownSelectorView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/office_residence_number"
         app:typeDualDropdown1="text"
@@ -30,27 +30,27 @@
         app:titleDualDropdown="@string/kindly_ente"
         app:hintDualDropdown1="@string/enter_your_office"
         app:hintDualDropdown2="Enter your Residence Number"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/dp_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tell_us_abo" />
 
     <com.example.scstrade.views.widgets.DualOptionToggleView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:id="@+id/parmanent_addr"
         app:titleDualOption="@string/is_your_mai"
         app:titleButton1="No"
         app:titleButton2="Yes"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/office_residence_number"/>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_115"
+        android:layout_marginTop="@dimen/dp_20"
         android:id="@+id/no_worries"
         app:cardBackgroundColor="#F4F9FF"
         app:strokeColor="#1A73E8"
@@ -61,7 +61,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15dp"
+            android:padding="@dimen/dp_15"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,15 +69,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:src="@drawable/icon_no_worries" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textFontWeight="600"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="@dimen/dp_12"
                     android:text="@string/no_worries_"
                     android:textAppearance="@style/no_worries_"
                     />
@@ -86,8 +86,8 @@
                 android:id="@+id/please_tap_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:paddingEnd="90dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:paddingEnd="@dimen/dp_90"
                 android:textFontWeight="400"
                 android:text="@string/please_tap_"
                 android:textAppearance="@style/please_tap_"
@@ -98,7 +98,7 @@
     </com.google.android.material.card.MaterialCardView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center_horizontal"
@@ -108,20 +108,20 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Back"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
         <View
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="0.2"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_50"
             android:layout_weight="0.8"
             android:text="Continue" />
     </LinearLayout>

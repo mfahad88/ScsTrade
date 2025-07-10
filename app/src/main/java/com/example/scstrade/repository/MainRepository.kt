@@ -16,6 +16,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.technicals.TechnicalDetailData
 import com.example.scstrade.model.response.fundamental.FundamentalDetailData
+import com.example.scstrade.model.response.globalMarket.GlobalMarketItem
 import com.example.scstrade.model.response.incomestatement.IncomeStatementDataItem
 import com.example.scstrade.model.response.insider.InsiderDataItem
 import com.example.scstrade.model.response.news.NewsData
@@ -558,6 +559,14 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun notificationDetails(type:String, id:Int): Resource<JsonElement> {
         try{
             return  Resource.Success(apiService.notificationDetails(type, id))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun globalMarket():Resource<List<GlobalMarketItem>>{
+        try {
+            return Resource.Success(apiService.globalMarket())
         }catch (e:Exception){
             return  Resource.Error(e.message?:"An error occurred",null)
         }
