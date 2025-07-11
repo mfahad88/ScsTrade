@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -140,14 +139,16 @@ class WatchListDetailActivity : BaseActivity() {
         binding.recyclerView.apply {
             layoutManager= LinearLayoutManager(this@WatchListDetailActivity, LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(20.dp))
-            adapter= WatchListDetailAdapter( emptyList()){  item->
+            adapter= WatchListDetailAdapter( mutableListOf(), onItemClick = { item->
+
                 val stockItem=list.filter { it.watchListSymbol.equals(item.sYM,true) }.first()
                 viewModel.deleteSymbol(stockItem.watchListDetailID,WatchListMainID?:0)
-             /*   Utils.showConfirmationDialog(this.context,null,null,"Are you sure you want to delete this symbol?"){
 
-                }*/
-
-            }
+            }, onItemMove = { sym,from,to ->
+                val watchListItem=list.filter { it.watchListSymbol.equals(sym,true) }.first()
+                Log.e("Swap","${sym} From:${from} To:${to}")
+                viewModel.watchListSort(watchListItem.watchListDetailID,to,from,WatchListMainID?:0)
+            } )
             (binding.recyclerView.adapter as WatchListDetailAdapter).getItemTouchHelper().attachToRecyclerView(this)
         }
 

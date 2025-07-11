@@ -39,7 +39,7 @@ class MyApp : Application() {
     lateinit var login: LoginDataItem
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    public val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun onCreate() {
         super.onCreate()
         getSha1Fingerprint()

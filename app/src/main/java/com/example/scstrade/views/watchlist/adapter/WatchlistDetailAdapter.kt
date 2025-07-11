@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
@@ -17,12 +18,13 @@ import com.example.scstrade.databinding.ItemWatchlistDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Collections
 
-class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockItem) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
+class WatchListDetailAdapter(var list:MutableList<StockItem>, val onItemClick: (StockItem) -> Unit, val onItemMove:(symbol:String,fromPosition:Int,toPosition:Int) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
     private val previousPrices = mutableMapOf<String, Double>()
     private val previousAsk = mutableMapOf<String, Double>()
     private val previousAskVol = mutableMapOf<String, Double>()
@@ -208,23 +210,55 @@ class WatchListDetailAdapter(var list:List<StockItem>, val onItemClick: (StockIt
     }
 
     public fun addItems(list: List<StockItem>){
-        this.list=list
+        this.list=list.toMutableList()
         notifyDataSetChanged()
     }
 
-    fun swapItems(context: Context, fromPosition: Int, toPosition: Int) {
-        Collections.swap(list, fromPosition, toPosition)
+    fun swapItems(
+        context: Context,
+        fromPosition: Int,
+        toPosition: Int
+    ) {
+        if (fromPosition == toPosition || fromPosition !in list.indices || toPosition !in list.indices) return
+        val movedItem = list.removeAt(fromPosition)
+        list.add(toPosition, movedItem)
         notifyItemMoved(fromPosition, toPosition)
+
+        // 🔁 Trigger reorder API
+//        onItemMove(movedItem.sYM, fromPosition, toPosition)
+       /* Collections.swap(list, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
+        onItemMove(list.get(fromPosition).sYM,fromPosition,toPosition)*/
+
     }
 
     fun getItemTouchHelper(): ItemTouchHelper {
+        var fromPosition = -1
+        var toPosition = -1
         return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
+                fromPosition = if (fromPosition == -1) viewHolder.adapterPosition else fromPosition
+                toPosition = target.adapterPosition
 
-                swapItems(viewHolder.itemView.context,fromPosition, toPosition)
+                swapItems(viewHolder.itemView.context, viewHolder.adapterPosition, target.adapterPosition)
                 return true
+            }
+
+            override fun clearView(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ) {
+                // ✅ Now call API after drop
+                if (fromPosition != -1 && toPosition != -1 && fromPosition != toPosition) {
+                    val movedItem = list[toPosition]
+
+                    onItemMove(movedItem.sYM, fromPosition, toPosition)
+//                    onItemMove(movedItem.sYM, fromPosition, toPosition)
+                }
+
+                // Reset
+                fromPosition = -1
+                toPosition = -1
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

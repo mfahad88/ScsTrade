@@ -43,6 +43,17 @@ class WatchListRepository(var apiService: ApiService,val context: Context) {
         }
     }
 
+    suspend fun watchListSort(watchListDetailID:Int,
+                              newPosition:Int,
+                              oldPosition:Int,
+                              watchListId:Int):Resource<List<WatchListDetailItem>>{
+        try{
+            return Resource.Success(apiService.watchListSort(watchListDetailID = watchListDetailID, newPosition = newPosition, oldPosition = oldPosition, watchListId = watchListId).sortedBy { it.watchListPosition })
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
     suspend fun deleteSymbol(watchListDetailId:Int, watchListID:Int): Resource<List<WatchListDetailItem>>{
         try{
             return Resource.Success(apiService.deleteSymbol("DeleteSymbol",watchListDetailId, watchListID))

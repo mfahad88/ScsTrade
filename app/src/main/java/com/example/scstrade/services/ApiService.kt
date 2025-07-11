@@ -111,6 +111,15 @@ interface ApiService {
         @Query("WatchListID") position: Int
     ): List<WatchListDetailItem>
 
+    @GET(value = "/WatchList")
+    suspend fun watchListSort(
+        @Query("ActionType") type:String="Sorting",
+        @Query("WatchListDetailID") watchListDetailID:Int,
+        @Query("NewPosition") newPosition:Int,
+        @Query("OldPosition") oldPosition:Int,
+        @Query("WatchListID") watchListId:Int
+    ): List<WatchListDetailItem>
+
     @GET(value = "/Registration")
     suspend fun registration(
         @Query("RegistrationEmail") email: String,
@@ -302,8 +311,34 @@ interface ApiService {
     suspend fun snapTechnical(@Query("symbol")symbol: String):JsonElement
 
     /////////////////////////////////AOF///////////////////////////////////////
+/*    @POST(value="api/register")
+    suspend fun registerAof(@Body regiserUser: RegisterUser): Response<ResponseRegisterUser>*/
+    @Multipart
     @POST(value="api/register")
-    suspend fun registerAof(@Body regiserUser: RegisterUser): Response<ResponseRegisterUser>
+    suspend fun registerAof(
+        @Part("applicationId") applicationId: RequestBody?,
+        @Part("email") email: RequestBody?,
+        @Part("ibanNo") ibanNo: RequestBody?,
+        @Part("id") id: RequestBody?,
+        @Part("identificationType") identificationType: RequestBody?,
+        @Part("isApp") isApp: RequestBody?,
+        @Part("issueDate") issueDate: RequestBody?,
+        @Part("lifecycleStatus") lifecycleStatus: RequestBody?,
+        @Part("mobileNo") mobileNo: RequestBody?,
+        @Part("name") name: RequestBody?,
+        @Part("reference") reference: RequestBody?,
+        @Part("relationship") relationship: RequestBody?,
+        @Part("relativeName") relativeName: RequestBody?,
+        @Part("relativeUIN") relativeUIN: RequestBody?,
+        @Part("residentialStatus") residentialStatus: RequestBody?,
+        @Part("uin") uin: RequestBody?,
+
+        // Files
+        @Part("nicFront") nicFront: RequestBody?,
+        @Part("nicBack") nicBack: RequestBody?,
+        @Part("proofofIBAN") proofofIBAN: RequestBody?,
+        @Part("proofofRelationships") proofofRelationships: RequestBody?
+    ): Response<ResponseRegisterUser>
 
     @POST(value = "api/login")
     suspend fun loginAof(@Body loginUser: LoginUser): Response<ApiResponse<Data>>

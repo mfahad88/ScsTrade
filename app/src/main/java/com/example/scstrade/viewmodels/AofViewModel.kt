@@ -162,7 +162,9 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
 
     fun registerUser(registerUser: RegisterUser){
         mutableRegisterUser.value =Resource.Loading()
+
         viewModelScope.launch (Dispatchers.IO){
+
             val result = repository.registerUser(registerUser)
             withContext(Dispatchers.Main){
 

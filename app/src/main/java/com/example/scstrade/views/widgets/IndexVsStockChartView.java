@@ -45,25 +45,26 @@ public class IndexVsStockChartView extends ConstraintLayout {
     }
 
     private void setupChart() {
-        chart.setTouchEnabled(false);
+        chart.setTouchEnabled(true);     // Enable gestures
+        chart.setDragEnabled(true);      // Allow dragging
+        chart.setScaleEnabled(false);    // Disable pinch zoom
+        chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
+        chart.setDragDecelerationEnabled(true);
+        chart.setDragDecelerationFrictionCoef(0.9f);
         chart.getDescription().setEnabled(false);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setTextColor(Color.GRAY);
-        xAxis.setGranularity(1f); // ensures 1:1 step between labels
-        xAxis.setGranularityEnabled(true); // enables granularity
-//        xAxis.setLabelCount(xLabels.size(), true); // show all labels, if space allows
-        xAxis.setAvoidFirstLastClipping(true); // prevent edge labels from being clipped
-        xAxis.setTextSize(10f); // reduce if overlapping
+        xAxis.setTextSize(10f);
+        xAxis.setAvoidFirstLastClipping(true);
         xAxis.setLabelRotationAngle(0f);
-//        chart.getAxisLeft().setAxisMinimum(175f);
-//        chart.getAxisLeft().setAxisMaximum(275f);
+
         chart.getAxisLeft().setDrawGridLines(true);
         chart.getAxisLeft().setTextColor(Color.GRAY);
-
+        chart.getAxisLeft().setTextSize(10f);
         chart.getAxisRight().setEnabled(false);
 
         Legend legend = chart.getLegend();
@@ -71,19 +72,21 @@ public class IndexVsStockChartView extends ConstraintLayout {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setTextColor(Color.BLACK);
+        legend.setTextSize(12f);
     }
 
     public void setChartData(List<String> xLabels, List<Float> indexValues, List<Float> stockValues,
-                              String indexLabel, String stockLabel) {
+                             String indexLabel, String stockLabel) {
+
+        if (xLabels == null || indexValues == null || stockValues == null) return;
 
         List<Entry> indexEntries = new ArrayList<>();
-        for (int i = 0; i < indexValues.size(); i++) {
-            indexEntries.add(new Entry(i, indexValues.get(i)));
-        }
-
         List<Entry> stockEntries = new ArrayList<>();
-        for (int i = 0; i < stockValues.size(); i++) {
-            stockEntries.add(new Entry(i, stockValues.get(i)));
+        for (int i = 0; i < xLabels.size(); i++) {
+            if (i < indexValues.size() && i < stockValues.size()) {
+                indexEntries.add(new Entry(i, indexValues.get(i)));
+                stockEntries.add(new Entry(i, stockValues.get(i)));
+            }
         }
 
         LineDataSet indexDataSet = new LineDataSet(indexEntries, indexLabel);
@@ -91,16 +94,30 @@ public class IndexVsStockChartView extends ConstraintLayout {
         indexDataSet.setDrawCircles(false);
         indexDataSet.setLineWidth(2f);
         indexDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        indexDataSet.setDrawValues(false);
 
         LineDataSet stockDataSet = new LineDataSet(stockEntries, stockLabel);
         stockDataSet.setColor(Color.parseColor("#84C5FF"));
         stockDataSet.setDrawCircles(false);
         stockDataSet.setLineWidth(2f);
         stockDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        stockDataSet.setDrawValues(false);
 
-        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        LineData lineData = new LineData(indexDataSet, stockDataSet);
-        chart.setData(lineData);
+        // Dynamic granularity for X-axis
+        float granularity = (float) Math.max(1, xLabels.size() / 6);
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setGranularity(granularity);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawLabels(false);
+
+        // Enable scrolling
+        chart.setVisibleXRangeMaximum(40f); // show 40 points at once
+        if (!stockEntries.isEmpty()) {
+            chart.moveViewToX(stockEntries.get(stockEntries.size() - 1).getX()); // scroll to end
+        }
+
+        chart.setData(new LineData(indexDataSet, stockDataSet));
         chart.invalidate();
     }
 }

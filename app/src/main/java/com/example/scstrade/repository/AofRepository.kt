@@ -477,7 +477,57 @@ class AofRepository (val apiService: ApiService,val context: Context){
     suspend fun registerUser(registerUser: RegisterUser): Resource<ResponseRegisterUser> {
 
         try{
-            val response = apiService.registerAof(registerUser)
+            fun String?.toPart() = this?.toRequestBody("text/plain".toMediaTypeOrNull())
+            fun Int?.toPart() = this?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            fun Boolean?.toPart() = this?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val user = registerUser
+
+          /*  val applicationId = 0.toPart()
+            val lifecycleStatus = 0.toPart()
+            val id = 0.toPart()
+            val name = registerUser.name.toPart()
+            val uin = registerUser.uin.toPart()
+            val mobileNo = registerUser.mobileNo.toPart()
+            val nicBack = registerUser.nicBack.toPart()
+            val nicFront = registerUser.nicFront.toPart()
+            val proofofIBAN = registerUser.proofofIBAN.toPart()
+            val identificationType = registerUser.identificationType.toPart()
+            val residentialStatus = registerUser.residentialStatus.toPart()
+            val email = registerUser.email.toPart()
+            val ibanNo = registerUser.ibanNo.toPart()
+            val reference = registerUser.reference.toPart()
+            val proofofRelationships = registerUser.proofofRelationships.toPart()
+            val relationship = registerUser.relationship.toPart()
+            val relativeName = registerUser.relativeName.toPart()
+            val relativeUIN = registerUser.relativeUIN.toPart()
+            val isApp = true.toPart()
+            val issueDate = registerUser.issueDate.toPart()*/
+
+//            val response = apiService.registerAof(registerUser)
+            val response = apiService.registerAof(
+                applicationId = user.applicationId.toPart(),
+                email = user.email.toPart(),
+                ibanNo = user.ibanNo.toPart(),
+                id = user.id.toPart(),
+                identificationType = user.identificationType.toPart(),
+                isApp = user.isApp.toPart(),
+                issueDate = user.issueDate.toPart(),
+                lifecycleStatus = user.lifecycleStatus.toPart(),
+                mobileNo = user.mobileNo.toPart(),
+                name = user.name.toPart(),
+                reference = user.reference.toPart(),
+                relationship = user.relationship.toPart(),
+                relativeName = user.relativeName.toPart(),
+                relativeUIN = user.relativeUIN.toPart(),
+                residentialStatus = user.residentialStatus.toPart(),
+                uin = user.uin.toPart(),
+
+                // Files (paths must be valid)
+                nicFront = user.nicFront.toPart(),
+                nicBack = user.nicBack.toPart(),
+                proofofIBAN = user.proofofIBAN.toPart(),
+                proofofRelationships = user.proofofRelationships.toPart()
+            )
             if(response.isSuccessful) {
                 return Resource.Success(response.body()!!)
             }else{

@@ -94,6 +94,30 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
                     withContext(Dispatchers.Main){
                         mutableWatchListDetailItem.value=watchList?: emptyList()
                     }
+                    val filterList= ArrayList<StockItem>()
+                    watchList?.forEach { it1->
+                        sharedViewModel.mutableAllData.value?.data?.filter { it2-> it2.sYM.equals(it1.watchListSymbol,true) }?.first()
+                            ?.let { filterList.add(it) }
+                    }
+
+
+                    /*   val flist=
+                           sharedViewModel.mutableAllData.value?.data?.filter { p1-> watchList!!.any { p2-> p1.sYM.equals(p2.watchListSymbol,true) } }
+                               ?.toList()?: emptyList()*/
+                    withContext(Dispatchers.Main){
+                        if(watchList?.size==filterList.size)
+                            mutableWatchListDetail.value = Resource.Success(filterList)
+                    }
+                }catch (e:Exception){
+                    withContext(Dispatchers.Main){
+                        mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
+                    }
+                }
+               /* try{
+                    val watchList=repository.getWatchListDetail(watchListId).data?.sortedBy { it.watchListPosition }
+                    withContext(Dispatchers.Main){
+                        mutableWatchListDetailItem.value=watchList?: emptyList()
+                    }
 
                     val filterList=
                         sharedViewModel.mutableAllData.value?.data?.filter { p1-> watchList!!.any { p2-> p1.sYM.equals(p2.watchListSymbol,true) } }
@@ -106,12 +130,22 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
                     withContext(Dispatchers.Main){
                         mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
                     }
-                }
+                }*/
                 delay(5000)
             }
         }
     }
 
+    fun watchListSort(watchListDetailID:Int, newPosition:Int, oldPosition:Int, watchListId:Int){
+
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.watchListSort(watchListDetailID, newPosition, oldPosition, watchListId)
+            withContext(Dispatchers.Main){
+                mutableWatchListDetailItem.value = result.data?: emptyList()
+            }
+        }
+
+    }
     fun updateWatchList(text: String, watchListItem: WatchListItem, registrationID: Int) {
         viewModelScope.launch {
             mutableWatchListItem.value = Resource.Loading()

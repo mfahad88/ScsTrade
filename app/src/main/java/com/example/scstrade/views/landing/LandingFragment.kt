@@ -46,6 +46,7 @@ import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.SideBarDivider
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.cancel
 
 
 class LandingFragment : Fragment() {
@@ -198,7 +199,11 @@ class LandingFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("Exit App")
             .setMessage("Are you sure you want to exit?")
-            .setPositiveButton("Yes") { _, _ -> requireActivity().finish() } // 🚪 Close the app
+            .setPositiveButton("Yes") { _, _ ->
+                (requireActivity().application as MyApp).appScope.cancel()
+                requireActivity().finish()
+
+            } // 🚪 Close the app
             .setNegativeButton("No") { dialog, _ -> dialog.dismiss() } // ❌ Dismiss
             .show()
     }
