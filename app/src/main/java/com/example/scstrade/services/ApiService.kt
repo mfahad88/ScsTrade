@@ -298,6 +298,9 @@ interface ApiService {
     @GET(value = "/GlobalMarket")
     suspend fun globalMarket():List<GlobalMarketItem>
 
+    @GET(value = "/SnapTechnical")
+    suspend fun snapTechnical(@Query("symbol")symbol: String):JsonElement
+
     /////////////////////////////////AOF///////////////////////////////////////
     @POST(value="api/register")
     suspend fun registerAof(@Body regiserUser: RegisterUser): Response<ResponseRegisterUser>

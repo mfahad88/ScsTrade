@@ -96,9 +96,23 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableTopPicks = MutableLiveData<Resource<List<TopPickItem>>>()
     val mutableResultIndices= MutableLiveData<Resource<ResultIndices>>()
     val mutableCompanyDetail = MutableLiveData<Resource<List<CompanyDetailItem>>>()
+    val mutableSnapTechnical = MutableLiveData<Resource<JsonElement>>()
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.Default) {
-            while(isFetchAllData) {
+            if(isConnected.value==true) {
+                val result2 = repository.fetchTopPicks()
+                val result = repository.fetchAllData("AllData")
+                val result1 = repository.fetchAllData("FutureData")
+
+                withContext(Dispatchers.Main) {
+                    mutableTopPicks.postValue(result2)
+                    mutableAllData.postValue(result)
+                    mutableFuture.postValue(result1)
+
+
+                }
+            }
+            /*while(isFetchAllData) {
                 
                 if(isConnected.value==true) {
                     val result2 = repository.fetchTopPicks()
@@ -114,7 +128,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     }
                     delay(5000)
                 }
-            }
+            }*/
         }
 
     }
@@ -140,9 +154,35 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun fetchIndices(){
-        mutableResultIndices.value = Resource.Loading()
+//        mutableResultIndices.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
-            while(isFetchIndices) {
+            if (isConnected.value == true) {
+
+                if(isLineChart){
+                    val resultDeffered = async{repository.getIndices()}
+                    val result_KSEALLDeffered= async{ repository.getIndexChart("KSE ALL", "1") }
+                    val result_KSE100Deffered = async { repository.getIndexChart("KSE", "1") }
+                    val result_KSE30Deffered = async { repository.getIndexChart("KSE 30", "1") }
+                    val result_KMI30Deffered = async { repository.getIndexChart("KMI 30", "1") }
+                    withContext(Dispatchers.Main){
+                        val result=resultDeffered.await()
+                        val result_KSEALL= result_KSEALLDeffered.await()
+                        val result_KSE100 = result_KSE100Deffered.await()
+                        val result_KSE30 = result_KSE30Deffered.await()
+                        val result_KMI30 = result_KMI30Deffered.await()
+
+
+                        mutableResultIndices.value=Resource.Success(ResultIndices(result.data,result_KSEALL.data,result_KSE100.data,result_KSE30.data,result_KMI30.data))
+                    }
+                }else {
+                    val result = repository.getIndices()
+                    withContext(Dispatchers.Main) {
+                        mutableIndices.value = result
+                    }
+                }
+
+            }
+            /*while(isFetchIndices) {
 //            mutableAllData.value = Resource.Loading()
                 if (isConnected.value == true) {
 
@@ -171,7 +211,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
                     delay(5000)
                 }
-            }
+            }*/
         }
     }
 
@@ -388,6 +428,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.snapshotChart(symbol)
                 withContext(Dispatchers.Main){
                     mutableSnapShotChart.value = result
+                }
+            }
+        }
+    }
+
+    fun snapTechnical(symbol: String){
+        mutableSnapTechnical.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.snapTechnical(symbol)
+                withContext(Dispatchers.Main){
+                    mutableSnapTechnical.value = result
                 }
             }
         }

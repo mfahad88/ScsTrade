@@ -182,7 +182,8 @@ class OverviewFragment : Fragment() {
 
                        val res=sharedViewModel.mutableAllData.value
                        val item=res?.data?.filter { it.sYM.equals(requireActivity().intent.extras?.getString(AppConstants.SYMBOL),true) }?.first()
-                       binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
+                       binding.dayRange.setLow(item?.lP?.toFloat()?:0f,item?.hP?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
+//                       binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.valueTrade.text = item?.cL.toString()
                        binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"

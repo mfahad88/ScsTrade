@@ -571,4 +571,13 @@ class MainRepository(val apiService: ApiService,val context: Context) {
             return  Resource.Error(e.message?:"An error occurred",null)
         }
     }
+
+
+    suspend fun snapTechnical(symbol:String): Resource<JsonElement> {
+        try{
+            return  Resource.Success(apiService.snapTechnical(symbol))
+        }catch (e:Exception){
+            return  Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
 }

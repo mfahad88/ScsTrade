@@ -26,11 +26,20 @@ import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     lateinit var login: LoginDataItem
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+
+    private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun onCreate() {
         super.onCreate()
         getSha1Fingerprint()
@@ -48,18 +57,33 @@ class MyApp : Application() {
         RetrofitInstance.init(this)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
 
-        viewModel.apply {
+       /* viewModel.apply {
             fetchIndices()
             fetchAllData()
+        }*/
+        appScope.launch {
+            while (isActive){
+                viewModel.fetchIndices()
+                viewModel.fetchAllData()
+                delay(5000)
+            }
+        }
+        appScope.launch {
+            while (isActive) {
+                Utils.logAppProfile(applicationContext)
+                delay(20_000)
+            }
         }
 
         CertificateHelper.printSHA1Fingerprint(this)
         registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
+            private var activityCount = 0
             override fun onActivityCreated(p0: Activity, p1: Bundle?) {
 
             }
 
             override fun onActivityStarted(p0: Activity) {
+                activityCount++
             }
 
             override fun onActivityResumed(p0: Activity) {
@@ -71,6 +95,11 @@ class MyApp : Application() {
             override fun onActivityStopped(p0: Activity) {
                 if(p0 is MainActivity) {
                     Log.e("Stop", "Done")
+                }
+                activityCount--
+                if (activityCount == 0) {
+                    // App went to background
+                    appScope.cancel() // stop API polling
                 }
             }
 
@@ -104,7 +133,10 @@ class MyApp : Application() {
         }
     }
 
-
+    override fun onTerminate() {
+        super.onTerminate()
+        appScope.cancel()
+    }
    /* override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         val config = Configuration(newConfig)

@@ -15,8 +15,11 @@ import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.icu.text.DecimalFormat
 import android.icu.util.Calendar
+import android.net.TrafficStats
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
+import android.os.Debug
 import android.os.Handler
 import android.provider.MediaStore
 import android.text.InputFilter
@@ -24,6 +27,7 @@ import android.text.Spanned
 import android.text.format.DateUtils
 import android.util.Base64
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowInsets
@@ -725,6 +729,43 @@ class Utils {
                     )
                     .show()
             }
+        }
+
+        fun logAppProfile(context: Context) {
+            val pid = android.os.Process.myPid()
+            val uid = android.os.Process.myUid()
+
+            // Memory Usage
+            val runtime = Runtime.getRuntime()
+            val usedMem = runtime.totalMemory() - runtime.freeMemory()
+            val maxMem = runtime.maxMemory()
+
+            val memInfo = Debug.MemoryInfo()
+            Debug.getMemoryInfo(memInfo)
+            val totalPss = memInfo.totalPss // in KB
+
+            // CPU (thread-specific)
+            val cpuTimeNano = Debug.threadCpuTimeNanos()
+
+            // Battery
+            val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+            val currentNow = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW) // μA
+            val batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+
+            // Network
+            val rxBytes = TrafficStats.getUidRxBytes(uid)
+            val txBytes = TrafficStats.getUidTxBytes(uid)
+
+            Log.d("Profiler", """
+            --- App Profiling Info ---
+            • Memory Used       : ${usedMem / 1024} KB / ${maxMem / 1024} KB (Heap)
+            • Total PSS         : $totalPss KB
+            • CPU Time (Thread) : ${cpuTimeNano / 1_000_000} ms
+            • Battery Level     : $batteryLevel%
+            • Current Now       : $currentNow μA
+            • Network Received  : $rxBytes bytes
+            • Network Sent      : $txBytes bytes
+        """.trimIndent())
         }
         fun showConfirmationDialog(context:Context,icon:Int?,title:String?,message:String?,onItemYes:(() -> Unit)? = null): Dialog {
             val dialog=Dialog(context)
