@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -250,12 +251,12 @@ class OverviewFragment : Fragment() {
 //                    .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+                border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, Color(0xFFE5E2E1)),
                 backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                elevation = 0.dp,
-                shape = RoundedCornerShape(10.dp),
+                elevation = dimensionResource(R.dimen.dp_0).value.dp,
+                shape = RoundedCornerShape(dimensionResource(R.dimen.dp_10).value.dp),
             ) {
-                Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
+                Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
                     if(!data?.paidUpCapital.isNullOrEmpty()) {
                         ItemValue(
                             "Paid Up Capital",
@@ -264,9 +265,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -280,9 +281,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -296,9 +297,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -313,9 +314,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -327,9 +328,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -341,9 +342,9 @@ class OverviewFragment : Fragment() {
                         )
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -351,9 +352,9 @@ class OverviewFragment : Fragment() {
                         ItemValue("Face Value", data?.faceValue ?: "0", null)
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -362,9 +363,9 @@ class OverviewFragment : Fragment() {
                         ItemValue("Year End", data?.yearEnd ?: "", null)
                         Row {
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                modifier = Modifier.padding(vertical = 4.dp)
+                                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                             )
                         }
                     }
@@ -379,39 +380,39 @@ class OverviewFragment : Fragment() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
             if(detail?.snapShot?.earnings!=null){
                 Card(
                     modifier = Modifier
 
                         .fillMaxWidth()
                         .wrapContentHeight(),
-                    border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
+                    border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, Color(0xFFE5E2E1)),
 
-                    elevation = 0.dp,
+                    elevation = dimensionResource(R.dimen.dp_0).value.dp,
                     backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(dimensionResource(R.dimen.dp_10).value.dp),
                 ) {
-                    Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
+                    Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
                         Text(
                             text = "Earnings",
                             style = TextStyle(
-                                fontSize = 20.sp,
-                                lineHeight = 27.sp,
+                                fontSize = dimensionResource(R.dimen.sp_20).value.sp,
+                                lineHeight = dimensionResource(R.dimen.sp_27).value.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(700),
                                 color = colorResource(id = R.color.black),
                             )
                         )
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                         detail?.snapShot?.earnings?.forEachIndexed{index, descNameValue ->
                             ItemValue(descNameValue.name?:"",descNameValue.value?:"",descNameValue.desc)
                             if(index<detail.snapShot.earnings.size-1) {
                                 Row {
                                     Divider(
-                                        thickness = 1.dp,
+                                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                         color = Color(0xFFE5E2E1),
-                                        modifier = Modifier.padding(vertical = 4.dp)
+                                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                                     )
                                 }
                             }
@@ -420,7 +421,7 @@ class OverviewFragment : Fragment() {
                     }
                 }
 
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
             }
 
             if(detail?.snapShot?.importantRatios!=null){
@@ -428,23 +429,23 @@ class OverviewFragment : Fragment() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight(),
-                    border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
-                    elevation = 0.dp,
+                    border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, Color(0xFFE5E2E1)),
+                    elevation = dimensionResource(R.dimen.dp_0).value.dp,
                     backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(dimensionResource(R.dimen.dp_10).value.dp),
                 ) {
-                    Column(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
+                    Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
                         Text(
                             text = "Important Ratios",
                             style = TextStyle(
-                                fontSize = 20.sp,
-                                lineHeight = 27.sp,
+                                fontSize = dimensionResource(R.dimen.sp_20).value.sp,
+                                lineHeight = dimensionResource(R.dimen.sp_27).value.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(700),
                                 color = colorResource(id = R.color.black),
                             )
                         )
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                         detail?.snapShot?.importantRatios?.forEachIndexed{index, descNameValue ->
                             if(descNameValue!=null){
 
@@ -452,9 +453,9 @@ class OverviewFragment : Fragment() {
                                 if(index<detail.snapShot.importantRatios.size-1) {
                                     Row {
                                         Divider(
-                                            thickness = 1.dp,
+                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                             color = Color(0xFFE5E2E1),
-                                            modifier = Modifier.padding(vertical = 4.dp)
+                                            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_4).value.dp)
                                         )
                                     }
                                 }
@@ -463,7 +464,7 @@ class OverviewFragment : Fragment() {
                     }
                 }
 
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
             }
 
             when(charting){
@@ -478,18 +479,18 @@ class OverviewFragment : Fragment() {
                     if(charting.data?.ePSYear!=null) {
                         Column (modifier = Modifier
                             .border(
-                                width = 1.dp,
+                                width = dimensionResource(R.dimen.dp_1).value.dp,
                                 color = Color(0xFFE5E2E1),
-                                shape = RoundedCornerShape(6.dp)
+                                shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
                             )
-                            .padding(10.dp)
+                            .padding(dimensionResource(R.dimen.dp_10).value.dp)
                         ){
                             Row (modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.Center){
                                 Text(
                                     text = charting.data?.ePSYear?.chartName ?: "",
                                     style = TextStyle(
-                                        fontSize = 14.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(600),
                                         color = colorResource(id = R.color.black),
@@ -500,12 +501,12 @@ class OverviewFragment : Fragment() {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                                    .height(250.dp),
+                                    .height(dimensionResource(R.dimen.dp_250).value.dp),
                                 factory = { context -> CustomBarChart(context) },
                                 update = { populateBarChart(it, charting.data?.ePSYear) }
                             )
                         }
-                        Spacer(modifier = Modifier.height(15.dp))
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
                     }
                 }
             }
@@ -514,18 +515,18 @@ class OverviewFragment : Fragment() {
             if(charting.data?.ePS!=null) {
                 Column(modifier = Modifier
                     .border(
-                        width = 1.dp,
+                        width = dimensionResource(R.dimen.dp_1).value.dp,
                         color = Color(0xFFE5E2E1),
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
                     )
-                    .padding(10.dp)) {
+                    .padding(dimensionResource(R.dimen.dp_10).value.dp)) {
 
                     Row (modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center){
                         Text(
                             text = charting.data?.ePS?.chartName ?: "",
                             style = TextStyle(
-                                fontSize = 14.sp,
+                                fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(600),
                                 color = colorResource(id = R.color.black),
@@ -536,27 +537,27 @@ class OverviewFragment : Fragment() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
-                            .height(250.dp),
+                            .height(dimensionResource(R.dimen.dp_250).value.dp),
                         factory = { context -> GroupedBarChart(context) },
                         update = { populateGroupBarChart(it, charting.data?.ePS) }
                     )
                 }
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
             }
 
 
             if(detail?.snapShot?.equity!=null) {
 
                 ExpandableList("Equity Ratios", detail.snapShot.equity,charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.dividend!=null) {
                 ExpandableList("Dividend", detail.snapShot.dividend,charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.sales!=null) {
                 ExpandableList("Sales", detail.snapShot.sales,charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.enterpriseValue!=null) {
                 ExpandableList(
@@ -564,19 +565,19 @@ class OverviewFragment : Fragment() {
                     detail.snapShot.enterpriseValue,
                     charting.data
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.cash!=null) {
                 ExpandableList("Cash", detail.snapShot.cash, charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.liquidity!=null) {
                 ExpandableList("Liquidity", detail.snapShot.liquidity, charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.solvency!=null) {
                 ExpandableList("Solvency", detail.snapShot.solvency, charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.advancesAndDeposits!=null) {
                 ExpandableList(
@@ -584,11 +585,11 @@ class OverviewFragment : Fragment() {
                     detail.snapShot.advancesAndDeposits,
                     charting.data
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.insurance!=null) {
                 ExpandableList("Insurance", detail.snapShot.insurance, charting.data)
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
             if(detail?.snapShot?.netAssetValueNAV!=null) {
                 ExpandableList(
@@ -596,7 +597,7 @@ class OverviewFragment : Fragment() {
                     detail.snapShot.netAssetValueNAV,
                     charting.data
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
 
             if(detail?.snapShot?.profitablility!=null){
@@ -605,34 +606,34 @@ class OverviewFragment : Fragment() {
                     detail.snapShot.profitablility,
                     charting.data
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
             }
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_15).value.dp))
 
         /*    Card(
                 modifier = Modifier
 
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                border = BorderStroke(1.dp, Color(0xFFE5E2E1)),
-                elevation = 0.dp,
+                border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, Color(0xFFE5E2E1)),
+                elevation = dimensionResource(R.dimen.dp_0).value.dp,
                 backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.dp_10).value.dp),
             ){
                 Column (
-                    modifier = Modifier.padding(horizontal = 15.dp, vertical = 20.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_20).value.dp)
                 ){
                     Text(
                         text = "About Company:",
                         style = TextStyle(
-                            fontSize = 18.sp,
-                            lineHeight = 27.sp,
+                            fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                            lineHeight = dimensionResource(R.dimen.sp_27).value.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(700),
                             color = colorResource(id = R.color.md_theme_primary),
                         )
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
                     AndroidView(factory = { context ->
                         TextView(context).apply {
                             text = HtmlCompat.fromHtml(data?.description?:"", HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -642,7 +643,7 @@ class OverviewFragment : Fragment() {
                     *//*Text(
                         text = data?.description?:"",
                         style = TextStyle(
-                            fontSize = 16.sp,
+                            fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                             lineHeight = 30.08.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(500),
@@ -663,19 +664,19 @@ class OverviewFragment : Fragment() {
             mutableStateOf(false)
         }
         Column (modifier = Modifier.border(
-            width = 1.dp,
+            width = dimensionResource(R.dimen.dp_1).value.dp,
             color = Color(0xFFE5E2E1),
-            shape = RoundedCornerShape(6.dp)
-        ).padding(horizontal = 15.dp, vertical = 10.dp)){
+            shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
+        ).padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_10).value.dp)){
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .height(50.dp)
+                    .height(dimensionResource(R.dimen.dp_50).value.dp)
                     /*  .border(
-                        width = 1.dp,
+                        width = dimensionResource(R.dimen.dp_1).value.dp,
                         color = Color(0xFFE5E2E1),
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
                     )*/
                     .background(
                         color = colorResource(
@@ -689,7 +690,7 @@ class OverviewFragment : Fragment() {
                 Text(
                     text = title,
                     style = TextStyle(
-                        fontSize = 18.sp,
+                        fontSize = dimensionResource(R.dimen.sp_18).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(600),
@@ -701,25 +702,25 @@ class OverviewFragment : Fragment() {
                     painter = painterResource(id = if(expand) R.drawable.drop_up else R.drawable.drop_down),
                     contentDescription = "Expandable",
                     modifier = Modifier
-                        .size(15.dp),
+                        .size(dimensionResource(R.dimen.dp_15).value.dp),
                     colorFilter = ColorFilter.tint(color = colorResource(id = R.color.black)))
 
             }
             if(expand){
-                Spacer(modifier = Modifier.height(7.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_7).value.dp))
                 list.forEachIndexed { index, descNameValue ->
                     val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
                     val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
                     Column {
                         Row (
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(vertical = 5.dp/*, horizontal = 5.dp*/)
+                            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_5).value.dp/*, horizontal = dimensionResource(R.dimen.dp_5).value.dp*/)
                         ){
                             Column{
                                 Text(
                                     text = descNameValue.name?:"",
                                     style = TextStyle(
-                                        fontSize = 14.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                         lineHeight = 30.08.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(500),
@@ -729,7 +730,7 @@ class OverviewFragment : Fragment() {
                                 Text(
                                     text = descNameValue.desc?:"",
                                     style = TextStyle(
-                                        fontSize = 12.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_12).value.sp,
                                         lineHeight = 30.08.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(500),
@@ -743,7 +744,7 @@ class OverviewFragment : Fragment() {
                                Text(
                                    text = /*if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else */descNameValue.value?:"",
                                    style = TextStyle(
-                                       fontSize = 16.sp,
+                                       fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                        lineHeight = 30.08.sp,
                                        fontFamily = FontFamily(Font(R.font.custom_font)),
                                        fontWeight = FontWeight(700),
@@ -756,7 +757,7 @@ class OverviewFragment : Fragment() {
                         }
                         if(index<list.size-1){
                             Divider(
-                                thickness = 1.dp,
+                                thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                 modifier = Modifier.fillMaxWidth(),
                                 color = Color(0xFFE5E2E1)
                             )
@@ -773,9 +774,9 @@ class OverviewFragment : Fragment() {
                             horizontalArrangement = Arrangement.Center) {
                             Text(
                                 text = "Book Value PKR",
-                                modifier = Modifier.padding(start = 15.dp),
+                                modifier = Modifier.padding(start = dimensionResource(R.dimen.dp_15).value.dp),
                                 style = TextStyle(
-                                    fontSize = 14.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
                                     color = colorResource(id = R.color.black),
@@ -786,7 +787,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> CustomCombinedChart(context) },
                             update = {
                                 it.setChartData(
@@ -801,12 +802,12 @@ class OverviewFragment : Fragment() {
                                 )
                             }
                         )
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
                         AndroidView(
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> MultiLineChartView(context) },
                             update = {
                                 it.setChartData(charting?.rOAROE?.year?.reversed(),
@@ -826,9 +827,9 @@ class OverviewFragment : Fragment() {
                             horizontalArrangement = Arrangement.Center) {
                             Text(
                                 text = "Dividend",
-                                modifier = Modifier.padding(start = 15.dp),
+                                modifier = Modifier.padding(start = dimensionResource(R.dimen.dp_15).value.dp),
                                 style = TextStyle(
-                                    fontSize = 14.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
                                     color = colorResource(id = R.color.black),
@@ -839,7 +840,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> CustomCombinedChart(context) },
                             update = {
                                 it.setChartData(
@@ -853,13 +854,13 @@ class OverviewFragment : Fragment() {
                                 )
                             }
                         )
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
 
                         AndroidView(
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> MultiLineChartView(context) },
                             update = {
                                 it.setChartData(
@@ -886,9 +887,9 @@ class OverviewFragment : Fragment() {
                             horizontalArrangement = Arrangement.Center) {
                             Text(
                                 text = "Sales Per Share",
-                                modifier = Modifier.padding(start = 15.dp),
+                                modifier = Modifier.padding(start = dimensionResource(R.dimen.dp_15).value.dp),
                                 style = TextStyle(
-                                    fontSize = 14.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
                                     color = colorResource(id = R.color.black),
@@ -899,7 +900,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> CustomCombinedChart(context) },
                             update = {
                                 it.setChartData(
@@ -925,9 +926,9 @@ class OverviewFragment : Fragment() {
                             horizontalArrangement = Arrangement.Center) {
                             Text(
                                 text = "Cash PS PKR",
-                                modifier = Modifier.padding(start = 15.dp),
+                                modifier = Modifier.padding(start = dimensionResource(R.dimen.dp_15).value.dp),
                                 style = TextStyle(
-                                    fontSize = 14.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
                                     color = colorResource(id = R.color.black),
@@ -938,7 +939,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> MultiLineChartView(context) },
                             update = {
                                 it.setChartData(
@@ -965,9 +966,9 @@ class OverviewFragment : Fragment() {
                             horizontalArrangement = Arrangement.Center) {
                             Text(
                                 text = "Market Cap / EV PKR in Billion",
-                                modifier = Modifier.padding(start = 15.dp),
+                                modifier = Modifier.padding(start = dimensionResource(R.dimen.dp_15).value.dp),
                                 style = TextStyle(
-                                    fontSize = 14.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
                                     color = colorResource(id = R.color.black),
@@ -978,7 +979,7 @@ class OverviewFragment : Fragment() {
                             modifier = Modifier
                                 .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                                 .fillMaxWidth()
-                                .height(250.dp),
+                                .height(dimensionResource(R.dimen.dp_250).value.dp),
                             factory = { context -> CustomEVCombinedChart(context) },
                             update = {
                                 /*it.setChartData(
@@ -1011,7 +1012,7 @@ class OverviewFragment : Fragment() {
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .fillMaxWidth()
-                            .height(250.dp),
+                            .height(dimensionResource(R.dimen.dp_250).value.dp),
                         factory = { context -> MultiLineChartView(context) },
                         update = {
                             it.setChartData(charting?.aDR?.year,
@@ -1027,7 +1028,7 @@ class OverviewFragment : Fragment() {
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .fillMaxWidth()
-                            .height(250.dp),
+                            .height(dimensionResource(R.dimen.dp_250).value.dp),
                         factory = { context -> MultiLineChartView(context) },
                         update = {
                             it.setChartData(charting?.profitablity?.year,
@@ -1042,7 +1043,7 @@ class OverviewFragment : Fragment() {
                         modifier = Modifier
                             .background(color = colorResource(id = R.color.md_theme_surfaceBright))
                             .fillMaxWidth()
-                            .height(250.dp),
+                            .height(dimensionResource(R.dimen.dp_250).value.dp),
                         factory = { context -> MultiLineChartView(context) },
                         update = {
                             it.setChartData(charting?.insurance?.year,
@@ -1064,7 +1065,7 @@ class OverviewFragment : Fragment() {
                 Text(
                     text = key,
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -1076,7 +1077,7 @@ class OverviewFragment : Fragment() {
                     Text(
                         text = desc,
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = dimensionResource(R.dimen.sp_12).value.sp,
                             lineHeight = 30.08.sp,
                             fontFamily = FontFamily(Font(R.font.custom_font)),
                             fontWeight = FontWeight(500),
@@ -1091,7 +1092,7 @@ class OverviewFragment : Fragment() {
             Text(
                 text = value?:"",
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                     lineHeight = 30.08.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(600),

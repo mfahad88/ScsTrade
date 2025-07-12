@@ -144,13 +144,4 @@
            app:layout_constraintStart_toEndOf="@+id/price"
            app:layout_constraintTop_toTopOf="@+id/price" />-->
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imageViewLogo,symbol,companyName"
-        app:layout_constraintEnd_toStartOf="@+id/e_p_e"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>

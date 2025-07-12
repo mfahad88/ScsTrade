@@ -1,4 +1,5 @@
 package com.example.scstrade.views.aof.fragments.kyc.otherDetail
+import androidx.compose.ui.res.dimensionResource
 
 import android.Manifest
 import android.content.ContentValues

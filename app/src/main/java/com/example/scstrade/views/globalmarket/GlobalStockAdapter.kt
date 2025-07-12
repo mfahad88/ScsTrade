@@ -1,4 +1,5 @@
 package com.example.scstrade.views.globalmarket
+import androidx.compose.ui.res.dimensionResource
 
 import android.graphics.Color
 import android.view.LayoutInflater

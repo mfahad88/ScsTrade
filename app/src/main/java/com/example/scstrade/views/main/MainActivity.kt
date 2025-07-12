@@ -1,4 +1,5 @@
 package com.example.scstrade.views.main
+import androidx.compose.ui.res.dimensionResource
 
 import android.Manifest
 import android.content.pm.PackageManager

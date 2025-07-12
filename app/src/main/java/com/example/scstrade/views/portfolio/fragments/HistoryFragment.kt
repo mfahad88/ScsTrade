@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.fragments
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -168,16 +169,16 @@ class HistoryFragment : Fragment() {
         Column (modifier = Modifier
             .fillMaxSize()){
             data.forEach {item->
-               Card (elevation = 5.dp, content = {
+               Card (elevation = dimensionResource(R.dimen.dp_5).value.dp, content = {
                    Row(modifier = Modifier.background(color = colorResource(id = R.color.md_theme_background))
                    ){
                        Box(modifier = Modifier
                            .weight(1f)
-                           .height(50.dp)){
+                           .height(dimensionResource(R.dimen.dp_50).value.dp)){
                            Text(
                                text = Utils.convertDateString(item.dividendDate,"dd-MMM-yy"),
                                style = TextStyle(
-                                   fontSize = 16.sp,
+                                   fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
                                    color = colorResource(R.color.black),
@@ -187,11 +188,11 @@ class HistoryFragment : Fragment() {
 
                        Box(modifier = Modifier
                            .weight(0.7f)
-                           .height(50.dp)){
+                           .height(dimensionResource(R.dimen.dp_50).value.dp)){
                            Text(
                                text = item.dividendQuantity.toString(),
                                style = TextStyle(
-                                   fontSize = 16.sp,
+                                   fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
                                    color = colorResource(R.color.black),
@@ -201,11 +202,11 @@ class HistoryFragment : Fragment() {
 
                        Box(modifier = Modifier
                            .weight(1f)
-                           .height(50.dp)){
+                           .height(dimensionResource(R.dimen.dp_50).value.dp)){
                            Text(
                                text = item.dividendPerShare.toString(),
                                style = TextStyle(
-                                   fontSize = 16.sp,
+                                   fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
                                    color = colorResource(R.color.black),
@@ -215,11 +216,11 @@ class HistoryFragment : Fragment() {
 
                        Box(modifier = Modifier
                            .weight(1f)
-                           .height(50.dp)){
+                           .height(dimensionResource(R.dimen.dp_50).value.dp)){
                            Text(
                                text = (item.dividendPerShare*item.dividendQuantity).toString(),
                                style = TextStyle(
-                                   fontSize = 16.sp,
+                                   fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                    fontFamily = FontFamily(Font(R.font.custom_font)),
                                    fontWeight = FontWeight(500),
                                    color = colorResource(R.color.black),

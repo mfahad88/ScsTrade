@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.fragments
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.text.TextUtils

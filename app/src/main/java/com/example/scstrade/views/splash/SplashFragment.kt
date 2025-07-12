@@ -1,4 +1,5 @@
 package com.example.scstrade.views.splash
+import androidx.compose.ui.res.dimensionResource
 
 import android.animation.Animator
 import android.animation.AnimatorSet

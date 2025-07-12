@@ -1511,7 +1511,6 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="sector_breadcrums"></style>
 
     <style name="board_meetings">
         <item name="android:textSize">@dimen/sp_12</item>

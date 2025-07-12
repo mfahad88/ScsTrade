@@ -1,4 +1,5 @@
 package com.example.scstrade.views.landing
+import androidx.compose.ui.res.dimensionResource
 
 
 import android.view.LayoutInflater

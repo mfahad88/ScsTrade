@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot.adapter
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
 import android.graphics.Color

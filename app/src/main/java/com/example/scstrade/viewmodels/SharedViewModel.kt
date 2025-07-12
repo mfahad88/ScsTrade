@@ -112,7 +112,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
                 }
             }
-            /*while(isFetchAllData) {
+           /* while(isFetchAllData) {
                 
                 if(isConnected.value==true) {
                     val result2 = repository.fetchTopPicks()
@@ -182,7 +182,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 }
 
             }
-            /*while(isFetchIndices) {
+           /* while(isFetchIndices) {
 //            mutableAllData.value = Resource.Loading()
                 if (isConnected.value == true) {
 
@@ -315,8 +315,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         mutableNews.value = Resource.Loading()
         if(isConnected.value==true){
             viewModelScope.launch (Dispatchers.IO){
-                var result:Resource<List<NewsData>> = Resource.Loading()
-                result=repository.news()
+                var result:Resource<List<NewsData>> =  repository.news()
+
                 withContext(Dispatchers.Main){
                     mutableNews.value = result
                 }

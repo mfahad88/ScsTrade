@@ -1,4 +1,5 @@
 package com.example.scstrade.views.login
+import androidx.compose.ui.res.dimensionResource
 
 import android.app.Activity
 import android.content.Intent

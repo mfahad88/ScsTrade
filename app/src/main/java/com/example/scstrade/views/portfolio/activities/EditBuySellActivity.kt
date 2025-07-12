@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.activities
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.res.Configuration
 import android.content.res.Resources

@@ -1,4 +1,5 @@
 package com.example.scstrade.views.allstock
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAllStockBinding
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stock.StockItem

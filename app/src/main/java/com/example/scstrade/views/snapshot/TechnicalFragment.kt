@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle

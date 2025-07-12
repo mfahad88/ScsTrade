@@ -1,4 +1,5 @@
 package com.example.scstrade.views.market
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

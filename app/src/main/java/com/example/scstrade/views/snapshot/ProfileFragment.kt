@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod

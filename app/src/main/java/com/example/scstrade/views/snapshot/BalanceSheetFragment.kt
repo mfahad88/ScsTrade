@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -128,7 +129,7 @@ class BalanceSheetFragment : Fragment() {
                                     )
                                     Row {
                                         mDropdownMenu(
-                                            150.dp,
+                                            dimensionResource(R.dimen.dp_150).value.dp,
                                             result.data?.map { it.yeartext }?.distinct()?.toList()
                                                 ?: emptyList(), selectedYear
                                         ) {
@@ -146,7 +147,7 @@ class BalanceSheetFragment : Fragment() {
                                         }
                                         Spacer(modifier = Modifier.weight(1f))
                                         mDropdownMenu(
-                                            180.dp,
+                                            dimensionResource(R.dimen.dp_180).value.dp,
                                             resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }?.filter { it.quarterName.contains(selectedYear.toString()) }
                                                 ?.map { it.quarterName }?.toList() ?: emptyList(),
                                             resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
@@ -168,30 +169,30 @@ class BalanceSheetFragment : Fragment() {
                                     Column(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .padding(bottom = 30.dp)
+                                            .padding(bottom = dimensionResource(R.dimen.dp_30).value.dp)
                                             .verticalScroll(rememberScrollState())
                                     ) {
 
                                         Text(
                                             modifier = Modifier.padding(
-                                                start = 15.dp,
-                                                end = 15.dp,
-                                                bottom = 10.dp
+                                                start = dimensionResource(R.dimen.dp_15).value.dp,
+                                                end = dimensionResource(R.dimen.dp_15).value.dp,
+                                                bottom = dimensionResource(R.dimen.dp_10).value.dp
                                             ),
                                             text = "Balance Sheet",
                                             style = TextStyle(
-                                                fontSize = 18.sp,
-                                                lineHeight = 27.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                                lineHeight = dimensionResource(R.dimen.sp_27).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(700),
                                                 color = colorResource(id = R.color.md_theme_primary),
                                             )
                                         )
                                         Card(
-                                            modifier = Modifier.padding(horizontal = 15.dp),
-                                            border = BorderStroke(1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
+                                            modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp),
+                                            border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
                                             backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                                            shape = RoundedCornerShape(12.dp)
+                                            shape = RoundedCornerShape(dimensionResource(R.dimen.dp_12).value.dp)
                                         ) {
                                             val balanceSheet =
                                             sharedViewModel.mutableBalanceSheet.asFlow()
@@ -202,23 +203,23 @@ class BalanceSheetFragment : Fragment() {
                                                 Column(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
-                                                        .height(45.dp)
+                                                        .height(dimensionResource(R.dimen.dp_45).value.dp)
                                                         .background(
                                                             colorResource(id = R.color.colorDarkerr),
                                                             shape = RoundedCornerShape(
-                                                                topStart = 12.dp,
-                                                                topEnd = 12.dp,
-                                                                bottomStart = 0.dp,
-                                                                bottomEnd = 0.dp
+                                                                topStart = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                topEnd = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                bottomStart = dimensionResource(R.dimen.dp_0).value.dp,
+                                                                bottomEnd = dimensionResource(R.dimen.dp_0).value.dp
                                                             )
                                                         )
                                                 ) {
                                                     Row(
                                                         modifier = Modifier.padding(
-                                                            start = 15.dp,
-                                                            end = 15.dp,
-                                                            top = 10.dp,
-                                                            bottom = 10.dp
+                                                            start = dimensionResource(R.dimen.dp_15).value.dp,
+                                                            end = dimensionResource(R.dimen.dp_15).value.dp,
+                                                            top = dimensionResource(R.dimen.dp_10).value.dp,
+                                                            bottom = dimensionResource(R.dimen.dp_10).value.dp
                                                         )
                                                     ) {
                                                         Box(
@@ -230,7 +231,7 @@ class BalanceSheetFragment : Fragment() {
                                                             Text(
                                                                 text = "Year/Quarter",
                                                                 style = TextStyle(
-                                                                    fontSize = 16.sp,
+                                                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                     lineHeight = 30.08.sp,
                                                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                     fontWeight = FontWeight(700),
@@ -248,7 +249,7 @@ class BalanceSheetFragment : Fragment() {
                                                             Text(
                                                                 text = "${selectedYear}/Q${selectedQuarter}",
                                                                 style = TextStyle(
-                                                                    fontSize = 16.sp,
+                                                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                     lineHeight = 30.08.sp,
                                                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                     fontWeight = FontWeight(700),
@@ -260,11 +261,11 @@ class BalanceSheetFragment : Fragment() {
                                                     }
                                                 }
                                                 if (balanceSheet.data?.isEmpty() == true) {
-                                                    Column(modifier = Modifier.padding(10.dp)) {
+                                                    Column(modifier = Modifier.padding(dimensionResource(R.dimen.dp_10).value.dp)) {
                                                         Text(
                                                             text = "No Record Found...",
                                                             style = TextStyle(
-                                                                fontSize = 22.sp,
+                                                                fontSize = dimensionResource(R.dimen.sp_22).value.sp,
                                                                 lineHeight = 30.08.sp,
                                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                 fontWeight = FontWeight(500),
@@ -274,7 +275,7 @@ class BalanceSheetFragment : Fragment() {
                                                     }
 
                                                 } else {
-                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                    Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp)) {
                                                         val sheet = balanceSheet.data?.first()
 
                                                         val balanceItems = listOf(
@@ -291,12 +292,12 @@ class BalanceSheetFragment : Fragment() {
                                                             "Total Equity" to sheet?.totalEquity
                                                         )
 
-                                                        Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                        Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp)) {
                                                             for ((label, value) in balanceItems) {
                                                                 if (value != null && value > 0) {
                                                                     cardItem(label, Utils.commaFormat(value))
                                                                     Divider(
-                                                                        thickness = 1.dp,
+                                                                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                                                         color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                                     )
                                                                 }
@@ -307,7 +308,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.cash)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -315,7 +316,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.inventory)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -323,7 +324,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.currentAsset)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -331,7 +332,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.investments)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -339,7 +340,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.fixedAsset)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -347,7 +348,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.totalAssets)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -355,7 +356,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.currentLiability)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -363,7 +364,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            Utils.commaFormat(balanceSheet.data?.first()?.fixedLiability)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -371,7 +372,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            value = Utils.commaFormat(balanceSheet.data?.first()?.totalLiabilities)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -379,7 +380,7 @@ class BalanceSheetFragment : Fragment() {
 //                                                            value = Utils.commaFormat(balanceSheet.data?.first()?.paidUpCapital)
 //                                                        )
 //                                                        Divider(
-//                                                            thickness = 1.dp,
+//                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
 //                                                            color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
 //                                                        )
 //                                                        cardItem(
@@ -394,13 +395,13 @@ class BalanceSheetFragment : Fragment() {
 
                                         Text(
                                             modifier = Modifier.padding(
-                                                horizontal = 15.dp,
-                                                vertical = 15.dp
+                                                horizontal = dimensionResource(R.dimen.dp_15).value.dp,
+                                                vertical = dimensionResource(R.dimen.dp_15).value.dp
                                             ),
                                             text = "Distributions",
                                             style = TextStyle(
-                                                fontSize = 18.sp,
-                                                lineHeight = 27.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                                lineHeight = dimensionResource(R.dimen.sp_27).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(700),
                                                 color = colorResource(id = R.color.md_theme_primary),
@@ -408,10 +409,10 @@ class BalanceSheetFragment : Fragment() {
                                         )
 
                                         Card(
-                                            modifier = Modifier.padding(horizontal = 15.dp),
-                                            border = BorderStroke(1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
+                                            modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp),
+                                            border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest)),
                                             backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
-                                            shape = RoundedCornerShape(12.dp)
+                                            shape = RoundedCornerShape(dimensionResource(R.dimen.dp_12).value.dp)
                                         ) {
                                             val distribution =
                                                 sharedViewModel.mutableDistribution.asFlow()
@@ -422,23 +423,23 @@ class BalanceSheetFragment : Fragment() {
                                                 Column(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
-                                                        .height(45.dp)
+                                                        .height(dimensionResource(R.dimen.dp_45).value.dp)
                                                         .background(
                                                             colorResource(id = R.color.colorDarkerr),
                                                             shape = RoundedCornerShape(
-                                                                topStart = 12.dp,
-                                                                topEnd = 12.dp,
-                                                                bottomStart = 0.dp,
-                                                                bottomEnd = 0.dp
+                                                                topStart = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                topEnd = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                bottomStart = dimensionResource(R.dimen.dp_0).value.dp,
+                                                                bottomEnd = dimensionResource(R.dimen.dp_0).value.dp
                                                             )
                                                         )
                                                 ) {
                                                     Row(
                                                         modifier = Modifier.padding(
-                                                            start = 15.dp,
-                                                            end = 15.dp,
-                                                            top = 10.dp,
-                                                            bottom = 10.dp
+                                                            start = dimensionResource(R.dimen.dp_15).value.dp,
+                                                            end = dimensionResource(R.dimen.dp_15).value.dp,
+                                                            top = dimensionResource(R.dimen.dp_10).value.dp,
+                                                            bottom = dimensionResource(R.dimen.dp_10).value.dp
                                                         )
                                                     ) {
                                                         Box(
@@ -450,7 +451,7 @@ class BalanceSheetFragment : Fragment() {
                                                             Text(
                                                                 text = "Year/Quarter",
                                                                 style = TextStyle(
-                                                                    fontSize = 16.sp,
+                                                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                     lineHeight = 30.08.sp,
                                                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                     fontWeight = FontWeight(700),
@@ -468,7 +469,7 @@ class BalanceSheetFragment : Fragment() {
                                                             Text(
                                                                 text = "${selectedYear}/Q${selectedQuarter}",
                                                                 style = TextStyle(
-                                                                    fontSize = 16.sp,
+                                                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                     lineHeight = 30.08.sp,
                                                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                     fontWeight = FontWeight(700),
@@ -480,11 +481,11 @@ class BalanceSheetFragment : Fragment() {
                                                     }
                                                 }
                                                 if (distribution?.isEmpty() == true) {
-                                                    Column(modifier = Modifier.padding(10.dp)) {
+                                                    Column(modifier = Modifier.padding(dimensionResource(R.dimen.dp_10).value.dp)) {
                                                         Text(
                                                             text = "No Record Found...",
                                                             style = TextStyle(
-                                                                fontSize = 22.sp,
+                                                                fontSize = dimensionResource(R.dimen.sp_22).value.sp,
                                                                 lineHeight = 30.08.sp,
                                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                 fontWeight = FontWeight(500),
@@ -494,13 +495,13 @@ class BalanceSheetFragment : Fragment() {
                                                     }
 
                                                 } else {
-                                                    Column(modifier = Modifier.padding(horizontal = 15.dp)) {
+                                                    Column(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp)) {
                                                         cardItem(
                                                             "Dividend",
                                                             Utils.commaFormat(distribution?.first()?.dividend)
                                                         )
                                                         Divider(
-                                                            thickness = 1.dp,
+                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                                             color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
@@ -508,7 +509,7 @@ class BalanceSheetFragment : Fragment() {
                                                             Utils.commaFormat(distribution?.first()?.bonus)
                                                         )
                                                         Divider(
-                                                            thickness = 1.dp,
+                                                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
                                                             color = colorResource(id = R.color.md_theme_surfaceContainerHighest)
                                                         )
                                                         cardItem(
@@ -543,12 +544,12 @@ class BalanceSheetFragment : Fragment() {
         Row {
             Box(modifier = Modifier
                 .weight(1f)
-                .padding(vertical = 10.dp)) {
+                .padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
 
                 Text(
                     text = key,
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -561,13 +562,13 @@ class BalanceSheetFragment : Fragment() {
                 contentAlignment = Alignment.CenterEnd,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 10.dp)) {
+                    .padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
 
                 Text(
                     text = value,
                     textAlign = TextAlign.End,
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -587,26 +588,26 @@ class BalanceSheetFragment : Fragment() {
           }*/
         Box(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.dp_16).value.dp)
                 .width(width)
-                .border(1.dp, Color.Gray, shape = RoundedCornerShape(10f))
+                .border(dimensionResource(R.dimen.dp_1).value.dp, Color.Gray, shape = RoundedCornerShape(10f))
         ) {
             Row (
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.dp_10).value.dp)
             ){
                 Text(text = selectedOption?:"", style = TextStyle(
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp,
+                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                    lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(400),
                     color = colorResource(id = R.color.black),
                 ),
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_10).value.dp)
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(14.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(dimensionResource(R.dimen.dp_14).value.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }
@@ -624,8 +625,8 @@ class BalanceSheetFragment : Fragment() {
                         Text(
                             text = it,
                             style = TextStyle(
-                                fontSize = 16.sp,
-                                lineHeight = 24.sp,
+                                fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(400),
                                 color = colorResource(id = R.color.black),

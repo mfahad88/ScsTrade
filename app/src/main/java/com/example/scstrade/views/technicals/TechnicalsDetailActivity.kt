@@ -1,4 +1,5 @@
 package com.example.scstrade.views.technicals
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
 import android.content.res.Configuration

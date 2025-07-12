@@ -136,19 +136,17 @@
 
 
                     <ImageView
+                        android:id="@+id/aof"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
-                        android:id="@+id/aof"
-                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_below="@id/globalMarket"
                         android:layout_alignStart="@id/sideMenu"
-                        app:srcCompat="@drawable/open_account"
-                        android:layout_below="@id/globalMarket"/>
-
-
-
-
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/open_account" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"

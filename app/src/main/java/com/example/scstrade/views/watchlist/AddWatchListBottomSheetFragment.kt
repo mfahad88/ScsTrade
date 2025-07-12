@@ -1,4 +1,5 @@
 package com.example.scstrade.views.watchlist
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.util.Log

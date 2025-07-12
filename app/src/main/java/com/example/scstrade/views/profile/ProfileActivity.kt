@@ -1,4 +1,5 @@
 package com.example.scstrade.views.profile
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.res.Configuration
 import android.content.res.Resources

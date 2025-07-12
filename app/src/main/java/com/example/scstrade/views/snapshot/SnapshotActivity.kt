@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -157,12 +158,12 @@ class SnapshotActivity : BaseActivity() {
                                             id = R.color.md_theme_primary
                                         ))
                                     )
-                                    Spacer(modifier = Modifier.width(7.dp))
+                                    Spacer(modifier = Modifier.width(dimensionResource(R.dimen.dp_7).value.dp))
                                     Text(
                                         text = result.data?.get(index)?.WatchListMainName?:"No name found",
                                         style = TextStyle(
-                                            fontSize = 16.sp,
-                                            lineHeight = 36.sp,
+                                            fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                            lineHeight = dimensionResource(R.dimen.sp_36).value.sp,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(400),
                                             color = colorResource(id = R.color.black),

@@ -1,4 +1,5 @@
 package com.example.scstrade.views.fundamental.adapter
+import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

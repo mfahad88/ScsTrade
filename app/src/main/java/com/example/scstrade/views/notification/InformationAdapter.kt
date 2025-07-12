@@ -1,4 +1,5 @@
 package com.example.scstrade.views.notification
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -62,7 +62,7 @@ class MyApp : Application() {
             fetchAllData()
         }*/
         appScope.launch {
-            while (isActive){
+            while(isActive) {
                 viewModel.fetchIndices()
                 viewModel.fetchAllData()
                 delay(5000)
@@ -96,11 +96,12 @@ class MyApp : Application() {
                 if(p0 is MainActivity) {
                     Log.e("Stop", "Done")
                 }
-                activityCount--
+                /*activityCount--
                 if (activityCount == 0) {
                     // App went to background
                     appScope.cancel() // stop API polling
-                }
+                    viewModel.stopAll()
+                }*/
             }
 
             override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {

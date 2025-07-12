@@ -1,4 +1,5 @@
 package com.example.scstrade.views.allstock
+import androidx.compose.ui.res.dimensionResource
 
 import com.example.scstrade.model.response.stock.StockItem
 

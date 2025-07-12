@@ -1,4 +1,5 @@
 package com.example.scstrade.views.snapshot
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -113,7 +114,7 @@ class IncomeStatementFragment : Fragment() {
                                       ) ?: "", selectedYear ?: "2025", "quarter${selectedQuarter}"
                                   )
                                   Row {
-                                      mDropdownMenu(150.dp,
+                                      mDropdownMenu(dimensionResource(R.dimen.dp_150).value.dp,
                                           result.data?.map { it.yeartext }?.distinct()?.toList()
                                               ?: emptyList(), selectedYear
                                       ) {
@@ -129,7 +130,7 @@ class IncomeStatementFragment : Fragment() {
                                           )
                                       }
                                       Spacer(modifier = Modifier.weight(1f))
-                                      mDropdownMenu(200.dp,
+                                      mDropdownMenu(dimensionResource(R.dimen.dp_200).value.dp,
                                           resultQuarter.data?.filter { it.yeartext.equals(selectedYear) }
                                               ?.filter { it.quarterName.contains(selectedYear.toString()) }
                                               ?.map { it.quarterName }?.toList() ?: emptyList(),
@@ -149,13 +150,13 @@ class IncomeStatementFragment : Fragment() {
                                   }
 
                                   Card(
-                                      modifier = Modifier.padding(horizontal = 15.dp),
+                                      modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp),
                                       border = BorderStroke(
-                                          1.dp, color = colorResource(
+                                          dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(
                                               id = R.color.md_theme_surfaceContainerHighest
                                           )
                                       ),
-                                      shape = RoundedCornerShape(12.dp),
+                                      shape = RoundedCornerShape(dimensionResource(R.dimen.dp_12).value.dp),
                                       backgroundColor = colorResource(id = R.color.md_theme_surfaceBright),
                                   ) {
                                       val res =
@@ -176,23 +177,23 @@ class IncomeStatementFragment : Fragment() {
                                                   Column(
                                                       modifier = Modifier
                                                           .fillMaxWidth()
-                                                          .height(45.dp)
+                                                          .height(dimensionResource(R.dimen.dp_45).value.dp)
                                                           .background(
                                                               colorResource(id = R.color.colorDarkerr),
                                                               shape = RoundedCornerShape(
-                                                                  topStart = 12.dp,
-                                                                  topEnd = 12.dp,
-                                                                  bottomStart = 0.dp,
-                                                                  bottomEnd = 0.dp
+                                                                  topStart = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                  topEnd = dimensionResource(R.dimen.dp_12).value.dp,
+                                                                  bottomStart = dimensionResource(R.dimen.dp_0).value.dp,
+                                                                  bottomEnd = dimensionResource(R.dimen.dp_0).value.dp
                                                               )
                                                           )
                                                   ) {
                                                       Row(
                                                           modifier = Modifier.padding(
-                                                              start = 15.dp,
-                                                              end = 15.dp,
-                                                              top = 10.dp,
-                                                              bottom = 10.dp
+                                                              start = dimensionResource(R.dimen.dp_15).value.dp,
+                                                              end = dimensionResource(R.dimen.dp_15).value.dp,
+                                                              top = dimensionResource(R.dimen.dp_10).value.dp,
+                                                              bottom = dimensionResource(R.dimen.dp_10).value.dp
                                                           )
                                                       ) {
                                                           Box(
@@ -204,7 +205,7 @@ class IncomeStatementFragment : Fragment() {
                                                               Text(
                                                                   text = "Year/Quarter",
                                                                   style = TextStyle(
-                                                                      fontSize = 16.sp,
+                                                                      fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                       lineHeight = 30.08.sp,
                                                                       fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                       fontWeight = FontWeight(700),
@@ -223,7 +224,7 @@ class IncomeStatementFragment : Fragment() {
                                                               Text(
                                                                   text = "${selectedYear}/Q${selectedQuarter}",
                                                                   style = TextStyle(
-                                                                      fontSize = 16.sp,
+                                                                      fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                                                       lineHeight = 30.08.sp,
                                                                       fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                       fontWeight = FontWeight(700),
@@ -235,7 +236,7 @@ class IncomeStatementFragment : Fragment() {
                                                       }
                                                   }
                                                   if(incomeStatement?.isNotEmpty() == true) {
-                                                      Column (modifier = Modifier.padding(horizontal = 15.dp)){
+                                                      Column (modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp)){
                                                           val statement = incomeStatement?.first()
 
                                                           val financialItems = listOf(
@@ -252,35 +253,35 @@ class IncomeStatementFragment : Fragment() {
 
                                                           for ((label, value) in financialItems) {
                                                               if (value != null && value > 0) {
-                                                                  Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+                                                                  Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
                                                                   cardItem(label, Utils.commaFormat(value))
                                                               }
                                                           }
 
 //                                                          cardItem("Sales", Utils.commaFormat(incomeStatement?.first()?.sales))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Cost Of Sales", Utils.commaFormat(incomeStatement?.first()?.costOfSales))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Gross Profit", Utils.commaFormat(incomeStatement?.first()?.grossProfit))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Operating Profit", Utils.commaFormat(incomeStatement?.first()?.operatingProfit))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Other Income", Utils.commaFormat(incomeStatement?.first()?.otherIncome))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Finance Cost", Utils.commaFormat(incomeStatement?.first()?.financeCost))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Profit Before Tax", Utils.commaFormat(incomeStatement?.first()?.profitBeforeTax))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem("Taxation", Utils.commaFormat(incomeStatement?.first()?.taxation))
-//                                                          Divider(thickness = 1.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
+//                                                          Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = colorResource(id = R.color.md_theme_surfaceContainerHighest))
 //                                                          cardItem(key = "Profit After Tax", value = Utils.commaFormat(incomeStatement?.first()?.profitAfterTax))
                                                       }
                                                   }else{
-                                                      Column(modifier = Modifier.padding(10.dp)) {
+                                                      Column(modifier = Modifier.padding(dimensionResource(R.dimen.dp_10).value.dp)) {
                                                           Text(
                                                               text = "No Record Found...",
                                                               style = TextStyle(
-                                                                  fontSize = 22.sp,
+                                                                  fontSize = dimensionResource(R.dimen.sp_22).value.sp,
                                                                   lineHeight = 30.08.sp,
                                                                   fontFamily = FontFamily(Font(R.font.custom_font)),
                                                                   fontWeight = FontWeight(500),
@@ -316,14 +317,14 @@ class IncomeStatementFragment : Fragment() {
                 contentAlignment = Alignment.CenterStart,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 10.dp)) {
+                    .padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
 
                 Text(
                     text = key,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Start,
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -335,14 +336,14 @@ class IncomeStatementFragment : Fragment() {
                 contentAlignment = Alignment.CenterEnd,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = 10.dp)) {
+                    .padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)) {
 
                 Text(
                     text = value,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                         lineHeight = 30.08.sp,
                         fontFamily = FontFamily(Font(R.font.custom_font)),
                         fontWeight = FontWeight(500),
@@ -363,26 +364,26 @@ class IncomeStatementFragment : Fragment() {
           }*/
         Box(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(dimensionResource(R.dimen.dp_16).value.dp)
                 .width(width)
-                .border(1.dp, Color.Gray, shape = RoundedCornerShape(10f))
+                .border(dimensionResource(R.dimen.dp_1).value.dp, Color.Gray, shape = RoundedCornerShape(10f))
         ) {
             Row (
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.dp_10).value.dp),
             ){
                 Text(text = selectedOption?:"", style = TextStyle(
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp,
+                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                    lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                     fontFamily = FontFamily(Font(R.font.custom_font)),
                     fontWeight = FontWeight(400),
                     color = colorResource(id = R.color.black),
                 ),
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_10).value.dp)
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { expanded = !expanded }) {
-                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(14.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
+                    Icon(painter = painterResource(id = R.drawable.drop_down), modifier = Modifier.size(dimensionResource(R.dimen.dp_14).value.dp), tint = colorResource(id = R.color.black), contentDescription = "More options")
                 }
 
             }
@@ -400,8 +401,8 @@ class IncomeStatementFragment : Fragment() {
                         Text(
                             text = it,
                             style = TextStyle(
-                                fontSize = 16.sp,
-                                lineHeight = 24.sp,
+                                fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                 fontWeight = FontWeight(400),
                                 color = colorResource(id = R.color.black),

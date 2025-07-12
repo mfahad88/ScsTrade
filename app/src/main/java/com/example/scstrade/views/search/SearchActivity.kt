@@ -1,4 +1,5 @@
 package com.example.scstrade.views.search
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -133,11 +135,11 @@ class SearchActivity : BaseActivity() {
     }
     @Composable
     public fun companyList(allData:List<StockItem>?){
-        LazyColumn (modifier = Modifier.padding(horizontal = 15.dp)){
+        LazyColumn (modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp)){
             items(allData?.size?:0){index->
                 Column{
                     Row(modifier = Modifier
-                        .padding(vertical = 15.dp)
+                        .padding(vertical = dimensionResource(R.dimen.dp_15).value.dp)
                         .clickable {
                             val intent = Intent(binding.root.context, SnapshotActivity::class.java)
                             intent.putExtra(AppConstants.SYMBOL, allData?.get(index)?.sYM)
@@ -148,7 +150,7 @@ class SearchActivity : BaseActivity() {
                             Text(
                                 text = allData?.get(index)?.sYM?:"",
                                 style = TextStyle(
-                                    fontSize = 16.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                     lineHeight = 25.61.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(600),
@@ -161,7 +163,7 @@ class SearchActivity : BaseActivity() {
                             Text(
                                 text = allData?.get(index)?.nM?:"",
                                 style =TextStyle(
-                                    fontSize = 16.sp,
+                                    fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                     lineHeight = 25.61.sp,
                                     fontFamily = FontFamily(Font(R.font.custom_font)),
                                     fontWeight = FontWeight(400),
@@ -170,7 +172,7 @@ class SearchActivity : BaseActivity() {
                             )
                         }
                     }
-                    Divider(thickness = 1.dp, color = Color(0xFFC9C6C4))
+                    Divider(thickness = dimensionResource(R.dimen.dp_1).value.dp, color = Color(0xFFC9C6C4))
                 }
             }
         }

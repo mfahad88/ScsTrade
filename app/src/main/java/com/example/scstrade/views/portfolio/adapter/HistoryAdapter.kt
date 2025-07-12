@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.adapter
+import androidx.compose.ui.res.dimensionResource
 
 import android.os.Build
 import android.view.LayoutInflater

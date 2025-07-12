@@ -1,4 +1,5 @@
 package com.example.scstrade.views.indices
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
 import android.graphics.Color

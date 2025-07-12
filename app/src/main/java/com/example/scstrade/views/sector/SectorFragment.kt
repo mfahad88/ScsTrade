@@ -1,4 +1,5 @@
 package com.example.scstrade.views.sector
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
 import android.graphics.Color

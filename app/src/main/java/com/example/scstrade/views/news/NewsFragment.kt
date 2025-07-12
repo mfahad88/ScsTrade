@@ -1,4 +1,5 @@
 package com.example.scstrade.views.news
+import androidx.compose.ui.res.dimensionResource
 
 import RssItem
 import android.content.Intent
@@ -90,6 +91,7 @@ import com.example.scstrade.model.response.news.brecoder.Item
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -108,7 +110,10 @@ class NewsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentNewsBinding.inflate(inflater,container,false)
         sharedViewModel=(requireActivity().application as MyApp).viewModel
-        sharedViewModel.news()
+        lifecycleScope.launch {
+            delay(1500)
+            sharedViewModel.news()
+        }
         ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
             view.setPadding(0,insets.top,0,insets.bottom)
@@ -128,7 +133,7 @@ class NewsFragment : Fragment() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 20.dp)
+                    .padding(top = dimensionResource(R.dimen.dp_20).value.dp)
             ) {
                 newsChannels(
                     listOf("SCS", "Recorder", "Tribune", "Profit", "Mettis", "Dawn"),
@@ -158,26 +163,26 @@ class NewsFragment : Fragment() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = 10.dp)
+                    .padding(end = dimensionResource(R.dimen.dp_10).value.dp)
                     // TabRow height
             ) {
                 Row(
                     modifier = Modifier
                         .horizontalScroll(scrollState)
-                        .padding(horizontal = 48.dp)
+                        .padding(horizontal = dimensionResource(R.dimen.dp_48).value.dp)
                 )
                 /*ScrollableTabRow(
                     selectedTabIndex = selectedTabIndex,
                     backgroundColor = Color.Transparent,
                     contentColor = colorResource(id = R.color.colorDarkerr),
                     modifier = Modifier.wrapContentSize(),
-                    //                edgePadding = -2.dp,
+                    //                edgePadding = -dimensionResource(R.dimen.dp_2).value.dp,
                     divider = {},
                     indicator = { tabPositions ->
                         TabRowDefaults.Indicator(
                             modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
                             color = colorResource(id = R.color.md_theme_primary),
-                            height = 2.dp
+                            height = dimensionResource(R.dimen.dp_2).value.dp
                         )
                     }
                 )*/ {
@@ -206,12 +211,12 @@ class NewsFragment : Fragment() {
                                     Image(
                                         painter = painterResource(id = images[index]),
                                         contentDescription = list[index],
-                                        modifier = Modifier.size(24.dp)
+                                        modifier = Modifier.size(dimensionResource(R.dimen.dp_24).value.dp)
                                     )
-                                    Spacer(modifier = Modifier.height(6.dp))
+                                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_6).value.dp))
                                     Text(
                                         text = list[index],
-                                        fontSize = 12.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_12).value.sp,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_medium_500)),
                                         fontWeight = FontWeight(500),
                                         color = colorResource(id = R.color.black),
@@ -238,7 +243,7 @@ class NewsFragment : Fragment() {
                         .align(Alignment.CenterStart)
                         .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Left", modifier = Modifier.size(30.dp))
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Left", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp))
                 }
 
                 // Right scroll button
@@ -253,7 +258,7 @@ class NewsFragment : Fragment() {
                         .align(Alignment.CenterEnd)
                         .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Right", modifier = Modifier.size(30.dp).rotate(180f))
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Right", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp).rotate(180f))
                 }
                 /*Box(
                     Modifier
@@ -280,7 +285,7 @@ class NewsFragment : Fragment() {
                             binding.loader.visibility= View.VISIBLE
                         }
                         is Resource.Success -> {
-                            binding.loader.visibility= View.GONE
+
                             newList(data = data.value.data?: emptyList()){
 
                                 /* val intent= Intent(requireContext(),NewsDetailActivity::class.java)
@@ -288,7 +293,8 @@ class NewsFragment : Fragment() {
                                  intent.putExtra(AppConstants.TITLE,it.newsDesc)
                                  startActivity(intent)*/
                             }
-
+                            binding.loader.visibility= View.GONE
+                            binding.horizontalList.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -395,7 +401,7 @@ class NewsFragment : Fragment() {
 
     @Composable
     private fun newsListTribune(data: List<Any>,onItemClick:(Any)->Unit) {
-        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
+        Box(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_20).value.dp, vertical = dimensionResource(R.dimen.dp_20).value.dp)) {
             LazyColumn {
                 items(data.size) { index ->
                     Row (modifier = Modifier.clickable {
@@ -419,7 +425,7 @@ class NewsFragment : Fragment() {
                                         else if (data[index] is com.example.scstrade.model.response.news.mettis.RssItem ) (data[index] as com.example.scstrade.model.response.news.mettis.RssItem).title.trim()
                                         else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) (data[index] as com.example.scstrade.model.response.news.dawn.RssItem).title.trim()
                                         else "No Description" ,
-                                        fontSize = 16.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                         minLines = 3,
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
@@ -429,13 +435,13 @@ class NewsFragment : Fragment() {
                                         modifier = Modifier.align(Alignment.Start)
                                     )
                                     Row(
-                                        modifier = Modifier.padding(top = 2.dp),
+                                        modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_2).value.dp),
                                     ) {
 
                                         Image(
                                             painter = painterResource(id = R.drawable.clock),
                                             contentDescription = "Clock",
-                                            modifier = Modifier.size(15.dp)
+                                            modifier = Modifier.size(dimensionResource(R.dimen.dp_15).value.dp)
                                         )
                                         Text(
                                             text =  Utils.convertDateBrFormat(if(data[index] is RssItem) (data[index] as RssItem).pubDate?.trim() ?: ""
@@ -446,7 +452,7 @@ class NewsFragment : Fragment() {
                                             else "" ),
 
                                             style = TextStyle(
-                                                fontSize = 12.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_12).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(500),
                                                 color = Color(0xFF79776F)
@@ -457,7 +463,7 @@ class NewsFragment : Fragment() {
                             }
 
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
+                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.dp_10).value.dp))
                         Box(
                             modifier = Modifier
                                 .weight(1f),
@@ -479,14 +485,14 @@ class NewsFragment : Fragment() {
                                         .fillMaxWidth()
                                         .fillParentMaxHeight(0.1f)
                                         .clip(
-                                            RoundedCornerShape(5.dp)
+                                            RoundedCornerShape(dimensionResource(R.dimen.dp_5).value.dp)
                                         ),
                                     contentScale = ContentScale.FillBounds
                                 )
                             }
                         )
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
 
                 }
             }
@@ -496,7 +502,7 @@ class NewsFragment : Fragment() {
     @Composable
     fun newList(data: List<NewsData>,onItemClick:(NewsData)->Unit){
 
-        Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
+        Box(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_20).value.dp, vertical = dimensionResource(R.dimen.dp_20).value.dp)) {
 
             LazyColumn(modifier = Modifier.fillMaxHeight()) {
                 items(data.size) { index ->
@@ -508,14 +514,14 @@ class NewsFragment : Fragment() {
                         Box(
                             modifier = Modifier
                                 .weight(3f)
-                                .padding(end = 5.dp),
+                                .padding(end = dimensionResource(R.dimen.dp_5).value.dp),
                             content = {
                                 Column(modifier = Modifier.fillMaxHeight()) {
 
 
                                         Text(
                                             text = data[index].type,
-                                            fontSize = 14.sp,
+                                            fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                             maxLines = 1,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(600),
@@ -523,13 +529,13 @@ class NewsFragment : Fragment() {
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .padding(bottom = 5.dp)
+                                                .padding(bottom = dimensionResource(R.dimen.dp_5).value.dp)
                                         )
 
                                     if(!data[index].type.equals("General News",true)){
                                         Text(
                                             text = data[index].newsHeading,
-                                            fontSize = 14.sp,
+                                            fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                             maxLines = 1,
                                             fontFamily = FontFamily(Font(R.font.custom_font)),
                                             fontWeight = FontWeight(600),
@@ -537,13 +543,13 @@ class NewsFragment : Fragment() {
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .padding(bottom = 5.dp)
+                                                .padding(bottom = dimensionResource(R.dimen.dp_5).value.dp)
                                         )
                                     }
 
                                     Text(
                                         text = data[index].newsText,
-                                        fontSize = 14.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                         maxLines = 3,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(400),
@@ -553,7 +559,7 @@ class NewsFragment : Fragment() {
                                     )
 
                                     Row (
-                                        modifier = Modifier.padding(top = 10.dp,),
+                                        modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_10).value.dp,),
                                     ){
                                         IntentLinkText("Source",data[index].newsLink,
                                         )
@@ -611,10 +617,10 @@ class NewsFragment : Fragment() {
                     }
                     Divider(
                         color = Color(0xFFB3C6C6CD),
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(vertical = 10.dp)
+                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
                     )
-//                    Spacer(modifier = Modifier.height(20.dp))
+//                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_20).value.dp))
 
                 }
             }

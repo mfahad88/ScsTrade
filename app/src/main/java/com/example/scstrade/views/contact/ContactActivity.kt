@@ -1,4 +1,5 @@
 package com.example.scstrade.views.contact
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
 import android.content.Intent
@@ -44,6 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -110,8 +112,8 @@ class ContactActivity : BaseActivity() {
                                 Text(
                                     text = item.contactUsName,
                                     style = TextStyle(
-                                        fontSize = 18.sp,
-                                        lineHeight = 24.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                        lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(700),
                                         color = colorResource(R.color.md_theme_primary),
@@ -120,12 +122,12 @@ class ContactActivity : BaseActivity() {
                             }
 
                             if(item.contactUsBranchManager!=null) {
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                                 Text(
                                     text = "Branch Manger: ${item.contactUsBranchManager}",
                                     style = TextStyle(
-                                        fontSize = 16.sp,
-                                        lineHeight = 24.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                        lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(500),
                                         color = colorResource(R.color.colorDarkerr),
@@ -133,12 +135,12 @@ class ContactActivity : BaseActivity() {
                                 )
                             }
                             if(item.contactUsAddress!=null) {
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                                 Text(
                                     text = item.contactUsAddress ?: "",
                                     style = TextStyle(
-                                        fontSize = 16.sp,
-                                        lineHeight = 24.sp,
+                                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                        lineHeight = dimensionResource(R.dimen.sp_24).value.sp,
                                         fontFamily = FontFamily(Font(R.font.custom_font)),
                                         fontWeight = FontWeight(500),
                                         color = colorResource(R.color.colorDarkerr),
@@ -146,7 +148,7 @@ class ContactActivity : BaseActivity() {
                                 )
                             }
                             if(item.contactUsPhone!=null){
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                                 Button(
                                     shape = CircleShape,
                                     modifier = Modifier.fillMaxWidth(),
@@ -166,8 +168,8 @@ class ContactActivity : BaseActivity() {
                                         Text(
                                             text = "Call on ${item.contactUsPhone}",
                                             style = TextStyle(
-                                                fontSize = 18.sp,
-                                                lineHeight = 20.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                                lineHeight = dimensionResource(R.dimen.sp_20).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(500),
                                                 color = Color(0xFFFFFFFF),
@@ -180,7 +182,7 @@ class ContactActivity : BaseActivity() {
                             }
 
                             if(item.contactUsWhatsApp!=null){
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
 
                                 Button(
                                     shape = CircleShape,
@@ -205,8 +207,8 @@ class ContactActivity : BaseActivity() {
                                         Text(
                                             text = "Chat on Whatsapp",
                                             style = TextStyle(
-                                                fontSize = 18.sp,
-                                                lineHeight = 20.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                                lineHeight = dimensionResource(R.dimen.sp_20).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(500),
                                                 color = Color(0xFFFFFFFF),
@@ -219,11 +221,11 @@ class ContactActivity : BaseActivity() {
                             }
 
                             if(item.contactUsEmail!=null){
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
                                 OutlinedButton(
                                     shape = CircleShape,
                                     modifier = Modifier.fillMaxWidth(),
-                                    border = BorderStroke(1.dp, color = Color(0xFF79776F) ),
+                                    border = BorderStroke(dimensionResource(R.dimen.dp_1).value.dp, color = Color(0xFF79776F) ),
 //                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF455A64)),
                                     onClick = {
                                         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
@@ -244,8 +246,8 @@ class ContactActivity : BaseActivity() {
                                         Text(
                                             text = "Email on ${item.contactUsEmail}",
                                             style = TextStyle(
-                                                fontSize = 18.sp,
-                                                lineHeight = 20.sp,
+                                                fontSize = dimensionResource(R.dimen.sp_18).value.sp,
+                                                lineHeight = dimensionResource(R.dimen.sp_20).value.sp,
                                                 fontFamily = FontFamily(Font(R.font.custom_font)),
                                                 fontWeight = FontWeight(500),
                                                 color = colorResource(id = R.color.md_theme_primary),
@@ -259,11 +261,11 @@ class ContactActivity : BaseActivity() {
                             
                             if(item.contactUsMap!=null){
                                 // Declare a string that contains a url
-                                Spacer(modifier = Modifier.height(20.dp))
+                                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_20).value.dp))
                                 WebViewItem(item.contactUsMap, LocalView.current.context)
                             }
                             
-                            Spacer(modifier = Modifier.height(20.dp))
+                            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_20).value.dp))
                         }
                     }
                 }
@@ -294,7 +296,7 @@ class ContactActivity : BaseActivity() {
             factory = { webView },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(dimensionResource(R.dimen.dp_300).value.dp)
         )
     }
 

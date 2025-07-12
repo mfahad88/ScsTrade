@@ -1,4 +1,5 @@
 package com.example.scstrade.views.landing
+import androidx.compose.ui.res.dimensionResource
 
 import android.app.Activity
 import android.content.Intent
@@ -247,7 +248,6 @@ class LandingFragment : Fragment() {
             KeyDescValue("News",null,R.drawable.side_news),
             KeyDescValue("Detailed Quote",null,R.drawable.side_detail_quote),
             KeyDescValue("Fundamental",null,R.drawable.side_fundamental),
-            KeyDescValue("Technical",null,R.drawable.side_technical),
             KeyDescValue("Technical",null,R.drawable.side_technical),
 //            KeyDescValue("SCS Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),

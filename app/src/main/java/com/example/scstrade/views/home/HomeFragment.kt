@@ -1,4 +1,5 @@
 package com.example.scstrade.views.home
+import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,6 +38,8 @@ import com.github.mikephil.charting.data.Entry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.PriorityQueue
@@ -146,194 +149,217 @@ class HomeFragment : Fragment() {
 
 
 
-        homeViewModel.selectedIndex.observe(viewLifecycleOwner, Observer {
-            if(it!=null){
-                val kseIndices=it
-                try {
-                    binding.cardHome.apply {
-                        kmiallshr.text=kseIndices.iNDEXCODE.replace("Index","").replace("Share","")
-                        if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
-                            tradeValueView.text=Utils.convertToMillions(
-                                kseIndices.cURRENTINDEX.toDouble() ?:0.0)
-                            if(kseIndices?.nETCHANGE?.contains("-")?:false) {
-                                tradeValueView.drawable =
-                                    AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
-//                            volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_red)
-                            }else{
-                                tradeValueView.drawable =
-                                    AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
-//                            volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_green)
-                            }
 
-                            netChangeChip.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
-                            volumeChip.text=kseIndices.vOLUMETRADED
-
-                            if(kseIndices.hIGHINDEX.toDouble().minus(kseIndices.preClose)<0.0){
-                                highView.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                                        "${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
-                            }else{
-
-                                highView.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} +${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                                        "+${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
-                            }
-
-                            if(kseIndices.lOWINDEX.toDouble().minus(kseIndices.preClose)<0.0){
-                                lowView.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                                        "${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
-                            }else{
-                                lowView.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} +${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
-                                        "+${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
-                            }
-
-
-
-                        }else{
-                            binding.cardHome.apply {
-                                tradeValueView.text = "0.0"
-                                volumeChip.text="0.0"
-                                netChangeChip.setText("0.0 0.0%","0.0")
-                                highView.text = "H: 0.0 0.0 0.0%"
-                                lowView.text = "L: 0.0 0.0 0.0%"
-                            }
-                        }
-
-                    }
-                }catch (e:Exception){
-                    e.printStackTrace()
-                }
-            }
-        })
-
-        viewModel.mutableIndices.observe(viewLifecycleOwner, Observer {result->
-            when(result){
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    entries=result.data?: emptyList()
-                   if(!entries.isNullOrEmpty()){
-                       if(homeViewModel.selectedIndex.value==null){
-
-                           homeViewModel.setSelectedIndex(result.data?.first {
-                               it.iNDEXCODE.contains("kse 100",true)
-                           }?: emptyList<KSEIndices>().first())
-                           homeViewModel.setSelectedCandle()
-
-//                        homeViewModel.fetchChart()
-                       }else{
-                           homeViewModel.setSelectedIndex(result.data?.first {
-                               it.iNDEXCODE.replace("Index","").replace("Share","").contains(binding.cardHome.kmiallshr.text,true)
-                           }?: emptyList<KSEIndices>().first())
-                       }
-                   }
-
-                }
-            }
-        })
-
-
-
-        homeViewModel.chartItem.observe(viewLifecycleOwner, Observer {result->
-           when(result){
-               is Resource.Error -> {}
-               is Resource.Loading -> {}
-               is Resource.Success -> {
-                   var interval=0
-                   if(!result.data.isNullOrEmpty()){
-
-                       if(homeViewModel.isCandleSelected.value==true){
-                           var candleEntry:ArrayList<CandleEntry>?= ArrayList()
-                           result.data?.reversed()?.forEachIndexed { index, it ->
-                               candleEntry?.add(
-                                   CandleEntry(index.toFloat(), it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat()))
-                           }
-
-                           binding.cardHome.candlestickChart.setCandleData(candleEntry?: emptyList())
-
-                       }else{
-
-                           binding.cardHome.lineChart.setEntries(result.data?.reversed()?.map {
-                               interval+=1
-                               Entry(interval.toFloat(),it.tradingHigh.toFloat())
-                           },false,true)
-
-                       }
-                   }
-               }
-           }
-        })
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
 
-            when(result){
-                is Resource.Error -> {
+       lifecycleScope.launch {
+           delay(1000)
+           homeViewModel.selectedIndex.observe(viewLifecycleOwner, Observer {
+               if(it!=null){
+                   val kseIndices=it
+                   try {
+                       binding.cardHome.apply {
+                           kmiallshr.text=kseIndices.iNDEXCODE.replace("Index","").replace("Share","")
+                           if(kseIndices?.vALUETRADED!="" && kseIndices?.vOLUMETRADED!="" && kseIndices?.cURRENTINDEX!="" && kseIndices?.nETCHANGE!="" && kseIndices?.hIGHINDEX!="" && kseIndices?.lOWINDEX!=""){
+                               tradeValueView.text=Utils.convertToMillions(
+                                   kseIndices.cURRENTINDEX.toDouble() ?:0.0)
+                               if(kseIndices?.nETCHANGE?.contains("-")?:false) {
+                                   tradeValueView.drawable =
+                                       AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
+//                            volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_red)
+                               }else{
+                                   tradeValueView.drawable =
+                                       AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
+//                            volumeChip.binding.relativeLayout.background=AppCompatResources.getDrawable(requireContext(),R.drawable.rounded_gray_green)
+                               }
 
-                }
-                is Resource.Loading -> {
+                               netChangeChip.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
+                               volumeChip.text=kseIndices.vOLUMETRADED
 
-                }
-                is Resource.Success -> {
-                    val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
-                    lifecycleScope.launch {
-                        if (!result.data.isNullOrEmpty()) {
-                            val items: List<ListItem> = withContext(Dispatchers.Default) {
-                                val data = result.data ?: emptyList()
-                                val bySymbolMap = data.associateBy { it.sYM }
+                               if(kseIndices.hIGHINDEX.toDouble().minus(kseIndices.preClose)<0.0){
+                                   highView.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                                           "${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
+                               }else{
 
-                                fun topKByVolume(data: List<StockItem>, k: Int = 10) =
-                                    data.sortedByDescending { it.v }.take(k)
+                                   highView.text = "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?:0.0)} +${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                                           "+${Utils.formatDouble((kseIndices?.hIGHINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
+                               }
 
-                                fun topKByGain(data: List<StockItem>, k: Int = 10) =
-                                    data.sortedByDescending { it.cHP }.take(k)
-
-                                fun topKByLoss(data: List<StockItem>, k: Int = 10) =
-                                    data.sortedBy { it.cHP }.take(k)
-
-                                val leaders = topKByVolume(data).map { ListItem.Item(it) }
-                                val gainers = topKByGain(data).map { ListItem.Item(it) }
-                                val losers = topKByLoss(data).map { ListItem.Item(it) }
-
-                                val scsItems = topPicks
-                                    .mapNotNull { bySymbolMap[it.sCSImpItemSymbol] }
-                                    .map { ListItem.Item(it) }
-
-                                buildList {
-                                    add(ListItem.Header("Leaders"))
-                                    addAll(leaders)
-
-                                    if (scsItems.isNotEmpty()) {
-                                        add(ListItem.Header("SCS Top Picks"))
-                                        addAll(scsItems)
-                                    }
-
-                                    add(ListItem.Header("Gainers"))
-                                    addAll(gainers)
-
-                                    add(ListItem.Header("Losers"))
-                                    addAll(losers)
-                                }
-                            }
-
-                            // Submit list to RecyclerView
-                            (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
-                                binding.apply {
-                                    if (loader.visibility == View.VISIBLE) {
-                                        loader.visibility = View.GONE
-                                        main.visibility = View.VISIBLE
-                                    }
-                                }
-                            }
-                        }
-                    }
+                               if(kseIndices.lOWINDEX.toDouble().minus(kseIndices.preClose)<0.0){
+                                   lowView.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                                           "${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
+                               }else{
+                                   lowView.text = "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?:0.0)} +${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0)?:0.0)} " +
+                                           "+${Utils.formatDouble((kseIndices?.lOWINDEX?.toDouble()?.minus(kseIndices?.preClose?:0.0))?.div(kseIndices?.preClose?:1.0)?.times(100)?:0.0)}%"
+                               }
 
 
-                }
-            }
-        })
+
+                           }else{
+                               binding.cardHome.apply {
+                                   tradeValueView.text = "0.0"
+                                   volumeChip.text="0.0"
+                                   netChangeChip.setText("0.0 0.0%","0.0")
+                                   highView.text = "H: 0.0 0.0 0.0%"
+                                   lowView.text = "L: 0.0 0.0 0.0%"
+                               }
+                           }
+
+                       }
+                   }catch (e:Exception){
+                       e.printStackTrace()
+                   }
+               }
+           })
+
+           viewModel.mutableIndices.observe(viewLifecycleOwner, Observer {result->
+               when(result){
+                   is Resource.Error -> {}
+                   is Resource.Loading -> {}
+                   is Resource.Success -> {
+                       entries=result.data?: emptyList()
+                       if(!entries.isNullOrEmpty()){
+                           if(homeViewModel.selectedIndex.value==null){
+
+                               homeViewModel.setSelectedIndex(result.data?.first {
+                                   it.iNDEXCODE.contains("kse 100",true)
+                               }?: emptyList<KSEIndices>().first())
+                               homeViewModel.setSelectedCandle()
+
+//                        homeViewModel.fetchChart()
+                           }else{
+                               homeViewModel.setSelectedIndex(result.data?.first {
+                                   it.iNDEXCODE.replace("Index","").replace("Share","").contains(binding.cardHome.kmiallshr.text,true)
+                               }?: emptyList<KSEIndices>().first())
+                           }
+                       }
+
+                   }
+               }
+           })
+
+
+
+           homeViewModel.chartItem.observe(viewLifecycleOwner, Observer {result->
+               when(result){
+                   is Resource.Error -> {}
+                   is Resource.Loading -> {}
+                   is Resource.Success -> {
+                       var interval=0
+                       if(!result.data.isNullOrEmpty()){
+
+                           if(homeViewModel.isCandleSelected.value==true){
+                               var candleEntry:ArrayList<CandleEntry>?= ArrayList()
+                               result.data?.reversed()?.forEachIndexed { index, it ->
+                                   candleEntry?.add(
+                                       CandleEntry(index.toFloat(), it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat()))
+                               }
+
+                               binding.cardHome.candlestickChart.setCandleData(candleEntry?: emptyList())
+
+                           }else{
+
+                               binding.cardHome.lineChart.setEntries(result.data?.reversed()?.map {
+                                   interval+=1
+                                   Entry(interval.toFloat(),it.tradingHigh.toFloat())
+                               },false,true)
+
+                           }
+                       }
+                   }
+               }
+           })
+           viewModel.mutableAllData.observe(viewLifecycleOwner, Observer { result->
+
+               when(result){
+                   is Resource.Error -> {
+
+                   }
+                   is Resource.Loading -> {
+
+                   }
+                   is Resource.Success -> {
+                       val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
+
+                       lifecycleScope.launch {
+                           if (!result.data.isNullOrEmpty()) {
+                               val items = withContext(Dispatchers.Default) {
+                                   val data = result.data
+                                   val topPickSymbolSet = topPicks.map { it.sCSImpItemSymbol }.toSet()
+
+                                   val leadersDeferred = async {
+                                       val start = System.currentTimeMillis()
+                                       val result = data?.sortedByDescending { it.v }?.take(10)?.map { ListItem.Item(it) }
+                                       Log.d("SortTime", "Leaders computed in ${System.currentTimeMillis() - start} ms")
+                                       result
+                                   }
+
+                                   val gainersDeferred = async {
+                                       val start = System.currentTimeMillis()
+                                       val result = data?.sortedByDescending { it.cHP }?.take(10)?.map { ListItem.Item(it) }
+                                       Log.d("SortTime", "Gainers computed in ${System.currentTimeMillis() - start} ms")
+                                       result
+                                   }
+
+                                   val losersDeferred = async {
+                                       val start = System.currentTimeMillis()
+                                       val result = data?.sortedBy { it.cHP }?.take(10)?.map { ListItem.Item(it) }
+                                       Log.d("SortTime", "Losers computed in ${System.currentTimeMillis() - start} ms")
+                                       result
+                                   }
+
+                                   val scsItems = data?.mapNotNull { item ->
+                                       val start = System.currentTimeMillis()
+                                       if (item.sYM in topPickSymbolSet) {
+                                           val listItem = ListItem.Item(item)
+                                           Log.d("RowTime", "Matched ${item.sYM} in ${System.currentTimeMillis() - start} ms")
+                                           listItem
+                                       } else {
+                                           Log.d("RowTime", "Skipped ${item.sYM} in ${System.currentTimeMillis() - start} ms")
+                                           null
+                                       }
+                                   }
+
+                                   val totalStart = System.currentTimeMillis()
+                                   val finalList = buildList {
+                                       add(ListItem.Header("Leaders"))
+                                       leadersDeferred.await()?.let { addAll(it) }
+
+                                       if (scsItems?.isNotEmpty()?:true) {
+                                           add(ListItem.Header("SCS Top Picks"))
+                                           scsItems?.let { addAll(it) }
+                                       }
+
+                                       add(ListItem.Header("Gainers"))
+                                       gainersDeferred.await()?.let { addAll(it) }
+
+                                       add(ListItem.Header("Losers"))
+                                       losersDeferred.await()?.let { addAll(it) }
+                                   }
+                                   Log.d("TotalTime", "Built full list in ${System.currentTimeMillis() - totalStart} ms")
+
+                                   finalList
+                               }
+
+                               (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
+                                   binding.apply {
+                                       loader.visibility = View.GONE
+                                       main.visibility = View.VISIBLE
+                                   }
+                               }
+                           }
+                       }
+
+
+                   }
+               }
+           })
+       }
     }
 
     private fun showPopup(view: View) {

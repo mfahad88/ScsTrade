@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
+import com.example.scstrade.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -71,7 +73,7 @@ public class IndexVsStockChartView extends ConstraintLayout {
         legend.setEnabled(true);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setTextColor(Color.BLACK);
+        legend.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
         legend.setTextSize(12f);
     }
 
@@ -90,13 +92,14 @@ public class IndexVsStockChartView extends ConstraintLayout {
         }
 
         LineDataSet indexDataSet = new LineDataSet(indexEntries, indexLabel);
-        indexDataSet.setColor(Color.BLACK);
+        indexDataSet.setColor(ContextCompat.getColor(getContext(), R.color.black));
         indexDataSet.setDrawCircles(false);
         indexDataSet.setLineWidth(2f);
         indexDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         indexDataSet.setDrawValues(false);
 
         LineDataSet stockDataSet = new LineDataSet(stockEntries, stockLabel);
+        stockDataSet.setValueTextColor(ContextCompat.getColor(getContext(),R.color.black));
         stockDataSet.setColor(Color.parseColor("#84C5FF"));
         stockDataSet.setDrawCircles(false);
         stockDataSet.setLineWidth(2f);
@@ -106,6 +109,7 @@ public class IndexVsStockChartView extends ConstraintLayout {
         // Dynamic granularity for X-axis
         float granularity = (float) Math.max(1, xLabels.size() / 6);
         XAxis xAxis = chart.getXAxis();
+        xAxis.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
         xAxis.setGranularity(granularity);
         xAxis.setGranularityEnabled(true);
