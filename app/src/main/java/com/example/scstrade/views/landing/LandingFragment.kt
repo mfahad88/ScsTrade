@@ -201,7 +201,7 @@ class LandingFragment : Fragment() {
             .setMessage("Are you sure you want to exit?")
             .setPositiveButton("Yes") { _, _ ->
                 (requireActivity().application as MyApp).appScope.cancel()
-                requireActivity().finish()
+                requireActivity().finishAffinity()
 
             } // 🚪 Close the app
             .setNegativeButton("No") { dialog, _ -> dialog.dismiss() } // ❌ Dismiss

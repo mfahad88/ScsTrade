@@ -268,30 +268,36 @@ class TechnicalFragment : Fragment() {
                         entries.forEachIndexed { index, it ->
                             val childBinding = ItemKeyValueBinding.inflate(layoutInflater)
 
-                            Log.e("Pair", "${it.key}: ${it.value.asString}")
                             childBinding.key.text = when {
                                 it.key.contains(Regex("""Simple\s+Mov\w+\s+Average""", RegexOption.IGNORE_CASE)) -> {
                                     // Extract number (e.g., 10, 20, 200) from the key
                                     val number = Regex("""\d+""").find(it.key)?.value ?: ""
                                     "SMA $number"
                                 }
+
                                 else -> {
                                     if(it.key.equals("macd daily",true)){
                                         macd = it.key
                                     }
-                                    it.key // fallback to original
+
+                                    if(it.key.equals("next signal",true)){
+                                        if(macd.equals("buy",true)){
+                                            "Sell When Price Closes Below"
+                                        }else{
+                                            "Buy When Price Closes Above"
+                                        }
+                                    }else {
+                                        if(it.key.equals("current signal",true)){
+                                            childBinding.tradingSignal.visibility = View.VISIBLE
+                                        }
+                                        it.key
+
+                                    }
                                 }
                             }
                             childBinding.value.text = try {
-                                if(it.key.equals("next signal",true)){
-                                    if(macd.equals("buy")){
-                                          "Sell When Price Closes Below ${Utils.roundTwoDecimal(it.value.asString.toDouble())}"
-                                    }else{
-                                        "Buy When Price Closes Above ${Utils.roundTwoDecimal(it.value.asString.toDouble())}"
-                                    }
-                                }else {
-                                    Utils.roundTwoDecimal(it.value.asString.toDouble())
-                                }
+
+                                Utils.roundTwoDecimal(it.value.asString.toDouble())
                             } catch (e: NumberFormatException) {
                                 if(it.value.asString.matches(Regex("""\d{1,4}[-/]\d{1,2}[-/]\d{1,4}"""))){
                                     Utils.formatDateString(
@@ -309,6 +315,7 @@ class TechnicalFragment : Fragment() {
                             if (index == entries.size - 1) {
                                 childBinding.divider.visibility = View.GONE
                             }else if (childBinding.key.text.toString().equals("SMA 200",true) ) {
+
                                 val layoutParams = childBinding.divider.layoutParams
                                 layoutParams.height = (4 * resources.displayMetrics.density).toInt() // 2dp to px
                                 childBinding.divider.layoutParams = layoutParams
