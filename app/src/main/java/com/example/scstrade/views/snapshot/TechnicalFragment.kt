@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -23,7 +22,9 @@ import com.example.scstrade.views.MyApp
 import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import java.util.Locale
-
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import android.view.ViewGroup
 
 class TechnicalFragment : Fragment() {
    lateinit var binding: FragmentTechnicalBinding
@@ -71,6 +72,20 @@ class TechnicalFragment : Fragment() {
             }
         }
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
+            val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            val fabHeight = (requireActivity() as SnapshotActivity).binding.floatingActionButton.height
+            val marginBottom = ((requireActivity() as SnapshotActivity).binding.floatingActionButton.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin
+
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                 fabHeight + marginBottom
+            )
+            insets
+        }
 
         if(!sharedViewModel.mutableAllData.value?.data.isNullOrEmpty()) {
             val icon = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals((requireActivity() as SnapshotActivity).symbol) }?.map { it.companyLogo }?.first()
@@ -277,7 +292,7 @@ class TechnicalFragment : Fragment() {
 
                                 else -> {
                                     if(it.key.equals("macd daily",true)){
-                                        macd = it.key
+                                        macd = it.value.asString
                                     }
 
                                     if(it.key.equals("next signal",true)){

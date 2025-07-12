@@ -53,7 +53,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 
 class SnapshotActivity : BaseActivity() {
-    private lateinit var binding: ActivitySnapshotBinding
+    public lateinit var binding: ActivitySnapshotBinding
     private lateinit var sharedViewModel: SharedViewModel
     lateinit var snapshotViewModel: SnapshotViewModel
     lateinit var watchListViewModel: WatchListViewModel
@@ -94,6 +94,7 @@ class SnapshotActivity : BaseActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+
         binding.tabLayout.getTabAt(0)?.select()
         loadFragment(OverviewFragment())
 
