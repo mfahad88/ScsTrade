@@ -64,6 +64,7 @@ class MyApp : Application() {
             fetchIndices()
             fetchAllData()
         }*/
+
         appScope.launch {
             while(isActive) {
                 viewModel.fetchIndices()

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -51,11 +52,11 @@ class HomeFragment : Fragment() {
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         Utils.startFrameTimeMonitoring()
-
+        Toast.makeText(requireContext(),Utils.getScreenDPI(requireContext()).toString(),Toast.LENGTH_SHORT).show()
         setupUI()
         setupRecyclerView()
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(700)
+            delay(900)
             observeLiveData()
         }
 

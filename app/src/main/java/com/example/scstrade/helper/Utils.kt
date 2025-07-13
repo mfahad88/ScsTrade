@@ -122,6 +122,10 @@ class Utils {
             }*/
         }
 
+        fun getScreenDPI(context: Context): Int {
+            val metrics: DisplayMetrics = context.resources.displayMetrics
+            return metrics.densityDpi
+        }
         fun startFrameTimeMonitoring() {
             val choreographer = android.view.Choreographer.getInstance()
             val frameCallback = object : android.view.Choreographer.FrameCallback {
