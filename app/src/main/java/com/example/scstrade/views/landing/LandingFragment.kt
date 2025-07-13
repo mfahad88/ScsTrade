@@ -74,6 +74,7 @@ class LandingFragment : Fragment() {
         binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         binding.aof.setOnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.END)
 //            Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
             startActivity(Intent(requireContext(),AofActivity::class.java))
         }
@@ -122,6 +123,7 @@ class LandingFragment : Fragment() {
             updateMarket(it)
         })*/
         binding.globalMarket.setOnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.END)
             startActivity(Intent(requireContext(),GlobalMarketActivity::class.java))
         }
         
@@ -264,6 +266,7 @@ class LandingFragment : Fragment() {
         }
         binding.sideMenu.apply {
             adapter= SideMenuAdapter(list){ keyDescValue ->
+
                 System.out.println("Clicked: ${keyDescValue.toString()}")
                 if(keyDescValue.key?.equals("psx market",true)?:false){
                     binding.bottomNavigationView.selectedItemId = R.id.marketFragment
@@ -302,18 +305,22 @@ class LandingFragment : Fragment() {
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
 
                 }else if(keyDescValue.key?.equals("fundamental",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(),FundamentalActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("detailed quote",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(),DetailQuoteActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("announcements",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(),AnnoucementActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("My Portfolio",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(), PortfolioActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)

@@ -53,7 +53,13 @@
             android:layout_height="wrap_content"
             android:text="@string/bonds" />
     </com.google.android.material.tabs.TabLayout>
-
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/md_theme_primary"
+         />
     <!--<FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -63,7 +69,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-
+        android:visibility="gone"
+        android:fadingEdgeLength="@dimen/dp_50"
+        android:fadingEdge="vertical"
+        android:paddingVertical="@dimen/dp_15"
+        android:paddingHorizontal="@dimen/dp_15"
         tools:listitem="@layout/item_stocks"/>
 
 </LinearLayout>

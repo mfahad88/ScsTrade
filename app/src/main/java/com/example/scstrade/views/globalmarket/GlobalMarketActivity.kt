@@ -3,6 +3,7 @@ import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -69,6 +70,7 @@ class GlobalMarketActivity : AppCompatActivity() {
         marketViewModel.mutableIndices.observe(this) { result ->
             when (result) {
                 is Resource.Success -> {
+
                     globalData = result.data
                     filterBySelectedTab()
                 }
@@ -93,7 +95,10 @@ class GlobalMarketActivity : AppCompatActivity() {
             5 -> data.filter { it.worldMarketType.equals("Bonds", true) }
             else -> emptyList<GlobalMarketItem>()
         }
-        (binding.recyclerView.adapter as GlobalStockAdapter).submitList(filtered)
+        (binding.recyclerView.adapter as GlobalStockAdapter).submitList(filtered){
+            binding.loader.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }
     }
 
 
