@@ -6,11 +6,13 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.ViewTreeObserver
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.core.view.ViewCompat
@@ -22,6 +24,7 @@ import com.example.scstrade.databinding.FragmentSplashBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
@@ -32,7 +35,23 @@ import kotlinx.coroutines.launch
 
 
 class SplashFragment : Fragment() {
+    private var hasLoggedStartupTime = false
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                if (!hasLoggedStartupTime) {
+                    hasLoggedStartupTime = true
+                    view.viewTreeObserver.removeOnPreDrawListener(this)
+                    val now = System.currentTimeMillis()
+                    val duration = now - MyApp.appStartTime
+                    Log.d("StartupTime", "App cold start completed in $duration ms")
+                }
+                return true
+            }
+        })
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -38,14 +38,17 @@ class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     lateinit var login: LoginDataItem
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-
+    companion object {
+        var appStartTime: Long = 0L
+    }
     public val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun onCreate() {
         super.onCreate()
         getSha1Fingerprint()
         FirebaseApp.initializeApp(this)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-
+        appStartTime = System.currentTimeMillis()
+        Log.d("StartupTime", "App onCreate: ${appStartTime}")
 
         if(!Utils.getSharedPreference(this, AppConstants.LIGHT_MODE)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
