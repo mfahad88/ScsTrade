@@ -200,6 +200,7 @@ class AddSymbolActivity : BaseActivity() {
 
                 }
                 sharedViewModel.mutableAllData.removeObserver(this)
+                binding.loader.visibility = View.GONE
             }
 
         })

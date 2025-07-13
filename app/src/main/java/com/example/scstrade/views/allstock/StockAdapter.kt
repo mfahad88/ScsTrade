@@ -62,10 +62,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                 binding.volume.text = "Vol: ${Utils.convertToMillions(stockItem.v.toDouble())}"
 
 
-                binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
-                binding.bid.text = "Bid: ${stockItem.bP}"
-                binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
-                binding.ask.text = "Ask: ${stockItem.aP}"
+
 
 
 
@@ -106,14 +103,18 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
                 binding.high.text = "H: ${Utils.formatDouble(stockItem.hP)}"
                 binding.low.text = "L: ${Utils.formatDouble(stockItem.lP)}"
-                binding.high52.text = if(!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"
-                binding.low52.text = if(!TextUtils.isEmpty(stockItem.low52)) stockItem.high52 else "0.0"
+
 
 
 
             }
-            if(isMore){
-
+           /* if(isMore){
+           binding.bidVol.text = "Bid Vol: ${Utils.convertToMillions(stockItem.bV.toDouble())}"
+                binding.bid.text = "Bid: ${stockItem.bP}"
+                binding.askVol.text = "Ask Vol: ${Utils.convertToMillions(stockItem.aV.toDouble())}"
+                binding.ask.text = "Ask: ${stockItem.aP}"
+                binding.high52.text = if(!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"
+                binding.low52.text = if(!TextUtils.isEmpty(stockItem.low52)) stockItem.high52 else "0.0"
                 binding.apply {
                     binding.layoutMore.visibility=View.VISIBLE
                     binding.moreDetail.setOnClickListener {
@@ -126,7 +127,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                         }
                     }
                 }
-            }
+            }*/
         }
 
 

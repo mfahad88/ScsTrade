@@ -122,6 +122,26 @@ class Utils {
             }*/
         }
 
+        fun startFrameTimeMonitoring() {
+            val choreographer = android.view.Choreographer.getInstance()
+            val frameCallback = object : android.view.Choreographer.FrameCallback {
+                private var lastFrameTimeNanos = 0L
+
+                override fun doFrame(frameTimeNanos: Long) {
+                    if (lastFrameTimeNanos != 0L) {
+                        val frameDurationMillis = (frameTimeNanos - lastFrameTimeNanos) / 1_000_000
+                        if (frameDurationMillis > 16) { // >16ms means dropped frame
+                            Log.w("FrameTimeMonitor", "⚠️ Frame took $frameDurationMillis ms")
+                        }
+                    }
+                    lastFrameTimeNanos = frameTimeNanos
+                    choreographer.postFrameCallback(this)
+                }
+            }
+
+            choreographer.postFrameCallback(frameCallback)
+        }
+
         fun roundPercent(value:Double?,ignoreDecimal:Boolean=false): String {
             return try {
                 if (value == null) return "0.0"

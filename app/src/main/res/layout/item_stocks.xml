@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<com.google.android.material.card.MaterialCardView
+    <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/dp_10"
-    app:strokeWidth="@dimen/dp_0">
-
+    android:background="@color/white"
+    android:orientation="horizontal">
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+
         android:paddingBottom="@dimen/dp_8"
         android:background="@drawable/stock_card">
 
@@ -185,7 +187,7 @@
             app:layout_constraintEnd_toStartOf="@+id/high"
             app:layout_constraintTop_toTopOf="@+id/volume" />
 
-        <RelativeLayout
+       <!-- <RelativeLayout
             android:id="@+id/layout_more"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
@@ -373,7 +375,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/high_52" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--<LinearLayout
+            &lt;!&ndash;<LinearLayout
                 android:id="@+id/layout_details"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
@@ -519,10 +521,10 @@
 
 
 
-            </LinearLayout>-->
-        </RelativeLayout>
+            </LinearLayout>&ndash;&gt;
+        </RelativeLayout>-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
