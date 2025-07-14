@@ -133,8 +133,64 @@
 
                     </RelativeLayout>
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_60"
+                        app:cardBackgroundColor="@color/white"
+                        android:id="@+id/aof"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_below="@id/globalMarket"
+                        android:layout_alignStart="@id/sideMenu"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <ImageView
+                            <TextView
+                                android:id="@+id/a_circle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/building_bl"
+                                android:text="A"
+                                android:textColor="@color/md_theme_onPrimary"
+                                android:textSize="18sp"
+                                android:textFontWeight="700"
+                                android:gravity="center"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_centerVertical="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Open Your Account"
+                                android:gravity="center_vertical"
+                                android:layout_toRightOf="@id/a_circle"
+                                android:layout_alignTop="@id/a_circle"
+                                android:layout_alignBottom="@id/a_circle"
+                                android:textFontWeight="500"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:textAppearance="@style/contact_sup"
+                                />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/dp_5"
+                                android:padding="@dimen/dp_10"
+                                app:srcCompat="@drawable/baseline_play_arrow_24" />
+
+
+                        </RelativeLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+                    <!--<ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
@@ -143,7 +199,7 @@
                         android:layout_marginEnd="@dimen/dp_10"
                         android:layout_alignStart="@id/sideMenu"
                         app:srcCompat="@drawable/open_account"
-                        android:layout_below="@id/globalMarket"/>
+                        android:layout_below="@id/globalMarket"/>-->
 
 
                     <com.google.android.material.card.MaterialCardView
@@ -151,7 +207,6 @@
                         android:layout_height="@dimen/dp_60"
                         app:cardBackgroundColor="@color/white"
                         android:id="@+id/contact"
-                        android:layout_marginEnd="@dimen/dp_7"
                         android:layout_below="@id/aof"
                         android:layout_alignStart="@id/aof"
                         android:layout_alignEnd="@id/aof">
@@ -211,7 +266,6 @@
                         app:cardBackgroundColor="@color/white"
                         android:id="@+id/profile"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginEnd="@dimen/dp_7"
                         android:layout_below="@id/contact"
                         android:layout_alignStart="@id/aof"
                         android:layout_alignEnd="@id/aof">

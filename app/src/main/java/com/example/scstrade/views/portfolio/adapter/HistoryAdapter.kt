@@ -45,6 +45,8 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
             binding.pLOnSellValue.text = "${Utils.roundTwoDecimal((item.salAmount.toDouble() - item.purAmount.toDouble()))}(${Utils.roundTwoDecimal(((item.salAmount.toDouble() - item.purAmount.toDouble()).div(item.salAmount.toDouble())).times(100))}%)"
             binding.pLOnSellValue.setTextColor(if(binding.pLOnSellValue.text.contains("-")) ContextCompat.getColor(binding.root.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(binding.root.context, R.color.md_theme_primary))
             binding.root.setOnClickListener { onItemClick(item) }
+
+
         }
     }
 

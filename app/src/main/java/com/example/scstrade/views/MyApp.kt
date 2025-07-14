@@ -6,8 +6,10 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.helper.AppConstants
@@ -44,6 +46,9 @@ class MyApp : Application() {
     public val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun onCreate() {
         super.onCreate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
         getSha1Fingerprint()
         FirebaseApp.initializeApp(this)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)

@@ -674,7 +674,12 @@
                            android:layout_height="match_parent"
                            android:layout_marginTop="@dimen/dp_4"
                            android:visibility="gone" />
-
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:padding="@dimen/dp_10"
+                           android:id="@+id/zoom"
+                           android:src="@drawable/zoom_out"/>
 
                    </FrameLayout>
 

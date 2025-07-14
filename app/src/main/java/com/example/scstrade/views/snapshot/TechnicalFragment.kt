@@ -1,4 +1,6 @@
 package com.example.scstrade.views.snapshot
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import androidx.compose.ui.res.dimensionResource
 
 import android.icu.text.SimpleDateFormat
@@ -26,6 +28,12 @@ import java.util.Locale
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.view.ViewGroup
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.example.scstrade.views.ChartActivity
+import com.example.scstrade.views.widgets.TextDrawable
 
 class TechnicalFragment : Fragment() {
    lateinit var binding: FragmentTechnicalBinding
@@ -41,6 +49,11 @@ class TechnicalFragment : Fragment() {
         sharedViewModel.snapTechnical((requireActivity() as SnapshotActivity).symbol)
         toggleLineChart(binding.candle)
         binding.apply {
+            zoom.setOnClickListener {
+                val intent = Intent(requireContext(), ChartActivity::class.java)
+                intent.putExtra("Indices",(requireActivity() as SnapshotActivity).symbol)
+                startActivity(intent)
+            }
             line.setOnClickListener {
                 toggleLineChart(it)
             }
@@ -89,8 +102,42 @@ class TechnicalFragment : Fragment() {
         }
 
         if(!sharedViewModel.mutableAllData.value?.data.isNullOrEmpty()) {
+            val firstChar = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals((requireActivity() as SnapshotActivity).symbol) }?.first()?.sYM?.first()?.uppercaseChar().toString()
+            val color = Utils.getColorFromSymbol(firstChar)
+            val placeholderDrawable = TextDrawable(firstChar, color)
             val icon = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals((requireActivity() as SnapshotActivity).symbol) }?.map { it.companyLogo }?.first()
-            Glide.with(binding.root.context).load(icon).circleCrop().into(binding.imageView16)
+            Glide.with(binding.root.context).load(icon)
+                .placeholder(placeholderDrawable)
+                .circleCrop()
+                .listener(object : RequestListener<Drawable> {
+
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imageView16.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imageView16.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+
+                })
+                .into(binding.imageView16)
+            /*val icon = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals((requireActivity() as SnapshotActivity).symbol) }?.map { it.companyLogo }?.first()
+            Glide.with(binding.root.context).load(icon).circleCrop().into(binding.imageView16)*/
         }
 
         sharedViewModel.mutableOverview.observe(viewLifecycleOwner, Observer { result->
@@ -277,7 +324,7 @@ class TechnicalFragment : Fragment() {
                     if (data != null && !data.isJsonNull) {
                         val obj = data.asJsonArray[0].asJsonObject
                         val excludeKeys = setOf("sector_name","company_code", "company_name", "company_id","Beta","1 Month Performance","3 Month Performance","6 Month Performance","1 Year Performance",
-                            "52 Week High","52 Week Low")
+                            "52 Week High","52 Week Low","52 Week Volume")
 
                         val entries = obj.entrySet().filterNot { it.key in excludeKeys }
 

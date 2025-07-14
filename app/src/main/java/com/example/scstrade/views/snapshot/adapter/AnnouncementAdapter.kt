@@ -71,8 +71,8 @@ class AnnouncementAdapter(
             boardMeeti.text = item.discription ?: ""
 
             // Control tags visibility based on announcement type
-            boardMeetings.setCardBackgroundColor(getTypeBackgroundColor(binding.root.context,item.discription))
-            labelText.setTextColor(getTypeFontColor(binding.root.context,item.discription))
+            boardMeetings.setCardBackgroundColor(getTypeBackgroundColor(binding.root.context,item.announcementType))
+            labelText.setTextColor(getTypeFontColor(binding.root.context,item.announcementType))
 
             labelText.text = item.announcementType
             // Handle click actions
@@ -97,6 +97,43 @@ class AnnouncementAdapter(
 
             // Kotlin reflection gives us all properties
             AnnouncementDataItem::class.memberProperties.forEach { prop ->
+                if (prop.name !in staticKeys) {
+                    val rawValue = prop.get(item)
+
+                    val valueStr = when {
+                        rawValue == null -> ""
+                        rawValue.toString().equals("null", ignoreCase = true) -> ""
+                        prop.name.contains("date", ignoreCase = true) -> formatDotNetDate(rawValue.toString())
+                        rawValue is String -> rawValue.trim()
+                        rawValue is Number -> rawValue.toString()
+                        else -> rawValue.toString().trim()
+                    }
+
+                    if (valueStr.isNotEmpty()) {
+                        val row = LinearLayout(root.context).apply {
+                            orientation = LinearLayout.HORIZONTAL
+                        }
+
+                        val keyTv = TextView(ContextThemeWrapper(root.context, R.style.engineering)).apply {
+                            text =  prop.name
+                                .replace("_", " ")
+                                .replace(Regex("(?<=[a-z])(?=[A-Z])"), " ")
+                                .replaceFirstChar { it.uppercaseChar() } + ": "
+                            setTypeface(typeface, Typeface.BOLD)
+                        }
+
+                        val valueTv = TextView(root.context).apply {
+                            text = valueStr
+                        }
+
+                        row.addView(keyTv)
+                        row.addView(valueTv)
+                        linearDetail.addView(row)
+                    }
+                }
+            }
+
+            /*AnnouncementDataItem::class.memberProperties.forEach { prop ->
                 if (prop.name !in staticKeys) {
                     val rawValue = prop.get(item)
                     val valueStr = when {
@@ -130,7 +167,7 @@ class AnnouncementAdapter(
                         linearDetail.addView(row)
                     }
                 }
-            }
+            }*/
         }
     }
 

@@ -26,6 +26,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
     val mutableWatchListItem=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableWatchListDetail=MutableLiveData<Resource<List<StockItem>>>()
     val mutableWatchListDetailItem=MutableLiveData<List<WatchListDetailItem>>()
+    var isFetchingWatchListDetailItem=true
     fun createWatchList(name:String, userId:Int){
         viewModelScope.launch {
             mutableCreate.value=Resource.Loading()
@@ -86,9 +87,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
         mutableWatchListDetail.value = Resource.Loading()
         viewModelScope.launch(Dispatchers.IO) {
 
-
-
-            while (true){
+            while (isFetchingWatchListDetailItem){
                 try{
                     val watchList=repository.getWatchListDetail(watchListId).data?.sortedBy { it.watchListPosition }
                     withContext(Dispatchers.Main){
@@ -139,6 +138,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
     fun watchListSort(watchListDetailID:Int, newPosition:Int, oldPosition:Int, watchListId:Int){
 
         viewModelScope.launch (Dispatchers.IO){
+//            isFetchingWatchListDetailItem=true
             val result = repository.watchListSort(watchListDetailID, newPosition, oldPosition, watchListId)
             withContext(Dispatchers.Main){
                 mutableWatchListDetailItem.value = result.data?: emptyList()

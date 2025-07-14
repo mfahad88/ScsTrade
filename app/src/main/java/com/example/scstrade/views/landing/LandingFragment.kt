@@ -248,6 +248,7 @@ class LandingFragment : Fragment() {
             KeyDescValue("PSX Market",null,R.drawable.side_psx_market),
             KeyDescValue("Watchlist",null,R.drawable.side_watchlist),
             KeyDescValue("News",null,R.drawable.side_news),
+            KeyDescValue("Announcements",null,R.drawable.announcements),
             KeyDescValue("Detailed Quote",null,R.drawable.side_detail_quote),
             KeyDescValue("Fundamental",null,R.drawable.side_fundamental),
             KeyDescValue("Technical",null,R.drawable.side_technical),

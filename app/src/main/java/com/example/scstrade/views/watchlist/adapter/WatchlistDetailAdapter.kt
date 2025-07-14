@@ -1,4 +1,5 @@
 package com.example.scstrade.views.watchlist.adapter
+import android.app.Activity
 import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
@@ -21,11 +22,12 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
+import com.example.scstrade.views.watchlist.WatchListDetailActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.Collections
 
-class WatchListDetailAdapter(var list:MutableList<StockItem>, val onItemClick: (StockItem) -> Unit, val onItemMove:(symbol:String,fromPosition:Int,toPosition:Int) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
+class WatchListDetailAdapter(val activity: Activity,var list:MutableList<StockItem>, val onItemClick: (StockItem) -> Unit, val onItemMove:(symbol:String, fromPosition:Int, toPosition:Int) -> Unit) : RecyclerView.Adapter<WatchListDetailAdapter.WatchListDetailViewHolder>() {
     private val previousPrices = mutableMapOf<String, Double>()
     private val previousAsk = mutableMapOf<String, Double>()
     private val previousAskVol = mutableMapOf<String, Double>()
@@ -240,7 +242,7 @@ class WatchListDetailAdapter(var list:MutableList<StockItem>, val onItemClick: (
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 fromPosition = if (fromPosition == -1) viewHolder.adapterPosition else fromPosition
                 toPosition = target.adapterPosition
-
+                (activity as WatchListDetailActivity).viewModel.isFetchingWatchListDetailItem=false
                 swapItems(viewHolder.itemView.context, viewHolder.adapterPosition, target.adapterPosition)
                 return true
             }

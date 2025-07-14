@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.fragments
+import android.content.Intent
 import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
@@ -32,13 +33,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentHistoryBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.portfolio.DividendItem
+import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.portfolio.activities.BuySellActivity
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
 import com.example.scstrade.views.portfolio.adapter.HistoryAdapter
+import com.example.scstrade.views.portfolio.adapter.HoldingAdapter
+import kotlin.math.roundToInt
 
 
 /**
@@ -109,9 +115,15 @@ class HistoryFragment : Fragment() {
                             val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
                             val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
                             val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
+                            val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
+                            val historPL=(soldValue).minus(totalPurchase)
                             binding.profitBookValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
                                 if((it.salAmount.toDouble() - it.purAmount.toDouble())>0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
                             )
+
+                            binding.netPLOnValue.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
+                                Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
+                            }%)"
                             binding.lossBookedValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
                                 if((it.salAmount.toDouble() - it.purAmount.toDouble())<0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
                             )
@@ -122,10 +134,8 @@ class HistoryFragment : Fragment() {
 
                             val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
                             if(totalPurchase!=null && totalPurchase>0.0) {
-                                binding.historicalValue.text =
-                                    "${Utils.roundTwoDecimal(historicalGain)} (${
-                                        (historicalGain.div(totalPurchase)).times(100)
-                                    }%)"
+                                binding.historicalValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                                    it.salAmount.toDouble()})
                             }else{
                                 binding.historicalValue.text = "0.0 (0.0%)"
                             }
@@ -156,6 +166,47 @@ class HistoryFragment : Fragment() {
 
                     }catch (e:Exception){
                         e.printStackTrace()
+                    }
+                }
+            }
+
+        })
+
+
+        sharedViewModel.mutablePortfolioDetails.observe(viewLifecycleOwner, Observer {result->
+
+            when(result){
+                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    binding.recyclerView.apply {
+
+                        val shares=result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { it.portfolioQuantity.toDouble() }?.sumOf { it }
+                        val purchaseCost= result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { (it.portfolioRate.times(it.portfolioQuantity.toDouble())) }?.sumOf { it }
+                        val avgBuyPrice = purchaseCost?.div(shares?:0.0)
+                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
+                        val currentMarketValue = currentPrice?.times(shares?:0.0)
+
+                        val daysPercentPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cHP }?.first()
+                        val totalPL= currentMarketValue?.minus(purchaseCost?:0.0)
+                        val totalPercentPL= (totalPL?.div(purchaseCost?:0.0))?.times(100)
+                        val fifo=sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(stockDetailActivity.symbol) }?.first()
+                        val daysPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cH }?.first()?.times(fifo?.quantity?.toDouble()?:0.0)
+
+                        val list= mutableListOf<PortfolioItemDetail>()
+
+                        result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.forEach {
+                            list.add(
+                                PortfolioItemDetail(it.portfolioDate,it.portfolioQuantity.toString(),it.portfolioRate.toString(),(currentPrice!!.minus(it.portfolioRate)).times(it.portfolioQuantity.toDouble()),
+                                ((currentPrice.times(it.portfolioQuantity.toInt()).minus(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).div(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).times(100)
+                                ,null)
+                            )
+                        }
+
+
+                        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                     }
                 }
             }

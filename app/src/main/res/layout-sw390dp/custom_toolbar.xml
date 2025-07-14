@@ -128,9 +128,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="www.scstrade.com"
+                android:text="@string/www_scstrade_com"
                 android:letterSpacing="0.05"
-                android:textAppearance="@style/closed"
+                android:textAppearance="@style/www_scstrade_com"
                 app:layout_constraintBottom_toBottomOf="@+id/dateTimeText"
                 app:layout_constraintStart_toStartOf="@+id/logo"
                 app:layout_constraintTop_toTopOf="@+id/dateTimeText" />

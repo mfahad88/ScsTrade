@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityWatchListDetailBinding
@@ -32,6 +33,7 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.watchlist.adapter.WatchListDetailAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 
 class WatchListDetailActivity : BaseActivity() {
     lateinit var viewModel: WatchListViewModel
@@ -140,7 +142,7 @@ class WatchListDetailActivity : BaseActivity() {
         binding.recyclerView.apply {
             layoutManager= LinearLayoutManager(this@WatchListDetailActivity, LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(20.dp))
-            adapter= WatchListDetailAdapter( mutableListOf(), onItemClick = { item->
+            adapter= WatchListDetailAdapter(this@WatchListDetailActivity, mutableListOf(), onItemClick = { item->
 
                 val stockItem=list.filter { it.watchListSymbol.equals(item.sYM,true) }.first()
                 viewModel.deleteSymbol(stockItem.watchListDetailID,WatchListMainID?:0)
@@ -149,6 +151,8 @@ class WatchListDetailActivity : BaseActivity() {
                 val watchListItem=list.filter { it.watchListSymbol.equals(sym,true) }.first()
                 Log.e("Swap","${sym} From:${from} To:${to}")
                 viewModel.watchListSort(watchListItem.watchListDetailID,to,from,WatchListMainID?:0)
+//                viewModel.isFetchingWatchListDetailItem=true
+//                viewModel.getWatchListDetail(WatchListMainID?:0)
             } )
             (binding.recyclerView.adapter as WatchListDetailAdapter).getItemTouchHelper().attachToRecyclerView(this)
         }

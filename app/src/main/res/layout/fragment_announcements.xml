@@ -28,7 +28,7 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutDate"
-        android:layout_width="@dimen/dp_130"
+        android:layout_width="@dimen/dp_140"
         android:layout_height="@dimen/dp_45"
         android:layout_marginStart="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"

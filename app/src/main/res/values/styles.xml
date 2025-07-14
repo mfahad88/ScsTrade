@@ -1692,4 +1692,11 @@
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
+
+    <style name="www_scstrade_com">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_11</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 </resources>
