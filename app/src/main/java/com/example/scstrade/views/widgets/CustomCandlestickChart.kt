@@ -62,38 +62,86 @@ class CustomCandlestickChart @JvmOverloads constructor(
         this.legend.isEnabled = false
     }
 
-    fun setCandleData(dataList: List<CandleEntry>) {
-        val isDark = Utils.isDarkMode(context)
-        val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
+    fun setCandleData(dataList: List<CandleEntry>?) {
+        // ✅ Null or empty check
+        if (dataList.isNullOrEmpty()) {
+            this.clear()
+            this.invalidate()
+            return
+        }
 
+        val isDark = Utils.isDarkMode(context)
+
+        val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
             color = Color.rgb(80, 80, 80)
-            valueTextColor = if(isDark) Color.WHITE else Color.BLACK
+            valueTextColor = if (isDark) Color.WHITE else Color.BLACK
             shadowColor = Color.DKGRAY
             shadowWidth = 0.7f
-            decreasingColor = ContextCompat.getColor(context,R.color.md_theme_error)
+            decreasingColor = ContextCompat.getColor(context, R.color.md_theme_error)
             decreasingPaintStyle = Paint.Style.FILL
-            increasingColor = ContextCompat.getColor(context,R.color.md_theme_primary)
+            increasingColor = ContextCompat.getColor(context, R.color.md_theme_primary)
             increasingPaintStyle = Paint.Style.FILL
             neutralColor = Color.BLUE
             setDrawValues(false)
         }
+
         this.data = CandleData(candleDataSet)
+
+        // ✅ Chart interaction config
         this.setTouchEnabled(true)
-        this.isDragEnabled=true
+        this.isDragEnabled = true
         this.setScaleEnabled(false)
         this.setPinchZoom(false)
         this.setDoubleTapToZoomEnabled(false)
 
-// Optional: Disable Y-axis scaling independently
+        // ✅ Axis scaling & highlight config
         this.isScaleYEnabled = false
         this.isScaleXEnabled = false
         this.isHighlightPerTapEnabled = false
         this.isHighlightPerDragEnabled = false
 
-// Remove marker (popup with value info)
+        // ✅ Disable marker popup
         this.marker = null
-//        this.setVisibleXRange(10f,30f)
+
+        // Optional visible range if needed
+        // this.setVisibleXRange(10f, 30f)
+
         setupChart()
         this.invalidate()
     }
+
+    /* fun setCandleData(dataList: List<CandleEntry>) {
+         val isDark = Utils.isDarkMode(context)
+         val candleDataSet = CandleDataSet(dataList, "Candlestick Data").apply {
+
+             color = Color.rgb(80, 80, 80)
+             valueTextColor = if(isDark) Color.WHITE else Color.BLACK
+             shadowColor = Color.DKGRAY
+             shadowWidth = 0.7f
+             decreasingColor = ContextCompat.getColor(context,R.color.md_theme_error)
+             decreasingPaintStyle = Paint.Style.FILL
+             increasingColor = ContextCompat.getColor(context,R.color.md_theme_primary)
+             increasingPaintStyle = Paint.Style.FILL
+             neutralColor = Color.BLUE
+             setDrawValues(false)
+         }
+         this.data = CandleData(candleDataSet)
+         this.setTouchEnabled(true)
+         this.isDragEnabled=true
+         this.setScaleEnabled(false)
+         this.setPinchZoom(false)
+         this.setDoubleTapToZoomEnabled(false)
+
+ // Optional: Disable Y-axis scaling independently
+         this.isScaleYEnabled = false
+         this.isScaleXEnabled = false
+         this.isHighlightPerTapEnabled = false
+         this.isHighlightPerDragEnabled = false
+
+ // Remove marker (popup with value info)
+         this.marker = null
+ //        this.setVisibleXRange(10f,30f)
+         setupChart()
+         this.invalidate()
+     }*/
 }

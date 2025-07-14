@@ -71,9 +71,88 @@ public class GroupedBarChart extends BarChart {
     }
 
     public void setGroupedBarData(List<BarEntry> group1, List<BarEntry> group2, List<BarEntry> group3,List<BarEntry> group4,List<String> years, String label1, String label2, String label3,String label4) {
+        // ✅ Safety: Check for null or empty input
+        if (group1 == null || group2 == null || group3 == null || group4 == null || years == null ||
+                group1.isEmpty() || group2.isEmpty() || group3.isEmpty() || group4.isEmpty() || years.isEmpty()) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
         float groupSpace = 0.1f;
         float barSpace = 0.05f;
         float barWidth = 0.2f;
+
+        // ✅ Helper to create DataSet with safe formatter
+        ValueFormatter formatter = new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                return Math.abs(y) < 0.0001f ? "" : String.format(Locale.US, "%,.2f", y);
+            }
+        };
+
+        BarDataSet set1 = new BarDataSet(group1, label1);
+        set1.setColor(Color.parseColor("#7cb5ec"));
+        set1.setValueFormatter(formatter);
+
+        BarDataSet set2 = new BarDataSet(group2, label2);
+        set2.setColor(Color.parseColor("#434348"));
+        set2.setValueFormatter(formatter);
+
+        BarDataSet set3 = new BarDataSet(group3, label3);
+        set3.setColor(Color.parseColor("#90ed7d"));
+        set3.setValueFormatter(formatter);
+
+        BarDataSet set4 = new BarDataSet(group4, label4);
+        set4.setColor(Color.parseColor("#f7a35c"));
+        set4.setValueFormatter(formatter);
+
+        BarData data = new BarData(set1, set2, set3, set4);
+
+        // ✅ Clean and validate year labels
+        List<String> safeYears = new ArrayList<>();
+        for (String year : years) {
+            if (year != null && !year.trim().isEmpty() && !"null".equalsIgnoreCase(year.trim())) {
+                safeYears.add(year.trim());
+            } else {
+                safeYears.add(""); // fallback blank label
+            }
+        }
+
+        XAxis xAxis = this.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(safeYears));
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+
+        data.setBarWidth(barWidth);
+        this.setData(data);
+
+        int groupCount = group1.size();
+        float groupWidth = data.getGroupWidth(groupSpace, barSpace);
+
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(groupCount * groupWidth);
+        this.setDrawValueAboveBar(true);
+        this.setFitBars(true);
+        this.setExtraOffsets(0f, 0f, 0f, 0f);
+        this.groupBars(0f, groupSpace, barSpace);
+
+        // ✅ Axis: force Y-axis minimum to 0 if all values are non-negative
+        boolean allPositive = group1.stream().allMatch(e -> e.getY() >= 0)
+                && group2.stream().allMatch(e -> e.getY() >= 0)
+                && group3.stream().allMatch(e -> e.getY() >= 0)
+                && group4.stream().allMatch(e -> e.getY() >= 0);
+
+        if (allPositive) {
+            this.getAxisLeft().setAxisMinimum(0f);
+        }
+
+        this.invalidate();
+       /* float groupSpace = 0.1f;
+        float barSpace = 0.05f;
+        float barWidth = 0.2f;
+
 
         BarDataSet set1 = new BarDataSet(group1, label1);
         set1.setColor(Color.parseColor("#7cb5ec")); // Purple
@@ -151,7 +230,6 @@ public class GroupedBarChart extends BarChart {
         }
 
 
-//        this.groupBars(0f, groupSpace, barSpace);
-        this.invalidate();
+        this.invalidate();*/
     }
 }

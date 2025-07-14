@@ -118,7 +118,7 @@ tools:context=".views.login.LoginFragment">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerIndices"
             android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_155"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="horizontal"

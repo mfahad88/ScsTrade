@@ -70,9 +70,73 @@ public class CustomBarChart extends BarChart {
 
 
     }
-
-
     public void setChartData(List<String> labels, List<Float> values, float barWidth) {
+        // ✅ Safety check: null or empty input
+        if (labels == null || values == null || labels.isEmpty() || values.isEmpty() || labels.size() != values.size()) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
+        // ✅ Sanitize labels (remove blank/"null")
+        List<String> safeLabels = new ArrayList<>();
+        for (String label : labels) {
+            if (label != null && !label.trim().isEmpty() && !"null".equalsIgnoreCase(label.trim())) {
+                safeLabels.add(label.trim());
+            } else {
+                safeLabels.add(""); // fallback blank
+            }
+        }
+
+        // ✅ Create Bar Entries
+        List<BarEntry> entries = new ArrayList<>();
+        for (int i = 0; i < values.size(); i++) {
+            Float value = values.get(i);
+            if (value != null) {
+                entries.add(new BarEntry(i, value));
+            }
+        }
+
+        // ✅ Handle empty safe entries
+        if (entries.isEmpty()) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
+        // ✅ Assign colors based on value sign
+        List<Integer> colors = new ArrayList<>();
+        for (BarEntry entry : entries) {
+            if (entry.getY() >= 0) {
+                colors.add(ContextCompat.getColor(getContext(), R.color.md_theme_primary)); // Positive
+            } else {
+                colors.add(ContextCompat.getColor(getContext(), R.color.md_theme_errorContainer)); // Negative
+            }
+        }
+
+        // ✅ Create DataSet
+        BarDataSet dataSet = new BarDataSet(entries, "Sales");
+        dataSet.setColors(colors);
+        dataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
+        dataSet.setValueTextSize(12f);
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getBarLabel(BarEntry barEntry) {
+                float y = barEntry.getY();
+                return Math.abs(y) < 0.0001f ? "" : String.format(Locale.US, "%,.2f", y);
+            }
+        });
+
+        // ✅ Set chart data
+        BarData data = new BarData(dataSet);
+        data.setBarWidth(barWidth);
+        this.setData(data);
+        this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(safeLabels));
+        this.invalidate(); // Refresh chart
+    }
+
+
+ /*   public void setChartData(List<String> labels, List<Float> values, float barWidth) {
         List<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < values.size(); i++) {
             entries.add(new BarEntry(i, values.get(i)));
@@ -107,6 +171,6 @@ public class CustomBarChart extends BarChart {
         this.setData(data);
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.invalidate(); // Refresh chart
-    }
+    }*/
 
 }

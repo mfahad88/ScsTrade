@@ -79,6 +79,79 @@ public class IndexVsStockChartView extends ConstraintLayout {
 
     public void setChartData(List<String> xLabels, List<Float> indexValues, List<Float> stockValues,
                              String indexLabel, String stockLabel) {
+        // ✅ Safety checks
+        if (xLabels == null || indexValues == null || stockValues == null ||
+                xLabels.isEmpty() || indexValues.isEmpty() || stockValues.isEmpty()) {
+            chart.clear();
+            chart.invalidate();
+            return;
+        }
+
+        // ✅ Ensure all lists are aligned
+        int minSize = Math.min(xLabels.size(), Math.min(indexValues.size(), stockValues.size()));
+        if (minSize == 0) {
+            chart.clear();
+            chart.invalidate();
+            return;
+        }
+
+        // ✅ Clean xLabels (handle null/blank/"null")
+        List<String> safeLabels = new ArrayList<>();
+        for (int i = 0; i < minSize; i++) {
+            String label = xLabels.get(i);
+            if (label != null && !label.trim().isEmpty() && !"null".equalsIgnoreCase(label.trim())) {
+                safeLabels.add(label.trim());
+            } else {
+                safeLabels.add(""); // fallback blank label
+            }
+        }
+
+        // ✅ Populate Entries
+        List<Entry> indexEntries = new ArrayList<>();
+        List<Entry> stockEntries = new ArrayList<>();
+        for (int i = 0; i < minSize; i++) {
+            indexEntries.add(new Entry(i, indexValues.get(i)));
+            stockEntries.add(new Entry(i, stockValues.get(i)));
+        }
+
+        // ✅ Index Line
+        LineDataSet indexDataSet = new LineDataSet(indexEntries, indexLabel);
+        indexDataSet.setColor(ContextCompat.getColor(getContext(), R.color.black));
+        indexDataSet.setDrawCircles(false);
+        indexDataSet.setLineWidth(2f);
+        indexDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        indexDataSet.setDrawValues(false);
+
+        // ✅ Stock Line
+        LineDataSet stockDataSet = new LineDataSet(stockEntries, stockLabel);
+        stockDataSet.setColor(Color.parseColor("#84C5FF"));
+        stockDataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.black));
+        stockDataSet.setDrawCircles(false);
+        stockDataSet.setLineWidth(2f);
+        stockDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        stockDataSet.setDrawValues(false);
+
+        // ✅ X-Axis Setup
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(safeLabels));
+        xAxis.setGranularity(Math.max(1f, minSize / 6f));
+        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawLabels(false); // hide text if needed
+
+        // ✅ Enable scrolling and set viewport
+        chart.setVisibleXRangeMaximum(40f);
+        if (!stockEntries.isEmpty()) {
+            chart.moveViewToX(stockEntries.get(stockEntries.size() - 1).getX()); // scroll to latest
+        }
+
+        // ✅ Apply data and refresh
+        chart.setData(new LineData(indexDataSet, stockDataSet));
+        chart.invalidate();
+    }
+
+    /*public void setChartData(List<String> xLabels, List<Float> indexValues, List<Float> stockValues,
+                             String indexLabel, String stockLabel) {
 
         if (xLabels == null || indexValues == null || stockValues == null) return;
 
@@ -123,5 +196,5 @@ public class IndexVsStockChartView extends ConstraintLayout {
 
         chart.setData(new LineData(indexDataSet, stockDataSet));
         chart.invalidate();
-    }
+    }*/
 }

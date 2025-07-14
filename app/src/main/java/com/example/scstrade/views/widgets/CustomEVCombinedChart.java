@@ -89,6 +89,68 @@ public class CustomEVCombinedChart extends CombinedChart {
             List<Float> evEbitdaValues,
             List<String> labels
     ) {
+        // ✅ Basic null/empty checks
+        if (marketCapValues == null || epValues == null || evEbitdaValues == null || labels == null ||
+                marketCapValues.isEmpty() || epValues.isEmpty() || evEbitdaValues.isEmpty() || labels.isEmpty()) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
+        // ✅ Size mismatch check
+        int count = labels.size();
+        if (marketCapValues.size() != count || epValues.size() != count || evEbitdaValues.size() != count) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
+        // ✅ Clean labels: remove null/blank/"null"
+        List<String> safeLabels = new ArrayList<>();
+        for (String label : labels) {
+            if (label != null && !label.trim().isEmpty() && !"null".equalsIgnoreCase(label.trim())) {
+                safeLabels.add(label.trim());
+            } else {
+                safeLabels.add(""); // fallback blank label
+            }
+        }
+
+        CombinedData data = new CombinedData();
+
+        // ✅ Bar Data: Market Cap & EP
+        BarData barData = generateBarData(marketCapValues, epValues);
+        float barWidth = 0.3f;
+        float groupSpace = 0.5f;
+        float barSpace = 0.02f;
+
+        barData.setBarWidth(barWidth);
+        barData.groupBars(0f, groupSpace, barSpace);
+        data.setData(barData);
+
+        float groupWidth = barData.getGroupWidth(groupSpace, barSpace);
+        float xAxisMin = 0f;
+        float xAxisMax = xAxisMin + safeLabels.size() * groupWidth;
+
+        // ✅ Line Data: EV/EBITDA
+        LineData lineData = generateLineData(evEbitdaValues);
+        data.setData(lineData); // overwrite okay since CombinedData will combine them
+
+        // ✅ Apply to chart
+        this.setData(data);
+        this.getXAxis().setAvoidFirstLastClipping(true);
+        this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(safeLabels));
+        this.getXAxis().setAxisMinimum(xAxisMin);
+        this.getXAxis().setAxisMaximum(xAxisMax);
+
+        this.invalidate();
+    }
+
+    /* public void setChartData(
+            List<Float> marketCapValues,
+            List<Float> epValues,
+            List<Float> evEbitdaValues,
+            List<String> labels
+    ) {
         CombinedData data = new CombinedData();
 
         // BarData (Market Cap & EP Value)
@@ -118,7 +180,7 @@ public class CustomEVCombinedChart extends CombinedChart {
 
         this.invalidate();
     }
-
+*/
     private BarData generateBarData(List<Float> marketCaps, List<Float> epValues) {
         List<BarEntry> marketEntries = new ArrayList<>();
         List<BarEntry> epEntries = new ArrayList<>();

@@ -1,6 +1,11 @@
 package com.example.scstrade.views.snapshot
 import androidx.compose.ui.res.dimensionResource
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
@@ -53,16 +58,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asFlow
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentOverviewBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.helper.safeToDoubleOrZero
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.BookValue
@@ -77,8 +89,10 @@ import com.example.scstrade.views.widgets.CustomCombinedChart
 import com.example.scstrade.views.widgets.CustomEVCombinedChart
 import com.example.scstrade.views.widgets.GroupedBarChart
 import com.example.scstrade.views.widgets.MultiLineChartView
+import com.example.scstrade.views.widgets.TextDrawable
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
+import java.io.File
 
 
 class OverviewFragment : Fragment() {
@@ -89,14 +103,46 @@ class OverviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater,container,false)
         symbol=(requireActivity() as SnapshotActivity).symbol
         sharedViewModel= (requireActivity().application as MyApp).viewModel
         if(!sharedViewModel.mutableAllData.value?.data.isNullOrEmpty()) {
+            val firstChar = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol) }?.first()?.sYM?.first()?.uppercaseChar().toString()
+            val color = Utils.getColorFromSymbol(firstChar)
+            val placeholderDrawable = TextDrawable(firstChar, color)
             val icon = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(symbol) }?.map { it.companyLogo }?.first()
-            Glide.with(binding.root.context).load(icon).circleCrop().into(binding.imageView16)
+            Glide.with(binding.root.context).load(icon)
+                .placeholder(placeholderDrawable)
+                .circleCrop()
+                .listener(object : RequestListener<Drawable> {
+
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imageView16.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imageView16.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+
+                })
+                .into(binding.imageView16)
         }
 
         sharedViewModel.mutableOverview.observe(viewLifecycleOwner, Observer { result->
@@ -107,6 +153,8 @@ class OverviewFragment : Fragment() {
                 }
                 is Resource.Success -> {
                    try{
+
+
                        Log.e("Result",result.data.toString())
                        binding.onePecent.text = "${result.data?.oneMonthReturn}%"
                        binding.threePecent.text = "${result.data?.twoMonthReturn}%"
@@ -186,7 +234,17 @@ class OverviewFragment : Fragment() {
                        binding.dayRange.setLow(item?.lP?.toFloat()?:0f,item?.hP?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
 //                       binding.dayRange.setLow(result.data?.oneMonthLow?.toFloat()?:0f,result.data?.oneMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
                        binding.dayRange52.setLow(result.data?.twelveMonthLow?.toFloat()?:0f,result.data?.twelveMonthHigh?.toFloat()?:0f,item?.cL?.toFloat()?:0f)
-                       binding.valueTrade.text = item?.cL.toString()
+                       binding.valueTrade.text = if (item?.cL != null && item.cL != 0.0 && !item.cL.isNaN()) {
+                           item.cL.toString()
+                       } else {
+                           val fallback = item?.oC?.toString()
+                           if (fallback.isNullOrBlank() || fallback.equals("null", ignoreCase = true)) {
+                               "0.0"
+                           } else {
+                               fallback
+                           }
+                       }
+
                        binding.netChange.text = "${if (item?.cH!! < 0.0) "" else "+"}${item?.cH.toString()} ${if (item?.cHP!! < 0.0) "" else "+"}${String.format("%.2f",item?.cHP)}%"
                        if(item?.cH!!<0.0) {
                            binding.netChange.setTextColor(android.graphics.Color.parseColor("#D01B10"))
@@ -212,8 +270,10 @@ class OverviewFragment : Fragment() {
                        binding.avgVolumeValue.text = Utils.commaFormat(result.data?.avgVolume12M?.toDouble(),true)
                        binding.marketCapValue.text = Utils.convertToBillions(result.data?.marketCap)
                        binding.companyName.text = item?.nM
-
-
+//                        Glide.with(requireContext()).load(item.companyLogo).transform(RoundedCorners(50)).into(binding.imageView16)
+                       binding.imageViewShare.setOnClickListener {
+                           shareViaWhatsApp(requireContext(),"Check out this stock snapshot:\n https://scstrade.com/stockscreening/SS_CompanySnapShot.aspx?symbol=${item.sYM}")
+                       }
 
                        binding.companyName.post {
 
@@ -240,6 +300,22 @@ class OverviewFragment : Fragment() {
 //        populateBarChart(it)
         return binding.root
     }
+
+
+    fun shareViaWhatsApp(context: Context, message: String) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+            setPackage("com.whatsapp") // Ensures only WhatsApp handles it
+        }
+
+        try {
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, "WhatsApp is not installed.", Toast.LENGTH_SHORT).show()
+        }
+    }
     @Composable
     private fun populateRatios(data: Overview?) {
         val detail=sharedViewModel.mutableDetail.asFlow().collectAsState(initial = Resource.Loading()).value.data?.first()
@@ -260,7 +336,7 @@ class OverviewFragment : Fragment() {
                     if(!data?.paidUpCapital.isNullOrEmpty()) {
                         ItemValue(
                             "Paid Up Capital",
-                            Utils.convertToMillions(data?.paidUpCapital?.toDouble()),
+                            Utils.convertToMillions(data?.paidUpCapital?.safeToDoubleOrZero()),
                             null
                         )
                         Row {
@@ -275,7 +351,7 @@ class OverviewFragment : Fragment() {
                         ItemValue(
                             "Authorized Capital",
                             Utils.convertToMillions(
-                                data?.authorizedCapital?.toDouble() ?: "0.0".toDouble()
+                                data?.authorizedCapital?.safeToDoubleOrZero()
                             ),
                             null
                         )
@@ -287,11 +363,11 @@ class OverviewFragment : Fragment() {
                             )
                         }
                     }
-                    if(data?.totalNoShares.isNullOrEmpty()) {
+                    if(!data?.totalNoShares.isNullOrEmpty()) {
                         ItemValue(
                             "Total No Shares",
                             Utils.convertToMillions(
-                                data?.totalNoShares?.toDouble() ?: "0.0".toDouble()
+                                data?.totalNoShares?.safeToDoubleOrZero()
                             ),
                             null
                         )
@@ -308,7 +384,7 @@ class OverviewFragment : Fragment() {
                         ItemValue(
                             "Free Float",
                             Utils.convertToMillions(
-                                data?.freeFloat?.toDouble() ?: "0.0".toDouble()
+                                data?.freeFloat?.safeToDoubleOrZero()
                             ),
                             null
                         )
@@ -323,7 +399,7 @@ class OverviewFragment : Fragment() {
                     if(!data?.freeFloatPer.isNullOrEmpty()) {
                         ItemValue(
                             "Free Float(%)",
-                            "${Utils.roundPercent(data?.freeFloatPer?.toDouble() ?: "0.0".toDouble())}%",
+                            "${Utils.roundPercent(data?.freeFloatPer?.safeToDoubleOrZero())}%",
                             null
                         )
                         Row {
@@ -337,7 +413,7 @@ class OverviewFragment : Fragment() {
                     if(!data?.beta.isNullOrEmpty()) {
                         ItemValue(
                             "Beta",
-                            Utils.roundTwoDecimal(data?.beta?.toDouble() ?: "0.0".toDouble()),
+                            Utils.roundTwoDecimal(data?.beta?.safeToDoubleOrZero()),
                             null
                         )
                         Row {
@@ -659,7 +735,7 @@ class OverviewFragment : Fragment() {
     }
 
     @Composable
-    private fun ExpandableList(title: String, list: List<DescNameValue>, charting: Charting?) {
+    private fun ExpandableList(title: String?, list: List<DescNameValue?>?, charting: Charting?) {
         var expand by remember {
             mutableStateOf(false)
         }
@@ -688,7 +764,7 @@ class OverviewFragment : Fragment() {
                     }
             ) {
                 Text(
-                    text = title,
+                    text = title?:"",
                     style = TextStyle(
                         fontSize = dimensionResource(R.dimen.sp_18).value.sp,
                         lineHeight = 30.08.sp,
@@ -708,9 +784,9 @@ class OverviewFragment : Fragment() {
             }
             if(expand){
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_7).value.dp))
-                list.forEachIndexed { index, descNameValue ->
-                    val digitsPart = Regex("""[\d.]+""").find(descNameValue.value?:"")?.value ?: ""
-                    val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue.value?:"")?.value ?: ""
+                list?.forEachIndexed { index, descNameValue ->
+                    val digitsPart = Regex("""[\d.]+""").find(descNameValue?.value?:"")?.value ?: ""
+                    val lettersPart = Regex("""[a-zA-Z]+""").find(descNameValue?.value?:"")?.value ?: ""
                     Column {
                         Row (
                             verticalAlignment = Alignment.CenterVertically,
@@ -718,7 +794,7 @@ class OverviewFragment : Fragment() {
                         ){
                             Column{
                                 Text(
-                                    text = descNameValue.name?:"",
+                                    text = descNameValue?.name?:"",
                                     style = TextStyle(
                                         fontSize = dimensionResource(R.dimen.sp_14).value.sp,
                                         lineHeight = 30.08.sp,
@@ -728,7 +804,7 @@ class OverviewFragment : Fragment() {
                                     )
                                 )
                                 Text(
-                                    text = descNameValue.desc?:"",
+                                    text = descNameValue?.desc?:"",
                                     style = TextStyle(
                                         fontSize = dimensionResource(R.dimen.sp_12).value.sp,
                                         lineHeight = 30.08.sp,
@@ -742,7 +818,7 @@ class OverviewFragment : Fragment() {
 
                            Column (modifier = Modifier.fillMaxHeight()){
                                Text(
-                                   text = /*if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else */descNameValue.value?:"",
+                                   text = /*if(title.equals("Enterprise Value")) "${Utils.convertToBillions( digitsPart)} ${if(!lettersPart.isNullOrEmpty()) lettersPart else ""}" else */descNameValue?.value?:"",
                                    style = TextStyle(
                                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                                        lineHeight = 30.08.sp,
@@ -1059,11 +1135,11 @@ class OverviewFragment : Fragment() {
     }
 
     @Composable
-    private fun ItemValue(key:String,value:String?,desc:String?) {
+    private fun ItemValue(key:String?,value:String?,desc:String?) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column {
                 Text(
-                    text = key,
+                    text = key?:"",
                     style = TextStyle(
                         fontSize = dimensionResource(R.dimen.sp_16).value.sp,
                         lineHeight = 30.08.sp,
@@ -1130,11 +1206,13 @@ class OverviewFragment : Fragment() {
 
     private fun populateBarChart(customBarChart: CustomBarChart, ePS: EPSYear?) {
         try {
-            customBarChart.setChartData(
-                ePS?.year?.reversed(),
-                ePS?.earningPerShare?.map { it.toFloat() }?.toList()?.reversed(),
-                0.5f
-            )
+            if(!ePS?.year.isNullOrEmpty() && !ePS?.earningPerShare.isNullOrEmpty()) {
+                customBarChart.setChartData(
+                    ePS?.year?.reversed(),
+                    ePS?.earningPerShare?.map { it.toFloat() }?.toList()?.reversed(),
+                    0.5f
+                )
+            }
         }catch (e:Exception){
             e.printStackTrace()
         }

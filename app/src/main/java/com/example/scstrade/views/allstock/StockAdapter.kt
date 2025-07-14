@@ -5,6 +5,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -17,6 +19,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemHeadingBinding
 import com.example.scstrade.databinding.ItemStocksBinding
@@ -24,6 +30,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.views.snapshot.SnapshotActivity
+import com.example.scstrade.views.widgets.TextDrawable
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -36,7 +43,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
         fun bind(stockItem: StockItem?, previousPrice: Double?) {
             if (stockItem!=null){
-
+                val firstChar = stockItem.sYM.first().uppercaseChar().toString()
+                val color = Utils.getColorFromSymbol(firstChar)
+                val placeholderDrawable = TextDrawable(firstChar, color)
                 binding.root.setOnClickListener {
                     val intent= Intent(binding.root.context, SnapshotActivity::class.java)
                     if(stockItem.sYM.contains("-")) {
@@ -47,8 +56,34 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     binding.root.context.startActivity(intent)
                 }
                 Glide.with(binding.root.context).load(stockItem.companyLogo)
-                    .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
+                    .placeholder(placeholderDrawable)
                     .circleCrop()
+                    .listener(object : RequestListener<Drawable> {
+
+
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any,
+                            target: com.bumptech.glide.request.target.Target<Drawable>?,
+                            dataSource: DataSource,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            binding.imageView6.alpha = 1f
+                            return false // Let Glide handle setting the image
+                        }
+
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            binding.imageView6.alpha = 1f
+                            return false // Let Glide handle setting the image
+                        }
+
+
+                    })
                     .into(binding.imageView6)
                 if(stockItem.iN.lowercase().contains("kmi")){
                     binding.shariah.visibility= View.VISIBLE

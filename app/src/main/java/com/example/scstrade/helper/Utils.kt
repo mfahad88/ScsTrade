@@ -65,11 +65,57 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+import kotlin.math.abs
 
+/**
+ * Safely converts a nullable String to Double, returning 0.0 if the input is null, blank,
+ * or the string "null" (case-insensitive).
+ */
+fun String?.safeToDoubleOrZero(): Double {
+    return if (!this.isNullOrBlank() && this.lowercase() != "null") {
+        this.toDoubleOrNull() ?: 0.0
+    } else {
+        0.0
+    }
+}
+
+/**
+ * Safely converts a nullable String to Float, returning 0f if the input is null, blank,
+ * or the string "null" (case-insensitive).
+ */
+fun String?.safeToFloatOrZero(): Float {
+    return if (!this.isNullOrBlank() && this.lowercase() != "null") {
+        this.toFloatOrNull() ?: 0f
+    } else {
+        0f
+    }
+}
+
+/**
+ * Safely maps a nullable list of nullable strings to a list of Floats, ignoring null,
+ * blank, or "null" values.
+ */
+fun List<String?>?.safeFloatList(): List<Float> {
+    return this?.mapNotNull {
+        it?.takeIf { value -> value.isNotBlank() && value.lowercase() != "null" }?.toFloatOrNull()
+    } ?: emptyList()
+}
+
+/**
+ * Safely maps a nullable list of nullable strings to a list of Doubles, ignoring null,
+ * blank, or "null" values.
+ */
+fun List<String?>?.safeDoubleList(): List<Double> {
+    return this?.mapNotNull {
+        it?.takeIf { value -> value.isNotBlank() && value.lowercase() != "null" }?.toDoubleOrNull()
+    } ?: emptyList()
+}
 class Utils {
+
     companion object{
         private val MY_PREFS="MyPrefs"
         fun helloWorld(){
@@ -111,6 +157,7 @@ class Utils {
                 e.printStackTrace()
                 ""
             }
+
           /*  try {
                *//* return NumberFormat.getInstance(Locale.US)
                     .format(String.format("%.2f", value).toDouble())*//*
@@ -145,7 +192,17 @@ class Utils {
 
             choreographer.postFrameCallback(frameCallback)
         }
-
+        fun safeFloatList(input: List<String?>?): List<Float> {
+            return input?.filter {
+                !it.isNullOrBlank() && it.lowercase() != "null"
+            }?.mapNotNull {
+                try {
+                    it?.toFloat()
+                } catch (e: NumberFormatException) {
+                    null
+                }
+            } ?: emptyList()
+        }
         fun roundPercent(value:Double?,ignoreDecimal:Boolean=false): String {
             return try {
                 if (value == null) return "0.0"
@@ -197,7 +254,20 @@ class Utils {
           }
         }
         fun convertToMillions(value: Double?): String {
-            try {
+            return try {
+                if (value == null) return "0.0"
+
+                val df = DecimalFormat("#,###.##")
+                if (value >= 1_000_000) {
+                    df.format(value / 1_000_000) + "M"
+                } else {
+                    df.format(value)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                "0.0"
+            }
+            /*try {
                 val df: DecimalFormat = DecimalFormat("#,###.##")
                 if(value!=null){
                     if (value >= 1_000_000) {
@@ -209,7 +279,7 @@ class Utils {
                 }else{
                     return "0.0"
                 }
-              /*  if (value != null) {
+              *//*  if (value != null) {
                     return when {
                         value >= 1_000_000_000 -> String.format("%.1fB", value / 1_000_000_000)
                         value >= 1_000_000     -> String.format("%.1fM", value / 1_000_000)
@@ -218,11 +288,11 @@ class Utils {
                     }
                 }else{
                     return "0.0"
-                }*/
+                }*//*
             }catch (e:Exception){
                 e.printStackTrace()
                 return "0.0"
-            }
+            }*/
 
         }
 
@@ -291,16 +361,20 @@ class Utils {
                 true
             }
         }
-        fun convertDateString(dateString: String,format: String): String {
+        fun convertDateString(dateString: String?,format: String): String {
             // Extract the timestamp value from the string
-            val timestamp = dateString.replace(Regex("[^0-9]"), "").toLong()
+            if(dateString!=null){
+                val timestamp = dateString.replace(Regex("[^0-9]"), "").toLong()
 
-            // Convert to Date
-            val date = Date(timestamp)
+                // Convert to Date
+                val date = Date(timestamp)
 
-            // Format the date to "dd/MM/yyyy"
-            val sdf = SimpleDateFormat(format, Locale.getDefault())
-            return sdf.format(date)
+                // Format the date to "dd/MM/yyyy"
+                val sdf = SimpleDateFormat(format, Locale.getDefault())
+                return sdf.format(date)
+            }else{
+                return dateString?:""
+            }
         }
 
         fun convertDate(dateString:String): String {
@@ -753,6 +827,20 @@ class Utils {
                     )
                     .show()
             }
+        }
+
+        fun getColorFromSymbol(symbol: String): Int {
+            val uuid = UUID.nameUUIDFromBytes(symbol.toByteArray())
+            val hash = uuid.mostSignificantBits xor uuid.leastSignificantBits
+            val hue = (abs(hash) % 360).toFloat()
+            val hsv = floatArrayOf(hue, 0.5f, 0.8f)
+            return Color.HSVToColor(hsv)
+            /*val hue = Math.abs(symbol.hashCode() % 360).toFloat()
+            val saturation = 0.5f
+            val brightness = 0.8f
+
+            val hsv = floatArrayOf(hue, saturation, brightness)
+            return Color.HSVToColor(hsv)*/
         }
 
         fun logAppProfile(context: Context) {

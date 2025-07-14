@@ -71,7 +71,60 @@ public class CustomCombinedChart extends CombinedChart {
         this.getAxisRight().setEnabled(true);
     }
 
-    public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor,String name1,String name2) {
+    public void setChartData(
+            List<Float> barValues,
+            List<Float> lineValues,
+            List<String> labels,
+            int barColor,
+            String name1,
+            String name2
+    ) {
+        // ✅ Null or empty input check
+        if (barValues == null || barValues.isEmpty() ||
+                lineValues == null || lineValues.isEmpty() ||
+                labels == null || labels.isEmpty()) {
+            this.clear();
+            this.invalidate();
+            return;
+        }
+
+        // ✅ Sanitize labels (null, empty, "null")
+        List<String> safeLabels = new ArrayList<>();
+        for (String label : labels) {
+            if (label != null && !label.trim().isEmpty() && !"null".equalsIgnoreCase(label.trim())) {
+                safeLabels.add(label.trim());
+            } else {
+                safeLabels.add(""); // fallback blank label
+            }
+        }
+
+        CombinedData data = new CombinedData();
+
+        // ✅ Line Data (e.g. Price-to-Book)
+        LineData lineData = generateLineData(lineValues, name1);
+        data.setData(lineData);
+
+        // ✅ Bar Data (e.g. Book Value)
+        BarData barData = generateBarData(barValues, barColor, name2);
+        float barWidth = 0.5f;
+        float barCount = barValues.size();
+        barData.setBarWidth(barWidth);
+
+        // ✅ Configure X axis limits for proper bar rendering
+        getXAxis().setAxisMinimum(-barWidth);                  // Left padding for first bar
+        getXAxis().setAxisMaximum(barCount - 1 + barWidth);    // Right padding for last bar
+
+        data.setData(barData); // ✅ Set BarData after LineData
+
+        // ✅ Final chart setup
+        this.setData(data);
+        this.getXAxis().setAvoidFirstLastClipping(true);
+        this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(safeLabels));
+
+        this.invalidate();
+    }
+
+    /*public void setChartData(List<Float> barValues, List<Float> lineValues, List<String> labels,int barColor,String name1,String name2) {
         CombinedData data = new CombinedData();
 
 
@@ -81,13 +134,13 @@ public class CustomCombinedChart extends CombinedChart {
 
         // Bar Data (Book Value)
         BarData barData = generateBarData(barValues,barColor,name2);
-        /*float groupCount = barValues.size();
+        *//*float groupCount = barValues.size();
         float barWidth = 0.5f;
         float xMin = 0f;
         float xMax = xMin + groupCount;
 
         this.getXAxis().setAxisMinimum(xMin);
-        this.getXAxis().setAxisMaximum(xMax);*/
+        this.getXAxis().setAxisMaximum(xMax);*//*
         float barWidth = 0.5f;
         float barCount = barValues.size();
         barData.setBarWidth(barWidth);
@@ -104,7 +157,7 @@ public class CustomCombinedChart extends CombinedChart {
         this.getXAxis().setAvoidFirstLastClipping(true);
         this.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         this.invalidate();
-    }
+    }*/
 
     private BarData generateBarData(List<Float> values, int barColor,String name) {
         List<BarEntry> entries = new ArrayList<>();

@@ -557,14 +557,24 @@ class NewsFragment : Fragment() {
                                         overflow = TextOverflow.Ellipsis,
                                         modifier = Modifier.fillMaxWidth()
                                     )
-
+                                    Text(
+                                        text = Utils.convertDateString( data[index].newsDate,"dd MMM yyyy"),
+                                        fontSize = dimensionResource(R.dimen.sp_14).value.sp,
+                                        fontFamily = FontFamily(Font(R.font.custom_font)),
+                                        fontWeight = FontWeight(400),
+                                        color = colorResource(id = R.color.black),
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.fillMaxWidth().padding(top = dimensionResource(R.dimen.dp_5).value.dp)
+                                    )
                                     Row (
-                                        modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_10).value.dp,),
+                                        modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_5).value.dp,),
                                     ){
                                         IntentLinkText("Source",data[index].newsLink,
                                         )
 
                                     }
+
+
                                 }
                             }
 
