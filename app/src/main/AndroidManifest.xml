@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".views.stockscreener.StockScreenerActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.globalmarket.GlobalMarketActivity"
             android:exported="false" />
         <activity
@@ -174,20 +177,20 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.fundamental.FundamentalDetailActivity"
+            android:name=".views.stockscreener.fundamental.FundamentalDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.fundamental.FundamentalActivity"
+            android:name=".views.stockscreener.fundamental.FundamentalActivity"
             android:configChanges="screenSize|orientation"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.technicals.TechnicalsDetailActivity"
+            android:name=".views.stockscreener.technicals.TechnicalsDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.technicals.TechnicalsActivity"
+            android:name=".views.stockscreener.technicals.TechnicalsFragment"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

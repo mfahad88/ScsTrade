@@ -1,4 +1,4 @@
-package com.example.scstrade.views.technicals.adapter
+package com.example.scstrade.views.stockscreener.technicals.adapter
 import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater

@@ -8,7 +8,15 @@ import android.util.DisplayMetrics;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.scstrade.helper.Utils;
+
 public class BaseActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Utils.Companion.setEdgeToEdgeWithWhiteIcons(this);
+        super.onCreate(savedInstanceState);
+    }
+
     /*@Override
     protected void attachBaseContext(Context newBase) {
         // Lock the display density to the default value

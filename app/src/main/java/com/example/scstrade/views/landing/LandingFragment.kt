@@ -1,5 +1,4 @@
 package com.example.scstrade.views.landing
-import androidx.compose.ui.res.dimensionResource
 
 import android.app.Activity
 import android.content.Intent
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
@@ -31,21 +28,18 @@ import com.example.scstrade.views.announcement.AnnoucementActivity
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.contact.ContactActivity
 import com.example.scstrade.views.detailquote.DetailQuoteActivity
-import com.example.scstrade.views.fundamental.FundamentalActivity
 import com.example.scstrade.views.globalmarket.GlobalMarketActivity
 import com.example.scstrade.views.home.HomeFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
-import com.example.scstrade.views.notification.NotificationActivity
 import com.example.scstrade.views.portfolio.activities.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.settings.SettingsActivity
-import com.example.scstrade.views.technicals.TechnicalsActivity
+import com.example.scstrade.views.stockscreener.StockScreenerActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.SideBarDivider
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.cancel
 
@@ -250,8 +244,9 @@ class LandingFragment : Fragment() {
             KeyDescValue("News",null,R.drawable.side_news),
             KeyDescValue("Announcements",null,R.drawable.announcements),
             KeyDescValue("Detailed Quote",null,R.drawable.side_detail_quote),
-            KeyDescValue("Fundamental",null,R.drawable.side_fundamental),
-            KeyDescValue("Technical",null,R.drawable.side_technical),
+            KeyDescValue("Stock Screener",null,R.drawable.side_fundamental),
+            /*KeyDescValue("Fundamental",null,R.drawable.side_fundamental),
+            KeyDescValue("Technical",null,R.drawable.side_technical),*/
 //            KeyDescValue("SCS Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
@@ -299,15 +294,15 @@ class LandingFragment : Fragment() {
                     Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())
-                }else if(keyDescValue.key?.equals("technical",true)?:false){
+                }/*else if(keyDescValue.key?.equals("technical",true)?:false){
 
-                    val intent = Intent(requireContext(),TechnicalsActivity::class.java)
+                    val intent = Intent(requireContext(), TechnicalsFragment::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
 
-                }else if(keyDescValue.key?.equals("fundamental",true)?:false){
+                }*/else if(keyDescValue.key?.equals("Stock Screener",true)?:false){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)
-                    val intent = Intent(requireContext(),FundamentalActivity::class.java)
+                    val intent = Intent(requireContext(), StockScreenerActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }else if(keyDescValue.key?.equals("detailed quote",true)?:false){

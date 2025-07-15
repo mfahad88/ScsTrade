@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_surface"
-    tools:context=".views.technicals.TechnicalsActivity">
-    <com.example.scstrade.views.widgets.mMarket
+    >
+ <!--   <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
         android:layout_width="@dimen/dp_0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
 
 
 
@@ -33,9 +33,9 @@
         android:id="@+id/recyclerView"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_0"
-        tools:listitem="@layout/item_fundamental"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_fundamental" />
 </androidx.constraintlayout.widget.ConstraintLayout>

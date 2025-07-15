@@ -1,4 +1,4 @@
-package com.example.scstrade.views.fundamental
+package com.example.scstrade.views.stockscreener.technicals
 import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
@@ -6,59 +6,48 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
-import com.example.scstrade.databinding.ActivityFundamentalDetailBinding
+import com.example.scstrade.databinding.ActivityTechnicalsDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.fundamental.adapter.FundamentalDetailAdapter
 import com.example.scstrade.views.snapshot.SnapshotActivity
+import com.example.scstrade.views.stockscreener.technicals.adapter.TechnicalDetailAdapter
 import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class FundamentalDetailActivity : BaseActivity() {
-    lateinit var binding: ActivityFundamentalDetailBinding
+class TechnicalsDetailActivity : BaseActivity() {
+    lateinit var binding: ActivityTechnicalsDetailBinding
     lateinit var viewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityTechnicalsDetailBinding.inflate(LayoutInflater.from(this))
         viewModel = (this.application as MyApp).viewModel
-        binding = ActivityFundamentalDetailBinding.inflate(LayoutInflater.from(this))
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         // binding.toolbar.toggleToolbar(false)
-        binding.toolbar.binding.market.text = "Fundamentals"
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        binding.toolbar.binding.market.text = "Technicals"
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.recyclerView.apply {
-            layoutManager=LinearLayoutManager(this@FundamentalDetailActivity,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(
-                VerticalSpaceItemDecoration(1,
-                    ContextCompat.getColor(this@FundamentalDetailActivity,R.color.md_theme_outline))
-            )
+        viewModel.getTechnicalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)?:"")
 
-        }
-        viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)?:"")
-
-        viewModel.mutableFundamentalDetail.observe(this, Observer {
-
-
+        viewModel.mutableTechnicalDetail.observe(this, Observer {
             when(it){
                 is Resource.Error -> {
                     binding.loader.visibility = View.GONE
@@ -72,43 +61,45 @@ class FundamentalDetailActivity : BaseActivity() {
                     if(jsonElement?.isJsonArray?:false){
                         var count=0
                         val resultList = mutableListOf<Array<String>>()
-                       lifecycleScope.launch (Dispatchers.IO){
-                           jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
-                               if(!it.key.equals("company_name",true)) {
-                                   count++
-                                   if(count==1){
-                                       binding.header1.text = it.key
-                                   }
-                                   if(count==2){
-                                       binding.header2.text = it.key
-                                   }
-                                   if(count==3){
-                                       binding.header3.text = it.key
-                                   }
+                        jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
+                            if(!it.key.equals("company_name",true)) {
+                                count++
+                                if(count==1){
+                                    binding.header1.text = it.key
+                                }
+                                if(count==2){
+                                    binding.header2.text = it.key
+                                }
+                                if(count==3){
+                                    binding.header3.text = it.key
+                                }
+                                if(count==4){
+                                    binding.header4.text = it.key
+                                }
 
-
-                                   System.out.println(it.key)
-                               }
-
-                           }
-
-                           jsonElement?.asJsonArray?.forEach { it ->
-                               val obj = it.asJsonObject
+                                System.out.println(it.key)
+                            }
+                        }
+                        jsonElement?.asJsonArray?.forEach { it ->
+                            val obj = it.asJsonObject
 //                               val map = Gson().fromJson(jsonElement, Map::class.java) as Map<String, Any>
-                               val values = obj.entrySet().map { it.value.asString }.toTypedArray()
-                               resultList.add(values)
+                            val values = obj.entrySet().map { it.value.asString }.toTypedArray()
+                            resultList.add(values)
 
 
-                           }
-                       }
+                        }
                         binding.recyclerView.apply {
-                            adapter = FundamentalDetailAdapter(resultList,viewModel){
-                                val intent= Intent(this@FundamentalDetailActivity, SnapshotActivity::class.java)
+                            adapter = TechnicalDetailAdapter(resultList,viewModel){
+                                val intent= Intent(this@TechnicalsDetailActivity, SnapshotActivity::class.java)
                                 intent.putExtra(AppConstants.SYMBOL, it)
                                 startActivity(intent)
                             }
 
-
+                            doOnPreDraw {
+                                Log.d("TAG", "RecyclerView visible rows are rendered")
+                                binding.groupMain.visibility = View.VISIBLE
+                                binding.loader.visibility = View.GONE
+                            }
                         }
 
 
@@ -119,9 +110,11 @@ class FundamentalDetailActivity : BaseActivity() {
             }
         })
 
+        binding.recyclerView.apply {
+            layoutManager=LinearLayoutManager(this@TechnicalsDetailActivity,LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(VerticalSpaceItemDecoration(1,ContextCompat.getColor(this@TechnicalsDetailActivity,R.color.md_theme_outline)))
+        }
 
-        binding.groupMain.visibility = View.VISIBLE
-        binding.loader.visibility = View.GONE
 
     }
 
