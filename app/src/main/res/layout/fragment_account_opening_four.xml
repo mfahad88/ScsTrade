@@ -126,6 +126,8 @@
                             android:id="@+id/captcha_input"
                             android:paddingHorizontal="@dimen/dp_5"
                             android:maxLines="1"
+                            android:digits="0123456789"
+                            android:inputType="number"
                             android:singleLine="true"
                             android:imeOptions="actionNext"
                             android:hint="Please Enter Recaptcha"

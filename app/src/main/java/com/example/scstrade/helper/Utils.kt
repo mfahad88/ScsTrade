@@ -605,10 +605,14 @@ class Utils {
         }
 
         fun generateCaptchaText(length: Int = 6): String {
-            val allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            val digits = "0123456789"
+            return (1..length)
+                .map { digits.random() }
+                .joinToString("")
+            /*val allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
             return (1..length)
                 .map { allowedChars.random() }
-                .joinToString("")
+                .joinToString("")*/
         }
         fun bitmapToBase64(bitmap: Bitmap): String {
             val outputStream = ByteArrayOutputStream()

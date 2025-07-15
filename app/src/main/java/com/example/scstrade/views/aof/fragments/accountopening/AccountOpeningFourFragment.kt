@@ -56,7 +56,7 @@ class AccountOpeningFourFragment : Fragment() {
                                 residentialStatus = viewModel.getaccountOpening().accountopeningresidentialStatus?:"",
                                 email = viewModel.getaccountOpening().accountopeningemailAddress?:"",
                                 ibanNo = viewModel.getaccountOpening().accountopeningibanNumber?.replace("|","")?:"",
-                                reference = viewModel.getaccountOpening().accountopeningreference?:"",
+                                reference = viewModel.accountOpening.accountopeningreference?:"",
                                 proofofRelationships = viewModel.accountOpening.accountopeningproofRelativeImage?:"",
                                 relationship = viewModel.getaccountOpening().accountopeningrelationshipType?:"",
                                 relativeName = viewModel.getaccountOpening().accountopeningrelativeName?:"",
