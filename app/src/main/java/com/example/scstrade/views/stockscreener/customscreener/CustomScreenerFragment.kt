@@ -1,6 +1,7 @@
 package com.example.scstrade.views.stockscreener.customscreener
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,6 +113,9 @@ class CustomScreenerFragment : Fragment() {
 
                 // 4. Show average and result count in view
                 view.setAverageAndResult(avg, filtered.size)
+                filtered.forEach {
+                    Log.e("List",it.toString())
+                }
             }
         }
     }
@@ -136,11 +140,11 @@ class CustomScreenerFragment : Fragment() {
                     "EnterpriseValueToEBITDA" -> stock.enterpriseValueToEBITDA
                     "EquityToAssetsRatio" -> 0.0
                     "ExpectedDividendYield" -> 0.0
-                    "ExpectedEarningGrowth" -> 0.0
-                    "ExpectedPayoutRatio" -> 0.0
-                    "ExpectedPriceToBookValue" -> 0.0
+                    "ExpectedEarningGrowth" -> stock.priceEarningGrowth
+                    "ExpectedPayoutRatio" -> stock.payoutRatio
+                    "ExpectedPriceToBookValue" -> stock.priceToBookValue
                     "ExpectedRetentionRatio" -> 0.0
-                    "ExpectedReturnOnEquity" -> 0.0
+                    "ExpectedReturnOnEquity" -> stock.returnOnEquity
                     "GrossProfitMargin" -> stock.grossProfitMargin
                     "LongTermDebtToAssets" -> 0.0
                     "LongTermDebtToEquity" -> 0.0
