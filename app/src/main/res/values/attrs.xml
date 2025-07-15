@@ -118,4 +118,7 @@
         <attr name="highPrice" format="float"/>
         <attr name="closePrice" format="float"/>
     </declare-styleable>
+    <declare-styleable name="FilterItemView">
+        <attr name="filterTitle" format="string" />
+    </declare-styleable>
 </resources>

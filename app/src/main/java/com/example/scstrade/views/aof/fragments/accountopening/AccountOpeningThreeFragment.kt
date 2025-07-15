@@ -162,7 +162,7 @@ class AccountOpeningThreeFragment : Fragment() {
 
         val backCamera = registerForActivityResult(TakePicture()) { ok ->
             if (ok) {
-                nicFrontCamUri?.let {
+                nicBackCamUri?.let {
                     binding.nicFront.bindImage(it)
                     nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
                 }

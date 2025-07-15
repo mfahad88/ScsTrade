@@ -283,7 +283,7 @@
     <string name="ax">7235ax</string>
     <string name="let_s_agree">Let’s agree to the terms &amp; conditions</string>
     <string name="accept_gene">Accept General Terms &amp; Conditions</string>
-    <string name="download_pdf">Download PDF</string>
+    <string name="download_pdf">View PDF</string>
     <string name="signup_next"><![CDATA[Signup & Next]]></string>
     <string name="otp_verific">OTP Verification</string>
     <string name="your_otp_ha">Your OTP has been sent via SMS to your registered phone number.</string>
@@ -497,4 +497,10 @@
         <item>P&amp;L %</item>
     </array>
 
+
+    <array name="screener_array">
+        <item>Between two values</item>
+        <item>Greater than equal to</item>
+        <item>Less than equal to</item>
+    </array>
 </resources>

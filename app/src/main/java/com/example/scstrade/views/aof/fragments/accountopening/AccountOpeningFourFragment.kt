@@ -1,4 +1,7 @@
 package com.example.scstrade.views.aof.fragments.accountopening
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
@@ -6,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentAccountOpeningFourBinding
 import com.example.scstrade.helper.Utils
@@ -14,6 +18,8 @@ import com.example.scstrade.model.request.aof.RegisterUser
 import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.aof.fragments.LoginAOFFragment
+import java.io.File
+import java.io.FileOutputStream
 
 class AccountOpeningFourFragment : Fragment() {
     lateinit var binding: FragmentAccountOpeningFourBinding
@@ -31,6 +37,13 @@ class AccountOpeningFourFragment : Fragment() {
         }
 
         binding.apply {
+            cardTermsOne.binding.cardDownloadPdf.setOnClickListener {
+                openPdfFromRaw(requireContext(), R.raw.general_terms, "General_Terms_Condition.pdf")
+            }
+
+            cardTermsTwo.binding.cardDownloadPdf.setOnClickListener {
+                openPdfFromRaw(requireContext(), R.raw.house_terms, "House_Terms_Condition.pdf")
+            }
             captchaValue.text = Utils.generateCaptchaText()
             btnContinue.setOnClickListener {
                 if(reference.text.toString()!="" && reference.text.toString()!=null){
@@ -111,4 +124,39 @@ class AccountOpeningFourFragment : Fragment() {
         binding.reference.text = viewModel.getaccountOpening().accountopeningreference
     }
 
+    fun openPdfFromRaw(context: Context, rawResId: Int, fileName: String) {
+        try {
+            val pdfFile = File(context.cacheDir, fileName)
+
+            if (!pdfFile.exists()) {
+                val inputStream = context.resources.openRawResource(rawResId)
+                val outputStream = FileOutputStream(pdfFile)
+
+                val buffer = ByteArray(1024)
+                var length: Int
+                while (inputStream.read(buffer).also { length = it } > 0) {
+                    outputStream.write(buffer, 0, length)
+                }
+
+                inputStream.close()
+                outputStream.close()
+            }
+
+            val uri: Uri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.fileprovider",
+                pdfFile
+            )
+
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, "application/pdf")
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+
+            context.startActivity(intent)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

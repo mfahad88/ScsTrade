@@ -10,7 +10,7 @@ import com.example.scstrade.databinding.TermsConditionBinding;
 import com.google.android.material.card.MaterialCardView;
 
 public class TermsConditionView extends MaterialCardView {
-    TermsConditionBinding binding;
+    public TermsConditionBinding binding;
 
     public TermsConditionView(Context context, AttributeSet attrs) {
         super(context, attrs);

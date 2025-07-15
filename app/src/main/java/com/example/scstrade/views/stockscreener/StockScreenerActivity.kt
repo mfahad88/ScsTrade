@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockScreenerBinding
 import com.example.scstrade.views.BaseActivity
+import com.example.scstrade.views.stockscreener.customscreener.CustomScreenerFragment
 import com.example.scstrade.views.stockscreener.fundamental.FundamentalFragment
 import com.example.scstrade.views.stockscreener.technicals.TechnicalsFragment
 import com.google.android.material.tabs.TabLayout
@@ -63,6 +64,9 @@ class StockScreenerActivity : BaseActivity() {
                     }
                     0->{
                         binding.sector.text = "Custom Screener"
+                        loadFragment("technicals"){
+                            CustomScreenerFragment()
+                        }
                     }
                 }
             }

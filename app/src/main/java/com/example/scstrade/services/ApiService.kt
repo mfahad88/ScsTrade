@@ -47,6 +47,7 @@ import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
+import com.example.scstrade.model.response.stockscreener.StockScreenerItem
 import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
@@ -236,6 +237,9 @@ interface ApiService {
 
     @GET(value = "/Announcements")
     suspend fun insider(@Query("type")type:String):List<InsiderDataItem>
+
+    @GET(value = "/StockScreener")
+    suspend fun stockScreener():List<StockScreenerItem>
 
     @GET(value="/Registration")
     suspend fun updateProfile(@Query("RegistrationEmail") email: String,
