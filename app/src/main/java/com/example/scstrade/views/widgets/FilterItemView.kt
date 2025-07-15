@@ -1,3 +1,4 @@
+package com.example.scstrade.views.widgets;
 
 
 import android.content.Context
@@ -5,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
@@ -22,11 +24,11 @@ class FilterItemView @JvmOverloads constructor(
     private val _filterLiveData = MutableLiveData(FilterValue())
     val filterLiveData: LiveData<FilterValue> get() = _filterLiveData
 
-    private val binding: ViewFilterItemBinding
+    val binding: ViewFilterItemBinding
 
     init {
-        val inflater = LayoutInflater.from(context)
-        binding = ViewFilterItemBinding.inflate(inflater, this)
+//        val inflater = LayoutInflater.from(context)
+        binding = ViewFilterItemBinding.inflate(LayoutInflater.from(context), this)
 
         // Load title from XML attributes
         context.theme.obtainStyledAttributes(attrs, R.styleable.FilterItemView, 0, 0).apply {
@@ -44,6 +46,16 @@ class FilterItemView @JvmOverloads constructor(
         binding.spinnerOperator.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 val operator = binding.spinnerOperator.selectedItem.toString()
+                if(operator.equals("Greater than equal to",true)){
+                    binding.etMax.visibility = View.GONE
+                    binding.etMin.visibility = View.VISIBLE
+                }else if(operator.equals("Less than equal to",true)){
+                    binding.etMax.visibility = View.VISIBLE
+                    binding.etMin.visibility = View.GONE
+                }else{
+                    binding.etMax.visibility = View.VISIBLE
+                    binding.etMin.visibility = View.VISIBLE
+                }
                 _filterLiveData.value = _filterLiveData.value?.copy(operator = operator)
             }
 

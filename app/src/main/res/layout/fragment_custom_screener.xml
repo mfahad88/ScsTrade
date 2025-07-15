@@ -4,8 +4,222 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".views.stockscreener.customscreener.CustomScreenerFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/loader"
+            android:layout_gravity="center"/>
+    <LinearLayout
+        android:id="@+id/filterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="8dp">
 
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterSharePrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Share Price" />
 
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterPE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Price To Earning" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedPE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Price To Earning" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterDividendYield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Dividend Yield" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterPBV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Price To BookValue" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterROA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Return On Assets" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterROE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Return On Equity" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterCurrentRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Current Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterEBITMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="EBIT Margin" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterEBITDAMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="EBITDA Margin" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterEVToEBITDA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Enterprise Value To EBITDA" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterEquityToAssets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Equity To Assets Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedDividendYield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Dividend Yield" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedEarningGrowth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Earning Growth" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedPayoutRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Payout Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedPBV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Price To Book Value" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedRetentionRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected RetentionRatio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterExpectedROE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Expected Return On Equity" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterGrossProfitMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Gross Profit Margin" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterLongTermDebtToAssets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Long Term Debt To Assets" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterLongTermDebtToEquity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Long Term Debt To Equity" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterNetProfitMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Net Profit Margin" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterPayoutRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Payout Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterPriceEarningGrowth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Price Earning Growth" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterQuickRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Quick Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterRetentionRatio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Retention Ratio" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterTotalDebtToAssets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Total Debt To Assets" />
+
+        <com.example.scstrade.views.widgets.FilterItemView
+            android:id="@+id/filterTotalDebtToEquity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:filterTitle="Total Debt To Equity" />
+
+    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockScreenerBinding
+import com.example.scstrade.helper.Utils.Companion.setEdgeToEdgeWithWhiteIcons
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.stockscreener.customscreener.CustomScreenerFragment
 import com.example.scstrade.views.stockscreener.fundamental.FundamentalFragment
@@ -24,9 +22,13 @@ class StockScreenerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityStockScreenerBinding.inflate(LayoutInflater.from(this))
         binding.toolbar.binding.market.text = getString(R.string.stock_screener)
         setContentView(binding.root)
+        loadFragment("customerscreener"){
+            CustomScreenerFragment()
+        }
         onBackPressedDispatcher.addCallback(this) {
             // Custom back logic
             if (supportFragmentManager.backStackEntryCount > 0) {
@@ -64,7 +66,7 @@ class StockScreenerActivity : BaseActivity() {
                     }
                     0->{
                         binding.sector.text = "Custom Screener"
-                        loadFragment("technicals"){
+                        loadFragment("customerscreener"){
                             CustomScreenerFragment()
                         }
                     }
