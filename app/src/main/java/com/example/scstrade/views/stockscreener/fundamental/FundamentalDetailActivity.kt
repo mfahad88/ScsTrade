@@ -40,7 +40,7 @@ class FundamentalDetailActivity : BaseActivity() {
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
         // binding.toolbar.toggleToolbar(false)
-        binding.toolbar.binding.market.text = "Fundamentals"
+        binding.toolbar.binding.market.text = intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)

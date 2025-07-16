@@ -491,6 +491,21 @@
     <string name="technicals">Technicals</string>
     <string name="stock_screener">Stock Screener</string>
     <string name="custom_screener">Custom Screener</string>
+    <string name="please_set_">Please set criteria</string>
+    <string name="total_resul">Total Result: %1$d</string>
+    <string name="dividend_yield">Dividend Yield</string>
+    <string name="ebita_margin">EBITA Margin</string>
+    <string name="enterprise_value_to_ebitda">Enterprise Value To EBITDA</string>
+    <string name="expected_price_to_earning">Expected Price To Earning</string>
+    <string name="gross_profit_margin">Gross Profit Margin</string>
+    <string name="payout_ratio">Payout Ratio</string>
+    <string name="price_earning_growth">Price Earning Growth</string>
+    <string name="price_to_book_value">Price To Book Value</string>
+    <string name="price_to_earning">Price To Earning</string>
+    <string name="return_on_assets">Return On Assets</string>
+    <string name="return_on_equity">Return On Equity</string>
+    <string name="total_debt_to_assets">Total Debt To Assets</string>
+    <string name="total_debt_to_equity">Total Debt To Equity</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

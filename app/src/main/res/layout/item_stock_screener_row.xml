@@ -3,28 +3,213 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
     android:orientation="horizontal">
 
     <!-- Sticky Column -->
-    <TextView
-        android:id="@+id/stickyColumn"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        tools:text="Sticky"
-        android:background="#EEE"
-        android:padding="8dp" />
-
-    <!-- Shared Scroll Columns -->
-    <com.example.scstrade.views.widgets.SyncHorizontalScrollView
-        android:id="@+id/sharedScroll"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_65"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/horizontalContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_5">
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/dp_4"
+                android:src="@drawable/image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_toEndOf="@id/imageViewLogo"
+                android:ellipsize="end"
+                
+                android:text="@string/wtl"
+                android:textAppearance="@style/symbol_wtl"
+                android:textFontWeight="600"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
+                app:layout_constraintEnd_toEndOf="@+id/companyName"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+                app:layout_constraintTop_toTopOf="@+id/imageViewLogo" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewLogo"
+            android:layout_marginStart="@dimen/dp_4"
+            android:text="@string/companyName"
+            android:textAppearance="@style/symbol_companyName"
+            android:textFontWeight="400"
+            android:visibility="visible"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+            app:layout_constraintTop_toBottomOf="@+id/symbol" />
+
+    </LinearLayout>
+   <!-- <TextView
+        android:id="@+id/stickyColumn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        tools:text="Sticky"
+        android:textAppearance="@style/price_to_ea_value"
+        android:textFontWeight="500"
+         />-->
+
+    <!-- Shared Scroll Columns -->
+    <com.example.scstrade.views.widgets.CustomHorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_65"
+        android:fillViewport="true"
+        android:id="@+id/horizontalScroll"
+        android:scrollbars="none">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"/>
-    </com.example.scstrade.views.widgets.SyncHorizontalScrollView>
+            android:orientation="horizontal"
+            >
+
+            <!-- Repeat this for each column heading -->
+
+            <TextView
+                android:id="@+id/dividend_yield"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500"
+                tools:text="@string/dividend_yield" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/ebita_margin"
+                tools:text="@string/ebita_margin"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/enterprise_value_to_ebitda"
+                tools:text="@string/enterprise_value_to_ebitda"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/expected_price_to_earning"
+                tools:text="@string/expected_price_to_earning"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/gross_profit_margin"
+                tools:text="@string/gross_profit_margin"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/payout_ratio"
+                tools:text="@string/payout_ratio"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/price_earning_growth"
+                tools:text="@string/price_earning_growth"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/price_to_book_value"
+                tools:text="@string/price_to_book_value"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/price_to_earning"
+                tools:text="@string/price_to_earning"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/return_on_assets"
+                tools:text="@string/return_on_assets"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/return_on_equity"
+                tools:text="@string/return_on_equity"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/total_debt_to_assets"
+                tools:text="@string/total_debt_to_assets"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:id="@+id/total_debt_to_equity"
+                tools:text="@string/total_debt_to_equity"
+                android:textAppearance="@style/price_to_ea_value"
+                android:textFontWeight="500" />
+
+            <!-- ... up to 19 fields -->
+        </LinearLayout>
+    </com.example.scstrade.views.widgets.CustomHorizontalScrollView>
 </LinearLayout>

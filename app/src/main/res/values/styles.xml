@@ -1646,48 +1646,56 @@
     </style>
 
     <style name="about_compa">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
     </style>
 
     <style name="oil_and_gas">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="registrar_">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="cdc_share_r">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="global_mark">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="index_vs_stocks">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="cash">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="scs_trading_signal_system">
+        <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_primary</item>
@@ -1698,5 +1706,31 @@
         <item name="android:textSize">@dimen/sp_11</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="please_set_">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="total_resul">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+    </style>
+
+    <style name="price_to_ea">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="price_to_ea_value">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

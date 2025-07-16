@@ -5,15 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentCustomScreenerBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.FilterValue
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stockscreener.StockScreenerItem
+import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.StockScreenerViewModel
+import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.stockscreener.StockScreenerActivity
 import com.example.scstrade.views.widgets.FilterItemView
 
 class CustomScreenerFragment : Fragment() {
@@ -23,7 +29,7 @@ class CustomScreenerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[StockScreenerViewModel::class.java]
+        viewModel = (requireActivity() as StockScreenerActivity).viewModel
     }
 
     override fun onCreateView(
@@ -31,7 +37,18 @@ class CustomScreenerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCustomScreenerBinding.inflate(inflater, container, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
+            v.setPadding(
+                systemBarsInsets.left,
+                0,
+                systemBarsInsets.right,
+                systemBarsInsets.bottom
+            )
+
+            insets
+        }
         viewModel.getStockScreener()
         viewModel.mutableStockScreener.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
@@ -67,6 +84,11 @@ class CustomScreenerFragment : Fragment() {
             }
         })
 
+        binding.btn.setOnClickListener {
+            (requireActivity() as StockScreenerActivity).loadFragment("customscreenerdetail"){
+                CustomScreenerListFragment()
+            }
+        }
         return binding.root
     }
 
@@ -106,16 +128,21 @@ class CustomScreenerFragment : Fragment() {
             view.filterLiveData.observe(viewLifecycleOwner) {
                 val filters = filterViews.associate { (v, k) -> k to v.filterLiveData.value!! }
 
-                val filtered = applyFilters(allStocks, filters)
+                viewModel.mutableFiltered.value = applyFilters(allStocks, filters)
 
-                // 3. Calculate average for current field
-                val avg = calculateAverage(filtered, key)
+                if(view.binding.tvAvg.text.toString().equals("Avg: 0.0",true)) {
+                    // 3. Calculate average for current field
+                    val avg = calculateAverage(viewModel.mutableFiltered.value ?: emptyList(), key)
 
-                // 4. Show average and result count in view
-                view.setAverageAndResult(avg, filtered.size)
-                filtered.forEach {
-                    Log.e("List",it.toString())
+                    // 4. Show average and result count in view
+                    view.setAverage(avg)
                 }
+                view.setResult( viewModel.mutableFiltered.value?.size ?: 0)
+                binding.totalResul.text = getString(R.string.total_resul,viewModel.mutableFiltered.value?.size?:0)
+                binding.btn.text = getString(R.string.total_resul,viewModel.mutableFiltered.value?.size?:0)
+              /*  filtered.forEach {
+                    Log.e("List",it.toString())
+                }*/
             }
         }
     }

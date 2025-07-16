@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "134999720068-1qccggi9gl9mvmgecj7dr19at1t6v91e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scstrade.scstradepro",
+            "certificate_hash": "2d2337f71af83dab68af2bd9ba022542acaab18a"
+          }
+        },
+        {
           "client_id": "134999720068-ocbdc272m5gjlo0popuqs9191mfcsbfs.apps.googleusercontent.com",
           "client_type": 3
         }

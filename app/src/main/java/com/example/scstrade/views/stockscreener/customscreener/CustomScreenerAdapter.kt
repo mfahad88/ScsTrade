@@ -4,60 +4,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.scstrade.databinding.ItemScreenerHeaderBinding
 import com.example.scstrade.databinding.ItemStockScreenerBinding
 
 import com.example.scstrade.databinding.ItemStockScreenerRowBinding
+import com.example.scstrade.helper.ScrollSyncHelper
 import com.example.scstrade.model.response.stockscreener.StockScreenerItem
+import com.example.scstrade.viewmodels.SharedViewModel
 import kotlin.reflect.full.memberProperties
 
-class CustomScreenerAdapter(private val itemList: MutableList<StockScreenerItem>?, private val onItemClick: (StockScreenerItem) -> Unit) : RecyclerView.Adapter<CustomScreenerAdapter.CustomScreenerViewHolder>() {
+class CustomScreenerAdapter(private val itemList: MutableList<StockScreenerItem>?,val sharedViewModel: SharedViewModel, private val onItemClick: (StockScreenerItem) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        private const val VIEW_TYPE_HEADER = 0
+        private const val VIEW_TYPE_ROW = 1
+    }
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_ROW
+    }
+    class CustomScreenerViewHolder(val binding: ItemStockScreenerRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class CustomScreenerViewHolder(private val binding: ItemStockScreenerRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: StockScreenerItem?,sharedViewModel: SharedViewModel, onItemClick: (StockScreenerItem) -> Unit) {
+            val stockItem=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item?.symbol,true) }?.first()
+            binding.apply {
+                Glide.with(binding.root.context).load(stockItem?.companyLogo).circleCrop().into(binding.imageViewLogo)
+                symbol.text = item?.symbol
+                companyName.text = stockItem?.nM
+                dividendYield.text = item?.dividendYield.toString()
+                ebitaMargin.text = item?.eBITAMargin.toString()
+                enterpriseValueToEbitda.text = item?.enterpriseValueToEBITDA.toString()
+                expectedPriceToEarning.text = item?.expectedPriceToEarning.toString()
+                grossProfitMargin.text = item?.grossProfitMargin.toString()
+                payoutRatio.text = item?.payoutRatio.toString()
+                priceEarningGrowth.text = item?.priceEarningGrowth.toString()
+                priceToBookValue.text = item?.priceToBookValue.toString()
+                priceToEarning.text = item?.priceToEarning.toString()
+                returnOnAssets.text = item?.returnOnAssets.toString()
+                returnOnEquity.text = item?.returnOnEquity.toString()
+                totalDebtToAssets.text = item?.totalDebtToAssets.toString()
+                totalDebtToEquity.text = item?.totalDebtToEquity.toString()
 
-        fun bind(item: StockScreenerItem?, position: Int, onItemClick: (StockScreenerItem) -> Unit) {
-            binding.stickyColumn.text = item?.symbol
-            val staticKeys = setOf(
-                "Symbol"
-            )
-            StockScreenerItem::class.memberProperties.forEach { prop ->
-                if (prop.name !in staticKeys) {
-                    val rawValue = item?.let { prop.get(it) }
-                    val childBinding = ItemStockScreenerBinding.inflate(LayoutInflater.from(binding.root.context))
-                    val valueStr = when {
-                        rawValue == null -> ""
-                        rawValue.toString().equals("null", ignoreCase = true) -> ""
-                        rawValue is String -> rawValue.trim()
-                        rawValue is Number -> rawValue.toString()
-                        else -> rawValue.toString().trim()
-                    }
-
-                    if (valueStr.isNotEmpty()) {
-                        childBinding.key.text = prop.name
-                        if(position!=0){
-                            childBinding.key.visibility = View.GONE
-                        }
-                        childBinding.value.text = valueStr
-                        /*val row = LinearLayout(root.context).apply {
-                            orientation = LinearLayout.HORIZONTAL
-                        }
-
-                        val keyTv = TextView(ContextThemeWrapper(root.context, R.style.engineering)).apply {
-                            text =  prop.name
-                                .replace("_", " ")
-                                .replace(Regex("(?<=[a-z])(?=[A-Z])"), " ")
-                                .replaceFirstChar { it.uppercaseChar() } + ": "
-                            setTypeface(typeface, Typeface.BOLD)
-                        }
-
-                        val valueTv = TextView(root.context).apply {
-                            text = valueStr
-                        }*/
-
-
-                        binding.horizontalContent.addView(childBinding.root)
-                    }
-                }
             }
+
             binding.root.setOnClickListener {
                 if (item != null) {
                     onItemClick(item)
@@ -66,13 +54,38 @@ class CustomScreenerAdapter(private val itemList: MutableList<StockScreenerItem>
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomScreenerViewHolder {
-        val binding = ItemStockScreenerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomScreenerViewHolder(binding)
+    class HeaderViewHolder(val binding: ItemScreenerHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            // Static XML headers – no binding needed
+        }
     }
 
-    override fun onBindViewHolder(holder: CustomScreenerViewHolder, position: Int) {
-        holder.bind(itemList?.get(position),position, onItemClick)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_HEADER -> {
+                val binding = ItemScreenerHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                HeaderViewHolder(binding)
+            }
+            else -> {
+                val binding = ItemStockScreenerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                CustomScreenerViewHolder(binding)
+            }
+        }
+        /*val binding = ItemStockScreenerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CustomScreenerViewHolder(binding)*/
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+//        holder.bind(itemList?.get(position),sharedViewModel, onItemClick)
+        if (holder is CustomScreenerViewHolder && position > 0) {
+            holder.bind(itemList?.get(position - 1),sharedViewModel, onItemClick) // Subtract 1 for header offset
+            ScrollSyncHelper.register((holder as CustomScreenerViewHolder).binding.horizontalScroll)
+        } else if (holder is HeaderViewHolder) {
+            holder.bind()
+            ScrollSyncHelper.register((holder as HeaderViewHolder).binding.horizontalScroll)
+        }
+
     }
 
     override fun getItemCount(): Int {

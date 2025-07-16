@@ -32,7 +32,7 @@ class GlobalMarketActivity : AppCompatActivity() {
         binding = ActivityGlobalMarketBinding.inflate(LayoutInflater.from(this))
         marketViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application as MyApp)
             .create(GlobalMarketViewModel::class.java)
-
+        binding.toolbar.binding.market.text = "Global Market"
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)

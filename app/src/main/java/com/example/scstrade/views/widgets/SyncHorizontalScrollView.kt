@@ -21,7 +21,7 @@ class SyncHorizontalScrollView @JvmOverloads constructor(
 
         fun syncScroll(source: SyncHorizontalScrollView, scrollX: Int) {
             scrollViews.forEach {
-                if (it != source) {
+                if (it != source && it.scrollX != scrollX) {
                     it.scrollTo(scrollX, 0)
                 }
             }

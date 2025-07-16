@@ -50,6 +50,7 @@ class MyApp : Application() {
             WebView.setWebContentsDebuggingEnabled(true)
         }
         getSha1Fingerprint()
+        getSha256Fingerprint()
         FirebaseApp.initializeApp(this)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         appStartTime = System.currentTimeMillis()
@@ -142,7 +143,24 @@ class MyApp : Application() {
             e.printStackTrace()
         }
     }
-
+    fun getSha256Fingerprint() {
+        try {
+            val packageInfo: PackageInfo = packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            for (signature in packageInfo.signatures!!) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA-256")
+                md.update(signature.toByteArray())
+                val sha256Fingerprint = md.digest().joinToString(":") { "%02X".format(it) }
+                Log.d("SHA-256 Fingerprint", sha256Fingerprint)
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        }
+    }
     override fun onTerminate() {
         super.onTerminate()
         appScope.cancel()

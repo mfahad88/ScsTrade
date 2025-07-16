@@ -83,8 +83,12 @@ class FilterItemView @JvmOverloads constructor(
         binding.spinnerOperator.adapter = adapter
     }
 
-    fun setAverageAndResult(avg: Double, result: Int) {
+    fun setAverage(avg: Double){
         binding.tvAvg.text = "Avg: $avg"
+    }
+
+    fun setResult(result: Int) {
+
         binding.tvResult.text = "Result: $result"
     }
 }

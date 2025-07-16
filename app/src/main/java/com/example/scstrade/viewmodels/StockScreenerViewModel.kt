@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 class StockScreenerViewModel(application: Application): AndroidViewModel(application) {
     private val repository= StockScreenerRepository(RetrofitInstance.create(ApiService::class.java),application)
     val mutableStockScreener = MutableLiveData<Resource<List<StockScreenerItem>>>()
-
+    var mutableFiltered= MutableLiveData<List<StockScreenerItem>>()
 
     fun getStockScreener(){
         mutableStockScreener.value = Resource.Loading()

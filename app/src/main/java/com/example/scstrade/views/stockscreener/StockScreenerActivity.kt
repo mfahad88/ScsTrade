@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockScreenerBinding
 import com.example.scstrade.helper.Utils.Companion.setEdgeToEdgeWithWhiteIcons
+import com.example.scstrade.viewmodels.StockScreenerViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.stockscreener.customscreener.CustomScreenerFragment
 import com.example.scstrade.views.stockscreener.fundamental.FundamentalFragment
@@ -19,9 +21,11 @@ import com.google.android.material.tabs.TabLayout
 
 class StockScreenerActivity : BaseActivity() {
     lateinit var binding:ActivityStockScreenerBinding
+    lateinit var viewModel: StockScreenerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        viewModel = ViewModelProvider(this)[StockScreenerViewModel::class.java]
         setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityStockScreenerBinding.inflate(LayoutInflater.from(this))
         binding.toolbar.binding.market.text = getString(R.string.stock_screener)
@@ -31,7 +35,7 @@ class StockScreenerActivity : BaseActivity() {
         }
         onBackPressedDispatcher.addCallback(this) {
             // Custom back logic
-            if (supportFragmentManager.backStackEntryCount > 0) {
+            if (supportFragmentManager.backStackEntryCount > 1) {
 
                 supportFragmentManager.popBackStack()
                 supportFragmentManager.addOnBackStackChangedListener {

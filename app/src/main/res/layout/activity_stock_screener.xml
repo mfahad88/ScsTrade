@@ -46,6 +46,7 @@
         android:id="@+id/breadcrums"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:paddingVertical="@dimen/dp_10"
         android:paddingHorizontal="@dimen/dp_20"
         android:background="#012D00"

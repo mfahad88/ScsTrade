@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:orientation="horizontal">
+
+    <!-- Sticky Symbol -->
+    <TextView
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="4dp"
+        android:text="Symbol"
+        android:textAppearance="@style/price_to_ea"
+        android:textFontWeight="500"
+        />
+
+    <!-- Scrollable content -->
+    <com.example.scstrade.views.widgets.CustomHorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/horizontalScroll"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/black">
+
+            <!-- Repeat this for each column heading -->
+
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Dividend Yield"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="EBITA Margin"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Enterprise Value To EBITDA"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Expected Price To Earning"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Gross Profit Margin"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Payout Ratio"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Price Earning Growth"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Price To Book Value"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Price To Earning"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Return On Assets"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Return On Equity"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Total Debt To Assets"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+            <TextView
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="4dp"
+                android:gravity="center_vertical"
+                android:text="Total Debt To Equity"
+                android:textAppearance="@style/price_to_ea"
+                android:textFontWeight="500" />
+
+            <!-- ... up to 19 fields -->
+        </LinearLayout>
+    </com.example.scstrade.views.widgets.CustomHorizontalScrollView>
+</LinearLayout>
