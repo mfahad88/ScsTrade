@@ -110,7 +110,7 @@ class WatchListDetailActivity : BaseActivity() {
                     }
 
 
-                    (binding.recyclerView.adapter as WatchListDetailAdapter).addItems(result.data?: emptyList())
+                    (binding.recyclerView.adapter as WatchListDetailAdapter).submitList(result.data?.toMutableList())
                 }
             }
 
@@ -142,7 +142,7 @@ class WatchListDetailActivity : BaseActivity() {
         binding.recyclerView.apply {
             layoutManager= LinearLayoutManager(this@WatchListDetailActivity, LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(20.dp))
-            adapter= WatchListDetailAdapter(this@WatchListDetailActivity, mutableListOf(), onItemClick = { item->
+            adapter= WatchListDetailAdapter(this@WatchListDetailActivity,  onItemClick = { item->
 
                 val stockItem=list.filter { it.watchListSymbol.equals(item.sYM,true) }.first()
                 viewModel.deleteSymbol(stockItem.watchListDetailID,WatchListMainID?:0)

@@ -100,9 +100,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
                     }
 
 
-                    /*   val flist=
-                           sharedViewModel.mutableAllData.value?.data?.filter { p1-> watchList!!.any { p2-> p1.sYM.equals(p2.watchListSymbol,true) } }
-                               ?.toList()?: emptyList()*/
+
                     withContext(Dispatchers.Main){
                         if(watchList?.size==filterList.size)
                             mutableWatchListDetail.value = Resource.Success(filterList)
@@ -112,24 +110,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
                         mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
                     }
                 }
-               /* try{
-                    val watchList=repository.getWatchListDetail(watchListId).data?.sortedBy { it.watchListPosition }
-                    withContext(Dispatchers.Main){
-                        mutableWatchListDetailItem.value=watchList?: emptyList()
-                    }
 
-                    val filterList=
-                        sharedViewModel.mutableAllData.value?.data?.filter { p1-> watchList!!.any { p2-> p1.sYM.equals(p2.watchListSymbol,true) } }
-                            ?.toList()?: emptyList()
-                    withContext(Dispatchers.Main){
-                        if(watchList?.size==filterList.size)
-                        mutableWatchListDetail.value = Resource.Success(filterList)
-                    }
-                }catch (e:Exception){
-                    withContext(Dispatchers.Main){
-                        mutableWatchListDetail.value = Resource.Error(e.message?:"An error occurred")
-                    }
-                }*/
                 delay(5000)
             }
         }
