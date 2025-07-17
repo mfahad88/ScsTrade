@@ -13,6 +13,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.ImageDecoder
+import android.graphics.drawable.Drawable
 import android.icu.text.DecimalFormat
 import android.icu.util.Calendar
 import android.net.TrafficStats
@@ -45,8 +46,15 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.scstrade.R
 import com.example.scstrade.helper.AppConstants.Companion.LIGHT_MODE
+import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.views.widgets.TextDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -167,6 +175,43 @@ class Utils {
                 e.printStackTrace()
                 return ""
             }*/
+        }
+
+        fun getCompanyLogo(context: Context,imageView: ImageView,stockItem: StockItem?){
+            imageView.alpha = 0f
+            val firstChar = stockItem?.sYM?.first()?.uppercaseChar().toString()
+            val color = Utils.getColorFromSymbol(firstChar)
+            val placeholderDrawable = TextDrawable(firstChar, color)
+            Glide.with(context).load(stockItem?.companyLogo)
+                .placeholder(placeholderDrawable)
+                .circleCrop()
+                .listener(object : RequestListener<Drawable> {
+
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: com.bumptech.glide.request.target.Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        imageView.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        imageView.alpha = 1f
+                        return false // Let Glide handle setting the image
+                    }
+
+
+                })
+                .into(imageView)
         }
 
         fun getScreenDPI(context: Context): Int {

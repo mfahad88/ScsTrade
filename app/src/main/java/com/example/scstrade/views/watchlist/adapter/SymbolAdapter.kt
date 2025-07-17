@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemSymbolBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import java.util.Collections
 
@@ -20,9 +21,8 @@ class SymbolAdapter(private val itemList: List<StockItem>, private val onItemCli
         fun bind(item: StockItem, onItemClick: (StockItem) -> Unit ) {
             binding.symbol.text=item.sYM
             binding.companyName.text = item.nM
-            Glide.with(binding.root.context).load(item.companyLogo).circleCrop()
-                .placeholder(ContextCompat.getDrawable(binding.root.context, R.drawable.building))
-                .into(binding.imageView6)
+            Utils.getCompanyLogo(binding.root.context,binding.imageView6,item)
+
             binding.main.setOnClickListener {
                 if(binding.imageViewSelected.visibility == View.INVISIBLE){
                 binding.imageViewSelected.visibility = View.VISIBLE

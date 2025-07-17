@@ -19,11 +19,11 @@
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabBackground="@color/md_theme_surface"
         android:id="@+id/tabLayout"
-        app:tabMode="scrollable"
         style="@style/CustomTabLayout"
         android:layout_gravity="center_horizontal"
-        app:tabGravity="center">
+        app:tabGravity="fill">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -66,8 +66,7 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

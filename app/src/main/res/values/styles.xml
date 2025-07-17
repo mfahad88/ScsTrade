@@ -1733,4 +1733,24 @@
         <item name="android:letterSpacing">-0.01</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="ScreenerHeader">
+        <item name="android:layout_width">@dimen/dp_100</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingHorizontal">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">@style/price_to_ea</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="RowField">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAppearance">@style/price_to_ea_value</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
 </resources>

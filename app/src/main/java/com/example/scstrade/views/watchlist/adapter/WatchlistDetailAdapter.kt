@@ -64,10 +64,10 @@ class WatchListDetailAdapter(
             binding.valueTrade.text = String.format("%.2f", stockItem.cL)
             binding.netChange.text =
                 "${if (stockItem.cH > 0.0) "+" else ""}${stockItem.cH} ${if (stockItem.cHP > 0.0) "+" else ""}${String.format("%.2f", stockItem.cHP)}%"
-            binding.high.text = "H: ${stockItem.hP}"
-            binding.low.text = "L: ${stockItem.lP}"
-            binding.high52.text = "H: ${if (!TextUtils.isEmpty(stockItem.high52)) stockItem.high52 else "0.0"}"
-            binding.low52.text = "L: ${if (!TextUtils.isEmpty(stockItem.low52)) stockItem.low52 else "0.0"}"
+            binding.high.text = "H: ${BigDecimal(stockItem.hP).setScale(2, RoundingMode.HALF_UP).toString()}"
+            binding.low.text = "L: ${BigDecimal(stockItem.lP).setScale(2, RoundingMode.HALF_UP).toString()}"
+            binding.high52.text = "H: ${if (!TextUtils.isEmpty(stockItem.high52)) BigDecimal(stockItem.high52).setScale(2, RoundingMode.HALF_UP).toString() else "0.0"}"
+            binding.low52.text = "L: ${if (!TextUtils.isEmpty(stockItem.low52)) BigDecimal(stockItem.low52).setScale(2, RoundingMode.HALF_UP).toString() else "0.0"}"
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, SnapshotActivity::class.java)

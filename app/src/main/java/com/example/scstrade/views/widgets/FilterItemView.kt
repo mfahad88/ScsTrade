@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ViewFilterItemBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.FilterValue
 
 class FilterItemView @JvmOverloads constructor(
@@ -47,14 +48,14 @@ class FilterItemView @JvmOverloads constructor(
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 val operator = binding.spinnerOperator.selectedItem.toString()
                 if(operator.equals("Greater than equal to",true)){
-                    binding.etMax.visibility = View.GONE
-                    binding.etMin.visibility = View.VISIBLE
+                    binding.cardMax.visibility = View.GONE
+                    binding.cardMin.visibility = View.VISIBLE
                 }else if(operator.equals("Less than equal to",true)){
-                    binding.etMax.visibility = View.VISIBLE
-                    binding.etMin.visibility = View.GONE
+                    binding.cardMax.visibility = View.VISIBLE
+                    binding.cardMin.visibility = View.GONE
                 }else{
-                    binding.etMax.visibility = View.VISIBLE
-                    binding.etMin.visibility = View.VISIBLE
+                    binding.cardMax.visibility = View.VISIBLE
+                    binding.cardMin.visibility = View.VISIBLE
                 }
                 _filterLiveData.value = _filterLiveData.value?.copy(operator = operator)
             }
@@ -84,7 +85,7 @@ class FilterItemView @JvmOverloads constructor(
     }
 
     fun setAverage(avg: Double){
-        binding.tvAvg.text = "Avg: $avg"
+        binding.tvAvg.text = "Avg: ${String.format("%,.2f", avg)}"
     }
 
     fun setResult(result: Int) {

@@ -43,48 +43,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
         fun bind(stockItem: StockItem?, previousPrice: Double?) {
             if (stockItem!=null){
-                val firstChar = stockItem.sYM.first().uppercaseChar().toString()
-                val color = Utils.getColorFromSymbol(firstChar)
-                val placeholderDrawable = TextDrawable(firstChar, color)
-                binding.root.setOnClickListener {
-                    val intent= Intent(binding.root.context, SnapshotActivity::class.java)
-                    if(stockItem.sYM.contains("-")) {
-                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM.substringBefore("-"))
-                    }else{
-                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM)
-                    }
-                    binding.root.context.startActivity(intent)
-                }
-                Glide.with(binding.root.context).load(stockItem.companyLogo)
-                    .placeholder(placeholderDrawable)
-                    .circleCrop()
-                    .listener(object : RequestListener<Drawable> {
-
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            dataSource: DataSource,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            binding.imageView6.alpha = 1f
-                            return false // Let Glide handle setting the image
-                        }
-
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            binding.imageView6.alpha = 1f
-                            return false // Let Glide handle setting the image
-                        }
-
-
-                    })
-                    .into(binding.imageView6)
+                Utils.getCompanyLogo(binding.root.context,binding.imageView6,stockItem)
                 if(stockItem.iN.lowercase().contains("kmi")){
                     binding.shariah.visibility= View.VISIBLE
                     binding.separator.visibility = View.VISIBLE

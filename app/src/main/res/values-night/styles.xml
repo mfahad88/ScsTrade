@@ -1523,6 +1523,10 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">#A44FA9</item>
     </style>
-
+    <style name="price_to_ea">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
     <style name="material_information"></style>
 </resources>

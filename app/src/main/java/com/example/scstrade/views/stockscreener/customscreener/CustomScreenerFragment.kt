@@ -1,7 +1,6 @@
 package com.example.scstrade.views.stockscreener.customscreener
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,23 +8,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentCustomScreenerBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.FilterValue
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.stockscreener.StockScreenerItem
-import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.viewmodels.StockScreenerViewModel
-import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.stockscreener.StockScreenerActivity
-import com.example.scstrade.views.widgets.FilterItemView
 
 class CustomScreenerFragment : Fragment() {
+
     private lateinit var binding: FragmentCustomScreenerBinding
     private lateinit var viewModel: StockScreenerViewModel
     private var allStocks: List<StockScreenerItem> = emptyList()
+    private val calculatedAverages = mutableSetOf<String>() // Track fields whose avg is already set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,32 +34,32 @@ class CustomScreenerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCustomScreenerBinding.inflate(inflater, container, false)
+
+        binding.totalResul.text = getString(R.string.total_resul, 0)
+        binding.btn.text = getString(R.string.total_record, 0)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            v.setPadding(
-                systemBarsInsets.left,
-                0,
-                systemBarsInsets.right,
-                systemBarsInsets.bottom
-            )
-
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+
         viewModel.getStockScreener()
         viewModel.mutableStockScreener.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Error -> {
-                    binding.loader.visibility =View.GONE
+                    binding.loader.visibility = View.GONE
                     Utils.showError(requireView(), result.message)
                 }
-                is Resource.Loading -> {}
+
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
+
                 is Resource.Success -> {
-                    /*allStocks = result.data ?: emptyList()*/
-                    binding.apply {
-                        loader.visibility = View.GONE
-                        filterContainer.visibility = View.VISIBLE
-                    }
+                    binding.loader.visibility = View.GONE
+                    binding.filterContainer.visibility = View.VISIBLE
+
                     allStocks = (result.data ?: emptyList()).filterNot { stock ->
                         stock.price == 0.0 &&
                                 stock.priceToEarning == 0.0 &&
@@ -79,16 +76,18 @@ class CustomScreenerFragment : Fragment() {
                                 stock.totalDebtToAssets == 0.0 &&
                                 stock.totalDebtToEquity == 0.0
                     }
+
                     observeAllFilterChanges()
                 }
             }
         })
 
         binding.btn.setOnClickListener {
-            (requireActivity() as StockScreenerActivity).loadFragment("customscreenerdetail"){
+            (requireActivity() as StockScreenerActivity).loadFragment("customscreenerdetail") {
                 CustomScreenerListFragment()
             }
         }
+
         return binding.root
     }
 
@@ -101,48 +100,71 @@ class CustomScreenerFragment : Fragment() {
             binding.filterPBV to "PriceToBookValue",
             binding.filterROA to "ReturnOnAssets",
             binding.filterROE to "ReturnOnEquity",
-            binding.filterCurrentRatio to "CurrentRatio",
-            binding.filterEBITMargin to "EBITMargin",
             binding.filterEBITDAMargin to "EBITDAMargin",
             binding.filterEVToEBITDA to "EnterpriseValueToEBITDA",
-            binding.filterEquityToAssets to "EquityToAssetsRatio",
-            binding.filterExpectedDividendYield to "ExpectedDividendYield",
-            binding.filterExpectedEarningGrowth to "ExpectedEarningGrowth",
-            binding.filterExpectedPayoutRatio to "ExpectedPayoutRatio",
-            binding.filterExpectedPBV to "ExpectedPriceToBookValue",
-            binding.filterExpectedRetentionRatio to "ExpectedRetentionRatio",
-            binding.filterExpectedROE to "ExpectedReturnOnEquity",
             binding.filterGrossProfitMargin to "GrossProfitMargin",
-            binding.filterLongTermDebtToAssets to "LongTermDebtToAssets",
-            binding.filterLongTermDebtToEquity to "LongTermDebtToEquity",
-            binding.filterNetProfitMargin to "NetProfitMargin",
             binding.filterPayoutRatio to "PayoutRatio",
             binding.filterPriceEarningGrowth to "PriceEarningGrowth",
-            binding.filterQuickRatio to "QuickRatio",
-            binding.filterRetentionRatio to "RetentionRatio",
             binding.filterTotalDebtToAssets to "TotalDebtToAssets",
             binding.filterTotalDebtToEquity to "TotalDebtToEquity"
         )
 
-        filterViews.forEach { (view, key) ->
+        filterViews.forEach { (view, _) ->
             view.filterLiveData.observe(viewLifecycleOwner) {
                 val filters = filterViews.associate { (v, k) -> k to v.filterLiveData.value!! }
 
-                viewModel.mutableFiltered.value = applyFilters(allStocks, filters)
+                // ✅ Always apply all filters on full list
+                val filtered = applyFilters(allStocks, filters)
+                viewModel.mutableFiltered.value = filtered
 
-                if(view.binding.tvAvg.text.toString().equals("Avg: 0.0",true)) {
-                    // 3. Calculate average for current field
-                    val avg = calculateAverage(viewModel.mutableFiltered.value ?: emptyList(), key)
+                val resultCount = filtered.size
+                binding.totalResul.text = getString(R.string.total_resul, resultCount)
+                binding.btn.text = getString(R.string.total_record, resultCount)
 
-                    // 4. Show average and result count in view
-                    view.setAverage(avg)
+                filterViews.forEach { (v, key) ->
+                    if (!calculatedAverages.contains(key)) {
+                        val avg = calculateAverage(allStocks, key)
+                        v.setAverage(avg)
+                        calculatedAverages.add(key)
+                    }
+
+                    // ✅ Calculate and set per-row result count
+                    val singleFilter = filters[key]
+                    val count = allStocks.count { stock ->
+                        val value = when (key) {
+                            "Price" -> stock.price
+                            "PriceToEarning" -> stock.priceToEarning
+                            "ExpectedPriceToEarning" -> stock.expectedPriceToEarning
+                            "DividendYield" -> stock.dividendYield
+                            "PriceToBookValue" -> stock.priceToBookValue
+                            "ReturnOnAssets" -> stock.returnOnAssets
+                            "ReturnOnEquity" -> stock.returnOnEquity
+                            "EBITDAMargin" -> stock.eBITAMargin
+                            "EnterpriseValueToEBITDA" -> stock.enterpriseValueToEBITDA
+                            "GrossProfitMargin" -> stock.grossProfitMargin
+                            "PayoutRatio" -> stock.payoutRatio
+                            "PriceEarningGrowth" -> stock.priceEarningGrowth
+                            "TotalDebtToAssets" -> stock.totalDebtToAssets
+                            "TotalDebtToEquity" -> stock.totalDebtToEquity
+                            else -> return@count false
+                        }
+
+                        if (singleFilter == null || (singleFilter.min == null && singleFilter.max == null)) return@count false
+
+                        when (singleFilter.operator.trim()) {
+                            "Between two values" -> {
+                                val minOk = singleFilter.min?.let { value >= it } ?: true
+                                val maxOk = singleFilter.max?.let { value <= it } ?: true
+                                minOk && maxOk
+                            }
+                            "Greater than equal to" -> singleFilter.min?.let { value >= it } ?: false
+                            "Less than equal to" -> singleFilter.max?.let { value <= it } ?: false
+                            else -> false
+                        }
+                    }
+
+                    v.setResult(count)
                 }
-                view.setResult( viewModel.mutableFiltered.value?.size ?: 0)
-                binding.totalResul.text = getString(R.string.total_resul,viewModel.mutableFiltered.value?.size?:0)
-                binding.btn.text = getString(R.string.total_resul,viewModel.mutableFiltered.value?.size?:0)
-              /*  filtered.forEach {
-                    Log.e("List",it.toString())
-                }*/
             }
         }
     }
@@ -151,8 +173,11 @@ class CustomScreenerFragment : Fragment() {
         stocks: List<StockScreenerItem>,
         filters: Map<String, FilterValue>
     ): List<StockScreenerItem> {
-        return stocks.filter { stock ->
-            filters.all { (field, filter) ->
+        var currentList = stocks
+        filters.forEach { (field, filter) ->
+            if (filter.min == null && filter.max == null) return@forEach
+
+            currentList = currentList.filter { stock ->
                 val value = when (field) {
                     "Price" -> stock.price
                     "PriceToEarning" -> stock.priceToEarning
@@ -161,34 +186,21 @@ class CustomScreenerFragment : Fragment() {
                     "PriceToBookValue" -> stock.priceToBookValue
                     "ReturnOnAssets" -> stock.returnOnAssets
                     "ReturnOnEquity" -> stock.returnOnEquity
-                    "CurrentRatio" -> 0.0 // Replace with actual field if available
-                    "EBITMargin" -> 0.0
                     "EBITDAMargin" -> stock.eBITAMargin
                     "EnterpriseValueToEBITDA" -> stock.enterpriseValueToEBITDA
-                    "EquityToAssetsRatio" -> 0.0
-                    "ExpectedDividendYield" -> 0.0
-                    "ExpectedEarningGrowth" -> stock.priceEarningGrowth
-                    "ExpectedPayoutRatio" -> stock.payoutRatio
-                    "ExpectedPriceToBookValue" -> stock.priceToBookValue
-                    "ExpectedRetentionRatio" -> 0.0
-                    "ExpectedReturnOnEquity" -> stock.returnOnEquity
                     "GrossProfitMargin" -> stock.grossProfitMargin
-                    "LongTermDebtToAssets" -> 0.0
-                    "LongTermDebtToEquity" -> 0.0
-                    "NetProfitMargin" -> 0.0
                     "PayoutRatio" -> stock.payoutRatio
                     "PriceEarningGrowth" -> stock.priceEarningGrowth
-                    "QuickRatio" -> 0.0
-                    "RetentionRatio" -> 0.0
                     "TotalDebtToAssets" -> stock.totalDebtToAssets
                     "TotalDebtToEquity" -> stock.totalDebtToEquity
-                    else -> return@all true
+                    else -> return@filter true
                 }
 
                 when (filter.operator.trim()) {
                     "Between two values" -> {
-                        (filter.min == null || value >= filter.min) &&
-                                (filter.max == null || value <= filter.max)
+                        val minOk = filter.min?.let { value >= it } ?: true
+                        val maxOk = filter.max?.let { value <= it } ?: true
+                        minOk && maxOk
                     }
                     "Greater than equal to" -> filter.min?.let { value >= it } ?: true
                     "Less than equal to" -> filter.max?.let { value <= it } ?: true
@@ -196,6 +208,8 @@ class CustomScreenerFragment : Fragment() {
                 }
             }
         }
+
+        return currentList
     }
 
     private fun calculateAverage(stocks: List<StockScreenerItem>, field: String): Double {
@@ -215,7 +229,6 @@ class CustomScreenerFragment : Fragment() {
                 "PriceEarningGrowth" -> it.priceEarningGrowth
                 "TotalDebtToAssets" -> it.totalDebtToAssets
                 "TotalDebtToEquity" -> it.totalDebtToEquity
-                // Unsupported fields (not available in data class) return null
                 else -> null
             }
         }

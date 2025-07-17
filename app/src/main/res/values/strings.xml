@@ -506,6 +506,7 @@
     <string name="return_on_equity">Return On Equity</string>
     <string name="total_debt_to_assets">Total Debt To Assets</string>
     <string name="total_debt_to_equity">Total Debt To Equity</string>
+    <string name="total_record">Total Record Found (%1$d)</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

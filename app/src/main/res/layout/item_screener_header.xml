@@ -2,142 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:background="@color/colorDarkerr"
     android:orientation="horizontal">
 
-    <!-- Sticky Symbol -->
+    <!-- Sticky Symbol Column -->
     <TextView
-        android:layout_width="@dimen/dp_120"
+        android:layout_width="@dimen/dp_130"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:paddingHorizontal="4dp"
         android:text="Symbol"
         android:textAppearance="@style/price_to_ea"
-        android:textFontWeight="500"
-        />
+        android:textFontWeight="500" />
 
-    <!-- Scrollable content -->
+    <!-- Scrollable Header Fields -->
     <com.example.scstrade.views.widgets.CustomHorizontalScrollView
+        android:id="@+id/horizontalScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/horizontalScroll"
+        android:scrollbars="none"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/black">
+            android:background="@color/colorDarkerr">
 
-            <!-- Repeat this for each column heading -->
+            <!-- Order from Screenshot -->
+            <TextView style="@style/ScreenerHeader" android:text="Share Price" />
+            <TextView style="@style/ScreenerHeader" android:text="Price To Earning" />
+            <TextView style="@style/ScreenerHeader" android:text="Expected Price To Earning" />
+            <TextView style="@style/ScreenerHeader" android:text="Dividend Yield" />
+            <TextView style="@style/ScreenerHeader" android:text="Price To BookValue" />
+            <TextView style="@style/ScreenerHeader" android:text="Return On Assets" />
+            <TextView style="@style/ScreenerHeader" android:text="Return On Equity" />
+            <TextView style="@style/ScreenerHeader" android:text="Enterprise Value To EBITDA" />
 
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Dividend Yield"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="EBITA Margin"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Enterprise Value To EBITDA"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Expected Price To Earning"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Gross Profit Margin"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Payout Ratio"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Price Earning Growth"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Price To Book Value"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Price To Earning"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
+            <!-- Remaining Fields (place at the end) -->
+            <TextView style="@style/ScreenerHeader" android:text="EBITA Margin" />
+            <TextView style="@style/ScreenerHeader" android:text="Gross Profit Margin" />
+            <TextView style="@style/ScreenerHeader" android:text="Payout Ratio" />
+            <TextView style="@style/ScreenerHeader" android:text="Price Earning Growth" />
+            <TextView style="@style/ScreenerHeader" android:text="Total Debt To Assets" />
+            <TextView style="@style/ScreenerHeader" android:text="Total Debt To Equity" />
 
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Return On Assets"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Return On Equity"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Total Debt To Assets"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-            <TextView
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="4dp"
-                android:gravity="center_vertical"
-                android:text="Total Debt To Equity"
-                android:textAppearance="@style/price_to_ea"
-                android:textFontWeight="500" />
-
-            <!-- ... up to 19 fields -->
         </LinearLayout>
     </com.example.scstrade.views.widgets.CustomHorizontalScrollView>
 </LinearLayout>

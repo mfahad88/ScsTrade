@@ -48,7 +48,8 @@ class CustomScreenerListFragment : Fragment() {
         setupRecyclerView()
         viewModel.mutableFiltered.observe(viewLifecycleOwner, Observer { result->
             val stockListWithEmptyRow = emptyList<StockScreenerItem>() + result
-            binding.recyclerView.adapter = CustomScreenerAdapter(stockListWithEmptyRow.toMutableList(),sharedViewModel){
+            val symbolMap = sharedViewModel.mutableAllData.value?.data?.associateBy { it.sYM.uppercase() } ?: emptyMap()
+            binding.recyclerView.adapter = CustomScreenerAdapter(stockListWithEmptyRow.toMutableList(),symbolMap){
 
             }
         })
