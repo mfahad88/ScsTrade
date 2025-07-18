@@ -57,7 +57,8 @@ public class NetChangeChip extends RelativeLayout {
         double preClose = Double.parseDouble(pClose);
 
         String changeSign = netChange > 0.0 ? "+" : "";
-        String changeValue = Utils.Companion.formatDouble(netChange);
+//        String changeValue = Utils.Companion.formatDouble(netChange);
+        String changeValue = String.format("%,.2f",netChange);
         double changePercent = (netChange / preClose) * 100;
         String percentValue = Utils.Companion.formatDouble(changePercent);
 

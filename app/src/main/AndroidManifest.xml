@@ -30,18 +30,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".views.stockscreener.StockScreenerActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            android:screenOrientation="portrait"
+            android:name=".views.portfolio.activities.MyPortfolioActivity"
             android:exported="false" />
+        <activity
+            android:name=".views.stockscreener.StockScreenerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".views.globalmarket.GlobalMarketActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.aof.StatusActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.BaseActivity"
             android:exported="false"
@@ -184,11 +187,13 @@
             android:name=".views.stockscreener.fundamental.FundamentalDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-    <!--    <activity
+        <!--
+    <activity
             android:name=".views.stockscreener.fundamental.FundamentalActivity"
             android:configChanges="screenSize|orientation"
             android:exported="false"
-            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" />
+        -->
         <activity
             android:name=".views.stockscreener.technicals.TechnicalsDetailActivity"
             android:exported="false"

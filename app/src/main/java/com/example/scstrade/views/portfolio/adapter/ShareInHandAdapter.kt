@@ -15,10 +15,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 
 class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
-                         private val sharedViewModel: SharedViewModel,
-                         private val onItemClick: (FifoPortfolio) -> Unit,
-                         private val onItemEditClick: (FifoPortfolio) -> Unit,
-                         private val onItemClickSnapshot: (FifoPortfolio) -> Unit
+                         private val sharedViewModel: SharedViewModel
 ) : ListAdapter<FifoPortfolio,ShareInHandAdapter.ShareInHandViewHolder>(ShareInHandDiffCallback()) {
 
     class ShareInHandDiffCallback:DiffUtil.ItemCallback<FifoPortfolio>(){
@@ -35,7 +32,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
         var previousFifoPortfolio:FifoPortfolio? = null
         var previousStockItem:StockItem? = null
 
-        fun bind(item:FifoPortfolio,stockItem: StockItem, onItemClick: (FifoPortfolio) -> Unit,onItemEditClick: (FifoPortfolio) -> Unit,onItemClickSnapshot: (FifoPortfolio) -> Unit) {
+        fun bind(item:FifoPortfolio,stockItem: StockItem) {
             Log.e("Item--->",item.toString())
 
 
@@ -67,7 +64,6 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
                 binding.totalPercentPL.text = "(0.0%)"
             }
             binding.btnSell.setOnClickListener {
-                onItemClick(item)
             }
             binding.threeDots.setOnClickListener {
 
@@ -78,12 +74,10 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
                     listOf("Edit Company")
                 ) {
                     if (it.contains("Edit", true)) {
-                        onItemEditClick(item)
                     }
                 }
             }
             binding.snapshotLogo.setOnClickListener {
-                onItemClickSnapshot(item)
             }
             previousFifoPortfolio = item
             previousStockItem = stockItem
@@ -98,9 +92,8 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
     override fun onBindViewHolder(holder: ShareInHandViewHolder, position: Int) {
 
         val list=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(getItem(position).symbol,true) }?.first()
-        if (list != null) {
-            holder.bind(getItem(position),list, onItemClick,onItemEditClick,onItemClickSnapshot)
-        }
+
+        holder.bind(getItem(position))
     }
 
 

@@ -26,13 +26,14 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
             onItemDeleteClick: (PortfolioItemDetail) -> Unit
         ) {
             binding.apply {
-                dateValue.text = Utils.convertDateString(item.date,"dd-MMM-yyyy")
-                sharesValue.text = "${item.quantity}"
-                netPriceValue.text = "${Utils.roundTwoDecimal(item.rate.toDouble())}"
-                netCostValue.text = "${Utils.roundTwoDecimal(item.rate.toDouble().times(item.quantity.toDouble()))}"
-                currentPLValue.text = "${Utils.roundTwoDecimal(item.currentPL)} (${Utils.roundTwoDecimal(item.currentPercentPL)}%)"
-                currentPLValue.setTextColor(if(currentPLValue.text.contains("-")) ContextCompat.getColor(itemView.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(itemView.context, R.color.md_theme_primary))
-                threeDots.setOnClickListener {
+                buyDate.text = Utils.convertDateString(item.date,"dd-MMM-yyyy")
+                shares.text = "${item.quantity}"
+                netPrice.text = "${Utils.roundTwoDecimal(item.rate.toDouble())}"
+                netCost.text = "${Utils.roundTwoDecimal(item.rate.toDouble().times(item.quantity.toDouble()))}"
+                currentPl.text = "${Utils.roundTwoDecimal(item.currentPL)}"
+                currentPlPercent.text = "(${Utils.roundTwoDecimal(item.currentPercentPL)}%)"
+//                currentPLValue.setTextColor(if(currentPLValue.text.contains("-")) ContextCompat.getColor(itemView.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(itemView.context, R.color.md_theme_primary))
+              /*  threeDots.setOnClickListener {
                     if(binding.floatingMenu.visibility == View.GONE) {
                         binding.floatingMenu.visibility = View.VISIBLE
                     }else{
@@ -47,7 +48,7 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
                 delete.setOnClickListener {
                     onItemDeleteClick(item)
                     binding.floatingMenu.visibility = View.GONE
-                }
+                }*/
 //                currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
 //                        "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
             }

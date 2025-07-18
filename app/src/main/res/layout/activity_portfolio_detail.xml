@@ -398,7 +398,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/linearLayout7"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
@@ -422,19 +422,9 @@
                     android:text="@string/share_in"
                     android:textAppearance="@style/share_in"
                     android:textFontWeight="400" />
-            </LinearLayout>
+            </LinearLayout>-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_15"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_share_in_hand" />
+
 
 
             <LinearLayout

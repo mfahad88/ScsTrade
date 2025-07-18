@@ -1,134 +1,160 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/share_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/dp_10"
-    android:paddingVertical="@dimen/dp_15"
+    android:background="@android:color/white"
+    android:padding="12dp"
+    android:orientation="horizontal"
     android:weightSum="4">
 
+    <!-- Column 1 -->
     <LinearLayout
-        android:layout_width="@dimen/dp_0"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sell_date"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/sell_date_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_price_value"
-            android:textAppearance="@style/net_price_value" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/quantity_so"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/quantity_so_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_cost_value"
-            android:textAppearance="@style/net_price_value" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/dp_25"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/purchase_pr"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/purchase_pr_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_price_value"
-            android:textAppearance="@style/net_price_value" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sell_price"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/sell_price_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_cost_value"
-            android:textAppearance="@style/net_price_value" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="@dimen/dp_25"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/purchase_co"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/net_price_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_price_value"
-            android:textAppearance="@style/net_price_value" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sold"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/net_cost_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_cost_value"
-            android:textAppearance="@style/net_price_value" />
-
-    </LinearLayout>
-    <TextView
-        android:id="@+id/p_l_on_sell_value"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textFontWeight="500"
+        android:layout_width="0dp"
         android:layout_weight="1"
-        android:text="@string/p_l_on_sell_value"
-        android:textAppearance="@style/p_l_on_sell_value" />
-
-    <ImageView
-        android:layout_width="@dimen/dp_3"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.5"
-        android:visibility="gone"
-        android:src="@drawable/three_dots"
-        app:tint="@color/colorDarkerr"/>
+        android:paddingHorizontal="6dp">
+
+        <TextView
+            android:text="Purchase Date"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Apr 5, 2024"
+            android:id="@+id/purDateValue"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Sell Date"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:text="Apr 8, 2024"
+            android:id="@+id/sellDateValue"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Column 2 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="6dp">
+
+        <TextView
+            android:text="Purchase Price"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="150.73"
+            android:id="@+id/purchasePrValue"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Sell Price"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:text="211.25"
+            android:id="@+id/sellPriceValue"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Column 3 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="6dp">
+
+        <TextView
+            android:text="Purchase Cost"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/purchaseCost"
+            android:text="150,726"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Sold Value"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/soldValue"
+            android:text="211,250"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Column 4 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="6dp">
+
+        <TextView
+            android:text="Quantity Sold"
+            android:textAppearance="@style/net_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="1000"
+            android:id="@+id/quantitySoldValue"
+            android:textAppearance="@style/net_price_value"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Profit/Loss"
+            android:textAppearance="@style/net_price"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.example.scstrade.views.widgets.ColoredValueTextView
+            android:id="@+id/profitLoss"
+            android:text="60,524"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

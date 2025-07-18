@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:gravity="top"
+        android:baselineAligned="false">
+
+        <!-- Logo + Symbol -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/image"
+                android:contentDescription="Logo" />
+
+            <TextView
+                android:id="@+id/tvSymbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OGDC"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PRICE"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500" />
+
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,100"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tvPriceChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,507"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+
+        </LinearLayout>
+
+        <!-- Column 1 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SHARES"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500"/>
+
+            <TextView
+                android:id="@+id/tvShares"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700"
+                android:text="1,100"
+
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AVG BUY"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/tvAvgBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="209.87"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL COST"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/tvTotalCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="230,856"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+        </LinearLayout>
+
+        <!-- Column 2 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MARKET VALUE"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/tvMarketValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="248,314"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DAY'S P&amp;L"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/tvDayPL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,507"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="DAY'S P&amp;L %"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/tvDayPLPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.60%"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700"/>
+        </LinearLayout>
+
+        <!-- Column 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL P&amp;L"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/tvTotalPL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="17,458"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL P&amp;L %"
+                android:textAppearance="@style/tvHeading"
+                android:textFontWeight="500"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/tvTotalPLPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.56%"
+                android:textAppearance="@style/tvShares"
+                android:textFontWeight="700" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+

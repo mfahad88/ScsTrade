@@ -198,7 +198,7 @@
     <string name="net_cost">Net Cost</string>
     <string name="net_cost_value">38,424.60</string>
     <string name="current_p_l_value">+2,021(5.36%)</string>
-    <string name="historical_">Historical Gain - OGDC</string>
+    <string name="historical_">Historical Gain - (%1$s)</string>
     <string name="historical_value">+0 (+0.0%)</string>
     <string name="net_p_l_on_"><![CDATA[Net P&L on Sold]]></string>
     <string name="net_p_l_on_value">+0 (+0.0%)</string>
@@ -507,6 +507,12 @@
     <string name="total_debt_to_assets">Total Debt To Assets</string>
     <string name="total_debt_to_equity">Total Debt To Equity</string>
     <string name="total_record">Total Record Found (%1$d)</string>
+    <string name="portfolio_cost">Portfolio Cost</string>
+    <string name="day_s_p_l_holding"><![CDATA[Day\'s P&L (Holding)]]></string>
+    <string name="total_p_l_holding"><![CDATA[Total P&L (Holding)]]></string>
+    <string name="holding_sha">Holding</string>
+    <string name="sub_title">(Share in Hand)</string>
+    <string name="purchase_cost">Purchase Cost</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

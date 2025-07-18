@@ -82,7 +82,7 @@ class CustomScreenerAdapter(
         }
 
         private fun formatDouble(value: Double?): String {
-            return value?.let { String.format("%.2f", it) } ?: "-"
+            return value?.let { String.format("%,.2f", it) } ?: "-"
         }
     }
 

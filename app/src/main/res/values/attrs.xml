@@ -121,4 +121,9 @@
     <declare-styleable name="FilterItemView">
         <attr name="filterTitle" format="string" />
     </declare-styleable>
+    <declare-styleable name="MarketValueView">
+        <attr name="mv_title" format="string" />
+        <attr name="mv_value" format="string" />
+        <attr name="isColor_Enabled" format="boolean" />
+    </declare-styleable>
 </resources>

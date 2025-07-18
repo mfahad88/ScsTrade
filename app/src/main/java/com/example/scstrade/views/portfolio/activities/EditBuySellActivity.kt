@@ -37,7 +37,7 @@ class EditBuySellActivity : BaseActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID, -1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
-        sharedViewModel.getPortfolioDetails(portfolioMainID)
+//        sharedViewModel.getPortfolioDetails(portfolioMainID)
         setContentView(binding.root)
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Edit"

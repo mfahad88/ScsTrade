@@ -14,5 +14,7 @@ data class PortfolioItem(
     @SerializedName("PortfolioMainPosition")
     val portfolioMainPosition: Int,
     @SerializedName("RegistrationID")
-    val registrationID: Int
+    val registrationID: Int,
+
+    var numberCompany: Int
 )

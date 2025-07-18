@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:text="Title"
+        android:textFontWeight="500"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tvValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123,456"
+        android:textSize="@dimen/sp_14"
+        android:textFontWeight="700"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center_horizontal" />
+</merge>

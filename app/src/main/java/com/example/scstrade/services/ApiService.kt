@@ -297,10 +297,10 @@ interface ApiService {
     @GET(value = "/Portfolio")
     suspend fun getDividend(@Query("ActionType")actionType: String="GetDividend",@Query("PortfolioMainID")portfolioMainID:String):List<DividendItem>
     @GET(value = "/Portfolio")
-    suspend fun getPortfolioItemDetail(@Query("ActionType")actionType: String="GetPortfolioItemDetails",@Query("PortfolioMainID")portfolioMainID:Int,@Query("PortfolioSymbol")portfolioSymbol:String):List<PortfolioItemDetail>
+    suspend fun getPortfolioItemDetail(@Query("ActionType")actionType: String="GetPortfolioItemDetails",@Query("PortfolioMainID")portfolioMainID:Int,@Query("PortfolioSymbol")portfolioSymbol:String):List<PortfolioItemDetail> //holding list
 
     @GET(value = "/Portfolio")
-    suspend fun getPortfolioDetails(@Query("ActionType")actionType: String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID:Int):List<PortfolioDetails>
+    suspend fun getPortfolioDetails(@Query("ActionType")actionType: String="GetPortfolioDetails",@Query("PortfolioMainID")portfolioMainID:Int):List<PortfolioDetails> //Trade logs
 
     @GET(value="/Notification")
     suspend fun notification():List<NotificationDto>

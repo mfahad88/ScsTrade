@@ -72,21 +72,13 @@ class BuySellActivity : BaseActivity() {
         if(intent.getBooleanExtra(AppConstants.IS_Dividend,false)){
             findViewById<View>(R.id.dividend_container).visibility = View.VISIBLE
             binding.toolbar.binding.apply {
-//                subTitle.text = "Dividend"
             }
-            // binding.toolbar.toggleToolbar(false)
             binding.toolbar.binding.market.text = "Dividend"
 //
-//            (binding.dividendContainer as View).visibility = View.VISIBLE
         }
-       /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
 
-        if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){
+      /*  if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){
 
             val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
 
@@ -192,7 +184,7 @@ class BuySellActivity : BaseActivity() {
                         )
                     }?.map { it.aP }?.first()
                     val totalCost = v?.price?.toDouble()
-                    val avgBuy = /*totalCost?.div(v.quantity.toInt())*/v?.price?.toDouble()
+                    val avgBuy = *//*totalCost?.div(v.quantity.toInt())*//*v?.price?.toDouble()
                     availableShareValue.text = "${qty}"
                     symbol.setText(sym)
                     buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
@@ -291,7 +283,7 @@ class BuySellActivity : BaseActivity() {
                     }
                 }
             }
-        }
+        }*/
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

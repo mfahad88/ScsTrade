@@ -38,7 +38,7 @@ class HoldingFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity=(requireActivity() as StockDetailActivity)
 //        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
-        sharedViewModel.getPortfolioDetails(stockDetailActivity.portfolioMainID)
+//        sharedViewModel.getPortfolioDetails(stockDetailActivity.portfolioMainID)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,11 +72,11 @@ class HoldingFragment : Fragment() {
                         binding.apply {
                             currentPriValue.text = Utils.roundTwoDecimal(currentPrice)
                             shareOwnedValue.text = "${shares}"
-                            purchaseCoValue.text = Utils.roundTwoDecimal(purchaseCost)
+                            purchaseCoValue.setValue(Utils.roundTwoDecimal(purchaseCost))
                             avgBuyPriValue.text = Utils.roundTwoDecimal(avgBuyPrice)
-                            currentMarValue.text = Utils.roundTwoDecimal(currentMarketValue)
-                            daysPLHoValue.text = "${Utils.roundTwoDecimal(daysPL)} (${Utils.roundTwoDecimal(daysPercentPL)}%)"
-                            totalPLHValue.text = "${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(totalPercentPL)}%)"
+                            currentMarket.setValue(Utils.roundTwoDecimal(currentMarketValue))
+                            daySPLHolding.setValue("${Utils.roundTwoDecimal(daysPL)} (${Utils.roundTwoDecimal(daysPercentPL)}%)")
+                            totalPLHolding.setValue("${Utils.roundTwoDecimal(totalPL)} (${Utils.roundTwoDecimal(totalPercentPL)}%)")
                             mainContainer.visibility = View.VISIBLE
                             loader.visibility = View.GONE
                         }

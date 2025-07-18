@@ -49,9 +49,9 @@ class SummaryFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity= requireActivity() as StockDetailActivity
 
-        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
-        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
-        sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
+//        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
+//        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
+//        sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
         val stockData= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
         Glide.with(this).load(stockData?.companyLogo).into(binding.imageView20)
         sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer { res->

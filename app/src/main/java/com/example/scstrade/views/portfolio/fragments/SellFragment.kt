@@ -53,7 +53,7 @@ class SellFragment : Fragment() {
                                 startActivity(intent)
                             },
                             onItemDelete = {
-                                sharedViewModel.deleteTrade(it.portfolioMainID,it.portfolioDetailID)
+//                                sharedViewModel.deleteTrade(it.portfolioMainID,it.portfolioDetailID)
                             })
                     }
                     binding.apply {

@@ -1,142 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingHorizontal="@dimen/dp_10"
-    android:paddingVertical="@dimen/dp_15"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:background="@color/md_theme_surface"
     android:weightSum="4">
 
-    <TextView
-        android:id="@+id/date_value"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:text="@string/feb_25"
-        android:textAppearance="@style/feb_25" />
-
-    <TextView
-        android:id="@+id/shares_value"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:gravity="center"
-        android:text="@string/shares_value"
-        android:textAppearance="@style/feb_25" />
-
+    <!-- Buy Date -->
     <LinearLayout
-        android:id="@+id/price_cost"
-        android:layout_width="@dimen/dp_0"
-        android:orientation="vertical"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/net_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/net_price"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/net_price_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_price_value"
-            android:textAppearance="@style/net_price_value" />
-
-        <TextView
-            android:id="@+id/net_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/net_cost"
-            android:textAppearance="@style/net_price" />
-
-        <TextView
-            android:id="@+id/net_cost_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textFontWeight="500"
-            android:text="@string/net_cost_value"
-            android:textAppearance="@style/net_price_value" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/current_p_l_value"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.3"
-        android:textFontWeight="500"
-        android:text="@string/current_p_l_value"
-        android:textAppearance="@style/current_p_l_value" />
-
-    <FrameLayout
-        android:layout_width="@dimen/dp_146"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone"
-        android:layout_weight="0.5">
-
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/three_dots"
-            android:src="@drawable/three_dots"
-            app:tint="@color/colorDarkerr"/>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/floating_menu"
-            android:layout_width="@dimen/dp_130"
+            android:text="Buy Date"
+            style="@style/TradeLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_gravity="end"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/md_theme_surface"
-            app:cardElevation="@dimen/dp_2"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
-            app:strokeWidth="@dimen/dp_0"
-            tools:visibility="visible">
+            android:id="@+id/buy_date"
+            android:text="Apr 8, 2024"
+            style="@style/TradeValue.Bold" />
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingVertical="@dimen/dp_10">
+    <!-- Shares -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-                <TextView
-                    android:id="@+id/edit"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:lineSpacingExtra="3sp"
-                    android:paddingVertical="@dimen/dp_5"
-                    android:drawableStart="@drawable/baseline_edit_24"
-                    android:text="Edit"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:textAppearance="@style/new_buy_trade"
-                    android:textFontWeight="500" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shares"
+            style="@style/TradeLabel" />
 
-                <TextView
-                    android:id="@+id/delete"
-                    android:layout_width="@dimen/dp_100"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:lineSpacingExtra="3sp"
-                    android:paddingVertical="@dimen/dp_5"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:text="Delete"
-                    android:drawableStart="@drawable/baseline_delete_24"
-                    android:textAppearance="@style/new_buy_trade"
-                    android:textFontWeight="500" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shares"
+            android:text="1,000"
+            style="@style/TradeValue.Bold" />
+    </LinearLayout>
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <!-- Current P/L -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current P/L"
+            style="@style/TradeLabel" />
 
-    </FrameLayout>
+        <com.example.scstrade.views.widgets.ColoredValueTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_pl"
+            android:textFontWeight="700"
+            android:text="14,490"
+            style="@style/TradeValue.Profit" />
+
+        <com.example.scstrade.views.widgets.ColoredValueTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_pl_percent"
+            android:text="(6.86%)"
+            style="@style/TradePercent.Profit" />
+    </LinearLayout>
+
+    <!-- Net Price + Cost -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="end">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Net Price"
+            style="@style/TradeLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/net_price"
+            android:text="211.25"
+            style="@style/TradeValue.Bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Net Cost"
+            style="@style/TradeLabel"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/net_cost"
+            android:text="211,250"
+            style="@style/TradeValue.Bold" />
+    </LinearLayout>
 
 </LinearLayout>
+

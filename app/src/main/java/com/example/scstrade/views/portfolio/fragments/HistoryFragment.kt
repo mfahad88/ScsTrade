@@ -67,7 +67,7 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity = (requireActivity() as StockDetailActivity)
-        sharedViewModel.getHistory(stockDetailActivity.portfolioMainID.toString())
+//        sharedViewModel.getHistory(stockDetailActivity.portfolioMainID.toString())
 
         binding.apply {
             buyTransac.text = getString(R.string.sell_trades,stockDetailActivity.symbol)
@@ -85,9 +85,9 @@ class HistoryFragment : Fragment() {
                 }
                 is Resource.Success ->{
                     val result=res.dividendItem
-                    binding.dividendEaValue.text = Utils.roundTwoDecimal(result.data!!.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }.sumOf {
+                    binding.dividendEa.setValue( Utils.roundTwoDecimal(result.data!!.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }.sumOf {
                         it.dividendPerShare
-                    }.toDouble())
+                    }.toDouble()))
                     binding.mainContent.setContent {
                         populateDividend(result.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?: emptyList())
                         if(result.data?.isNotEmpty()?:false){
@@ -117,16 +117,16 @@ class HistoryFragment : Fragment() {
                             val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
                             val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
                             val historPL=(soldValue).minus(totalPurchase)
-                            binding.profitBookValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                            binding.profitBook.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
                                 if((it.salAmount.toDouble() - it.purAmount.toDouble())>0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                            )
+                            ))
 
-                            binding.netPLOnValue.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
+                          /*  binding.netPLOnValue.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
                                 Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
-                            }%)"
-                            binding.lossBookedValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                            }%)"*/
+                            binding.lossBooked.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
                                 if((it.salAmount.toDouble() - it.purAmount.toDouble())<0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                            )
+                            ))
                             binding.purchasedCValue.text = Utils.roundTwoDecimal(totalPurchase)
 
                             binding.soldValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
@@ -134,23 +134,23 @@ class HistoryFragment : Fragment() {
 
                             val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
                             if(totalPurchase!=null && totalPurchase>0.0) {
-                                binding.historicalValue.text =Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                                    it.salAmount.toDouble()})
+                                binding.historicalGain.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
+                                    it.salAmount.toDouble()}))
                             }else{
-                                binding.historicalValue.text = "0.0 (0.0%)"
+                                binding.historicalGain.setValue("0.0 (0.0%)")
                             }
-                            if(binding.historicalValue.text.contains("-")){
-                                binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
+                            if(binding.historicalGain.tvValue.text.toString().contains("-")){
+                                binding.historicalGain.tvValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
                             }else{
-                                binding.historicalValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
+                                binding.historicalGain.tvValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
                             }
-                            if(percentPL!=null && percentPL>0.0){
+                            /*if(percentPL!=null && percentPL>0.0){
                                 binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
                                         "(${Utils.roundTwoDecimal(percentPL)}%)"
 
                             }else {
                                 binding.netPLOnValue.text = "0.0 (0.0%)"
-                            }
+                            }*/
 
                             binding.recyclerView.apply {
                                 adapter = HistoryAdapter(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){

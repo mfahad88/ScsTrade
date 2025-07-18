@@ -37,13 +37,28 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
 
                 }
             }
+
+            if(!item.purDate.isNullOrEmpty()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val formatter = DateTimeFormatter.ofPattern("M/dd/yyyy")
+                    val date = LocalDate.parse(item.salDate, formatter)
+                    binding.purDateValue.text = "${date.dayOfMonth}-${
+                        date.month.name.substring(
+                            0,
+                            3
+                        )
+                    }-${date.year.toString().substring(2, 4)}"
+                } else {
+
+                }
+            }
             binding.sellPriceValue.text = Utils.roundTwoDecimal(item.salPrice.toDouble())
             binding.purchasePrValue.text = Utils.roundTwoDecimal(item.purPrice.toDouble())
-            binding.netPriceValue.text = Utils.roundTwoDecimal(item.purAmount.toDouble())
-            binding.netCostValue.text = Utils.roundTwoDecimal(item.salAmount.toDouble())
-            binding.quantitySoValue.text = item.salQuantity
-            binding.pLOnSellValue.text = "${Utils.roundTwoDecimal((item.salAmount.toDouble() - item.purAmount.toDouble()))}(${Utils.roundTwoDecimal(((item.salAmount.toDouble() - item.purAmount.toDouble()).div(item.salAmount.toDouble())).times(100))}%)"
-            binding.pLOnSellValue.setTextColor(if(binding.pLOnSellValue.text.contains("-")) ContextCompat.getColor(binding.root.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(binding.root.context, R.color.md_theme_primary))
+            binding.purchaseCost.text = Utils.roundTwoDecimal(item.purAmount.toDouble())
+            binding.soldValue.text = Utils.roundTwoDecimal(item.salAmount.toDouble())
+            binding.quantitySoldValue.text = item.salQuantity
+            binding.profitLoss.text = "${Utils.roundTwoDecimal((item.salAmount.toDouble() - item.purAmount.toDouble()))}"
+
             binding.root.setOnClickListener { onItemClick(item) }
 
 

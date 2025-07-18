@@ -16,13 +16,18 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.scstrade.databinding.ActivityMyPortfolioBinding
 import com.example.scstrade.databinding.ActivityPortfolioDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.SymbolProfit
 import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.model.response.portfolio.PortfolioHeader
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
@@ -33,8 +38,9 @@ import com.google.gson.reflect.TypeToken
 import kotlin.math.roundToInt
 
 class PortfolioDetailActivity : BaseActivity() {
-    private lateinit var binding:ActivityPortfolioDetailBinding
+    private lateinit var binding:ActivityMyPortfolioBinding
     private lateinit var sharedViewModel: SharedViewModel
+    lateinit var portfolioViewModel: PortFolioViewModel
     lateinit var login: LoginDataItem
     var portfolioMainID:Int?=null
 
@@ -42,7 +48,7 @@ class PortfolioDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityPortfolioDetailBinding.inflate(LayoutInflater.from(this))
+        binding = ActivityMyPortfolioBinding.inflate(LayoutInflater.from(this))
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Portfolio"
         Utils.setEdgeToEdgeWithWhiteIcons(this)
@@ -50,7 +56,7 @@ class PortfolioDetailActivity : BaseActivity() {
 
         fetchUser(this)
         sharedViewModel = (this.application as MyApp).viewModel
-        sharedViewModel.startPortfolioFinal()
+        portfolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
 
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -59,9 +65,34 @@ class PortfolioDetailActivity : BaseActivity() {
             insets
         }
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
-        sharedViewModel.getPortfolioFinalDetail(portfolioMainID)
-//        sharedViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
-        binding.apply {
+
+        portfolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
+        portfolioViewModel.mutablePortfolioFinalDetailOnce.observe(this, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                    Utils.showError(binding.root,result.message)
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    binding.apply {
+                        loader.visibility = View.GONE
+                        group.visibility = View.VISIBLE
+
+                        val data = result.data
+                        recyclerView.adapter = ShareInHandAdapter(sharedViewModel)
+                        data?.fifoPortfolio?.let {
+                            (recyclerView.adapter as ShareInHandAdapter).submitList(
+                                it
+                            )
+                        }
+
+                    }
+                }
+            }
+        })
+
+     /*   binding.apply {
             viewDetail.setOnClickListener {
                 if(summaryCard.visibility == View.VISIBLE){
                     summaryCard.visibility = View.GONE
@@ -251,7 +282,7 @@ class PortfolioDetailActivity : BaseActivity() {
 
                 null -> {}
             }
-        })
+        })*/
 
     }
 

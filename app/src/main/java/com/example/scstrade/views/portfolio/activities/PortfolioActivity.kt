@@ -14,6 +14,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.databinding.ActivityPortfolioBinding
 import com.example.scstrade.databinding.BottomPortfolioBinding
@@ -21,6 +23,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
@@ -33,6 +36,7 @@ class PortfolioActivity : BaseActivity() {
     lateinit var binding: ActivityPortfolioBinding
     lateinit var login:LoginDataItem
     lateinit var sharedViewModel: SharedViewModel
+    lateinit var portfolioViewModel: PortFolioViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,12 +48,13 @@ class PortfolioActivity : BaseActivity() {
         fetchUser(this)
 //        login=(this.application as MyApp).login
         sharedViewModel = (this.application as MyApp).viewModel
-        sharedViewModel.getPortfolio(login.registrationID)
+        portfolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
+        portfolioViewModel.getPortfolio(login.registrationID)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PortfolioActivity,LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))
         }
-        sharedViewModel.mutablePortfolio.observe(this, Observer { result ->
+        portfolioViewModel.mutableResultPortFolioList.observe(this, Observer { result ->
 
             when(result){
                 is Resource.Error -> {
@@ -63,8 +68,9 @@ class PortfolioActivity : BaseActivity() {
                 }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
+
                     binding.recyclerView.apply {
-                        adapter = PortFolioAdapter(result.data?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
+                        adapter = PortFolioAdapter(result.data?.portfolioList?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
 
                             val intent=Intent(this@PortfolioActivity, PortfolioDetailActivity::class.java)
                             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,it.portfolioMainID)
@@ -72,7 +78,7 @@ class PortfolioActivity : BaseActivity() {
                         }, onItemPopupClick = {str,item->
                             if(str.contains("delete",true)) {
                                 Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){
-                                    sharedViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
+//                                    sharedViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
                                     Utils.showDeleteBottomSheet(this@PortfolioActivity,"Your portfolio has been deleted.")
 
                                 }
@@ -106,7 +112,7 @@ class PortfolioActivity : BaseActivity() {
 
 
         dialogBinding.btnAdd.setOnClickListener {
-            sharedViewModel.cretePortfolio(dialogBinding.portfolioName.text.toString(),login.registrationID)
+//            sharedViewModel.cretePortfolio(dialogBinding.portfolioName.text.toString(),login.registrationID)
             dialog.dismiss()
         }
 

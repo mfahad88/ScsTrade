@@ -43,6 +43,15 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
         fun bind(stockItem: StockItem?, previousPrice: Double?) {
             if (stockItem!=null){
+                binding.root.setOnClickListener {
+                    val intent= Intent(binding.root.context, SnapshotActivity::class.java)
+                    if(stockItem.sYM.contains("-")) {
+                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM.substringBefore("-"))
+                    }else{
+                        intent.putExtra(AppConstants.SYMBOL, stockItem.sYM)
+                    }
+                    binding.root.context.startActivity(intent)
+                }
                 Utils.getCompanyLogo(binding.root.context,binding.imageView6,stockItem)
                 if(stockItem.iN.lowercase().contains("kmi")){
                     binding.shariah.visibility= View.VISIBLE
