@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.scstrade.databinding.ItemMyPortfolioHoldingBinding
 import com.example.scstrade.databinding.ItemShareInHandBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
@@ -28,7 +29,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
         }
 
     }
-    class ShareInHandViewHolder(private val binding: ItemShareInHandBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ShareInHandViewHolder(private val binding: ItemMyPortfolioHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
         var previousFifoPortfolio:FifoPortfolio? = null
         var previousStockItem:StockItem? = null
 
@@ -36,56 +37,34 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             Log.e("Item--->",item.toString())
 
 
-            val totalCost = item.price.toDouble().times(item.quantity.toInt())
-            val marketValue = stockItem.cL.times(item.quantity.toInt())
-            val avgCost = item.price.toDouble()
-            val dayPL = stockItem.cH.times(item.quantity.toInt())
-            val percentDayPL = stockItem.cHP/*.div(stockItem.cL).times(100)*/
-            val totalPL = stockItem.oC.minus(item.price.toDouble()).times(item.quantity.toDouble())
-            val percentTotalPL = stockItem.oC.minus(item.price.toDouble()).div(item.price.toDouble()).times(100)
-            binding.symbol.text = item.symbol
-            binding.price2133.text = Utils.roundTwoDecimal(stockItem.cL)
-//            Utils.animatedValueChange(binding.totalCostValue,0.00,totalCost)
-            Glide.with(binding.root.context).load(stockItem.companyLogo).circleCrop().into(binding.companyIcon)
-            binding.totalCostValue.text = Utils.roundTwoDecimal(totalCost)
-            binding.avgBuyValue.text = Utils.roundTwoDecimal(avgCost)
-            binding.marketValue.text = "${Utils.roundTwoDecimal(marketValue)}"
-            binding.shareValue.text = item.quantity
-            binding.daysPL.text = Utils.roundTwoDecimal(dayPL)
-            if(percentDayPL!=null ) {
-                binding.daysPercentPL.text = "(${Utils.roundTwoDecimal(percentDayPL)}%)"
-            }else{
-                binding.daysPercentPL.text = "(0.0%)"
-            }
-            binding.totalPL.text = Utils.roundTwoDecimal(totalPL)
-            if(percentTotalPL!=null && percentTotalPL>0.0) {
-                binding.totalPercentPL.text = "(${Utils.roundTwoDecimal(percentTotalPL)}%)"
-            }else{
-                binding.totalPercentPL.text = "(0.0%)"
-            }
-            binding.btnSell.setOnClickListener {
-            }
-            binding.threeDots.setOnClickListener {
+            val marketValue =item.quantity.toDouble().times(stockItem.cL)
+            val totalCost   =item.quantity.toDouble().times(item.price.toDouble())
+            val dayPL   = item.quantity.toDouble().times(stockItem.cH)
+            val dayPLPercent = stockItem.cHP
+            val totalPL = item.quantity.toDouble().times(stockItem.cL).minus(totalCost)
+            val totPLPercent = totalPL.div(totalCost).times(100)
 
-                Utils.showPopup(
-                    binding.root.context,
-                    binding.threeDots,
-                    null,
-                    listOf("Edit Company")
-                ) {
-                    if (it.contains("Edit", true)) {
-                    }
-                }
-            }
-            binding.snapshotLogo.setOnClickListener {
-            }
-            previousFifoPortfolio = item
-            previousStockItem = stockItem
+
+            Utils.getCompanyLogo(binding.root.context,binding.imgLogo,stockItem)
+            binding.tvSymbol.text = item.symbol
+            binding.tvPrice.text = Utils.roundTwoDecimal(stockItem.cL)
+            binding.tvShares.text = item.quantity
+            binding.tvAvgBuy.text = item.price
+            binding.tvTotalCost.text = Utils.roundTwoDecimal(totalCost)
+            binding.tvMarketValue.text = Utils.roundTwoDecimal(marketValue)
+            binding.tvDayPL.text = Utils.roundTwoDecimal(dayPL)
+            binding.tvDayPLPercent.text = "${Utils.roundTwoDecimal(dayPLPercent)}%"
+            binding.tvTotalPL.text = Utils.roundTwoDecimal(totalPL)
+            binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"
+            binding.tvPriceChange.text = "${stockItem.cH}"
+
+//            previousFifoPortfolio = item
+//            previousStockItem = stockItem
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShareInHandViewHolder {
-        val binding = ItemShareInHandBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMyPortfolioHoldingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ShareInHandViewHolder(binding)
     }
 
@@ -93,7 +72,9 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
 
         val list=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(getItem(position).symbol,true) }?.first()
 
-        holder.bind(getItem(position))
+        if (list != null) {
+            holder.bind(getItem(position),list)
+        }
     }
 
 

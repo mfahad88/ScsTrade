@@ -65,6 +65,10 @@ class PortfolioDetailActivity : BaseActivity() {
             insets
         }
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
+            addItemDecoration(HorizontalDivider(30.dp))
+        }
 
         portfolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         portfolioViewModel.mutablePortfolioFinalDetailOnce.observe(this, Observer { result->
@@ -78,14 +82,16 @@ class PortfolioDetailActivity : BaseActivity() {
                     binding.apply {
                         loader.visibility = View.GONE
                         group.visibility = View.VISIBLE
-
+                        val stockItem = sharedViewModel.mutableAllData.value?.data
                         val data = result.data
+                       val currentMarketValue=data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }
+                        val portfolioCost = data!!.fifoPortfolio.sumOf { res-> res.quantity.toDouble().times(res.price.toDouble()) }
+                        val dayPL = data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cH }?.first()?:0.0) }
+                        binding.currentMarket.setValue(Utils.roundTwoDecimal(currentMarketValue))
+                        binding.portfolioCost.setValue(Utils.roundTwoDecimal(portfolioCost))
+                        binding.daySPLHolding.setValue(Utils.roundTwoDecimal(dayPL))
                         recyclerView.adapter = ShareInHandAdapter(sharedViewModel)
-                        data?.fifoPortfolio?.let {
-                            (recyclerView.adapter as ShareInHandAdapter).submitList(
-                                it
-                            )
-                        }
+                        (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
 
                     }
                 }
