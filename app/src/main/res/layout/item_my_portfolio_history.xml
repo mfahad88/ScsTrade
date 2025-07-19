@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="2dp"
     android:padding="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingVertical="@dimen/dp_10"
-        android:paddingHorizontal="@dimen/dp_15"
-        android:baselineAligned="false">
+        android:weightSum="2"
+        android:padding="12dp">
 
-        <!-- Stock Symbol -->
         <TextView
             android:id="@+id/tvSymbol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:text="OGDC"
+            android:gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/custom_font"
             android:textFontWeight="700"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginEnd="16dp" />
+            android:textSize="@dimen/sp_16"
+            android:textColor="@android:color/black" />
 
-        <!-- Message Text -->
         <TextView
-            android:id="@+id/tvLossMessage"
+            android:id="@+id/tvSummary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textFontWeight="500"
+            android:layout_weight="1.5"
             android:text="You made a total Loss of 13,587 with a decrease of 2.58%"
-            android:textSize="14sp"
-            android:textColor="#000000" />
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/custom_font"
+            android:textFontWeight="500"
+            android:textSize="@dimen/sp_14"
+            android:paddingTop="4dp" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

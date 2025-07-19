@@ -2,7 +2,10 @@ package com.example.scstrade.views.portfolio.fragments
 import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +19,15 @@ import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSummaryBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.portfolio.CloseTrade
+import com.example.scstrade.model.response.portfolio.FifoPortfolio
+import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
 import com.example.scstrade.views.portfolio.adapter.HistoryAdapter
+import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 
@@ -31,6 +39,7 @@ import kotlin.math.roundToInt
 class SummaryFragment : Fragment() {
     lateinit var binding : FragmentSummaryBinding
     private lateinit var sharedViewModel: SharedViewModel
+    lateinit var portFolioViewModel: PortFolioViewModel
     lateinit var stockDetailActivity: StockDetailActivity
 
 
@@ -48,13 +57,42 @@ class SummaryFragment : Fragment() {
         binding = FragmentSummaryBinding.inflate(inflater)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity= requireActivity() as StockDetailActivity
+        portFolioViewModel = stockDetailActivity.portFolioViewModel
 
 //        sharedViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
 //        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
 //        sharedViewModel.getPortfolioFinalDetailOnce(stockDetailActivity.portfolioMainID)
         val stockData= sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.first()
         Glide.with(this).load(stockData?.companyLogo).into(binding.imageView20)
-        sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer { res->
+
+        portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Error -> {
+                    Utils.showError(requireView(),result.message)
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    binding.apply {
+                        loader.visibility  = View.GONE
+                        mainContainer.visibility = View.VISIBLE
+                        if(!result.data?.fifoPortfolio.isNullOrEmpty() && !result.data?.closeTrades.isNullOrEmpty()) {
+                            bindSummaryDataForSymbol(
+                                binding,
+                                stockDetailActivity.symbol,
+                                stockData,
+                                result.data?.fifoPortfolio ?: emptyList(),
+                                result.data?.closeTrades ?: emptyList()
+                            )
+                        }
+                    }
+                }
+            }
+        })
+
+
+
+        /*sharedViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner, Observer { res->
             when (res){
                 is Resource.Error -> Utils.showError(binding.root,res.message?:"An error occurred...")
                 is Resource.Loading -> {
@@ -159,7 +197,7 @@ class SummaryFragment : Fragment() {
                     })
                 }
             }
-        })
+        })*/
 
 
 
@@ -167,5 +205,62 @@ class SummaryFragment : Fragment() {
         return binding.root
     }
 
+    fun bindSummaryDataForSymbol(
+        binding: FragmentSummaryBinding,
+        symbol: String,
+        stockItem: StockItem?,
+        fifoList: List<FifoPortfolio>,
+        closeTradeList: List<CloseTrade>
+    ) {
+
+        // ----- HOLDING -----
+        val holdingItems = fifoList.filter { it.symbol.equals(symbol, ignoreCase = true) }
+
+        val holdingCost = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (stockItem?.cL ?: 0.0) }
+        val holdingValue = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (it.price.toDouble() ?: 0.0) }
+        val holdingPL = holdingValue - holdingCost
+
+        binding.holdingCost.text = formatAmount(holdingCost)
+        binding.holdingValue.text = formatAmount(holdingValue)
+        binding.holdingPL.text = formatAmount(holdingPL, colorize = true)
+        binding.holdingPL.setTextColor(
+            ContextCompat.getColor(binding.root.context,
+                if (holdingPL >= 0) R.color.md_theme_primary else R.color.md_theme_error
+            )
+        )
+
+        // ----- HISTORY -----
+        val closedItems = closeTradeList.filter { it.symbol.equals(symbol, ignoreCase = true) }
+
+        val historyCost = closedItems.sumOf { it.purAmount.toDouble() ?: 0.0 }
+        val historyValue = closedItems.sumOf { it.salAmount.toDouble() ?: 0.0 }
+        val historyPL = historyValue - historyCost
+
+        val totalCost=holdingCost.plus(historyCost)
+        val totalValue = holdingValue.plus(holdingCost)
+        val totalPL = holdingPL.plus(historyPL)
+
+        binding.historyCost.text = formatAmount(historyCost)
+        binding.historyValue.text = formatAmount(historyValue)
+        binding.historyPL.text = formatAmount(historyPL, colorize = true)
+
+        binding.totalCost.text = formatAmount(totalCost)
+        binding.totalValue.text = formatAmount(totalValue)
+        binding.totalPL.text = formatAmount(totalPL, colorize = true)
+       /* binding.historyPL.setTextColor(
+            ContextCompat.getColor(binding.root.context,
+                if (historyPL >= 0) R.color.md_theme_primary else R.color.md_theme_error
+            )
+        )*/
+    }
+    private fun formatAmount(amount: Double, colorize: Boolean = false): SpannableString {
+        val formatted = DecimalFormat("#,##0").format(amount)
+        return SpannableString(formatted).apply {
+            if (colorize) {
+                val color = if (amount >= 0) ContextCompat.getColor(requireContext(),R.color.md_theme_primary) else ContextCompat.getColor(requireContext(),R.color.md_theme_error)
+                setSpan(ForegroundColorSpan(color), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }
+    }
 
 }

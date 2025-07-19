@@ -16,7 +16,8 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 
 class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
-                         private val sharedViewModel: SharedViewModel
+                         private val sharedViewModel: SharedViewModel,
+                         private val onItemClick: (FifoPortfolio) -> Unit
 ) : ListAdapter<FifoPortfolio,ShareInHandAdapter.ShareInHandViewHolder>(ShareInHandDiffCallback()) {
 
     class ShareInHandDiffCallback:DiffUtil.ItemCallback<FifoPortfolio>(){
@@ -30,11 +31,9 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
 
     }
     class ShareInHandViewHolder(private val binding: ItemMyPortfolioHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
-        var previousFifoPortfolio:FifoPortfolio? = null
-        var previousStockItem:StockItem? = null
+
 
         fun bind(item:FifoPortfolio,stockItem: StockItem) {
-            Log.e("Item--->",item.toString())
 
 
             val marketValue =item.quantity.toDouble().times(stockItem.cL)
@@ -58,8 +57,6 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"
             binding.tvPriceChange.text = "${stockItem.cH}"
 
-//            previousFifoPortfolio = item
-//            previousStockItem = stockItem
         }
     }
 
@@ -74,19 +71,13 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
 
         if (list != null) {
             holder.bind(getItem(position),list)
+            holder.itemView.setOnClickListener {
+                onItemClick(getItem(position))
+            }
         }
     }
 
 
 
-    /*fun submitList(itemList:List<FifoPortfolio>, list:List<StockItem>){
-        this.itemList=itemList
-        this.list = list
-    *//*    this.itemList.clear()
-        this.itemList.addAll(itemList)
-        this.list.clear()
-        this.list.addAll(list)*//*
-        notifyDataSetChanged()
-    }*/
 
 }

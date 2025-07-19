@@ -1,58 +1,36 @@
 package com.example.scstrade.views.portfolio.adapter
-import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemHoldingBinding
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
-import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.portfolio.CloseTrade
+import com.example.scstrade.model.response.stock.StockItem
 
 import java.util.Collections
 
-class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private val onItemClick: (PortfolioItemDetail) -> Unit,private val onItemEditClick: (PortfolioItemDetail) -> Unit,
-                     private val onItemDeleteClick: (PortfolioItemDetail) -> Unit) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
+class HoldingAdapter(private val itemList: List<CloseTrade>, val stockItem: StockItem?) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
     class HoldingViewHolder(private val binding: ItemHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: PortfolioItemDetail,
-            onItemClick: (PortfolioItemDetail) -> Unit,
-            onItemEditClick: (PortfolioItemDetail) -> Unit,
-            onItemDeleteClick: (PortfolioItemDetail) -> Unit
+            item: CloseTrade,
+            stockItem: StockItem?,
         ) {
+            val currentPrice = stockItem?.cL
+            val marketCost = item.purQuantity.toDouble().times(currentPrice?:0.0)
+            val currentPL = marketCost.minus(item.purAmount.toDouble())
             binding.apply {
-                buyDate.text = Utils.convertDateString(item.date,"dd-MMM-yyyy")
-                shares.text = "${item.quantity}"
-                netPrice.text = "${Utils.roundTwoDecimal(item.rate.toDouble())}"
-                netCost.text = "${Utils.roundTwoDecimal(item.rate.toDouble().times(item.quantity.toDouble()))}"
-                currentPl.text = "${Utils.roundTwoDecimal(item.currentPL)}"
-                currentPlPercent.text = "(${Utils.roundTwoDecimal(item.currentPercentPL)}%)"
-//                currentPLValue.setTextColor(if(currentPLValue.text.contains("-")) ContextCompat.getColor(itemView.context, R.color.md_theme_errorContainer) else ContextCompat.getColor(itemView.context, R.color.md_theme_primary))
-              /*  threeDots.setOnClickListener {
-                    if(binding.floatingMenu.visibility == View.GONE) {
-                        binding.floatingMenu.visibility = View.VISIBLE
-                    }else{
-                        binding.floatingMenu.visibility = View.GONE
-                    }
-                }
+                buyDate.text = Utils.formatDateString(item.purDate,"M/d/yyyy","MMM dd,yyyy")
+                shares.text = "${item.purQuantity}"
+                netPrice.text = "${Utils.roundTwoDecimal(item.purPrice.toDouble())}"
+                netCost.text = "${Utils.roundTwoDecimal(item.purAmount.toDouble())}"
+                currentPl.text = "${Utils.roundTwoDecimal(currentPL)}"
+                currentPlPercent.text = "(${Utils.roundTwoDecimal(currentPL.div(item.purAmount.toDouble()))}%)"
 
-                edit.setOnClickListener {
-                    onItemEditClick(item)
-                    binding.floatingMenu.visibility = View.GONE
-                }
-                delete.setOnClickListener {
-                    onItemDeleteClick(item)
-                    binding.floatingMenu.visibility = View.GONE
-                }*/
-//                currentPLValue.text = "${Utils.roundTwoDecimal((currentPrice - item.portfolioRate).times(item.portfolioQuantity))}" +
-//                        "(${Utils.roundTwoDecimal((((currentPrice - item.portfolioRate).times(item.portfolioQuantity)).div(item.portfolioRate.times(item.portfolioQuantity))).times(100))}%)"
             }
-            binding.root.setOnClickListener { onItemClick(item) }
+//            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 
@@ -62,7 +40,7 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, private va
     }
 
     override fun onBindViewHolder(holder: HoldingViewHolder, position: Int) {
-        holder.bind(itemList[position], onItemClick,onItemEditClick,onItemDeleteClick)
+        holder.bind(itemList[position],stockItem)
     }
 
     override fun getItemCount(): Int {

@@ -120,6 +120,7 @@
                 app:layout_constraintStart_toEndOf="@+id/title"
                 app:layout_constraintTop_toTopOf="@+id/title" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="@dimen/dp_0"
@@ -128,11 +129,11 @@
                 android:layout_marginTop="4dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.551"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:itemCount="1"
                 tools:listitem="@layout/item_my_portfolio_holding" />
-
 
             <TextView
                 android:id="@+id/titleHistory"
@@ -143,7 +144,7 @@
                 android:textFontWeight="700"
                 app:layout_constraintStart_toStartOf="@+id/title"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-                tools:text="@string/history" />
+                android:text="@string/history" />
 
 
             <TextView
@@ -178,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="current_market,portfolio_cost,day_s_p_l_holding,total_p_l_holding,recyclerView"
+                app:constraint_referenced_ids="title,subTitle,current_market,portfolio_cost,day_s_p_l_holding,total_p_l_holding,recyclerView"
                 tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.Group
@@ -186,6 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:constraint_referenced_ids="titleHistory,subTitleHistory,recyclerViewHistory" />
 
 

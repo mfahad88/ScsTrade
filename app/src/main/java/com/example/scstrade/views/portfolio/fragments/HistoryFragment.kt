@@ -1,5 +1,6 @@
 package com.example.scstrade.views.portfolio.fragments
 import android.content.Intent
+import android.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 
 import android.os.Bundle
@@ -38,12 +39,14 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.activities.BuySellActivity
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
 import com.example.scstrade.views.portfolio.adapter.HistoryAdapter
 import com.example.scstrade.views.portfolio.adapter.HoldingAdapter
+import com.example.scstrade.views.widgets.SideBarDivider
 import kotlin.math.roundToInt
 
 
@@ -56,7 +59,7 @@ class HistoryFragment : Fragment() {
     lateinit var binding:FragmentHistoryBinding
     lateinit var sharedViewModel: SharedViewModel
     lateinit var stockDetailActivity: StockDetailActivity
-
+    lateinit var portFolioViewModel: PortFolioViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,151 +70,70 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater)
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity = (requireActivity() as StockDetailActivity)
+        portFolioViewModel = stockDetailActivity.portFolioViewModel
+        portFolioViewModel.getDividend(stockDetailActivity.portfolioMainID.toString())
 //        sharedViewModel.getHistory(stockDetailActivity.portfolioMainID.toString())
 
         binding.apply {
             buyTransac.text = getString(R.string.sell_trades,stockDetailActivity.symbol)
             dividends.text = getString(R.string.dividend_trades,stockDetailActivity.symbol)
-            recyclerView.apply {
-                layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
+            binding.recyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                val divider = SideBarDivider(
+                    dividerColor = Color.parseColor("#B3C6C6CD"),
+                    marginEnd = 10
+                )
+                addItemDecoration(divider)
+
             }
         }
 
-        sharedViewModel.mutableHistory.observe(viewLifecycleOwner, Observer { res->
-            when(res.dividendItem){
-                is Resource.Error -> Utils.showError(binding.root,res.dividendItem.message?:"An error occurred")
-                is Resource.Loading -> {
-                }
-                is Resource.Success ->{
-                    val result=res.dividendItem
-                    binding.dividendEa.setValue( Utils.roundTwoDecimal(result.data!!.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }.sumOf {
-                        it.dividendPerShare
-                    }.toDouble()))
-                    binding.mainContent.setContent {
-                        populateDividend(result.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?: emptyList())
-                        if(result.data?.isNotEmpty()?:false){
-                            binding.materialCardViewDividend.visibility = View.VISIBLE
-                        }else{
-                            binding.materialCardViewDividend.visibility = View.GONE
-                        }
-                    }
-                }
-            }
 
-            when(res.portfolioDetails){
-                is Resource.Error -> Utils.showError(binding.root,res.portfolioDetails.message?:"An error occurred")
+
+        portFolioViewModel.mutableDividend.observe(viewLifecycleOwner, Observer {result->
+            when(result){
+                is Resource.Error -> {
+                    Utils.showError(requireView(),result.message)
+                    binding.loader.visibility = View.GONE
+                }
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    val result=res.portfolioDetails
-                    try {
-                        binding.loader.visibility = View.GONE
-                        binding.mainContainer.visibility = View.VISIBLE
-                        if(!result.data?.closeTrades.isNullOrEmpty()){
+                    binding.apply {
 
-                            val netPL=  result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble() - it.purAmount.toDouble()) }
-                            val percentPL = (netPL.div(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble() })).times(100)
-                            val sumSellPrice = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { (it.salAmount.toDouble()) }
-                            val sumDividend = sharedViewModel.mutableDividend.value?.data?.filter { it.dividendSymbol.contains(stockDetailActivity.symbol,true) }?.sumOf { (it.dividendPerShare) }
-                            val totalPurchase = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.purAmount.toDouble()}
-                            val historicalGain = sumSellPrice.plus(sumDividend!!).minus(totalPurchase)
-                            val soldValue = result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { it.salAmount.toDouble()}
-                            val historPL=(soldValue).minus(totalPurchase)
-                            binding.profitBook.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                                if((it.salAmount.toDouble() - it.purAmount.toDouble())>0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                            ))
 
-                          /*  binding.netPLOnValue.text = "${Utils.commaSeparated(historPL.roundToInt())} (${
-                                Utils.roundTwoDecimal((historPL.div(totalPurchase))?.times(100))
-                            }%)"*/
-                            binding.lossBooked.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                                if((it.salAmount.toDouble() - it.purAmount.toDouble())<0){ (it.salAmount.toDouble() - it.purAmount.toDouble()) }else{ 0.00 } }
-                            ))
-                            binding.purchasedCValue.text = Utils.roundTwoDecimal(totalPurchase)
-
-                            binding.soldValue.text = Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                                it.salAmount.toDouble()})
-
-                            val sumPL= result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf { item -> (item.salAmount.toDouble() - item.purAmount.toDouble()) }
-                            if(totalPurchase!=null && totalPurchase>0.0) {
-                                binding.historicalGain.setValue(Utils.roundTwoDecimal(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }!!.toList().sumOf {
-                                    it.salAmount.toDouble()}))
-                            }else{
-                                binding.historicalGain.setValue("0.0 (0.0%)")
-                            }
-                            if(binding.historicalGain.tvValue.text.toString().contains("-")){
-                                binding.historicalGain.tvValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_errorContainer))
-                            }else{
-                                binding.historicalGain.tvValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
-                            }
-                            /*if(percentPL!=null && percentPL>0.0){
-                                binding.netPLOnValue.text = "${Utils.roundTwoDecimal(netPL)}" +
-                                        "(${Utils.roundTwoDecimal(percentPL)}%)"
-
-                            }else {
-                                binding.netPLOnValue.text = "0.0 (0.0%)"
-                            }*/
-
-                            binding.recyclerView.apply {
-                                adapter = HistoryAdapter(result.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
-                                }
-                                if(result.data?.closeTrades?.isNotEmpty()?:false){
-                                    binding.materialCardViewSell.visibility = View.VISIBLE
-                                }else{
-                                    binding.materialCardViewSell.visibility = View.GONE
-                                }
-                            }
+                        val data=result.data
+                        if(!data.isNullOrEmpty()){
+                          mainContent.setContent {
+                              populateDividend(data)
+                          }
                         }
 
 
-                    }catch (e:Exception){
-                        e.printStackTrace()
+
+                        portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer { res->
+                            when(res){
+                                is Resource.Error -> {
+                                    Utils.showError(requireView(),res.message)
+                                }
+                                is Resource.Loading -> {}
+                                is Resource.Success ->
+                                {
+                                 binding.recyclerView.adapter=HistoryAdapter(res.data?.closeTrades?: emptyList()){
+
+                                 }
+                                }
+                            }
+
+                        })
+                        loader.visibility = View.GONE
+                        mainContainer.visibility = View.VISIBLE
                     }
                 }
             }
-
         })
 
 
-        sharedViewModel.mutablePortfolioDetails.observe(viewLifecycleOwner, Observer {result->
 
-            when(result){
-                is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    binding.recyclerView.apply {
-
-                        val shares=result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { it.portfolioQuantity.toDouble() }?.sumOf { it }
-                        val purchaseCost= result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { (it.portfolioRate.times(it.portfolioQuantity.toDouble())) }?.sumOf { it }
-                        val avgBuyPrice = purchaseCost?.div(shares?:0.0)
-                        val currentPrice = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cL }?.first()
-                        val currentMarketValue = currentPrice?.times(shares?:0.0)
-
-                        val daysPercentPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cHP }?.first()
-                        val totalPL= currentMarketValue?.minus(purchaseCost?:0.0)
-                        val totalPercentPL= (totalPL?.div(purchaseCost?:0.0))?.times(100)
-                        val fifo=sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter { it.symbol.equals(stockDetailActivity.symbol) }?.first()
-                        val daysPL = sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(stockDetailActivity.symbol,true) }?.map { it.cH }?.first()?.times(fifo?.quantity?.toDouble()?:0.0)
-
-                        val list= mutableListOf<PortfolioItemDetail>()
-
-                        result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.forEach {
-                            list.add(
-                                PortfolioItemDetail(it.portfolioDate,it.portfolioQuantity.toString(),it.portfolioRate.toString(),(currentPrice!!.minus(it.portfolioRate)).times(it.portfolioQuantity.toDouble()),
-                                ((currentPrice.times(it.portfolioQuantity.toInt()).minus(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).div(it.portfolioRate.toDouble().times(it.portfolioQuantity.toInt()))).times(100)
-                                ,null)
-                            )
-                        }
-
-
-                        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                    }
-                }
-            }
-
-        })
 
         return binding.root
     }

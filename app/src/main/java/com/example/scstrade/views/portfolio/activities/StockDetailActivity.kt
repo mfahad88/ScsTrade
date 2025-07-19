@@ -1,4 +1,5 @@
 package com.example.scstrade.views.portfolio.activities
+import android.content.Context
 import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
@@ -6,6 +7,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -13,30 +15,42 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityStockDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.response.login.LoginDataItem
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.views.BaseActivity
+import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.fragments.HistoryFragment
 import com.example.scstrade.views.portfolio.fragments.HoldingFragment
 import com.example.scstrade.views.portfolio.fragments.SummaryFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.reflect.TypeToken
 
 class StockDetailActivity : BaseActivity() {
     var portfolioMainID: Int=-1
     lateinit var binding:ActivityStockDetailBinding
+    lateinit var portFolioViewModel: PortFolioViewModel
+    lateinit var login: LoginDataItem
     var symbol:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
+        portFolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         // binding.toolbar.toggleToolbar(false)
+        fetchUser(this)
         binding.toolbar.binding.market.text = "Portfolio"
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
+        portFolioViewModel.getPortfolioItemDetail(portfolioMainID,symbol)
+        portFolioViewModel.getPortfolio(login.registrationID)
+        portFolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
         binding.newBuyTrade.text="Buy ${symbol}"
         binding.sellTrade.text="Sell ${symbol}"
         binding.addDividend.text="Add ${symbol} Dividend"
@@ -157,4 +171,13 @@ class StockDetailActivity : BaseActivity() {
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }
+
+    private fun fetchUser(context: Context) {
+        val listType = object : TypeToken<List<LoginDataItem>>() {}
+        val user= Utils.getSharedPreference(context, emptyList<LoginDataItem>(),
+            AppConstants.USER,listType)
+        login=user.first()
+        Log.e("User: ",user.toString())
+    }
+
 }
