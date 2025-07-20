@@ -14,6 +14,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
 import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
+import kotlin.math.roundToInt
 
 class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
                          private val sharedViewModel: SharedViewModel,
@@ -49,11 +50,11 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.tvPrice.text = Utils.roundTwoDecimal(stockItem.cL)
             binding.tvShares.text = item.quantity
             binding.tvAvgBuy.text = String.format("%,.2f",item.price.toDouble())
-            binding.tvTotalCost.text = Utils.roundTwoDecimal(totalCost)
-            binding.tvMarketValue.text = Utils.roundTwoDecimal(marketValue)
+            binding.tvTotalCost.text = "%,d".format(totalCost.roundToInt())
+            binding.tvMarketValue.text = "%,d".format(marketValue.roundToInt())
             binding.tvDayPL.text = Utils.roundTwoDecimal(dayPL)
             binding.tvDayPLPercent.text = "${Utils.roundTwoDecimal(dayPLPercent)}%"
-            binding.tvTotalPL.text = Utils.roundTwoDecimal(totalPL)
+            binding.tvTotalPL.text = "%,d".format(totalPL.roundToInt())
             binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"
             binding.tvPriceChange.text = "${stockItem.cH}"
 

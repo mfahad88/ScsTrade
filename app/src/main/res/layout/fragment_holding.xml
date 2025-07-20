@@ -162,7 +162,7 @@
                     android:gravity="center"
                     android:text="1,100"
                     android:textSize="15sp"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -173,7 +173,7 @@
                     android:gravity="center"
                     android:text="209.87"
                     android:textSize="15sp"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <TextView
@@ -184,7 +184,7 @@
                     android:gravity="center"
                     android:text="225.74"
                     android:textSize="15sp"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </LinearLayout>
 

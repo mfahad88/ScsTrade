@@ -20,6 +20,7 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.activities.StockDetailActivity
 import com.example.scstrade.views.portfolio.adapter.HoldingAdapter
 import com.example.scstrade.views.widgets.SideBarDivider
+import kotlin.math.roundToInt
 
 
 /**
@@ -81,13 +82,13 @@ class HoldingFragment : Fragment() {
                             val totalShaes=data.sumOf { res->res.quantity.toDouble()}
                             val avgBuyPrice = data.map { it.rate }.first()
                             val currentPrice = stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.map { it.cL }?.first()
-                            binding.currentMarket.setValue(Utils.roundTwoDecimal(currentMarketValue))
-                            binding.purchaseCoValue.setValue(Utils.roundTwoDecimal(portfolioCost))
-                            binding.daySPLHolding.setValue(Utils.roundTwoDecimal(dayPL))
-                            binding.totalPLHolding.setValue(Utils.roundTwoDecimal(totalPL))
+                            binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
+                            binding.purchaseCoValue.setValue("%,d".format(portfolioCost.roundToInt()))
+                            binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt()))
+                            binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt()))
                             shareOwnedValue.text = totalShaes.toString()
                             avgBuyPriValue.text = String.format("%,.2f",avgBuyPrice.toDouble())
-                            currentPriValue.text = currentPrice.toString()
+                            currentPriValue.text = "%,.2f".format(currentPrice)
 
                             binding.recyclerView.adapter=HoldingAdapter(data,stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.first())
                         }else{

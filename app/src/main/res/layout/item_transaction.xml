@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/light_green">
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/buy_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="28-Feb-2025"
-            android:textColor="#9E9E9E"
+            android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BUY"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
@@ -90,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="Percentage"
             android:textSize="12sp"
-            android:textColor="#AAAAAA"
+            android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBaseline_toBaselineOf="@id/textRate" />
 

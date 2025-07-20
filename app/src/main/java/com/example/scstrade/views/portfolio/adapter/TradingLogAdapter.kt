@@ -43,7 +43,7 @@ class TradingLogAdapter(
             val tagColor = ContextCompat.getColor(root.context,
                 if (isBuy) R.color.success_green else R.color.error_red)
 //            buyTag.background.setTint(tagColor)
-            buyTag.setTextColor(ContextCompat.getColor(root.context, R.color.black))
+            buyTag.setTextColor(ContextCompat.getColor(root.context, android.R.color.black))
 
             // Set CardView background color
             val cardColor = ContextCompat.getColor(root.context,

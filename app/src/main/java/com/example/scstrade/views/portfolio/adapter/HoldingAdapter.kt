@@ -11,6 +11,7 @@ import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
 import com.example.scstrade.model.response.stock.StockItem
 
 import java.util.Collections
+import kotlin.math.roundToInt
 
 class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, val stockItem: StockItem?) : RecyclerView.Adapter<HoldingAdapter.HoldingViewHolder>() {
     class HoldingViewHolder(private val binding: ItemHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -26,10 +27,9 @@ class HoldingAdapter(private val itemList: List<PortfolioItemDetail>, val stockI
                 buyDate.text = Utils.formatDateString(item.date,"M/d/yyyy hh:mm:ss a","MMM dd,yyyy")
                 shares.text = "${item.quantity}"
                 netPrice.text = "${Utils.roundTwoDecimal(item.rate.toDouble())}"
-                netCost.text = "${Utils.roundTwoDecimal(item.quantity.toDouble().times(item.rate.toDouble()))}"
-                currentPl.text = "${Utils.roundTwoDecimal(currentPL)}"
+                netCost.text = "%,d".format(item.quantity.toDouble().times(item.rate.toDouble()).roundToInt())
+                currentPl.text = "%,d".format(currentPL.roundToInt())
                 currentPlPercent.text = "(${Utils.roundTwoDecimal(currentPL.div(item.quantity.toDouble().times(item.rate.toDouble())))}%)"
-
             }
 //            binding.root.setOnClickListener { onItemClick(item) }
         }

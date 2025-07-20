@@ -208,8 +208,8 @@
     <color name="type_default_fg">#000000</color>
 
     <color name="light_green">#EAF7EC</color>
-    <color name="buy_background">#EAF7EC</color>
-    <color name="sell_background">#FCEBEB</color>
+    <color name="buy_background">#BFEAF7EC</color>
+    <color name="sell_background">#BFFCEBEB</color>
     <color name="success_green">#4CAF50</color>
     <color name="error_red">#F44336</color>
 </resources>

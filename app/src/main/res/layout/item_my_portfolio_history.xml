@@ -22,7 +22,7 @@
             android:fontFamily="@font/custom_font"
             android:textFontWeight="700"
             android:textSize="@dimen/sp_16"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvSummary"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="You made a total Loss of 13,587 with a decrease of 2.58%"
-            android:textColor="@android:color/black"
+            android:textColor="@color/black"
             android:fontFamily="@font/custom_font"
             android:textFontWeight="500"
             android:textSize="@dimen/sp_14"

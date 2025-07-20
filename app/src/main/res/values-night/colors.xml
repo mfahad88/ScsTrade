@@ -55,7 +55,8 @@
     <color name="md_theme_surfaceContainerLow">#1C1B1B</color>
     <color name="md_theme_surfaceContainer">#201F1F</color>
     <color name="md_theme_surfaceContainerHigh">#2A2A2A</color>
-    <color name="md_theme_surfaceContainerHighest">#353434</color>
+    <!--<color name="md_theme_surfaceContainerHighest">#353434</color>-->
+    <color name="md_theme_surfaceContainerHighest">@color/md_theme_surfaceVariant_mediumContrast</color>
     <color name="md_theme_primary_mediumContrast">#8AF56D</color>
     <color name="md_theme_onPrimary_mediumContrast">#042D00</color>
     <color name="md_theme_primaryContainer_mediumContrast">#40A829</color>

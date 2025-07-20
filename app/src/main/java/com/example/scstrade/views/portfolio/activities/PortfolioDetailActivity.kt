@@ -166,10 +166,10 @@ class PortfolioDetailActivity : BaseActivity() {
                         val totalPL = data!!.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
                         val totalPlPercent = totalPL.div(portfolioCost).times(100)
 
-                        binding.currentMarket.setValue(Utils.roundTwoDecimal(currentMarketValue))
-                        binding.portfolioCost.setValue(Utils.roundTwoDecimal(portfolioCost))
-                        binding.daySPLHolding.setValue(Utils.roundTwoDecimal(dayPL))
-                        binding.totalPLHolding.setValue(Utils.roundTwoDecimal(totalPL))
+                        binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
+                        binding.portfolioCost.setValue("%,d".format(portfolioCost.roundToInt()))
+                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt()))
+                        binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt()))
 
                         (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
                         if(!data.fifoPortfolio.isNullOrEmpty()){

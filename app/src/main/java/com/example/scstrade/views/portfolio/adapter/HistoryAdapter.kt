@@ -16,6 +16,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Collections
 import java.util.Date
+import kotlin.math.roundToInt
 import kotlin.time.times
 
 class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemClick: (CloseTrade) -> Unit) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
@@ -54,8 +55,8 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
             }
             binding.sellPriceValue.text = Utils.roundTwoDecimal(item.salPrice.toDouble())
             binding.purchasePrValue.text = Utils.roundTwoDecimal(item.purPrice.toDouble())
-            binding.purchaseCost.text = Utils.roundTwoDecimal(item.purAmount.toDouble())
-            binding.soldValue.text = Utils.roundTwoDecimal(item.salAmount.toDouble())
+            binding.purchaseCost.text = "%,d".format(item.purAmount.toDouble().roundToInt())
+            binding.soldValue.text = "%,d".format(item.salAmount.toDouble().roundToInt())
             binding.quantitySoldValue.text = item.salQuantity
             binding.profitLoss.text = "${Utils.roundTwoDecimal((item.salAmount.toDouble() - item.purAmount.toDouble()))}"
 
