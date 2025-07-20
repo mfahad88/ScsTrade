@@ -179,7 +179,11 @@ class HistoryFragment : Fragment() {
         var profitBooked = 0.0
         var lossBooked = 0.0
 
-        closeTrades.filter { it.symbol == symbol }.forEach { trade ->
+     /*   val historicalGain = closeTrades.filter { it.symbol.equals(symbol,true) }.sumOf {
+            it.salAmount.toDouble().minus(it.purAmount.toDouble())
+        }*/
+
+        closeTrades.filter { it.symbol.equals(symbol,true) }.forEach { trade ->
             val pur = trade.purAmount.toDoubleOrNull() ?: 0.0
             val sal = trade.salAmount.toDoubleOrNull() ?: 0.0
             val pnl = sal - pur
@@ -190,6 +194,7 @@ class HistoryFragment : Fragment() {
             if (pnl > 0) profitBooked += pnl
             else lossBooked += pnl
         }
+
 
         val historicalGain = profitBooked + lossBooked // net P&L
 

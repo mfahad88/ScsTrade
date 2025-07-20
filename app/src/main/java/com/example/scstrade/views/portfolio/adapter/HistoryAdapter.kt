@@ -26,7 +26,7 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
         fun bind(item: CloseTrade, onItemClick: (CloseTrade) -> Unit) {
             if(!item.salDate.isNullOrEmpty()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val formatter = DateTimeFormatter.ofPattern("M/dd/yyyy")
+                    val formatter = DateTimeFormatter.ofPattern("M/d/yyyy")
                     val date = LocalDate.parse(item.salDate, formatter)
                     binding.sellDateValue.text = "${date.dayOfMonth}-${
                         date.month.name.substring(
@@ -41,8 +41,8 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
 
             if(!item.purDate.isNullOrEmpty()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val formatter = DateTimeFormatter.ofPattern("M/dd/yyyy")
-                    val date = LocalDate.parse(item.salDate, formatter)
+                    val formatter = DateTimeFormatter.ofPattern("M/d/yyyy")
+                    val date = LocalDate.parse(item.purDate, formatter)
                     binding.purDateValue.text = "${date.dayOfMonth}-${
                         date.month.name.substring(
                             0,
