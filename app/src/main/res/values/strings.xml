@@ -513,6 +513,7 @@
     <string name="holding_sha">Holding</string>
     <string name="sub_title">(Share in Hand)</string>
     <string name="purchase_cost">Purchase Cost</string>
+    <string name="trade_log">Trade Log</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

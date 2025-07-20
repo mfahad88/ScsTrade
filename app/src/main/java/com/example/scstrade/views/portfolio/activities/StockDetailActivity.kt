@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,6 +28,7 @@ import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.fragments.HistoryFragment
 import com.example.scstrade.views.portfolio.fragments.HoldingFragment
 import com.example.scstrade.views.portfolio.fragments.SummaryFragment
+import com.example.scstrade.views.portfolio.fragments.TradeLogFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.reflect.TypeToken
 
@@ -36,21 +38,27 @@ class StockDetailActivity : BaseActivity() {
     lateinit var portFolioViewModel: PortFolioViewModel
     lateinit var login: LoginDataItem
     var symbol:String = ""
+
+    override fun onResume() {
+        super.onResume()
+        portFolioViewModel.getPortfolioItemDetail(portfolioMainID,symbol)
+        portFolioViewModel.getPortfolio(login.registrationID)
+        portFolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStockDetailBinding.inflate(LayoutInflater.from(this))
         portFolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
+
         // binding.toolbar.toggleToolbar(false)
         fetchUser(this)
         binding.toolbar.binding.market.text = "Portfolio"
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()
-        portFolioViewModel.getPortfolioItemDetail(portfolioMainID,symbol)
-        portFolioViewModel.getPortfolio(login.registrationID)
-        portFolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
+
         binding.newBuyTrade.text="Buy ${symbol}"
         binding.sellTrade.text="Sell ${symbol}"
         binding.addDividend.text="Add ${symbol} Dividend"
@@ -58,6 +66,8 @@ class StockDetailActivity : BaseActivity() {
         binding.newBuyTrade.setOnClickListener {
             val intent = Intent(this, BuySellActivity::class.java)
             intent.putExtra(AppConstants.IS_BUY,true)
+            intent.putExtra(AppConstants.MODE,0)
+            intent.putExtra(AppConstants.SYMBOL,symbol)
             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
             startActivity(intent)
             binding.floatingMenu.visibility = View.GONE
@@ -75,6 +85,7 @@ class StockDetailActivity : BaseActivity() {
         binding.addDividend.setOnClickListener {
             val intent = Intent(this, BuySellActivity::class.java)
             intent.putExtra(AppConstants.IS_Dividend, true)
+            intent.putExtra(AppConstants.SYMBOL,symbol)
             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
             startActivity(intent)
             binding.floatingMenu.visibility = View.GONE
@@ -106,6 +117,8 @@ class StockDetailActivity : BaseActivity() {
                     loadFragment(HistoryFragment())
                 }else if(tab.text!!.equals(getString(R.string.holding))){
                     loadFragment(HoldingFragment())
+                }else if(tab.text!!.equals(getString(R.string.trade_log))){
+                    loadFragment(TradeLogFragment())
                 }
             }
 

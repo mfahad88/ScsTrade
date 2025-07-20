@@ -48,7 +48,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.tvSymbol.text = item.symbol
             binding.tvPrice.text = Utils.roundTwoDecimal(stockItem.cL)
             binding.tvShares.text = item.quantity
-            binding.tvAvgBuy.text = item.price
+            binding.tvAvgBuy.text = String.format("%,.2f",item.price.toDouble())
             binding.tvTotalCost.text = Utils.roundTwoDecimal(totalCost)
             binding.tvMarketValue.text = Utils.roundTwoDecimal(marketValue)
             binding.tvDayPL.text = Utils.roundTwoDecimal(dayPL)

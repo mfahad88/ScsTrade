@@ -21,13 +21,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityBuySellBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
+import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.viewmodels.PortFolioViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
@@ -37,7 +41,8 @@ import java.util.Locale
 class BuySellActivity : BaseActivity() {
     lateinit var binding: ActivityBuySellBinding
     lateinit var sharedViewModel: SharedViewModel
-    lateinit var list:List<String>
+
+    lateinit var portFolioViewModel: PortFolioViewModel
     //    lateinit var stockList:ArrayList<PortfolioDetailItem>
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +50,53 @@ class BuySellActivity : BaseActivity() {
         enableEdgeToEdge()
         binding = ActivityBuySellBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
+        portFolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
         setContentView(binding.root)
         Utils.setEdgeToEdgeWithWhiteIcons(this)
-        list = sharedViewModel.mutableAllData.value?.data?.map { "${it.sYM}-${it.nM}" }?.toList()?: emptyList()
         val porfolioMainId=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
+        sharedViewModel.mutableAllData.observe(this, Observer { result->
+            when(result){
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE) {
+                        binding.buyContainer.apply{
+                            val adapter = ArrayAdapter(
+                                this@BuySellActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                result.data?.map { "${it.sYM}-${it.nM}" }?.toList() ?: emptyList()
+                            )
+                            symbol.setAdapter(adapter)
+                        }
+                    }
+
+                    if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE) {
+                        binding.sellContainer.apply{
+                            val adapter = ArrayAdapter(
+                                this@BuySellActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                result.data?.map { "${it.sYM}-${it.nM}" }?.toList() ?: emptyList()
+                            )
+                            symbol.setAdapter(adapter)
+                        }
+                    }
+
+                    if( findViewById<View>(R.id.dividend_container).visibility == View.VISIBLE) {
+                        binding.dividendContainer.apply{
+                            val adapter = ArrayAdapter(
+                                this@BuySellActivity,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                result.data?.map { "${it.sYM}-${it.nM}" }?.toList() ?: emptyList()
+                            )
+                            symbol.setAdapter(adapter)
+                        }
+                    }
+
+                }
+            }
+        })
+//        list = sharedViewModel.mutableAllData.value?.data?.map { "${it.sYM}-${it.nM}" }?.toList()?: emptyList()
+
         val portfolioDetails=intent.getParcelableExtra<PortfolioDetails>(AppConstants.PORTFOLIO_DETAIL)
         if(intent.getBooleanExtra(AppConstants.IS_Sell,false)){
             findViewById<View>(R.id.sell_container).visibility = View.VISIBLE
@@ -78,37 +126,57 @@ class BuySellActivity : BaseActivity() {
         }
 
 
-      /*  if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){
+        if( findViewById<View>(R.id.buy_container).visibility == View.VISIBLE){
 
-            val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
 
             binding.buyContainer.apply {
+                val sym = intent.getStringExtra(AppConstants.SYMBOL)
+                val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                val symb="${stockItem?.sYM}-${stockItem?.nM}"
+                val v =
+                    sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                        it.symbol.equals(
+                            sym,
+                            true
+                        )
+                    }?.first()
+                val qty = v?.quantity
+                val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                    it.sYM.equals(
+                        sym,
+                        true
+                    )
+                }?.map { it.aP }?.first()
+                val avgBuy = String.format("%.2f",stockItem?.avgP)
+//                availableShareValue.text = "${qty}"
+                symbol.setText(symb)
+                buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
+//                avgBuyPriceValue.setText("${avgBuy}")
+                purchaseDate.setOnFocusChangeListener { view, b ->
+                    if (b) {
+                        showDatePicker(purchaseDate)
+                    }
+                }
 
-
-                symbol.setAdapter(adapter)
                 symbol.setOnDismissListener {
-                   try{
-                       if(sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()!=null) {
-                           val symbol = sharedViewModel.mutableAllData.value?.data?.filter {
-                               "${it.sYM}-${it.nM}".contains(
-                                   symbol.text.toString(),
-                                   true
-                               )
-                           }?.first()
-                           buyPrice.setText(symbol?.oC.toString())
-                       }
-                   }catch (e:Exception){
-                       e.printStackTrace()
-                   }
+                    try{
+                        if(sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()!=null) {
+                            val symbol = sharedViewModel.mutableAllData.value?.data?.filter {
+                                "${it.sYM}-${it.nM}".contains(
+                                    symbol.text.toString(),
+                                    true
+                                )
+                            }?.first()
+                            buyPrice.setText(symbol?.oC.toString())
+                        }
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                     val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
 
                 }
-                purchaseDate.setOnFocusChangeListener { view, b ->
-                    if(b){
-                        showDatePicker(purchaseDate)
-                    }
-                }
+
                 if(intent.getIntExtra(AppConstants.MODE,0)==1){
                     symbol.setText(portfolioDetails?.portfolioSymbol)
                     shares.setText(portfolioDetails?.portfolioQuantity.toString())
@@ -129,7 +197,7 @@ class BuySellActivity : BaseActivity() {
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId != null && purchaseDate.text.isNotEmpty()
                     ) {
                         if(intent.getIntExtra(AppConstants.MODE,0)==0){
-                            sharedViewModel.buyStock(
+                            portFolioViewModel.buyStock(
                                 portfolioMainID = porfolioMainId,
                                 portfolioDate = purchaseDate.text.toString(),
                                 portfolioSymbol = symbol.text.split("-").first(),
@@ -139,9 +207,9 @@ class BuySellActivity : BaseActivity() {
                                 portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
                                 portfolioPosition = "0"
                             )
-                            sharedViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
+                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
                         }else{
-                            sharedViewModel.updateTrade(
+                            portFolioViewModel.updateTrade(
                                 portfolioMainID = porfolioMainId,
                                 portfolioType = "BUY",
                                 portfolioDate = purchaseDate.text.toString(),
@@ -153,8 +221,9 @@ class BuySellActivity : BaseActivity() {
                                 portfolioPosition = "0",
                                 portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
                             )
+                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
                         }
-                        Toast.makeText(it.context, "Done", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(it.context, "Done", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
                         Utils.showError(root, "Empty fields not allowed...")
@@ -167,8 +236,11 @@ class BuySellActivity : BaseActivity() {
 
 
             binding.sellContainer.apply {
+
                 if(intent.getIntExtra(AppConstants.MODE,0)==0) {
                     val sym = intent.getStringExtra(AppConstants.SYMBOL)
+                    val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                    val symb="${stockItem?.sYM}-${stockItem?.nM}"
                     val v =
                         sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
                             it.symbol.equals(
@@ -183,10 +255,9 @@ class BuySellActivity : BaseActivity() {
                             true
                         )
                     }?.map { it.aP }?.first()
-                    val totalCost = v?.price?.toDouble()
-                    val avgBuy = *//*totalCost?.div(v.quantity.toInt())*//*v?.price?.toDouble()
+                    val avgBuy = String.format("%.2f",stockItem?.avgP)
                     availableShareValue.text = "${qty}"
-                    symbol.setText(sym)
+                    symbol.setText(symb)
                     buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
                     avgBuyPriceValue.setText("${avgBuy}")
                     purchaseDate.setOnFocusChangeListener { view, b ->
@@ -214,7 +285,7 @@ class BuySellActivity : BaseActivity() {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
                         if(intent.getIntExtra(AppConstants.MODE,0)==0){
-                            sharedViewModel.sellStock(
+                            portFolioViewModel.sellStock(
                                 portfolioMainID = porfolioMainId,
                                 portfolioDate = purchaseDate.text.toString(),
                                 portfolioSymbol = symbol.text.split("-").first(),
@@ -225,7 +296,7 @@ class BuySellActivity : BaseActivity() {
                                 portfolioPosition = "0"
                             )
                         }else{
-                            sharedViewModel.updateTrade(
+                            portFolioViewModel.updateTrade(
                                 portfolioMainID = porfolioMainId,
                                 portfolioType = "SELL",
                                 portfolioDate = purchaseDate.text.toString(),
@@ -238,7 +309,7 @@ class BuySellActivity : BaseActivity() {
                                 portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
                             )
                         }
-                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
                         finish()
 
                     }else{
@@ -253,12 +324,31 @@ class BuySellActivity : BaseActivity() {
         }
 
         if( findViewById<View>(R.id.dividend_container).visibility == View.VISIBLE){
-            val adapter =ArrayAdapter(this@BuySellActivity,android.R.layout.simple_spinner_dropdown_item,list)
+
 
             binding.dividendContainer.apply {
-                symbol.setAdapter(adapter)
+                val sym = intent.getStringExtra(AppConstants.SYMBOL)
+                val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                val symb="${stockItem?.sYM}-${stockItem?.nM}"
+                val v =
+                    sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                        it.symbol.equals(
+                            sym,
+                            true
+                        )
+                    }?.first()
+                val qty = v?.quantity
+                val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                    it.sYM.equals(
+                        sym,
+                        true
+                    )
+                }?.map { it.aP }?.first()
+                val avgBuy = String.format("%.2f",stockItem?.avgP)
+//                availableShareValue.text = "${qty}"
+                symbol.setText(symb)
                 symbol.setOnDismissListener {
-                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
+//                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
                     val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     manager.hideSoftInputFromWindow(currentFocus?.applicationWindowToken,0)
 
@@ -270,7 +360,7 @@ class BuySellActivity : BaseActivity() {
                 }
                 btnDividend.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && dividendShare.text.isNotEmpty() && dividendDate.text.isNotEmpty()){
-                        sharedViewModel.addDividend(
+                        portFolioViewModel.addDividend(
                             dividendSymbol = symbol.text.toString(),
                             dividendDate = dividendDate.text.toString(),
                             portfolioMainID = porfolioMainId.toString(),
@@ -283,7 +373,7 @@ class BuySellActivity : BaseActivity() {
                     }
                 }
             }
-        }*/
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

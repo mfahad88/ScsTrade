@@ -17,7 +17,7 @@
     <color name="md_theme_errorContainer">#910000</color>
     <color name="md_theme_onErrorContainer">#FF8787</color>
     <color name="md_theme_onSuccessContainer">#9DFF87</color>
-    <color name="md_theme_background">#F5FCEC</color>
+    <color name="md_theme_background">#FFFFFF</color>
     <color name="md_theme_onBackground">#171D14</color>
     <color name="md_theme_surface">#FCF8F8</color>
     <color name="md_theme_onSurface">#1C1B1B</color>
@@ -206,4 +206,10 @@
     <color name="type_payout_fg">#CCA52A2A</color>
     <color name="type_other_fg">#CCFF9800</color>
     <color name="type_default_fg">#000000</color>
+
+    <color name="light_green">#EAF7EC</color>
+    <color name="buy_background">#EAF7EC</color>
+    <color name="sell_background">#FCEBEB</color>
+    <color name="success_green">#4CAF50</color>
+    <color name="error_red">#F44336</color>
 </resources>

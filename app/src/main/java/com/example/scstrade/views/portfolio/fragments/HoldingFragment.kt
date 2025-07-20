@@ -38,6 +38,7 @@ class HoldingFragment : Fragment() {
         sharedViewModel = (requireActivity().application as MyApp).viewModel
         stockDetailActivity=(requireActivity() as StockDetailActivity)
         portFolioViewModel = stockDetailActivity.portFolioViewModel
+//        portFolioViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
 //        sharedViewModel.getPortfolioItemDetail(stockDetailActivity.portfolioMainID,stockDetailActivity.symbol)
 //        sharedViewModel.getPortfolioDetails(stockDetailActivity.portfolioMainID)
     }
@@ -58,7 +59,54 @@ class HoldingFragment : Fragment() {
             addItemDecoration(divider)
 
         }
-        portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer {result->
+
+
+        portFolioViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner,Observer{result->
+            when(result){
+                is Resource.Error -> Utils.showError(requireView(),result.message)
+                is Resource.Loading -> {}
+                is Resource.Success-> {
+                    binding.apply {
+                        loader.visibility = View.GONE
+                        mainContainer.visibility = View.VISIBLE
+
+                        val stockItem = sharedViewModel.mutableAllData.value?.data
+                        val data = result.data
+                        if(!data.isNullOrEmpty()){
+                            val currentMarketValue= data.sumOf { res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cL }?.first()?:0.0) }
+                            val portfolioCost = data.sumOf { res-> res.quantity.toDouble().times(res.rate.toDouble()) }
+                            val dayPL = data.sumOf { res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cH }?.first()?:0.0) }
+                            val totalPL = data.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
+                            val totalPlPercent = totalPL.div(portfolioCost).times(100)
+                            val totalShaes=data.sumOf { res->res.quantity.toDouble()}
+                            val avgBuyPrice = data.map { it.rate }.first()
+                            val currentPrice = stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.map { it.cL }?.first()
+                            binding.currentMarket.setValue(Utils.roundTwoDecimal(currentMarketValue))
+                            binding.purchaseCoValue.setValue(Utils.roundTwoDecimal(portfolioCost))
+                            binding.daySPLHolding.setValue(Utils.roundTwoDecimal(dayPL))
+                            binding.totalPLHolding.setValue(Utils.roundTwoDecimal(totalPL))
+                            shareOwnedValue.text = totalShaes.toString()
+                            avgBuyPriValue.text = String.format("%,.2f",avgBuyPrice.toDouble())
+                            currentPriValue.text = currentPrice.toString()
+
+                            binding.recyclerView.adapter=HoldingAdapter(data,stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.first())
+                        }else{
+                            binding.currentMarket.setValue(Utils.roundTwoDecimal(0.0))
+                            binding.purchaseCoValue.setValue(Utils.roundTwoDecimal(0.0))
+                            binding.daySPLHolding.setValue(Utils.roundTwoDecimal(0.0))
+                            binding.totalPLHolding.setValue(Utils.roundTwoDecimal(0.0))
+                            shareOwnedValue.text = 0.0.toString()
+                            avgBuyPriValue.text = 0.0.toString()
+                            currentPriValue.text = 0.0.toString()
+                        }
+
+
+                    }
+                }
+            }
+
+        })
+        /*portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(viewLifecycleOwner, Observer {result->
 
             when(result){
                 is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred...")
@@ -84,14 +132,14 @@ class HoldingFragment : Fragment() {
                         binding.daySPLHolding.setValue(Utils.roundTwoDecimal(dayPL))
                         binding.totalPLHolding.setValue(Utils.roundTwoDecimal(totalPL))
                         shareOwnedValue.text = totalShaes.toString()
-                        avgBuyPriValue.text = avgBuyPrice
+                        avgBuyPriValue.text = String.format("%,.2f",avgBuyPrice.toDouble())
                         currentPriValue.text = currentPrice.toString()
 
                         binding.recyclerView.adapter=HoldingAdapter(data.closeTrades,stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.first())
 
 
                     }
-                    /*binding.recyclerView.apply {
+                    *//*binding.recyclerView.apply {
 
                         val shares=result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { it.portfolioQuantity.toDouble() }?.sumOf { it }
                         val purchaseCost= result.data?.filter { it.portfolioSymbol.equals(stockDetailActivity.symbol) }?.filter { it.portfolioType.equals("buy",true) }?.map { (it.portfolioRate.times(it.portfolioQuantity.toDouble())) }?.sumOf { it }
@@ -138,11 +186,11 @@ class HoldingFragment : Fragment() {
 
                         })
                         layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                    }*/
+                    }*//*
                 }
             }
 
-        })
+        })*/
 
         return binding.root
     }

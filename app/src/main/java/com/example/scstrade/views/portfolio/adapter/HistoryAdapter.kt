@@ -78,23 +78,4 @@ class HistoryAdapter(private val itemList: List<CloseTrade>, private val onItemC
         return itemList.size
     }
 
-    fun swapItems(fromPosition: Int, toPosition: Int) {
-        Collections.swap(itemList, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    fun getItemTouchHelper(): ItemTouchHelper {
-        return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                swapItems(fromPosition, toPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // No swipe action needed
-            }
-        })
-    }
 }

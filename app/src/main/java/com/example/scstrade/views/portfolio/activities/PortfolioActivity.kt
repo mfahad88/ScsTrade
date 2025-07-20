@@ -64,11 +64,12 @@ class PortfolioActivity : BaseActivity() {
                 is Resource.Loading -> {
                     if(binding.loader.visibility == View.GONE) {
                         binding.loader.visibility = View.VISIBLE
+                        binding.recyclerView.visibility = View.GONE
                     }
                 }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-
+                    binding.recyclerView.visibility = View.VISIBLE
                     binding.recyclerView.apply {
                         adapter = PortFolioAdapter(result.data?.portfolioList?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
 
@@ -78,8 +79,8 @@ class PortfolioActivity : BaseActivity() {
                         }, onItemPopupClick = {str,item->
                             if(str.contains("delete",true)) {
                                 Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){
-//                                    sharedViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
-                                    Utils.showDeleteBottomSheet(this@PortfolioActivity,"Your portfolio has been deleted.")
+                                    portfolioViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
+//                                    Utils.showDeleteBottomSheet(this@PortfolioActivity,"Your portfolio has been deleted.")
 
                                 }
                             }
@@ -112,7 +113,7 @@ class PortfolioActivity : BaseActivity() {
 
 
         dialogBinding.btnAdd.setOnClickListener {
-//            sharedViewModel.cretePortfolio(dialogBinding.portfolioName.text.toString(),login.registrationID)
+            portfolioViewModel.cretePortfolio(dialogBinding.portfolioName.text.toString(),login.registrationID)
             dialog.dismiss()
         }
 

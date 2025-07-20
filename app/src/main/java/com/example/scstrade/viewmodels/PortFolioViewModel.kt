@@ -29,6 +29,30 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
     val mutablePortfolioFinalDetailOnce= MutableLiveData<Resource<PortfolioDetailItem>>()
     val mutablePortfolioItemDetail = MutableLiveData<Resource<List<PortfolioItemDetail>>>()
     val mutableDividend = MutableLiveData<Resource<List<DividendItem>>>()
+    val mutablePortfolioDetails= MutableLiveData<Resource<List<PortfolioDetails>>>()
+    val mutableCreatePortfolio = MutableLiveData<Resource<List<PortfolioItem>>>()
+
+
+    fun cretePortfolio(name:String?,registrationId: Int?){
+        mutableCreatePortfolio.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.createPortfolio(name?:"",registrationId?:-1)
+            withContext(Dispatchers.Main){
+                mutableCreatePortfolio.value = result
+                getPortfolio(registrationId)
+            }
+        }
+    }
+
+    fun deletePortfolio(portfolioMainID: Int, registrationID: Int) {
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.deletePortfolio(portfolioMainID,registrationID)
+            withContext(Dispatchers.Main){
+                getPortfolio(registrationID)
+            }
+        }
+
+    }
     fun getPortfolio(registrationId:Int?){
         mutableResultPortFolioList.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
@@ -37,7 +61,7 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
 
                 val portfolioListDetail= ArrayList<PortfolioDetails>()
                 result?.forEach {
-                    it.numberCompany = repository.getPortfolioDetails(it.portfolioMainID).data?.size?:0
+                    it.numberCompany = repository.getPortfolioDetails(it.portfolioMainID).data?.groupBy { it.portfolioSymbol }?.size?:0
                     portfolioListDetail.addAll(repository.getPortfolioDetails(it.portfolioMainID).data?: emptyList())
                 }
                 withContext(Dispatchers.Main){
@@ -47,6 +71,15 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
         }
     }
 
+    fun getPortfolioDetails(portfolioMainID: Int?){
+        mutablePortfolioDetails.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.getPortfolioDetails(portfolioMainID?:0)
+            withContext(Dispatchers.Main) {
+                mutablePortfolioDetails.value = result
+            }
+        }
+    }
     fun getPortfolioFinalDetailOnce(portfolioMainID: Int?){
         mutablePortfolioFinalDetailOnce.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
@@ -77,17 +110,58 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
         }
     }
 
-    /* fun cretePortfolio(name:String?,registrationId: Int?){
-         mutablePortfolio.value = Resource.Loading()
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.createPortfolio(name?:"",registrationId?:-1)
-                 withContext(Dispatchers.Main){
-                     mutablePortfolio.value = result
-                 }
-             }
-         }
-     }
+    fun buyStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.buyStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
+            //                 repository.getPortfolioDetail(portfolioMainID ?: -1)
+            withContext(Dispatchers.Main){
+
+                //                    mutablePortfolioDetail.value = result
+            }
+        }
+    }
+
+    fun sellStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
+            repository.getPortfolioDetail(portfolioMainID ?: -1)
+            withContext(Dispatchers.Main){
+
+                //                    mutablePortfolioDetail.value = result
+            }
+        }
+    }
+
+    fun addDividend(dividendSymbol:String,dividendQuantity:String,dividendPerShare:String, dividendDate:String, portfolioMainID:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.addDividend(dividendSymbol, dividendQuantity, dividendPerShare, dividendDate, portfolioMainID)
+            withContext(Dispatchers.Main){
+
+                mutableDividend.value=result
+            }
+        }
+    }
+    fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioType:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioType = portfolioType, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
+                portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
+            withContext(Dispatchers.Main){
+            }
+        }
+    }
+
+    fun deleteTrade(portfolioMainID: Int,portfolioDetailID:Int){
+        viewModelScope.launch (Dispatchers.IO){
+            val result = repository.deleteTrade(portfolioMainID = portfolioMainID, portfolioDetailID = portfolioDetailID)
+            withContext(Dispatchers.Main){
+                getPortfolioDetails(portfolioMainID)
+            }
+        }
+    }
+
+    /*
 
      fun getPortfolioFinalDetail(portfolioMainID: Int?){
          mutablePortfolioFinalDetail.value = Resource.Loading()
@@ -125,68 +199,11 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
          }
      }
 
-     fun updateTrade(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioType:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String,portfolioDetailID:String){
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.updateTrade(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioType = portfolioType, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
-                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition, portfolioDetailID = portfolioDetailID)
-                 withContext(Dispatchers.Main){
-                     mutablePortfolioDetails.value = result
-                 }
-             }
-         }
-     }
 
-     fun deleteTrade(portfolioMainID: Int,portfolioDetailID:Int){
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.deleteTrade(portfolioMainID = portfolioMainID, portfolioDetailID = portfolioDetailID)
-                 withContext(Dispatchers.Main){
-                     mutablePortfolioDetails.value = result
-                 }
-             }
-         }
-     }
 
-     fun buyStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.buyStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
-                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
- //                 repository.getPortfolioDetail(portfolioMainID ?: -1)
-                 withContext(Dispatchers.Main){
 
- //                    mutablePortfolioDetail.value = result
-                 }
-             }
-         }
-     }
 
-     fun sellStock(portfolioMainID: Int,portfolioDate:String,portfolioSymbol:String,portfolioQuantity:String,portfolioRate:String,portfolioCommission:String,portfolioCommissionType:String,portfolioPosition:String){
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.sellStock(portfolioMainID = portfolioMainID, portfolioDate = portfolioDate, portfolioSymbol = portfolioSymbol, portfolioQuantity = portfolioQuantity,
-                     portfolioRate = portfolioRate, portfolioCommission = portfolioCommission, portfolioCommissionType = portfolioCommissionType, portfolioPosition = portfolioPosition)
-                 repository.getPortfolioDetail(portfolioMainID ?: -1)
-                 withContext(Dispatchers.Main){
 
- //                    mutablePortfolioDetail.value = result
-                 }
-             }
-         }
-     }
-
-     fun addDividend(dividendSymbol:String,dividendQuantity:String,dividendPerShare:String, dividendDate:String, portfolioMainID:String){
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.addDividend(dividendSymbol, dividendQuantity, dividendPerShare, dividendDate, portfolioMainID)
-                 withContext(Dispatchers.Main){
-
-                     mutableDividend.value=result
-                 }
-             }
-         }
-     }
 
 
      fun getPortfolioDetails(portfolioMainID:Int){
@@ -213,16 +230,5 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
      }
 
 
-     fun deletePortfolio(portfolioMainID: Int, registrationID: Int) {
-         mutablePortfolio.value = Resource.Loading()
-         if(isConnected.value == true){
-             viewModelScope.launch (Dispatchers.IO){
-                 val result = repository.deletePortfolio(portfolioMainID,registrationID)
-                 withContext(Dispatchers.Main){
-                     mutablePortfolio.value = result
-                 }
-             }
-         }
-
-     }*/
+     */
 }
