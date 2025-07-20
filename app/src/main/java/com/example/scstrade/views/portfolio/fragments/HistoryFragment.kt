@@ -145,12 +145,12 @@ class HistoryFragment : Fragment() {
                                     val dividendEarning = summaryMap["DividendEarning"] ?: 0.0
 
                                     binding.historicalGain.tvTitle.text = getString(R.string.historical_,stockDetailActivity.symbol)
-                                    binding.historicalGain.setValue(historicalGain.roundToInt().toString())
-                                    binding.profitBook.setValue(profitBooked.roundToInt().toString())
-                                    binding.lossBooked.setValue(lossBooked.roundToInt().toString())
-                                    binding.dividendEa.setValue(dividendEarning.roundToInt().toString())
-                                    binding.purchasedCValue.text=String.format("%,.2f",purchaseCost)
-                                    binding.soldValue.text = String.format("%,.2f",soldValue)
+                                    binding.historicalGain.setValue("%,d".format(historicalGain.roundToInt()))
+                                    binding.profitBook.setValue("%,d".format(profitBooked.roundToInt()))
+                                    binding.lossBooked.setValue("%,d".format(lossBooked.roundToInt()))
+                                    binding.dividendEa.setValue("%,d".format(dividendEarning.roundToInt()))
+                                    binding.purchasedCValue.text=String.format("%,d",purchaseCost.roundToInt())
+                                    binding.soldValue.text = String.format("%,d",soldValue.roundToInt())
                                     loader.visibility = View.GONE
                                     mainContainer.visibility = View.VISIBLE
                                 }
