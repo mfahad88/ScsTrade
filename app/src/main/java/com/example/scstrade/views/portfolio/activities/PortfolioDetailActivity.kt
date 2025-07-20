@@ -49,7 +49,10 @@ class PortfolioDetailActivity : BaseActivity() {
     //    var portfolioMainID:Int?=-1
 
 
-
+    override fun onResume() {
+        super.onResume()
+        portfolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
+    }
     fun generateSummaryForTrades(trades: List<CloseTrade>): List<TradeSummary> {
         return trades
             .groupBy { it.symbol }
@@ -91,6 +94,41 @@ class PortfolioDetailActivity : BaseActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.floatingActionButton.setOnClickListener {
+            if(binding.floatingMenu.visibility== View.GONE){
+                binding.floatingMenu.visibility=View.VISIBLE
+            }else{
+                binding.floatingMenu.visibility=View.GONE
+            }
+        }
+        binding.newBuyTrade.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_BUY,true)
+            intent.putExtra(AppConstants.MODE,0)
+//            intent.putExtra(AppConstants.SYMBOL,symbol)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
+
+        binding.sellTrade.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_Sell, true)
+//            intent.putExtra(AppConstants.SYMBOL,symbol)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
+
+        binding.addDividend.setOnClickListener {
+            val intent = Intent(this, BuySellActivity::class.java)
+            intent.putExtra(AppConstants.IS_Dividend, true)
+//            intent.putExtra(AppConstants.SYMBOL,symbol)
+            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+            startActivity(intent)
+            binding.floatingMenu.visibility = View.GONE
+        }
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
@@ -106,14 +144,16 @@ class PortfolioDetailActivity : BaseActivity() {
             layoutManager = LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))
         }
-        portfolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
+
         portfolioViewModel.mutablePortfolioFinalDetailOnce.observe(this, Observer { result->
             when(result){
                 is Resource.Error -> {
                     binding.loader.visibility = View.GONE
                     Utils.showError(binding.root,result.message)
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
                 is Resource.Success -> {
                     binding.apply {
                         loader.visibility = View.GONE

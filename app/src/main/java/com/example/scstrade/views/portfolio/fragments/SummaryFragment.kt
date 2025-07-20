@@ -76,7 +76,7 @@ class SummaryFragment : Fragment() {
                     binding.apply {
                         loader.visibility  = View.GONE
                         mainContainer.visibility = View.VISIBLE
-                        if(!result.data?.fifoPortfolio.isNullOrEmpty() && !result.data?.closeTrades.isNullOrEmpty()) {
+                        if(!result.data?.fifoPortfolio.isNullOrEmpty()) {
                             bindSummaryDataForSymbol(
                                 binding,
                                 stockDetailActivity.symbol,

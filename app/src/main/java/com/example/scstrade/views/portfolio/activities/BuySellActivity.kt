@@ -131,26 +131,31 @@ class BuySellActivity : BaseActivity() {
 
             binding.buyContainer.apply {
                 val sym = intent.getStringExtra(AppConstants.SYMBOL)
-                val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
-                val symb="${stockItem?.sYM}-${stockItem?.nM}"
-                val v =
-                    sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
-                        it.symbol.equals(
+                if(!sym.isNullOrEmpty()) {
+                    val stockItem =
+                        sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }
+                            ?.first()
+                    val symb = "${stockItem?.sYM}-${stockItem?.nM}"
+                    val v =
+                        sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                            it.symbol.equals(
+                                sym,
+                                true
+                            )
+                        }?.first()
+                    val qty = v?.quantity
+                    val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                        it.sYM.equals(
                             sym,
                             true
                         )
-                    }?.first()
-                val qty = v?.quantity
-                val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
-                    it.sYM.equals(
-                        sym,
-                        true
-                    )
-                }?.map { it.aP }?.first()
-                val avgBuy = String.format("%.2f",stockItem?.avgP)
+                    }?.map { it.aP }?.first()
+                    val avgBuy = String.format("%.2f", stockItem?.avgP)
 //                availableShareValue.text = "${qty}"
-                symbol.setText(symb)
-                buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
+                    symbol.setText(symb)
+                    buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
+                }
+
 //                avgBuyPriceValue.setText("${avgBuy}")
                 purchaseDate.setOnFocusChangeListener { view, b ->
                     if (b) {
@@ -239,27 +244,29 @@ class BuySellActivity : BaseActivity() {
 
                 if(intent.getIntExtra(AppConstants.MODE,0)==0) {
                     val sym = intent.getStringExtra(AppConstants.SYMBOL)
-                    val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
-                    val symb="${stockItem?.sYM}-${stockItem?.nM}"
-                    val v =
-                        sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
-                            it.symbol.equals(
+                    if(!sym.isNullOrEmpty()){
+                        val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                        val symb="${stockItem?.sYM}-${stockItem?.nM}"
+                        val v =
+                            sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                                it.symbol.equals(
+                                    sym,
+                                    true
+                                )
+                            }?.first()
+                        val qty = v?.quantity
+                        val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                            it.sYM.equals(
                                 sym,
                                 true
                             )
-                        }?.first()
-                    val qty = v?.quantity
-                    val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
-                        it.sYM.equals(
-                            sym,
-                            true
-                        )
-                    }?.map { it.aP }?.first()
-                    val avgBuy = String.format("%.2f",stockItem?.avgP)
-                    availableShareValue.text = "${qty}"
-                    symbol.setText(symb)
-                    buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
-                    avgBuyPriceValue.setText("${avgBuy}")
+                        }?.map { it.aP }?.first()
+                        val avgBuy = String.format("%.2f",stockItem?.avgP)
+                        availableShareValue.text = "${qty}"
+                        symbol.setText(symb)
+                        buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
+                        avgBuyPriceValue.setText("${avgBuy}")
+                    }
                     purchaseDate.setOnFocusChangeListener { view, b ->
                         if (b) {
                             showDatePicker(purchaseDate)
@@ -328,25 +335,27 @@ class BuySellActivity : BaseActivity() {
 
             binding.dividendContainer.apply {
                 val sym = intent.getStringExtra(AppConstants.SYMBOL)
-                val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
-                val symb="${stockItem?.sYM}-${stockItem?.nM}"
-                val v =
-                    sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
-                        it.symbol.equals(
+                if(!sym.isNullOrEmpty()){
+                    val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                    val symb="${stockItem?.sYM}-${stockItem?.nM}"
+                    val v =
+                        sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                            it.symbol.equals(
+                                sym,
+                                true
+                            )
+                        }?.first()
+                    val qty = v?.quantity
+                    val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                        it.sYM.equals(
                             sym,
                             true
                         )
-                    }?.first()
-                val qty = v?.quantity
-                val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
-                    it.sYM.equals(
-                        sym,
-                        true
-                    )
-                }?.map { it.aP }?.first()
-                val avgBuy = String.format("%.2f",stockItem?.avgP)
+                    }?.map { it.aP }?.first()
+                    val avgBuy = String.format("%.2f",stockItem?.avgP)
 //                availableShareValue.text = "${qty}"
-                symbol.setText(symb)
+                    symbol.setText(symb)
+                }
                 symbol.setOnDismissListener {
 //                    val symbol=sharedViewModel.mutableAllData.value?.data?.filter { "${it.sYM}-${it.nM}".contains(symbol.text.toString(),true) }?.first()
                     val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
