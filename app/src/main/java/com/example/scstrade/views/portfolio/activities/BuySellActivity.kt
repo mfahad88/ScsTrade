@@ -212,7 +212,7 @@ class BuySellActivity : BaseActivity() {
                                 portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
                                 portfolioPosition = "0"
                             )
-                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
+//                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
                         }else{
                             portFolioViewModel.updateTrade(
                                 portfolioMainID = porfolioMainId,
@@ -226,7 +226,7 @@ class BuySellActivity : BaseActivity() {
                                 portfolioPosition = "0",
                                 portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
                             )
-                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
+//                            portFolioViewModel.getPortfolioItemDetail(porfolioMainId,symbol.text.split("-").first())
                         }
 //                        Toast.makeText(it.context, "Done", Toast.LENGTH_SHORT).show()
                         finish()

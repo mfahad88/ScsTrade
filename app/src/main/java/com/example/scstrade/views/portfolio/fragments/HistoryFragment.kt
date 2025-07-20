@@ -107,10 +107,10 @@ class HistoryFragment : Fragment() {
                 is Resource.Loading -> {}
                 is Resource.Success ->
                 {
-                    if(!res.data?.closeTrades.isNullOrEmpty()){
+                    if(!res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList().isNullOrEmpty()){
                         binding.materialCardViewSell.visibility = View.VISIBLE
                     }
-                    binding.recyclerView.adapter=HistoryAdapter(res.data?.closeTrades?: emptyList()){
+                    binding.recyclerView.adapter=HistoryAdapter(res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
 
                     }
 
