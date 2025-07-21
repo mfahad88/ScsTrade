@@ -53,6 +53,23 @@ class BuySellActivity : BaseActivity() {
         portFolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
         setContentView(binding.root)
         Utils.setEdgeToEdgeWithWhiteIcons(this)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.buyContainer.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.sellContainer.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.dividendContainer.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
         val porfolioMainId=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         sharedViewModel.mutableAllData.observe(this, Observer { result->
             when(result){
@@ -71,6 +88,7 @@ class BuySellActivity : BaseActivity() {
                     }
 
                     if( findViewById<View>(R.id.sell_container).visibility == View.VISIBLE) {
+                        portFolioViewModel.getPortfolioFinalDetailOnce(porfolioMainId)
                         binding.sellContainer.apply{
                             val adapter = ArrayAdapter(
                                 this@BuySellActivity,
@@ -242,30 +260,49 @@ class BuySellActivity : BaseActivity() {
 
             binding.sellContainer.apply {
 
+                val sym = intent.getStringExtra(AppConstants.SYMBOL)
+
                 if(intent.getIntExtra(AppConstants.MODE,0)==0) {
-                    val sym = intent.getStringExtra(AppConstants.SYMBOL)
+
+
                     if(!sym.isNullOrEmpty()){
                         val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
                         val symb="${stockItem?.sYM}-${stockItem?.nM}"
-                        val v =
-                            sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
-                                it.symbol.equals(
-                                    sym,
-                                    true
-                                )
-                            }?.first()
-                        val qty = v?.quantity?:0.0
+                        portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(this@BuySellActivity, Observer { result->
+                                when(result){
+                                    is Resource.Error -> {}
+                                    is Resource.Loading -> {}
+                                    is Resource.Success -> {
+                                        /*val avgBuy = intent.getStringExtra(AppConstants.AVG_PRICE)
+                                        val qty = intent.getStringExtra(AppConstants.QTY)*/
+                                        val avgBuy = result.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.map { it.price }?.first()
+                                        val qty = result.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.map { it.quantity }?.first()
+                                        availableShareValue.text = "${qty}"
+                                        avgBuyPriceValue.setText(Utils.roundTwoDecimal(avgBuy?.toDouble()?:0.0))
+                                    }
+                                }
+                            })
+
+                        /*  val v =
+                              sharedViewModel.mutablePortfolioFinalDetail.value?.data?.fifoPortfolio?.filter {
+                                  it.symbol.equals(
+                                      sym,
+                                      true
+                                  )
+                              }?.first()
+                          val qty = v?.quantity?:0.0*/
                         val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
                             it.sYM.equals(
                                 sym,
                                 true
                             )
                         }?.map { it.aP }?.first()
-                        val avgBuy = String.format("%.2f",stockItem?.avgP)
-                        availableShareValue.text = "${qty}"
+
+
                         symbol.setText(symb)
                         buyPrice.setText(Utils.roundTwoDecimal(askPrice ?: 0.00))
-                        avgBuyPriceValue.setText("${avgBuy}")
+
+
                     }
                     purchaseDate.setOnFocusChangeListener { view, b ->
                         if (b) {
@@ -273,8 +310,23 @@ class BuySellActivity : BaseActivity() {
                         }
                     }
                 }else{
-                    availableShareValue.visibility=View.GONE
-                    avgBuyPriceValue.visibility = View.GONE
+
+                    portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(this@BuySellActivity, Observer { result->
+                        when(result){
+                            is Resource.Error -> {}
+                            is Resource.Loading -> {}
+                            is Resource.Success -> {
+                                /*val avgBuy = intent.getStringExtra(AppConstants.AVG_PRICE)
+                                val qty = intent.getStringExtra(AppConstants.QTY)*/
+                                val avgBuy = result.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.map { it.price }?.first()
+                                val qty = result.data?.fifoPortfolio?.filter { it.symbol.equals(sym,true) }?.map { it.quantity }?.first()
+                                availableShareValue.text = "${qty}"
+                                avgBuyPriceValue.setText(Utils.roundTwoDecimal(avgBuy?.toDouble()?:0.0))
+                            }
+                        }
+                    })
+                    availableShareValue.visibility=View.VISIBLE
+                    avgBuyPriceValue.visibility = View.VISIBLE
                     symbol.setText(portfolioDetails?.portfolioSymbol)
                     shares.setText(portfolioDetails?.portfolioQuantity.toString())
                     buyPrice.setText(portfolioDetails?.portfolioRate.toString())
@@ -291,33 +343,40 @@ class BuySellActivity : BaseActivity() {
                 buttonSell.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                        if(intent.getIntExtra(AppConstants.MODE,0)==0){
-                            portFolioViewModel.sellStock(
-                                portfolioMainID = porfolioMainId,
-                                portfolioDate = purchaseDate.text.toString(),
-                                portfolioSymbol = symbol.text.split("-").first(),
-                                portfolioQuantity = shares.text.toString(),
-                                portfolioRate = buyPrice.text.toString(),
-                                portfolioCommission = comissionShare.text.toString(),
-                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                                portfolioPosition = "0"
-                            )
+                        if(shares.text.toString().toInt() > availableShareValue.text.toString().toInt() ||
+                            buyPrice.text.toString().toInt() > avgBuyPriceValue.text.toString().toInt()){
+                            Utils.showError(binding.root,"Please check number of shares and price")
                         }else{
-                            portFolioViewModel.updateTrade(
-                                portfolioMainID = porfolioMainId,
-                                portfolioType = "SELL",
-                                portfolioDate = purchaseDate.text.toString(),
-                                portfolioSymbol = symbol.text.split("-").first(),
-                                portfolioQuantity = shares.text.toString(),
-                                portfolioRate = buyPrice.text.toString(),
-                                portfolioCommission = comissionShare.text.toString(),
-                                portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
-                                portfolioPosition = "0",
-                                portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
-                            )
+                            if(intent.getIntExtra(AppConstants.MODE,0)==0){
+                                portFolioViewModel.sellStock(
+                                    portfolioMainID = porfolioMainId,
+                                    portfolioDate = purchaseDate.text.toString(),
+                                    portfolioSymbol = symbol.text.split("-").first(),
+                                    portfolioQuantity = shares.text.toString(),
+                                    portfolioRate = buyPrice.text.toString(),
+                                    portfolioCommission = comissionShare.text.toString(),
+                                    portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                    portfolioPosition = "0"
+                                )
+                            }else{
+                                portFolioViewModel.updateTrade(
+                                    portfolioMainID = porfolioMainId,
+                                    portfolioType = "SELL",
+                                    portfolioDate = purchaseDate.text.toString(),
+                                    portfolioSymbol = symbol.text.split("-").first(),
+                                    portfolioQuantity = shares.text.toString(),
+                                    portfolioRate = buyPrice.text.toString(),
+                                    portfolioCommission = comissionShare.text.toString(),
+                                    portfolioCommissionType = if (radioCommissionType.checkedRadioButtonId == R.id.radioShare) "Rs" else "Percentage",
+                                    portfolioPosition = "0",
+                                    portfolioDetailID = portfolioDetails?.portfolioDetailID.toString()
+                                )
+                            }
+                            finish()
                         }
+
 //                        Toast.makeText(it.context,"Done",Toast.LENGTH_SHORT).show()
-                        finish()
+
 
                     }else{
                         Utils.showError(root,"Empty fields not allowed...")

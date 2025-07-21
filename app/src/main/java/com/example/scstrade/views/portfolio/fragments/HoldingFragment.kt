@@ -91,7 +91,7 @@ class HoldingFragment : Fragment() {
                             avgBuyPriValue.text = "${String.format("%,.2f",avgBuyPrice.toDouble())}"
                             currentPriValue.text = "%,.2f".format(currentPrice)
 
-                            binding.recyclerView.visibility = View.VISIBLE
+                            binding.cardHoldings.visibility = View.VISIBLE
                             binding.recyclerView.adapter=HoldingAdapter(data,stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.first())
                         }else{
                             binding.currentMarket.setValue(Utils.roundTwoDecimal(0.0))
@@ -101,7 +101,7 @@ class HoldingFragment : Fragment() {
                             shareOwnedValue.text = 0.0.toString()
                             avgBuyPriValue.text = 0.0.toString()
                             currentPriValue.text = 0.0.toString()
-                            binding.recyclerView.visibility = View.GONE
+                            binding.cardHoldings.visibility = View.GONE
                             binding.noRecordFound.visibility = View.VISIBLE
                         }
 

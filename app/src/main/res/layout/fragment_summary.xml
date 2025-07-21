@@ -154,6 +154,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/total_cost_sum"
+                    android:textFontWeight="500"
                     android:textAppearance="@style/total" />
 
                 <TextView
@@ -162,6 +163,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/total_value"
                     android:textAppearance="@style/total" />
 
@@ -171,6 +173,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.25"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/total_p_l_sum"
                     android:textAppearance="@style/total_p_l" />
             </LinearLayout>
@@ -202,6 +205,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/holding_cost_sum"
                     android:textAppearance="@style/total" />
 
@@ -211,6 +215,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/holding_value"
                     android:textAppearance="@style/total" />
 
@@ -220,6 +225,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.25"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/holding_p_l_sum"
                     android:textAppearance="@style/total_p_l" />
             </LinearLayout>
@@ -252,6 +258,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/history_cost_sum"
+                    android:textFontWeight="500"
                     android:textAppearance="@style/total" />
 
                 <TextView
@@ -261,6 +268,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/history_value"
+                    android:textFontWeight="500"
                     android:textAppearance="@style/total" />
 
                 <TextView
@@ -269,6 +277,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.25"
                     android:gravity="center"
+                    android:textFontWeight="500"
                     android:text="@string/history_p_l_sum"
                     android:textAppearance="@style/total_p_l" />
             </LinearLayout>

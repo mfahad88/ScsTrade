@@ -41,6 +41,7 @@ class StockDetailActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
         portFolioViewModel.getPortfolioItemDetail(portfolioMainID,symbol)
         portFolioViewModel.getPortfolio(login.registrationID)
         portFolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
@@ -107,8 +108,14 @@ class StockDetailActivity : BaseActivity() {
             }
         }
 
-        binding.tabLayout.getTabAt(0)?.select()
-        loadFragment(SummaryFragment())
+        if(intent.getBooleanExtra(AppConstants.IS_HISTORY,false)){
+            binding.tabLayout.getTabAt(2)?.select()
+            loadFragment(HistoryFragment())
+        }else{
+            binding.tabLayout.getTabAt(0)?.select()
+            loadFragment(SummaryFragment())
+        }
+
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab!!.text!!.equals(getString(R.string.summary))){

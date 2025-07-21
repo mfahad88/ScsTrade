@@ -161,9 +161,10 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="1,100"
-                    android:textSize="15sp"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/sp_14"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                  />
 
                 <TextView
                     android:id="@+id/avg_buy_pri_value"
@@ -172,9 +173,9 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="209.87"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/current_pri_value"
@@ -183,9 +184,9 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="225.74"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <TextView

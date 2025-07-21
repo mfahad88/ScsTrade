@@ -148,6 +148,7 @@ class HistoryFragment : Fragment() {
 
                                     binding.historicalGain.tvTitle.text = getString(R.string.historical_,stockDetailActivity.symbol)
                                     binding.historicalGain.setValue("%,d".format(historicalGain.roundToInt()))
+                                    binding.historicalGain.tvValue.setTextColor(if (historicalGain<0.0) ContextCompat.getColor(requireContext(),R.color.md_theme_error) else ContextCompat.getColor(requireContext(),R.color.md_theme_primary))
                                     binding.profitBook.setValue("%,d".format(profitBooked.roundToInt()))
                                     binding.lossBooked.setValue("%,d".format(lossBooked.roundToInt()))
                                     binding.dividendEa.setValue("%,d".format(dividendEarning.roundToInt()))

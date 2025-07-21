@@ -84,6 +84,7 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
         mutablePortfolioFinalDetailOnce.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.getPortfolioDetail(portfolioMainID ?: -1)
+
             withContext(Dispatchers.Main) {
                 mutablePortfolioFinalDetailOnce.value = result
             }
@@ -94,6 +95,7 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
         mutablePortfolioItemDetail.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.getPortfolioItemDetail(portfolioMainID, portfolioSymbol)
+
             withContext(Dispatchers.Main){
 
                 mutablePortfolioItemDetail.value=result

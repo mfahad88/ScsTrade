@@ -174,8 +174,11 @@ class PortfolioDetailActivity : BaseActivity() {
                 intent.putExtra(AppConstants.SYMBOL, it.symbol)
                 startActivity(intent)
             }, onItemClickSell = {
+
                 val intent = Intent(this.context, BuySellActivity::class.java)
                 intent.putExtra(AppConstants.IS_Sell, true)
+                intent.putExtra(AppConstants.AVG_PRICE,it.price)
+                intent.putExtra(AppConstants.QTY,it.quantity)
                 intent.putExtra(AppConstants.SYMBOL,it.symbol)
                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
                 startActivity(intent)
@@ -223,7 +226,15 @@ class PortfolioDetailActivity : BaseActivity() {
                         }
 
                         if(!data.closeTrades.isNullOrEmpty()){
-                            binding.recyclerViewHistory.adapter = TradeSummaryAdapter(generateSummaryForTrades(data.closeTrades))
+                            binding.recyclerViewHistory.adapter = TradeSummaryAdapter(generateSummaryForTrades(data.closeTrades)){
+                                val intent = Intent(this@PortfolioDetailActivity, StockDetailActivity::class.java)
+                                intent.putExtra(AppConstants.PORTFOLIO_NAME,"${it.symbol} in ${binding.toolbar.binding.market.text.toString()}")
+                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                                intent.putExtra(AppConstants.IS_HISTORY,true)
+                                intent.putExtra(AppConstants.SYMBOL, it.symbol)
+                                startActivity(intent)
+                            }
+
                             groupHistory.visibility = View.VISIBLE
                         }
 

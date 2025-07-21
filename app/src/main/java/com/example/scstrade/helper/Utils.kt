@@ -264,7 +264,17 @@ class Utils {
             }
         }
         fun roundTwoDecimal(value:Double?):String{
-          try{
+            try {
+                return if (value != null) {
+                    String.format("%,.2f", value)
+                } else {
+                    "0.00"
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return "0.00"
+            }
+         /* try{
               if(value!=null) {
                   val decimal=value.toString().substringAfter(".","")
                   if(decimal.length>2) {
@@ -283,7 +293,7 @@ class Utils {
 
               e.printStackTrace()
               return value.toString()
-          }
+          }*/
         }
 
         fun commaSeparated(value:Int):String{

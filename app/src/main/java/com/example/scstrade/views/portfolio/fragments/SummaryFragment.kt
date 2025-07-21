@@ -216,9 +216,9 @@ class SummaryFragment : Fragment() {
         // ----- HOLDING -----
         val holdingItems = fifoList.filter { it.symbol.equals(symbol, ignoreCase = true) }
 
-        val holdingCost = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (stockItem?.cL ?: 0.0) }
-        val holdingValue = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (it.price.toDouble() ?: 0.0) }
-        val holdingPL = holdingValue - holdingCost
+        val holdingCost = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (it.price.toDouble() ?: 0.0) }
+        val holdingValue = holdingItems.sumOf { (it.quantity.toDouble() ?: 0.0) * (stockItem?.cL ?: 0.0) }
+        val holdingPL = holdingValue.minus(holdingCost)
 
         binding.holdingCost.text = formatAmount(holdingCost)
         binding.holdingValue.text = formatAmount(holdingValue)
@@ -237,7 +237,7 @@ class SummaryFragment : Fragment() {
         val historyPL = historyValue - historyCost
 
         val totalCost=holdingCost.plus(historyCost)
-        val totalValue = holdingValue.plus(holdingCost)
+        val totalValue = holdingValue.plus(historyValue)
         val totalPL = holdingPL.plus(historyPL)
 
         binding.historyCost.text = formatAmount(historyCost)

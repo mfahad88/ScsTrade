@@ -37,6 +37,10 @@ class PortfolioActivity : BaseActivity() {
     lateinit var login:LoginDataItem
     lateinit var sharedViewModel: SharedViewModel
     lateinit var portfolioViewModel: PortFolioViewModel
+    override fun onResume() {
+        super.onResume()
+        portfolioViewModel.getPortfolio(login.registrationID)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -49,7 +53,7 @@ class PortfolioActivity : BaseActivity() {
 //        login=(this.application as MyApp).login
         sharedViewModel = (this.application as MyApp).viewModel
         portfolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
-        portfolioViewModel.getPortfolio(login.registrationID)
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PortfolioActivity,LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))

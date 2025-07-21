@@ -55,7 +55,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.tvAvgBuy.text = String.format("%,.2f",item.price.toDouble())
             binding.tvTotalCost.text = "%,d".format(totalCost.roundToInt())
             binding.tvMarketValue.text = "%,d".format(marketValue.roundToInt())
-            binding.tvDayPL.text = Utils.roundTwoDecimal(dayPL)
+            binding.tvDayPL.text = "%,d".format(dayPL.roundToInt())
             binding.tvDayPLPercent.text = "${Utils.roundTwoDecimal(dayPLPercent)}%"
             binding.tvTotalPL.text = "%,d".format(totalPL.roundToInt())
             binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"

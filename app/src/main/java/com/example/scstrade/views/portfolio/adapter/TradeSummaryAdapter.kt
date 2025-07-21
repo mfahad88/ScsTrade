@@ -7,9 +7,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemMyPortfolioHistoryBinding
+import com.example.scstrade.model.response.portfolio.CloseTrade
 import com.example.scstrade.model.response.portfolio.TradeSummary
 
-class TradeSummaryAdapter(private val summaries: List<TradeSummary>) :
+class TradeSummaryAdapter(private val summaries: List<TradeSummary>,private val onItemClick: (TradeSummary) -> Unit) :
     RecyclerView.Adapter<TradeSummaryAdapter.SummaryViewHolder>() {
 
 
@@ -26,7 +27,9 @@ class TradeSummaryAdapter(private val summaries: List<TradeSummary>) :
     override fun onBindViewHolder(holder: SummaryViewHolder, position: Int) {
         val item = summaries[position]
         val context = holder.binding.root.context
-
+        holder.binding.root.setOnClickListener {
+            onItemClick(item)
+        }
         val status = item.status // "Loss" or "Gain"
         val color = if (status == "Loss")
             ContextCompat.getColor(context, R.color.md_theme_error)
