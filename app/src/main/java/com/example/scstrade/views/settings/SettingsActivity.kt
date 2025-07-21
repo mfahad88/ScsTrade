@@ -35,6 +35,18 @@ class SettingsActivity : BaseActivity() {
             binding.switch1.isChecked = true
 //            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+        binding.apply {
+            btnSave.setOnClickListener {
+
+                Utils.saveSharedPreference(this@SettingsActivity,AppConstants.REPEAT_DAILY,repeatDaily.isChecked)
+                Utils.saveSharedPreference(this@SettingsActivity,AppConstants.DURATION,duration.value.toInt())
+                Utils.saveSharedPreference(this@SettingsActivity,AppConstants.MARKET_UPDATE,marketUpdate.isChecked)
+
+                if(duration.value.toInt()>0 && marketUpdate.isChecked){
+                    Utils.scheduleMarketNotification(binding.root.context,duration.value.toInt(),repeatDaily.isChecked)
+                }
+            }
+        }
 
         binding.switch1.setOnCheckedChangeListener { compoundButton, b ->
             if(!b){

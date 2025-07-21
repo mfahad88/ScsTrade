@@ -112,6 +112,7 @@ android {
 dependencies {
     implementation(project(":MyCalendar-sdk"))
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
     val room_version = "2.6.1"
 
 //    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))

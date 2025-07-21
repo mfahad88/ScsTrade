@@ -55,6 +55,7 @@ import com.example.scstrade.model.summary.KSEIndices
 import com.google.gson.JsonElement
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -69,6 +70,8 @@ interface ApiService {
     @GET(value = "/Data?que=KSE Indices")
     suspend fun getIndices(): List<KSEIndices>
 
+    @GET(value = "/Data?que=KSE Indices")
+    fun getIndicess(): Call<List<KSEIndices>>
     @GET(value = "/Chart")
     suspend fun getChart(
         @Query("symbol") symbol: String,

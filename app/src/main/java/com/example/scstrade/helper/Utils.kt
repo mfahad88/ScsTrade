@@ -4,10 +4,8 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.app.UiModeManager
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -21,7 +19,6 @@ import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Debug
-import android.os.Handler
 import android.provider.MediaStore
 import android.text.InputFilter
 import android.text.Spanned
@@ -46,6 +43,12 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -54,6 +57,8 @@ import com.bumptech.glide.request.target.Target
 import com.example.scstrade.R
 import com.example.scstrade.helper.AppConstants.Companion.LIGHT_MODE
 import com.example.scstrade.model.response.stock.StockItem
+import com.example.scstrade.services.notifications.MarketNotificationWorker
+import com.example.scstrade.services.notifications.NotificationWorker
 import com.example.scstrade.views.widgets.TextDrawable
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -65,7 +70,6 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -74,6 +78,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -307,6 +312,61 @@ class Utils {
               e.printStackTrace()
               return value.toString()
           }
+        }
+
+        fun scheduleMarketNotification(
+            context: Context,
+            delayMinutes: Int = 0,
+            repeatDaily: Boolean = true
+        ) {
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            if (repeatDaily) {
+                val repeatRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+                    .setConstraints(constraints)
+                    .setInitialDelay(delayMinutes.toLong(), TimeUnit.MINUTES) // optional delay before first run
+                    .build()
+
+                WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    "daily_market_notification",
+                    ExistingPeriodicWorkPolicy.UPDATE,
+                    repeatRequest
+                )
+            } else {
+                val oneTimeRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                    .setInitialDelay(delayMinutes.toLong(), TimeUnit.MINUTES)
+                    .setConstraints(constraints)
+                    .build()
+
+                WorkManager.getInstance(context).enqueue(oneTimeRequest)
+            }
+        }
+
+        fun scheduleDailyWork(context: Context) {
+            val now = Calendar.getInstance()
+            val target = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 9)
+                set(Calendar.MINUTE, 30)
+                set(Calendar.SECOND, 0)
+                if (before(now)) add(Calendar.DAY_OF_YEAR, 1)
+            }
+
+            val initialDelay = target.timeInMillis - now.timeInMillis
+
+            val workRequest = PeriodicWorkRequestBuilder<MarketNotificationWorker>(
+                24, TimeUnit.HOURS
+            )
+                .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
+                .addTag("daily_market_notification")
+                .build()
+
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                "DailyMarketWorker",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                workRequest
+            )
         }
         fun convertToMillions(value: Double?): String {
             return try {
@@ -703,7 +763,19 @@ class Utils {
             editor.apply()
         }
 
-        fun  getSharedPreference(context: Context, key:String): Boolean {
+        fun saveSharedPreference(context: Context,key:String,value:Int){
+            val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putInt(key,value)
+            editor.apply()
+        }
+
+        fun getIntSharedPreference(context: Context, key:String): Int {
+            val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
+            return  sharedPreferences.getInt(key,0)
+        }
+
+        fun getSharedPreference(context: Context, key:String): Boolean {
             val sharedPreferences=context.getSharedPreferences(MY_PREFS,MODE_PRIVATE)
             return  sharedPreferences.getBoolean(key,true)
         }

@@ -514,6 +514,8 @@
     <string name="sub_title">(Share in Hand)</string>
     <string name="purchase_cost">Purchase Cost</string>
     <string name="trade_log">Trade Log</string>
+    <string name="repeat_daily">Repeat Daily</string>
+    <string name="market_update">Market Update</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>
