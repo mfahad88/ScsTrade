@@ -10,11 +10,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +38,7 @@ import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.portfolio.adapter.ShareInHandAdapter
 import com.example.scstrade.views.portfolio.adapter.TradeSummaryAdapter
+import com.example.scstrade.views.snapshot.SnapshotActivity
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.gson.reflect.TypeToken
 import kotlin.math.roundToInt
@@ -48,7 +52,8 @@ class PortfolioDetailActivity : BaseActivity() {
 
     //    var portfolioMainID:Int?=-1
 
-
+    /*val Int.dp: Int
+        get() = (this * Resources.getSystem().displayMetrics.density).toInt()*/
     override fun onResume() {
         super.onResume()
         portfolioViewModel.getPortfolioFinalDetailOnce(portfolioMainID)
@@ -80,7 +85,7 @@ class PortfolioDetailActivity : BaseActivity() {
         enableEdgeToEdge()
         binding = ActivityMyPortfolioBinding.inflate(LayoutInflater.from(this))
         // binding.toolbar.toggleToolbar(false)
-        binding.toolbar.binding.market.text = "Portfolio"
+        binding.toolbar.binding.market.text = intent.getStringExtra(AppConstants.PORTFOLIO_NAME)
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
@@ -88,7 +93,33 @@ class PortfolioDetailActivity : BaseActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         portfolioViewModel= ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(PortFolioViewModel::class.java)
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.floatingActionButton ) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams<FrameLayout.LayoutParams> {
+                bottomMargin = systemBars.bottom+32
+                rightMargin = systemBars.right+32
+            }
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainLayout) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(
+                top = 0,
+                bottom = systemBars.bottom,
+                left = systemBars.left,
+                right = systemBars.right
+            )
+            insets
+        }
 
+/*        ViewCompat.setOnApplyWindowInsetsListener(binding.floatingMenu ) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams<FrameLayout.LayoutParams> {
+                bottomMargin = systemBars.bottom+62
+                rightMargin = systemBars.right+32
+            }
+            insets
+        }*/
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -132,12 +163,24 @@ class PortfolioDetailActivity : BaseActivity() {
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@PortfolioDetailActivity,LinearLayoutManager.VERTICAL,false)
-            adapter = ShareInHandAdapter(sharedViewModel){
+            adapter = ShareInHandAdapter(sharedViewModel, onItemClick = {
                 val intent = Intent(this.context, StockDetailActivity::class.java)
+                intent.putExtra(AppConstants.PORTFOLIO_NAME,"${it.symbol} in ${binding.toolbar.binding.market.text.toString()}")
                 intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
                 intent.putExtra(AppConstants.SYMBOL, it.symbol)
                 startActivity(intent)
-            }
+            }, onItemClickSnapshot = {
+                val intent= Intent(this.context, SnapshotActivity::class.java)
+                intent.putExtra(AppConstants.SYMBOL, it.symbol)
+                startActivity(intent)
+            }, onItemClickSell = {
+                val intent = Intent(this.context, BuySellActivity::class.java)
+                intent.putExtra(AppConstants.IS_Sell, true)
+                intent.putExtra(AppConstants.SYMBOL,it.symbol)
+                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                startActivity(intent)
+
+            })
             addItemDecoration(HorizontalDivider(30.dp))
         }
         binding.recyclerViewHistory.apply {
@@ -163,13 +206,16 @@ class PortfolioDetailActivity : BaseActivity() {
                         val currentMarketValue=data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }
                         val portfolioCost = data!!.fifoPortfolio.sumOf { res-> res.quantity.toDouble().times(res.price.toDouble()) }
                         val dayPL = data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cH }?.first()?:0.0) }
+                        val dayPLPercent =data.fifoPortfolio.sumOf { res->
+                            stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cHP }?.first()?:0.0
+                        }
                         val totalPL = data!!.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
                         val totalPlPercent = totalPL.div(portfolioCost).times(100)
 
                         binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
                         binding.portfolioCost.setValue("%,d".format(portfolioCost.roundToInt()))
-                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt()))
-                        binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt()))
+                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt())+" (${Utils.roundTwoDecimal(dayPLPercent)}%)")
+                        binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt())+" (${Utils.roundTwoDecimal(totalPlPercent)}%)")
 
                         (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
                         if(!data.fifoPortfolio.isNullOrEmpty()){

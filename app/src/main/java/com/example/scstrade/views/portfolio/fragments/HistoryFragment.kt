@@ -109,9 +109,11 @@ class HistoryFragment : Fragment() {
                 {
                     if(!res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList().isNullOrEmpty()){
                         binding.materialCardViewSell.visibility = View.VISIBLE
-                    }
-                    binding.recyclerView.adapter=HistoryAdapter(res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
+                        binding.recyclerView.adapter=HistoryAdapter(res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList()?: emptyList()){
 
+                        }
+                    }else{
+                        binding.noRecordFound.visibility = View.VISIBLE
                     }
 
                     portFolioViewModel.mutableDividend.observe(viewLifecycleOwner, Observer {result->

@@ -1816,4 +1816,10 @@
         <item name="android:textColor">#D32F2F</item>
     </style>
 
+    <style name="no_record_found">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

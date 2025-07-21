@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/tabLayout"
         android:layout_below="@id/toolbar"
-        app:tabBackground="@color/md_theme_surface">
+        android:elevation="1dp"
+        app:tabBackground="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

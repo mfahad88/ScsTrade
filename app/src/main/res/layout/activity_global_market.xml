@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/md_theme_surface"
+    android:background="@color/white"
     tools:context=".views.market.MarketFragment">
     <com.example.scstrade.views.widgets.mMarket
         android:id="@+id/toolbar"
@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/tabLayout"
         app:tabMode="scrollable"
+        android:background="@color/white"
+        android:elevation="1dp"
         style="@style/CustomTabLayout"
         android:layout_gravity="center_horizontal"
         app:tabGravity="center"

@@ -54,7 +54,7 @@ class StockDetailActivity : BaseActivity() {
 
         // binding.toolbar.toggleToolbar(false)
         fetchUser(this)
-        binding.toolbar.binding.market.text = "Portfolio"
+        binding.toolbar.binding.market.text = intent.getStringExtra(AppConstants.PORTFOLIO_NAME)
         setContentView(binding.root)
         portfolioMainID=intent.getIntExtra(AppConstants.PORTFOLIO_MAIN_ID,-1)
         symbol = intent.getStringExtra(AppConstants.SYMBOL).toString()

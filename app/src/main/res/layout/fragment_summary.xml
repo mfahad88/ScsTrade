@@ -34,7 +34,7 @@
             android:layout_height="@dimen/dp_50"
             android:layout_marginStart="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_16"
-            android:src="@drawable/snapshot_icon"
+            android:src="@drawable/snapshot_icon_portfolio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

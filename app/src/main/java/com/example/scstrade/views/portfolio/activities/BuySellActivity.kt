@@ -254,7 +254,7 @@ class BuySellActivity : BaseActivity() {
                                     true
                                 )
                             }?.first()
-                        val qty = v?.quantity
+                        val qty = v?.quantity?:0.0
                         val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
                             it.sYM.equals(
                                 sym,

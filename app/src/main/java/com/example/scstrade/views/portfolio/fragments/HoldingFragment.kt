@@ -77,6 +77,7 @@ class HoldingFragment : Fragment() {
                             val currentMarketValue= data.sumOf { res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cL }?.first()?:0.0) }
                             val portfolioCost = data.sumOf { res-> res.quantity.toDouble().times(res.rate.toDouble()) }
                             val dayPL = data.sumOf { res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cH }?.first()?:0.0) }
+                            val dayPLPercent =stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cHP }?.first()?:0.0
                             val totalPL = data.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals((requireActivity() as StockDetailActivity).symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
                             val totalPlPercent = totalPL.div(portfolioCost).times(100)
                             val totalShaes=data.sumOf { res->res.quantity.toDouble()}
@@ -84,12 +85,13 @@ class HoldingFragment : Fragment() {
                             val currentPrice = stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.map { it.cL }?.first()
                             binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
                             binding.purchaseCoValue.setValue("%,d".format(portfolioCost.roundToInt()))
-                            binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt()))
-                            binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt()))
+                            binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt())+" (${Utils.roundTwoDecimal(dayPLPercent)}%)")
+                            binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt())+" (${Utils.roundTwoDecimal(totalPlPercent)}%)")
                             shareOwnedValue.text = totalShaes.toString()
-                            avgBuyPriValue.text = String.format("%,.2f",avgBuyPrice.toDouble())
+                            avgBuyPriValue.text = "${String.format("%,.2f",avgBuyPrice.toDouble())}"
                             currentPriValue.text = "%,.2f".format(currentPrice)
 
+                            binding.recyclerView.visibility = View.VISIBLE
                             binding.recyclerView.adapter=HoldingAdapter(data,stockItem?.filter { it.sYM.equals(stockDetailActivity.symbol) }?.first())
                         }else{
                             binding.currentMarket.setValue(Utils.roundTwoDecimal(0.0))
@@ -99,6 +101,8 @@ class HoldingFragment : Fragment() {
                             shareOwnedValue.text = 0.0.toString()
                             avgBuyPriValue.text = 0.0.toString()
                             currentPriValue.text = 0.0.toString()
+                            binding.recyclerView.visibility = View.GONE
+                            binding.noRecordFound.visibility = View.VISIBLE
                         }
 
 

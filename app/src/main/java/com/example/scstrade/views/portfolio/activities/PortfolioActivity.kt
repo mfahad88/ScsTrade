@@ -74,6 +74,7 @@ class PortfolioActivity : BaseActivity() {
                         adapter = PortFolioAdapter(result.data?.portfolioList?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
 
                             val intent=Intent(this@PortfolioActivity, PortfolioDetailActivity::class.java)
+                            intent.putExtra(AppConstants.PORTFOLIO_NAME,it.portfolioMainName)
                             intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,it.portfolioMainID)
                             startActivity(intent)
                         }, onItemPopupClick = {str,item->

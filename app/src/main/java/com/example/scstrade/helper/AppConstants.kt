@@ -2,6 +2,7 @@ package com.example.scstrade.helper
 
 class AppConstants {
     companion object{
+        val PORTFOLIO_NAME: String?= "portfolio_name"
         val LIGHT_MODE: String ="LIGHT_MODE"
         val ID_REF: String="id_ref"
         val ANNOUNCEMENT_TYPE_NAME="announcementTypeName"

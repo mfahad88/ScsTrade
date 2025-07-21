@@ -1,15 +1,11 @@
 package com.example.scstrade.views.portfolio.adapter
-import androidx.compose.ui.res.dimensionResource
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemMyPortfolioHoldingBinding
-import com.example.scstrade.databinding.ItemShareInHandBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.portfolio.FifoPortfolio
 import com.example.scstrade.model.response.stock.StockItem
@@ -18,7 +14,9 @@ import kotlin.math.roundToInt
 
 class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
                          private val sharedViewModel: SharedViewModel,
-                         private val onItemClick: (FifoPortfolio) -> Unit
+                         private val onItemClick: (FifoPortfolio) -> Unit,
+                         private val onItemClickSnapshot: (FifoPortfolio) -> Unit,
+                         private val onItemClickSell: (FifoPortfolio) -> Unit
 ) : ListAdapter<FifoPortfolio,ShareInHandAdapter.ShareInHandViewHolder>(ShareInHandDiffCallback()) {
 
     class ShareInHandDiffCallback:DiffUtil.ItemCallback<FifoPortfolio>(){
@@ -34,7 +32,12 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
     class ShareInHandViewHolder(private val binding: ItemMyPortfolioHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(item:FifoPortfolio,stockItem: StockItem) {
+        fun bind(
+            item: FifoPortfolio,
+            stockItem: StockItem,
+            onItemClickSnapshot: (FifoPortfolio) -> Unit,
+            onItemClickSell: (FifoPortfolio) -> Unit
+        ) {
 
 
             val marketValue =item.quantity.toDouble().times(stockItem.cL)
@@ -57,7 +60,13 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
             binding.tvTotalPL.text = "%,d".format(totalPL.roundToInt())
             binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"
             binding.tvPriceChange.text = "${stockItem.cH}"
+            binding.snapshot.setOnClickListener {
+                onItemClickSnapshot(item)
+            }
 
+            binding.sell.setOnClickListener {
+                onItemClickSell(item)
+            }
         }
     }
 
@@ -71,7 +80,7 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
         val list=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(getItem(position).symbol,true) }?.first()
 
         if (list != null) {
-            holder.bind(getItem(position),list)
+            holder.bind(getItem(position),list,onItemClickSnapshot,onItemClickSell)
             holder.itemView.setOnClickListener {
                 onItemClick(getItem(position))
             }
