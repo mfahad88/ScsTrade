@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class NewsData(
     @SerializedName("news_date")
-    val newsDate: String?,
+    val newsDate: String,
     @SerializedName("news_heading")
     val newsHeading: String,
     @SerializedName("news_link")
