@@ -154,10 +154,10 @@ class RegisterFragment : Fragment() {
                 if(Utils.isPasswordValid(binding.password.text)) {
                     binding.apply {
                         viewModel.registerUser(
-                            fullName = fullName.text,
-                            email = email.text,
-                            password = password.text,
-                            mobile = mobileNumber.text,
+                            fullName = fullName.text.toString(),
+                            email = email.text.toString(),
+                            password = password.text.toString(),
+                            mobile = mobileNumber.text.toString(),
                             fireBaseID = fcm ?: ""
                         )
                     }

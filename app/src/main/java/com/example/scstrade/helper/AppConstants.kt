@@ -2,6 +2,7 @@ package com.example.scstrade.helper
 
 class AppConstants {
     companion object{
+        val IS_NOTIFY: String = "is_notify"
         val MARKET_UPDATE: String="market_update"
         val DURATION: String="duration"
         val REPEAT_DAILY="repeat_daily"

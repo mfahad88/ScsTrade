@@ -516,6 +516,7 @@
     <string name="trade_log">Trade Log</string>
     <string name="repeat_daily">Repeat Daily</string>
     <string name="market_update">Market Update</string>
+    <string name="announcement_date">Announcement Date:</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

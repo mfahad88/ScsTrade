@@ -176,7 +176,7 @@ class  NewsDetailActivity : BaseActivity() {
                     is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        /*val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
                         if(data?.description!=null) {
                             if (extractImage(data.description) != null) {
                                 Glide.with(this).load(extractImage(data.description))
@@ -196,7 +196,7 @@ class  NewsDetailActivity : BaseActivity() {
                         binding.source.setOnClickListener {
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
                             this.startActivity(intent)
-                        }
+                        }*/
                     }
                 }
             })

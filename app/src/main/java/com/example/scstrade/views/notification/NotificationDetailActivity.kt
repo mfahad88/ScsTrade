@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNotificationDetailBinding
@@ -44,6 +46,9 @@ class NotificationDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
         Utils.setEdgeToEdgeWithWhiteIcons(this)
+        sharedViewModel = (application as MyApp).viewModel
+//        sharedViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this.application)
+//            .create(SharedViewModel::class.java)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -80,10 +85,11 @@ class NotificationDetailActivity : BaseActivity() {
             insets
         }
         enableEdgeToEdge()
-        sharedViewModel = (application as MyApp).viewModel
+
         setContentView(binding.root)
         announcmentType=intent.getStringExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME)
         idRef = intent.getIntExtra(AppConstants.ID_REF,-1)
+
         sharedViewModel.notificationDetals(id = idRef?:-1, type =  announcmentType?:"")
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Notification"
@@ -115,23 +121,25 @@ class NotificationDetailActivity : BaseActivity() {
                                             "company_code"
                                         )
                                         && !it.key.equals("company_name") && !it.key.equals("Heading") && !it.key.equals(
-                                            "Board_Meeting_Date"
+                                            "bm_ann_date"
                                         )
                                         && !it.key.equals("ImageLink") && !it.key.equals("PDFLink")
                                     ) {
+
+                                        if (it.key.contains("date", ignoreCase = true) && it.value.asString.contains("-"))return@forEach
                                         list.add(KeyDescValue(it.key, it.value.asString, null))
                                     }
                                 }
                                 detail.listView.adapter =
                                     InformationAdapter(this@NotificationDetailActivity, list)
 
-                                detail.symbol.text = jsonObject.get("company_code").asString
+                                detail.symbol.text = jsonObject.get("company_code").asString+" - "
                                 detail.companyName.text = jsonObject.get("company_name").asString
                                 detail.description.text = jsonObject.get("Heading").asString
 
-                                if (jsonObject.has("Board_Meeting_Date")) {
+                                if (jsonObject.has("bm_ann_date")) {
                                     detail.datetime.text = Utils.convertDateString(
-                                        jsonObject.get("Board_Meeting_Date").asString,
+                                        jsonObject.get("bm_ann_date").asString,
                                         "dd-MMM-yyyy"
                                     )
                                     detail.datetime.visibility = View.VISIBLE

@@ -4,66 +4,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/dp_15"
+    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:textAppearance="@style/mcbim_funds"
-        app:layout_constraintStart_toStartOf="parent"
         android:textFontWeight="700"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         tools:text="@string/mcbim_funds" />
 
 
     <TextView
         android:id="@+id/company_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_4"
-        android:textFontWeight="500"
-        android:gravity="center_horizontal|center_vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
         android:textAppearance="@style/crescent_st"
-        app:layout_constraintStart_toStartOf="@+id/symbol"
-        app:layout_constraintTop_toBottomOf="@+id/symbol"
+        android:textFontWeight="500"
+        app:layout_constraintBottom_toBottomOf="@+id/symbol"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/symbol"
+        app:layout_constraintTop_toTopOf="@+id/symbol"
         tools:text="@string/crescent_st" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
         android:gravity="center_vertical"
         android:lineSpacingExtra="1sp"
-        tools:text="@string/notice_for_"
         android:textAppearance="@style/notice_for_"
         android:textFontWeight="500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/symbol"
-        app:layout_constraintTop_toBottomOf="@+id/company_name" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/notice_for_" />
+
+    <TextView
+        android:id="@+id/announcement_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/announcement_date"
+        android:textAppearance="@style/mar_2025_12"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@+id/symbol"
+        app:layout_constraintTop_toBottomOf="@+id/symbol" />
 
     <TextView
         android:id="@+id/datetime"
-        android:layout_width="@dimen/dp_159"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dp_20"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
-        android:textFontWeight="500"
         android:text="@string/mar_2025_12"
-        android:textAppearance="@style/mar_2025_12"
-        app:layout_constraintStart_toStartOf="@+id/description"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        android:textAppearance="@style/datetime"
+        android:textFontWeight="500"
+        app:layout_constraintBottom_toBottomOf="@+id/announcement_date"
+        app:layout_constraintEnd_toEndOf="@+id/company_name"
+        app:layout_constraintStart_toEndOf="@+id/announcement_date"
+        app:layout_constraintTop_toBottomOf="@+id/symbol" />
 
     <ImageView
         android:id="@+id/imageViewView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/datetime"
         app:srcCompat="@drawable/rounded_file_view" />
@@ -94,6 +114,7 @@
         android:layout_height="@dimen/dp_667"
         android:layout_marginTop="@dimen/dp_8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewDownload" />
 

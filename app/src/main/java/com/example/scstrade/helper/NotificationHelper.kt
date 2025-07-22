@@ -36,50 +36,28 @@ class NotificationHelper(private val context: Context) {
             notificationMap.toString()
             /*"Type ${notificationMap["type"].toString()}  Reference ID ${notificationMap["reference_id"].toString()} "*/
         )
-        val activityToOpen = NotificationDetailActivity::class.java
+        val requestCode = notificationMap["reference_id"]?.toIntOrNull() ?: System.currentTimeMillis().toInt()
+        val activityToOpen = MainActivity::class.java
         var intent = Intent(context, activityToOpen)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.putExtra(AppConstants.IS_NOTIFY,true)
         intent.putExtra(AppConstants.ID_REF,notificationMap["reference_id"]?.toInt())
         intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,notificationMap["title"].toString())
-        /*val loginOTPResponse = Utils.getLogin(context)
 
-        //Log.d("Notification User Type","${notificationMap["userType"].toString()}")
-
-        if(notificationMap["userType"].toString()!=SecurePreferences.getString(context,AppConstants.Keys.USER_TYPE)) {
-            Intent(context, MainActivity::class.java)
-            //Log.d("Notification User Type","${notificationMap["userType"].toString()} & matched ${loginOTPResponse?.userType}")
-        }
-        else {
-            intent = getIntent(notificationMap, intent)
-        }
-
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        if(!isDashboard) {
-            intent.putExtra(
-                AppConstants.SPKeys.PUSH_NOTIFICATION_ID,
-                notificationMap["id"]
-            ) // Replace with your actual parameter data
-            isDashboard=false
-        }
-        intent.putExtra(
-            AppConstants.Keys.IS_FROM_NOTIFICATION,
-           true
-        )*/
 
 
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            requestCode,
             intent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
         val title =notificationMap["title"]
         val company=notificationMap["company"]
 //        val body = notificationMap["body"]
-        val details = notificationMap["details"]?.replace("|","\n")?.trim()
+        val details = notificationMap["details"]?.replace("| ","\n")?.trim()
         val boldTitle = SpannableString(title).apply {
             setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
@@ -96,6 +74,7 @@ class NotificationHelper(private val context: Context) {
 // ✅ Notification builder
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
+            .setContentIntent(pendingIntent)
 //            .setColor(ContextCompat.getColor(context,R.color.md_theme_primary))
 //            .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_launcher_round))
             .setContentTitle(boldTitle)
@@ -103,8 +82,8 @@ class NotificationHelper(private val context: Context) {
 //            .setContentText(body) // shown below title in collapsed view
             .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(false)
-            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
 
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
@@ -122,13 +101,8 @@ class NotificationHelper(private val context: Context) {
                 return
             }
 
-            /*  var notificationToRoute = HashMap<String, Bundle>()
-              if(SecurePreferences.contains(context,AppConstants.SPKeys.ROUTE_PUSH_NOTIFICATION)){
-                  notificationToRoute = (SecurePreferences.getHashMap(context,AppConstants.SPKeys.ROUTE_PUSH_NOTIFICATION,Bundle::class.java) as HashMap<String, Bundle>?)?: HashMap()
-              }
-              notificationToRoute[notificationMap["id"].toString()] = Utils.intentToBundle(intent)
-              SecurePreferences.saveHashMap(context,AppConstants.SPKeys.ROUTE_PUSH_NOTIFICATION,notificationToRoute)*/
-            notify(notificationMap["reference_id"]?.toInt()?:0, notificationBuilder.build())
+
+            notify(notificationMap["reference_id"]?.toInt()?:System.currentTimeMillis().toInt(), notificationBuilder.build())
         }
     }
 

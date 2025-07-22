@@ -1529,4 +1529,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="material_information"></style>
+
+    <style name="datetime">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/md_theme_outline</item>
+    </style>
 </resources>

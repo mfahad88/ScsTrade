@@ -1433,7 +1433,7 @@
     <style name="mar_2025_12">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_14</item>
-        <item name="android:textColor">@color/md_theme_scrim</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="text1">
@@ -1827,6 +1827,12 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="datetime">
+        <item name="android:fontFamily">@font/custom_font</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/md_theme_outline</item>
     </style>
 
 </resources>

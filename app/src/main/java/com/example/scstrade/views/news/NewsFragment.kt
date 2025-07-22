@@ -366,12 +366,12 @@ class NewsFragment : Fragment() {
                         is Resource.Loading -> binding.loader.visibility= View.VISIBLE
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
-                            newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+                          /*  newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
                                 val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.METTIS)
                                 intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.mettis.RssItem).title)
                                 startActivity(intent)
-                            }
+                            }*/
                         }
                     }
                 }

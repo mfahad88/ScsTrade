@@ -23,6 +23,7 @@ import com.example.scstrade.model.response.incomestatement.IncomeStatementDataIt
 import com.example.scstrade.model.response.indices.ResultIndices
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.RssWrapper
+import com.example.scstrade.model.response.news.mettis.NewsItem
 import com.example.scstrade.model.response.notification.NotificationDto
 import com.example.scstrade.model.response.portfolio.DividendItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
@@ -66,7 +67,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableTribune=MutableLiveData<Resource<RssFeed>>()
     val mutableBrecoder=MutableLiveData<Resource<RssWrapper>>()
     val mutableProfit=MutableLiveData<Resource<com.example.scstrade.model.response.news.profit.RssFeed>>()
-    val mutableMettis=MutableLiveData<Resource<com.example.scstrade.model.response.news.mettis.RssFeed>>()
+    val mutableMettis=MutableLiveData<Resource<NewsItem>>()
     val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
     val mutableContactUs=MutableLiveData<Resource<List<ContactData>>>()
     val mutableOverview=MutableLiveData<Resource<Overview>>()
@@ -367,13 +368,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         if(isConnected.value==true){
             viewModelScope.launch (Dispatchers.IO){
                 try{
+                    var list= mutableListOf<NewsItem>()
                     val scraper = MettisScraper()
                     scraper.fetchArticles {
+                        list.addAll(it)
                         Log.e("mettis",it.toString())
                     }
+//                    withContext()
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
+
               /*  val result = repository.newsMettis()
                 withContext(Dispatchers.Main){
                     mutableMettis.value = result

@@ -1,6 +1,7 @@
 package com.example.scstrade.views.main
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -24,6 +25,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
+import com.example.scstrade.views.notification.NotificationDetailActivity
 import com.example.scstrade.views.splash.SplashFragment
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -42,7 +44,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
+        if(intent.getBooleanExtra(AppConstants.IS_NOTIFY,false)){
+            val intentNotify = Intent(this,NotificationDetailActivity::class.java)
+            intentNotify.putExtra(AppConstants.ID_REF,intent.getIntExtra(AppConstants.ID_REF,-1))
+            intentNotify.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,intent.getStringExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME))
+            startActivity(intentNotify)
+        }
     /*    // StrictMode for dev debugging
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
