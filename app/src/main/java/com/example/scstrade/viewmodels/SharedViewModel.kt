@@ -67,7 +67,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableTribune=MutableLiveData<Resource<RssFeed>>()
     val mutableBrecoder=MutableLiveData<Resource<RssWrapper>>()
     val mutableProfit=MutableLiveData<Resource<com.example.scstrade.model.response.news.profit.RssFeed>>()
-    val mutableMettis=MutableLiveData<Resource<NewsItem>>()
+    val mutableMettis=MutableLiveData<Resource<List<NewsItem>>>()
     val mutableDawn=MutableLiveData<Resource<com.example.scstrade.model.response.news.dawn.RssFeed>>()
     val mutableContactUs=MutableLiveData<Resource<List<ContactData>>>()
     val mutableOverview=MutableLiveData<Resource<Overview>>()
@@ -364,25 +364,21 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
 
     fun mettisNews(){
-        mutableMettis.value  = Resource.Loading()
-        if(isConnected.value==true){
-            viewModelScope.launch (Dispatchers.IO){
-                try{
-                    var list= mutableListOf<NewsItem>()
+        mutableMettis.value = Resource.Loading()
+        if (isConnected.value == true) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
                     val scraper = MettisScraper()
-                    scraper.fetchArticles {
-                        list.addAll(it)
-                        Log.e("mettis",it.toString())
-                    }
-//                    withContext()
-                }catch (e:Exception){
-                    e.printStackTrace()
-                }
+                    val articles = scraper.fetchArticles()
 
-              /*  val result = repository.newsMettis()
-                withContext(Dispatchers.Main){
-                    mutableMettis.value = result
-                }*/
+                    withContext(Dispatchers.Main) {
+                        mutableMettis.value = Resource.Success(articles)
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        mutableMettis.value = Resource.Error(e.message ?: "No record found")
+                    }
+                }
             }
         }
     }

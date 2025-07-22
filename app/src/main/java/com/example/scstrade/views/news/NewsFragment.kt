@@ -88,6 +88,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.news.NewsData
 import com.example.scstrade.model.response.news.brecoder.Item
+import com.example.scstrade.model.response.news.mettis.NewsItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
@@ -366,12 +367,13 @@ class NewsFragment : Fragment() {
                         is Resource.Loading -> binding.loader.visibility= View.VISIBLE
                         is Resource.Success -> {
                             binding.loader.visibility= View.GONE
-                          /*  newsListTribune(data=data.value.data?.channel?.items?: emptyList()){
+
+                            newsListMettis(data=data.value.data?: emptyList()){
                                 val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                 intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.METTIS)
-                                intent.putExtra(AppConstants.TITLE,(it as com.example.scstrade.model.response.news.mettis.RssItem).title)
+                                intent.putExtra(AppConstants.TITLE,it.title)
                                 startActivity(intent)
-                            }*/
+                            }
                         }
                     }
                 }
@@ -480,6 +482,95 @@ class NewsFragment : Fragment() {
                                     else if(data[index] is com.example.scstrade.model.response.news.mettis.RssItem) rememberAsyncImagePainter(extractImage((data[index] as com.example.scstrade.model.response.news.mettis.RssItem).description))
                                     else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) rememberAsyncImagePainter((data[index] as com.example.scstrade.model.response.news.dawn.RssItem).mediaContent?.url)
                                     else painterResource(id = R.drawable.news_empty_old) ,
+                                    contentDescription = "Dawn",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillParentMaxHeight(0.1f)
+                                        .clip(
+                                            RoundedCornerShape(dimensionResource(R.dimen.dp_5).value.dp)
+                                        ),
+                                    contentScale = ContentScale.FillBounds
+                                )
+                            }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
+
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun newsListMettis(data: List<NewsItem>, onItemClick:(NewsItem)->Unit) {
+        Box(modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.dp_20).value.dp, vertical = dimensionResource(R.dimen.dp_20).value.dp)) {
+            LazyColumn {
+                items(data.size) { index ->
+                    Row (modifier = Modifier.clickable {
+                        onItemClick(data[index])
+                    }){
+
+                        Box(
+                            modifier = Modifier
+                                .weight(2f),
+                            content = {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    horizontalAlignment = Alignment.Start,
+                                ) {
+                                    Text(
+                                        text =data[index].title?:"No Description",
+                                        fontSize = dimensionResource(R.dimen.sp_16).value.sp,
+                                        minLines = 3,
+                                        maxLines = 3,
+                                        fontFamily = FontFamily(Font(R.font.inter_28pt_semibold_600)),
+                                        fontWeight = FontWeight(600),
+                                        color = colorResource(id = R.color.black),
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.align(Alignment.Start)
+                                    )
+                                    /*Row(
+                                        modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_2).value.dp),
+                                    ) {
+
+                                        Image(
+                                            painter = painterResource(id = R.drawable.clock),
+                                            contentDescription = "Clock",
+                                            modifier = Modifier.size(dimensionResource(R.dimen.dp_15).value.dp)
+                                        )
+                                        Text(
+                                            text =  Utils.convertDateBrFormat(if(data[index] is RssItem) (data[index] as RssItem).pubDate?.trim() ?: ""
+                                            else if(data[index] is com.example.scstrade.model.response.news.brecoder.Item ) (data[index] as com.example.scstrade.model.response.news.brecoder.Item).pubDate?.trim()?:""
+                                            else if (data[index] is com.example.scstrade.model.response.news.profit.RssItem ) (data[index] as com.example.scstrade.model.response.news.profit.RssItem).pubDate.trim()
+                                            else if (data[index] is com.example.scstrade.model.response.news.mettis.RssItem ) (data[index] as com.example.scstrade.model.response.news.mettis.RssItem).pubDate.trim()
+                                            else if (data[index] is com.example.scstrade.model.response.news.dawn.RssItem ) (data[index] as com.example.scstrade.model.response.news.dawn.RssItem).pubDate.trim()
+                                            else "" ),
+
+                                            style = TextStyle(
+                                                fontSize = dimensionResource(R.dimen.sp_12).value.sp,
+                                                fontFamily = FontFamily(Font(R.font.custom_font)),
+                                                fontWeight = FontWeight(500),
+                                                color = Color(0xFF79776F)
+                                            )
+                                        )
+                                    }*/
+                                }
+                            }
+
+                        )
+                        Spacer(modifier = Modifier.width(dimensionResource(R.dimen.dp_10).value.dp))
+                        Box(
+                            modifier = Modifier
+                                .weight(1f),
+                            content = {
+                                Image(
+                                    /* painter = if (data[index].image != null) rememberAsyncImagePainter(
+                                         data[index].image?.img?.src
+                                     ) else painterResource(
+                                         id = R.drawable.news_empty
+                                     ),*/
+                                    painter =  rememberAsyncImagePainter((data[index]).imageUrl),
                                     contentDescription = "Dawn",
                                     modifier = Modifier
                                         .fillMaxWidth()

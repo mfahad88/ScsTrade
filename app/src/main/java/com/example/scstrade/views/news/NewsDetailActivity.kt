@@ -176,27 +176,24 @@ class  NewsDetailActivity : BaseActivity() {
                     is Resource.Error -> Utils.showError(binding.root,result.message?:"An error occurred")
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        /*val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
-                        if(data?.description!=null) {
-                            if (extractImage(data.description) != null) {
-                                Glide.with(this).load(extractImage(data.description))
-                                    .transform(RoundedCorners(50))
-                                    .into(binding.imageViewNews)
-                            }
-                        }
+                        val data= result.data?.filter { it.title.equals(intent.getStringExtra(AppConstants.TITLE)) }?.first()
+//                        val data = result.data?.channel?.items?.filter { it.title.equals(title) }?.first()
+                        Glide.with(this).load(data?.imageUrl)
+                            .transform(RoundedCorners(50))
+                            .into(binding.imageViewNews)
                         binding.cardTitle.setTextColor(Color.WHITE)
                         binding.pubDate.setTextColor(Color.WHITE)
                         binding.imageView14.setColorFilter(Color.WHITE)
                         binding.cardTitle.text = data?.title
-                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
+//                        binding.pubDate.text = Utils.convertDateBrFormat(data?.pubDate?:"")
                         binding.description.text = HtmlCompat.fromHtml(data?.description?.trim()?:"",
                             HtmlCompat.FROM_HTML_MODE_LEGACY
                         )
                         binding.description.movementMethod = LinkMovementMethod.getInstance()
                         binding.source.setOnClickListener {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.link))
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(data?.newsLink))
                             this.startActivity(intent)
-                        }*/
+                        }
                     }
                 }
             })

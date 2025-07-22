@@ -35,6 +35,8 @@ class AofActivity : BaseActivity() {
         binding=ActivityAofBinding.inflate(LayoutInflater.from(this))
         viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
             AofViewModel::class.java)
+        binding.toolbar.binding.market.text= getString(R.string.new_account_opening)
+
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
