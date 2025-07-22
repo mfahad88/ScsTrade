@@ -1,4 +1,5 @@
 package com.example.scstrade.views.notification
+import android.app.Dialog
 import androidx.compose.ui.res.dimensionResource
 
 import android.content.Context
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,8 @@ import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityNotificationDetailBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
@@ -28,6 +32,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.main.MainActivity
+import com.example.scstrade.views.widgets.ZoomImageView
 import java.io.File
 
 class NotificationDetailActivity : BaseActivity() {
@@ -38,8 +43,22 @@ class NotificationDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
+            // Apply bottom padding to prevent overlap with nav bar
+            v.setPadding(
+                systemBars.left,
+                0,
+                systemBars.right,
+                systemBars.bottom
+            )
+
+
+            insets
+        }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 // Your custom back press logic here
@@ -119,7 +138,7 @@ class NotificationDetailActivity : BaseActivity() {
                                 } else {
                                     detail.datetime.visibility = View.GONE
                                 }
-                                if (!jsonObject.get("PDFLink").isJsonNull) {
+                                if (!jsonObject.get("PDFLink").asString.isNullOrBlank()) {
                                     detail.imageViewDownload.visibility = View.VISIBLE
                                     detail.imageViewDownload.setOnClickListener {
                                         binding.loader.visibility = View.VISIBLE
@@ -139,27 +158,33 @@ class NotificationDetailActivity : BaseActivity() {
                                     detail.imageViewDownload.visibility = View.GONE
                                 }
 
-                                if (!jsonObject.get("ImageLink").isJsonNull) {
+                                if (!jsonObject.get("ImageLink").asString.isNullOrBlank()) {
                                     detail.imageViewView.visibility = View.VISIBLE
                                     detail.imageViewView.setOnClickListener {
+                                        Log.d("GIF_URL", jsonObject.get("ImageLink").asString)
                                         binding.loader.visibility = View.VISIBLE
-                                        downloadPdf(
-                                            this@NotificationDetailActivity,
-                                            jsonObject.get("ImageLink").asString
-                                        ) { file ->
-                                            this@NotificationDetailActivity.runOnUiThread {
-                                                if (file != null) {
-                                                    openPdf(this@NotificationDetailActivity, file)
-                                                    binding.loader.visibility = View.GONE
-                                                }
+                                        val dialog = Dialog(this@NotificationDetailActivity)
+                                        dialog.setContentView(R.layout.dialog_image)
+                                        Glide
+                                            .with(this@NotificationDetailActivity)
+
+                                            .load(jsonObject.get("ImageLink").asString)
+                                            .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
+                                        dialog.setCancelable(false)
+                                        dialog.setCanceledOnTouchOutside(false)
+                                        dialog
+                                            .findViewById<ImageView>(R.id.btnClose)
+                                            .setOnClickListener {
+                                                dialog.dismiss()
                                             }
-                                        }
+                                        dialog.show()
+                                        binding.loader.visibility = View.GONE
                                     }
                                 } else {
                                     detail.imageViewView.visibility = View.GONE
                                 }
-                                if (!jsonObject.get("PDFLink").isJsonNull) {
-                                    detail.imageViewView.visibility = View.VISIBLE
+                                if (!jsonObject.get("PDFLink").asString.isNullOrBlank()) {
+                                    detail.imageViewShare.visibility = View.VISIBLE
                                     detail.imageViewShare.setOnClickListener {
                                         binding.loader.visibility = View.VISIBLE
                                         downloadPdf(
@@ -174,7 +199,7 @@ class NotificationDetailActivity : BaseActivity() {
                                         }
                                     }
                                 } else {
-                                    detail.imageViewView.visibility = View.GONE
+                                    detail.imageViewShare.visibility = View.GONE
                                 }
                             }
                         }else{

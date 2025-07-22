@@ -20,12 +20,12 @@ class NotificationAdapter(private val itemList: List<NotificationEntity>,private
             binding.apply {
                 heading.setText(item.title)
                 details.setText(item.message)
-                time.setText(Utils.convertDotNetDateToTimeAgo(item.timestamp))
-                if(item.isRead){
+                time.setText(Utils.convertDateString(item.timestamp,"dd-MMM-yyyy"))
+                /*if(item.isRead){
                     imageViewRead.visibility = View.GONE
                 }else{
                     imageViewRead.visibility = View.VISIBLE
-                }
+                }*/
                 imageView28.setOnClickListener {
                     Utils.showPopup(binding.root.context,it,null, listOf("Mark as read")){
 
@@ -50,23 +50,4 @@ class NotificationAdapter(private val itemList: List<NotificationEntity>,private
         return itemList.size
     }
 
-    fun swapItems(fromPosition: Int, toPosition: Int) {
-        Collections.swap(itemList, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    fun getItemTouchHelper(): ItemTouchHelper {
-        return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                val fromPosition = viewHolder.adapterPosition
-                val toPosition = target.adapterPosition
-                swapItems(fromPosition, toPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // No swipe action needed
-            }
-        })
-    }
 }

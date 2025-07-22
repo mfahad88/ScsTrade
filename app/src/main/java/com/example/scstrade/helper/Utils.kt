@@ -218,7 +218,16 @@ class Utils {
                 })
                 .into(imageView)
         }
-
+        fun formatHighLow(
+            label: String,
+            current: Double,
+            preClose: Double
+        ): String {
+            val change = current - preClose
+            val percent = if (preClose != 0.0) (change / preClose) * 100 else 0.0
+            val sign = if (change >= 0) "+" else ""
+            return "$label: ${Utils.formatDouble(current)} $sign${Utils.formatDouble(change)} $sign${Utils.formatDouble(percent)}%"
+        }
         fun getScreenDPI(context: Context): Int {
             val metrics: DisplayMetrics = context.resources.displayMetrics
             return metrics.densityDpi
@@ -790,6 +799,12 @@ class Utils {
             }else{
                 return defaultValue
             }
+        }
+
+        fun closeKeyboard(activity: Activity) {
+            val view = activity.currentFocus ?: View(activity)
+            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
         fun convertDotNetDateToTimeAgo(dotNetDate: String): String {

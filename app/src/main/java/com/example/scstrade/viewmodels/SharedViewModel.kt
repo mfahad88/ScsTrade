@@ -38,6 +38,7 @@ import com.example.scstrade.model.response.toppicks.TopPickItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.ApiService
+import com.example.scstrade.services.MettisScraper
 import com.example.scstrade.services.RetrofitInstance
 import com.google.gson.JsonElement
 import kotlinx.coroutines.Dispatchers
@@ -365,10 +366,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         mutableMettis.value  = Resource.Loading()
         if(isConnected.value==true){
             viewModelScope.launch (Dispatchers.IO){
-                val result = repository.newsMettis()
+                try{
+                    val scraper = MettisScraper()
+                    scraper.fetchArticles {
+                        Log.e("mettis",it.toString())
+                    }
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+              /*  val result = repository.newsMettis()
                 withContext(Dispatchers.Main){
                     mutableMettis.value = result
-                }
+                }*/
             }
         }
     }

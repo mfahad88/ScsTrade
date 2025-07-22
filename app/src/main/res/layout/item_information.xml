@@ -17,7 +17,7 @@
         android:textFontWeight="600"
         android:textAppearance="@style/text1"
         android:textAlignment="textStart"
-        android:layout_weight="0.8"
+        android:layout_weight="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,7 @@
         android:textAppearance="@style/text1"
         android:textFontWeight="400"
         android:textAlignment="textEnd"
-        android:layout_weight="1.2"
+        android:layout_weight="1.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>

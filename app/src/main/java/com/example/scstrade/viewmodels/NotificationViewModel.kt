@@ -18,7 +18,7 @@ class NotificationViewModel(application: Application): AndroidViewModel(applicat
         viewModelScope.launch (Dispatchers.IO){
             val result=db.notificationDao().getAllNotifications()
             withContext(Dispatchers.Main){
-                mutableNotification.value=result
+                mutableNotification.value=result.reversed()
             }
         }
 

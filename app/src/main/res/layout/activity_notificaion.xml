@@ -17,14 +17,17 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationList"
-        tools:listitem="@layout/notification_item"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_0"
+        android:paddingHorizontal="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/notification_item" />
+
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="wrap_content"

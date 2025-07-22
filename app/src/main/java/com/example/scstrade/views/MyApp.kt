@@ -49,6 +49,23 @@ class MyApp : Application() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            } else {
+                Utils.scheduleDailyWork(this)
+            }
+        } else {
+            Utils.scheduleDailyWork(this)
+        }
+*/
+      /*  Utils.scheduleDailyWork(this)
+        if(Utils.getSharedPreference(this,AppConstants.REPEAT_DAILY)
+            && Utils.getIntSharedPreference(this,AppConstants.DURATION)>0
+            && Utils.getSharedPreference(this,AppConstants.MARKET_UPDATE)){
+            Utils.scheduleMarketNotification(this,Utils.getIntSharedPreference(this,AppConstants.DURATION),Utils.getSharedPreference(this,AppConstants.REPEAT_DAILY))
+        }*/
+
         getSha1Fingerprint()
         getSha256Fingerprint()
         FirebaseApp.initializeApp(this)

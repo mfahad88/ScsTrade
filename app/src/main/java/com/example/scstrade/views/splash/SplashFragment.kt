@@ -1,44 +1,36 @@
 package com.example.scstrade.views.splash
-import androidx.compose.ui.res.dimensionResource
 
-import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentSplashBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
-import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.main.MainActivity
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-
+import kotlinx.coroutines.withContext
 
 class SplashFragment : Fragment() {
     private var hasLoggedStartupTime = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         view.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 if (!hasLoggedStartupTime) {
@@ -52,132 +44,82 @@ class SplashFragment : Fragment() {
             }
         })
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val binding=FragmentSplashBinding.inflate(inflater,container,false)
-      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.bottomItem){ v, windowInsets->
-            val insets= windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updateLayoutParams<MarginLayoutParams> {
-                bottomMargin=insets.bottom
-            }
-            windowInsets
-        }*/
-        binding.main.post {
+    ): View {
+        val binding = FragmentSplashBinding.inflate(inflater, container, false)
+
+        binding.main.postDelayed({
             val centerX = (binding.imageView.width - binding.imageViewLogo.width) / 2f
             val centerY = (binding.imageView.height - binding.imageViewLogo.height) / 2.5f
-
-            // Get current absolute position of imageView relative to rootLayout
             val currentX = binding.imageViewLogo.x
             val currentY = binding.imageViewLogo.y
-
-
-
             val deltaX = centerX - currentX
             val deltaY = centerY - currentY
 
             val rootHeight = binding.root.height
-            val targetY = rootHeight - binding.bottomProgess.height.toFloat() // bottom of root layout
             val startY = rootHeight.toFloat() + binding.bottomProgess.height
 
-            binding.imageViewLogo.apply {
-                alpha = 0f // start from invisible
-            }
-            binding.scsTradeP.apply {
-                alpha = 0f
-            }
+            binding.imageViewLogo.alpha = 0f
+            binding.scsTradeP.alpha = 0f
+            binding.bottomProgess.alpha = 0f
+            binding.bottomProgess.translationY = startY
+            binding.bottomProgess.visibility = View.VISIBLE
 
-            binding.bottomProgess.apply {
-                alpha = 0f
-                translationY = startY
-                visibility = View.VISIBLE
-            }
+            val smallestWidth = Utils.getSmallestWidthDp(requireContext())
+            val bottomTranslationY = if (smallestWidth in 321..399) -700f else -600f
 
-            AnimatorSet().apply {
-                addListener(object:Animator.AnimatorListener{
-                    override fun onAnimationStart(p0: Animator) {
-                    }
-
-                    override fun onAnimationEnd(p0: Animator) {
-                        ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100)
-                            .apply {
-                                addListener(object : Animator.AnimatorListener{
-                                override fun onAnimationStart(p0: Animator) {
-                                }
-
-                                override fun onAnimationEnd(p0: Animator) {
-                                    if(Utils.getSharedPreference(requireContext(), listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()){
-                                        (requireActivity() as MainActivity).loadFragment(LandingFragment())
-                                    }else{
-                                        (requireActivity() as MainActivity).loadFragment(LoginFragment())
-                                    }
-
-                                }
-
-                                override fun onAnimationCancel(p0: Animator) {
-                                }
-
-                                override fun onAnimationRepeat(p0: Animator) {
-                                }
-
-                            })
-                            duration = 2000 // 2 seconds
-                            interpolator = android.view.animation.DecelerateInterpolator()
-                            start()
-                        }
-                    }
-
-                    override fun onAnimationCancel(p0: Animator) {}
-
-                    override fun onAnimationRepeat(p0: Animator) {
-                    }
-
-                })
-                val smallestWidth = Utils.getSmallestWidthDp(requireContext())
-                if(smallestWidth>320 && smallestWidth<400) {
-                    playTogether(
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationY", 0f, deltaY),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "alpha", 0f, 1f),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -700f),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
-                    )
-                }else{
-                    playTogether(
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
-                        ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "translationY", 0f, deltaY),
-                        ObjectAnimator.ofFloat(binding.scsTradeP, "alpha", 0f, 1f),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, -600f),
-                        ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
-                    )
-                }
-                this.duration = 1000L
+            val animationSet = AnimatorSet().apply {
+                playTogether(
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationX", 0f, deltaX),
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "translationY", 0f, deltaY),
+                    ObjectAnimator.ofFloat(binding.imageViewLogo, "alpha", 0f, 1f),
+                    ObjectAnimator.ofFloat(binding.scsTradeP, "translationX", 0f, deltaX),
+                    ObjectAnimator.ofFloat(binding.scsTradeP, "translationY", 0f, deltaY),
+                    ObjectAnimator.ofFloat(binding.scsTradeP, "alpha", 0f, 1f),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationX", 0f, deltaX),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "translationY", 0f, bottomTranslationY),
+                    ObjectAnimator.ofFloat(binding.bottomProgess, "alpha", 0f, 1f)
+                )
+                duration = 1000L
                 interpolator = AccelerateDecelerateInterpolator()
-                start()
-            }
-        }
-       /* lifecycleScope.launch {
-            delay(5000)
-
-            if(Utils.getSharedPreference(requireContext(), listOf(false),AppConstants.IS_REMEMBER, object : TypeToken<List<Boolean>>() {}).first()){
-                (requireActivity() as MainActivity).loadFragment(LandingFragment())
-            }else{
-                (requireActivity() as MainActivity).loadFragment(LoginFragment())
             }
 
-        }*/
+            animationSet.start()
 
-        return  binding.root
+            lifecycleScope.launch {
+                delay(1000L) // wait for animation to complete
+
+                ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100).apply {
+                    duration = 2000L
+                    interpolator = DecelerateInterpolator()
+                    start()
+                }
+
+                delay(2000L) // wait for progress animation to complete
+
+                // ✅ Moved SharedPreferences access to background thread
+                val remembered = withContext(Dispatchers.IO) {
+                    Utils.getSharedPreference(
+                        requireContext(),
+                        listOf(false),
+                        AppConstants.IS_REMEMBER,
+                        object : TypeToken<List<Boolean>>() {}
+                    ).first()
+                }
+
+                // ✅ Navigation must run on Main thread
+                val activity = requireActivity() as MainActivity
+                if (remembered) {
+                    activity.loadFragment(LandingFragment())
+                } else {
+                    activity.loadFragment(LoginFragment())
+                }
+            }
+        }, 200)
+
+        return binding.root
     }
-
 }

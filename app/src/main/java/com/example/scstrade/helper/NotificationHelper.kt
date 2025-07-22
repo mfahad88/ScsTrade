@@ -1,4 +1,4 @@
-package com.example.scstrade.services
+package com.example.scstrade.helper
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -7,10 +7,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.scstrade.R
 import com.example.scstrade.helper.AppConstants
@@ -19,21 +25,22 @@ import com.example.scstrade.views.notification.NotificationDetailActivity
 
 class NotificationHelper(private val context: Context) {
 
-    private val CHANNEL_ID = "tlh"
+    private val CHANNEL_ID = "SCSTrade"
     private var isDashboard =false
-
+    private var index=0
     fun createNotification(notificationMap: MutableMap<String, String>) {
         createNotificationChannel()
 
         Log.d(
             "Notification",
-            "Type ${notificationMap["type"].toString()}  Reference ID ${notificationMap["reference_id"].toString()} "
+            notificationMap.toString()
+            /*"Type ${notificationMap["type"].toString()}  Reference ID ${notificationMap["reference_id"].toString()} "*/
         )
         val activityToOpen = NotificationDetailActivity::class.java
         var intent = Intent(context, activityToOpen)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         intent.putExtra(AppConstants.ID_REF,notificationMap["reference_id"]?.toInt())
-        intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,notificationMap["type"].toString())
+        intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,notificationMap["title"].toString())
         /*val loginOTPResponse = Utils.getLogin(context)
 
         //Log.d("Notification User Type","${notificationMap["userType"].toString()}")
@@ -69,14 +76,35 @@ class NotificationHelper(private val context: Context) {
             intent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
+        val title =notificationMap["title"]
+        val company=notificationMap["company"]
+//        val body = notificationMap["body"]
+        val details = notificationMap["details"]?.replace("|","\n")?.trim()
+        val boldTitle = SpannableString(title).apply {
+            setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+        val collapsedContent = "$company"
+        index += 1
+// 👉 Combine full text for BigTextStyle
+        val bigText = buildString {
+            appendLine(company)
+//            appendLine(body)
+//            appendLine()
+            appendLine(details)
+        }
 
+// ✅ Notification builder
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.logo)
-            .setContentTitle(notificationMap["title"])
-            .setContentText(notificationMap["message"])
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setSmallIcon(R.drawable.ic_notification)
+//            .setColor(ContextCompat.getColor(context,R.color.md_theme_primary))
+//            .setLargeIcon(BitmapFactory.decodeResource(context.resources,R.mipmap.ic_launcher_round))
+            .setContentTitle(boldTitle)
+            .setContentText(collapsedContent)
+//            .setContentText(body) // shown below title in collapsed view
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(false)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
             if (ActivityCompat.checkSelfPermission(
@@ -100,57 +128,16 @@ class NotificationHelper(private val context: Context) {
               }
               notificationToRoute[notificationMap["id"].toString()] = Utils.intentToBundle(intent)
               SecurePreferences.saveHashMap(context,AppConstants.SPKeys.ROUTE_PUSH_NOTIFICATION,notificationToRoute)*/
-            notify(0, notificationBuilder.build())
+            notify(notificationMap["reference_id"]?.toInt()?:0, notificationBuilder.build())
         }
     }
 
-    /*private fun getIntent(
-        notificationMap: MutableMap<String, String>,
-        intent: Intent
-    ): Intent {
-        var intent1 = intent
-       *//* if (notificationMap["type"].toString() == AppConstants.PushNotificationTypes.BORROWER_LOAN_APPROVED_SUCCESS) {
-            intent1 = Intent(context, LoanDetailActivity::class.java)
-            intent1.putExtra(AppConstants.Keys.LOAN_ID, notificationMap["loanId"])
-        }*//*
-        when (notificationMap["type"].toString()) {
-            AppConstants.PushNotificationTypes.BORROWER_INSTALLMENT_UPCOMING, AppConstants.PushNotificationTypes.BORROWER_INSTALLMENT_OVERDUE, AppConstants.PushNotificationTypes.BORROWER_INSTALLMENT_DEFAULTED-> {
-                intent1 = Intent(context, LoanDetailActivity::class.java)
-                intent1.putExtra(AppConstants.Keys.LOAN_ID, notificationMap["loanId"])
-            }
-            AppConstants.PushNotificationTypes.BORROWER_LOAN_APPROVED_SUCCESS, AppConstants.PushNotificationTypes.BORROWER_LOAN_REJECTED_BY_BORROWER, AppConstants.PushNotificationTypes.BORROWER_HIGH_RISK_SCORE_LOAN_REJECT, AppConstants.PushNotificationTypes.BORROWER_LOAN_APPLICATION_EXPIRED, AppConstants.PushNotificationTypes.BORROWER_LOAN_APPLICATION_UNDER_REVIEW  -> {
-                intent1 = Intent(context, ApplicationDetailActivity::class.java)
-                intent1.putExtra(AppConstants.Keys.APPLICATION_LOAN_ID, notificationMap["applicationLoanId"])
-            }
-            AppConstants.PushNotificationTypes.LENDER_LOAN_REPAYMENT_RECEIVED, AppConstants.PushNotificationTypes.LENDER_FOUR_INVESTORS_INVESTED -> {
-                intent1 = Intent(context, InvestmentDetailActivity::class.java)
-                intent1.putExtra(AppConstants.Keys.LOAN_ID, notificationMap["loanId"])
-            }
-            AppConstants.PushNotificationTypes.ADMIN_BAN_USER, AppConstants.PushNotificationTypes.ADMIN_UNBAN_USER, AppConstants.PushNotificationTypes.ADMIN_PEP_APPROVE
-                , AppConstants.PushNotificationTypes.ADMIN_PEP_REJECT, AppConstants.PushNotificationTypes.ADMIN_SANCTIONED_APPROVE, AppConstants.PushNotificationTypes.ADMIN_SANCTIONED_REJECT, AppConstants.PushNotificationTypes.ADMIN_CANCELLED_LOAN-> {
-                intent1 = Intent(context, MainActivity::class.java)
-                isDashboard = true
-            }
-            AppConstants.PushNotificationTypes.LENDER_NEW_OPPORTUNITY , AppConstants.PushNotificationTypes.LENDER_LOAN_EXPIRY-> {
-                intent1 = Intent(context, InvestmentOpportunityDetailActivity::class.java)
-                intent1.putExtra(AppConstants.Keys.LOAN_ID, notificationMap["loanId"])
-                intent1.putExtra(AppConstants.Keys.APPLICATION_LOAN_ID, notificationMap["applicationLoanId"])
-                intent1.putExtra(AppConstants.Keys.OPPORTUNITY_TYPE, notificationMap["opportunityType"])
-            }
-            AppConstants.PushNotificationTypes.BORROWER_WALLET_AMOUNT_RECEIVED -> {
-                intent1 = Intent(context, TransactionDetailActivity::class.java)
-                intent1.putExtra(AppConstants.Keys.TRANSACTION_ID, notificationMap["transactionId"])
-            }
 
-            else -> Intent(context, MainActivity::class.java)
-        }
-        return intent1
-    }*/
 
     private fun createNotificationChannel() {
         val name = context.getString(R.string.app_name)
         val descriptionText = "ScsTrade Pro"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
         }

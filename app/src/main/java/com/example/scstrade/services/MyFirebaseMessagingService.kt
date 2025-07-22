@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.scstrade.R
 import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.NotificationHelper
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.notification.NotificationDetailActivity

@@ -147,14 +147,17 @@ class LoginFragment : Fragment() {
             }else{
                 Utils.showError(binding.root,"Please provide valid username and password")
             }
+            Utils.closeKeyboard(requireActivity())
         }
         viewModel.isLineChart = true
         viewModel.fetchIndices()
-        binding.recyclerIndices.apply {
-            adapter= IndexAdapter()
-            layoutManager=
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
-            addItemDecoration(VerticalDivider())
+        binding.recyclerIndices.post {
+          binding.recyclerIndices.apply {
+              adapter= IndexAdapter()
+              layoutManager=
+                  LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+              addItemDecoration(VerticalDivider())
+          }
 
 
         }

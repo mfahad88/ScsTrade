@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -25,6 +26,8 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters): Work
             response.body()?.forEach {
                 stringBuilder.append(createKseStatusMessage(it))
             }
+            Log.d("NotificationWorker", "Worker triggered! Generating PSX market notification.")
+
             showNotification(stringBuilder.toString())
         }
         return Result.success()

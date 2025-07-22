@@ -23,6 +23,7 @@ import com.example.scstrade.databinding.ActivityNotificaionBinding
 import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.data.NotificationEntity
 import com.example.scstrade.viewmodels.NotificationViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
@@ -51,7 +52,16 @@ class NotificationActivity : BaseActivity() {
 
         notificationViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application as MyApp).create(NotificationViewModel::class.java)
 
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.notificationList) { view, insets ->
+            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                systemBarsInsets.left,
+                0,
+                systemBarsInsets.right,
+                systemBarsInsets.bottom
+            )
+            insets
+        }
         binding.apply {
 
             notificationList.apply {
@@ -83,14 +93,27 @@ class NotificationActivity : BaseActivity() {
                     binding.apply {
                         notificationList.visibility = View.VISIBLE
                         loader.visibility = View.GONE
-                        notificationViewModel.insertNotification(result.data?: emptyList())
-                        notificationViewModel.getNotification()
+                        binding.notificationList.adapter=NotificationAdapter(result.data?.map { NotificationEntity(it.mainAnnID,"${it.mainAnnHeading} - ${it.announcementTypeName}",it.mainAnnDetails,it.mainAnnDate,it.mainAnnIDRef,it.announcementTypeName,false) }?.toList()?: emptyList(),{
+                            if(it.MainAnnIDRef!=null && it.AnnouncementTypeName?.isNotBlank()?:true){
+                            val intent= Intent(this@NotificationActivity,NotificationDetailActivity::class.java)
+                            intent.putExtra(AppConstants.ID_REF,it.MainAnnIDRef)
+                            intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.AnnouncementTypeName)
+                            startActivity(intent)
+                            }
+
+                        },{ notificationEntity,index ->
+
+//                            notificationViewModel.markAsRead(notificationEntity.id)
+//                            notificationViewModel.getNotification()
+                        })
+//                        notificationViewModel.insertNotification(result.data?: emptyList())
+//                        notificationViewModel.getNotification()
                     }
                 }
             }
         })
 
-        notificationViewModel.mutableNotification.observe(this, Observer {
+        /*notificationViewModel.mutableNotification.observe(this, Observer {
             binding.notificationList.adapter=NotificationAdapter(it,{
                 val intent= Intent(this,NotificationDetailActivity::class.java)
                 intent.putExtra(AppConstants.ID_REF,it.MainAnnIDRef)
@@ -104,7 +127,7 @@ class NotificationActivity : BaseActivity() {
             })
 
 
-        })
+        })*/
 
     }
     override fun getResources(): Resources {

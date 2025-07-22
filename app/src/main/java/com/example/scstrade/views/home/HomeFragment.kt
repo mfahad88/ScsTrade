@@ -47,6 +47,7 @@ import java.util.PriorityQueue
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+/*
 class HomeFragment : Fragment() {
     private lateinit var viewModel: SharedViewModel
     private lateinit var homeViewModel: HomeViewModel
@@ -342,7 +343,8 @@ class HomeFragment : Fragment() {
         })
     }
 
-    /*private fun showPopup(view: View) {
+    */
+/*private fun showPopup(view: View) {
         val popupMenu = PopupMenu(requireContext(), view)
 
         entries.forEach {
@@ -363,7 +365,8 @@ class HomeFragment : Fragment() {
         }
         popupMenu.show()
 
-    }*/
+    }*//*
+
     private fun showPopup(view: View) {
         val popupMenu = PopupMenu(requireContext(), view)
 
@@ -395,4 +398,182 @@ class HomeFragment : Fragment() {
         popupMenu.show()
     }
 
+}*/
+class HomeFragment : Fragment() {
+    private lateinit var viewModel: SharedViewModel
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
+    private var entries = emptyList<KSEIndices>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewModel = (requireActivity().application as MyApp).viewModel
+        homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
+
+        binding.aofCard.setOnClickListener {
+            startActivity(Intent(requireContext(), AofActivity::class.java))
+        }
+
+        binding.cardHome.apply {
+            zoom.setOnClickListener {
+                val intent = Intent(requireContext(), ChartActivity::class.java)
+                intent.putExtra("Indices", kmiallshr.text.trim().toString())
+                startActivity(intent)
+            }
+            line.setOnClickListener { homeViewModel.setSelectedLine() }
+            candle.setOnClickListener { homeViewModel.setSelectedCandle() }
+            min1.setOnClickListener { homeViewModel.setSelectedTime(1) }
+            min5.setOnClickListener { homeViewModel.setSelectedTime(5) }
+            min15.setOnClickListener { homeViewModel.setSelectedTime(15) }
+            min30.setOnClickListener { homeViewModel.setSelectedTime(30) }
+            hr1.setOnClickListener { homeViewModel.setSelectedTime(60) }
+            d1.setOnClickListener { homeViewModel.setSelectedTime(1440) }
+            cardKmiAllShr.setOnClickListener { showPopup(it) }
+            kmiallshr.setOnClickListener { showPopup(cardKmiAllShr) }
+        }
+
+        binding.recyclerLeaders.apply {
+            adapter = StockAdapter()
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(HorizontalDivider(15.dp))
+            isNestedScrollingEnabled = true
+        }
+
+        observeViewModels()
+        return binding.root
+    }
+
+    private fun observeViewModels() {
+        homeViewModel.apply {
+            isLineSelected.observe(viewLifecycleOwner) {
+                binding.cardHome.line.setChipSelected(it)
+                binding.cardHome.lineChart.visibility = if (it) View.VISIBLE else View.GONE
+                binding.cardHome.candlestickChart.visibility = if (it) View.GONE else View.VISIBLE
+            }
+            isCandleSelected.observe(viewLifecycleOwner) {
+                binding.cardHome.candle.setChipSelected(it)
+            }
+            selectedTime.observe(viewLifecycleOwner) {
+                val times = listOf(binding.cardHome.min1, binding.cardHome.min5, binding.cardHome.min15, binding.cardHome.min30, binding.cardHome.hr1, binding.cardHome.d1)
+                times.forEachIndexed { i, chip -> chip.setChipSelected(it[i]) }
+            }
+
+            chartItem.observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        lifecycleScope.launch {
+                            val data = result.data ?: return@launch
+                            if (isCandleSelected.value == true) {
+                                val candles = withContext(Dispatchers.Default) {
+                                    data.takeLast(100).mapIndexed { index, it ->
+                                        CandleEntry(index.toFloat(), it.tradingHigh.toFloat(), it.tradingLow.toFloat(), it.tradingOpen.toFloat(), it.tradingClose.toFloat())
+                                    }
+                                }
+                                binding.cardHome.candlestickChart.setCandleData(candles)
+                            } else {
+                                val entries = withContext(Dispatchers.Default) {
+                                    data.takeLast(100).mapIndexed { index, it ->
+                                        Entry(index.toFloat(), it.tradingHigh.toFloat())
+                                    }
+                                }
+                                binding.cardHome.lineChart.setEntries(entries, false, true)
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+        viewModel.mutableIndices.observe(viewLifecycleOwner) { result ->
+            if (result is Resource.Success) {
+                entries = result.data ?: emptyList()
+                if (entries.isNotEmpty() && homeViewModel.selectedIndex.value == null) {
+                    val defaultIndex = entries.firstOrNull { it.iNDEXCODE.contains("kse 100", true) }
+                    defaultIndex?.let {
+                        homeViewModel.setSelectedIndex(it)
+                        homeViewModel.setSelectedCandle()
+                    }
+                }
+            }
+        }
+
+        homeViewModel.selectedIndex.observe(viewLifecycleOwner) { index ->
+            index?.let { updateIndexUI(it) }
+        }
+
+        viewModel.mutableAllData.observe(viewLifecycleOwner) { result ->
+            if (result is Resource.Success) {
+                lifecycleScope.launch {
+                    val topPicks = viewModel.mutableTopPicks.value?.data ?: emptyList()
+                    val items = withContext(Dispatchers.Default) {
+                        val allData = result.data ?: emptyList()
+                        val map = allData.associateBy { it.sYM }
+                        val leaders = allData.sortedByDescending { it.v }.take(10).map { ListItem.Item(it) }
+                        val gainers = allData.sortedByDescending { it.cHP }.take(10).map { ListItem.Item(it) }
+                        val losers = allData.sortedBy { it.cHP }.take(10).map { ListItem.Item(it) }
+                        val scsItems = topPicks.mapNotNull { map[it.sCSImpItemSymbol] }.map { ListItem.Item(it) }
+
+                        buildList {
+                            add(ListItem.Header("Leaders"))
+                            addAll(leaders)
+                            if (scsItems.isNotEmpty()) {
+                                add(ListItem.Header("SCS Top Picks"))
+                                addAll(scsItems)
+                            }
+                            add(ListItem.Header("Gainers"))
+                            addAll(gainers)
+                            add(ListItem.Header("Losers"))
+                            addAll(losers)
+                        }
+                    }
+                    withContext(Dispatchers.Main) {
+                        (binding.recyclerLeaders.adapter as StockAdapter).submitList(items) {
+                            binding.loader.alpha = 0f
+                            binding.main.alpha = 1f
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateIndexUI(kse: KSEIndices) {
+        binding.cardHome.apply {
+            kmiallshr.text = kse.iNDEXCODE.replace("Index", "").replace("Share", "")
+            val current = kse.cURRENTINDEX.toDoubleOrNull() ?: 0.0
+            val change = kse.nETCHANGE ?: "0.0"
+            tradeValueView.text = Utils.convertToMillions(current)
+            tradeValueView.drawable = if (change.contains("-")) AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
+            else AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
+            netChangeChip.setText(change, kse.preClose.toString())
+            volumeChip.text = kse.vOLUMETRADED
+            highView.text = Utils.formatHighLow("H", kse.hIGHINDEX.toDoubleOrNull()?:0.0, kse.preClose)
+            lowView.text = Utils.formatHighLow("L", kse.lOWINDEX.toDoubleOrNull()?:0.0, kse.preClose)
+        }
+    }
+
+    private fun showPopup(view: View) {
+        val popupMenu = PopupMenu(requireContext(), view)
+        entries.forEach {
+            popupMenu.menu.add(it.iNDEXCODE.replace("Index", "").replace("Share", ""))
+        }
+        popupMenu.setOnMenuItemClickListener { menu ->
+            val selected = viewModel.mutableIndices.value?.data?.firstOrNull {
+                it.iNDEXCODE.replace("Index", "").replace("Share", "").contains(menu.title.toString(), true)
+            }
+            if (selected != null) {
+                homeViewModel.setSelectedIndex(selected)
+                homeViewModel.fetchChart()
+                true
+            } else {
+                Toast.makeText(requireContext(), "Selected index not found", Toast.LENGTH_SHORT).show()
+                false
+            }
+        }
+        popupMenu.show()
+    }
 }
