@@ -64,6 +64,9 @@ class WatchListDetailAdapter(
             binding.valueTrade.text = String.format("%.2f", stockItem.cL)
             binding.netChange.text =
                 "${if (stockItem.cH > 0.0) "+" else ""}${stockItem.cH} ${if (stockItem.cHP > 0.0) "+" else ""}${String.format("%.2f", stockItem.cHP)}%"
+
+
+            binding.netChange.setTextColor(if(stockItem.cH >=0.0) ContextCompat.getColor(binding.root.context,R.color.md_theme_primary) else ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
             binding.high.text = "H: ${BigDecimal(stockItem.hP).setScale(2, RoundingMode.HALF_UP).toString()}"
             binding.low.text = "L: ${BigDecimal(stockItem.lP).setScale(2, RoundingMode.HALF_UP).toString()}"
             binding.high52.text = "H: ${if (!TextUtils.isEmpty(stockItem.high52)) BigDecimal(stockItem.high52).setScale(2, RoundingMode.HALF_UP).toString() else "0.0"}"

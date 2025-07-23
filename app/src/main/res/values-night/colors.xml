@@ -211,4 +211,5 @@
     <color name="type_payout_fg">#CCA52A2A</color>
     <color name="type_other_fg">#CCFF9800</color>
     <color name="type_default_fg">#000000</color>
+    <color name="announcement_type">@color/md_theme_outlineVariant</color>
 </resources>

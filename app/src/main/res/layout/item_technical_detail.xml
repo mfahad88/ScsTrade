@@ -8,149 +8,136 @@
     android:paddingVertical="@dimen/dp_5"
     android:paddingHorizontal="@dimen/dp_8"
     android:background="@color/md_theme_surface"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="@dimen/dp_80"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
+        android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_80"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dp_5">
-            <ImageView
-                android:id="@+id/imageViewLogo"
-                android:layout_width="@dimen/dp_25"
-                android:layout_height="@dimen/dp_25"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/dp_4"
-                android:src="@drawable/image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/symbol"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
-                android:layout_toEndOf="@id/imageViewLogo"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:text="@string/wtl"
-                android:textAppearance="@style/symbol_wtl"
-                android:textFontWeight="600"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
-                app:layout_constraintEnd_toEndOf="@+id/companyName"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
-                app:layout_constraintTop_toTopOf="@+id/imageViewLogo" />
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_5">
+                <ImageView
+                    android:id="@+id/imageViewLogo"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:src="@drawable/image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/symbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:layout_toEndOf="@id/imageViewLogo"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:text="@string/wtl"
+                    android:textAppearance="@style/symbol_wtl"
+                    android:textFontWeight="600"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
+                    app:layout_constraintEnd_toEndOf="@+id/companyName"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
+                    app:layout_constraintTop_toTopOf="@+id/imageViewLogo" />
+            </LinearLayout>
+
+
         </LinearLayout>
+
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/e_p_e"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            tools:text="Signal"
+            app:layout_constraintHorizontal_weight="1"
+            android:textAppearance="@style/e_p_e"
+            android:textFontWeight="500"
+            app:layout_constraintBaseline_toBaselineOf="@id/symbol"
+            app:layout_constraintEnd_toStartOf="@+id/price"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/companyName"
+            app:layout_constraintTop_toTopOf="@+id/symbol" />
+
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            tools:text="Initated"
+            app:layout_constraintBaseline_toBaselineOf="@id/symbol"
+            android:textAppearance="@style/e_p_e"
+            app:layout_constraintHorizontal_weight="1"
+            android:textFontWeight="500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/e_p_e"
+            app:layout_constraintTop_toTopOf="@+id/e_p_e" />
+
+
+        <TextView
+            android:id="@+id/av"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|end"
+            android:layout_weight="1"
+            android:textAlignment="textEnd"
+            android:text="35.36"
+            app:layout_constraintBaseline_toBaselineOf="@id/symbol"
+            android:textAppearance="@style/e_p_e"
+            app:layout_constraintHorizontal_weight="1"
+            android:textFontWeight="500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/e_p_e"
+            app:layout_constraintTop_toTopOf="@+id/e_p_e" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/companyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewLogo"
+
             android:layout_marginStart="@dimen/dp_4"
             android:text="@string/companyName"
             android:textAppearance="@style/symbol_companyName"
-            android:textFontWeight="400"
+            android:textFontWeight="700"
             android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/imageViewLogo"
             app:layout_constraintTop_toBottomOf="@+id/symbol" />
-
     </LinearLayout>
 
 
-
-
-
-
-
-    <TextView
-        android:id="@+id/e_p_e"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        tools:text="Signal"
-        app:layout_constraintHorizontal_weight="1"
-        android:textAppearance="@style/e_p_e"
-        android:textFontWeight="500"
-        app:layout_constraintBaseline_toBaselineOf="@id/symbol"
-        app:layout_constraintEnd_toStartOf="@+id/price"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/companyName"
-        app:layout_constraintTop_toTopOf="@+id/symbol" />
-
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        tools:text="Initated"
-        app:layout_constraintBaseline_toBaselineOf="@id/symbol"
-        android:textAppearance="@style/e_p_e"
-        app:layout_constraintHorizontal_weight="1"
-        android:textFontWeight="500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/e_p_e"
-        app:layout_constraintTop_toTopOf="@+id/e_p_e" />
-
-
-    <TextView
-        android:id="@+id/av"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:text="35.36"
-        app:layout_constraintBaseline_toBaselineOf="@id/symbol"
-        android:textAppearance="@style/e_p_e"
-        app:layout_constraintHorizontal_weight="1"
-        android:textFontWeight="500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/e_p_e"
-        app:layout_constraintTop_toTopOf="@+id/e_p_e" />
-
-
-    <!--   <TextView
-           android:id="@+id/avg_vol"
-           android:layout_width="@dimen/dp_0"
-           android:layout_height="wrap_content"
-           android:layout_gravity="top|end"
-           android:layout_marginEnd="@dimen/dp_4"
-           android:gravity="top|end"
-           android:text="8,616,226"
-           android:textAppearance="@style/e_p_e"
-           android:textFontWeight="500"
-           app:layout_constraintBaseline_toBaselineOf="@id/symbol"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.5"
-           app:layout_constraintHorizontal_weight="1"
-           app:layout_constraintStart_toEndOf="@+id/price"
-           app:layout_constraintTop_toTopOf="@+id/price" />-->
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imageViewLogo,symbol,companyName"
-        app:layout_constraintEnd_toStartOf="@+id/e_p_e"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>

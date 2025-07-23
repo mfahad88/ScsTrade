@@ -212,4 +212,5 @@
     <color name="sell_background">#BFFCEBEB</color>
     <color name="success_green">#4CAF50</color>
     <color name="error_red">#F44336</color>
+    <color name="announcement_type">#625B71</color>
 </resources>

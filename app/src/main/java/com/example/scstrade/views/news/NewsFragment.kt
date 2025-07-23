@@ -164,13 +164,13 @@ class NewsFragment : Fragment() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(end = dimensionResource(R.dimen.dp_10).value.dp)
+                    .padding(horizontal = dimensionResource(R.dimen.dp_10).value.dp)
                     // TabRow height
             ) {
                 Row(
                     modifier = Modifier
                         .horizontalScroll(scrollState)
-                        .padding(horizontal = dimensionResource(R.dimen.dp_48).value.dp)
+                        .padding(horizontal = dimensionResource(R.dimen.dp_20).value.dp)
                 )
                 /*ScrollableTabRow(
                     selectedTabIndex = selectedTabIndex,
@@ -212,7 +212,7 @@ class NewsFragment : Fragment() {
                                     Image(
                                         painter = painterResource(id = images[index]),
                                         contentDescription = list[index],
-                                        modifier = Modifier.size(dimensionResource(R.dimen.dp_24).value.dp)
+                                        modifier = Modifier.size(dimensionResource(R.dimen.dp_38).value.dp)
                                     )
                                     Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_6).value.dp))
                                     Text(
@@ -242,7 +242,7 @@ class NewsFragment : Fragment() {
                     },
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
+//                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
                     Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Left", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp))
                 }
@@ -257,7 +257,7 @@ class NewsFragment : Fragment() {
                     },
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
+//                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
                     Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Right", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp).rotate(180f))
                 }
@@ -288,7 +288,9 @@ class NewsFragment : Fragment() {
                         is Resource.Success -> {
 
                             newList(data = data.value.data?: emptyList()){
-
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.newsLink))
+                                // Optionally add flags, chooser, etc.
+                                context?.startActivity(intent)
                                 /* val intent= Intent(requireContext(),NewsDetailActivity::class.java)
                                  intent.putExtra(AppConstants.NEWS_TYPE,AppConstants.SCS)
                                  intent.putExtra(AppConstants.TITLE,it.newsDesc)
@@ -494,7 +496,12 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
+                    Divider(
+                        color = Color(0xFFB3C6C6CD),
+                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
+                    )
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
 
                 }
             }
@@ -583,7 +590,12 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_10).value.dp))
+                    Divider(
+                        color = Color(0xFFB3C6C6CD),
+                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
+                    )
+                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
 
                 }
             }
@@ -600,6 +612,7 @@ class NewsFragment : Fragment() {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.clickable {
+//                            IntentLinkText("Source",data[index].newsLink)
                         onItemClick(data[index])
                     }){
                         Box(
@@ -657,14 +670,14 @@ class NewsFragment : Fragment() {
                                         overflow = TextOverflow.Ellipsis,
                                         modifier = Modifier.fillMaxWidth().padding(top = dimensionResource(R.dimen.dp_5).value.dp)
                                     )
-                                    Row (
+                                   /* Row (
                                         modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_5).value.dp,),
                                     ){
                                         IntentLinkText("Source",data[index].newsLink,
                                         )
 
                                     }
-
+*/
 
                                 }
                             }

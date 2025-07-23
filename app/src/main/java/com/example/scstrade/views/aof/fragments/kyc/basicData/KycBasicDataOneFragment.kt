@@ -46,7 +46,7 @@ class KycBasicDataOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentKycOneBinding.inflate(inflater, container, false)
         viewModel = (requireActivity() as AofActivity).viewModel
-        viewModel.protectedAppId()
+//        viewModel.protectedAppId()
         viewModel.getBasicData()
         initFields()
         binding.ivrService.apply {

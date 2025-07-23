@@ -3,10 +3,13 @@ import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemTechnicalDetailBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
 import java.util.Collections
 
@@ -18,12 +21,17 @@ class TechnicalDetailAdapter(private val itemList: MutableList<Array<String>>, p
             binding.apply {
                 symbol.text=item[0]
                 ePE.text=item[1]
+                ePE.setTextColor( if (item[1].equals("buy",true)) ContextCompat.getColor(binding.root.context,
+                    R.color.md_theme_primary) else ContextCompat.getColor(binding.root.context,
+                    R.color.md_theme_error)
+                )
                 price.text = item[2]
                 av.text = item[3]
                 companyName.text = item[4]
 
-                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.companyLogo }?.first()
-                Glide.with(binding.root.context).load(logo).circleCrop().into(binding.imageViewLogo)
+                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.first()
+                Utils.getCompanyLogo(binding.root.context,binding.imageViewLogo,logo)
+
             }
             binding.root.setOnClickListener { onItemClick(item[0]) }
         }

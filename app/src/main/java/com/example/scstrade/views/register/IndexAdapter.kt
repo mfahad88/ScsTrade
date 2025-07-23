@@ -1,5 +1,4 @@
 package com.example.scstrade.views.register
-import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
 import android.view.View
@@ -26,33 +25,25 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
 
         fun bind(kseIndices: KSEIndices) {
             binding.apply {
+                val netChangeDouble = kseIndices.nETCHANGE.toDoubleOrNull() ?: 0.0
+                val preCloseDouble = kseIndices.preClose // Avoid divide by zero
+
                 val percentChange = Utils.formatDouble(
-                    kseIndices.nETCHANGE.toDouble()
-                        .div(kseIndices.preClose.toDouble())
-                        .times(100)
+                    (netChangeDouble / preCloseDouble) * 100
                 )
-                val netChangeFormatted =
-                    "${if (kseIndices.nETCHANGE.toDouble() < 0.0) "" else "+"} ${
-                        Utils.formatDouble(kseIndices.nETCHANGE.toDouble())
-                    }"
+                val netChangeFormatted = "${if (netChangeDouble < 0.0) "" else "+"} ${Utils.formatDouble(netChangeDouble)}"
 
                 kse100.text = kseIndices.iNDEXCODE
 
-                tradingValue.text = if (kseIndices.cURRENTINDEX != "")
-                    Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble())
-                else
-                    0.0.toString()
+                val currentIndexDouble = kseIndices.cURRENTINDEX.toDoubleOrNull() ?: 0.0
+                tradingValue.text = Utils.convertToMillions(currentIndexDouble)
+
+                val volumeDouble = kseIndices.vOLUMETRADED.toDoubleOrNull() ?: 0.0
+                volume.text = "MVol: ${Utils.convertToMillions(volumeDouble)}"
 
                 netChange.text = "$percentChange % $netChangeFormatted"
 
-                volume.text = "MVol: ${
-                    if (kseIndices.vOLUMETRADED != "")
-                        Utils.convertToMillions(kseIndices.vOLUMETRADED.toDouble())
-                    else
-                        0.0.toString()
-                }"
-
-                if (kseIndices.nETCHANGE.toDouble() < 0.0) {
+                if (netChangeDouble < 0.0) {
                     marketDown.visibility = View.VISIBLE
                     marketUp.visibility = View.GONE
                     relativeLayout.setBackgroundResource(R.drawable.red_chip)
@@ -69,16 +60,22 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
         private fun populateChart(data: String) {
             try {
                 var interval = 0
-                val entries = when {
+                val chartList = when {
                     data.contains("kse all", ignoreCase = true) -> chartItems
                     data.contains("kse 100", ignoreCase = true) -> chartItems1
                     data.contains("kse 30", ignoreCase = true) -> chartItems2
                     data.contains("kmi 30", ignoreCase = true) -> chartItems3
                     else -> emptyList()
-                }.map {
-                    interval += 1
-                    Entry(interval.toFloat(), it.tradingHigh.toFloat())
                 }
+
+                val entries = chartList.mapNotNull {
+                    val high = it.tradingHigh.toFloat()
+                    if (high != null) {
+                        interval += 1
+                        Entry(interval.toFloat(), high)
+                    } else null
+                }
+
                 binding.lineChart.setEntries(entries, false, false)
                 binding.lineChart.moveViewToX(interval.toFloat())
                 binding.lineChart.xAxis.setDrawLabels(false)

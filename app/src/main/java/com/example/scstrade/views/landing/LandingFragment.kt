@@ -14,6 +14,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
@@ -57,6 +59,7 @@ class LandingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding=FragmentLandingBinding.inflate(inflater,container,false)
         initSideMenu()
+
 
 
 

@@ -18,6 +18,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.services.RetrofitInstance
 import com.example.scstrade.services.RetrofitInstanceAof
+import com.example.scstrade.viewmodels.AofViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
 import java.security.MessageDigest
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 class MyApp : Application() {
     lateinit var viewModel: SharedViewModel
     lateinit var login: LoginDataItem
+    lateinit var aofViewModel: AofViewModel
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     companion object {
         var appStartTime: Long = 0L
@@ -82,7 +84,7 @@ class MyApp : Application() {
         RetrofitInstanceAof.init(this)
         RetrofitInstance.init(this)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(SharedViewModel::class.java)
-
+        aofViewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this).create(AofViewModel::class.java)
        /* viewModel.apply {
             fetchIndices()
             fetchAllData()

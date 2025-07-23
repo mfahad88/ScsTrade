@@ -27,6 +27,7 @@ class GlobalStockAdapter(private val onItemClick: (GlobalMarketItem) -> Unit) : 
 
         fun bind(item: GlobalMarketItem,previousPrice: Double?, onItemClick: (GlobalMarketItem) -> Unit) {
             binding.apply {
+
                 symbol.text = item.worldMarketName
                 valueTrade.text = Utils.roundTwoDecimal(item.worldMarketPrice)
                 netChange.text = "${if(item.worldMarketChange<0.0) "" else "+"}${Utils.formatDouble(item.worldMarketChange)} ${if(item.worldMarketChangeP<0.0) "" else "+"}${Utils.formatDouble(item.worldMarketChangeP)}%"

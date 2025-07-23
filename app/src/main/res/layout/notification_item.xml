@@ -37,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_64"
         android:ellipsize="end"
-        android:maxLines="2"
         android:text="@string/hbl_has_rea"
         android:textAppearance="@style/hbl_has_rea"
         android:textFontWeight="500"

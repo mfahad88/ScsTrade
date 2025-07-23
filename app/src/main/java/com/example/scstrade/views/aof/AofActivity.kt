@@ -33,8 +33,9 @@ class AofActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityAofBinding.inflate(LayoutInflater.from(this))
-        viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
-            AofViewModel::class.java)
+        viewModel = (this.application as MyApp).aofViewModel
+    /*    viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
+            AofViewModel::class.java)*/
         binding.toolbar.binding.market.text= getString(R.string.new_account_opening)
 
         enableEdgeToEdge()
@@ -48,7 +49,7 @@ class AofActivity : BaseActivity() {
         viewModel.country()
         viewModel.city()
         binding.imageView22.setOnClickListener {
-//            startActivity(Intent(this,StatusActivity::class.java))
+            startActivity(Intent(this,StatusActivity::class.java))
         }
         viewModel.mutableCounty.observe(this, Observer { result->
             when(result){

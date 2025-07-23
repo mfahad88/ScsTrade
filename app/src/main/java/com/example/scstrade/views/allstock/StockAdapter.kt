@@ -69,7 +69,9 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
 
 
 
-
+                val price = stockItem?.cL?.takeIf { it != 0.0 && !it.isNaN() }
+                    ?: stockItem?.oC?.takeIf { it != 0.0 && !it.isNaN() && it.toString() != "null" }
+                    ?: 0.0
 
 
                 if(previousPrice==null){
@@ -77,7 +79,7 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     binding.cardValueTrade.alpha=1f
                 }else{
                     val diff=
-                        BigDecimal(stockItem.cL).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
+                        BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble().minus(previousPrice)
                     if(diff>0){
                         binding.cardValueTrade.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.green_increse))
                     }else if (diff<0){
@@ -91,8 +93,10 @@ class StockAdapter(/*private var list:MutableList<StockItem>,*/var isMore:Boolea
                     },3000)
                 }
 
+
+
+                binding.valueTrade.text = String.format("%.2f", price)
 //                Log.e("Stock:", "${previousPrice}\n${stockItem.cL}")
-                binding.valueTrade.text = String.format("%.2f",stockItem.cL)
 
 
                 binding.netChange.text = "${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cH)} ${if(stockItem.cH<0.0) "" else "+"}${Utils.formatDouble(stockItem.cHP)}%"

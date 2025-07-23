@@ -27,9 +27,9 @@ class StatusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStatusBinding.inflate(LayoutInflater.from(this))
-        viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
-            AofViewModel::class.java)
+        viewModel = (this.application as MyApp).aofViewModel
         enableEdgeToEdge()
+//        viewModel.protectedAppId()
         setContentView(binding.root)
         binding.apply {
             loader.visibility = View.GONE
@@ -39,6 +39,9 @@ class StatusActivity : AppCompatActivity() {
         viewModel.mutableLifeCycle.observe(this,Observer{result->
 
             when(result){
+                0 -> {
+
+                }
                 70 -> {
                     // BASIC_DATA
                     binding.statusImageBasicData.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.current_group))

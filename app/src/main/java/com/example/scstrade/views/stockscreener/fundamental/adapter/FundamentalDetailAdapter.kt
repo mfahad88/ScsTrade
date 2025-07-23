@@ -1,31 +1,47 @@
 package com.example.scstrade.views.stockscreener.fundamental.adapter
-import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.scstrade.databinding.ItemFundamentDetailBinding
+import com.example.scstrade.helper.Utils
 import com.example.scstrade.viewmodels.SharedViewModel
+import java.util.*
 
-import java.util.Collections
+class FundamentalDetailAdapter(
+    private var itemList: List<Array<String>>,
+    private val sharedViewModel: SharedViewModel,
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<FundamentalDetailAdapter.FundamentalDetailViewHolder>() {
 
-class FundamentalDetailAdapter(private val itemList: MutableList<Array<String>>, private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<FundamentalDetailAdapter.FundamentalDetailViewHolder>() {
+    class FundamentalDetailViewHolder(private val binding: ItemFundamentDetailBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    class FundamentalDetailViewHolder(private val binding: ItemFundamentDetailBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Array<String>,sharedViewModel: SharedViewModel, onItemClick: (String) -> Unit) {
+        fun bind(
+            item: Array<String>,
+            sharedViewModel: SharedViewModel,
+            onItemClick: (String) -> Unit
+        ) {
             binding.apply {
-                symbol.text=item[0]
-                ePE.text=item[1]
-                price.text = item[3]
-                companyName.text = item[2]
-                av.text = "${sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.aV }?.first()}"
-                val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.map { it.companyLogo }?.first()
-                Glide.with(binding.root.context).load(logo).circleCrop().into(binding.imageViewLogo)
+                symbol.text = item.getOrNull(0) ?: "-"
+                ePE.text = item.getOrNull(1)?.toDoubleOrNull()?.let { String.format("%,.2f", it) } ?: "-"
+                price.text = item.getOrNull(3)?.toDoubleOrNull()?.let { String.format("%,.2f", it) } ?: "-"
+                companyName.text = item.getOrNull(2) ?: "-"
+
+                val match = sharedViewModel.mutableAllData.value?.data?.firstOrNull {
+                    it.sYM.equals(item.getOrNull(0), ignoreCase = true)
+                }
+
+                av.text = match?.aV?.let { String.format("%,.2f", it) } ?: "-"
+                Utils.getCompanyLogo(itemView.context, imageViewLogo, match)
             }
-            binding.root.setOnClickListener { onItemClick(item[0]) }
+
+            binding.root.setOnClickListener {
+                item.getOrNull(0)?.let { symbol ->
+                    onItemClick(symbol)
+                }
+            }
         }
     }
 
@@ -35,21 +51,32 @@ class FundamentalDetailAdapter(private val itemList: MutableList<Array<String>>,
     }
 
     override fun onBindViewHolder(holder: FundamentalDetailViewHolder, position: Int) {
-        holder.bind(itemList[position],sharedViewModel, onItemClick)
+        holder.bind(itemList[position], sharedViewModel, onItemClick)
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
+    override fun getItemCount(): Int = itemList.size
+
+    // Used for sorting or refreshing list
+    fun submitList(newList: List<Array<String>>) {
+        itemList = newList
+        notifyDataSetChanged()
     }
 
     fun swapItems(fromPosition: Int, toPosition: Int) {
-        Collections.swap(itemList, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
+        if (itemList is MutableList) {
+            Collections.swap(itemList as MutableList, fromPosition, toPosition)
+            notifyItemMoved(fromPosition, toPosition)
+        }
     }
 
     fun getItemTouchHelper(): ItemTouchHelper {
-        return ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        return ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
                 swapItems(fromPosition, toPosition)
@@ -57,7 +84,7 @@ class FundamentalDetailAdapter(private val itemList: MutableList<Array<String>>,
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // No swipe action needed
+                // No swipe action
             }
         })
     }

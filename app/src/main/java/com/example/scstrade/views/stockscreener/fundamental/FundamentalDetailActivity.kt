@@ -29,6 +29,7 @@ import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/*
 class FundamentalDetailActivity : BaseActivity() {
     lateinit var binding: ActivityFundamentalDetailBinding
     lateinit var viewModel: SharedViewModel
@@ -161,6 +162,152 @@ class FundamentalDetailActivity : BaseActivity() {
             // Override any incoming configuration changes
             overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
         }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
+}*/
+class FundamentalDetailActivity : BaseActivity() {
+    lateinit var binding: ActivityFundamentalDetailBinding
+    lateinit var viewModel: SharedViewModel
+
+    private var resultList = mutableListOf<Array<String>>()
+    private var originalList = mutableListOf<Array<String>>()
+    private var currentSortColumn: Int? = null
+    private var sortAscending = true
+    private lateinit var adapter: FundamentalDetailAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = (this.application as MyApp).viewModel
+        binding = ActivityFundamentalDetailBinding.inflate(LayoutInflater.from(this))
+        enableEdgeToEdge()
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
+        setContentView(binding.root)
+
+        binding.toolbar.binding.market.text = intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@FundamentalDetailActivity, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(
+                VerticalSpaceItemDecoration(
+                    1,
+                    ContextCompat.getColor(this@FundamentalDetailActivity, R.color.md_theme_outline)
+                )
+            )
+        }
+
+        adapter = FundamentalDetailAdapter(resultList, viewModel) {
+            val intent = Intent(this@FundamentalDetailActivity, SnapshotActivity::class.java)
+            intent.putExtra(AppConstants.SYMBOL, it)
+            startActivity(intent)
+        }
+
+        binding.recyclerView.adapter = adapter
+
+        viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION) ?: "")
+
+        viewModel.mutableFundamentalDetail.observe(this, Observer {
+            when (it) {
+                is Resource.Error -> {
+                    binding.loader.visibility = View.GONE
+                    Utils.showError(binding.root, it.message ?: "An error occurred")
+                }
+
+                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+
+                is Resource.Success -> {
+                    val jsonElement = it.data
+
+                    if (jsonElement?.isJsonArray == true) {
+                        var count = 0
+                        resultList.clear()
+                        originalList.clear()
+
+                        val headers = jsonElement.asJsonArray.first().asJsonObject.entrySet()
+                            .distinctBy { it.key }
+                            .filterNot { it.key.equals("company_name", true) }
+
+                        headers.forEachIndexed { index, entry ->
+                            when (index) {
+                                0 -> binding.header1.text = entry.key
+                                1 -> binding.header2.text = entry.key
+                                2 -> binding.header3.text = entry.key
+                                3 -> binding.header4.text = entry.key
+                            }
+                        }
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            jsonElement.asJsonArray.forEach { element ->
+                                val row = element.asJsonObject.entrySet()
+                                    .map { it.value.asString }
+                                    .toTypedArray()
+                                resultList.add(row)
+                            }
+                            originalList = resultList.toMutableList()
+
+                            runOnUiThread {
+                                adapter.submitList(resultList)
+                            }
+                        }
+                    }
+
+                    binding.loader.visibility = View.GONE
+                    binding.groupMain.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        // Header click sorting
+        binding.header1.setOnClickListener { sortByColumn(0) }
+        binding.header2.setOnClickListener { sortByColumn(1) }
+        binding.header3.setOnClickListener { sortByColumn(2) }
+        binding.header4.setOnClickListener { sortByColumn(3) }
+    }
+
+    private fun sortByColumn(index: Int) {
+        sortAscending = if (currentSortColumn == index) !sortAscending else true
+        currentSortColumn = index
+
+        val sortedList = originalList.sortedWith(compareBy {
+            it.getOrNull(index)?.let { value -> value.toDoubleOrNull() ?: value }
+        })
+
+        val finalList = if (sortAscending) sortedList else sortedList.reversed()
+
+        resultList = finalList.toMutableList()
+        adapter.submitList(resultList)
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        val metrics = res.displayMetrics
+
+        val widthInches = metrics.widthPixels / metrics.xdpi
+        val heightInches = metrics.heightPixels / metrics.ydpi
+        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+
+        config.fontScale = when {
+            diagonalInches in 3.9..4.9 -> 0.85f
+            diagonalInches in 4.9..5.4 -> 0.95f
+            diagonalInches in 5.5..6.9 -> 1.0f
+            else -> 1.2f
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            config.fontWeightAdjustment = 0
+        }
+
+        res.updateConfiguration(config, metrics)
+        return res
+    }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        overrideConfiguration?.densityDpi = resources.displayMetrics.densityDpi
         super.applyOverrideConfiguration(overrideConfiguration)
     }
 }
