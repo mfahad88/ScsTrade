@@ -24,28 +24,28 @@
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/header_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/colorDarkerr">
 
-            <!-- Order from Screenshot -->
-            <TextView style="@style/ScreenerHeader" android:text="Share Price" />
-            <TextView style="@style/ScreenerHeader" android:text="Price To Earning" />
-            <TextView style="@style/ScreenerHeader" android:text="Expected Price To Earning" />
-            <TextView style="@style/ScreenerHeader" android:text="Dividend Yield" />
-            <TextView style="@style/ScreenerHeader" android:text="Price To BookValue" />
-            <TextView style="@style/ScreenerHeader" android:text="Return On Assets" />
-            <TextView style="@style/ScreenerHeader" android:text="Return On Equity" />
-            <TextView style="@style/ScreenerHeader" android:text="Enterprise Value To EBITDA" />
+            <TextView android:id="@+id/price" style="@style/ScreenerHeader" android:text="Share Price" />
+            <TextView android:id="@+id/priceToEarning" style="@style/ScreenerHeader" android:text="Price To Earning" />
+            <TextView android:id="@+id/expectedPriceToEarning" style="@style/ScreenerHeader" android:text="Expected Price To Earning" />
+            <TextView android:id="@+id/dividendYield" style="@style/ScreenerHeader" android:text="Dividend Yield" />
+            <TextView android:id="@+id/priceToBookValue" style="@style/ScreenerHeader" android:text="Price To BookValue" />
+            <TextView android:id="@+id/returnOnAssets" style="@style/ScreenerHeader" android:text="Return On Assets" />
+            <TextView android:id="@+id/returnOnEquity" style="@style/ScreenerHeader" android:text="Return On Equity" />
+            <TextView android:id="@+id/enterpriseValueToEbitda" style="@style/ScreenerHeader" android:text="Enterprise Value To EBITDA" />
 
-            <!-- Remaining Fields (place at the end) -->
-            <TextView style="@style/ScreenerHeader" android:text="EBITA Margin" />
-            <TextView style="@style/ScreenerHeader" android:text="Gross Profit Margin" />
-            <TextView style="@style/ScreenerHeader" android:text="Payout Ratio" />
-            <TextView style="@style/ScreenerHeader" android:text="Price Earning Growth" />
-            <TextView style="@style/ScreenerHeader" android:text="Total Debt To Assets" />
-            <TextView style="@style/ScreenerHeader" android:text="Total Debt To Equity" />
+            <!-- Optional Fields -->
+            <TextView android:id="@+id/ebitaMargin" style="@style/ScreenerHeader" android:text="EBITA Margin" />
+            <TextView android:id="@+id/grossProfitMargin" style="@style/ScreenerHeader" android:text="Gross Profit Margin" />
+            <TextView android:id="@+id/payoutRatio" style="@style/ScreenerHeader" android:text="Payout Ratio" />
+            <TextView android:id="@+id/priceEarningGrowth" style="@style/ScreenerHeader" android:text="Price Earning Growth" />
+            <TextView android:id="@+id/totalDebtToAssets" style="@style/ScreenerHeader" android:text="Total Debt To Assets" />
+            <TextView android:id="@+id/totalDebtToEquity" style="@style/ScreenerHeader" android:text="Total Debt To Equity" />
 
         </LinearLayout>
     </com.example.scstrade.views.widgets.CustomHorizontalScrollView>

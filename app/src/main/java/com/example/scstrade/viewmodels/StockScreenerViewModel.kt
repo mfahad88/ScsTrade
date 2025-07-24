@@ -18,7 +18,11 @@ class StockScreenerViewModel(application: Application): AndroidViewModel(applica
     private val repository= StockScreenerRepository(RetrofitInstance.create(ApiService::class.java),application)
     val mutableStockScreener = MutableLiveData<Resource<List<StockScreenerItem>>>()
     var mutableFiltered= MutableLiveData<List<StockScreenerItem>>()
-
+    val selectedFilters  = mutableSetOf(
+    "Share Price",
+    "Price to Earnings (P/E)",
+    "Expected Price to Earnings"
+    )
     fun getStockScreener(){
         mutableStockScreener.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO) {

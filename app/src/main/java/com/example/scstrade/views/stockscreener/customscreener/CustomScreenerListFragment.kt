@@ -1,5 +1,6 @@
 package com.example.scstrade.views.stockscreener.customscreener
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,7 +19,7 @@ import com.example.scstrade.viewmodels.StockScreenerViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.stockscreener.StockScreenerActivity
 import com.example.scstrade.views.widgets.SideBarDivider
-
+import com.example.scstrade.views.widgets.StickyHeaderItemDecoration
 
 
 class CustomScreenerListFragment : Fragment() {
@@ -33,6 +34,8 @@ class CustomScreenerListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCustomScreenerListBinding.inflate(inflater,container,false)
+//
+//        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         viewModel = (requireActivity() as StockScreenerActivity).viewModel
         sharedViewModel=(requireActivity().application as MyApp).viewModel
         ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView) { view, insets ->
@@ -49,7 +52,7 @@ class CustomScreenerListFragment : Fragment() {
         viewModel.mutableFiltered.observe(viewLifecycleOwner, Observer { result->
             val stockListWithEmptyRow = emptyList<StockScreenerItem>() + result
             val symbolMap = sharedViewModel.mutableAllData.value?.data?.associateBy { it.sYM.uppercase() } ?: emptyMap()
-            binding.recyclerView.adapter = CustomScreenerAdapter(stockListWithEmptyRow.toMutableList(),symbolMap){
+            binding.recyclerView.adapter = CustomScreenerAdapter(stockListWithEmptyRow.toMutableList(),symbolMap, viewModel.selectedFilters.toList()){
 
             }
         })
@@ -64,6 +67,7 @@ class CustomScreenerListFragment : Fragment() {
                 marginEnd = 80
             )
             addItemDecoration(divider)
+//            addItemDecoration(StickyHeaderItemDecoration { position -> true })
         }
     }
 

@@ -206,36 +206,38 @@ class PortfolioDetailActivity : BaseActivity() {
 
                         val stockItem = sharedViewModel.mutableAllData.value?.data
                         val data = result.data
-                        val currentMarketValue=data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }
-                        val portfolioCost = data!!.fifoPortfolio.sumOf { res-> res.quantity.toDouble().times(res.price.toDouble()) }
-                        val dayPL = data!!.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cH }?.first()?:0.0) }
-                        val dayPLPercent =data.fifoPortfolio.sumOf { res->
-                            stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cHP }?.first()?:0.0
-                        }
-                        val totalPL = data!!.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
-                        val totalPlPercent = totalPL.div(portfolioCost).times(100)
+                        if(data!=null){
+                            val currentMarketValue=data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }
+                            val portfolioCost = data.fifoPortfolio.sumOf { res-> res.quantity.toDouble().times(res.price.toDouble()) }
+                            val dayPL = data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cH }?.first()?:0.0) }
+                            val dayPLPercent =data.fifoPortfolio.sumOf { res->
+                                stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cHP }?.first()?:0.0
+                            }
+                            val totalPL = data.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
+                            val totalPlPercent = totalPL.div(portfolioCost).times(100)
 
-                        binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
-                        binding.portfolioCost.setValue("%,d".format(portfolioCost.roundToInt()))
-                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt())+" (${Utils.roundTwoDecimal(dayPLPercent)}%)")
-                        binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt())+" (${Utils.roundTwoDecimal(totalPlPercent)}%)")
+                            binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
+                            binding.portfolioCost.setValue("%,d".format(portfolioCost.roundToInt()))
+                            binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt())+" (${Utils.roundTwoDecimal(dayPLPercent)}%)")
+                            binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt())+" (${Utils.roundTwoDecimal(totalPlPercent)}%)")
 
-                        (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
-                        if(!data.fifoPortfolio.isNullOrEmpty()){
-                            group.visibility = View.VISIBLE
-                        }
-
-                        if(!data.closeTrades.isNullOrEmpty()){
-                            binding.recyclerViewHistory.adapter = TradeSummaryAdapter(generateSummaryForTrades(data.closeTrades)){
-                                val intent = Intent(this@PortfolioDetailActivity, StockDetailActivity::class.java)
-                                intent.putExtra(AppConstants.PORTFOLIO_NAME,"${it.symbol} in ${binding.toolbar.binding.market.text.toString()}")
-                                intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
-                                intent.putExtra(AppConstants.IS_HISTORY,true)
-                                intent.putExtra(AppConstants.SYMBOL, it.symbol)
-                                startActivity(intent)
+                            (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
+                            if(!data.fifoPortfolio.isNullOrEmpty()){
+                                group.visibility = View.VISIBLE
                             }
 
-                            groupHistory.visibility = View.VISIBLE
+                            if(!data.closeTrades.isNullOrEmpty()){
+                                binding.recyclerViewHistory.adapter = TradeSummaryAdapter(generateSummaryForTrades(data.closeTrades)){
+                                    val intent = Intent(this@PortfolioDetailActivity, StockDetailActivity::class.java)
+                                    intent.putExtra(AppConstants.PORTFOLIO_NAME,"${it.symbol} in ${binding.toolbar.binding.market.text.toString()}")
+                                    intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID, portfolioMainID)
+                                    intent.putExtra(AppConstants.IS_HISTORY,true)
+                                    intent.putExtra(AppConstants.SYMBOL, it.symbol)
+                                    startActivity(intent)
+                                }
+
+                                groupHistory.visibility = View.VISIBLE
+                            }
                         }
 
                     }

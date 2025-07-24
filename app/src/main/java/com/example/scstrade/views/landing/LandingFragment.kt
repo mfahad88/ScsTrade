@@ -75,7 +75,13 @@ class LandingFragment : Fragment() {
 //            Toast.makeText(requireContext(),"Working In Progress under fixes", Toast.LENGTH_SHORT).show()
             startActivity(Intent(requireContext(),AofActivity::class.java))
         }
-
+        if((requireActivity() as MainActivity).intent.getBooleanExtra(AppConstants.IS_MARKET,false)){
+            binding.toolbar.binding.market.text = "Market"
+            loadFragment("Market"){
+                MarketFragment()
+            }
+            binding.bottomNavigationView.selectedItemId= R.id.marketFragment
+        }
 
         childFragmentManager.addOnBackStackChangedListener {
             val count = childFragmentManager.backStackEntryCount

@@ -17,273 +17,98 @@
         android:fadingEdgeLength="50dp"
         tools:context=".views.stockscreener.customscreener.CustomScreenerFragment">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/filterContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp_50">
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:id="@+id/loader"
-                android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <LinearLayout
-                android:id="@+id/filterContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical"
-                tools:visibility="visible"
-                android:padding="8dp">
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="@dimen/dp_8">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/please_set_"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:textAlignment="textStart"
-                        android:text="@string/please_set_"
-                        android:textAppearance="@style/please_set_"
-                        android:textFontWeight="700"
-                        />
-                    <TextView
-                        android:id="@+id/total_resul"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="600"
-                        android:layout_weight="1"
-                        android:layout_gravity="end"
-                        android:text="@string/total_resul"
-                        android:textAppearance="@style/total_resul"
-                        android:lineSpacingExtra="2sp"
-                        android:translationY="-1.11sp"
-                        android:gravity="end"
-                        />
-                </LinearLayout>
+                    android:text="Add Filters"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterSharePrice"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/selected_count"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Share Price" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterPE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Price To Earning" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedPE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Expected Price To Earning" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterDividendYield"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Dividend Yield" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterPBV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Price To BookValue" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterROA"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Return On Assets" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterROE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Return On Equity" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterCurrentRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Current Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterEBITMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="EBIT Margin" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterEBITDAMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="EBITDA Margin" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterEVToEBITDA"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Enterprise Value To EBITDA" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterEquityToAssets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Equity To Assets Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedDividendYield"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Expected Dividend Yield" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedEarningGrowth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Expected Earning Growth" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedPayoutRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Expected Payout Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedPBV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Expected Price To Book Value" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedRetentionRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Expected RetentionRatio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterExpectedROE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Expected Return On Equity" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterGrossProfitMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Gross Profit Margin" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterLongTermDebtToAssets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Long Term Debt To Assets" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterLongTermDebtToEquity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Long Term Debt To Equity" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterNetProfitMargin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Net Profit Margin" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterPayoutRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Payout Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterPriceEarningGrowth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Price Earning Growth" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterQuickRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Quick Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterRetentionRatio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    app:filterTitle="Retention Ratio" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterTotalDebtToAssets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Total Debt To Assets" />
-
-                <com.example.scstrade.views.widgets.FilterItemView
-                    android:id="@+id/filterTotalDebtToEquity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:filterTitle="Total Debt To Equity" />
-
+                    android:text="@string/selected_3"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/selected_3"
+                    android:layout_gravity="center_vertical|end"
+                    android:gravity="end"
+                    />
             </LinearLayout>
+            <!-- Dropdown -->
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp"
+                app:contentPaddingTop="7dp"
+                app:contentPaddingBottom="7dp"
+                app:contentPaddingLeft="5dp"
+                app:cardElevation="0dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvSelectedFilters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:text="Select your Criteria"
+                    android:textColor="@color/black" />
+              <!--  <Spinner
+                    android:id="@+id/spinnerCriteria"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dropdown" />-->
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Filter Cards -->
+            <!--<com.example.scstrade.views.widgets.FilterItemView
+                android:id="@+id/filterSharePrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:filterTitle="Share Price" />
+
+            <com.example.scstrade.views.widgets.FilterItemView
+                android:id="@+id/filterPE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:filterTitle="Price To Earning" />
+
+            <com.example.scstrade.views.widgets.FilterItemView
+                android:id="@+id/filterExpectedPE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:filterTitle="Expected Price To Earning" />-->
+
+        </LinearLayout>
     </ScrollView>
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/total_record"
         android:id="@+id/btn"
+        android:enabled="false"
+        android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:layout_alignParentBottom="true"/>
 

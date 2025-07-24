@@ -24,6 +24,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.notification.NotificationDetailActivity
 
+/*
 class NotificationHelper(private val context: Context) {
 
     private val CHANNEL_ID = "SCSTrade"
@@ -35,7 +36,9 @@ class NotificationHelper(private val context: Context) {
         Log.d(
             "Notification",
             notificationMap.toString()
-            /*"Type ${notificationMap["type"].toString()}  Reference ID ${notificationMap["reference_id"].toString()} "*/
+            */
+/*"Type ${notificationMap["type"].toString()}  Reference ID ${notificationMap["reference_id"].toString()} "*//*
+
         )
         val requestCode = notificationMap["reference_id"]?.toIntOrNull() ?: System.currentTimeMillis().toInt()
         val activityToOpen = MainActivity::class.java
@@ -148,4 +151,112 @@ class NotificationHelper(private val context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
+}*/
+
+class NotificationHelper(private val context: Context) {
+
+    private val CHANNEL_ID = "SCSTrade"
+
+    fun createNotification(notificationMap: MutableMap<String, String?>) {
+        createNotificationChannel()
+
+        Log.d("Notification", notificationMap.toString())
+
+        val refId = notificationMap["reference_id"]?.toIntOrNull() ?: System.currentTimeMillis().toInt()
+        val title = notificationMap["title"] ?: "SCSTrade Notification"
+        val company = notificationMap["company"] ?: ""
+        val details = notificationMap["details"]?.replace("| ", "\n")?.trim()
+        var intent:Intent?=null
+        // Launch MainActivity and it will redirect to NotificationDetailActivity
+        if(title.equals("Market Updates",true)){
+            intent = Intent(context, MainActivity::class.java).apply {
+                flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra(AppConstants.IS_MARKET, true)
+            }
+
+        }else {
+            intent = Intent(context, MainActivity::class.java).apply {
+                flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra(AppConstants.IS_NOTIFY, true)
+                putExtra(AppConstants.ID_REF, notificationMap["reference_id"]?.toIntOrNull() ?: -1)
+                putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME, title)
+            }
+
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            refId,
+            intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val boldTitle = SpannableString(title).apply {
+            setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        val bigText = buildString {
+            appendLine(company)
+            appendLine(formatDetailsWithBoldKeys(details))
+        }
+
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(boldTitle)
+            .setContentText(company)
+            .setContentIntent(pendingIntent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+
+        try {
+            with(NotificationManagerCompat.from(context)) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED
+                ) {
+                    Log.w("NotificationHelper", "POST_NOTIFICATIONS permission not granted.")
+                    return
+                }
+                notify(refId, notificationBuilder.build())
+            }
+        } catch (e: Exception) {
+            Log.e("NotificationHelper", "Error sending notification: ${e.message}")
+        }
+    }
+
+    fun formatDetailsWithBoldKeys(details: String?): SpannableStringBuilder {
+        val builder = SpannableStringBuilder()
+        if (details != null) {
+            val parts = details.split("|")
+            for (part in parts) {
+                val line = part.trim()
+                if (line.contains(":")) {
+                    val key = line.substringBefore(":").trim()
+                    val value = line.substringAfter(":").trim()
+
+                    if (value.isBlank() || value.equals("null", ignoreCase = true)) continue
+
+                    val start = builder.length
+                    builder.append("$key: ")
+                    builder.setSpan(StyleSpan(Typeface.BOLD), start, start + key.length + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    builder.append(value)
+                    builder.append("\n")
+                }
+            }
+        }
+        return builder
+    }
+
+    private fun createNotificationChannel() {
+        val name = context.getString(R.string.app_name)
+        val descriptionText = "SCSTrade Pro Notifications"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
+        }
+
+        val notificationManager = getSystemService(context, NotificationManager::class.java) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
 }

@@ -518,6 +518,7 @@
     <string name="market_update">Market Update</string>
     <string name="announcement_date">Announcement Date:</string>
     <string name="new_account_opening">New Account Opening</string>
+    <string name="selected_3">Selected: %d</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

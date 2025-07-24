@@ -3,4 +3,21 @@
     <string-array name="spinner_country">
         <item>+92</item>
     </string-array>
+
+    <string-array name="filter_criteria">
+        <item>Price</item>
+        <item>PriceToEarning</item>
+        <item>ExpectedPriceToEarning</item>
+        <item>DividendYield</item>
+        <item>PriceToBookValue</item>
+        <item>ReturnOnAssets</item>
+        <item>ReturnOnEquity</item>
+        <item>EBITDAMargin</item>
+        <item>EnterpriseValueToEBITDA</item>
+        <item>GrossProfitMargin</item>
+        <item>PayoutRatio</item>
+        <item>PriceEarningGrowth</item>
+        <item>TotalDebtToAssets</item>
+        <item>TotalDebtToEquity</item>
+    </string-array>
 </resources>

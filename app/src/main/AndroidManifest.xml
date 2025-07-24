@@ -33,7 +33,7 @@
         <activity
             android:name=".views.stockscreener.StockScreenerActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
+            android:screenOrientation="unspecified"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".views.globalmarket.GlobalMarketActivity"

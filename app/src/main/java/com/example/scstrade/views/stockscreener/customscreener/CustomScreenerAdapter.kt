@@ -2,7 +2,9 @@ package com.example.scstrade.views.stockscreener.customscreener
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,6 +26,7 @@ import com.example.scstrade.views.widgets.TextDrawable
 class CustomScreenerAdapter(
     private val itemList: MutableList<StockScreenerItem>,
     private val symbolMap: Map<String, StockItem>,
+    private val selectedColumns: List<String>,
     private val onItemClick: (StockScreenerItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -46,8 +49,25 @@ class CustomScreenerAdapter(
     }
 
     class HeaderViewHolder(val binding: ItemScreenerHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-            // Static header — no binding required
+        fun bind(selectedColumns: List<String>) {
+            toggle(binding.price, "Share Price", selectedColumns)
+            toggle(binding.priceToEarning, "Price to Earnings (P/E)", selectedColumns)
+            toggle(binding.expectedPriceToEarning, "Expected Price to Earnings", selectedColumns)
+            toggle(binding.dividendYield, "Dividend Yield", selectedColumns)
+            toggle(binding.priceToBookValue, "Price to Book Value (P/B)", selectedColumns)
+            toggle(binding.returnOnAssets, "Return on Assets (ROA)", selectedColumns)
+            toggle(binding.returnOnEquity, "Return on Equity (ROE)", selectedColumns)
+            toggle(binding.ebitaMargin, "EBITDA Margin", selectedColumns)
+            toggle(binding.enterpriseValueToEbitda, "EV to EBITDA", selectedColumns)
+            toggle(binding.grossProfitMargin, "Gross Profit Margin", selectedColumns)
+            toggle(binding.payoutRatio, "Payout Ratio", selectedColumns)
+            toggle(binding.priceEarningGrowth, "Price Earning Growth", selectedColumns)
+            toggle(binding.totalDebtToAssets, "Total Debt to Assets", selectedColumns)
+            toggle(binding.totalDebtToEquity, "Total Debt to Equity", selectedColumns)
+        }
+
+        private fun toggle(view: View, key: String, selected: List<String>) {
+            view.visibility = if (key in selected) View.VISIBLE else View.GONE
         }
     }
 
@@ -55,34 +75,49 @@ class CustomScreenerAdapter(
         fun bind(
             item: StockScreenerItem,
             stockItem: StockItem?,
+            selectedColumns: List<String>,
             onItemClick: (StockScreenerItem) -> Unit
         ) {
             binding.apply {
-               Utils.getCompanyLogo(binding.root.context,binding.imageViewLogo,stockItem)
+                Utils.getCompanyLogo(binding.root.context, binding.imageViewLogo, stockItem)
 
                 symbol.text = item.symbol
                 companyName.text = stockItem?.nM ?: "-"
-                price.text = formatDouble(item.price)
-                dividendYield.text = formatDouble(item.dividendYield)
-                ebitaMargin.text = formatDouble(item.eBITAMargin)
-                enterpriseValueToEbitda.text = formatDouble(item.enterpriseValueToEBITDA)
-                expectedPriceToEarning.text = formatDouble(item.expectedPriceToEarning)
-                grossProfitMargin.text = formatDouble(item.grossProfitMargin)
-                payoutRatio.text = formatDouble(item.payoutRatio)
-                priceEarningGrowth.text = formatDouble(item.priceEarningGrowth)
-                priceToBookValue.text = formatDouble(item.priceToBookValue)
-                priceToEarning.text = formatDouble(item.priceToEarning)
-                returnOnAssets.text = formatDouble(item.returnOnAssets)
-                returnOnEquity.text = formatDouble(item.returnOnEquity)
-                totalDebtToAssets.text = formatDouble(item.totalDebtToAssets)
-                totalDebtToEquity.text = formatDouble(item.totalDebtToEquity)
+
+                toggle(price, "Share Price", selectedColumns, formatDouble(item.price))
+                toggle(priceToEarning, "Price to Earnings (P/E)", selectedColumns, formatDouble(item.priceToEarning))
+                toggle(expectedPriceToEarning, "Expected Price to Earnings", selectedColumns, formatDouble(item.expectedPriceToEarning))
+                toggle(dividendYield, "Dividend Yield", selectedColumns, formatDouble(item.dividendYield))
+                toggle(priceToBookValue, "Price to Book Value (P/B)", selectedColumns, formatDouble(item.priceToBookValue))
+                toggle(returnOnAssets, "Return on Assets (ROA)", selectedColumns, formatDouble(item.returnOnAssets))
+                toggle(returnOnEquity, "Return on Equity (ROE)", selectedColumns, formatDouble(item.returnOnEquity))
+                toggle(ebitaMargin, "EBITDA Margin", selectedColumns, formatDouble(item.eBITAMargin))
+                toggle(enterpriseValueToEbitda, "EV to EBITDA", selectedColumns, formatDouble(item.enterpriseValueToEBITDA))
+                toggle(grossProfitMargin, "Gross Profit Margin", selectedColumns, formatDouble(item.grossProfitMargin))
+                toggle(payoutRatio, "Payout Ratio", selectedColumns, formatDouble(item.payoutRatio))
+                toggle(priceEarningGrowth, "Price Earning Growth", selectedColumns, formatDouble(item.priceEarningGrowth))
+                toggle(totalDebtToAssets, "Total Debt to Assets", selectedColumns, formatDouble(item.totalDebtToAssets))
+                toggle(totalDebtToEquity, "Total Debt to Equity", selectedColumns, formatDouble(item.totalDebtToEquity))
 
                 root.setOnClickListener { onItemClick(item) }
             }
         }
 
+        private fun toggle(view: View, key: String, selected: List<String>, value: String) {
+            if (key in selected) {
+                view.visibility = View.VISIBLE
+                if (view is TextView) view.text = value
+            } else {
+                view.visibility = View.GONE
+            }
+        }
+
         private fun formatDouble(value: Double?): String {
-            return value?.let { String.format("%,.2f", it) } ?: "-"
+            return if (value == null || value == 0.0) {
+                "N/A"
+            } else {
+                String.format("%,.2f", value)
+            }
         }
     }
 
@@ -98,23 +133,25 @@ class CustomScreenerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {
-            holder.bind()
+            holder.bind(selectedColumns)
             ScrollSyncHelper.register(holder.binding.horizontalScroll)
         } else if (holder is CustomScreenerViewHolder) {
             val item = itemList[position - 1] // account for header
             val stockItem = symbolMap[item.symbol.uppercase()]
-            holder.bind(item, stockItem, onItemClick)
+            holder.bind(item, stockItem, selectedColumns, onItemClick)
             ScrollSyncHelper.register(holder.binding.horizontalScroll)
         }
     }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
-        if (holder is HeaderViewHolder) {
-            ScrollSyncHelper.unregister(holder.binding.horizontalScroll)
-        } else if (holder is CustomScreenerViewHolder) {
-            ScrollSyncHelper.unregister(holder.binding.horizontalScroll)
-        }
+        ScrollSyncHelper.unregister(
+            when (holder) {
+                is HeaderViewHolder -> holder.binding.horizontalScroll
+                is CustomScreenerViewHolder -> holder.binding.horizontalScroll
+                else -> return
+            }
+        )
     }
 
     override fun getItemCount(): Int = itemList.size + 1
