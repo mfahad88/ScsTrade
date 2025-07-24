@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -57,7 +58,9 @@ class NotificationHelper(private val context: Context) {
         val title =notificationMap["title"]
         val company=notificationMap["company"]
 //        val body = notificationMap["body"]
+
         val details = notificationMap["details"]?.replace("| ","\n")?.trim()
+
         val boldTitle = SpannableString(title).apply {
             setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
@@ -68,7 +71,7 @@ class NotificationHelper(private val context: Context) {
             appendLine(company)
 //            appendLine(body)
 //            appendLine()
-            appendLine(details)
+            appendLine(formatDetailsWithBoldKeys(details))
         }
 
 // ✅ Notification builder
@@ -106,7 +109,31 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
+    fun formatDetailsWithBoldKeys(details: String?): SpannableStringBuilder {
+        val builder = SpannableStringBuilder()
+        if(details!=null){
+            val parts = details.split("|")
+            for (part in parts) {
+                val line = part.trim()
+                if (line.contains(":")) {
+                    val key = line.substringBefore(":").trim()
+                    val value = line.substringAfter(":").trim()
 
+                    // ✅ Skip if value is empty, null, or blank
+                    if (value.isBlank() || value.equals("null", ignoreCase = true)) continue
+
+                    val start = builder.length
+                    builder.append("$key: ")
+                    builder.setSpan(StyleSpan(Typeface.BOLD), start, start + key.length + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    builder.append(value)
+                    builder.append("\n")
+                }
+            }
+        }else{
+            builder.append("")
+        }
+        return builder
+    }
 
     private fun createNotificationChannel() {
         val name = context.getString(R.string.app_name)

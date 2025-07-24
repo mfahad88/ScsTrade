@@ -25,15 +25,15 @@ class FundamentalDetailAdapter(
         ) {
             binding.apply {
                 symbol.text = item.getOrNull(0) ?: "-"
-                ePE.text = item.getOrNull(1)?.toDoubleOrNull()?.let { String.format("%,.2f", it) } ?: "-"
-                price.text = item.getOrNull(3)?.toDoubleOrNull()?.let { String.format("%,.2f", it) } ?: "-"
+                ePE.text = formatDecimal(item.getOrNull(1))
                 companyName.text = item.getOrNull(2) ?: "-"
+                price.text = formatDecimal(item.getOrNull(3))
 
                 val match = sharedViewModel.mutableAllData.value?.data?.firstOrNull {
                     it.sYM.equals(item.getOrNull(0), ignoreCase = true)
                 }
 
-                av.text = match?.aV?.let { String.format("%,.2f", it) } ?: "-"
+                av.text = match?.aV?.let { formatDecimal(it.toString()) } ?: "-"
                 Utils.getCompanyLogo(itemView.context, imageViewLogo, match)
             }
 
@@ -43,12 +43,20 @@ class FundamentalDetailAdapter(
                 }
             }
         }
+
+        private fun formatDecimal(value: String?): String {
+            return value?.toDoubleOrNull()?.let {
+                String.format("%,.2f", it)
+            } ?: (value ?: "-")
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundamentalDetailViewHolder {
         val binding = ItemFundamentDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FundamentalDetailViewHolder(binding)
     }
+
+
 
     override fun onBindViewHolder(holder: FundamentalDetailViewHolder, position: Int) {
         holder.bind(itemList[position], sharedViewModel, onItemClick)

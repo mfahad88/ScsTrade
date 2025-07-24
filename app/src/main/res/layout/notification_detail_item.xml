@@ -69,8 +69,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
+        tools:visibility="visible"
         android:text="@string/announcement_date"
         android:textAppearance="@style/mar_2025_12"
         android:textFontWeight="700"
@@ -88,6 +90,8 @@
         android:lineSpacingExtra="3sp"
         android:text="@string/mar_2025_12"
         android:textAppearance="@style/datetime"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:textFontWeight="500"
         app:layout_constraintBottom_toBottomOf="@+id/announcement_date"
         app:layout_constraintEnd_toEndOf="@+id/company_name"
@@ -96,12 +100,12 @@
 
     <ImageView
         android:id="@+id/imageViewView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="@+id/description"
-        app:layout_constraintTop_toBottomOf="@+id/datetime"
+        app:layout_constraintTop_toBottomOf="@+id/symbol"
         app:srcCompat="@drawable/rounded_file_view" />
 
     <ImageView
@@ -109,32 +113,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_24"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewView"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/imageViewView"
-        app:layout_constraintTop_toBottomOf="@+id/datetime"
+        app:layout_constraintTop_toBottomOf="@+id/symbol"
         app:srcCompat="@drawable/rounded_file_download" />
 
     <ImageView
         android:id="@+id/imageViewShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_24"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewDownload"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/imageViewDownload"
-        app:layout_constraintTop_toBottomOf="@+id/datetime"
+        app:layout_constraintTop_toBottomOf="@+id/symbol"
         app:srcCompat="@drawable/rounded_file_share" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_667"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="78dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datetime" />
+        app:layout_constraintTop_toBottomOf="@+id/symbol" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

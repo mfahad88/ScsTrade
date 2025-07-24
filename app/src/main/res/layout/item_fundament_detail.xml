@@ -11,10 +11,10 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="@dimen/dp_80"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1.2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,9 +77,9 @@
         android:id="@+id/e_p_e"
         android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center|end"
         android:layout_weight="1"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         tools:text="Signal"
         app:layout_constraintHorizontal_weight="1"
         android:textAppearance="@style/e_p_e"
@@ -95,9 +95,9 @@
         android:id="@+id/price"
         android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textAlignment="center"
+        android:gravity="center|end"
+        android:layout_weight="0.8"
+        android:textAlignment="textEnd"
         tools:text="Initated"
         app:layout_constraintBaseline_toBaselineOf="@id/symbol"
         android:textAppearance="@style/e_p_e"

@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="@dimen/dp_0"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginTop="@dimen/dp_0"
         android:background="@color/colorDarkerr"
@@ -41,64 +41,111 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <TextView
-            android:id="@+id/header1"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="match_parent"
-            android:gravity="center|start"
-            android:layout_weight="1"
-            tools:text="@string/symbol"
-            android:textAlignment="textStart"
-            android:textAppearance="@style/symbol"
-            android:textFontWeight="600"
-            app:layout_constraintEnd_toStartOf="@+id/header2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/header2"
+        <!-- Column 1 -->
+        <LinearLayout
+            android:id="@+id/header1Container"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            tools:text="Signal"
-            android:textAlignment="center"
-            android:textAppearance="@style/symbol"
-            android:textFontWeight="600"
-            app:layout_constraintEnd_toStartOf="@+id/header3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/header1" />
+            android:layout_weight="1.2"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start">
 
-        <TextView
-            android:id="@+id/header3"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:layout_weight="1"
-            tools:text="Initated"
-            android:textAlignment="center"
-            android:textAppearance="@style/symbol"
-            android:textFontWeight="600"
-            app:layout_constraintEnd_toStartOf="@+id/header4"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/header2" />
+            <TextView
+                android:id="@+id/header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/symbol"
+                android:textAppearance="@style/symbol"
+                android:textFontWeight="600"
+                android:textAlignment="textStart" />
 
-        <TextView
-            android:id="@+id/header4"
-            android:layout_width="@dimen/dp_0"
+            <ImageView
+                android:id="@+id/sortIcon1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_sort_default"
+                android:contentDescription="Sort Icon 1" />
+        </LinearLayout>
+
+        <!-- Column 2 -->
+        <LinearLayout
+            android:id="@+id/header2Container"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|end"
-            android:gravity="center|end"
             android:layout_weight="1"
-            android:text="AV"
-            android:textAlignment="textEnd"
-            android:textAppearance="@style/symbol"
-            android:textFontWeight="600"
-            app:layout_constraintEnd_toStartOf="@+id/header1"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/header3" />
+            android:orientation="horizontal"
+            android:gravity="center|end">
+
+            <TextView
+                android:id="@+id/header2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Signal"
+                android:textAppearance="@style/symbol"
+                android:textFontWeight="600" />
+
+            <ImageView
+                android:id="@+id/sortIcon2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_sort_default"
+                android:contentDescription="Sort Icon 2" />
+        </LinearLayout>
+
+        <!-- Column 3 -->
+        <LinearLayout
+            android:id="@+id/header3Container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:orientation="horizontal"
+            android:gravity="center|end">
+
+            <TextView
+                android:id="@+id/header3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Initiated"
+                android:textAppearance="@style/symbol"
+                android:textFontWeight="600" />
+
+            <ImageView
+                android:id="@+id/sortIcon3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_sort_default"
+                android:contentDescription="Sort Icon 3" />
+        </LinearLayout>
+
+        <!-- Column 4 -->
+        <LinearLayout
+            android:id="@+id/header4Container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/header4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AV"
+                android:textAppearance="@style/symbol"
+                android:textFontWeight="600"
+                android:textAlignment="textEnd" />
+
+            <ImageView
+                android:id="@+id/sortIcon4"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_sort_default"
+                android:contentDescription="Sort Icon 4" />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -113,7 +160,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintVertical_bias="1.0"
-        tools:listitem="@layout/item_technical_detail"
+        tools:listitem="@layout/item_fundament_detail"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Group

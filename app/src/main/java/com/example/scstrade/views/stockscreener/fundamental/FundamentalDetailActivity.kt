@@ -1,5 +1,4 @@
 package com.example.scstrade.views.stockscreener.fundamental
-import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -8,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -23,149 +23,15 @@ import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
-import com.example.scstrade.views.stockscreener.fundamental.adapter.FundamentalDetailAdapter
 import com.example.scstrade.views.snapshot.SnapshotActivity
+import com.example.scstrade.views.stockscreener.fundamental.adapter.FundamentalDetailAdapter
 import com.example.scstrade.views.widgets.VerticalSpaceItemDecoration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.sqrt
 
-/*
 class FundamentalDetailActivity : BaseActivity() {
-    lateinit var binding: ActivityFundamentalDetailBinding
-    lateinit var viewModel: SharedViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = (this.application as MyApp).viewModel
-        binding = ActivityFundamentalDetailBinding.inflate(LayoutInflater.from(this))
-        enableEdgeToEdge()
-        Utils.setEdgeToEdgeWithWhiteIcons(this)
-        setContentView(binding.root)
-        // binding.toolbar.toggleToolbar(false)
-        binding.toolbar.binding.market.text = intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
-            insets
-        }
-        binding.recyclerView.apply {
-            layoutManager=LinearLayoutManager(this@FundamentalDetailActivity,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(
-                VerticalSpaceItemDecoration(1,
-                    ContextCompat.getColor(this@FundamentalDetailActivity,R.color.md_theme_outline))
-            )
 
-        }
-        viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)?:"")
-
-        viewModel.mutableFundamentalDetail.observe(this, Observer {
-
-
-            when(it){
-                is Resource.Error -> {
-                    binding.loader.visibility = View.GONE
-                    Utils.showError(binding.root,it.message?:"An error occurred")
-                }
-                is Resource.Loading -> binding.loader.visibility=View.VISIBLE
-                is Resource.Success -> {
-
-                    val jsonElement=it.data
-
-                    if(jsonElement?.isJsonArray?:false){
-                        var count=0
-                        val resultList = mutableListOf<Array<String>>()
-                       lifecycleScope.launch (Dispatchers.IO){
-                           jsonElement?.asJsonArray?.first()?.asJsonObject?.entrySet()?.distinctBy { it.key }?.forEach {
-                               if(!it.key.equals("company_name",true)) {
-                                   count++
-                                   if(count==1){
-                                       binding.header1.text = it.key
-                                   }
-                                   if(count==2){
-                                       binding.header2.text = it.key
-                                   }
-                                   if(count==3){
-                                       binding.header3.text = it.key
-                                   }
-
-
-                                   System.out.println(it.key)
-                               }
-
-                           }
-
-                           jsonElement?.asJsonArray?.forEach { it ->
-                               val obj = it.asJsonObject
-//                               val map = Gson().fromJson(jsonElement, Map::class.java) as Map<String, Any>
-                               val values = obj.entrySet().map { it.value.asString }.toTypedArray()
-                               resultList.add(values)
-
-
-                           }
-                       }
-                        binding.recyclerView.apply {
-                            adapter = FundamentalDetailAdapter(resultList,viewModel){
-                                val intent= Intent(this@FundamentalDetailActivity, SnapshotActivity::class.java)
-                                intent.putExtra(AppConstants.SYMBOL, it)
-                                startActivity(intent)
-                            }
-
-
-                        }
-
-
-                    }
-
-
-                }
-            }
-        })
-
-
-        binding.groupMain.visibility = View.VISIBLE
-        binding.loader.visibility = View.GONE
-
-    }
-
-    override fun getResources(): Resources {
-
-        val res = super.getResources()
-        val config = Configuration(res.configuration)
-
-        val metrics = res.displayMetrics
-
-        // Calculate screen width and height in inches
-        val widthInches = metrics.widthPixels / metrics.xdpi
-        val heightInches = metrics.heightPixels / metrics.ydpi
-        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
-
-        // Set fontScale based on diagonal screen size
-        if(diagonalInches>3.9 && diagonalInches<4.9){
-            config.fontScale = 0.85f  // Small phones
-        }else if (diagonalInches>4.9 && diagonalInches<5.4){
-            config.fontScale = 0.95f
-        }else if (diagonalInches>5.5 && diagonalInches<6.9){
-            config.fontScale = 1.0f
-        }else{
-            config.fontScale = 1.2f
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            config.fontWeightAdjustment = 0
-
-        }
-        res.updateConfiguration(config, metrics)
-        return res
-    }
-
-    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
-        if (overrideConfiguration != null) {
-            // Override any incoming configuration changes
-            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
-        }
-        super.applyOverrideConfiguration(overrideConfiguration)
-    }
-}*/
-class FundamentalDetailActivity : BaseActivity() {
     lateinit var binding: ActivityFundamentalDetailBinding
     lateinit var viewModel: SharedViewModel
 
@@ -174,6 +40,7 @@ class FundamentalDetailActivity : BaseActivity() {
     private var currentSortColumn: Int? = null
     private var sortAscending = true
     private lateinit var adapter: FundamentalDetailAdapter
+    private lateinit var sortIcons: List<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -183,7 +50,9 @@ class FundamentalDetailActivity : BaseActivity() {
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
 
+        // Toolbar label
         binding.toolbar.binding.market.text = intent.extras?.getString(AppConstants.TECHNICAL_SELECTION)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
@@ -191,7 +60,7 @@ class FundamentalDetailActivity : BaseActivity() {
         }
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@FundamentalDetailActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(this@FundamentalDetailActivity)
             addItemDecoration(
                 VerticalSpaceItemDecoration(
                     1,
@@ -205,11 +74,23 @@ class FundamentalDetailActivity : BaseActivity() {
             intent.putExtra(AppConstants.SYMBOL, it)
             startActivity(intent)
         }
-
         binding.recyclerView.adapter = adapter
 
-        viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION) ?: "")
+        // Icons
+        sortIcons = listOf(
+            binding.sortIcon1,
+            binding.sortIcon2,
+            binding.sortIcon3,
+            binding.sortIcon4
+        )
 
+        // Header click listeners
+        binding.header1Container.setOnClickListener { sortByColumn(0) }
+        binding.header2Container.setOnClickListener { sortByColumn(1) }
+        binding.header3Container.setOnClickListener { sortByColumn(2) }
+        binding.header4Container.setOnClickListener { sortByColumn(3) }
+
+        viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION) ?: "")
         viewModel.mutableFundamentalDetail.observe(this, Observer {
             when (it) {
                 is Resource.Error -> {
@@ -221,12 +102,7 @@ class FundamentalDetailActivity : BaseActivity() {
 
                 is Resource.Success -> {
                     val jsonElement = it.data
-
                     if (jsonElement?.isJsonArray == true) {
-                        var count = 0
-                        resultList.clear()
-                        originalList.clear()
-
                         val headers = jsonElement.asJsonArray.first().asJsonObject.entrySet()
                             .distinctBy { it.key }
                             .filterNot { it.key.equals("company_name", true) }
@@ -240,6 +116,9 @@ class FundamentalDetailActivity : BaseActivity() {
                             }
                         }
 
+                        resultList.clear()
+                        originalList.clear()
+
                         lifecycleScope.launch(Dispatchers.IO) {
                             jsonElement.asJsonArray.forEach { element ->
                                 val row = element.asJsonObject.entrySet()
@@ -248,48 +127,47 @@ class FundamentalDetailActivity : BaseActivity() {
                                 resultList.add(row)
                             }
                             originalList = resultList.toMutableList()
-
                             runOnUiThread {
                                 adapter.submitList(resultList)
+                                binding.loader.visibility = View.GONE
+                                binding.groupMain.visibility = View.VISIBLE
                             }
                         }
                     }
-
-                    binding.loader.visibility = View.GONE
-                    binding.groupMain.visibility = View.VISIBLE
                 }
             }
         })
-
-        // Header click sorting
-        binding.header1.setOnClickListener { sortByColumn(0) }
-        binding.header2.setOnClickListener { sortByColumn(1) }
-        binding.header3.setOnClickListener { sortByColumn(2) }
-        binding.header4.setOnClickListener { sortByColumn(3) }
     }
 
     private fun sortByColumn(index: Int) {
         sortAscending = if (currentSortColumn == index) !sortAscending else true
         currentSortColumn = index
 
+        // Perform sorting
         val sortedList = originalList.sortedWith(compareBy {
             it.getOrNull(index)?.let { value -> value.toDoubleOrNull() ?: value }
         })
 
-        val finalList = if (sortAscending) sortedList else sortedList.reversed()
-
-        resultList = finalList.toMutableList()
+        resultList = if (sortAscending) sortedList.toMutableList() else sortedList.reversed().toMutableList()
         adapter.submitList(resultList)
+
+        // Update all icons to default
+        sortIcons.forEachIndexed { i, icon ->
+            icon.setImageResource(R.drawable.ic_sort_default)
+        }
+
+        // Set current icon based on sort direction
+        val iconRes = if (sortAscending) R.drawable.ic_sort_down else R.drawable.ic_sort_up
+        sortIcons.getOrNull(index)?.setImageResource(iconRes)
     }
 
     override fun getResources(): Resources {
         val res = super.getResources()
         val config = Configuration(res.configuration)
         val metrics = res.displayMetrics
-
         val widthInches = metrics.widthPixels / metrics.xdpi
         val heightInches = metrics.heightPixels / metrics.ydpi
-        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+        val diagonalInches = sqrt(widthInches * widthInches + heightInches * heightInches)
 
         config.fontScale = when {
             diagonalInches in 3.9..4.9 -> 0.85f

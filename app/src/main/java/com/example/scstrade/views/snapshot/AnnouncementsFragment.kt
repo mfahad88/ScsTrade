@@ -128,12 +128,14 @@ class AnnouncementsFragment : Fragment() {
         binding.spinnerAnnouncement.apply {
             onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
                     val selectedLabel = parent!!.getItemAtPosition(position) as String
                     if(selectedLabel.equals("all",true)){
                         binding.textDate.text.clear()
                     }
 //                    binding.textDate.text.clear()
                     snapshotViewModel.announcement(symbol,selectedLabel,binding.textDate.text.toString())
+                    binding.main.scrollToPosition(0)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

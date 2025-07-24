@@ -4,7 +4,10 @@ import androidx.compose.ui.res.dimensionResource
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +62,23 @@ class AnnouncementAdapter(
 
             // Set company title and date
             mcbimFunds.text = item.companyCode?.trim() ?: ""
-            mar202512.text = if(!TextUtils.isEmpty(item.announcementDate?.toString())) "Announcement Date: ${formatDotNetDate(item.announcementDate?.toString() ?: "")}" else "Meeting Date: ${formatDotNetDate(item.meetingDate)}"
+            val label: String
+            val value: String
+
+            if (!TextUtils.isEmpty(item.announcementDate?.toString())) {
+                label = "Announcement Date: "
+                value = formatDotNetDate(item.announcementDate?.toString() ?: "")
+            } else {
+                label = "Meeting Date: "
+                value = formatDotNetDate(item.meetingDate)
+            }
+
+            val spannable = SpannableStringBuilder().apply {
+                append(label, TypefaceSpan("sans-serif-medium"), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                append(value)
+            }
+
+            mar202512.text = spannable
        /*     if(TextUtils.isEmpty(item.Announcement_Date?.toString())){
                 mar202512.visibility = View.GONE
             }else{

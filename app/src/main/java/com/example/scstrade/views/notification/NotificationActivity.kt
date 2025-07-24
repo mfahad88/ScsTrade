@@ -93,18 +93,14 @@ class NotificationActivity : BaseActivity() {
                     binding.apply {
                         notificationList.visibility = View.VISIBLE
                         loader.visibility = View.GONE
-                        binding.notificationList.adapter=NotificationAdapter(result.data?.map { NotificationEntity(it.mainAnnID,"${it.mainAnnHeading} - ${it.announcementTypeName}",it.mainAnnDetails,it.mainAnnDate,it.mainAnnIDRef,it.announcementTypeName,false) }?.toList()?: emptyList(),{
-                            if(it.MainAnnIDRef!=null && it.AnnouncementTypeName?.isNotBlank()?:true){
+                        binding.notificationList.adapter=NotificationAdapter(result.data?.toList()?: emptyList(),{
+                            if(it.mainAnnIDRef!=null && it.announcementTypeName?.isNotBlank()?:true){
                             val intent= Intent(this@NotificationActivity,NotificationDetailActivity::class.java)
-                            intent.putExtra(AppConstants.ID_REF,it.MainAnnIDRef)
-                            intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.AnnouncementTypeName)
+                            intent.putExtra(AppConstants.ID_REF,it.mainAnnIDRef)
+                            intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.announcementTypeName)
                             startActivity(intent)
                             }
 
-                        },{ notificationEntity,index ->
-
-//                            notificationViewModel.markAsRead(notificationEntity.id)
-//                            notificationViewModel.getNotification()
                         })
 //                        notificationViewModel.insertNotification(result.data?: emptyList())
 //                        notificationViewModel.getNotification()

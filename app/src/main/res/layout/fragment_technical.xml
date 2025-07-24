@@ -235,6 +235,7 @@
                            android:layout_width="wrap_content"
                            android:layout_height="@dimen/dp_0"
                            android:layout_marginEnd="@dimen/dp_16"
+                           android:visibility="gone"
                            android:src="@drawable/circle_share"
                            app:layout_constraintBottom_toBottomOf="@+id/imageView16"
                            app:layout_constraintEnd_toEndOf="parent"

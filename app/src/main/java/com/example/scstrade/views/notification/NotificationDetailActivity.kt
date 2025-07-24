@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -45,10 +44,8 @@ class NotificationDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
         Utils.setEdgeToEdgeWithWhiteIcons(this)
-
         sharedViewModel = (application as MyApp).viewModel
 
-//        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
@@ -95,81 +92,88 @@ class NotificationDetailActivity : BaseActivity() {
                 }
 
                 is Resource.Success -> {
-
                     val response = result.data
-
-
                     if (response != null && response.isJsonArray) {
                         val array = response.asJsonArray
-
                         if (array.size() > 0) {
                             val jsonObject = array[0].asJsonObject
                             val list = ArrayList<KeyDescValue>()
 
                             jsonObject.asMap().entries.forEach {
-                                if (!it.value.isJsonNull && !it.value.asString.isNullOrEmpty()
-                                    && !listOf(
-                                        "company_code", "AnnouncementType",
-                                        "company_name", "Heading",
-                                        "bm_ann_date", "ImageLink", "PDFLink"
-                                    ).contains(it.key)
+                                val value = jsonObject.safeString(it.key)
+                                if (!value.isNullOrBlank()
+                                    && !listOf("company_code", "AnnouncementType", "company_name", "Heading", "bm_ann_date", "ImageLink", "PDFLink").contains(it.key)
+                                    && !(it.key.contains("date", true) && value.contains("-"))
                                 ) {
-                                    if (it.key.contains("date", ignoreCase = true) && it.value.asString.contains("-")) return@forEach
-                                    list.add(KeyDescValue(it.key, it.value.asString, null))
+                                    list.add(KeyDescValue(it.key, value, null))
                                 }
                             }
 
                             binding.detail.listView.adapter = InformationAdapter(this, list)
 
-                            binding.detail.symbol.text = jsonObject.get("company_code").asString + " - "
-                            binding.detail.companyName.text = jsonObject.get("company_name").asString
-                            binding.detail.description.text = jsonObject.get("Heading").asString
-                            binding.detail.announcementType.text =  jsonObject.get("AnnouncementType").asString
-                            if(!jsonObject.get("AnnouncementType").asString.equals(jsonObject.get("Heading").asString)){
-                                if(jsonObject.get("AnnouncementType").asString.equals("board meetings") && jsonObject.get("Heading").asString.equals("board meeting")){
-                                    binding.detail.announcementType.visibility = View.GONE
-                                }else{
+                            val companyCode = jsonObject.safeString("company_code") ?: "-"
+                            val companyName = jsonObject.safeString("company_name") ?: "-"
+                            val heading = jsonObject.safeString("Heading") ?: "-"
+                            val announcementType = jsonObject.safeString("AnnouncementType") ?: "-"
+                            val bmAnnDate = jsonObject.safeString("bm_ann_date")
+                            val imageLink = jsonObject.safeString("ImageLink")
+                            val pdfLink = jsonObject.safeString("PDFLink")
 
-                                    binding.detail.announcementType.visibility = View.VISIBLE
-                                }
-                            }
+                            binding.detail.symbol.text = "$companyCode -"
+                            binding.detail.companyName.text = companyName
+                            binding.detail.description.text = heading
+                            binding.detail.announcementType.text = announcementType
 
-                            if (jsonObject.has("bm_ann_date")) {
-                                binding.detail.datetime.text = Utils.convertDateString(
-                                    jsonObject.get("bm_ann_date").asString, "dd-MMM-yyyy"
-                                )
+                            binding.detail.announcementType.visibility =
+                                if (announcementType.equals(heading, true) ||
+                                    (announcementType.equals("board meetings", true) && heading.equals("board meeting", true))
+                                ) View.GONE else View.VISIBLE
+
+                            if (!bmAnnDate.isNullOrBlank()) {
+                                binding.detail.datetime.text = Utils.convertDateString(bmAnnDate, "dd-MMM-yyyy")
                                 binding.detail.datetime.visibility = View.VISIBLE
+                                binding.detail.announcementDate.visibility = View.VISIBLE
                             } else {
                                 binding.detail.datetime.visibility = View.GONE
+                                binding.detail.announcementDate.visibility = View.GONE
                             }
 
-                            if (!jsonObject.get("PDFLink").asString.isNullOrBlank()) {
+                            if (!pdfLink.isNullOrBlank()) {
                                 binding.detail.imageViewDownload.visibility = View.VISIBLE
                                 binding.detail.imageViewDownload.setOnClickListener {
                                     binding.loader.visibility = View.VISIBLE
-                                    downloadPdf(this, jsonObject.get("PDFLink").asString) { file ->
+                                    downloadPdf(this, pdfLink) { file ->
                                         runOnUiThread {
-                                            if (file != null) {
-                                                openPdf(this, file)
-                                            }
+                                            file?.let { openPdf(this, it) }
+                                            binding.loader.visibility = View.GONE
+                                        }
+                                    }
+                                }
+
+                                binding.detail.imageViewShare.visibility = View.VISIBLE
+                                binding.detail.imageViewShare.setOnClickListener {
+                                    binding.loader.visibility = View.VISIBLE
+                                    downloadPdf(this, pdfLink) { file ->
+                                        runOnUiThread {
+                                            file?.let { sharePdf(it) }
                                             binding.loader.visibility = View.GONE
                                         }
                                     }
                                 }
                             } else {
                                 binding.detail.imageViewDownload.visibility = View.GONE
+                                binding.detail.imageViewShare.visibility = View.GONE
                             }
 
-                            if (!jsonObject.get("ImageLink").asString.isNullOrBlank()) {
+                            if (!imageLink.isNullOrBlank()) {
                                 binding.detail.imageViewView.visibility = View.VISIBLE
                                 binding.detail.imageViewView.setOnClickListener {
                                     binding.loader.visibility = View.VISIBLE
                                     val dialog = Dialog(this)
                                     dialog.setContentView(R.layout.dialog_image)
                                     Glide.with(this)
-                                        .load(jsonObject.get("ImageLink").asString)
+                                        .load(imageLink)
                                         .into(dialog.findViewById<ZoomImageView>(R.id.imageView))
-
                                     dialog.setCancelable(false)
                                     dialog.setCanceledOnTouchOutside(false)
                                     dialog.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
@@ -182,24 +186,7 @@ class NotificationDetailActivity : BaseActivity() {
                                 binding.detail.imageViewView.visibility = View.GONE
                             }
 
-                            if (!jsonObject.get("PDFLink").asString.isNullOrBlank()) {
-                                binding.detail.imageViewShare.visibility = View.VISIBLE
-                                binding.detail.imageViewShare.setOnClickListener {
-                                    binding.loader.visibility = View.VISIBLE
-                                    downloadPdf(this, jsonObject.get("PDFLink").asString) { file ->
-                                        runOnUiThread {
-                                            if (file != null) {
-                                                sharePdf(file)
-                                            }
-                                            binding.loader.visibility = View.GONE
-                                        }
-                                    }
-                                }
-                            } else {
-                                binding.detail.imageViewShare.visibility = View.GONE
-                            }
                             findViewById<View>(R.id.detail).visibility = View.VISIBLE
-
                         } else {
                             Utils.showError(binding.root, "No notification details available.")
                         }
@@ -216,13 +203,11 @@ class NotificationDetailActivity : BaseActivity() {
     private fun sharePdf(file: File) {
         if (!file.exists()) return
         val uri: Uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
-
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "application/pdf"
             putExtra(Intent.EXTRA_STREAM, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-
         startActivity(Intent.createChooser(shareIntent, "Share PDF via"))
     }
 
@@ -233,7 +218,6 @@ class NotificationDetailActivity : BaseActivity() {
             } else {
                 Uri.fromFile(file)
             }
-
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(uri, "application/pdf")
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -248,30 +232,31 @@ class NotificationDetailActivity : BaseActivity() {
         val res = super.getResources()
         val config = Configuration(res.configuration)
         val metrics = res.displayMetrics
-
         val widthInches = metrics.widthPixels / metrics.xdpi
         val heightInches = metrics.heightPixels / metrics.ydpi
         val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
-
         config.fontScale = when {
             diagonalInches > 3.9 && diagonalInches < 4.9 -> 0.85f
             diagonalInches > 4.9 && diagonalInches < 5.4 -> 0.95f
             diagonalInches > 5.5 && diagonalInches < 6.9 -> 1.0f
             else -> 1.2f
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             config.fontWeightAdjustment = 0
         }
-
         res.updateConfiguration(config, metrics)
         return res
     }
 
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
-        if (overrideConfiguration != null) {
-            overrideConfiguration.densityDpi = resources.displayMetrics.densityDpi
-        }
+        overrideConfiguration?.densityDpi = resources.displayMetrics.densityDpi
         super.applyOverrideConfiguration(overrideConfiguration)
     }
+}
+
+// Extension for safe string extraction from JsonObject
+private fun com.google.gson.JsonObject.safeString(key: String): String? {
+    return if (this.has(key) && !this.get(key).isJsonNull) {
+        this.get(key).asString?.takeIf { it.isNotBlank() }
+    } else null
 }
