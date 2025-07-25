@@ -73,24 +73,52 @@ class PortfolioActivity : BaseActivity() {
                 }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
-                    binding.recyclerView.visibility = View.VISIBLE
-                    binding.recyclerView.apply {
-                        adapter = PortFolioAdapter(result.data?.portfolioList?.sortedBy { it.portfolioMainPosition }?.toMutableList()?: emptyList(), onItemClick = {
 
-                            val intent=Intent(this@PortfolioActivity, PortfolioDetailActivity::class.java)
-                            intent.putExtra(AppConstants.PORTFOLIO_NAME,it.portfolioMainName)
-                            intent.putExtra(AppConstants.PORTFOLIO_MAIN_ID,it.portfolioMainID)
-                            startActivity(intent)
-                        }, onItemPopupClick = {str,item->
-                            if(str.contains("delete",true)) {
-                                Utils.showConfirmationDialog(this@PortfolioActivity,null,null,"Are you sure you want to delete your portfolio?"){
-                                    portfolioViewModel.deletePortfolio(item.portfolioMainID,login.registrationID?:-1)
+                    if(!result.data?.portfolioList.isNullOrEmpty()?:true) {
+                        binding.recyclerView.apply {
+                            adapter =
+                                PortFolioAdapter(result.data?.portfolioList?.sortedBy { it.portfolioMainPosition }
+                                    ?.toMutableList() ?: emptyList(), onItemClick = {
+
+                                    val intent = Intent(
+                                        this@PortfolioActivity,
+                                        PortfolioDetailActivity::class.java
+                                    )
+                                    intent.putExtra(
+                                        AppConstants.PORTFOLIO_NAME,
+                                        it.portfolioMainName
+                                    )
+                                    intent.putExtra(
+                                        AppConstants.PORTFOLIO_MAIN_ID,
+                                        it.portfolioMainID
+                                    )
+                                    startActivity(intent)
+                                }, onItemPopupClick = { str, item ->
+                                    if (str.contains("delete", true)) {
+                                        Utils.showConfirmationDialog(
+                                            this@PortfolioActivity,
+                                            null,
+                                            null,
+                                            "Are you sure you want to delete your portfolio?"
+                                        ) {
+                                            portfolioViewModel.deletePortfolio(
+                                                item.portfolioMainID,
+                                                login.registrationID ?: -1
+                                            )
 //                                    Utils.showDeleteBottomSheet(this@PortfolioActivity,"Your portfolio has been deleted.")
 
-                                }
-                            }
-                        })
-                        layoutManager=LinearLayoutManager(this@PortfolioActivity,LinearLayoutManager.VERTICAL,false)
+                                        }
+                                    }
+                                })
+                            layoutManager = LinearLayoutManager(
+                                this@PortfolioActivity,
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        }
+                        binding.recyclerView.visibility = View.VISIBLE
+                    }else{
+                        binding.groupNoRecord.visibility = View.VISIBLE
                     }
 
 

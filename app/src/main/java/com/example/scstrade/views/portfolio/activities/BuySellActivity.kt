@@ -343,9 +343,8 @@ class BuySellActivity : BaseActivity() {
                 buttonSell.setOnClickListener {
                     if(symbol.text.isNotEmpty() && shares.text.isNotEmpty() && buyPrice.text.isNotEmpty()
                         && comissionShare.text.isNotEmpty() && radioCommissionType.checkedRadioButtonId!=null && purchaseDate.text.isNotEmpty()){
-                        if(shares.text.toString().toInt() > availableShareValue.text.toString().toInt() ||
-                            buyPrice.text.toString().toInt() > avgBuyPriceValue.text.toString().toInt()){
-                            Utils.showError(binding.root,"Please check number of shares and price")
+                        if(shares.text.toString().toDouble() > availableShareValue.text.toString().toDouble()){
+                            Utils.showError(binding.root,"Please check number of shares")
                         }else{
                             if(intent.getIntExtra(AppConstants.MODE,0)==0){
                                 portFolioViewModel.sellStock(

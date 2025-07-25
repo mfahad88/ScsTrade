@@ -207,13 +207,13 @@ class PortfolioDetailActivity : BaseActivity() {
                         val stockItem = sharedViewModel.mutableAllData.value?.data
                         val data = result.data
                         if(data!=null){
-                            val currentMarketValue=data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }
+                            val currentMarketValue=data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.firstOrNull { it.sYM.equals(res.symbol,true) }?.cL?:0.0) }
                             val portfolioCost = data.fifoPortfolio.sumOf { res-> res.quantity.toDouble().times(res.price.toDouble()) }
-                            val dayPL = data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cH }?.first()?:0.0) }
+                            val dayPL = data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.firstOrNull { it.sYM.equals(res.symbol,true) }?.cH?:0.0) }
                             val dayPLPercent =data.fifoPortfolio.sumOf { res->
-                                stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cHP }?.first()?:0.0
+                                stockItem?.firstOrNull { it.sYM.equals(res.symbol,true) }?.cHP?:0.0
                             }
-                            val totalPL = data.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.filter { it.sYM.equals(res.symbol) }?.map { it.cL }?.first()?:0.0) }.minus(portfolioCost)
+                            val totalPL = data.fifoPortfolio.sumOf { res->res.quantity.toDouble().times(stockItem?.firstOrNull { it.sYM.equals(res.symbol,true) }?.cL?:0.0) }.minus(portfolioCost)
                             val totalPlPercent = totalPL.div(portfolioCost).times(100)
 
                             binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
@@ -224,6 +224,10 @@ class PortfolioDetailActivity : BaseActivity() {
                             (recyclerView.adapter as ShareInHandAdapter).submitList(data?.fifoPortfolio)
                             if(!data.fifoPortfolio.isNullOrEmpty()){
                                 group.visibility = View.VISIBLE
+                                groupNoRecord.visibility = View.GONE
+                            }else{
+                                groupNoRecord.visibility = View.VISIBLE
+                                group.visibility = View.GONE
                             }
 
                             if(!data.closeTrades.isNullOrEmpty()){
@@ -238,6 +242,8 @@ class PortfolioDetailActivity : BaseActivity() {
 
                                 groupHistory.visibility = View.VISIBLE
                             }
+                        }else{
+                            groupNoRecord.visibility = View.VISIBLE
                         }
 
                     }
