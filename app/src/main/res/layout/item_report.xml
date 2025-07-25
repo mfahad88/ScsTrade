@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/dp_5"
+    android:paddingStart="@dimen/dp_8"
+    android:paddingEnd="@dimen/dp_8">
+
+    <!-- Label Card (board_meetings) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/board_meetings"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_8"
+        app:cardBackgroundColor="#1A187376"
+        app:cardCornerRadius="@dimen/dp_5"
+        app:contentPaddingLeft="@dimen/dp_8"
+        app:contentPaddingRight="@dimen/dp_8"
+        app:strokeColor="@null"
+        app:strokeWidth="@dimen/dp_0">
+
+        <TextView
+            android:id="@+id/labelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/board_meetings"
+            android:textAppearance="@style/board_meetings" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Row: mcbim_funds and crescent_st -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_5">
+
+        <TextView
+            android:id="@+id/mcbim_funds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="2sp"
+            android:textFontWeight="600"
+            android:text="@string/mcbim_funds"
+            android:textAppearance="@style/mcbim_funds" />
+
+        <TextView
+            android:id="@+id/crescent_st"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="@dimen/dp_3"
+            android:lineSpacingExtra="3sp"
+            android:text="@string/crescent_st"
+            android:textAppearance="@style/crescent_st"
+            android:textFontWeight="400" />
+    </LinearLayout>
+
+    <!-- board_meeti (Title) -->
+    <TextView
+        android:id="@+id/board_meeti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="1sp"
+        android:maxLines="3"
+        android:text="@string/board_meeti"
+        android:textAppearance="@style/board_meeti"
+        android:textFontWeight="600" />
+
+    <!-- mar_2025_12 (Date) -->
+    <TextView
+        android:id="@+id/mar_2025_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/mar_2025_12"
+        android:textAppearance="@style/mar_2025_12"
+        android:textFontWeight="500" />
+
+</LinearLayout>

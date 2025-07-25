@@ -6,11 +6,13 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.ui.unit.TextUnit
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -94,7 +96,7 @@ class NotificationActivity : BaseActivity() {
                         notificationList.visibility = View.VISIBLE
                         loader.visibility = View.GONE
                         binding.notificationList.adapter=NotificationAdapter(result.data?.toList()?: emptyList(),{
-                            if(it.mainAnnIDRef!=null && it.announcementTypeName?.isNotBlank()?:true){
+                            if(!TextUtils.isEmpty(it.mainAnnIDRef.toString()) && it.announcementTypeName?.isNotBlank()?:true){
                             val intent= Intent(this@NotificationActivity,NotificationDetailActivity::class.java)
                             intent.putExtra(AppConstants.ID_REF,it.mainAnnIDRef)
                             intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.announcementTypeName)

@@ -95,8 +95,8 @@ class NotificationAdapter(private val itemList: List<NotificationDto>,private va
                 }
 
                 boardMeeti.text = item.mainAnnHeading
-                boardMeetings.setCardBackgroundColor(getTypeBackgroundColor(binding.root.context,item.announcementTypeName))
-                labelText.setTextColor(getTypeFontColor(binding.root.context,item.announcementTypeName))
+                boardMeetings.setCardBackgroundColor(getTypeBackgroundColor(binding.root.context,item.announcementTypeName?:""))
+                labelText.setTextColor(getTypeFontColor(binding.root.context,item.announcementTypeName?:""))
 
                 labelText.text = item.announcementTypeName
                 var isExpanded = false

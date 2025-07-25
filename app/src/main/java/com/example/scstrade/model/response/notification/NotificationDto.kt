@@ -5,33 +5,33 @@ import com.google.gson.annotations.SerializedName
 
 data class NotificationDto(
     @SerializedName("AnnouncementTypeName")
-    val announcementTypeName: String,
+    val announcementTypeName: String?,
     @SerializedName("company_code")
-    val companyCode: String,
+    val companyCode: String?,
     @SerializedName("company_name")
-    val companyName: String,
+    val companyName: String?,
     @SerializedName("MainAnnCompany")
-    val mainAnnCompany: String,
+    val mainAnnCompany: String?,
     @SerializedName("MainAnnDate")
-    val mainAnnDate: String,
+    val mainAnnDate: String?,
     @SerializedName("MainAnnDesc")
-    val mainAnnDesc: String,
+    val mainAnnDesc: String?,
     @SerializedName("MainAnnDetails")
-    val mainAnnDetails: String,
+    val mainAnnDetails: String?,
     @SerializedName("MainAnnHeading")
-    val mainAnnHeading: String,
+    val mainAnnHeading: String?,
     @SerializedName("MainAnnID")
-    val mainAnnID: Int,
+    val mainAnnID: Int?,
     @SerializedName("MainAnnIDRef")
-    val mainAnnIDRef: Int,
+    val mainAnnIDRef: Int?,
     @SerializedName("MainAnnLinkIMG")
-    val mainAnnLinkIMG: String,
+    val mainAnnLinkIMG: String?,
     @SerializedName("MainAnnLinkPDF")
-    val mainAnnLinkPDF: String,
+    val mainAnnLinkPDF: String?,
     @SerializedName("MainAnnSource")
-    val mainAnnSource: String,
+    val mainAnnSource: String?,
     @SerializedName("MainAnnStatus")
-    val mainAnnStatus: Boolean,
+    val mainAnnStatus: Boolean?,
     @SerializedName("MainAnnType")
-    val mainAnnType: Int
+    val mainAnnType: Int?
 )

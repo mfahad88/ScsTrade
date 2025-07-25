@@ -38,6 +38,7 @@ import com.example.scstrade.views.market.MarketFragment
 import com.example.scstrade.views.news.NewsFragment
 import com.example.scstrade.views.portfolio.activities.PortfolioActivity
 import com.example.scstrade.views.profile.ProfileActivity
+import com.example.scstrade.views.reports.ReportActivity
 import com.example.scstrade.views.settings.SettingsActivity
 import com.example.scstrade.views.stockscreener.StockScreenerActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
@@ -258,6 +259,7 @@ class LandingFragment : Fragment() {
             KeyDescValue("Technical",null,R.drawable.side_technical),*/
 //            KeyDescValue("SCS Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),
+            KeyDescValue("Research Reports",null,R.drawable.side_news),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
         binding.contact.setOnClickListener {
@@ -303,7 +305,13 @@ class LandingFragment : Fragment() {
                     Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
                     Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())
-                }/*else if(keyDescValue.key?.equals("technical",true)?:false){
+                }else if (keyDescValue.key?.equals("Research Reports",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
+                    val intent = Intent(requireContext(), ReportActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+                }
+                /*else if(keyDescValue.key?.equals("technical",true)?:false){
 
                     val intent = Intent(requireContext(), TechnicalsFragment::class.java)
                     startActivity(intent)

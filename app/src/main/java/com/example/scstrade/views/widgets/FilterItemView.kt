@@ -183,7 +183,7 @@ class FilterItemView @JvmOverloads constructor(
      * Display average for the field
      */
     fun setAverage(avg: Double) {
-        binding.tvAvg.text = "Avg: ${String.format("%,.2f", avg)}"
+//        binding.tvAvg.text = "Avg: ${String.format("%,.2f", avg)}"
     }
 
     /**

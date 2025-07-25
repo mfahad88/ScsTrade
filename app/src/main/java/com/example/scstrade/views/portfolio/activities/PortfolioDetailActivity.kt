@@ -204,7 +204,7 @@ class PortfolioDetailActivity : BaseActivity() {
                     binding.apply {
                         loader.visibility = View.GONE
 
-                        val stockItem = sharedViewModel.mutableAllData.value?.data
+                        val stockItem = sharedViewModel.mutableAllData.value?.data?: emptyList()
                         val data = result.data
                         if(data!=null){
                             val currentMarketValue=data.fifoPortfolio.sumOf {res-> res.quantity.toDouble().times(stockItem?.firstOrNull { it.sYM.equals(res.symbol,true) }?.cL?:0.0) }

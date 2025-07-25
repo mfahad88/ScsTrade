@@ -30,6 +30,8 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.researchreport.ResearchReportItem
+import com.example.scstrade.model.response.researchreport.ResearchReportList
 import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.ResultYearQuarter
@@ -99,6 +101,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableResultIndices= MutableLiveData<Resource<ResultIndices>>()
     val mutableCompanyDetail = MutableLiveData<Resource<List<CompanyDetailItem>>>()
     val mutableSnapTechnical = MutableLiveData<Resource<JsonElement>>()
+    val mutableReportList = MutableLiveData<Resource<List<ResearchReportList>>>()
+    val mutableReportDetails = MutableLiveData<Resource<List<ResearchReportItem>>>()
     fun fetchAllData(){
         viewModelScope.launch(Dispatchers.Default) {
             if(isConnected.value==true) {
@@ -321,6 +325,30 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
                 withContext(Dispatchers.Main){
                     mutableNews.value = result
+                }
+            }
+        }
+    }
+
+    fun researchReportList(){
+        mutableReportList.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.researchReportList()
+                withContext(Dispatchers.Main){
+                    mutableReportList.value = result
+                }
+            }
+        }
+    }
+
+    fun researchReport(type: String){
+        mutableReportDetails.value = Resource.Loading()
+        if(isConnected.value == true){
+            viewModelScope.launch (Dispatchers.IO){
+                val result = repository.researchReport(type)
+                withContext(Dispatchers.Main){
+                    mutableReportDetails.value = result
                 }
             }
         }

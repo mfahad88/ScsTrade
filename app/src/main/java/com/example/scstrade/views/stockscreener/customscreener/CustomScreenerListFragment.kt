@@ -1,12 +1,15 @@
 package com.example.scstrade.views.stockscreener.customscreener
 
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -34,8 +37,6 @@ class CustomScreenerListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCustomScreenerListBinding.inflate(inflater,container,false)
-//
-//        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         viewModel = (requireActivity() as StockScreenerActivity).viewModel
         sharedViewModel=(requireActivity().application as MyApp).viewModel
         ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView) { view, insets ->
@@ -48,6 +49,7 @@ class CustomScreenerListFragment : Fragment() {
 
             insets
         }
+
         setupRecyclerView()
         viewModel.mutableFiltered.observe(viewLifecycleOwner, Observer { result->
             val stockListWithEmptyRow = emptyList<StockScreenerItem>() + result

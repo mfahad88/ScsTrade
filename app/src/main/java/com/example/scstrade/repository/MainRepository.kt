@@ -28,6 +28,8 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.researchreport.ResearchReportItem
+import com.example.scstrade.model.response.researchreport.ResearchReportList
 import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -172,6 +174,22 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         }
     }
 
+    suspend fun researchReportList(): Resource<List<ResearchReportList>>{
+        try {
+           return Resource.Success(apiService.researchReportList())
+        }catch (e:Exception){
+            return Resource.Error(e.message?:"An error occurred",null)
+        }
+    }
+
+    suspend fun researchReport(type: String):Resource<List<ResearchReportItem>> {
+        try {
+            return Resource.Success(apiService.researchReport(type))
+        } catch (e: Exception) {
+            return Resource.Error(e.message ?: "An error occurred", null)
+
+        }
+    }
 
 
     suspend fun newsTribune() : Resource<RssFeed> {

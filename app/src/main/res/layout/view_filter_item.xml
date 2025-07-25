@@ -3,28 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@drawable/stock_card"
-        android:padding="7dp"
-        >
+        android:padding="7dp">
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:text="Share Price"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!-- Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
 
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Share Price"
+                android:textFontWeight="500"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result: 32"
+                android:textFontWeight="500"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <!-- Input Row -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:gravity="center_vertical"
-            android:layout_marginTop="4dp"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:layout_marginTop="4dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
@@ -32,87 +51,53 @@
                 android:layout_weight="1.5"
                 app:cardCornerRadius="5dp"
                 app:contentPaddingLeft="7dp"
-                app:cardBackgroundColor="@color/white"
-                app:contentPaddingRight="7dp">
+                app:contentPaddingRight="7dp"
+                app:cardBackgroundColor="@color/white">
                 <Spinner
                     android:id="@+id/spinnerOperator"
                     android:layout_width="match_parent"
-                    android:entries="@array/screener_array"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:entries="@array/screener_array" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="5dp"
-                android:id="@+id/cardMin"
-                app:cardBackgroundColor="@color/white"
                 android:layout_marginStart="5dp"
+                android:layout_weight="0.75"
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/white"
                 app:contentPaddingLeft="7dp"
-                app:contentPaddingRight="7dp"
-                android:layout_weight="0.75">
+                app:contentPaddingRight="7dp">
                 <EditText
                     android:id="@+id/etMin"
                     android:hint="Min"
-                    android:inputType="numberSigned|numberDecimal"
+                    android:inputType="numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null" />
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMax"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:id="@+id/cardMax"
+                android:layout_weight="0.75"
+                app:cardCornerRadius="5dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="7dp"
-                app:contentPaddingLeft="5dp"
-                app:contentPaddingRight="7dp"
-                android:layout_weight="0.75">
+                app:contentPaddingLeft="7dp"
+                app:contentPaddingRight="7dp">
                 <EditText
                     android:id="@+id/etMax"
                     android:hint="Max"
-                    android:inputType="numberSigned|numberDecimal"
+                    android:inputType="numberDecimal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null" />
             </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-
-            <TextView
-                android:id="@+id/tvAvg"
-                android:text="Avg: 0.0"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#666666" />
-
-            <TextView
-                android:id="@+id/tvResult"
-                android:text="Result: 0"
-                android:textSize="12sp"
-                android:layout_marginStart="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#666666" />
         </LinearLayout>
     </LinearLayout>
-    <!--<com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contentPadding="4dp"
-        app:strokeWidth="0dp"
-        app:cardCornerRadius="7dp"
-        app:cardBackgroundColor="@color/neutral_90">
-
-    </com.google.android.material.card.MaterialCardView>-->
 </merge>
+

@@ -27,7 +27,7 @@ class NotificationViewModel(application: Application): AndroidViewModel(applicat
     fun insertNotification(notifications:List<NotificationDto>){
         viewModelScope.launch {
             db.notificationDao().insertAll(
-                notifications.map { NotificationEntity(it.mainAnnID,"${it.mainAnnHeading} - ${it.announcementTypeName}",it.mainAnnDetails,it.mainAnnDate,it.mainAnnIDRef,it.announcementTypeName,false) }.toList()
+                notifications.map { NotificationEntity(it.mainAnnID?:-1,"${it.mainAnnHeading} - ${it.announcementTypeName}",it.mainAnnDetails,it.mainAnnDate,it.mainAnnIDRef,it.announcementTypeName,false) }.toList()
             )
         }
     }

@@ -1450,6 +1450,7 @@
         <item name="hintTextColor">@color/black</item>
     </style>
     <style name="CustomTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxCollapsedPaddingTop">0dp</item>
         <item name="boxStrokeColor">@color/md_theme_onSurfaceVariant</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="boxStrokeWidthFocused">3dp</item>
@@ -1749,7 +1750,7 @@
 
     <style name="RowField">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">@dimen/dp_100</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:paddingHorizontal">8dp</item>
         <item name="android:gravity">center_vertical|end</item>

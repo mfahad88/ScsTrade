@@ -23,9 +23,10 @@ class StockScreenerActivity : BaseActivity() {
     lateinit var binding:ActivityStockScreenerBinding
     lateinit var viewModel: StockScreenerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(this)[StockScreenerViewModel::class.java]
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        viewModel = ViewModelProvider(this)[StockScreenerViewModel::class.java]
         setEdgeToEdgeWithWhiteIcons(this)
         binding = ActivityStockScreenerBinding.inflate(LayoutInflater.from(this))
         binding.toolbar.binding.market.text = getString(R.string.stock_screener)
@@ -160,4 +161,5 @@ class StockScreenerActivity : BaseActivity() {
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }
+
 }

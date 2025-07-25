@@ -42,6 +42,8 @@ import com.example.scstrade.model.response.portfolio.PortfolioDetailItem
 import com.example.scstrade.model.response.portfolio.PortfolioDetails
 import com.example.scstrade.model.response.portfolio.PortfolioItem
 import com.example.scstrade.model.response.portfolio.PortfolioItemDetail
+import com.example.scstrade.model.response.researchreport.ResearchReportItem
+import com.example.scstrade.model.response.researchreport.ResearchReportList
 import com.example.scstrade.model.response.snapshot.CompanyDetailItem
 import com.example.scstrade.model.response.snapshot.Overview
 import com.example.scstrade.model.response.snapshot.chart.Charting
@@ -316,6 +318,13 @@ interface ApiService {
 
     @GET(value = "/SnapTechnical")
     suspend fun snapTechnical(@Query("symbol")symbol: String):JsonElement
+
+    @GET(value ="/researchreports" )
+    suspend fun researchReportList(@Query("type")type:String="List"):List<ResearchReportList>
+
+    @GET(value ="/researchreports")
+    suspend fun researchReport(@Query("type")type:String):List<ResearchReportItem>
+
 
     /////////////////////////////////AOF///////////////////////////////////////
 /*    @POST(value="api/register")

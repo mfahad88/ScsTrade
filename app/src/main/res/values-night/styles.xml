@@ -1434,6 +1434,7 @@
         <item name="boxStrokeColor">@color/md_theme_onSurfaceVariant</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="boxStrokeWidthFocused">3dp</item>
+        <item name="boxCollapsedPaddingTop">0dp</item>
     </style>
     <style name="preferences">
         <item name="android:fontFamily">@font/custom_font</item>
