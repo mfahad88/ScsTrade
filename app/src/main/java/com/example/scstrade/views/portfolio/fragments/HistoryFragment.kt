@@ -104,7 +104,10 @@ class HistoryFragment : Fragment() {
                 is Resource.Error -> {
                     Utils.showError(requireView(),res.message)
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                    binding.mainContainer.visibility = View.GONE
+                }
                 is Resource.Success ->
                 {
                     if(!res.data?.closeTrades?.filter { it.symbol.equals(stockDetailActivity.symbol,true) }?.toList().isNullOrEmpty()){

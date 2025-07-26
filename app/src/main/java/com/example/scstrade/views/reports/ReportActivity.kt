@@ -10,6 +10,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -20,6 +22,7 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.widgets.HorizontalDivider
 import com.example.scstrade.views.widgets.SideBarDivider
 
 class ReportActivity : AppCompatActivity() {
@@ -29,6 +32,7 @@ class ReportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportBinding.inflate(LayoutInflater.from(this))
+        binding.toolbar.binding.market.text="Research Reports"
         sharedViewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -109,7 +113,8 @@ class ReportActivity : AppCompatActivity() {
     private fun setupRecyclerview() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(SideBarDivider(dividerColor = Color.parseColor("#B3C6C6CD"), marginEnd = 80))
+            addItemDecoration(HorizontalDivider(15.dp))
+//            addItemDecoration(SideBarDivider(dividerColor = Color.parseColor("#B3C6C6CD"), marginEnd = 0))
         }
     }
 

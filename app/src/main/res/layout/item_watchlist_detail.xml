@@ -461,7 +461,7 @@
             android:layout_height="@dimen/dp_27"
             android:layout_marginEnd="@dimen/dp_16"
             android:padding="@dimen/dp_5"
-            app:tint="#484646"
+            app:tint="@color/md_theme_outline"
             android:src="@drawable/baseline_delete_24"
             app:layout_constraintBottom_toBottomOf="@+id/frameValueTrade"
             app:layout_constraintEnd_toEndOf="parent"

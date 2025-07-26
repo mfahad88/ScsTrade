@@ -21,6 +21,7 @@ class HorizontalDivider(private val verticalSpaceHeight: Dp): RecyclerView.ItemD
         super.getItemOffsets(outRect, view, parent, state)
 
         if (parent.getChildAdapterPosition(view) != parent.adapter?.itemCount?.minus(1)) {
+//            outRect.top = verticalSpaceHeight.value.toInt()
             outRect.bottom = verticalSpaceHeight.value.toInt()
         }
     }

@@ -16,19 +16,26 @@ import java.util.Collections
 
 class SymbolAdapter(private val itemList: List<StockItem>, private val onItemClick: (StockItem) -> Unit) : RecyclerView.Adapter<SymbolAdapter.SymbolViewHolder>() {
     private var filterList=ArrayList<StockItem>()
-    class SymbolViewHolder(private val binding: ItemSymbolBinding) : RecyclerView.ViewHolder(binding.root) {
+    private val selectedItems = mutableSetOf<String>()
+    inner class SymbolViewHolder(private val binding: ItemSymbolBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: StockItem, onItemClick: (StockItem) -> Unit ) {
             binding.symbol.text=item.sYM
             binding.companyName.text = item.nM
             Utils.getCompanyLogo(binding.root.context,binding.imageView6,item)
+            if(selectedItems.contains(item.sYM)){
+                binding.imageViewSelected.visibility = View.VISIBLE
+            }else{
+                binding.imageViewSelected.visibility = View.INVISIBLE
+            }
 
             binding.main.setOnClickListener {
-                if(binding.imageViewSelected.visibility == View.INVISIBLE){
-                binding.imageViewSelected.visibility = View.VISIBLE
-
-                }else{
+                if (selectedItems.contains(item.sYM)) {
+                    selectedItems.remove(item.sYM)
                     binding.imageViewSelected.visibility = View.INVISIBLE
+                } else {
+                    selectedItems.add(item.sYM)
+                    binding.imageViewSelected.visibility = View.VISIBLE
                 }
                 onItemClick(item)
             }

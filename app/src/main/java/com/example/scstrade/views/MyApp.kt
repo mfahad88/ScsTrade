@@ -97,12 +97,12 @@ class MyApp : Application() {
                 delay(5000)
             }
         }
-        appScope.launch {
+        /*appScope.launch {
             while (isActive) {
                 Utils.logAppProfile(applicationContext)
                 delay(20_000)
             }
-        }
+        }*/
 
         CertificateHelper.printSHA1Fingerprint(this)
         registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{

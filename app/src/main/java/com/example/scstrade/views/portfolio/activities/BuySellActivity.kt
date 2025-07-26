@@ -266,7 +266,7 @@ class BuySellActivity : BaseActivity() {
 
 
                     if(!sym.isNullOrEmpty()){
-                        val stockItem =sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(sym) }?.first()
+                        val stockItem =sharedViewModel.mutableAllData.value?.data?.firstOrNull { it.sYM.equals(sym,true) }
                         val symb="${stockItem?.sYM}-${stockItem?.nM}"
                         portFolioViewModel.mutablePortfolioFinalDetailOnce.observe(this@BuySellActivity, Observer { result->
                                 when(result){
@@ -291,12 +291,12 @@ class BuySellActivity : BaseActivity() {
                                   )
                               }?.first()
                           val qty = v?.quantity?:0.0*/
-                        val askPrice = sharedViewModel.mutableAllData.value?.data?.filter {
+                        val askPrice = sharedViewModel.mutableAllData.value?.data?.firstOrNull {
                             it.sYM.equals(
                                 sym,
                                 true
                             )
-                        }?.map { it.aP }?.first()
+                        }?.aP
 
 
                         symbol.setText(symb)

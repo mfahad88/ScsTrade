@@ -244,7 +244,7 @@ class NewsFragment : Fragment() {
                         .align(Alignment.CenterStart)
 //                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Left", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp))
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), tint = colorResource(R.color.black), contentDescription = "Scroll Left", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp))
                 }
 
                 // Right scroll button
@@ -259,7 +259,7 @@ class NewsFragment : Fragment() {
                         .align(Alignment.CenterEnd)
 //                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "Scroll Right", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp).rotate(180f))
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), tint = colorResource(R.color.black), contentDescription = "Scroll Right", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp).rotate(180f))
                 }
                 /*Box(
                     Modifier

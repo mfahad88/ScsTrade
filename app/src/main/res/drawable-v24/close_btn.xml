@@ -4,7 +4,7 @@
 <item>
     <shape
         android:shape="oval">
-        <solid android:color="@color/md_theme_inverseOnSurface"/>
+        <solid android:color="#FCF8F8"/>
 
     </shape>
 </item>

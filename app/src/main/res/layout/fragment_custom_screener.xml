@@ -76,27 +76,7 @@
                     android:spinnerMode="dropdown" />-->
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Filter Cards -->
-            <!--<com.example.scstrade.views.widgets.FilterItemView
-                android:id="@+id/filterSharePrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:filterTitle="Share Price" />
 
-            <com.example.scstrade.views.widgets.FilterItemView
-                android:id="@+id/filterPE"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:filterTitle="Price To Earning" />
-
-            <com.example.scstrade.views.widgets.FilterItemView
-                android:id="@+id/filterExpectedPE"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:filterTitle="Expected Price To Earning" />-->
 
         </LinearLayout>
     </ScrollView>

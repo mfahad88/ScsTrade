@@ -743,6 +743,10 @@ class OverviewFragment : Fragment() {
             width = dimensionResource(R.dimen.dp_1).value.dp,
             color = Color(0xFFE5E2E1),
             shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
+        ).background(
+            color = colorResource(
+                id = R.color.md_theme_surfaceBright
+            )
         ).padding(horizontal = dimensionResource(R.dimen.dp_15).value.dp, vertical = dimensionResource(R.dimen.dp_10).value.dp)){
 
             Row(
@@ -754,11 +758,11 @@ class OverviewFragment : Fragment() {
                         color = Color(0xFFE5E2E1),
                         shape = RoundedCornerShape(dimensionResource(R.dimen.dp_6).value.dp)
                     )*/
-                    .background(
+                    /*.background(
                         color = colorResource(
                             id = R.color.md_theme_surfaceBright
                         )
-                    )
+                    )*/
                     .clickable {
                         expand = !expand
                     }

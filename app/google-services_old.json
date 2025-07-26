@@ -22,14 +22,6 @@
           }
         },
         {
-          "client_id": "134999720068-fq8pv3fhv71m17i6ko6clv2lpaohpq12.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.scstrade.scstradepro",
-            "certificate_hash": "ac986dc5c32ab4f3af5d2c0e47eafe63837d1288"
-          }
-        },
-        {
           "client_id": "134999720068-ocbdc272m5gjlo0popuqs9191mfcsbfs.apps.googleusercontent.com",
           "client_type": 3
         }

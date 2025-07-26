@@ -135,6 +135,12 @@ class CustomScreenerFragment : Fragment() {
         selectedFilters.forEach { title ->
             val filterView = FilterItemView(requireContext())
             filterView.setFilterTitle(title)
+            val layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            layoutParams.topMargin = resources.getDimensionPixelSize(R.dimen.dp_7)
+            filterView.layoutParams = layoutParams
             container.addView(filterView)
             filterViewsMap[title] = filterView
 

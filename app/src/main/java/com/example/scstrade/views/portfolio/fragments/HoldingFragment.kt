@@ -64,8 +64,16 @@ class HoldingFragment : Fragment() {
 
         portFolioViewModel.mutablePortfolioItemDetail.observe(viewLifecycleOwner,Observer{result->
             when(result){
-                is Resource.Error -> Utils.showError(requireView(),result.message)
-                is Resource.Loading -> {}
+                is Resource.Error -> {
+                    Utils.showError(requireView(),result.message)
+                    binding.loader.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.apply {
+                        loader.visibility = View.VISIBLE
+                        mainContainer.visibility = View.GONE
+                    }
+                }
                 is Resource.Success-> {
                     binding.apply {
                         loader.visibility = View.GONE

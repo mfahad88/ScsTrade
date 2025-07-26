@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemSectorBinding
+import com.example.scstrade.helper.AppConstants
+import com.example.scstrade.helper.Utils
 import java.util.Collections
 
 class SectorAdapter(private var itemList: List<String>, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<SectorAdapter.SectorViewHolder>() {
@@ -19,7 +21,10 @@ class SectorAdapter(private var itemList: List<String>, private val onItemClick:
 
         fun bind(item: String, onItemClick: (String) -> Unit) {
             binding.textView.text=item
-            if(item.equals("AUTOMOBILE ASSEMBLER",true)){	binding.imageView.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.automob_ass))
+            binding.imageView.setColorFilter(ContextCompat.getColor(binding.root.context,R.color.black))
+            if(item.equals("AUTOMOBILE ASSEMBLER",true)){
+                binding.imageView.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.automob_ass))
+
             }
             if(item.equals("AUTOMOBILE PARTS & ACCESSORIES",true)){	binding.imageView.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.	automob_parts))
             }
