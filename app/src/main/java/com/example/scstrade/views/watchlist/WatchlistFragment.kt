@@ -53,7 +53,7 @@ class WatchlistFragment : Fragment() {
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
             view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 if(Utils.getSmallestWidthDp(requireContext())<390) {
-                    bottomMargin = 270.dp.value.toInt() + insets.bottom
+                    bottomMargin = 150.dp.value.toInt() + insets.bottom
                 }else{
                     bottomMargin = 250.dp.value.toInt() + insets.bottom
                 }
