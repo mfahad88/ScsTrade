@@ -321,7 +321,7 @@ class TechnicalFragment : Fragment() {
 
 
                     val data = result.data
-                    if (data != null && !data.isJsonNull) {
+                    if (data != null && data.isJsonArray && data.asJsonArray.size() > 0) {
                         val obj = data.asJsonArray[0].asJsonObject
                         val excludeKeys = setOf("sector_name","company_code", "company_name", "company_id","Beta","1 Month Performance","3 Month Performance","6 Month Performance","1 Year Performance",
                             "52 Week High","52 Week Low","52 Week Volume")
@@ -390,6 +390,10 @@ class TechnicalFragment : Fragment() {
                             loader.visibility = View.GONE
                             main.visibility = View.VISIBLE
                         }
+                    }else {
+                        // ✅ No data available: show fallback
+                        binding.loader.visibility = View.GONE
+                        Utils.showError(binding.root, "No technical data available.")
                     }
 
 

@@ -156,10 +156,10 @@ class OverviewFragment : Fragment() {
 
 
                        Log.e("Result",result.data.toString())
-                       binding.onePecent.text = "${result.data?.oneMonthReturn}%"
-                       binding.threePecent.text = "${result.data?.twoMonthReturn}%"
-                       binding.sixPecent.text = "${result.data?.sixMonthReturn}%"
-                       binding.oneYrPecent.text = "${result.data?.twelveMonthReturn}%"
+                       binding.onePecent.text = "${safePercentage(result.data?.oneMonthReturn)}%"
+                       binding.threePecent.text = "${safePercentage(result.data?.twoMonthReturn)}%"
+                       binding.sixPecent.text = "${safePercentage(result.data?.sixMonthReturn)}%"
+                       binding.oneYrPecent.text = "${safePercentage(result.data?.twelveMonthReturn)}%"
                        binding.loader.visibility = View.GONE
                        binding.main.visibility = View.VISIBLE
                        binding.apply {
@@ -299,6 +299,14 @@ class OverviewFragment : Fragment() {
 
 //        populateBarChart(it)
         return binding.root
+    }
+
+    fun safePercentage(value: String?): String {
+        return if (value.isNullOrBlank()) {
+            "0.0"
+        } else {
+            value
+        }
     }
 
 

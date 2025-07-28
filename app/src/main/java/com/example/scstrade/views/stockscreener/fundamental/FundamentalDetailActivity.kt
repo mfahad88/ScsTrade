@@ -143,6 +143,21 @@ class FundamentalDetailActivity : BaseActivity() {
         sortAscending = if (currentSortColumn == index) !sortAscending else true
         currentSortColumn = index
 
+        val sortedList = if (sortAscending) {
+            originalList.sortedBy { it.getOrNull(index)?.trim().orEmpty().toDoubleOrNull() ?: 0.0 }
+        } else {
+            originalList.sortedByDescending { it.getOrNull(index)?.trim().orEmpty().toDoubleOrNull() ?: 0.0 }
+        }
+
+        resultList = sortedList.toMutableList()
+        adapter.submitList(resultList.toList())
+
+        sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
+        val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
+        sortIcons.getOrNull(index)?.setImageResource(iconRes)
+       /* sortAscending = if (currentSortColumn == index) !sortAscending else true
+        currentSortColumn = index
+
         // Perform sorting
         val sortedList = originalList.sortedWith(compareBy {
             it.getOrNull(index)?.let { value -> value.toDoubleOrNull() ?: value }
@@ -158,7 +173,7 @@ class FundamentalDetailActivity : BaseActivity() {
 
         // Set current icon based on sort direction
         val iconRes = if (sortAscending) R.drawable.ic_sort_down else R.drawable.ic_sort_up
-        sortIcons.getOrNull(index)?.setImageResource(iconRes)
+        sortIcons.getOrNull(index)?.setImageResource(iconRes)*/
     }
 
     override fun getResources(): Resources {

@@ -66,6 +66,11 @@ class DetailQuoteActivity : BaseActivity() {
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Detail Quote"
         Utils.setEdgeToEdgeWithWhiteIcons(this)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         binding.searchText.addTextChangedListener {
             val search=it.toString()
             lifecycleScope.launch {

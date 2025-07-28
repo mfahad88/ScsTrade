@@ -19,10 +19,9 @@
             android:id="@+id/textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text"
-
             android:imeOptions="actionDone"
-            />
+
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/supporting_"

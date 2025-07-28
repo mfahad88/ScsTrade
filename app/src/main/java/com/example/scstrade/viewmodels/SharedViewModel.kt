@@ -110,6 +110,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 val result = repository.fetchAllData("AllData")
                 val result1 = repository.fetchAllData("FutureData")
 
+                Log.e("AllData",result.data.toString())
                 withContext(Dispatchers.Main) {
                     mutableTopPicks.postValue(result2)
                     mutableAllData.postValue(result)

@@ -952,6 +952,15 @@ class Utils {
             })
         }
 
+        fun showNeutral(view: View,message:String){
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(Color.parseColor("#1C1C1C"))
+                .setTextColor(
+                    Color.parseColor("#FFFFFF")
+                )
+                .show()
+        }
+
         fun showSuccess(view: View,message:String){
             if(isDarkMode(view.context)){
                 Snackbar.make(view, message, Snackbar.LENGTH_SHORT)

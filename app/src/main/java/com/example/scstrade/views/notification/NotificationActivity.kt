@@ -45,10 +45,13 @@ class NotificationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         binding = ActivityNotificaionBinding.inflate(LayoutInflater.from(this))
         sharedViewModel = (this.application as MyApp).viewModel
         setContentView(binding.root)
+        Utils.setEdgeToEdgeWithWhiteIcons(this@NotificationActivity)
         sharedViewModel.notification()
+
         // binding.toolbar.toggleToolbar(false)
         binding.toolbar.binding.market.text = "Notification"
 

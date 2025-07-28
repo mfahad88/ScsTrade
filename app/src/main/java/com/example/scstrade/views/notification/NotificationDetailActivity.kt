@@ -42,8 +42,8 @@ class NotificationDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityNotificationDetailBinding.inflate(LayoutInflater.from(this))
-        Utils.setEdgeToEdgeWithWhiteIcons(this)
         sharedViewModel = (application as MyApp).viewModel
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -73,7 +73,7 @@ class NotificationDetailActivity : BaseActivity() {
 
         enableEdgeToEdge()
         setContentView(binding.root)
-
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         announcmentType = intent.getStringExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME)
         idRef = intent.getIntExtra(AppConstants.ID_REF, -1)
 

@@ -63,7 +63,7 @@ public class MarketValueView extends LinearLayout {
                 }
             }else{
                 setBackgroundResource(R.drawable.bg_market_normal);
-                tvValue.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                tvValue.setTextColor(ContextCompat.getColor(getContext(), R.color.tvValue));
             }
 
             tvValue.addTextChangedListener(new TextWatcher() {

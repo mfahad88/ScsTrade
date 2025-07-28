@@ -213,4 +213,10 @@
     <color name="success_green">#4CAF50</color>
     <color name="error_red">#F44336</color>
     <color name="announcement_type">#625B71</color>
+    <color name="market_positive">#E0FFE0</color>
+    <color name="market_negative">#FFCDD2</color>
+    <color name="market_normal_stroke">#CCCCCC</color>
+    <color name="market_normal">#F9F5F4</color>
+    <color name="tvTitle">#8C8C8C</color>
+    <color name="tvValue">#000000</color>
 </resources>

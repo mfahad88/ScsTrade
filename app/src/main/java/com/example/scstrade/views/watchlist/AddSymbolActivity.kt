@@ -196,6 +196,9 @@ class AddSymbolActivity : BaseActivity() {
                     }else {
                         myList.add(res.sYM)
                     }
+                    binding.symbol.text=""
+                    Utils.closeKeyboard(this@AddSymbolActivity)
+                    binding.recyclerView.smoothScrollToPosition(0)
 //                    viewModel.getWatchListDetail(sharedViewModel,selectedItem)
 
                 }

@@ -27,6 +27,12 @@ object RetrofitInstance {
         val cacheSize = 10L * 1024 * 1024 // 10 MB
         val cacheDir = File(context.cacheDir, "http_cache")
         val cache = Cache(cacheDir, cacheSize)
+        val gson = GsonBuilder()
+//            .registerTypeAdapter(String::class.java, StringAdapter())
+            .registerTypeAdapter(Int::class.java, IntAdapter())
+            .registerTypeAdapter(Float::class.java, FloatAdapter())
+            .registerTypeAdapter(Double::class.java, DoubleAdapter())
+            .create()
         val chuckerInterceptor = ChuckerInterceptor.Builder(context)
             .collector(ChuckerCollector(context))
             .maxContentLength(250_000L)
@@ -38,6 +44,7 @@ object RetrofitInstance {
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(120, TimeUnit.SECONDS)
+
 //            .addInterceptor(chuckerInterceptor)
             .addInterceptor(AuthInterceptor(context))
             .addInterceptor(provideOfflineCacheInterceptor(context))
@@ -46,7 +53,7 @@ object RetrofitInstance {
 
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
     }

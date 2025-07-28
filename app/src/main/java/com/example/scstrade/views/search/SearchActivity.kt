@@ -70,7 +70,11 @@ class SearchActivity : BaseActivity() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.searchText, InputMethodManager.SHOW_IMPLICIT)
         }
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         sharedViewModel = (this.application as MyApp).viewModel
 
         setContentView(binding.root)

@@ -12,7 +12,7 @@ import com.example.scstrade.model.response.stock.StockItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import kotlin.math.roundToInt
 
-class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*/
+/*class ShareInHandAdapter(*//*private var itemList:List<FifoPortfolio>,private var list:List<StockItem>*//*
                          private val sharedViewModel: SharedViewModel,
                          private val onItemClick: (FifoPortfolio) -> Unit,
                          private val onItemClickSnapshot: (FifoPortfolio) -> Unit,
@@ -90,4 +90,73 @@ class ShareInHandAdapter(/*private var itemList:List<FifoPortfolio>,private var 
 
 
 
+}*/
+class ShareInHandAdapter(
+    private val onItemClick: (FifoPortfolio) -> Unit,
+    private val onItemClickSnapshot: (FifoPortfolio) -> Unit,
+    private val onItemClickSell: (FifoPortfolio) -> Unit
+) : ListAdapter<FifoPortfolio, ShareInHandAdapter.ShareInHandViewHolder>(ShareInHandDiffCallback()) {
+
+    private var stockMap: Map<String, StockItem> = emptyMap()
+
+    fun updateStockMap(newMap: Map<String, StockItem>) {
+        stockMap = newMap
+        notifyDataSetChanged()
+    }
+
+    class ShareInHandDiffCallback : DiffUtil.ItemCallback<FifoPortfolio>() {
+        override fun areItemsTheSame(oldItem: FifoPortfolio, newItem: FifoPortfolio): Boolean {
+            return oldItem.portfolioMainID == newItem.portfolioMainID
+        }
+
+        override fun areContentsTheSame(oldItem: FifoPortfolio, newItem: FifoPortfolio): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    class ShareInHandViewHolder(private val binding: ItemMyPortfolioHoldingBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            item: FifoPortfolio,
+            stockItem: StockItem,
+            onItemClickSnapshot: (FifoPortfolio) -> Unit,
+            onItemClickSell: (FifoPortfolio) -> Unit
+        ) {
+            val marketValue = item.quantity.toDouble().times(stockItem.cL)
+            val totalCost = item.quantity.toDouble().times(item.price.toDouble())
+            val dayPL = item.quantity.toDouble().times(stockItem.cH)
+            val dayPLPercent = stockItem.cHP
+            val totalPL = marketValue - totalCost
+            val totPLPercent = totalPL.div(totalCost).times(100)
+
+            Utils.getCompanyLogo(binding.root.context, binding.imgLogo, stockItem)
+            binding.tvSymbol.text = item.symbol
+            binding.tvPrice.text = Utils.roundTwoDecimal(stockItem.cL)
+            binding.tvShares.text = item.quantity
+            binding.tvAvgBuy.text = String.format("%,.2f", item.price.toDouble())
+            binding.tvTotalCost.text = "%,d".format(totalCost.roundToInt())
+            binding.tvMarketValue.text = "%,d".format(marketValue.roundToInt())
+            binding.tvDayPL.text = "%,d".format(dayPL.roundToInt())
+            binding.tvDayPLPercent.text = "${Utils.roundTwoDecimal(dayPLPercent)}%"
+            binding.tvTotalPL.text = "%,d".format(totalPL.roundToInt())
+            binding.tvTotalPLPercent.text = "${Utils.roundTwoDecimal(totPLPercent)}%"
+            binding.tvPriceChange.text = "${stockItem.cH}"
+
+            binding.snapshot.setOnClickListener { onItemClickSnapshot(item) }
+            binding.sell.setOnClickListener { onItemClickSell(item) }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShareInHandViewHolder {
+        val binding = ItemMyPortfolioHoldingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ShareInHandViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ShareInHandViewHolder, position: Int) {
+        val item = getItem(position)
+        val stockItem = stockMap[item.symbol.lowercase()]
+        if (stockItem != null) {
+            holder.bind(item, stockItem, onItemClickSnapshot, onItemClickSell)
+            holder.itemView.setOnClickListener { onItemClick(item) }
+        }
+    }
 }

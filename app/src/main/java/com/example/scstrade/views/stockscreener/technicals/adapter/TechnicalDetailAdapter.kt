@@ -15,7 +15,7 @@ import java.util.Collections
 
 class TechnicalDetailAdapter(private val itemList: MutableList<Array<String>>, private val sharedViewModel: SharedViewModel, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<TechnicalDetailAdapter.TechnicalDetailViewHolder>() {
 
-    class TechnicalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+   inner class TechnicalDetailViewHolder(private val binding: ItemTechnicalDetailBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Array<String>,sharedViewModel: SharedViewModel, onItemClick: (String) -> Unit) {
             binding.apply {
@@ -26,7 +26,7 @@ class TechnicalDetailAdapter(private val itemList: MutableList<Array<String>>, p
                     R.color.md_theme_error)
                 )
                 price.text = item[2]
-                av.text = item[3]
+                av.text = formatDecimal(item[3])
                 companyName.text = item[4]
 
                 val logo=sharedViewModel.mutableAllData.value?.data?.filter { it.sYM.equals(item[0]) }?.first()
@@ -34,6 +34,11 @@ class TechnicalDetailAdapter(private val itemList: MutableList<Array<String>>, p
 
             }
             binding.root.setOnClickListener { onItemClick(item[0]) }
+        }
+        private fun formatDecimal(value: String?): String {
+            return value?.toDoubleOrNull()?.let {
+                String.format("%,.2f", it)
+            } ?: (value ?: "-")
         }
     }
 

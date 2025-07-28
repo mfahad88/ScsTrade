@@ -1,7 +1,7 @@
 <resources>
 <!--    <color name="md_theme_primary">#2DE500</color>-->
 <!--    <color name="md_theme_primary">@color/md_theme_secondaryFixedDim</color>-->
-    <color name="md_theme_primary">#69C74D</color>
+    <color name="md_theme_primary">#64BD49</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_toolbar">#141313</color>
 <!--    <color name="md_theme_primaryContainer">#40A829</color>-->
@@ -19,7 +19,8 @@
     <!--<color name="md_theme_error">@color/md_theme_errorContainer</color>
     <color name="md_theme_onError">#910000</color>
     <color name="md_theme_errorContainer">#910000</color>-->
-    <color name="md_theme_error">#E7544C</color>
+    <color name="md_theme_error">#DA5048</color>
+<!--    <color name="md_theme_error">#E7544C</color>-->
     <color name="md_theme_onError">#E7544C</color>
     <color name="md_theme_errorContainer">#E7544C</color>
     <color name="md_theme_onErrorContainer">#FF9787</color>
@@ -212,4 +213,10 @@
     <color name="type_other_fg">#CCFF9800</color>
     <color name="type_default_fg">#000000</color>
     <color name="announcement_type">@color/md_theme_outlineVariant</color>
+    <color name="market_positive">@color/md_theme_onPrimaryContainer</color>
+    <color name="market_negative">#400000</color>
+    <color name="market_normal_stroke">#333333</color>
+    <color name="market_normal">#1E1E1E</color>
+    <color name="tvTitle">#CCCCCC</color>
+    <color name="tvValue">#F2F2F2</color>
 </resources>

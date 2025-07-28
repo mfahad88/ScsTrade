@@ -5,31 +5,31 @@ import com.google.gson.annotations.SerializedName
 
 data class BalanceSheetDataItem(
     @SerializedName("Cash")
-    val cash: Double,
+    val cash: Double?,
     @SerializedName("company_name")
-    val companyName: String,
+    val companyName: String?,
     @SerializedName("Current Asset")
-    val currentAsset: Double,
+    val currentAsset: Double?,
     @SerializedName("Current Liability")
-    val currentLiability: Double,
+    val currentLiability: Double?,
     @SerializedName("Fixed Asset")
-    val fixedAsset: Double,
+    val fixedAsset: Double?,
     @SerializedName("Fixed Liability")
-    val fixedLiability: Double,
+    val fixedLiability: Double?,
     @SerializedName("Inventory")
-    val inventory: Double,
+    val inventory: Double?,
     @SerializedName("Investments")
-    val investments: Double,
+    val investments: Double?,
     @SerializedName("Paid Up Capital")
-    val paidUpCapital: Double,
+    val paidUpCapital: Double?,
     @SerializedName("quarter_name")
-    val quarterName: String,
+    val quarterName: String?,
     @SerializedName("Total Assets")
-    val totalAssets: Double,
+    val totalAssets: Double?,
     @SerializedName("Total Equity")
-    val totalEquity: Double,
+    val totalEquity: Double?,
     @SerializedName("Total Liabilities")
-    val totalLiabilities: Double,
+    val totalLiabilities: Double?,
     @SerializedName("Year")
-    val year: String
+    val year: String?
 )

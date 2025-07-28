@@ -130,7 +130,7 @@
                     app:layout_constraintTop_toBottomOf="@id/title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:itemCount="1"
+                    tools:itemCount="10"
                     tools:listitem="@layout/item_my_portfolio_holding" />
 
                 <TextView
@@ -175,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:constraint_referenced_ids="title,subTitle,current_market,portfolio_cost,day_s_p_l_holding,total_p_l_holding,recyclerView"
-                    tools:visibility="gone" />
+                    tools:visibility="visible" />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/groupHistory"
