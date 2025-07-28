@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/sideMenu"
-
+                        android:nestedScrollingEnabled="false"
                         tools:listitem="@layout/item_side_menu"
                         android:layout_below="@id/imageViewClose"
                         android:layout_marginTop="@dimen/dp_20"

@@ -1,9 +1,15 @@
 package com.example.scstrade.views.watchlist.adapter
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.view.HapticFeedbackConstants
 import androidx.compose.ui.res.dimensionResource
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -95,24 +101,36 @@ class SymbolAdapter(
             Utils.getCompanyLogo(binding.root.context, binding.imageView6, item)
 
             val isSelected = selectedItems.contains(item.sYM)
-            binding.imageViewSelected.setImageDrawable(
+            val iconView = binding.imageViewSelected
+            val context = iconView.context
+
+            // Set initial icon
+            iconView.setImageDrawable(
                 ContextCompat.getDrawable(
-                    binding.root.context,
+                    context,
                     if (isSelected) R.drawable.baseline_check_circle_24 else R.drawable.baseline_add_circle_outline_24
                 )
             )
 
             binding.main.setOnClickListener {
-                if (isSelected) {
+                val wasSelected = selectedItems.contains(item.sYM)
+
+                if (wasSelected) {
                     selectedItems.remove(item.sYM)
                     Utils.showNeutral(binding.root, "${item.sYM} removed from watchlist")
                 } else {
+                    val vibrator = binding.root.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
                     selectedItems.add(item.sYM)
                     Utils.showNeutral(binding.root, "${item.sYM} added to watchlist")
                 }
+
+                // Animate icon change
+                val iconRes = if (wasSelected) R.drawable.baseline_add_circle_outline_24 else R.drawable.baseline_check_circle_24
+                iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+
                 onItemClick(item)
-                // Re-filter to move selected items on top
-                filterList(null, null) // or pass current sector/symbol if tracked externally
+                filterList(null, null) // re-sort list
             }
         }
     }
@@ -140,9 +158,7 @@ class SymbolAdapter(
             }
         }
 
-        // Sort: selected items on top
         val sorted = filtered.sortedWith(compareByDescending { selectedItems.contains(it.sYM) })
-
         filterList.addAll(sorted)
         notifyDataSetChanged()
     }

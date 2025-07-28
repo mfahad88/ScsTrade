@@ -68,7 +68,7 @@ class DetailQuoteActivity : BaseActivity() {
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
         binding.searchText.addTextChangedListener {
@@ -114,6 +114,7 @@ class DetailQuoteActivity : BaseActivity() {
                         startActivity(intent)
                         finish()
                     }) {
+
                         Box (modifier = Modifier.weight(1f)){
                             Text(
                                 text = allData?.get(index)?.sYM?:"",

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
@@ -52,6 +53,8 @@ class LandingFragment : Fragment() {
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private val ROOT_FRAGMENT:String="Home"
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -355,6 +358,7 @@ class LandingFragment : Fragment() {
 
     override fun onResume() {
         fetchUser()
+
         super.onResume()
     }
 

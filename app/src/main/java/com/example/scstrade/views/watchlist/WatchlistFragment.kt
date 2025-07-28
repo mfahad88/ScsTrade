@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.FragmentWatchlistBinding
 import com.example.scstrade.helper.AppConstants
@@ -49,19 +50,37 @@ class WatchlistFragment : Fragment() {
 //            subTitle.text = "Watchlist"
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.buttonAdd) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                if(Utils.getSmallestWidthDp(requireContext())<390) {
-                    bottomMargin = 150.dp.value.toInt() + insets.bottom
-                }else{
-                    bottomMargin = 250.dp.value.toInt() + insets.bottom
-                }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout3) { view, windowInsets ->
+
+            // Get insets for navigation bar (bottom) and status bar (top)
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
+            (parentFragment as LandingFragment).binding.bottomNavigationView.post {
+                val navHeight = (parentFragment as LandingFragment).binding.bottomNavigationView.height
+                view.setPadding(
+                    view.paddingLeft,
+                    0,
+                    view.paddingRight,
+                    insets.bottom + navHeight
+                )
+
             }
+            // Apply as padding
+
+
+
             windowInsets
-           /* view.setPadding(0,0,0,insets.bottom+160)
-            windowInsets*/
         }
+        /*ViewCompat.setOnApplyWindowInsetsListener(binding.buttonAdd) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            if (Utils.getSmallestWidthDp(requireContext()) < 390) {
+                150.dp.value.toInt() + insets.bottom
+            } else {
+                250.dp.value.toInt() + insets.bottom
+            }
+
+            windowInsets
+        }*/
 
         binding.buttonAdd.setOnClickListener {
             val intent= Intent(requireContext(),AddSymbolActivity::class.java)

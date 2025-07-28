@@ -116,8 +116,12 @@ class NewsFragment : Fragment() {
             sharedViewModel.news()
         }
         ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
-            view.setPadding(0,insets.top,0,insets.bottom)
+            (parentFragment as LandingFragment).binding.bottomNavigationView.post {
+                val navHeight=(parentFragment as LandingFragment).binding.bottomNavigationView.height
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                view.setPadding(0,insets.top,0,navHeight)
+            }
+
             windowInsets
         }
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {

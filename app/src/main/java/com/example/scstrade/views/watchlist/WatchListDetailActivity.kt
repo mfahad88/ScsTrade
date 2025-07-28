@@ -59,7 +59,7 @@ class WatchListDetailActivity : BaseActivity() {
 
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
 
             view.setPadding(0,0,0,insets.bottom)
             windowInsets

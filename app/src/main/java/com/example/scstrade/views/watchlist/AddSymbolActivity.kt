@@ -1,4 +1,5 @@
 package com.example.scstrade.views.watchlist
+import android.content.Context
 import androidx.compose.ui.res.dimensionResource
 
 import android.content.Intent
@@ -6,10 +7,13 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
@@ -199,6 +203,7 @@ class AddSymbolActivity : BaseActivity() {
                     binding.symbol.text=""
                     Utils.closeKeyboard(this@AddSymbolActivity)
                     binding.recyclerView.smoothScrollToPosition(0)
+
 //                    viewModel.getWatchListDetail(sharedViewModel,selectedItem)
 
                 }
