@@ -17,17 +17,17 @@ import com.google.gson.annotations.SerializedName
 )
 data class ChartItem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val kseIndexId: Int,
+    val kseIndexId: Int?,
     @SerializedName("trading_close")
-    val tradingClose: Double,
+    val tradingClose: Double?,
     @SerializedName("trading_date")
-    val tradingDate: String,
+    val tradingDate: String?,
     @SerializedName("trading_high")
-    val tradingHigh: Double,
+    val tradingHigh: Double?,
     @SerializedName("trading_low")
-    val tradingLow: Double,
+    val tradingLow: Double?,
     @SerializedName("trading_open")
-    val tradingOpen: Double,
+    val tradingOpen: Double?,
     @SerializedName("trading_vol")
-    val tradingVol: Double
+    val tradingVol: Double?
 )

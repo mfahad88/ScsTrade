@@ -469,14 +469,14 @@ class HomeFragment : Fragment() {
                             if (isCandleSelected.value == true) {
                                 val candles = withContext(Dispatchers.Default) {
                                     data.takeLast(100).mapIndexed { index, it ->
-                                        CandleEntry(index.toFloat(), it.tradingHigh.toFloat(), it.tradingLow.toFloat(), it.tradingOpen.toFloat(), it.tradingClose.toFloat())
+                                        CandleEntry(index.toFloat(), it.tradingHigh?.toFloat()?:0f, it.tradingLow?.toFloat()?:0f, it.tradingOpen?.toFloat()?:0f, it.tradingClose?.toFloat()?:0f)
                                     }
                                 }
                                 binding.cardHome.candlestickChart.setCandleData(candles)
                             } else {
                                 val entries = withContext(Dispatchers.Default) {
                                     data.takeLast(100).mapIndexed { index, it ->
-                                        Entry(index.toFloat(), it.tradingHigh.toFloat())
+                                        Entry(index.toFloat(), it.tradingHigh?.toFloat()?:0f)
                                     }
                                 }
                                 binding.cardHome.lineChart.setEntries(entries, false, true)
@@ -492,7 +492,7 @@ class HomeFragment : Fragment() {
             if (result is Resource.Success) {
                 entries = result.data ?: emptyList()
                 if (entries.isNotEmpty() && homeViewModel.selectedIndex.value == null) {
-                    val defaultIndex = entries.firstOrNull { it.iNDEXCODE.contains("kse 100", true) }
+                    val defaultIndex = entries.firstOrNull { it.iNDEXCODE?.contains("kse 100", true)?:false }
                     defaultIndex?.let {
                         homeViewModel.setSelectedIndex(it)
                         homeViewModel.setSelectedCandle()
@@ -543,27 +543,27 @@ class HomeFragment : Fragment() {
 
     private fun updateIndexUI(kse: KSEIndices) {
         binding.cardHome.apply {
-            kmiallshr.text = kse.iNDEXCODE.replace("Index", "").replace("Share", "")
-            val current = kse.cURRENTINDEX.toDoubleOrNull() ?: 0.0
+            kmiallshr.text = kse.iNDEXCODE?.replace("Index", "")?.replace("Share", "")
+            val current = kse.cURRENTINDEX?.toDoubleOrNull() ?: 0.0
             val change = kse.nETCHANGE ?: "0.0"
             tradeValueView.text = Utils.convertToMillions(current)
             tradeValueView.drawable = if (change.contains("-")) AppCompatResources.getDrawable(requireContext(), R.drawable.drop_down)
             else AppCompatResources.getDrawable(requireContext(), R.drawable.drop_up)
             netChangeChip.setText(change, kse.preClose.toString())
             volumeChip.text = kse.vOLUMETRADED
-            highView.text = Utils.formatHighLow("H", kse.hIGHINDEX.toDoubleOrNull()?:0.0, kse.preClose)
-            lowView.text = Utils.formatHighLow("L", kse.lOWINDEX.toDoubleOrNull()?:0.0, kse.preClose)
+            highView.text = Utils.formatHighLow("H", kse.hIGHINDEX?.toDoubleOrNull()?:0.0, kse.preClose?:1.0)
+            lowView.text = Utils.formatHighLow("L", kse.lOWINDEX?.toDoubleOrNull()?:0.0, kse.preClose?:1.0)
         }
     }
 
     private fun showPopup(view: View) {
         val popupMenu = PopupMenu(requireContext(), view)
         entries.forEach {
-            popupMenu.menu.add(it.iNDEXCODE.replace("Index", "").replace("Share", ""))
+            popupMenu.menu.add(it.iNDEXCODE?.replace("Index", "")?.replace("Share", ""))
         }
         popupMenu.setOnMenuItemClickListener { menu ->
             val selected = viewModel.mutableIndices.value?.data?.firstOrNull {
-                it.iNDEXCODE.replace("Index", "").replace("Share", "").contains(menu.title.toString(), true)
+                it.iNDEXCODE?.replace("Index", "")?.replace("Share", "")?.contains(menu.title.toString(), true)?:false
             }
             if (selected != null) {
                 homeViewModel.setSelectedIndex(selected)

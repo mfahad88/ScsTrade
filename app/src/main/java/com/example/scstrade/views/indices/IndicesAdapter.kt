@@ -17,11 +17,11 @@ import java.util.Collections
 
 class IndicesAdapter(private var itemList: List<KSEIndices>,
                      private val onItemClick: (KSEIndices) -> Unit) : RecyclerView.Adapter<IndicesAdapter.ViewHolder>() {
-    private val previousIndices = mutableMapOf<String, Double>()
+    private val previousIndices = mutableMapOf<String?, Double>()
     inner class ViewHolder(private val binding: ItemGroupIndicesCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(kseIndices: KSEIndices, previousIndex: Double?) {
-            binding.kse100.text = kseIndices.iNDEXCODE.replace("Index","")
-            binding.indexValue.text = Utils.convertToMillions(kseIndices.cURRENTINDEX.toDouble())
+            binding.kse100.text = kseIndices.iNDEXCODE?.replace("Index","")
+            binding.indexValue.text = Utils.convertToMillions(kseIndices.cURRENTINDEX?.toDouble()?:0.0)
 //            binding.indexValue.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up,0)
 //            binding.indexValue.drawable= AppCompatResources.getDrawable(binding.root.context,if(kseIndices.nETCHANGE.contains("-")) R.drawable.drop_down else R.drawable.drop_up)
             binding.labelText.setText(kseIndices.nETCHANGE,kseIndices.preClose.toString())
@@ -44,65 +44,68 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
                     binding.cardIndexValue.setCardBackgroundColor(Color.TRANSPARENT)
                 },3000)
             }
-
-            if(kseIndices.hIGHINDEX.toDouble().minus(kseIndices.preClose)<0.0) {
+            val highIndex = kseIndices.hIGHINDEX?.toDoubleOrNull()
+            val preClose = kseIndices.preClose ?: 0.0
+            if(highIndex != null && (highIndex - preClose) < 0.0) {
                 binding.high.text =
-                    "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble() ?: 0.0)} ${
+                    "H: ${Utils.formatDouble(kseIndices.hIGHINDEX.toDouble() ?: 0.0)} ${
                         Utils.formatDouble(
-                            kseIndices?.hIGHINDEX?.toDouble()
-                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                            kseIndices.hIGHINDEX.toDouble()
+                                .minus(kseIndices.preClose ?: 0.0) ?: 0.0
                         )
                     } " +
                             "${
                                 Utils.formatDouble(
-                                    (kseIndices?.hIGHINDEX?.toDouble()
-                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                    (kseIndices.hIGHINDEX.toDouble()
+                                        .minus(kseIndices.preClose ?: 0.0))?.div(kseIndices.preClose ?: 1.0)
                                         ?.times(100) ?: 0.0
                                 )
                             }%"
             }else{
                 binding.high.text =
-                    "H: ${Utils.formatDouble(kseIndices?.hIGHINDEX?.toDouble() ?: 0.0)} +${
+                    "H: ${Utils.formatDouble(kseIndices.hIGHINDEX?.toDouble() ?: 0.0)} +${
                         Utils.formatDouble(
-                            kseIndices?.hIGHINDEX?.toDouble()
-                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                            kseIndices.hIGHINDEX?.toDouble()
+                                ?.minus(kseIndices.preClose ?: 0.0) ?: 0.0
                         )
                     } " +
                             "+${
                                 Utils.formatDouble(
-                                    (kseIndices?.hIGHINDEX?.toDouble()
-                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                    (kseIndices.hIGHINDEX?.toDouble()
+                                        ?.minus(kseIndices.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
                                         ?.times(100) ?: 0.0
                                 )
                             }%"
             }
-            if(kseIndices.lOWINDEX.toDouble().minus(kseIndices.preClose)<0.0) {
+            val lowIndex = kseIndices.lOWINDEX?.toDoubleOrNull()
+
+            if(lowIndex != null && (lowIndex - preClose) < 0.0) {
                 binding.l1167000.text =
-                    "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble() ?: 0.0)} ${
+                    "L: ${Utils.formatDouble(kseIndices.lOWINDEX.toDouble() ?: 0.0)} ${
                         Utils.formatDouble(
-                            kseIndices?.lOWINDEX?.toDouble()
-                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                            kseIndices.lOWINDEX.toDouble()
+                                .minus(kseIndices.preClose ?: 0.0) ?: 0.0
                         )
                     } " +
                             "${
                                 Utils.formatDouble(
-                                    (kseIndices?.lOWINDEX?.toDouble()
-                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
-                                        ?.times(100) ?: 0.0
+                                    (kseIndices.lOWINDEX.toDouble()
+                                        .minus(kseIndices.preClose ?: 0.0)).div(kseIndices.preClose ?: 1.0)
+                                        .times(100) ?: 0.0
                                 )
                             }%"
             }else{
                 binding.l1167000.text =
-                    "L: ${Utils.formatDouble(kseIndices?.lOWINDEX?.toDouble() ?: 0.0)} +${
+                    "L: ${Utils.formatDouble(kseIndices.lOWINDEX?.toDouble() ?: 0.0)} +${
                         Utils.formatDouble(
-                            kseIndices?.lOWINDEX?.toDouble()
-                                ?.minus(kseIndices?.preClose ?: 0.0) ?: 0.0
+                            kseIndices.lOWINDEX?.toDouble()
+                                ?.minus(kseIndices.preClose ?: 0.0) ?: 0.0
                         )
                     } " +
                             "+${
                                 Utils.formatDouble(
-                                    (kseIndices?.lOWINDEX?.toDouble()
-                                        ?.minus(kseIndices?.preClose ?: 0.0))?.div(kseIndices?.preClose ?: 1.0)
+                                    (kseIndices.lOWINDEX?.toDouble()
+                                        ?.minus(kseIndices.preClose ?: 0.0))?.div(kseIndices.preClose ?: 1.0)
                                         ?.times(100) ?: 0.0
                                 )
                             }%"
@@ -123,7 +126,7 @@ class IndicesAdapter(private var itemList: List<KSEIndices>,
         val item = itemList[position]
         val previousIndex=previousIndices[item.iNDEXCODE]
         holder.bind(item,previousIndex)
-        previousIndices[item.iNDEXCODE] = item.cURRENTINDEX.toDouble()
+        previousIndices[item.iNDEXCODE] = item.cURRENTINDEX?.toDouble()?:0.0
     }
     public fun addItem(itemList: List<KSEIndices>){
         this.itemList = itemList

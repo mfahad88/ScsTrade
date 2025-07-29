@@ -299,14 +299,14 @@ class TechnicalFragment : Fragment() {
                     val candleEntry:ArrayList<CandleEntry>?= ArrayList()
                     result.data?.reversed()?.forEachIndexed { index, it ->
                         candleEntry?.add(
-                            CandleEntry(index.toFloat(), it.tradingHigh.toFloat(),it.tradingLow.toFloat(),it.tradingOpen.toFloat(),it.tradingClose.toFloat())
+                            CandleEntry(index.toFloat(), it.tradingHigh?.toFloat()?:0f,it.tradingLow?.toFloat()?:0f,it.tradingOpen?.toFloat()?:0f,it.tradingClose?.toFloat()?:0f)
                         )
                     }
                     binding.candlestickChart.setCandleData(candleEntry?: emptyList())
 
                     binding.lineChart.setEntries(result.data?.reversed()?.map {
                         interval+=1
-                        Entry(interval.toFloat(),it.tradingHigh.toFloat())
+                        Entry(interval.toFloat(),it.tradingHigh?.toFloat()?:0f)
                     },false,true)
 
                 }

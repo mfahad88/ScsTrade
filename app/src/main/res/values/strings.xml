@@ -417,6 +417,7 @@
     <string name="notice_for_">Notice for Unclaimed Dividend Under Section 244 of the Companies Act, 2017 Prior to Publication.</string>
     <string name="mar_2025_12">19 Mar 2025 | 12:45 PM</string>
     <string name="alphabets">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ \'_"</string>
+    <string name="alphanumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
     <string name="basic_data">BASIC DATA</string>
     <string name="contact_detail">Contact Details</string>
     <string name="attorney_details">Attorney Details</string>

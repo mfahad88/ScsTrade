@@ -1,11 +1,7 @@
 package com.example.scstrade.views.watchlist.adapter
-import android.content.Context
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.view.HapticFeedbackConstants
-import androidx.compose.ui.res.dimensionResource
 
+import android.content.Context
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,77 +9,12 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ItemSymbolBinding
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.response.stock.StockItem
 import java.util.Collections
 
-/*class SymbolAdapter(private val itemList: List<StockItem>, private val onItemClick: (StockItem) -> Unit) : RecyclerView.Adapter<SymbolAdapter.SymbolViewHolder>() {
-    private var filterList=ArrayList<StockItem>()
-    private val selectedItems = mutableSetOf<String>()
-    inner class SymbolViewHolder(private val binding: ItemSymbolBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: StockItem, onItemClick: (StockItem) -> Unit ) {
-            binding.symbol.text=item.sYM
-            binding.companyName.text = item.nM
-            Utils.getCompanyLogo(binding.root.context,binding.imageView6,item)
-            if(selectedItems.contains(item.sYM)){
-                binding.imageViewSelected.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.baseline_check_circle_24))
-            }else{
-                binding.imageViewSelected.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.baseline_add_circle_outline_24))
-            }
-
-            binding.main.setOnClickListener {
-                if (selectedItems.contains(item.sYM)) {
-                    selectedItems.remove(item.sYM)
-                    binding.imageViewSelected.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.baseline_add_circle_outline_24))
-                    Utils.showNeutral(binding.root,"${item.sYM} removed from watchlist")
-                } else {
-                    selectedItems.add(item.sYM)
-                    binding.imageViewSelected.setImageDrawable(ContextCompat.getDrawable(binding.root.context,R.drawable.baseline_check_circle_24))
-                    Utils.showNeutral(binding.root,"${item.sYM} added to watchlist")
-                }
-                onItemClick(item)
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SymbolViewHolder {
-        val binding = ItemSymbolBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SymbolViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: SymbolViewHolder, position: Int) {
-        holder.bind(filterList[position], onItemClick)
-    }
-
-    fun filterList(sector:String?,symbol:String?){
-        filterList.clear()
-        if(sector?.equals("All Sector",true)?:false){
-            if(symbol?.isEmpty()?:false){
-                filterList.addAll(itemList)
-            }else{
-                filterList.addAll(itemList.filter { it.sYM.contains(symbol?:"",true) })
-            }
-
-        }else{
-            if(symbol?.isEmpty()?:false){
-                filterList.addAll(itemList.filter { it.sN.contains(sector?:"",true) })
-            }else{
-                filterList.addAll(itemList.filter { it.sN.contains(sector?:"",true) }.filter { it.sYM.contains(symbol?:"",true) })
-            }
-
-        }
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int {
-        return filterList.size
-    }
-
-}*/
 class SymbolAdapter(
     private val itemList: List<StockItem>,
     private val onItemClick: (StockItem) -> Unit
@@ -113,24 +44,41 @@ class SymbolAdapter(
             )
 
             binding.main.setOnClickListener {
+                // Haptic feedback
+                binding.main.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+
                 val wasSelected = selectedItems.contains(item.sYM)
 
-                if (wasSelected) {
-                    selectedItems.remove(item.sYM)
-                    Utils.showNeutral(binding.root, "${item.sYM} removed from watchlist")
-                } else {
-                    val vibrator = binding.root.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                    vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK))
-                    selectedItems.add(item.sYM)
-                    Utils.showNeutral(binding.root, "${item.sYM} added to watchlist")
+                // Fade animations
+                val fadeOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out).apply {
+                    duration = 150
+                }
+                val fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply {
+                    duration = 150
                 }
 
-                // Animate icon change
-                val iconRes = if (wasSelected) R.drawable.baseline_add_circle_outline_24 else R.drawable.baseline_check_circle_24
-                iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+                iconView.startAnimation(fadeOut)
 
-                onItemClick(item)
-                filterList(null, null) // re-sort list
+                iconView.postDelayed({
+                    if (wasSelected) {
+                        selectedItems.remove(item.sYM)
+                        Utils.showNeutral(binding.root, "${item.sYM} removed from watchlist")
+                    } else {
+                        selectedItems.add(item.sYM)
+                        Utils.showNeutral(binding.root, "${item.sYM} added to watchlist")
+                    }
+
+                    val iconRes = if (wasSelected)
+                        R.drawable.baseline_add_circle_outline_24
+                    else
+                        R.drawable.baseline_check_circle_24
+
+                    iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+                    iconView.startAnimation(fadeIn)
+
+                    onItemClick(item)
+                    filterList(null, null) // re-sort
+                }, fadeOut.duration)
             }
         }
     }

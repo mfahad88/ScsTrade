@@ -34,9 +34,9 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters): Work
     }
 
     fun createKseStatusMessage(data: KSEIndices): String {
-        val currentIndex = data.cURRENTINDEX.toDoubleOrNull() ?: 0.0
-        val netChange = data.nETCHANGE.toDoubleOrNull() ?: 0.0
-        val preClose = data.preClose
+        val currentIndex = data.cURRENTINDEX?.toDoubleOrNull() ?: 0.0
+        val netChange = data.nETCHANGE?.toDoubleOrNull() ?: 0.0
+        val preClose = data.preClose?:1.0
         val changePercent = if (preClose != 0.0) (netChange / preClose) * 100 else 0.0
 
         val arrow = if (netChange >= 0) "📈" else "📉"

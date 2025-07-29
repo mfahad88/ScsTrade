@@ -25,8 +25,8 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
 
         fun bind(kseIndices: KSEIndices) {
             binding.apply {
-                val netChangeDouble = kseIndices.nETCHANGE.toDoubleOrNull() ?: 0.0
-                val preCloseDouble = kseIndices.preClose // Avoid divide by zero
+                val netChangeDouble = kseIndices.nETCHANGE?.toDoubleOrNull() ?: 0.0
+                val preCloseDouble = kseIndices.preClose?:1.0 // Avoid divide by zero
 
                 val percentChange = Utils.formatDouble(
                     (netChangeDouble / preCloseDouble) * 100
@@ -35,10 +35,10 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
 
                 kse100.text = kseIndices.iNDEXCODE
 
-                val currentIndexDouble = kseIndices.cURRENTINDEX.toDoubleOrNull() ?: 0.0
+                val currentIndexDouble = kseIndices.cURRENTINDEX?.toDoubleOrNull() ?: 0.0
                 tradingValue.text = Utils.convertToMillions(currentIndexDouble)
 
-                val volumeDouble = kseIndices.vOLUMETRADED.toDoubleOrNull() ?: 0.0
+                val volumeDouble = kseIndices.vOLUMETRADED?.toDoubleOrNull() ?: 0.0
                 volume.text = "MVol: ${Utils.convertToMillions(volumeDouble)}"
 
                 netChange.text = "$percentChange % $netChangeFormatted"
@@ -53,7 +53,7 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
                     relativeLayout.setBackgroundResource(R.drawable.green_chip)
                 }
 
-                populateChart(kseIndices.iNDEXCODE)
+                populateChart(kseIndices.iNDEXCODE?:"")
             }
         }
 
@@ -69,7 +69,7 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
                 }
 
                 val entries = chartList.mapNotNull {
-                    val high = it.tradingHigh.toFloat()
+                    val high = it.tradingHigh?.toFloat()?:0f
                     if (high != null) {
                         interval += 1
                         Entry(interval.toFloat(), high)

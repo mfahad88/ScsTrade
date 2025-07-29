@@ -8,22 +8,22 @@ import com.google.gson.annotations.SerializedName
 data class KSEIndices(
     @PrimaryKey(autoGenerate = true) val id:Int=0,
     @SerializedName("CURRENT_INDEX")
-    val cURRENTINDEX: String,
+    val cURRENTINDEX: String?,
     @SerializedName("HIGH_INDEX")
-    val hIGHINDEX: String,
+    val hIGHINDEX: String?,
     @SerializedName("INDEX_CODE")
-    val iNDEXCODE: String,
+    val iNDEXCODE: String?,
     @SerializedName("LOW_INDEX")
-    val lOWINDEX: String,
+    val lOWINDEX: String?,
     @SerializedName("MarketStatus")
-    val marketStatus: String,
+    val marketStatus: String?,
     @SerializedName("NET_CHANGE")
-    val nETCHANGE: String,
+    val nETCHANGE: String?,
     @SerializedName("PreClose")
-    val preClose: Double,
+    val preClose: Double?,
     @SerializedName("VALUE_TRADED")
-    val vALUETRADED: String,
+    val vALUETRADED: String?,
     @SerializedName("VOLUME_TRADED")
-    val vOLUMETRADED: String,
+    val vOLUMETRADED: String?,
 
 )
