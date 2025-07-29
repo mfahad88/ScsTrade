@@ -87,8 +87,8 @@ class FundamentalDetailActivity : BaseActivity() {
         // Header click listeners
         binding.header1Container.setOnClickListener { sortByColumn(0) }
         binding.header2Container.setOnClickListener { sortByColumn(1) }
-        binding.header3Container.setOnClickListener { sortByColumn(2) }
-        binding.header4Container.setOnClickListener { sortByColumn(3) }
+        binding.header3Container.setOnClickListener { sortByColumn(3) }
+        binding.header4Container.setOnClickListener { sortByColumn(4) }
 
         viewModel.getFundamentalDetail(intent.extras?.getString(AppConstants.TECHNICAL_SELECTION) ?: "")
         viewModel.mutableFundamentalDetail.observe(this, Observer {
@@ -123,8 +123,16 @@ class FundamentalDetailActivity : BaseActivity() {
                             jsonElement.asJsonArray.forEach { element ->
                                 val row = element.asJsonObject.entrySet()
                                     .map { it.value.asString }
-                                    .toTypedArray()
-                                resultList.add(row)
+                                    .toMutableList()
+
+                                val symbol = row.getOrNull(0)
+                                val match = viewModel.mutableAllData.value?.data?.firstOrNull {
+                                    it.sYM.equals(symbol, ignoreCase = true)
+                                }
+
+                                val avValue = match?.aV?.toString() ?: "-"
+                                row.add(avValue)
+                                resultList.add(row.toTypedArray())
                             }
                             originalList = resultList.toMutableList()
                             runOnUiThread {
@@ -143,18 +151,48 @@ class FundamentalDetailActivity : BaseActivity() {
         sortAscending = if (currentSortColumn == index) !sortAscending else true
         currentSortColumn = index
 
-        val sortedList = if (sortAscending) {
-            originalList.sortedBy { it.getOrNull(index)?.trim().orEmpty().toDoubleOrNull() ?: 0.0 }
+        val sortedList = if (index == 0) {
+            if (sortAscending) {
+                originalList.sortedBy {
+                    it.getOrNull(index)?.trim()?.lowercase() ?: ""
+                }
+            } else {
+                originalList.sortedByDescending {
+                    it.getOrNull(index)?.trim()?.lowercase() ?: ""
+                }
+            }
         } else {
-            originalList.sortedByDescending { it.getOrNull(index)?.trim().orEmpty().toDoubleOrNull() ?: 0.0 }
+            if (sortAscending) {
+                originalList.sortedBy {
+                    it.getOrNull(index)?.trim()?.toDoubleOrNull() ?: 0.0
+                }
+            } else {
+                originalList.sortedByDescending {
+                    it.getOrNull(index)?.trim()?.toDoubleOrNull() ?: 0.0
+                }
+            }
         }
-
         resultList = sortedList.toMutableList()
         adapter.submitList(resultList.toList())
 
-        sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
-        val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
-        sortIcons.getOrNull(index)?.setImageResource(iconRes)
+
+        if(index==0) {
+            sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
+            val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
+            sortIcons.getOrNull(0)?.setImageResource(iconRes)
+        }else if (index==1){
+            sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
+            val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
+            sortIcons.getOrNull(1)?.setImageResource(iconRes)
+        }else if (index==3){
+            sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
+            val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
+            sortIcons.getOrNull(2)?.setImageResource(iconRes)
+        }else if(index==4){
+            sortIcons.forEach { it.setImageResource(R.drawable.ic_sort_default) }
+            val iconRes = if (sortAscending) R.drawable.ic_sort_up else R.drawable.ic_sort_down
+            sortIcons.getOrNull(3)?.setImageResource(iconRes)
+        }
        /* sortAscending = if (currentSortColumn == index) !sortAscending else true
         currentSortColumn = index
 

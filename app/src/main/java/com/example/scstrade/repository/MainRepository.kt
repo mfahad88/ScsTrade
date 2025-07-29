@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.TextUtils
 import coil.network.HttpException
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.analystopinion.AnalystOpinionItem
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.announcement.AnnouncementTypeDataItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
@@ -186,6 +187,15 @@ class MainRepository(val apiService: ApiService,val context: Context) {
         try {
             return Resource.Success(apiService.researchReport(type))
         } catch (e: Exception) {
+            return Resource.Error(e.message ?: "An error occurred", null)
+
+        }
+    }
+
+    suspend fun analystOpinion():Resource<List<AnalystOpinionItem>>{
+        try {
+            return Resource.Success(apiService.analystOpinion())
+        }catch (e: Exception) {
             return Resource.Error(e.message ?: "An error occurred", null)
 
         }

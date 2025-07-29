@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/dp_5"
+    android:paddingStart="@dimen/dp_8"
+    android:paddingEnd="@dimen/dp_8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/mcbim_funds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:text="@string/mcbim_funds"
+            android:textAppearance="@style/mcbim_funds"
+            android:lineSpacingExtra="2sp"
+            android:gravity="top"
+            android:textFontWeight="600" />
+
+        <TextView
+            android:id="@+id/crescent_st"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="@dimen/dp_4"
+            android:text="@string/crescent_st"
+            android:textAppearance="@style/crescent_st"
+            android:textFontWeight="400"
+            android:lineSpacingExtra="3sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/board_meeti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:gravity="center_vertical"
+        android:text="@string/board_meeti"
+        android:textAppearance="@style/board_meeti"
+        android:textFontWeight="600"
+        android:lineSpacingExtra="1sp" />
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="@dimen/dp_4"
+       android:orientation="horizontal">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center_vertical"
+           android:text="Date: "
+           android:textAppearance="@style/mar_2025_12"
+           android:textFontWeight="700"
+           android:lineSpacingExtra="3sp" />
+       <TextView
+           android:id="@+id/mar_2025_12"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center_vertical"
+           android:text="@string/mar_2025_12"
+           android:textAppearance="@style/mar_2025_12"
+           android:textFontWeight="500"
+           android:lineSpacingExtra="3sp" />
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Name: "
+            android:textAppearance="@style/mar_2025_12"
+            android:textFontWeight="700"
+            android:lineSpacingExtra="3sp" />
+        <TextView
+            android:id="@+id/person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/mar_2025_12"
+            android:textAppearance="@style/mar_2025_12"
+            android:textFontWeight="500"
+            android:lineSpacingExtra="3sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -26,7 +26,20 @@ class SettingsActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
+            // Apply top and bottom padding
+            view.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+
+            // Return insets so child views can also use them
+            insets
+        }
 
         if(!Utils.getSharedPreference(this,AppConstants.LIGHT_MODE)){
             binding.switch1.isChecked = false
@@ -42,9 +55,11 @@ class SettingsActivity : BaseActivity() {
                 Utils.saveSharedPreference(this@SettingsActivity,AppConstants.DURATION,duration.value.toInt())
                 Utils.saveSharedPreference(this@SettingsActivity,AppConstants.MARKET_UPDATE,marketUpdate.isChecked)
 
-                if(duration.value.toInt()>0 && marketUpdate.isChecked){
+                if(duration.value>0f && marketUpdate.isChecked){
                     Utils.scheduleMarketNotification(binding.root.context,duration.value.toInt(),repeatDaily.isChecked)
                 }
+                Utils.showSuccess(binding.root,"Setting Saved...")
+//                finish()
             }
         }
 

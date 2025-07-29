@@ -13,6 +13,7 @@ import com.example.scstrade.model.response.aof.country.CountryDto
 import com.example.scstrade.model.request.aof.nomineeDetail.NomineeDetailDto
 import com.example.scstrade.model.request.aof.otherDetail.OtherDetailDto
 import com.example.scstrade.model.request.aof.verifyOtp.VerifyOtpDto
+import com.example.scstrade.model.response.analystopinion.AnalystOpinionItem
 import com.example.scstrade.model.response.announcement.AnnouncementDataItem
 import com.example.scstrade.model.response.aof.attorneyDetail.AttorneyDetailResponse
 import com.example.scstrade.model.response.aof.basicDetails.BasicDetailResponse
@@ -325,6 +326,8 @@ interface ApiService {
     @GET(value ="/researchreports")
     suspend fun researchReport(@Query("type")type:String):List<ResearchReportItem>
 
+    @GET(value = "/AnalystOP")
+    suspend fun analystOpinion():List<AnalystOpinionItem>
 
     /////////////////////////////////AOF///////////////////////////////////////
 /*    @POST(value="api/register")

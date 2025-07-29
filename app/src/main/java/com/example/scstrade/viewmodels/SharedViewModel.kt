@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.scstrade.helper.ConnectivityObserver
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.data.ResultData
+import com.example.scstrade.model.response.analystopinion.AnalystOpinionItem
 import com.example.scstrade.model.response.balancesheet.BalanceSheetDataItem
 import com.example.scstrade.model.response.fundamental.FundamentalData
 import com.example.scstrade.model.response.chart.ChartItem
@@ -90,6 +91,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutablePortfolioDetails = MutableLiveData<Resource<List<PortfolioDetails>>>()
     val mutableNotificationList= MutableLiveData<Resource<List<NotificationDto>>>()
     val mutableNotificationDetailList= MutableLiveData<Resource<JsonElement>>()
+    val mutableAnalystOpinion=MutableLiveData<Resource<List<AnalystOpinionItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
@@ -269,7 +271,17 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
-
+    fun analystOpinion(){
+        mutableAnalystOpinion.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            if(isConnected.value == true){
+                val result = repository.analystOpinion()
+                withContext(Dispatchers.Main){
+                    mutableAnalystOpinion.value = result
+                }
+            }
+        }
+    }
     fun getTechnicals(){
         mutableTechnical.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){

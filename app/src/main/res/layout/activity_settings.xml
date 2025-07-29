@@ -98,22 +98,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingVertical="10dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Duration"
                 android:textAppearance="@style/repeat_daily" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/duration"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:valueTo="120"
+                android:valueTo="10"
                 android:valueFrom="0"
                 android:stepSize="1" />
         </LinearLayout>

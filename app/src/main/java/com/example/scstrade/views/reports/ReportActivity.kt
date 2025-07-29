@@ -10,11 +10,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityReportBinding
@@ -36,6 +38,7 @@ class ReportActivity : AppCompatActivity() {
         sharedViewModel = (this.application as MyApp).viewModel
         enableEdgeToEdge()
         setContentView(binding.root)
+        Utils.setEdgeToEdgeWithWhiteIcons(this)
         setupRecyclerview()
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -113,7 +116,14 @@ class ReportActivity : AppCompatActivity() {
     private fun setupRecyclerview() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.VERTICAL,false)
-            addItemDecoration(HorizontalDivider(15.dp))
+            val divider = DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+            AppCompatResources.getDrawable(context, R.drawable.custom_divider)?.let {
+                divider.setDrawable(it)
+            }
+            addItemDecoration(divider)
 //            addItemDecoration(SideBarDivider(dividerColor = Color.parseColor("#B3C6C6CD"), marginEnd = 0))
         }
     }

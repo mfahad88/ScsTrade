@@ -27,6 +27,7 @@ import com.example.scstrade.model.data.KeyDescValue
 import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.analystopinion.AnalystOpinionActivity
 import com.example.scstrade.views.announcement.AnnoucementActivity
 import com.example.scstrade.views.aof.AofActivity
 import com.example.scstrade.views.contact.ContactActivity
@@ -263,6 +264,7 @@ class LandingFragment : Fragment() {
 //            KeyDescValue("SCS Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("Research Reports",null,R.drawable.side_news),
+            KeyDescValue("Analyst Opinion",null,R.drawable.side_scs_portfolio),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
         binding.contact.setOnClickListener {
@@ -311,6 +313,11 @@ class LandingFragment : Fragment() {
                 }else if (keyDescValue.key?.equals("Research Reports",true)?:false){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(), ReportActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+                }else if (keyDescValue.key?.equals("Analyst Opinion",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
+                    val intent = Intent(requireContext(), AnalystOpinionActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }

@@ -28,12 +28,13 @@ class FundamentalDetailAdapter(
                 ePE.text = formatDecimal(item.getOrNull(1))
                 companyName.text = item.getOrNull(2) ?: "-"
                 price.text = formatDecimal(item.getOrNull(3))
-
+                av.text = formatDecimal(item.getOrNull(4))
                 val match = sharedViewModel.mutableAllData.value?.data?.firstOrNull {
                     it.sYM.equals(item.getOrNull(0), ignoreCase = true)
                 }
 
-                av.text = match?.aV?.let { formatDecimal(it.toString()) } ?: "-"
+                /*av.text = match?.aV?.let { formatDecimal(it.toString()) } ?: "-"*/
+
                 Utils.getCompanyLogo(itemView.context, imageViewLogo, match)
             }
 

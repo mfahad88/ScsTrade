@@ -522,6 +522,7 @@
     <string name="selected_3">Selected: %d</string>
     <string name="get_started">Get Started with Portfolio</string>
     <string name="create_your">Create your demo portfolio and practice stock trading risk-free! Learn, experiment, and enhance your trading skills before investing real money.</string>
+    <string name="analyst_opinion">Analyst Opinion</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>
