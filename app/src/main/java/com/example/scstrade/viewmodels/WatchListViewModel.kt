@@ -22,7 +22,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
     val mutableCreate=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableDelete=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableSymDelete=MutableLiveData<Resource<List<WatchListDetailItem>>>()
-    val mutableSymAdd=MutableLiveData<Resource<List<WatchListDetailItem>>>()
+    val mutableSymAdd=MutableLiveData<Resource<List<WatchListDetailItem?>?>>()
     val mutableWatchListItem=MutableLiveData<Resource<List<WatchListItem>>>()
     val mutableWatchListDetail=MutableLiveData<Resource<List<StockItem>>>()
     val mutableWatchListDetailItem=MutableLiveData<List<WatchListDetailItem>>()
@@ -60,18 +60,33 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
         mutableSymAdd.value = Resource.Loading()
         viewModelScope.launch {
             val result=repository.addSymbol(watchListId, symbol)
-            mutableWatchListDetailItem.value=result.data?: emptyList()
-            mutableSymAdd.value = result
+
             val filterList = ArrayList<StockItem>()
-            result.data?.forEach { it1 ->
-                sharedViewModel.mutableAllData.value?.data?.forEach { it2 ->
-                    if (it1.watchListSymbol.equals(it2.sYM, true)) {
-                        filterList.add(it2)
+            if(result.data?.isJsonArray?:false) {
+                val jsonArray = result.data?.asJsonArray
+                val list = mutableListOf<WatchListDetailItem>()
+                jsonArray?.forEach { item ->
+                    val obj = item.asJsonObject
+                    val id = obj["WatchListDetailID"].asInt
+                    val symbol = obj["WatchListSymbol"].asString
+                    val position = obj["WatchListPosition"].asInt
+                    list.add(WatchListDetailItem(position, symbol, id))
+//                Log.d("Watchlist", "ID: $id, Symbol: $symbol, Position: $position")
+                }
+                mutableWatchListDetailItem.value = list
+                mutableSymAdd.value = Resource.Success(list)
+                list?.forEach { it1 ->
+                    sharedViewModel.mutableAllData.value?.data?.forEach { it2 ->
+                        if (it1.watchListSymbol.equals(it2.sYM, true)) {
+                            filterList.add(it2)
+                        }
                     }
                 }
-            }
-            if(filterList.size==result.data?.size) {
-                mutableWatchListDetail.value = Resource.Success(filterList)
+                if (filterList.size == list?.size) {
+                    mutableWatchListDetail.value = Resource.Success(filterList)
+                }
+            }else{
+                mutableSymAdd.value = Resource.Success(null)
             }
 
         }

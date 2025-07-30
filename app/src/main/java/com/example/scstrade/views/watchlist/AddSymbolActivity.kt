@@ -154,6 +154,8 @@ class AddSymbolActivity : BaseActivity() {
                     }else{
                         if (it.data?.last()?.watchListSymbol.equals(myList.last())) {
                             finish()
+                        }else if(it.data==null){
+                            finish()
                         }
                     }
                 }

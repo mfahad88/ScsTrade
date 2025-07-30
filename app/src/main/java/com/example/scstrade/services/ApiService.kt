@@ -148,7 +148,7 @@ interface ApiService {
         @Query("ActionType") type:String,
         @Query("WatchListID")watchListId:Int,
         @Query("symbol") symbol:String
-    ):List<WatchListDetailItem>
+    ):JsonElement
 
     @GET(value = "/WatchList")
     suspend fun updateWatchList(

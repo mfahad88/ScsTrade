@@ -7,6 +7,7 @@ import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
+import com.google.gson.JsonElement
 import retrofit2.http.Query
 
 class WatchListRepository(var apiService: ApiService,val context: Context) {
@@ -62,7 +63,7 @@ class WatchListRepository(var apiService: ApiService,val context: Context) {
         }
     }
 
-    suspend fun addSymbol(watchListId: Int,symbol:String): Resource<List<WatchListDetailItem>> {
+    suspend fun addSymbol(watchListId: Int,symbol:String): Resource<JsonElement> {
         try{
             return Resource.Success(apiService.addSymbol("AddSymbol",watchListId, symbol))
         }catch (e:Exception){
