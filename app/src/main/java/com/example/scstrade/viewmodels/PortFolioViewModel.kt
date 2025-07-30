@@ -61,7 +61,7 @@ class PortFolioViewModel(application: Application): AndroidViewModel(application
 
                 val portfolioListDetail= ArrayList<PortfolioDetails>()
                 result?.forEach {
-                    it.numberCompany = repository.getPortfolioDetails(it.portfolioMainID).data?.groupBy { it.portfolioSymbol }?.size?:0
+                    it.numberCompany = repository.getPortfolioDetails(it.portfolioMainID).data?.groupBy { it.portfolioSymbol.uppercase() }?.size?:0
                     portfolioListDetail.addAll(repository.getPortfolioDetails(it.portfolioMainID).data?: emptyList())
                 }
                 withContext(Dispatchers.Main){

@@ -1776,7 +1776,7 @@
 
     <style name="tvShares">
         <item name="android:fontFamily">@font/custom_font</item>
-        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

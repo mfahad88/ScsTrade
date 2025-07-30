@@ -145,7 +145,10 @@ class LandingFragment : Fragment() {
         }
         binding.bottomNavigationView.setOnItemSelectedListener {item ->
 //            binding.bottomNavigationView.selectedItemId=item.itemId
-            item.setChecked(true)
+            /*if(binding.bottomNavigationView.selectedItemId!=R.id.more) {
+                item.setChecked(true)
+            }*/
+
             if(item.itemId==R.id.homeFragment){
 //                binding.toolbar.toggleToolbar(true)
 //                binding.toolbar.binding.tickerScroll.visibility = View.GONE
@@ -154,6 +157,7 @@ class LandingFragment : Fragment() {
                     HomeFragment()
                 }
                 binding.toolbar.binding.market.text = getString(R.string.scs_trade_p)
+                item.setChecked(true)
                 true
             }else if(item.itemId==R.id.watchlistFragment){
                 // binding.toolbar.toggleToolbar(false)
@@ -161,6 +165,7 @@ class LandingFragment : Fragment() {
                 loadFragment("WatchList"){
                     WatchlistFragment()
                 }
+                item.setChecked(true)
                 true
             }else if(item.itemId==R.id.marketFragment){
                 // binding.toolbar.toggleToolbar(false)
@@ -168,6 +173,7 @@ class LandingFragment : Fragment() {
                 loadFragment("Market"){
                     MarketFragment()
                 }
+                item.setChecked(true)
                 true
             }else if(item.itemId==R.id.news){
                 // binding.toolbar.toggleToolbar(false)
@@ -175,6 +181,7 @@ class LandingFragment : Fragment() {
                 loadFragment("News"){
                     NewsFragment()
                 }
+                item.setChecked(true)
                 true
             }
 
@@ -182,6 +189,7 @@ class LandingFragment : Fragment() {
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
             if (item.itemId==R.id.more){
+//                binding.bottomNavigationView.menu.findItem(R.id.more).isChecked = false
                 if(binding.drawerLayout.isDrawerOpen(GravityCompat.END)){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)
                 }else {
