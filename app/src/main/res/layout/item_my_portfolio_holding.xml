@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/dp_37"
+                android:layout_height="@dimen/dp_37"
                 android:src="@drawable/image"
                 android:contentDescription="Logo" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="OGDC"
 
-                android:textStyle="bold"
+                android:textFontWeight="700"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="4dp" />
@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1,100"
-                android:textStyle="bold"
-                android:textSize="14sp"
+                android:textFontWeight="700"
+                android:textSize="@dimen/sp_14"
                 android:textColor="@color/black" />
 
             <com.example.scstrade.views.widgets.ColoredValueTextView
@@ -66,7 +66,7 @@
                 android:gravity="start"
                 android:text="7.01"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
 
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700"
+                android:textFontWeight="500"
                 android:text="1,100"
 
                  />
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="209.87"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:text="230,856"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
         </LinearLayout>
 
         <!-- Column 2 -->
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="248,314"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:text="1,507"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700"/>
+                android:textFontWeight="500"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:text="0.60%"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700"/>
+                android:textFontWeight="500"/>
         </LinearLayout>
 
         <!-- Column 3 -->
@@ -219,7 +219,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_6"
                 android:text="TOTAL P&amp;L"
                 android:textAppearance="@style/tvHeading"
                 android:textFontWeight="500" />
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:text="17,458"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:text="7.56%"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="700" />
+                android:textFontWeight="500" />
         </LinearLayout>
 
     </LinearLayout>
