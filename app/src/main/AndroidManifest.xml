@@ -161,10 +161,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <provider
-            android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider325684013944376"
-            android:exported="true" />
 
         <activity
             android:name=".views.snapshot.SnapshotActivity"

@@ -27,8 +27,7 @@ import com.example.scstrade.views.landing.LandingFragment
 import com.example.scstrade.views.login.LoginFragment
 import com.example.scstrade.views.notification.NotificationDetailActivity
 import com.example.scstrade.views.splash.SplashFragment
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
+
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.reflect.TypeToken

@@ -45,37 +45,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_4"
         android:ellipsize="end"
-        android:maxLines="3"
+        android:maxLines="1"
         android:gravity="center_vertical"
         android:text="@string/board_meeti"
         android:textAppearance="@style/board_meeti"
         android:textFontWeight="600"
         android:lineSpacingExtra="1sp" />
 
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_marginTop="@dimen/dp_4"
-       android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:orientation="horizontal">
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:gravity="center_vertical"
-           android:text="Date: "
-           android:textAppearance="@style/mar_2025_12"
-           android:textFontWeight="700"
-           android:lineSpacingExtra="3sp" />
-       <TextView
-           android:id="@+id/mar_2025_12"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:gravity="center_vertical"
-           android:text="@string/mar_2025_12"
-           android:textAppearance="@style/mar_2025_12"
-           android:textFontWeight="500"
-           android:lineSpacingExtra="3sp" />
-   </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Date: "
+            android:textAppearance="@style/mar_2025_12"
+            android:textFontWeight="700"
+            android:lineSpacingExtra="3sp" />
+        <TextView
+            android:id="@+id/mar_2025_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/mar_2025_12"
+            android:textAppearance="@style/mar_2025_12"
+            android:textFontWeight="500"
+            android:lineSpacingExtra="3sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -102,4 +102,42 @@
             android:lineSpacingExtra="3sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:maxLines="3"
+        android:gravity="center_vertical"
+        android:text="@string/board_meeti"
+        android:textAppearance="@style/body"
+        android:textFontWeight="400"
+        android:lineSpacingExtra="1sp" />
+
+
+    <LinearLayout
+        android:id="@+id/more_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_gravity="end"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more_detail"
+            android:textAppearance="@style/more_detail"
+            android:textFontWeight="500" />
+
+        <ImageView
+            android:id="@+id/dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:src="@drawable/drop_down_icon"
+            android:rotation="0" />
+    </LinearLayout>
 </LinearLayout>

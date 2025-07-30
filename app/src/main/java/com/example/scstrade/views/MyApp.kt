@@ -23,8 +23,7 @@ import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.main.MainActivity
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger
+
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
