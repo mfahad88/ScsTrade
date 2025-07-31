@@ -693,34 +693,42 @@ class NewsFragment : Fragment() {
                                 .weight(1f),
                             content = {
                                 val context = LocalContext.current
-                                if(!TextUtils.isEmpty(data[index].newsLink)) {
-                                    val source=extractSourceName(data[index].newsLink)
-                                    println("Source: https://scstrade.com/img/newsicon/${
-                                        source
-                                    }.png")
+                                if (!TextUtils.isEmpty(data[index].newsLink)) {
+                                    val newsUrl = data[index].newsLink.trim()
+                                    val source = extractSourceName(newsUrl)
+                                    println("Source: $source")
+
+                                    // 🔁 Mutable state to retry with fallback URL
+                                    var imageUrl by remember(newsUrl) {
+                                        mutableStateOf(
+                                            if (source.equals("Unknown", true)) getFaviconUrl(newsUrl)
+                                            else "https://scstrade.com/img/newsicon/${source}.png"
+                                        )
+                                    }
+
+                                    val fallbackUrl = getFaviconUrl(newsUrl)
+
                                     AsyncImage(
                                         model = ImageRequest.Builder(context)
-                                            .data("https://scstrade.com/img/newsicon/${
-                                                source
-                                            }.png")
+                                            .data(imageUrl)
                                             .crossfade(true)
                                             .placeholder(R.drawable.news_empty_old)
                                             .error(R.drawable.news_empty_old)
                                             .listener(
-                                                onError = { request, throwable ->
-                                                    // 🔥 Error caught here
-                                                    Log.e("ImageLoad", "Failed to load image", throwable.throwable)
+                                                onError = { _, _ ->
+                                                    // 🔁 Fallback only once
+                                                    if (!imageUrl.contains("google.com/s2/favicons")) {
+                                                        imageUrl = fallbackUrl
+                                                    }
                                                 },
-                                                onSuccess = { request, result ->
-                                                    // ✅ Successfully loaded
-                                                    Log.d("ImageLoad", "Image loaded successfully")
+                                                onSuccess = { _, _ ->
+                                                    Log.d("ImageLoad", "Image loaded successfully: $imageUrl")
                                                 }
                                             )
                                             .build(),
-                                        contentDescription = data[index].newsLink,
+                                        contentDescription = newsUrl,
                                         modifier = Modifier.fillMaxSize(),
                                         contentScale = ContentScale.FillWidth
-
                                     )
                                 }else {
                                     Image(
@@ -785,15 +793,37 @@ class NewsFragment : Fragment() {
             val host = uri.host ?: return "Unknown"
             val parts = host.split(".")
             return if (secondLevelTlds.any { host.endsWith(it) }) {
-                // .com.pk domain
-                if (parts.size >= 3) parts[parts.size - 3] // e.thenews.com.pk
-                else parts[0] // tribune.com.pk
+                if (parts.size >= 3) parts[parts.size - 3] else parts[0]
             } else {
-                // normal domain
                 if (parts.size >= 2) parts[parts.size - 2] else parts[0]
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             "Unknown"
+        }
+    }
+
+    fun getFaviconUrl(newsUrl: String): String {
+        val secondLevelTlds = listOf("com.pk", "org.pk", "net.pk", "gov.pk", "co.uk")
+
+        return try {
+            val uri = java.net.URI(newsUrl)
+            val host = uri.host?.removePrefix("www.") ?: return ""
+            val parts = host.split(".")
+
+            val mainDomain = if (secondLevelTlds.any { host.endsWith(it) }) {
+                if (parts.size >= 3) {
+                    parts.takeLast(3).joinToString(".")  // e.g., e.thenews.com.pk → thenews.com.pk
+                } else {
+                    host
+                }
+            } else {
+                parts.takeLast(2).joinToString(".") // e.g., www.cnbc.com → cnbc.com
+            }
+
+            return "https://www.google.com/s2/favicons?domain=$mainDomain&sz=256"
+        } catch (e: Exception) {
+            ""
         }
     }
 }
