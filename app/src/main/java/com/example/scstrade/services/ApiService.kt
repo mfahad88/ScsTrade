@@ -52,6 +52,8 @@ import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.response.stockscreener.StockScreenerItem
 import com.example.scstrade.model.response.toppicks.TopPickItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryListItem
 import com.example.scstrade.model.response.watchList.WatchListDetailItem
 import com.example.scstrade.model.response.watchList.WatchListItem
 import com.example.scstrade.model.summary.KSEIndices
@@ -328,6 +330,12 @@ interface ApiService {
 
     @GET(value = "/AnalystOP")
     suspend fun analystOpinion():List<AnalystOpinionItem>
+
+    @GET(value="/Media")
+    suspend fun videoGallery(@Query("type")type:String="List"):List<VideoGalleryListItem>
+
+    @GET(value="/Media")
+    suspend fun videoGalleryItem(@Query("type")type:String="All"):List<VideoGalleryItem>
 
     /////////////////////////////////AOF///////////////////////////////////////
 /*    @POST(value="api/register")

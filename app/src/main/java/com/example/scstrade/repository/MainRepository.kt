@@ -37,6 +37,8 @@ import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.snapshot.year.YearDetailsItem
 import com.example.scstrade.model.response.toppicks.TopPickItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryListItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.services.ApiService
 import com.example.scstrade.services.AppDatabase
@@ -195,6 +197,27 @@ class MainRepository(val apiService: ApiService,val context: Context) {
     suspend fun analystOpinion():Resource<List<AnalystOpinionItem>>{
         try {
             return Resource.Success(apiService.analystOpinion())
+        }catch (e: Exception) {
+            return Resource.Error(e.message ?: "An error occurred", null)
+
+        }
+    }
+
+    suspend fun videoGallery():Resource<List<VideoGalleryListItem>>{
+        try {
+            val list = mutableListOf<VideoGalleryListItem>()
+            list.add(VideoGalleryListItem("All"))
+            list.addAll(apiService.videoGallery())
+            return Resource.Success(list)
+        }catch (e: Exception) {
+            return Resource.Error(e.message ?: "An error occurred", null)
+
+        }
+    }
+
+    suspend fun videoGalleryItem(type:String):Resource<List<VideoGalleryItem>>{
+        try {
+            return Resource.Success(apiService.videoGalleryItem(type))
         }catch (e: Exception) {
             return Resource.Error(e.message ?: "An error occurred", null)
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/md_theme_surface"
+    app:cardElevation="2dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- YouTube thumbnail -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_250">
+            <FrameLayout
+                android:id="@+id/fullscreenContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/stock_card"
+                android:clipToOutline="true"
+                />
+        </LinearLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PSX Analysis | Market Company Analysis Buy Back | SCSTrade | 16th NOV 22"
+            android:textAppearance="@style/title_video"
+            android:textFontWeight="700"
+            android:paddingTop="8dp"
+            android:autoLink="web" />
+
+        <!-- Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:textAppearance="@style/date_video"
+                android:textFontWeight="700"
+                android:paddingTop="4dp" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11/16/2022"
+                android:layout_marginStart="@dimen/dp_3"
+                android:textAppearance="@style/date_video"
+                android:textFontWeight="500"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+
+        <!-- Description -->
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Description:"
+               android:textAppearance="@style/date_video"
+               android:textFontWeight="700"
+               android:paddingTop="4dp" />
+           <TextView
+               android:id="@+id/description"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:maxLines="3"
+               android:ellipsize="end"
+               android:layout_marginStart="@dimen/dp_3"
+               android:text="If you're interested in Pakistan Stock Market..."
+               android:textAppearance="@style/date_video"
+               android:paddingTop="4dp" />
+       </LinearLayout>
+
+        <!-- Playlist -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Playlist:"
+                android:textAppearance="@style/date_video"
+                android:textFontWeight="700"
+                android:paddingTop="4dp" />
+            <TextView
+                android:id="@+id/playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Market Round Up"
+                android:textFontWeight="400"
+                android:layout_marginStart="@dimen/dp_3"
+                android:textAppearance="@style/date_video"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

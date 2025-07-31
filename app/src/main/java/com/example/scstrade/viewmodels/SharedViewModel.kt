@@ -39,6 +39,8 @@ import com.example.scstrade.model.response.snapshot.ResultYearQuarter
 import com.example.scstrade.model.response.snapshot.chart.Charting
 import com.example.scstrade.model.response.snapshot.detail.DetailItem
 import com.example.scstrade.model.response.toppicks.TopPickItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryItem
+import com.example.scstrade.model.response.videogallery.VideoGalleryListItem
 import com.example.scstrade.model.summary.KSEIndices
 import com.example.scstrade.repository.MainRepository
 import com.example.scstrade.services.ApiService
@@ -92,6 +94,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val mutableNotificationList= MutableLiveData<Resource<List<NotificationDto>>>()
     val mutableNotificationDetailList= MutableLiveData<Resource<JsonElement>>()
     val mutableAnalystOpinion=MutableLiveData<Resource<List<AnalystOpinionItem>>>()
+    val mutableVideoGalleryListItem = MutableLiveData<Resource<List<VideoGalleryListItem>>>()
+    val mutableVideoGalleryItem = MutableLiveData<Resource<List<VideoGalleryItem>>>()
     var isFetchAllData=true
     var isFetchIndices=true
     var isFetchPortfolioFinal=false
@@ -282,6 +286,31 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
+    fun videoGallery(){
+        mutableVideoGalleryListItem.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            if(isConnected.value == true){
+                val result = repository.videoGallery()
+                withContext(Dispatchers.Main){
+                    mutableVideoGalleryListItem.value = result
+                }
+            }
+        }
+    }
+
+    fun videoGalleryItem(type: String){
+        mutableVideoGalleryItem.value = Resource.Loading()
+        viewModelScope.launch (Dispatchers.IO){
+            if(isConnected.value == true){
+                val result = repository.videoGalleryItem(type)
+                withContext(Dispatchers.Main){
+                    mutableVideoGalleryItem.value = result
+                }
+            }
+        }
+    }
+
     fun getTechnicals(){
         mutableTechnical.value = Resource.Loading()
         viewModelScope.launch (Dispatchers.IO){

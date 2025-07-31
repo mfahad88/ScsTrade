@@ -43,6 +43,7 @@ import com.example.scstrade.views.profile.ProfileActivity
 import com.example.scstrade.views.reports.ReportActivity
 import com.example.scstrade.views.settings.SettingsActivity
 import com.example.scstrade.views.stockscreener.StockScreenerActivity
+import com.example.scstrade.views.videogallery.VideoGalleryActivity
 import com.example.scstrade.views.watchlist.WatchlistFragment
 import com.example.scstrade.views.widgets.SideBarDivider
 import com.google.gson.reflect.TypeToken
@@ -273,6 +274,7 @@ class LandingFragment : Fragment() {
             KeyDescValue("My Portfolio",null,R.drawable.side_scs_portfolio),
             KeyDescValue("Research Reports",null,R.drawable.side_news),
             KeyDescValue("Analyst Opinion",null,R.drawable.side_scs_portfolio),
+            KeyDescValue("Video Gallery",null,R.drawable.baseline_ondemand_video_24),
             KeyDescValue("Logout",null,R.drawable.baseline_power_settings_new_24)
         )
         binding.contact.setOnClickListener {
@@ -326,6 +328,11 @@ class LandingFragment : Fragment() {
                 }else if (keyDescValue.key?.equals("Analyst Opinion",true)?:false){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)
                     val intent = Intent(requireContext(), AnalystOpinionActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+                }else if (keyDescValue.key?.equals("Video Gallery",true)?:false){
+                    binding.drawerLayout.closeDrawer(GravityCompat.END)
+                    val intent = Intent(requireContext(), VideoGalleryActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
                 }
