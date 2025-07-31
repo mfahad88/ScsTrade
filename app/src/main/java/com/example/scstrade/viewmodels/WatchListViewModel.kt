@@ -104,7 +104,7 @@ class WatchListViewModel(application: Application,private  val sharedViewModel: 
 
             while (isFetchingWatchListDetailItem){
                 try{
-                    val watchList=repository.getWatchListDetail(watchListId).data?.sortedBy { it.watchListPosition }
+                    val watchList=repository.getWatchListDetail(watchListId).data/*.sortedBy { it.watchListPosition }*/
                     withContext(Dispatchers.Main){
                         mutableWatchListDetailItem.value=watchList?: emptyList()
                     }

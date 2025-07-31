@@ -93,7 +93,9 @@ class WatchListDetailActivity : BaseActivity() {
                     binding.loader.visibility = View.GONE
                     Utils.showError(binding.root,result.message?:"An error occurred")
                 }
-                is Resource.Loading -> binding.loader.visibility = View.VISIBLE
+                is Resource.Loading -> {
+//                    binding.loader.visibility = View.VISIBLE
+                }
                 is Resource.Success -> {
                     binding.loader.visibility = View.GONE
 
@@ -150,7 +152,7 @@ class WatchListDetailActivity : BaseActivity() {
             }, onItemMove = { sym,from,to ->
                 val watchListItem=list.filter { it.watchListSymbol.equals(sym,true) }.first()
                 Log.e("Swap","${sym} From:${from} To:${to}")
-                viewModel.watchListSort(watchListItem.watchListDetailID,to,from,WatchListMainID?:0)
+                viewModel.watchListSort(watchListItem.watchListDetailID,/*if(to<from) to-1 else*/ to,from,WatchListMainID?:0)
 //                viewModel.isFetchingWatchListDetailItem=true
 //                viewModel.getWatchListDetail(WatchListMainID?:0)
             } )

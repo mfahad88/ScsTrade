@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="@color/white"
-    card_view:cardElevation="1dp"
+    card_view:cardElevation="0dp"
     >
 
     <LinearLayout
@@ -69,7 +69,7 @@
                 android:gravity="start"
                 android:text="7.01"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="400" />
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500"
+                android:textFontWeight="700"
                 android:text="1,100"
 
                  />
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:text="209.87"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="700" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:text="230,856"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="700" />
         </LinearLayout>
 
         <!-- Column 2 -->
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:text="248,314"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="700" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:text="1,507"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500"/>
+                android:textFontWeight="700"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:text="0.60%"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500"/>
+                android:textFontWeight="700"/>
         </LinearLayout>
 
         <!-- Column 3 -->
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:text="17,458"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="700" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:text="7.56%"
                 android:textAppearance="@style/tvShares"
-                android:textFontWeight="500" />
+                android:textFontWeight="700" />
         </LinearLayout>
 
     </LinearLayout>

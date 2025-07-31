@@ -8,7 +8,7 @@
         android:paddingTop="5dp"
         android:text="Title"
         android:textFontWeight="500"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_10"
         android:textColor="@color/tvTitle"
         android:layout_gravity="center_horizontal" />
 
@@ -19,7 +19,7 @@
         android:text="123,456"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/tvValue"
-        android:textFontWeight="500"
+        android:textFontWeight="700"
         android:layout_marginTop="0dp"
         android:paddingBottom="5dp"
         android:layout_gravity="center_horizontal" />

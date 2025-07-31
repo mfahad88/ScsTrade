@@ -468,14 +468,14 @@ class HomeFragment : Fragment() {
                             val data = result.data ?: return@launch
                             if (isCandleSelected.value == true) {
                                 val candles = withContext(Dispatchers.Default) {
-                                    data.takeLast(100).mapIndexed { index, it ->
+                                    data/*.takeLast(100)*/.reversed().mapIndexed { index, it ->
                                         CandleEntry(index.toFloat(), it.tradingHigh?.toFloat()?:0f, it.tradingLow?.toFloat()?:0f, it.tradingOpen?.toFloat()?:0f, it.tradingClose?.toFloat()?:0f)
                                     }
                                 }
                                 binding.cardHome.candlestickChart.setCandleData(candles)
                             } else {
                                 val entries = withContext(Dispatchers.Default) {
-                                    data.takeLast(100).mapIndexed { index, it ->
+                                    data/*.takeLast(100)*/.reversed().mapIndexed { index, it ->
                                         Entry(index.toFloat(), it.tradingHigh?.toFloat()?:0f)
                                     }
                                 }

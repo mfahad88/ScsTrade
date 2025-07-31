@@ -65,12 +65,25 @@ class WatchListDetailAdapter(
             binding.netChange.text =
                 "${if (stockItem.cH > 0.0) "+" else ""}${stockItem.cH} ${if (stockItem.cHP > 0.0) "+" else ""}${String.format("%.2f", stockItem.cHP)}%"
 
+            binding.netChange.setTextColor(
+                if (stockItem.cH >= 0.0)
+                    ContextCompat.getColor(binding.root.context, R.color.md_theme_primary)
+                else
+                    ContextCompat.getColor(binding.root.context, R.color.md_theme_error)
+            )
 
-            binding.netChange.setTextColor(if(stockItem.cH >=0.0) ContextCompat.getColor(binding.root.context,R.color.md_theme_primary) else ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
-            binding.high.text = "H: ${BigDecimal(stockItem.hP).setScale(2, RoundingMode.HALF_UP).toString()}"
-            binding.low.text = "L: ${BigDecimal(stockItem.lP).setScale(2, RoundingMode.HALF_UP).toString()}"
-            binding.high52.text = "H: ${if (!TextUtils.isEmpty(stockItem.high52)) BigDecimal(stockItem.high52).setScale(2, RoundingMode.HALF_UP).toString() else "0.0"}"
-            binding.low52.text = "L: ${if (!TextUtils.isEmpty(stockItem.low52)) BigDecimal(stockItem.low52).setScale(2, RoundingMode.HALF_UP).toString() else "0.0"}"
+            binding.high.text = "H: ${BigDecimal(stockItem.hP).setScale(2, RoundingMode.HALF_UP)}"
+            binding.low.text = "L: ${BigDecimal(stockItem.lP).setScale(2, RoundingMode.HALF_UP)}"
+            binding.high52.text = "H: ${
+                if (!TextUtils.isEmpty(stockItem.high52))
+                    BigDecimal(stockItem.high52).setScale(2, RoundingMode.HALF_UP)
+                else "0.0"
+            }"
+            binding.low52.text = "L: ${
+                if (!TextUtils.isEmpty(stockItem.low52))
+                    BigDecimal(stockItem.low52).setScale(2, RoundingMode.HALF_UP)
+                else "0.0"
+            }"
 
             binding.root.setOnClickListener {
                 val intent = Intent(binding.root.context, SnapshotActivity::class.java)
@@ -138,41 +151,50 @@ class WatchListDetailAdapter(
         )
     }
 
+    // ✅ Only rearrange items visually — API called on clearView only
     fun swapItems(fromPosition: Int, toPosition: Int) {
         if (fromPosition == toPosition || fromPosition !in currentList.indices || toPosition !in currentList.indices) return
+
         val mutableList = currentList.toMutableList()
         val movedItem = mutableList.removeAt(fromPosition)
         mutableList.add(toPosition, movedItem)
-        submitList(mutableList)
 
-        onItemMove(movedItem.sYM, fromPosition, toPosition)
+        submitList(mutableList)
     }
 
+    // ✅ Handles drag + triggers API only after drop
     fun getItemTouchHelper(): ItemTouchHelper {
         var fromPosition = -1
         var toPosition = -1
+
         return ItemTouchHelper(object :
             ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                fromPosition = if (fromPosition == -1) viewHolder.adapterPosition else fromPosition
-                toPosition = target.adapterPosition
-                (activity as WatchListDetailActivity).viewModel.isFetchingWatchListDetailItem = false
-                swapItems(fromPosition, toPosition)
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+
+                if (from == RecyclerView.NO_POSITION || to == RecyclerView.NO_POSITION) return false
+
+                if (fromPosition == -1) fromPosition = from
+                toPosition = to
+
+                swapItems(from, to)
                 return true
             }
 
-            override fun clearView(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ) {
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
+
                 if (fromPosition != -1 && toPosition != -1 && fromPosition != toPosition) {
                     val movedItem = getItem(toPosition)
                     onItemMove(movedItem.sYM, fromPosition, toPosition)
                 }
+
                 fromPosition = -1
                 toPosition = -1
             }
@@ -180,6 +202,8 @@ class WatchListDetailAdapter(
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // no-op
             }
+
+            override fun isLongPressDragEnabled(): Boolean = true
         })
     }
 

@@ -45,7 +45,7 @@ class ResearchReportAdapter(
 
             // Company Name
             if (!item.companyName.isNullOrBlank()) {
-                binding.mcbimFunds.text = item.companyName
+                binding.mcbimFunds.text = item.companyCode
                 binding.mcbimFunds.visibility = View.VISIBLE
             } else {
                 binding.mcbimFunds.visibility = View.GONE
@@ -53,7 +53,7 @@ class ResearchReportAdapter(
 
             // Company Code
             if (!item.companyCode.isNullOrBlank()) {
-                binding.crescentSt.text = item.companyCode
+                binding.crescentSt.text = item.companyName
                 binding.crescentSt.visibility = View.VISIBLE
             } else {
                 binding.crescentSt.visibility = View.GONE

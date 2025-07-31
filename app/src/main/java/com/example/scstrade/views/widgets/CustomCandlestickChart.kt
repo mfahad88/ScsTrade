@@ -90,13 +90,13 @@ class CustomCandlestickChart @JvmOverloads constructor(
         // ✅ Chart interaction config
         this.setTouchEnabled(true)
         this.isDragEnabled = true
-        this.setScaleEnabled(false)
-        this.setPinchZoom(false)
-        this.setDoubleTapToZoomEnabled(false)
+        this.setScaleEnabled(true)
+        this.setPinchZoom(true)
+        this.setDoubleTapToZoomEnabled(true)
 
         // ✅ Axis scaling & highlight config
-        this.isScaleYEnabled = false
-        this.isScaleXEnabled = false
+        this.isScaleYEnabled = true
+        this.isScaleXEnabled = true
         this.isHighlightPerTapEnabled = false
         this.isHighlightPerDragEnabled = false
 

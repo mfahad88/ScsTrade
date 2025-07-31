@@ -416,12 +416,13 @@ class PortfolioDetailActivity : BaseActivity() {
                         val dayPL = fifo.sumOf {
                             it.quantity.toDouble() * (stockMap[it.symbol.lowercase()]?.cH ?: 0.0)
                         }
+                        val dayPlPerecent = dayPL.div(currentMarketValue.minus(dayPL)).times(100)
                         val totalPL = currentMarketValue - portfolioCost
                         val totalPLPercent = (totalPL / portfolioCost) * 100
 
                         binding.currentMarket.setValue("%,d".format(currentMarketValue.roundToInt()))
                         binding.portfolioCost.setValue("%,d".format(portfolioCost.roundToInt()))
-                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt()))
+                        binding.daySPLHolding.setValue("%,d".format(dayPL.roundToInt())+" (${Utils.roundTwoDecimal(dayPlPerecent)}%)")
                         binding.totalPLHolding.setValue("%,d".format(totalPL.roundToInt()) + " (${Utils.roundTwoDecimal(totalPLPercent)}%)")
 
                         if (fifo.isNotEmpty()) {

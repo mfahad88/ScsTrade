@@ -55,11 +55,12 @@ class AllStockFragment : Fragment() {
             v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom)
             insets
         }
+
         /*binding.recyclerIndices.post {
             binding.recyclerIndices.setPadding(0,0,0,350)
             binding.recyclerIndices.clipToPadding=false
         }*/
-
+        binding.tabLayout.getTabAt(1)?.select()
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(binding.tabLayout.selectedTabPosition){
