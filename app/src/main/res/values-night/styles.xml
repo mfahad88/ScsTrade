@@ -340,7 +340,7 @@
     <style name="kmiallshr">
         <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:letterSpacing">-0.02</item>
-        <item name="android:textColor">@color/special_headlines</item>
+        <item name="android:textColor">@color/kse_100</item>
         <!--<item name="android:fontFamily">@font/inter_28pt_bold_700</item>-->
     </style>
 

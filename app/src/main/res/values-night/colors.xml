@@ -179,6 +179,7 @@
     <color name="item_side_menu">#FFFFFF</color>
     <color name="surfaceTint">#011500</color>
     <color name="special_headlines">#001C43</color>
+    <color name="kse_100">#004AB1</color>
     <color name="white">#000000</color>
     <color name="black">#FFFFFF</color>
     <color name="snapshot_value">#FFFFFF</color>
