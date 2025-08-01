@@ -76,7 +76,7 @@ class AccountOpeningOneFragment : Fragment() {
 
             nicIssueDate.textInputEditText.setOnFocusChangeListener { view, b ->
                 if(b){
-                    Utils.showDatePicker(requireContext(),"yyyy-MM-dd"){ date->
+                    Utils.showDatePicker(requireContext(),"dd-MM-yyyy"){ date->
 
                         binding.nicIssueDate.textInputEditText.setText(date)
                         issue_date = date

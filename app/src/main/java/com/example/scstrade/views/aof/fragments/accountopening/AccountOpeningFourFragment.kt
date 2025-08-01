@@ -75,7 +75,7 @@ class AccountOpeningFourFragment : Fragment() {
                                 relativeName = viewModel.getaccountOpening().accountopeningrelativeName?:"",
                                 relativeUIN = viewModel.getaccountOpening().accountopeningrelativeUin?:"",
                                 isApp = true,
-                                issueDate = viewModel.getaccountOpening().accountopeningnicIssueDate?:""
+                                issueDate = Utils.formatDateString(viewModel.getaccountOpening().accountopeningnicIssueDate?:"","dd-MM-yyyy","yyyy-MM-dd")?:""
 
                             )
                             viewModel.registerUser(register)

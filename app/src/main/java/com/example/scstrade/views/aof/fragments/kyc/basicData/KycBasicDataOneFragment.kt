@@ -115,7 +115,7 @@ class KycBasicDataOneFragment : Fragment() {
         })
         binding.dobInputLayout.setOnFocusListener {
             if(it) {
-                Utils.showDatePicker(requireContext(), "yyyy-MM-dd") { date ->
+                Utils.showDatePicker(requireContext(), "dd-MM-yyyy") { date ->
                     binding.dobInputLayout.selectedOption=date
                 }
             }
@@ -154,7 +154,7 @@ class KycBasicDataOneFragment : Fragment() {
                             .map { it.first.first }.first() else null,
                         ivrstatus = ivrService.selectedOption.second,
                         uinExpiryDate = cardNic.textFieldValue,
-                        dateOfBirth = dobInputLayout.selectedOption
+                        dateOfBirth = Utils.formatDateString(dobInputLayout.selectedOption,"dd-MM-yyyy","yyyy-MM-dd")
 
 
                     ))
