@@ -23,6 +23,7 @@ import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
+import com.example.scstrade.views.main.MainActivity
 import com.example.scstrade.views.widgets.VerticalDivider
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.messaging.FirebaseMessaging
@@ -138,7 +139,7 @@ class RegisterFragment : Fragment() {
                             )
                             Utils.showSuccess(binding.root,"Successfully Register")
                             Utils.saveSharedPreference(requireContext(),AppConstants.USER,data?: emptyList())
-                            loadFragment(LandingFragment(),false)
+                            (requireActivity() as MainActivity).loadFragment(LandingFragment(),false)
                         }else{
                             Utils.showError(binding.root,json.asString?:"An error occurred...")
 
