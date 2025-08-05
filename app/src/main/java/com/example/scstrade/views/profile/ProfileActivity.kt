@@ -51,7 +51,7 @@ class ProfileActivity : BaseActivity() {
         binding.fullName.text = login.registrationName
         binding.mobileNumber.text = login.registrationPhone
         binding.email.text = login.registrationEmail
-
+        binding.textView2.text = (login.registrationName?.get(0)?:"").toString()
         binding.apply {
             buttonSave.setOnClickListener {
                 if(fullName.text.isNotEmpty() && mobileNumber.isNotEmpty() && email.isNotEmpty()){

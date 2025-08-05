@@ -102,7 +102,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/dp_97"
-        android:layout_height="@dimen/dp_56"
+        android:layout_height="@dimen/dp_59"
         android:layout_marginTop="@dimen/dp_16"
         app:strokeWidth="@dimen/dp_1"
         app:cardCornerRadius="@dimen/dp_6"
@@ -126,16 +126,16 @@
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/mobileNumber"
         android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_0"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_12"
         android:inputType="number"
         android:maxLength="10"
         app:hintText="Mobile Number"
         app:hintTextField="Enter Mobile Number"
-        app:layout_constraintBottom_toBottomOf="@+id/countryCard"
         app:layout_constraintEnd_toEndOf="@+id/fullName"
         app:layout_constraintStart_toEndOf="@+id/countryCard"
-        app:layout_constraintTop_toTopOf="@+id/countryCard" />
+        app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
     <com.example.scstrade.views.widgets.LabelledTextField
         android:id="@+id/email"
