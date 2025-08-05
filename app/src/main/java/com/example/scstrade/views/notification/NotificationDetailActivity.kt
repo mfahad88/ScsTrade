@@ -99,7 +99,7 @@ class NotificationDetailActivity : BaseActivity() {
                             val jsonObject = array[0].asJsonObject
                             val list = ArrayList<KeyDescValue>()
 
-                            jsonObject.asMap().entries.forEach {
+                            jsonObject.entrySet().forEach {
                                 val value = jsonObject.safeString(it.key)
                                 if (!value.isNullOrBlank()
                                     && !listOf("company_code", "AnnouncementType", "company_name", "Heading", "bm_ann_date", "ImageLink", "PDFLink").contains(it.key)

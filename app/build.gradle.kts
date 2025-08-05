@@ -88,14 +88,14 @@ android {
             }
         }
     }*/
-    applicationVariants.all {
+   /* applicationVariants.all {
         outputs.all {
             val variant = this@all
             val date = SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Date())
             val fileName = "SCSTrade-Pro_${defaultConfig.versionName}_$date.apk"
             (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = fileName
         }
-    }
+    }*/
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

@@ -281,10 +281,10 @@ class AnnouncementsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         snapshotViewModel.apply {
-            mutableAnnouncementItem.value=null
-            mutableInsider.value=null
-            mutableAnnouncementType.value = null
-            mutableInsider.value=null
+//            mutableAnnouncementItem.value=null
+//            mutableInsider.value=null
+//            mutableAnnouncementType.value = null
+//            mutableInsider.value=null
         }
     }
 

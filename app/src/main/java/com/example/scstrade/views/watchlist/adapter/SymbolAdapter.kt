@@ -100,7 +100,7 @@ class SymbolAdapter(
             sector.equals("All Sector", true) -> itemList.filter { it.sYM.contains(symbol ?: "", true) }
             symbol.isNullOrEmpty() -> itemList.filter { it.sN.contains(sector ?: "", true) }
             else -> itemList.filter {
-                it.sN.contains(sector ?: "", true) && it.sYM.contains(symbol ?: "", true)
+                it.sN.contains(sector ?: "", true) && it.sYM.contains(symbol , true)
             }
         }
 

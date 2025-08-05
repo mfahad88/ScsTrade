@@ -1,8 +1,11 @@
 package com.example.scstrade.views.register
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,32 +18,27 @@ import com.github.mikephil.charting.data.Entry
 
 class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIndicesDiffCallback()) {
 
-    var chartItems = mutableListOf<ChartItem>()
-    var chartItems1 = mutableListOf<ChartItem>()
-    var chartItems2 = mutableListOf<ChartItem>()
-    var chartItems3 = mutableListOf<ChartItem>()
+    private var chartMap: Map<String, List<ChartItem>> = emptyMap()
 
     inner class IndexViewHolder(private val binding: ItemIndicesCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(kseIndices: KSEIndices) {
             binding.apply {
+                ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
+                    val padding = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                    view.setPadding(padding.left, padding.top, padding.right, padding.bottom)
+                    insets
+                }
+
                 val netChangeDouble = kseIndices.nETCHANGE?.toDoubleOrNull() ?: 0.0
-                val preCloseDouble = kseIndices.preClose?:1.0 // Avoid divide by zero
+                val preCloseDouble = kseIndices.preClose ?: 1.0
+                val percentChange = Utils.formatDouble((netChangeDouble / preCloseDouble) * 100)
+                val netChangeFormatted = "${if (netChangeDouble < 0.0) "" else "+"}${Utils.formatDouble(netChangeDouble)}"
 
-                val percentChange = Utils.formatDouble(
-                    (netChangeDouble / preCloseDouble) * 100
-                )
-                val netChangeFormatted = "${if (netChangeDouble < 0.0) "" else "+"} ${Utils.formatDouble(netChangeDouble)}"
-
-                kse100.text = kseIndices.iNDEXCODE
-
-                val currentIndexDouble = kseIndices.cURRENTINDEX?.toDoubleOrNull() ?: 0.0
-                tradingValue.text = Utils.convertToMillions(currentIndexDouble)
-
-                val volumeDouble = kseIndices.vOLUMETRADED?.toDoubleOrNull() ?: 0.0
-                volume.text = "MVol: ${Utils.convertToMillions(volumeDouble)}"
-
+                kse100.text = kseIndices.iNDEXCODE ?: ""
+                tradingValue.text = Utils.convertToMillions(kseIndices.cURRENTINDEX?.toDoubleOrNull() ?: 0.0)
+                volume.text = "MVol: ${Utils.convertToMillions(kseIndices.vOLUMETRADED?.toDoubleOrNull() ?: 0.0)}"
                 netChange.text = "$percentChange % $netChangeFormatted"
 
                 if (netChangeDouble < 0.0) {
@@ -53,34 +51,42 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
                     relativeLayout.setBackgroundResource(R.drawable.green_chip)
                 }
 
-                populateChart(kseIndices.iNDEXCODE?:"")
+                populateChart(kseIndices.iNDEXCODE ?: "")
             }
         }
 
-        private fun populateChart(data: String) {
+        private fun populateChart(indexCode: String) {
             try {
-                var interval = 0
-                val chartList = when {
-                    data.contains("kse all", ignoreCase = true) -> chartItems
-                    data.contains("kse 100", ignoreCase = true) -> chartItems1
-                    data.contains("kse 30", ignoreCase = true) -> chartItems2
-                    data.contains("kmi 30", ignoreCase = true) -> chartItems3
-                    else -> emptyList()
+                val cleanedKey = indexCode
+                    .lowercase()
+                    .replace("-", " ")
+                    .replace("_", " ")
+                    .replace("index", "")
+                    .replace("share", "")
+                    .trim()
+
+                // Try best match from chartMap keys
+                val matchedEntry = chartMap.entries.firstOrNull { (key, _) ->
+                    cleanedKey.contains(key.lowercase())
                 }
 
-                val entries = chartList.mapNotNull {
-                    val high = it.tradingHigh?.toFloat()?:0f
-                    if (high != null) {
-                        interval += 1
-                        Entry(interval.toFloat(), high)
-                    } else null
-                }
+                val matchedKey = matchedEntry?.key
+                val chartList = matchedEntry?.value ?: emptyList()
+
+
+
+                val entries = chartList.reversed().mapNotNull { it.tradingHigh?.toFloat() }
+                    .mapIndexed { index, high -> Entry(index.toFloat(), high) }
 
                 binding.lineChart.setEntries(entries, false, false)
-                binding.lineChart.moveViewToX(interval.toFloat())
+                Log.d("ChartDebug", "IndexCode: \"$indexCode\" → Cleaned: \"$cleanedKey\" → Matched Key: \"$matchedKey\" → Entries: $entries")
+                binding.lineChart.moveViewToX(entries.size.toFloat())
                 binding.lineChart.xAxis.setDrawLabels(false)
+//                binding.lineChart.invalidate()
+
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e("ChartDebug", "Chart generation failed for \"$indexCode\": ${e.message}")
             }
         }
     }
@@ -96,16 +102,10 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
 
     fun addItems(
         list: List<KSEIndices>,
-        chartItems: List<ChartItem>,
-        chartItems1: List<ChartItem>,
-        chartItems2: List<ChartItem>,
-        chartItems3: List<ChartItem>
+        chartMap: Map<String, List<ChartItem>>
     ) {
-        this.chartItems = chartItems.toMutableList()
-        this.chartItems1 = chartItems1.toMutableList()
-        this.chartItems2 = chartItems2.toMutableList()
-        this.chartItems3 = chartItems3.toMutableList()
-        submitList(list)
+        this.chartMap = chartMap
+        submitList(list.toList())
     }
 }
 
