@@ -29,6 +29,11 @@ class StatusActivity : AppCompatActivity() {
         binding = ActivityStatusBinding.inflate(LayoutInflater.from(this))
         viewModel = (this.application as MyApp).aofViewModel
         enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root){v,insets->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 //        viewModel.protectedAppId()
         setContentView(binding.root)
         binding.apply {

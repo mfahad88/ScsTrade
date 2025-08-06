@@ -40,11 +40,10 @@
                 style="@style/CustomBottomNavigationView"
                 app:itemBackground="@drawable/item_background"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dp_120"
                 android:layout_gravity="bottom"
-                android:background="@drawable/rectangle_bottom_bar"
+                android:background="@drawable/toolbar"
                 app:labelVisibilityMode="labeled"
-                app:itemIconSize="@dimen/dp_27"
                 app:menu="@menu/menu" />
 
             <com.example.scstrade.views.widgets.mMarket
