@@ -126,7 +126,6 @@
                     app:srcCompat="@drawable/icon_aof" />
 
                 <TextView
-                    android:id="@+id/welcome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -158,6 +157,50 @@
                 android:paddingVertical="@dimen/dp_10"
                 android:background="@color/md_theme_onPrimary">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/dp_7"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_image_welcome"
+                        android:src="@drawable/undone_group"/>
+
+                    <TextView
+                        android:id="@+id/welcome"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:text="@string/welcome"
+                        android:textAppearance="@style/welcome"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/dp_7"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_image_aof"
+                        android:src="@drawable/undone_group"/>
+
+                    <TextView
+                        android:id="@+id/aof"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        android:text="Account Opening Details"
+                        android:textAppearance="@style/welcome"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

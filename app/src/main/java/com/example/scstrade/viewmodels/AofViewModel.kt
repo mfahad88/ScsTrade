@@ -334,6 +334,7 @@ class AofViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             val result = repository.verifyOtp(verifyOtpDto)
             withContext(Dispatchers.Main){
+                mutableLifeCycle.value = result.data?.status
                 mutableVerifyOtp.value =result
             }
         }

@@ -40,16 +40,22 @@ class StatusActivity : AppCompatActivity() {
 
             when(result){
                 0 -> {
-
+                    binding.statusImageWelcome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.current_group))
+                }
+                5 ->{
+                    binding.statusImageWelcome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.done_group))
+                    binding.statusImageAof.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.current_group))
                 }
                 70 -> {
                     // BASIC_DATA
+                    binding.statusImageWelcome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.done_group))
+                    binding.statusImageAof.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.done_group))
                     binding.statusImageBasicData.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.current_group))
                 }
                 80 -> {
                     // CONTACT_DETAILS
                     binding.statusImageBasicData.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.done_group))
-                    binding.statusImageContactDetail.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.done_group))
+                    binding.statusImageContactDetail.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.current_group))
                 }
                 90 -> {
                     // ATTORNEY_DETAILS
@@ -93,6 +99,8 @@ class StatusActivity : AppCompatActivity() {
                 else -> {
                     // unknown
                     binding.apply {
+                        statusImageWelcome.setImageDrawable(ContextCompat.getDrawable(this@StatusActivity,R.drawable.undone_group))
+                        statusImageAof.setImageDrawable(ContextCompat.getDrawable(this@StatusActivity,R.drawable.undone_group))
                         statusImageBasicData.setImageDrawable(ContextCompat.getDrawable(this@StatusActivity,R.drawable.undone_group))
                         statusImageContactDetail.setImageDrawable(ContextCompat.getDrawable(this@StatusActivity,R.drawable.undone_group))
                         statusImageAttorneyDetails.setImageDrawable(ContextCompat.getDrawable(this@StatusActivity,R.drawable.undone_group))

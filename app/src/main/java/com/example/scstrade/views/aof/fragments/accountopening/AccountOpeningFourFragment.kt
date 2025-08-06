@@ -31,6 +31,7 @@ class AccountOpeningFourFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningFourBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        viewModel.mutableLifeCycle.value = 5
 //        initFields()
         binding.back.setOnClickListener {
             (requireActivity() as AofActivity).loadFragment(fragment = AccountOpeningThreeFragment())

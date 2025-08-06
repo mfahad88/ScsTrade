@@ -34,6 +34,7 @@ class AofActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityAofBinding.inflate(LayoutInflater.from(this))
         viewModel = (this.application as MyApp).aofViewModel
+
     /*    viewModel =  ViewModelProvider.AndroidViewModelFactory.getInstance(this.application as MyApp).create(
             AofViewModel::class.java)*/
         binding.toolbar.binding.market.text= getString(R.string.new_account_opening)
@@ -100,14 +101,14 @@ class AofActivity : BaseActivity() {
         if(isBackStack){
             supportFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+//                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(binding.fragmentContainer.id, fragment)
                 .addToBackStack(null)
                 .commit()
         }else{
             supportFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+//                .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                 .replace(binding.fragmentContainer.id,fragment)
                 .commit()
         }

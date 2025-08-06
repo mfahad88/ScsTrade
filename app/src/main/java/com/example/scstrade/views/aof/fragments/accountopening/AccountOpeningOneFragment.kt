@@ -52,6 +52,7 @@ class AccountOpeningOneFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningOneBinding.inflate(inflater,container,false)
         viewModel=(requireActivity() as AofActivity).viewModel
+        viewModel.mutableLifeCycle.value = 5
         (requireActivity() as AofActivity).binding.progressBar.progress=1
         binding.apply {
 

@@ -92,6 +92,7 @@ class AccountOpeningThreeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.mutableLifeCycle.value = 5
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningThreeBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
@@ -163,7 +164,7 @@ class AccountOpeningThreeFragment : Fragment() {
         val backCamera = registerForActivityResult(TakePicture()) { ok ->
             if (ok) {
                 nicBackCamUri?.let {
-                    binding.nicFront.bindImage(it)
+                    binding.nicBack.bindImage(it)
                     nicBackB64 = "data:image/jpeg;base64,${binding.nicBack.getBase64()}"
                 }
             }
