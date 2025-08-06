@@ -134,7 +134,7 @@
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_17"
             android:padding="@dimen/dp_0"
             android:clipToPadding="false"
             android:clipChildren="false"
@@ -144,7 +144,7 @@
             android:id="@+id/candlestick_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_17"
             android:visibility="gone"
             />
 

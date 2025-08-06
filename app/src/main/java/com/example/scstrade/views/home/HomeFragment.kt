@@ -479,7 +479,7 @@ class HomeFragment : Fragment() {
                                         Entry(index.toFloat(), it.tradingHigh?.toFloat()?:0f)
                                     }
                                 }
-                                binding.cardHome.lineChart.setEntries(entries, false, true)
+                                binding.cardHome.lineChart.setEntries(entries, false, false)
                             }
                         }
                     }

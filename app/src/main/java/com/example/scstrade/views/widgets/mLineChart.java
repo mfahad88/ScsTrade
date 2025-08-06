@@ -17,6 +17,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class mLineChart extends LineChart {
     private Context context;
@@ -70,7 +72,7 @@ public class mLineChart extends LineChart {
         this.getXAxis().setEnabled(isxAxis);
         this.isRightEnabled = isRightEnabled;
         this.fitScreen();
-        this.setViewPortOffsets(0f,0f,0f,0f);
+        this.setViewPortOffsets(40f, 0f, 20f, 10f);
         this.setExtraOffsets(0f,0f,0f,0f);
         this.setDragEnabled(false);
         this.setTouchEnabled(false);
@@ -122,7 +124,7 @@ public class mLineChart extends LineChart {
         dataSet.setColor(lineColor);
         dataSet.setLineWidth(2f);
         dataSet.setDrawIcons(false);
-        this.setViewPortOffsets(0f,0f,70f,0f);
+        this.setViewPortOffsets(120f, 0f, 0f, 0f);
         this.setExtraOffsets(0f,0f,0f,0f);
         LineData lineData = new LineData(dataSet);
 
@@ -135,15 +137,24 @@ public class mLineChart extends LineChart {
         xAxis.setDrawGridLines(false);
         YAxis leftAxis = this.getAxisLeft();
         leftAxis.setDrawGridLines(false);
-        leftAxis.setEnabled(false);
+        leftAxis.setEnabled(true);
+        leftAxis.setTextSize(8f);
+//        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART); // ✅ important
         leftAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
+        leftAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(Locale.US, "%,.2f", value);
+            }
+        });
+
 
         YAxis rightAxis = this.getAxisRight();
         rightAxis.setTextSize(5f);
         rightAxis.setTextColor(ContextCompat.getColor(context,R.color.black));
-        rightAxis.setDrawLabels(true);
+        rightAxis.setDrawLabels(false);
         rightAxis.setDrawGridLines(false);
-        rightAxis.setEnabled(isRightEnabled);
+        rightAxis.setEnabled(false);
 
         this.setHighlightPerTapEnabled(false);
         this.setHighlightPerDragEnabled(false);

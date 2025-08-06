@@ -260,7 +260,7 @@
     </style>
 
     <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconSize">30dp</item>
+        <item name="itemIconSize">27dp</item>
         <item name="itemTextColor">@color/md_theme_onPrimary</item>
         <item name="itemIconTint">@color/md_theme_onPrimary</item>
 

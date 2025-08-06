@@ -24,15 +24,15 @@ class CustomCandlestickChart @JvmOverloads constructor(
         setupChart()
     }
 
-  /*  override fun onTouchEvent(event: MotionEvent?): Boolean {
-        parent?.requestDisallowInterceptTouchEvent(true)
-        return super.onTouchEvent(event)
-    }
+    /*  override fun onTouchEvent(event: MotionEvent?): Boolean {
+          parent?.requestDisallowInterceptTouchEvent(true)
+          return super.onTouchEvent(event)
+      }
 
-    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        parent?.requestDisallowInterceptTouchEvent(true)
-        return super.onInterceptTouchEvent(ev)
-    }*/
+      override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+          parent?.requestDisallowInterceptTouchEvent(true)
+          return super.onInterceptTouchEvent(ev)
+      }*/
     private fun setupChart() {
         this.description.isEnabled = false
         this.setBackgroundColor(Color.WHITE)
@@ -51,11 +51,15 @@ class CustomCandlestickChart @JvmOverloads constructor(
 //        this.xAxis.axisMaximum=200f
 
         // Left Y Axis
-        this.axisLeft.isEnabled = false
+        this.axisLeft.isEnabled = true
+        this.axisLeft.setDrawGridLines(true)
+        this.axisLeft.setDrawAxisLine(true)
+        this.axisLeft.textColor = ContextCompat.getColor(context,R.color.black)
+        this.axisLeft.textSize=8F
         // Right Y Axis
         this.axisRight.setDrawGridLines(true)
         this.axisRight.setDrawAxisLine(true)
-        this.axisRight.isEnabled = true
+        this.axisRight.isEnabled = false
         this.axisRight.textColor = ContextCompat.getColor(context,R.color.black)
         this.axisRight.textSize=8F
         // Disable Legend
