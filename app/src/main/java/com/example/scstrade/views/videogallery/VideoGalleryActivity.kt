@@ -1,6 +1,9 @@
 package com.example.scstrade.views.videogallery
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -104,5 +107,33 @@ class VideoGalleryActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        overrideConfiguration?.densityDpi = resources.displayMetrics.densityDpi
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
+
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        val config = Configuration(res.configuration)
+        val metrics = res.displayMetrics
+
+        val widthInches = metrics.widthPixels / metrics.xdpi
+        val heightInches = metrics.heightPixels / metrics.ydpi
+        val diagonalInches = Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+
+        config.fontScale = when {
+            diagonalInches in 3.9..4.9 -> 0.85f
+            diagonalInches in 4.9..5.4 -> 0.95f
+            diagonalInches in 5.5..6.9 -> 1.0f
+            else -> 1.2f
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            config.fontWeightAdjustment = 0
+        }
+
+        res.updateConfiguration(config, metrics)
+        return res
     }
 }

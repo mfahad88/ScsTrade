@@ -511,7 +511,21 @@ class HomeFragment : Fragment() {
                                         Entry(index.toFloat(), it.tradingHigh?.toFloat()?:0f)
                                     }
                                 }
-                                binding.cardHome.lineChart.setEntries(entries,120f, false, false)
+                                if(Utils.getSmallestWidthDp(requireContext())>450){
+                                    binding.cardHome.lineChart.setEntries(
+                                        entries,
+                                        70f,
+                                        false,
+                                        false
+                                    )
+                                }else {
+                                    binding.cardHome.lineChart.setEntries(
+                                        entries,
+                                        120f,
+                                        false,
+                                        false
+                                    )
+                                }
                             }
                         }
                     }
