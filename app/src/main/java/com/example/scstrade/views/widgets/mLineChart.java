@@ -2,15 +2,12 @@ package com.example.scstrade.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.example.scstrade.R;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -19,11 +16,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,16 +59,16 @@ public class mLineChart extends LineChart {
         return entries;
     }
 
-    public void setEntries(List<Entry> entries,boolean isxAxis,boolean isRightEnabled) {
+    public void setEntries(List<Entry> entries,float offsetLeft,boolean isxAxis,boolean isRightEnabled) {
         this.entries = entries;
         this.getXAxis().setEnabled(isxAxis);
         this.isRightEnabled = isRightEnabled;
         this.fitScreen();
-        this.setViewPortOffsets(40f, 0f, 20f, 10f);
-        this.setExtraOffsets(0f,0f,0f,0f);
+//        this.setViewPortOffsets(40f, 0f, 20f, 10f);
+//        this.setExtraOffsets(0f,0f,0f,0f);
         this.setDragEnabled(false);
         this.setTouchEnabled(false);
-        init(context,attrs);
+        init(context,offsetLeft,attrs);
     }
 
     private List<Entry> entries;
@@ -91,7 +83,7 @@ public class mLineChart extends LineChart {
         super(context, attrs);
         this.context=context;
         this.attrs=attrs;
-        init(context,attrs);
+        init(context, 0f, attrs);
     }
 
 
@@ -100,10 +92,10 @@ public class mLineChart extends LineChart {
         super(context, attrs, defStyle);
         this.context=context;
         this.attrs=attrs;
-        init(context,attrs);
+        init(context, 0f, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, float offsetLeft, AttributeSet attrs) {
         TypedArray a=context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.LabelledTextField,
@@ -124,7 +116,7 @@ public class mLineChart extends LineChart {
         dataSet.setColor(lineColor);
         dataSet.setLineWidth(2f);
         dataSet.setDrawIcons(false);
-        this.setViewPortOffsets(120f, 0f, 0f, 0f);
+        this.setViewPortOffsets(offsetLeft, 0f, 0f, 0f);
         this.setExtraOffsets(0f,0f,0f,0f);
         LineData lineData = new LineData(dataSet);
 

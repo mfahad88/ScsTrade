@@ -78,7 +78,7 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
                 val entries = chartList.reversed().mapNotNull { it.tradingHigh?.toFloat() }
                     .mapIndexed { index, high -> Entry(index.toFloat(), high) }
 
-                binding.lineChart.setEntries(entries, false, false)
+                binding.lineChart.setEntries(entries,0f, false, false)
                 Log.d("ChartDebug", "IndexCode: \"$indexCode\" → Cleaned: \"$cleanedKey\" → Matched Key: \"$matchedKey\" → Entries: $entries")
                 binding.lineChart.moveViewToX(entries.size.toFloat())
                 binding.lineChart.xAxis.setDrawLabels(false)

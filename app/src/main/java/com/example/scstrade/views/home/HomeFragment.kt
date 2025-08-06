@@ -445,20 +445,52 @@ class HomeFragment : Fragment() {
         observeViewModels()
         return binding.root
     }
+    fun View.fadeIn(duration: Long = 300) {
+        alpha = 0f
+        visibility = View.VISIBLE
+        animate().alpha(1f).setDuration(duration).start()
+    }
 
+    fun View.fadeOut(duration: Long = 300) {
+        animate().alpha(0f).setDuration(duration).withEndAction {
+            visibility = View.GONE
+        }.start()
+    }
+    fun View.fadeTo(duration: Long = 200, targetAlpha: Float = 1f, onEnd: (() -> Unit)? = null) {
+        animate().alpha(targetAlpha).setDuration(duration).withEndAction {
+            onEnd?.invoke()
+        }.start()
+    }
     private fun observeViewModels() {
         homeViewModel.apply {
             isLineSelected.observe(viewLifecycleOwner) {
                 binding.cardHome.line.setChipSelected(it)
-                binding.cardHome.lineChart.visibility = if (it) View.VISIBLE else View.GONE
-                binding.cardHome.candlestickChart.visibility = if (it) View.GONE else View.VISIBLE
+                if (it) {
+                    binding.cardHome.candlestickChart.fadeOut()
+                    binding.cardHome.lineChart.fadeIn()
+                } else {
+                    binding.cardHome.lineChart.fadeOut()
+                    binding.cardHome.candlestickChart.fadeIn()
+                }
+               /* binding.cardHome.lineChart.visibility = if (it) View.VISIBLE else View.GONE
+                binding.cardHome.candlestickChart.visibility = if (it) View.GONE else View.VISIBLE*/
             }
             isCandleSelected.observe(viewLifecycleOwner) {
                 binding.cardHome.candle.setChipSelected(it)
             }
             selectedTime.observe(viewLifecycleOwner) {
                 val times = listOf(binding.cardHome.min1, binding.cardHome.min5, binding.cardHome.min15, binding.cardHome.min30, binding.cardHome.hr1, binding.cardHome.d1)
-                times.forEachIndexed { i, chip -> chip.setChipSelected(it[i]) }
+//                times.forEachIndexed { i, chip -> chip.setChipSelected(it[i]) }
+                times.forEachIndexed { i, chip ->
+                    // Optional: Only animate if state is changing
+                    val shouldSelect = it[i]
+                    if (chip.isSelected != shouldSelect) {
+                        chip.fadeTo(targetAlpha = 0.0f) {
+                            chip.setChipSelected(shouldSelect)
+                            chip.fadeTo(targetAlpha = 1f)
+                        }
+                    }
+                }
             }
 
             chartItem.observe(viewLifecycleOwner) { result ->
@@ -479,7 +511,7 @@ class HomeFragment : Fragment() {
                                         Entry(index.toFloat(), it.tradingHigh?.toFloat()?:0f)
                                     }
                                 }
-                                binding.cardHome.lineChart.setEntries(entries, false, false)
+                                binding.cardHome.lineChart.setEntries(entries,120f, false, false)
                             }
                         }
                     }

@@ -307,7 +307,7 @@ class TechnicalFragment : Fragment() {
                     binding.lineChart.setEntries(result.data?.reversed()?.map {
                         interval+=1
                         Entry(interval.toFloat(),it.tradingHigh?.toFloat()?:0f)
-                    },false,true)
+                    },40f,false,true)
 
                 }
             }
