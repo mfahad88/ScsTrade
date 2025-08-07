@@ -164,12 +164,12 @@
                                 android:gravity="center" />
 
                             <TextView
+                                android:id="@+id/open_account"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/a_circle"
-                                android:layout_alignTop="@id/a_circle"
-                                android:layout_alignBottom="@id/a_circle"
                                 android:layout_marginStart="@dimen/dp_10"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@id/arrow"
                                 android:text="Open Your Account"
                                 android:textFontWeight="500"
                                 android:textAppearance="@style/contact_sup" />
@@ -181,6 +181,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="@dimen/dp_5"
                                 android:padding="@dimen/dp_10"
+                                android:id="@+id/arrow"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -213,6 +214,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/callIcon"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:layout_marginStart="@dimen/dp_10"
                                 android:text="@string/contact_sup"
                                 android:textFontWeight="500"
@@ -224,8 +226,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/contact_sup"
                                 android:layout_alignStart="@id/contact_sup"
+                                android:layout_toLeftOf="@id/imageView5"
                                 android:text="@string/here_to_hel"
                                 android:textFontWeight="400"
+                                android:layout_marginBottom="@dimen/dp_5"
                                 android:textAppearance="@style/here_to_hel" />
 
                             <ImageView
@@ -274,6 +278,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/roundedAvatar"
                                 android:layout_marginStart="@dimen/dp_10"
+                                tools:text="Muhammad Fahad"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:textFontWeight="500"
                                 android:textAppearance="@style/contact_sup" />
 
@@ -281,6 +287,7 @@
                                 android:id="@+id/profile_email"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                tools:text="Muhammad Fahad"
                                 android:layout_below="@id/profile_name"
                                 android:layout_alignStart="@id/profile_name"
                                 android:textFontWeight="400"

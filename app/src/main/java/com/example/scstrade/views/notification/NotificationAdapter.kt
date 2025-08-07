@@ -87,6 +87,14 @@ class NotificationAdapter(private val itemList: List<NotificationDto>,private va
                 }else{
                     mar202512.visibility = View.GONE
                 }
+
+                if(!TextUtils.isEmpty(item.companyCode)) {
+                    mcbimFunds.visibility = View.VISIBLE
+                    mcbimFunds.text = item.companyName
+                }else{
+                    mcbimFunds.visibility = View.GONE
+                }
+
                 if(!TextUtils.isEmpty(item.companyName)) {
                     crescentSt.visibility = View.VISIBLE
                     crescentSt.text = item.companyName

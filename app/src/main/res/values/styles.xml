@@ -566,7 +566,7 @@
     </style>
 
     <style name="here_to_hel">
-        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textSize">@dimen/sp_10</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textColor">@color/md_theme_outline</item>
         <item name="android:fontFamily">@font/custom_font</item>

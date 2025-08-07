@@ -33,7 +33,17 @@ class AnalystOpinionAdapter(
             body.text = item.aoText?.ifBlank { "" } ?: ""
             mar202512.text = formatJsonDate(item.aoDate)
             person.text = item.person?.ifBlank { "" } ?: ""
+            if(!symbol.isNullOrBlank()){
+                mcbimFunds.visibility = View.VISIBLE
+            }else{
+                mcbimFunds.visibility = View.GONE
+            }
 
+            if(!name.isNullOrBlank()){
+                crescentSt.visibility = View.VISIBLE
+            }else{
+                crescentSt.visibility = View.GONE
+            }
             if(!item.link.isNullOrBlank()){
                 source.visibility = View.VISIBLE
             }else{

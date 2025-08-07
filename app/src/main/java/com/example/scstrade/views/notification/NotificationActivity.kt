@@ -30,6 +30,8 @@ import com.example.scstrade.viewmodels.NotificationViewModel
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
+import com.example.scstrade.views.analystopinion.AnalystOpinionActivity
+import com.example.scstrade.views.main.MainActivity
 
 class NotificationActivity : BaseActivity() {
     lateinit var binding: ActivityNotificaionBinding
@@ -99,11 +101,17 @@ class NotificationActivity : BaseActivity() {
                         notificationList.visibility = View.VISIBLE
                         loader.visibility = View.GONE
                         binding.notificationList.adapter=NotificationAdapter(result.data?.toList()?: emptyList(),{
-                            if(!TextUtils.isEmpty(it.mainAnnIDRef.toString()) && it.announcementTypeName?.isNotBlank()?:true){
-                            val intent= Intent(this@NotificationActivity,NotificationDetailActivity::class.java)
-                            intent.putExtra(AppConstants.ID_REF,it.mainAnnIDRef)
-                            intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.announcementTypeName)
-                            startActivity(intent)
+                            if(it.announcementTypeName?.contains("Analyst Opinion",true)?:false){
+                                val intent = Intent(this@NotificationActivity, AnalystOpinionActivity::class.java)
+                                intent.putExtra(AppConstants.OPINION_TYPE,it.announcementTypeName?.substringAfter("-")?.trim())
+                                startActivity(intent)
+                            }else{
+                                if(!TextUtils.isEmpty(it.mainAnnIDRef.toString()) && it.announcementTypeName?.isNotBlank()?:true){
+                                    val intent= Intent(this@NotificationActivity,NotificationDetailActivity::class.java)
+                                    intent.putExtra(AppConstants.ID_REF,it.mainAnnIDRef)
+                                    intent.putExtra(AppConstants.ANNOUNCEMENT_TYPE_NAME,it.announcementTypeName)
+                                    startActivity(intent)
+                                }
                             }
 
                         })
