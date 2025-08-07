@@ -174,7 +174,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 if(isLineChart){
                     val resultDeffered = async{repository.getIndices()}
                     val result_KSEALLDeffered= async{ repository.getIndexChart("KSE ALL", "1D") }
-                    val result_KSE100Deffered = async { repository.getIndexChart("KSE", "1D") }
+                    val result_KSE100Deffered = async { repository.getIndexChart("KSE 100", "1D") }
                     val result_KSE30Deffered = async { repository.getIndexChart("KSE 30", "1D") }
                     val result_KMI30Deffered = async { repository.getIndexChart("KMI 30", "1D") }
                     withContext(Dispatchers.Main){

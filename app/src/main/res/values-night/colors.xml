@@ -220,5 +220,7 @@
     <color name="market_normal">#1E1E1E</color>
     <color name="tvTitle">#CCCCCC</color>
     <color name="tvValue">#F2F2F2</color>
+    <color name="green_chip">#1AF7FFEE</color>
+    <color name="red_chip">#1AF7FFEE</color>
 
 </resources>

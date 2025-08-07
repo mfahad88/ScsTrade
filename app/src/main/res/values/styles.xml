@@ -54,7 +54,7 @@
     <style name="net_change">
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:textColor">@color/md_theme_onSurfaceVariant</item>
+        <item name="android:textColor">@color/colorDarkerr</item>
 
     </style>
 

@@ -26,7 +26,8 @@ class SettingsActivity : BaseActivity() {
         enableEdgeToEdge()
         Utils.setEdgeToEdgeWithWhiteIcons(this)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
+        binding.toolbar.binding.market.text="Settings"
+   /*     ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             // Apply top and bottom padding
@@ -39,7 +40,7 @@ class SettingsActivity : BaseActivity() {
 
             // Return insets so child views can also use them
             insets
-        }
+        }*/
 
         if(!Utils.getSharedPreference(this,AppConstants.LIGHT_MODE)){
             binding.switch1.isChecked = false

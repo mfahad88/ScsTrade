@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -44,11 +45,15 @@ class IndexAdapter : ListAdapter<KSEIndices, IndexAdapter.IndexViewHolder>(KSEIn
                 if (netChangeDouble < 0.0) {
                     marketDown.visibility = View.VISIBLE
                     marketUp.visibility = View.GONE
+                    imageView3.rotation = 180f
+                    imageView3.setColorFilter(ContextCompat.getColor(binding.root.context,R.color.md_theme_error))
                     relativeLayout.setBackgroundResource(R.drawable.red_chip)
                 } else {
                     marketDown.visibility = View.GONE
                     marketUp.visibility = View.VISIBLE
                     relativeLayout.setBackgroundResource(R.drawable.green_chip)
+                    imageView3.setColorFilter(ContextCompat.getColor(binding.root.context,R.color.md_theme_primary))
+                    imageView3.rotation = 0f
                 }
 
                 populateChart(kseIndices.iNDEXCODE ?: "")

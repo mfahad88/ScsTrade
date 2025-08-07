@@ -42,7 +42,7 @@
     <string name="continue_wi">Continue with Google</string>
     <string name="scs_trade_p_logo">SCS Trade Pro</string>
     <string name="committed_t_appbar">Committed to intelligent investing</string>
-    <string name="committed_t">Committed to\nintelligent investing</string>
+    <string name="committed_t">Committed to intelligent investing</string>
     <string name="version_1_0">Version 1.0</string>
     <string name="register_an">Register An Account</string>
     <string name="create_weal">Create wealth and create a better future</string>
@@ -523,6 +523,7 @@
     <string name="get_started">Get Started with Portfolio</string>
     <string name="create_your">Create your demo portfolio and practice stock trading risk-free! Learn, experiment, and enhance your trading skills before investing real money.</string>
     <string name="analyst_opinion">Analyst Opinion</string>
+    <string name="watchlist_removed">Your watchlist has been deleted.</string>
 
     <array name="p_l_array">
         <item>P&amp;L</item>

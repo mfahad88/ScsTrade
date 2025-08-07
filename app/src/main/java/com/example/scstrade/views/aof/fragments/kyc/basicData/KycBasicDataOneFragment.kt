@@ -236,7 +236,7 @@ class KycBasicDataOneFragment : Fragment() {
 
     private fun populateRecord(basicData: BasicDetailResponse) {
         binding.dropdownTitle.setSelectedDropDown(basicData.salutation)
-        binding.dobInputLayout.selectedOption=Utils.formatDateString(inputDate = basicData.dateOfBirth.toString())
+        binding.dobInputLayout.selectedOption=Utils.formatDateString(inputDate = basicData.dateOfBirth.toString()/*, inputPattern = "yyyy-MM-dd"*/, outputPattern = "dd-MM-yyyy")
         binding.motherName.selectedOption = basicData.motherMaidenName
         binding.dropdownNationality.setSelectedDropDown(basicData.nationalityId)
         binding.maritalStatus.setSelectedOption(basicData.maritalStatus)

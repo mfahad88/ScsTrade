@@ -13,7 +13,7 @@
         android:id="@+id/imageView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_130"
+        android:layout_marginTop="@dimen/dp_100"
         android:src="@drawable/green_tick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +47,11 @@
         android:text="@string/you_have_su"
         android:textAppearance="@style/whatever_in"
         android:textFontWeight="500"
+        app:layout_constraintBottom_toTopOf="@+id/btnDashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/undertaking" />
+        app:layout_constraintTop_toBottomOf="@+id/undertaking"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="@dimen/dp_0"

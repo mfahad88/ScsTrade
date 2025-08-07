@@ -92,10 +92,11 @@ class AccountOpeningThreeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.mutableLifeCycle.value = 5
+
         // Inflate the layout for this fragment
         binding = FragmentAccountOpeningThreeBinding.inflate(inflater,container,false)
         viewModel = (requireActivity() as AofActivity).viewModel
+        viewModel.mutableLifeCycle.value = 5
 //        initFields()
         if(viewModel.accountOpening.accountopeningrelationshipType.equals("1")){
             binding.proofOfRelative.visibility = View.GONE
