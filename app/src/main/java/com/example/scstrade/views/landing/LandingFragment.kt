@@ -87,6 +87,10 @@ class LandingFragment : Fragment() {
                 MarketFragment()
             }
             binding.bottomNavigationView.selectedItemId= R.id.marketFragment
+        }else if((requireActivity() as MainActivity).intent.getBooleanExtra(AppConstants.IS_ANALYST,false)){
+            val intent = Intent(requireContext(), AnalystOpinionActivity::class.java)
+            intent.putExtra(AppConstants.OPINION_TYPE,(requireActivity() as MainActivity).intent.getStringExtra(AppConstants.OPINION_TYPE))
+            startActivity(intent)
         }
 
         childFragmentManager.addOnBackStackChangedListener {

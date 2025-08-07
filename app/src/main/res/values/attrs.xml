@@ -8,16 +8,16 @@
     <attr name="colorSpecialHeadingColorContainer" format="color" />
     <attr name="colorOnSpecialHeadingColorContainer" format="color" />
     <declare-styleable name="LabelledTextField">
-        <attr name="hintText" format="string"/>
-        <attr name="hintTextField" format="string"/>
-        <attr name="infoText" format="string"/>
-        <attr name="android:text" format="string"/>
+        <attr name="hintText" format="string" />
+        <attr name="hintTextField" format="string" />
+        <attr name="infoText" format="string" />
+        <attr name="android:text" format="string" />
         <attr name="android:digits" />
-        <attr name="android:drawableEnd" string="reference"/>
-        <attr name="android:inputType" format="reference"/>
+        <attr name="android:drawableEnd" string="reference" />
+        <attr name="android:inputType" format="reference" />
         <attr name="android:maxLines" format="reference" />
-        <attr name="android:maxLength" format="integer"/>
-        <attr name="passwordToggleEnabled" format="boolean"/>
+        <attr name="android:maxLength" format="integer" />
+        <attr name="passwordToggleEnabled" format="boolean" />
         <attr name="android:imeOptions" format="enum">
             <enum name="actionUnspecified" value="0" />
             <enum name="actionNone" value="1" />
@@ -30,48 +30,48 @@
         </attr>
     </declare-styleable>
     <declare-styleable name="TermsConditionView">
-        <attr name="buttonTitle" format="string"/>
-        <attr name="title" format="string"/>
+        <attr name="buttonTitle" format="string" />
+        <attr name="title" format="string" />
     </declare-styleable>
     <declare-styleable name="LabelledTextIconField">
-        <attr name="hintLabelText" format="string"/>
-        <attr name="hintLabelTextField" format="string"/>
-        <attr name="android:inputType" format="reference"/>
-        <attr name="android:maxLength" format="integer"/>
+        <attr name="hintLabelText" format="string" />
+        <attr name="hintLabelTextField" format="string" />
+        <attr name="android:inputType" format="reference" />
+        <attr name="android:maxLength" format="integer" />
     </declare-styleable>
     <declare-styleable name="LabelledSpinner">
-        <attr name="hintLabel" format="string"/>
+        <attr name="hintLabel" format="string" />
         <attr name="dropdownLabel" format="string" />
         <attr name="entries" format="reference" />
     </declare-styleable>
     <declare-styleable name="GrayCardView">
-        <attr name="titleGrayView" format="string"/>
-        <attr name="android:text" format="string"/>
+        <attr name="titleGrayView" format="string" />
+        <attr name="android:text" format="string" />
     </declare-styleable>
     <declare-styleable name="DualOptionToggleView">
-        <attr name="titleDualOption" format="string"/>
-        <attr name="subTitleDualOption" format="string"/>
-        <attr name="hintDualOption" format="string"/>
-        <attr name="titleButton1" format="string"/>
-        <attr name="titleButton2" format="string"/>
-        <attr name="drawable" format="reference"/>
+        <attr name="titleDualOption" format="string" />
+        <attr name="subTitleDualOption" format="string" />
+        <attr name="hintDualOption" format="string" />
+        <attr name="titleButton1" format="string" />
+        <attr name="titleButton2" format="string" />
+        <attr name="drawable" format="reference" />
     </declare-styleable>
     <declare-styleable name="DualDropdownSelectorView">
-        <attr name="titleDualDropdown" format="string"/>
+        <attr name="titleDualDropdown" format="string" />
         <attr name="typeDualDropdown1" format="enum">
-            <enum name="dropdown" value="0"/>
-            <enum name="text" value="1"/>
+            <enum name="dropdown" value="0" />
+            <enum name="text" value="1" />
         </attr>
         <attr name="typeDualDropdown2" format="enum">
-            <enum name="dropdown" value="0"/>
-            <enum name="text" value="1"/>
+            <enum name="dropdown" value="0" />
+            <enum name="text" value="1" />
         </attr>
-        <attr name="hintDualDropdown1" format="string"/>
-        <attr name="hintDualDropdown2" format="string"/>
+        <attr name="hintDualDropdown1" format="string" />
+        <attr name="hintDualDropdown2" format="string" />
     </declare-styleable>
     <declare-styleable name="FileUploadCamera">
-        <attr name="titleFileUpload" format="string"/>
-        <attr name="colorFileUpload" format="color"/>
+        <attr name="titleFileUpload" format="string" />
+        <attr name="colorFileUpload" format="color" />
 
     </declare-styleable>
     <declare-styleable name="mLineChart">
@@ -84,39 +84,39 @@
         <attr name="entries" format="string"/>-->
     </declare-styleable>
     <declare-styleable name="LabelledCardTextField">
-        <attr name="titleLabelledCardTextField" format="string"/>
-        <attr name="hint1" format="string"/>
-        <attr name="hint2" format="string"/>
+        <attr name="titleLabelledCardTextField" format="string" />
+        <attr name="hint1" format="string" />
+        <attr name="hint2" format="string" />
     </declare-styleable>
     <declare-styleable name="VolumeChip">
-        <attr name="android:text" format="string|reference"/>
-        <attr name="android:background" format="color|reference"/>
+        <attr name="android:text" format="string|reference" />
+        <attr name="android:background" format="color|reference" />
     </declare-styleable>
 
     <declare-styleable name="NetChangeChip">
-        <attr name="android:text" format="string|reference"/>
-        <attr name="android:background" format="color|reference"/>
+        <attr name="android:text" format="string|reference" />
+        <attr name="android:background" format="color|reference" />
     </declare-styleable>
     <declare-styleable name="HighView">
-        <attr name="android:text" format="string|reference"/>
+        <attr name="android:text" format="string|reference" />
     </declare-styleable>
     <declare-styleable name="LowView">
-        <attr name="android:text" format="string|reference"/>
+        <attr name="android:text" format="string|reference" />
     </declare-styleable>
     <declare-styleable name="TradeValueView">
-        <attr name="android:text" format="string|reference"/>
-        <attr name="android:textSize" format="dimension"/>
-        <attr name="android:src" format="reference"/>
+        <attr name="android:text" format="string|reference" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="android:src" format="reference" />
     </declare-styleable>
     <declare-styleable name="TimeChip">
-        <attr name="android:text" format="string|reference"/>
-        <attr name="setSelected" format="boolean"/>
+        <attr name="android:text" format="string|reference" />
+        <attr name="setSelected" format="boolean" />
     </declare-styleable>
     <declare-styleable name="mMarket"></declare-styleable>
     <declare-styleable name="DayRange">
-        <attr name="lowPrice" format="float"/>
-        <attr name="highPrice" format="float"/>
-        <attr name="closePrice" format="float"/>
+        <attr name="lowPrice" format="float" />
+        <attr name="highPrice" format="float" />
+        <attr name="closePrice" format="float" />
     </declare-styleable>
     <declare-styleable name="FilterItemView">
         <attr name="filterTitle" format="string" />
@@ -125,5 +125,10 @@
         <attr name="mv_title" format="string" />
         <attr name="mv_value" format="string" />
         <attr name="isColor_Enabled" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="AppWidgetAttrs">
+        <attr name="appWidgetPadding" format="dimension" />
+        <attr name="appWidgetInnerRadius" format="dimension" />
+        <attr name="appWidgetRadius" format="dimension" />
     </declare-styleable>
 </resources>

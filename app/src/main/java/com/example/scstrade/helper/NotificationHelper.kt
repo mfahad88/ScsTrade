@@ -165,7 +165,7 @@ class NotificationHelper(private val context: Context) {
         val refId = notificationMap["reference_id"]?.toIntOrNull() ?: System.currentTimeMillis().toInt()
         val title = notificationMap["title"] ?: "SCSTrade Notification"
         val company = notificationMap["company"] ?: ""
-        val details = notificationMap["details"]?.replace("| ", "\n")?.trim()
+        val details = notificationMap["details"]?.trim()/*replace("| ", "\n")?.trim()*/
         var intent:Intent?=null
         // Launch MainActivity and it will redirect to NotificationDetailActivity
         if(title.equals("Market Updates",true)){
@@ -175,7 +175,16 @@ class NotificationHelper(private val context: Context) {
                 putExtra(AppConstants.IS_MARKET, true)
             }
 
-        }else {
+        }else if(title.contains("Analyst Opinion",true)){
+            val type=title.substringAfter("-").trim()
+            intent = Intent(context, MainActivity::class.java).apply {
+                flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra(AppConstants.IS_ANALYST, true)
+                putExtra(AppConstants.OPINION_TYPE,type)
+            }
+        }
+        else {
             intent = Intent(context, MainActivity::class.java).apply {
                 flags =
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -227,6 +236,46 @@ class NotificationHelper(private val context: Context) {
 
     fun formatDetailsWithBoldKeys(details: String?): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
+
+        if (!details.isNullOrBlank()) {
+            if(details.contains("|")){
+                val parts = details.split("|")
+                // Filter out invalid lines first
+                val validLines = parts.mapNotNull { part ->
+                    val line = part.trim()
+                    if (line.contains(":")) {
+                        val key = line.substringBefore(":").trim()
+                        val value = line.substringAfter(":").trim()
+
+                        if (key.isBlank() || value.isBlank() || value.equals("null", ignoreCase = true)) return@mapNotNull null
+                        Pair(key, value)
+                    } else null
+                }
+
+                // Loop through validLines and only append \n for non-last items
+                for ((index, pair) in validLines.withIndex()) {
+                    val (key, value) = pair
+                    Log.e("Notification:", "$key\n$value")
+                    val start = builder.length
+                    builder.append("$key: ")
+                    builder.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        start,
+                        start + key.length + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    builder.append(value)
+                    if (index != validLines.lastIndex) {
+                        builder.append("\n")
+                    }
+                }
+            }else{
+                builder.append(details)
+            }
+        }
+
+        return builder
+        /*val builder = SpannableStringBuilder()
         if (details != null) {
             val parts = details.split("|")
             for (part in parts) {
@@ -236,7 +285,7 @@ class NotificationHelper(private val context: Context) {
                     val value = line.substringAfter(":").trim()
 
                     if (value.isBlank() || value.equals("null", ignoreCase = true)) continue
-
+                    Log.e("Notification: ","$key\n$value")
                     val start = builder.length
                     builder.append("$key: ")
                     builder.setSpan(StyleSpan(Typeface.BOLD), start, start + key.length + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -245,7 +294,7 @@ class NotificationHelper(private val context: Context) {
                 }
             }
         }
-        return builder
+        return builder*/
     }
 
     private fun createNotificationChannel() {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:background="#f4f4f4"
+    android:layout_marginBottom="6dp">
+
+    <TextView
+        android:id="@+id/tv_index_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KSE 100 Index"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_index_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="145559.57"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_index_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+471.08"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

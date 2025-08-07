@@ -88,14 +88,14 @@ android {
             }
         }
     }*/
-   /* applicationVariants.all {
+    applicationVariants.all {
         outputs.all {
             val variant = this@all
             val date = SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Date())
             val fileName = "SCSTrade-Pro_${defaultConfig.versionName}_$date.apk"
             (this as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = fileName
         }
-    }*/
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -154,7 +154,7 @@ dependencies {
     implementation ("androidx.compose.material:material:1.7.7")
 //    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 //    implementation ("com.prof18.rssparser:rssparser:1.1")
-
+    implementation ("com.google.firebase:firebase-perf:20.5.1")
     implementation ("com.fasterxml.jackson.core:jackson-core:2.18.3")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.18.3")
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.18.3")

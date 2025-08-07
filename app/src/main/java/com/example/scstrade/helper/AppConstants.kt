@@ -2,6 +2,8 @@ package com.example.scstrade.helper
 
 class AppConstants {
     companion object{
+        val IS_ANALYST: String? = "is_analyst"
+        val OPINION_TYPE: String? = "opinion_type"
         val IS_MARKET: String? = "is_market"
         val IS_NOTIFY: String = "is_notify"
         val MARKET_UPDATE: String="market_update"

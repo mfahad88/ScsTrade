@@ -8,6 +8,7 @@
         <item name="fontFamily">@font/custom_font</item>
 
     </style>
+
     <style name="RoundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">0dp</item>
@@ -364,7 +365,6 @@
     </style>
 
 
-
     <style name="time_chip_text">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_9</item>
@@ -456,10 +456,10 @@
     <style name="CustomFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/md_theme_primary</item> <!-- FAB background color -->
         <item name="rippleColor">@color/md_theme_primary</item> <!-- Ripple effect color -->
-<!--        <item name="app:tint">@color/white</item> &lt;!&ndash; Icon tint color &ndash;&gt;-->
+        <!--        <item name="app:tint">@color/white</item> &lt;!&ndash; Icon tint color &ndash;&gt;-->
         <item name="android:layout_width">60dp</item> <!-- Custom FAB size -->
         <item name="android:layout_height">60dp</item>
-<!--        <item name="app:maxImageSize">36dp</item> &lt;!&ndash; Icon size &ndash;&gt;-->
+        <!--        <item name="app:maxImageSize">36dp</item> &lt;!&ndash; Icon size &ndash;&gt;-->
         <item name="elevation">6dp</item> <!-- Shadow -->
         <item name="android:layout_gravity">bottom|end</item>
     </style>
@@ -484,8 +484,9 @@
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
-    <style name="CustomButton"  parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/gray_rounded_button</item> <!-- Custom background -->
+    <style name="CustomButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/gray_rounded_button
+        </item> <!-- Custom background -->
         <item name="android:textColor">@color/md_theme_outline</item> <!-- Text color -->
         <item name="android:textSize">@dimen/sp_12</item> <!-- Text size -->
         <item name="android:elevation">4dp</item> <!-- Shadow effect -->
@@ -758,6 +759,7 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/custom_font</item>
     </style>
+
     <style name="custom_green" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/md_theme_primary</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
@@ -772,6 +774,7 @@
         <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">@color/md_theme_onPrimary</item>
     </style>
+
     <style name="syed_abdull">
         <item name="android:textSize">@dimen/sp_27</item>
         <item name="android:letterSpacing">-0.02</item>
@@ -1457,12 +1460,14 @@
         <item name="boxStrokeWidthFocused">1dp</item>
         <item name="hintTextColor">@color/black</item>
     </style>
+
     <style name="CustomTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxCollapsedPaddingTop">0dp</item>
         <item name="boxStrokeColor">@color/md_theme_onSurfaceVariant</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="boxStrokeWidthFocused">3dp</item>
     </style>
+
     <style name="preferences">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_18</item>
@@ -1512,7 +1517,6 @@
         <item name="itemVerticalPadding">0dp</item>
 
     </style>
-
 
 
     <style name="snapshot_logo">
@@ -1787,6 +1791,7 @@
         <item name="android:textSize">@dimen/sp_10</item>
         <item name="android:textColor">@color/md_theme_outline</item>
     </style>
+
     <style name="TradeLabel" parent="TextAppearance.AppCompat.Body2">
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_12</item>
@@ -1865,6 +1870,7 @@
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">#787776</item>
     </style>
+
     <style name="CustomPopupMenu" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:popupBackground">@color/white</item>
     </style>
@@ -1885,5 +1891,15 @@
         <item name="android:fontFamily">@font/custom_font</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Widget.ScsTrade.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+    </style>
+
+    <style name="Widget.ScsTrade.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 </resources>

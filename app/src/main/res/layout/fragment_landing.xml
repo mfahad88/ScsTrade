@@ -1,150 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.drawerlayout.widget.DrawerLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/drawerLayout"
-    android:background="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:openDrawer="end"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:openDrawer="end">
 
+    <!-- Main content with toolbar + bottom nav -->
     <RelativeLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:id="@+id/main">
+        android:background="@color/white">
 
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_147" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/coordinate"
-            >
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+                <com.example.scstrade.views.widgets.mMarket
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    app:layout_anchorGravity="center" />
 
-            </com.google.android.material.appbar.AppBarLayout>
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                style="@style/CustomBottomNavigationView"
-                app:itemBackground="@drawable/item_background"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/group_bottom_navigation"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/menu" />
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/toolbar"
+                    android:layout_above="@id/bottomNavigationView"
+                    />
 
-            <com.example.scstrade.views.widgets.mMarket
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="center" />
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/rectangle_bottom_bar"
+                    style="@style/CustomBottomNavigationView"
+                    app:itemBackground="@drawable/item_background"
+                    app:menu="@menu/menu"
+                    app:labelVisibilityMode="labeled" />
+            </RelativeLayout>
+
+
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
     </RelativeLayout>
 
+    <!-- Navigation Drawer Content -->
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        style="@style/NavigationViewStyle"
-        android:id="@+id/drawer_nav_view">
+        style="@style/NavigationViewStyle">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@drawable/navigation_background"
-                android:scaleType="centerCrop"/>
-
+                android:scaleType="centerCrop"
+                android:src="@drawable/navigation_background" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/sideMain">
 
+                <RelativeLayout
+                    android:id="@+id/sideMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Close Button -->
                     <ImageView
                         android:id="@+id/imageViewClose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/sideMenu"
                         android:layout_marginTop="@dimen/dp_40"
-                        app:srcCompat="@drawable/close_btn" />
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:src="@drawable/close_btn" />
 
+                    <!-- Side Menu -->
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/sideMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/sideMenu"
-                        android:nestedScrollingEnabled="false"
-                        tools:listitem="@layout/item_side_menu"
                         android:layout_below="@id/imageViewClose"
                         android:layout_marginTop="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_30"/>
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_side_menu" />
 
+                    <!-- Global Market Row -->
                     <RelativeLayout
+                        android:id="@+id/globalMarket"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_40"
-                        android:layout_marginTop="@dimen/dp_7"
-                        android:background="@drawable/gradient_global_market"
                         android:layout_below="@id/sideMenu"
-                        android:layout_alignEnd="@id/contact"
-                        android:layout_alignStart="@id/sideMenu"
-                        app:cornerRadius="5dp"
-                        android:id="@+id/globalMarket">
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:background="@drawable/gradient_global_market">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/global_icon"
-                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
                             android:layout_toStartOf="@id/global_mark"
-                            />
+                            android:layout_marginEnd="@dimen/dp_4"
+                            android:src="@drawable/global_icon" />
 
                         <TextView
                             android:id="@+id/global_mark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/global_mark"
                             android:layout_centerInParent="true"
-                            android:layout_marginStart="@dimen/dp_7"
-                            android:textAppearance="@style/global_mark"
-                            />
-
+                            android:text="@string/global_mark"
+                            android:textAppearance="@style/global_mark" />
                     </RelativeLayout>
 
-
+                    <!-- AOF Card -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/aof"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_60"
-                        app:cardBackgroundColor="@color/white"
-                        android:id="@+id/aof"
+                        android:layout_below="@id/globalMarket"
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_10"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:layout_below="@id/globalMarket"
-                        android:layout_alignStart="@id/sideMenu"
-                        >
+                        android:layout_marginStart="@dimen/dp_30"
+                        app:cardBackgroundColor="@color/white">
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -153,29 +154,25 @@
                                 android:id="@+id/a_circle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:background="@drawable/building_bl"
                                 android:text="A"
                                 android:textColor="@color/md_theme_onPrimary"
                                 android:textSize="18sp"
                                 android:textFontWeight="700"
-                                android:gravity="center"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginStart="@dimen/dp_10"
-                                android:layout_centerVertical="true"/>
+                                android:gravity="center" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Open Your Account"
-                                android:gravity="center_vertical"
-                                android:layout_toRightOf="@id/a_circle"
+                                android:layout_toEndOf="@id/a_circle"
                                 android:layout_alignTop="@id/a_circle"
                                 android:layout_alignBottom="@id/a_circle"
-                                android:textFontWeight="500"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:textAppearance="@style/contact_sup"
-                                />
-
+                                android:text="Open Your Account"
+                                android:textFontWeight="500"
+                                android:textAppearance="@style/contact_sup" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -185,45 +182,41 @@
                                 android:layout_marginEnd="@dimen/dp_5"
                                 android:padding="@dimen/dp_10"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
-
-
                         </RelativeLayout>
-
-
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Contact Card -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/contact"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_60"
-                        app:cardBackgroundColor="@color/white"
-                        android:id="@+id/contact"
                         android:layout_below="@id/aof"
-                        android:layout_alignStart="@id/aof"
-                        android:layout_alignEnd="@id/aof">
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_30"
+                        app:cardBackgroundColor="@color/white">
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:id="@+id/callIcon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/monogram"
-                                android:id="@+id/callIcon"
-                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:layout_centerVertical="true"/>
+                                android:src="@drawable/monogram" />
 
                             <TextView
                                 android:id="@+id/contact_sup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/callIcon"
-                                android:layout_alignTop="@id/callIcon"
-                                android:textFontWeight="500"
+                                android:layout_toEndOf="@id/callIcon"
                                 android:layout_marginStart="@dimen/dp_10"
                                 android:text="@string/contact_sup"
-                                android:textAppearance="@style/contact_sup"
-                                />
+                                android:textFontWeight="500"
+                                android:textAppearance="@style/contact_sup" />
 
                             <TextView
                                 android:id="@+id/here_to_hel"
@@ -231,10 +224,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/contact_sup"
                                 android:layout_alignStart="@id/contact_sup"
-                                android:textFontWeight="400"
                                 android:text="@string/here_to_hel"
-                                android:textAppearance="@style/here_to_hel"
-                                />
+                                android:textFontWeight="400"
+                                android:textAppearance="@style/here_to_hel" />
 
                             <ImageView
                                 android:id="@+id/imageView5"
@@ -245,48 +237,45 @@
                                 android:layout_marginEnd="@dimen/dp_5"
                                 android:padding="@dimen/dp_10"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
-
-
                         </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Profile Card -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_60"
-                        app:cardBackgroundColor="@color/white"
-                        android:id="@+id/profile"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_below="@id/contact"
-                        android:layout_alignStart="@id/aof"
-                        android:layout_alignEnd="@id/aof">
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_30"
+                        app:cardBackgroundColor="@color/white">
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/roundedAvatar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/dp_10"
                                 android:background="@drawable/building_bl"
-                                android:id="@+id/roundedAvatar"
                                 android:text="S"
                                 android:textColor="@color/md_theme_onPrimary"
                                 android:textSize="18sp"
                                 android:textFontWeight="700"
-                                android:gravity="center"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginStart="@dimen/dp_10"
-                                android:layout_centerVertical="true"/>
+                                android:gravity="center" />
 
                             <TextView
                                 android:id="@+id/profile_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/roundedAvatar"
-                                android:layout_alignTop="@id/roundedAvatar"
-                                android:textFontWeight="500"
+                                android:layout_toEndOf="@id/roundedAvatar"
                                 android:layout_marginStart="@dimen/dp_10"
-                                android:textAppearance="@style/contact_sup"
-                                />
+                                android:textFontWeight="500"
+                                android:textAppearance="@style/contact_sup" />
 
                             <TextView
                                 android:id="@+id/profile_email"
@@ -295,8 +284,7 @@
                                 android:layout_below="@id/profile_name"
                                 android:layout_alignStart="@id/profile_name"
                                 android:textFontWeight="400"
-                                android:textAppearance="@style/here_to_hel"
-                                />
+                                android:textAppearance="@style/here_to_hel" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -306,49 +294,40 @@
                                 android:layout_marginEnd="@dimen/dp_5"
                                 android:padding="@dimen/dp_10"
                                 app:srcCompat="@drawable/baseline_play_arrow_24" />
-
-
                         </RelativeLayout>
-
-
                     </com.google.android.material.card.MaterialCardView>
 
-
+                    <!-- App Settings -->
                     <RelativeLayout
+                        android:id="@+id/appSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignStart="@id/profile"
-                        android:layout_alignEnd="@id/profile"
                         android:layout_below="@id/profile"
-                        android:id="@+id/appSettings"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:layout_marginEnd="@dimen/dp_10"
                         android:background="@drawable/green_stroke">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/baseline_settings_24"
-                            android:layout_centerInParent="true"
-                            android:layout_toStartOf="@id/settings"/>
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@id/settings"
+                            android:layout_marginEnd="@dimen/dp_4"
+                            android:src="@drawable/baseline_settings_24" />
 
                         <TextView
+                            android:id="@+id/settings"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/app_settings"
-                            android:id="@+id/settings"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:textAppearance="@style/app_settings"
-                            android:lineSpacingExtra="3sp"
                             android:layout_centerInParent="true"
-                            android:gravity="center_horizontal|center_vertical"
-                            />
+                            android:gravity="center"
+                            android:text="@string/app_settings"
+                            android:textAppearance="@style/app_settings"
+                            android:lineSpacingExtra="3sp" />
                     </RelativeLayout>
                 </RelativeLayout>
             </androidx.core.widget.NestedScrollView>
         </FrameLayout>
-
     </com.google.android.material.navigation.NavigationView>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

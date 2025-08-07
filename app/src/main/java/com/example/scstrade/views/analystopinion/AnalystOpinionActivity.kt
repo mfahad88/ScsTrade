@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
 import com.example.scstrade.databinding.ActivityAnalystOpinionBinding
+import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.analystopinion.AnalystOpinionItem
@@ -44,6 +45,8 @@ class AnalystOpinionActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
+
+
 
         adapterA = AnalystOpinionAdapter(emptyList()) { item ->
             if (!item.link.isNullOrBlank()) {
@@ -109,6 +112,14 @@ class AnalystOpinionActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+
+        if(intent!=null){
+            if(intent.getStringExtra(AppConstants.OPINION_TYPE).equals("Technicals",true)){
+                binding.tabLayout.getTabAt(1)?.select()
+            }else{
+                binding.tabLayout.getTabAt(0)?.select()
+            }
+        }
     }
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
         overrideConfiguration?.densityDpi = resources.displayMetrics.densityDpi

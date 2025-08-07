@@ -1,6 +1,7 @@
 package com.example.scstrade.views.analystopinion.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,14 @@ class AnalystOpinionAdapter(
             mar202512.text = formatJsonDate(item.aoDate)
             person.text = item.person?.ifBlank { "" } ?: ""
 
+            if(!item.link.isNullOrBlank()){
+                source.visibility = View.VISIBLE
+            }else{
+                source.visibility = View.GONE
+            }
+            source.setOnClickListener {
+                onItemClick(item)
+            }
             // Handle expansion state
             val isExpanded = expandedPositions.contains(position)
             body.maxLines = if (isExpanded) Int.MAX_VALUE else 3
@@ -56,9 +65,9 @@ class AnalystOpinionAdapter(
                 }
             })
             // External click listener
-            root.setOnClickListener {
-                onItemClick(item)
-            }
+            /*root.setOnClickListener {
+
+            }*/
         }
 
         private fun formatJsonDate(jsonDate: String?): String {

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingVertical="@dimen/dp_5"
     android:paddingStart="@dimen/dp_8"
@@ -115,14 +116,14 @@
         android:lineSpacingExtra="1sp" />
 
 
+
     <LinearLayout
         android:id="@+id/more_detail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_4"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_gravity="end"
+        android:layout_gravity="start"
         android:gravity="center_vertical">
 
         <TextView
@@ -139,5 +140,24 @@
             android:layout_marginStart="@dimen/dp_5"
             android:src="@drawable/drop_down_icon"
             android:rotation="0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+            <TextView
+                android:id="@+id/source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
+                android:text="@string/source_sama"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAppearance="@style/source_sama"
+                android:textFontWeight="500" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
