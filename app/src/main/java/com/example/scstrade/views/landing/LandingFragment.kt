@@ -91,6 +91,8 @@ class LandingFragment : Fragment() {
             val intent = Intent(requireContext(), AnalystOpinionActivity::class.java)
             intent.putExtra(AppConstants.OPINION_TYPE,(requireActivity() as MainActivity).intent.getStringExtra(AppConstants.OPINION_TYPE))
             startActivity(intent)
+            (requireActivity() as MainActivity).intent.removeExtra(AppConstants.IS_ANALYST)
+            (requireActivity() as MainActivity).intent.removeExtra(AppConstants.OPINION_TYPE)
         }
 
         childFragmentManager.addOnBackStackChangedListener {

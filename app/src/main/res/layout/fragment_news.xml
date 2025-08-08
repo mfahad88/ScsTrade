@@ -22,6 +22,7 @@
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/horizontalList"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_0"
         android:paddingTop="@dimen/dp_10"

@@ -7,12 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scstrade.R
@@ -22,12 +24,13 @@ import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
 import com.example.scstrade.model.response.analystopinion.AnalystOpinionItem
 import com.example.scstrade.viewmodels.SharedViewModel
+import com.example.scstrade.views.BaseActivity
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.analystopinion.adapter.AnalystOpinionAdapter
 import com.example.scstrade.views.widgets.HorizontalDivider
 import com.google.android.material.tabs.TabLayout
 
-class AnalystOpinionActivity : AppCompatActivity() {
+class AnalystOpinionActivity : BaseActivity() {
     lateinit var binding: ActivityAnalystOpinionBinding
     lateinit var sharedViewModel: SharedViewModel
     private lateinit var adapterA: AnalystOpinionAdapter
@@ -45,7 +48,9 @@ class AnalystOpinionActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
-
+       onBackPressedDispatcher.addCallback {
+           finishAndRemoveTask()
+       }
 
 
         adapterA = AnalystOpinionAdapter(emptyList()) { item ->

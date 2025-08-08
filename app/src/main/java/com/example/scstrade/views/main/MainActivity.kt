@@ -187,4 +187,10 @@ class MainActivity : AppCompatActivity() {
         res.updateConfiguration(config, metrics)
         return res
     }
+
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+    }
 }

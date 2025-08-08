@@ -115,15 +115,16 @@ class NewsFragment : Fragment() {
             delay(1500)
             sharedViewModel.news()
         }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { view, windowInsets ->
+        /*ViewCompat.setOnApplyWindowInsetsListener(binding.horizontalList) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
+            view.setPadding(0,0,0,insets.bottom)
             (parentFragment as LandingFragment).binding.bottomNavigationView.post {
                 val navHeight=(parentFragment as LandingFragment).binding.bottomNavigationView.height
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
-                view.setPadding(0,insets.top,0,navHeight)
+                Log.e("Nav Height",navHeight.toString())
             }
 
             windowInsets
-        }
+        }*/
         (parentFragment as LandingFragment).binding.toolbar.binding.apply {
 
 //            subTitle.text = "News"
@@ -163,7 +164,8 @@ class NewsFragment : Fragment() {
         val scope = rememberCoroutineScope()
         val scrollState = rememberScrollState()
         Column (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ){
             Box(
                 modifier = Modifier
@@ -263,7 +265,9 @@ class NewsFragment : Fragment() {
                         .align(Alignment.CenterEnd)
 //                        .background(Color.White.copy(alpha = 0.7f), CircleShape)
                 ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), tint = colorResource(R.color.black), contentDescription = "Scroll Right", modifier = Modifier.size(dimensionResource(R.dimen.dp_30).value.dp).rotate(180f))
+                    Icon(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), tint = colorResource(R.color.black), contentDescription = "Scroll Right", modifier = Modifier
+                        .size(dimensionResource(R.dimen.dp_30).value.dp)
+                        .rotate(180f))
                 }
                 /*Box(
                     Modifier
@@ -500,12 +504,14 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Divider(
-                        color = Color(0xFFB3C6C6CD),
-                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
-                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
-                    )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
+                    if(index<data.size-1) {
+                        Divider(
+                            color = Color(0xFFB3C6C6CD),
+                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
+                        )
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
+                    }
 
                 }
             }
@@ -594,12 +600,14 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Divider(
-                        color = Color(0xFFB3C6C6CD),
-                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
-                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
-                    )
-                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
+                    if(index<data.size-1){
+                        Divider(
+                            color = Color(0xFFB3C6C6CD),
+                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
+                        )
+                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_5).value.dp))
+                    }
 
                 }
             }
@@ -672,7 +680,9 @@ class NewsFragment : Fragment() {
                                         fontWeight = FontWeight(400),
                                         color = colorResource(id = R.color.black),
                                         overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.fillMaxWidth().padding(top = dimensionResource(R.dimen.dp_5).value.dp)
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = dimensionResource(R.dimen.dp_5).value.dp)
                                     )
                                    /* Row (
                                         modifier = Modifier.padding(top = dimensionResource(R.dimen.dp_5).value.dp,),
@@ -741,11 +751,13 @@ class NewsFragment : Fragment() {
                             }
                         )
                     }
-                    Divider(
-                        color = Color(0xFFB3C6C6CD),
-                        thickness = dimensionResource(R.dimen.dp_1).value.dp,
-                        modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
-                    )
+                    if(index<data.size-1) {
+                        Divider(
+                            color = Color(0xFFB3C6C6CD),
+                            thickness = dimensionResource(R.dimen.dp_1).value.dp,
+                            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.dp_10).value.dp)
+                        )
+                    }
 //                    Spacer(modifier = Modifier.height(dimensionResource(R.dimen.dp_20).value.dp))
 
                 }
