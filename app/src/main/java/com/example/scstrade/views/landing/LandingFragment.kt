@@ -87,6 +87,7 @@ class LandingFragment : Fragment() {
                 MarketFragment()
             }
             binding.bottomNavigationView.selectedItemId= R.id.marketFragment
+            (requireActivity() as MainActivity).intent.removeExtra(AppConstants.IS_MARKET)
         }else if((requireActivity() as MainActivity).intent.getBooleanExtra(AppConstants.IS_ANALYST,false)){
             val intent = Intent(requireContext(), AnalystOpinionActivity::class.java)
             intent.putExtra(AppConstants.OPINION_TYPE,(requireActivity() as MainActivity).intent.getStringExtra(AppConstants.OPINION_TYPE))
