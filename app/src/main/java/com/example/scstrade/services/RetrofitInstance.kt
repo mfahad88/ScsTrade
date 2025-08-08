@@ -45,7 +45,7 @@ object RetrofitInstance {
             .readTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(120, TimeUnit.SECONDS)
 //            .addInterceptor(CustomLoggingInterceptor())
-            .addInterceptor(chuckerInterceptor)
+//            .addInterceptor(chuckerInterceptor)
             .addInterceptor(AuthInterceptor(context))
             .addInterceptor(provideOfflineCacheInterceptor(context))
             .addNetworkInterceptor(provideOnlineCacheInterceptor())
