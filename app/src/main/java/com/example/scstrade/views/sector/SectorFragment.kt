@@ -67,10 +67,16 @@ class SectorFragment : Fragment() {
 
         }
 
-        binding.recyclerViewSector.post {
+      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerViewSector){v,insets->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom)
+            insets
+        }*/
+
+     /*   binding.recyclerViewSector.post {
             binding.recyclerViewSector.setPadding(0,0,0,350)
             binding.recyclerViewSector.clipToPadding=false
-        }
+        }*/
         sharedViewModel.mutableAllData.observe(viewLifecycleOwner, object : Observer<Resource<List<StockItem>>>{
             override fun onChanged(it: Resource<List<StockItem>>) {
                 (binding.recyclerViewSector.adapter as SectorAdapter).addItems(it.data?.map { it.sN }?.distinct()?.sortedBy { it }?: emptyList())

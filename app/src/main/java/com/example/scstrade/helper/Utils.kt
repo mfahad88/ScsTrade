@@ -218,6 +218,7 @@ class Utils {
                 })
                 .into(imageView)
         }
+
         fun formatHighLow(
             label: String,
             current: Double,

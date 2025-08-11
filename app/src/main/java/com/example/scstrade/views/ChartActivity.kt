@@ -29,11 +29,11 @@ class ChartActivity : BaseActivity() {
         enableEdgeToEdge()
         indices=intent.getStringExtra("Indices")?:"KSE 100"
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+      /*  ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
         binding.chart.settings.javaScriptEnabled = true
         binding.chart.webViewClient = WebViewClient()
         fetchUser(this)

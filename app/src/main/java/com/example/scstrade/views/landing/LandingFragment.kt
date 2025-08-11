@@ -1,6 +1,7 @@
 package com.example.scstrade.views.landing
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -56,7 +57,9 @@ class LandingFragment : Fragment() {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private val ROOT_FRAGMENT:String="Home"
 
-
+    fun Int.toDp(context: Context): Float {
+        return this / context.resources.displayMetrics.density
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +70,9 @@ class LandingFragment : Fragment() {
         initSideMenu()
 
 
-
+        binding.bottomNavigationView.post {
+            Log.e("Botttom",binding.bottomNavigationView.height.toDp(requireContext()).toString())
+        }
 
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment

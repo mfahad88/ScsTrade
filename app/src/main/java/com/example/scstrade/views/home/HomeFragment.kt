@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -412,7 +414,11 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = (requireActivity().application as MyApp).viewModel
         homeViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
-
+       /* ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerLeaders) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            v.setPadding(0,0,0, 0)
+            insets
+        }*/
         binding.aofCard.setOnClickListener {
             startActivity(Intent(requireContext(), AofActivity::class.java))
         }

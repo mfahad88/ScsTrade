@@ -153,6 +153,7 @@
                 android:layout_marginEnd="@dimen/dp_30"
                 android:inputType="textPassword"
                 app:hintText="Password"
+                app:hintTextField="Password"
                 app:passwordToggleEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

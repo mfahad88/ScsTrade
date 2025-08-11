@@ -51,7 +51,7 @@ class WatchlistFragment : Fragment() {
         }
 
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout3) { view, windowInsets ->
+        /*ViewCompat.setOnApplyWindowInsetsListener(binding.frameLayout3) { view, windowInsets ->
 
             // Get insets for navigation bar (bottom) and status bar (top)
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.ime())
@@ -70,7 +70,7 @@ class WatchlistFragment : Fragment() {
 
 
             windowInsets
-        }
+        }*/
         /*ViewCompat.setOnApplyWindowInsetsListener(binding.buttonAdd) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
             if (Utils.getSmallestWidthDp(requireContext()) < 390) {

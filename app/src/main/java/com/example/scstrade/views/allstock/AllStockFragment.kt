@@ -50,11 +50,11 @@ class AllStockFragment : Fragment() {
             layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             addItemDecoration(HorizontalDivider(30.dp))
         }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root){ v, insets ->
+      /*  ViewCompat.setOnApplyWindowInsetsListener(binding.root){ v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
 
         /*binding.recyclerIndices.post {
             binding.recyclerIndices.setPadding(0,0,0,350)

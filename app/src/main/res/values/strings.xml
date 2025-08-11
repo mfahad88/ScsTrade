@@ -49,8 +49,8 @@
     <string name="hi_there_we">Hi There! Welcome Back</string>
     <string name="let_s_sign_">Let’s sign in to your account and get started.</string>
     <string name="sign_in">Sign in</string>
-    <string name="user_name">User Name</string>
-    <string name="enter_user_name">Enter User Name</string>
+    <string name="user_name">Email</string>
+    <string name="enter_user_name">Enter Email Address</string>
     <string name="password">Password</string>
     <string name="enter_your_password">Enter Your Password</string>
     <string name="forgot_pass">Forgot Password</string>

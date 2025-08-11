@@ -13,8 +13,7 @@
     tools:context=".views.home.HomeFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -159,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_5"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="@dimen/dp_130"
+                android:paddingBottom="@dimen/dp_10"
                 app:layout_constraintEnd_toEndOf="@+id/aof_card"
                 app:layout_constraintStart_toStartOf="@+id/aof_card"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView"
