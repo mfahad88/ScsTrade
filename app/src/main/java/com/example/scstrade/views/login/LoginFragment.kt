@@ -184,8 +184,21 @@ class LoginFragment : Fragment() {
                         "kmi 30" to (data?.chartItemKMI30 ?: emptyList())
                     )
 
+                    val preferredOrder = listOf(
+                        "KSE 100 Index",
+                        "KSE All Share Index"
+                    )
+
+                    val sortedIndices = (data?.kseIndices ?: emptyList())
+                        .sortedWith(
+                            compareBy(
+                                { preferredOrder.indexOf(it.iNDEXCODE).takeIf { idx -> idx >= 0 } ?: Int.MAX_VALUE },
+                               // { it.iNDEXCODE } // secondary alphabetical sort for the rest
+                            )
+                        )
+
                     indexAdapter.addItems(
-                        data?.kseIndices ?: emptyList(),
+                        sortedIndices,
                         chartMap
                     )
                 }

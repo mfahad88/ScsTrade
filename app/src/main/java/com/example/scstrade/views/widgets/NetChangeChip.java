@@ -3,6 +3,7 @@ package com.example.scstrade.views.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
@@ -53,23 +54,24 @@ public class NetChangeChip extends RelativeLayout {
     }
 
     public void setText(String nChange,String pClose){
-        double netChange = Double.parseDouble(nChange);
-        double preClose = Double.parseDouble(pClose);
+        if(!TextUtils.isEmpty(nChange) && !TextUtils.isEmpty(pClose)){
+            double netChange = Double.parseDouble(nChange);
+            double preClose = Double.parseDouble(pClose);
 
-        String changeSign = netChange > 0.0 ? "+" : "";
+            String changeSign = netChange > 0.0 ? "+" : "";
 //        String changeValue = Utils.Companion.formatDouble(netChange);
-        String changeValue = String.format("%,.2f",netChange);
-        double changePercent = (netChange / preClose) * 100;
-        String percentValue = Utils.Companion.formatDouble(changePercent);
+            String changeValue = String.format("%,.2f",netChange);
+            double changePercent = (netChange / preClose) * 100;
+            String percentValue = Utils.Companion.formatDouble(changePercent);
 
-        String result = changeSign + changeValue + " " + changeSign + "" + percentValue + "%";
-        if (nChange.contains("-")) {
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
-            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
-        } else {
-            binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
-            binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
-        }
+            String result = changeSign + changeValue + " " + changeSign + "" + percentValue + "%";
+            if (nChange.contains("-")) {
+                binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_red));
+                binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_error));
+            } else {
+                binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_green));
+                binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
+            }
         /*if(nChange.equals("0") || nChange.equals("0.0")){
             binding.relativeLayout.setBackground(AppCompatResources.getDrawable(getContext(), R.drawable.rounded_gray_blue));
             binding.tv.setTextColor(Color.parseColor("#1A73E8"));
@@ -82,8 +84,10 @@ public class NetChangeChip extends RelativeLayout {
                 binding.tv.setTextColor(ContextCompat.getColor(getContext(),R.color.md_theme_primary));
             }
         }*/
-        binding.tv.setText(result);
-        previousText=nChange;
+            binding.tv.setText(result);
+            previousText=nChange;
+        }
+
     }
 
     public String getText(){

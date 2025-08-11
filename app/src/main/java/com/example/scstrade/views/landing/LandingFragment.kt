@@ -70,9 +70,7 @@ class LandingFragment : Fragment() {
         initSideMenu()
 
 
-        binding.bottomNavigationView.post {
-            Log.e("Botttom",binding.bottomNavigationView.height.toDp(requireContext()).toString())
-        }
+
 
         Utils.setSystemBarIcons(requireActivity(),darkIcons = false)
         binding.bottomNavigationView.selectedItemId=R.id.homeFragment

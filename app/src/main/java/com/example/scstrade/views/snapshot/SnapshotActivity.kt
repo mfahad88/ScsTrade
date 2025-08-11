@@ -156,7 +156,7 @@ class SnapshotActivity : BaseActivity() {
                                         },
                                         colors = CheckboxDefaults.colors(checkedColor = colorResource(
                                             id = R.color.md_theme_primary
-                                        ))
+                                        ), uncheckedColor = colorResource(id = R.color.black))
                                     )
                                     Spacer(modifier = Modifier.width(dimensionResource(R.dimen.dp_7).value.dp))
                                     Text(

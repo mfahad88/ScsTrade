@@ -152,7 +152,8 @@
     <color name="md_theme_surfaceContainer_highContrast">#313030</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#3C3B3B</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#474646</color>
-    <color name="colorDarkerr">#000000</color>
+<!--    <color name="colorDarkerr">#000000</color>-->
+    <color name="colorDarkerr">#3C3C3C</color>
     <color name="colorOnDarkerr">#000000</color>
     <color name="colorDarkerrContainer">#000000</color>
     <color name="colorOnDarkerrContainer">#000000</color>
