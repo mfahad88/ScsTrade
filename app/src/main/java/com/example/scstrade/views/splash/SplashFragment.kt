@@ -125,11 +125,12 @@ class SplashFragment : Fragment() {
             }
 
             val activity = requireActivity() as MainActivity
-            if (remembered) {
+            activity.loadFragment(LoginFragment())
+          /*  if (remembered) {
                 activity.loadFragment(LandingFragment())
             } else {
                 activity.loadFragment(LoginFragment())
-            }
+            }*/
         }
     }
 }

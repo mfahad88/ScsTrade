@@ -327,8 +327,8 @@ class LandingFragment : Fragment() {
                     binding.bottomNavigationView.selectedItemId = R.id.news
 //                    loadFragment("news"){ NewsFragment() }
                 } else if(keyDescValue.key?.equals("logout",true)?:false){
-                    Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
-                    Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
+//                    Utils.removeSharedPrefence(requireContext(),AppConstants.USER)
+//                    Utils.removeSharedPrefence(requireContext(),AppConstants.IS_REMEMBER)
                     (requireActivity() as MainActivity).loadFragment(LoginFragment())
                 }else if (keyDescValue.key?.equals("Research Reports",true)?:false){
                     binding.drawerLayout.closeDrawer(GravityCompat.END)

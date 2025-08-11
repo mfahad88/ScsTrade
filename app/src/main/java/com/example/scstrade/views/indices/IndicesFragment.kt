@@ -41,25 +41,24 @@ class IndicesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentIndicesBinding.inflate(inflater,container,false)
 
 //        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel = (requireActivity().application as MyApp).viewModel
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView){v,insets ->
+       /* ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView){v,insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left,0, systemBars.right, systemBars.bottom+220)
             insets
-        }
+        }*/
 
 
         binding.recyclerView.apply {
             visibility= View.VISIBLE
-            val typeToken = object:TypeToken<List<KSEIndices>>(){}
             adapter=IndicesAdapter(emptyList()){kseIndices ->
-                var bundle=Bundle()
+                val bundle=Bundle()
                 bundle.putString("index",kseIndices.iNDEXCODE)
                 val intent= Intent(requireContext(),StockActivity::class.java)
                 intent.putExtras(bundle)

@@ -3,6 +3,7 @@ package com.example.scstrade.views.login
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.example.scstrade.helper.AppConstants
 import com.example.scstrade.helper.GoogleSignInUtils
 import com.example.scstrade.helper.Utils
 import com.example.scstrade.model.Resource
+import com.example.scstrade.model.response.login.LoginDataItem
 import com.example.scstrade.viewmodels.SharedViewModel
 import com.example.scstrade.views.MyApp
 import com.example.scstrade.views.landing.LandingFragment
@@ -29,6 +31,10 @@ import com.example.scstrade.views.widgets.VerticalDivider
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class LoginFragment : Fragment() {
 
@@ -37,7 +43,7 @@ class LoginFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
     private var fcm: String? = null
-
+    lateinit var login:LoginDataItem
     private val indexAdapter = IndexAdapter()
 
     private val googleSignInLauncher =
@@ -64,6 +70,12 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         viewModel = (requireActivity().application as MyApp).viewModel
+        val remembered =  Utils.getSharedPreference(
+            requireContext(),
+            listOf(false),
+            AppConstants.IS_REMEMBER,
+            object : TypeToken<List<Boolean>>() {}
+        ).first()
 
         if (Build.VERSION.SDK_INT >= 29) {
             ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -103,6 +115,18 @@ class LoginFragment : Fragment() {
             googleSignInLauncher.launch(signInIntent)
         }
 
+        binding.rememberMe.isChecked = remembered
+
+        if(remembered){
+            fetchUser()
+
+            binding.userName.text = login.registrationEmail
+            binding.password.text = login.registrationPassword
+        }else{
+            binding.userName.text = null
+            binding.password.text = null
+        }
+
         binding.button.setOnClickListener {
             if (binding.userName.text.isNotEmpty() && binding.password.text.isNotEmpty()) {
                 viewModel.fetchLogin(binding.userName.text, binding.password.text, fcm ?: "")
@@ -140,6 +164,12 @@ class LoginFragment : Fragment() {
                                 requireContext(),
                                 AppConstants.IS_REMEMBER,
                                 listOf(true)
+                            )
+                        }else{
+                            Utils.saveSharedPreference(
+                                requireContext(),
+                                AppConstants.IS_REMEMBER,
+                                listOf(false)
                             )
                         }
 
@@ -217,5 +247,12 @@ class LoginFragment : Fragment() {
         viewModel.mutableLogin.value = null
         viewModel.mutableResultIndices.value = null
         viewModel.isLineChart = false
+    }
+
+    private fun fetchUser() {
+        val listType = object : TypeToken<List<LoginDataItem>>() {}
+        val user= Utils.getSharedPreference(requireContext(), emptyList<LoginDataItem>(),AppConstants.USER,listType)
+        login=user.first()
+        Log.e("User: ",user.toString())
     }
 }
