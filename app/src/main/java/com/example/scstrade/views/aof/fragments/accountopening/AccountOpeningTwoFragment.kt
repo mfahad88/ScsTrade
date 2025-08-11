@@ -78,6 +78,8 @@ class AccountOpeningTwoFragment : Fragment() {
                     viewModel.saveaccountOpening()
                     (requireActivity() as AofActivity).loadFragment(AccountOpeningThreeFragment())
 
+                }else{
+                    Utils.showError(requireView(),"Empty fields not allowed...")
                 }
             }
 
